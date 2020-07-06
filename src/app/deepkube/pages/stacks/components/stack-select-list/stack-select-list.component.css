@@ -1,0 +1,28 @@
+:host ::ng-deep .ant-list-items {
+  max-height: 250px;
+  overflow: auto;
+}
+
+.list-default {
+  border-radius: 2px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.list-custom {
+  border-radius: 2px;
+  background-color: #f1f1f1;
+}
+
+.stack {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.selected {
+  background: #e6f7ff;
+  color:#1890ff;
+}
+
+.stack:hover {
+  opacity: 1;
+}

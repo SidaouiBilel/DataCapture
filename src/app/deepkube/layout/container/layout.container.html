@@ -1,0 +1,50 @@
+<nz-layout class="full-h">
+  <!-- Header -->
+  <nz-header>
+
+    <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
+      <a [routerLink]="['/deepkube/projects']">
+        <img class="header-icon" [class.header-icon-collapsed]="isCollapsed" src="../../../../assets/images/logo.png"
+          alt="logo">
+        <h1 *ngIf="!isCollapsed">deepkube</h1>
+      </a>
+    </div>
+
+    <nz-input-group class="search-box" [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="Find projects, clusters, datasets..." />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+
+  </nz-header>
+
+  <nz-layout>
+    <!-- Sidebar -->
+    <ng-container *ngIf="true">
+      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200px" nzTheme="light">
+        <ul nz-menu nzMode="inline" class="sider-menu" [nzInlineCollapsed]="isCollapsed">
+          <li nz-menu-item [nzSelected]="isPrimaryPage('stacks')"  [routerLink]="['/deepkube/stacks']">
+            <i nz-icon nzType="hdd"></i>
+            <span>Stacks</span>
+          </li>
+        </ul>
+      </nz-sider>
+    </ng-container>
+
+    <!-- Content -->
+    <nz-layout class="inner-layout">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item *ngFor="let item of pageList; let i = index">
+          <a [routerLink]="[getLinkByIndex(i)]">
+            <i nz-icon [nzType]="matchNameWithIcons(item)"></i>
+            <span *ngIf="item != 'home'">{{item | titlecase}}</span>
+          </a>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
