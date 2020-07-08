@@ -1,0 +1,28 @@
+
+
+
+ <nz-form-item *ngFor='let f of form'>
+    <nz-form-label [nzSpan]="7" [nzRequired]="f.mandatory">{{f.name}}</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+        <ng-container [ngSwitch]="f.type">
+        <div *ngSwitchCase="'text'">
+            {{data[f.field]}}
+        </div>
+
+        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' (input)='f.onChange()' nz-input rows="2"></textarea>
+
+        <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
+            <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+        </nz-select>
+
+        <input *ngSwitchDefault [(ngModel)]='data[f.field]' (input)='f.onChange()' nz-input />
+        
+        </ng-container>
+   
+    </nz-form-control>
+  </nz-form-item>
+
+<ng-template #modalFooter>
+    <button nz-button nzType="default" [disabled]="!canClose()" (click)="close()">Cancel</button>
+    <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">{{edit? "Save": "Create"}}</button>
+</ng-template>

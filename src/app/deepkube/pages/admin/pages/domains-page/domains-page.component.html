@@ -1,0 +1,66 @@
+<!-- <nz-switch [(ngModel)]="loading"></nz-switch> -->
+<!-- <nz-card style="width: 300px;margin-top: 16px" [nzLoading]="loading">
+  <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Card title" nzDescription="This is the description"></nz-card-meta>
+</nz-card> -->
+
+<div nz-row>
+
+  <div nz-col [nzSpan]='18'>
+
+    <button nz-button nzType="primary" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Domain</button>
+    <button nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
+    
+  </div>
+  <div nz-col [nzSpan]='6'>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="Filter Domains" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </div>
+</div>
+<!-- <button nz-button nzType="primary"><i nz-icon nzType="download"></i></button> -->
+
+<div nz-row>
+
+        <div nz-col class="inner-box" [nzSpan]="24" *ngFor="let d of domains$ | async">
+            <nz-card [nzActions]="[actionSetting, actionEdit, actionReference, actionEllipsis]">
+                <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
+                    <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="titleTemplate" [nzDescription]="descTemplate"></nz-card-meta>
+                    <!-- <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{d.name}}" nzDescription="{{d.description}}"></nz-card-meta> -->
+
+                    <ng-template #titleTemplate>
+                      <small>{{d.identifier}}</small>
+                      <h3>{{d.name}} </h3>
+                    </ng-template>
+                    <ng-template #descTemplate>
+                      <i>{{d.created_on}}</i>
+                      <br>
+                      <p>{{d.description}}</p>
+                    </ng-template>
+
+                    <ng-template #avatarTemplate>
+                      <nz-avatar [nzText]="getAvatar(d)" [nzShape]="'square'" [nzSize]="'large'" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+                    </ng-template>
+                    <ng-template #actionSetting>
+                      <i nz-icon nzType="setting" (click)="openConfig(d)"></i>
+                    </ng-template>
+                    <ng-template #actionEdit>
+                      <i nz-icon nzType="table" (click)="navigate(['/deepkube/admin/fields', d.id])"></i>
+                    </ng-template>
+                    <ng-template #actionReference>
+                        <i nz-icon nzType="minus"></i>
+                    </ng-template>
+                    <ng-template #actionEllipsis>
+                        <i nz-icon nzType="delete"></i>
+                      </ng-template>
+
+                </nz-skeleton>
+            </nz-card>
+        </div>
+
+</div>
+
+
+<!-- TEMPLATES -->

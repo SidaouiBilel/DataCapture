@@ -1,0 +1,12 @@
+[nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+  }
+
+.inner-box{
+  margin-bottom: 14px;
+}
+
+::ng-deep.ant-card-meta-avatar{
+  padding-top: 21px;
+}

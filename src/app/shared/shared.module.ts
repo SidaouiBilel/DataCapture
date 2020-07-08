@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IconsProviderModule } from '@app/icons-provider.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzModalModule } from 'ng-zorro-antd';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
@@ -22,7 +22,8 @@ const SharedModules = [
   NzGridModule,
   ReactiveFormsModule,
   MonacoEditorModule,
-  DndModule
+  DndModule,
+  NzModalModule
 ];
 
 @NgModule({

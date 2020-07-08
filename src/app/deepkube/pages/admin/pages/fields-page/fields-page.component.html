@@ -1,0 +1,22 @@
+<nz-table  nzTableLayout="fixed">
+    <thead>
+      <tr>
+          <ng-container  *ngFor="let column of columns">
+            <th *ngIf="column.field == 'action'">
+                <button nz-button nzType="default" nzShape="circle" (click)='openConfig(null)'><i nz-icon nzType="plus"></i></button>
+            </th>
+            <th *ngIf="column.field != 'action'">
+                {{ column.label }}
+            </th>
+
+          </ng-container>
+          
+     
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of list$ | async">
+        <td  *ngFor="let column of columns">{{ data[column.field] }}</td>
+      </tr>
+    </tbody>
+  </nz-table>

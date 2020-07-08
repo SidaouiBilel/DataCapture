@@ -28,6 +28,10 @@
             <i nz-icon nzType="hdd"></i>
             <span>Stacks</span>
           </li>
+          <li nz-menu-item [nzSelected]="isPrimaryPage('admin')"  [routerLink]="['/deepkube/admin']">
+            <i nz-icon nzType="tool"></i>
+            <span>Administration</span>
+          </li>
         </ul>
       </nz-sider>
     </ng-container>

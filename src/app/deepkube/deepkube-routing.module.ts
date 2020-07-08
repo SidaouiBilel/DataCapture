@@ -12,8 +12,12 @@ const routes: Routes = [
           loadChildren : 'app/deepkube/pages/stacks/stacks.module#StacksModule'
         },
         {
+          path: 'admin',
+          loadChildren : 'app/deepkube/pages/admin/admin.module#AdminModule'
+        },
+        {
           path: '**',
-          redirectTo: ''
+          redirectTo: 'stacks'
         }
       ]
   }
