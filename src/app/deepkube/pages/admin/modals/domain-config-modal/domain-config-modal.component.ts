@@ -16,7 +16,7 @@ export class DomainConfigModalComponent extends EntityModal implements OnInit {
    }
 
   ngOnInit() {
-    this.modalrRef['nzFooter'] = this.modalFooter
+    super.ngOnInit()
   }
 
   canSave(){

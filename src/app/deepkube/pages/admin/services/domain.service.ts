@@ -27,7 +27,7 @@ export class DomainService {
     return this.http.get( this.url + `domain/${domain_id}/fields`)
   }
 
-  addTargetFields(domain_id, target_field){
+  saveTargetField(domain_id, target_field){
     return this.http.post( this.url + `domain/${domain_id}/fields`, target_field)
   }
 

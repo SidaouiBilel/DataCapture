@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomainService } from '../../services/domain.service';
 import { BehaviorSubject } from 'rxjs';
 import { Column } from '../../models/column';
@@ -19,15 +19,20 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   list$ = new BehaviorSubject<any>([])
 
   columns=[
+    new Column('', 'action'),
     new Column('Label', 'label'),
     new Column('Name', 'name'),
     new Column('Description', 'description'),
     new Column('Category', 'category'),
     new Column('Type', 'type'),
-    new Column('', 'action')
   ]
+  
+  constructor(private route: ActivatedRoute, private ds: DomainService, private modal: NzModalService, private router: Router) {}
 
-  constructor(private route: ActivatedRoute, private ds: DomainService, private modal: NzModalService) {}
+  onBack(){
+    this.router.navigate(['/deepkube/admin'])
+  }
+
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -35,7 +40,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
         this.load_data()
     });
 
-    this.openConfig(null)
+    // this.openConfig(null)
   }
 
   load_data(){
@@ -61,7 +66,8 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
       nzContent: FieldModalComponent,
       nzComponentParams: {
         data: obj,
-        edit: edit
+        edit: edit,
+        domain_id:this.id
       },
     });
 

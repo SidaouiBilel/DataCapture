@@ -15,12 +15,12 @@ export class FieldModalComponent extends EntityModal implements OnInit {
     { name:'label', 
       field: 'label',
       mandatory: true,
-      onChange: ()=>this.onLabelChanged()
+      // onChange: ()=>this.onLabelChanged()
     },
     { name:'Name', 
       field: 'name',
       mandatory: true,
-      type:'text'
+      // type:'text'
     },
     { name:'Type', 
       field: 'type',
@@ -50,10 +50,11 @@ export class FieldModalComponent extends EntityModal implements OnInit {
     },
   ]
 
-  onLabelChanged(){
-    console.log(this.data)
-    this.data.name = 'kkkkk'
-  }
+  domain_id
+  // onLabelChanged(){
+  //   console.log(this.data)
+  //   this.data.name = 'kkkkk'
+  // }
 
   constructor(private mr: NzModalRef, private ds:DomainService) {
     super(mr)
@@ -61,7 +62,8 @@ export class FieldModalComponent extends EntityModal implements OnInit {
 
   ngOnInit() {
     this.modalrRef['nzTitle'] = (this.edit)? 'Edit Target Field': 'Create New Target Field'
-    this.modalrRef['nzFooter'] = this.modalFooter
+    
+    super.ngOnInit()
   }
 
   canSave(){
@@ -89,7 +91,7 @@ export class FieldModalComponent extends EntityModal implements OnInit {
   save(){
     if (this.canSave()){
       this.loading = false
-      this.ds.saveDomain(this.data).subscribe(res=>{
+      this.ds.saveTargetField(this.domain_id, this.data).subscribe(res=>{
         this.modalrRef.close(true)
       })
     }

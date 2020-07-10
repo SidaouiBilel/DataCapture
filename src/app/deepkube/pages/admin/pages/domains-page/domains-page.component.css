@@ -5,6 +5,7 @@
 
 .inner-box{
   margin-bottom: 14px;
+  /* margin-right: 14px; */
 }
 
 ::ng-deep.ant-card-meta-avatar{

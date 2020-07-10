@@ -1,0 +1,15 @@
+.vertical-center-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical-center-modal .ant-modal {
+    padding: 0;
+    top: 0;
+}
+
+
+.ma-b {
+    margin-bottom: 12px
+}

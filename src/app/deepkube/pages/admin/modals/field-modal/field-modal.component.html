@@ -9,13 +9,13 @@
             {{data[f.field]}}
         </div>
 
-        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' (input)='f.onChange()' nz-input rows="2"></textarea>
+        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
 
         <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
             <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
         </nz-select>
 
-        <input *ngSwitchDefault [(ngModel)]='data[f.field]' (input)='f.onChange()' nz-input />
+        <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
         
         </ng-container>
    

@@ -20,6 +20,8 @@ export class DomainsPageComponent implements OnInit {
   domains$ = new BehaviorSubject<any>([])
   loading = false
 
+  displayList = true
+
   ngOnInit() {
     this.load_data()
   }

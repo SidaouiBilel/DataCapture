@@ -1,9 +1,48 @@
-<nz-table  nzTableLayout="fixed">
+
+<!-- <nz-card class="fields-card ma-b"> -->
+<nz-page-header class="site-page-header" (nzBack)="onBack()" nzBackIcon nzTitle="Target Fields" nzSubtitle="Customize domain specific fields">
+  <!-- <nz-page-header-content>
+    <div class="content">
+      <div class="extra">
+        <div>
+          <nz-statistic nzTitle="Status" nzValue="Pending"></nz-statistic>
+          <nz-statistic nzTitle="Price" [nzValue]="568.08" nzPrefix="$" style="margin: 0 32px"></nz-statistic>
+        </div>
+      </div>
+    </div>
+  </nz-page-header-content> -->
+
+</nz-page-header>
+<!-- </nz-card> -->
+
+
+<div nz-row class='ma-b'>
+
+  <div nz-col [nzSpan]='10'>
+
+    <button nz-button nzType="primary" (click)='openConfig(null)'  nzShape="round"><i nz-icon nzType="plus"></i>Add New Target Field</button>
+
+    <button nz-button nzType="default" (click)="load_data()"  nzShape="circle"><i nz-icon nzType="reload"></i></button>
+    
+  </div>
+
+  <div nz-col [nzSpan]='14'>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="Filter Domain Targets" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </div>
+</div>
+
+  <nz-card class="fields-card">
+<nz-table [nzData]="list$ | async" nzSize='small' [nzShowPagination]="false">
     <thead>
       <tr>
           <ng-container  *ngFor="let column of columns">
             <th *ngIf="column.field == 'action'">
-                <button nz-button nzType="default" nzShape="circle" (click)='openConfig(null)'><i nz-icon nzType="plus"></i></button>
+                <!-- <button nz-button nzType="primary" nzShape="circle" (click)='openConfig(null)'><i nz-icon nzType="plus"></i></button> -->
             </th>
             <th *ngIf="column.field != 'action'">
                 {{ column.label }}
@@ -15,8 +54,20 @@
       </tr>
     </thead>
     <tbody>
+
       <tr *ngFor="let data of list$ | async">
-        <td  *ngFor="let column of columns">{{ data[column.field] }}</td>
+        
+        <ng-container  *ngFor="let column of columns">
+          <td *ngIf="column.field == 'action'">
+            <button nz-button nzShape="circle" (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
+            <button nz-button nzShape="circle" (click)='openConfig(data)'><i nz-icon nzType="delete"></i></button>
+          </td>
+          <td *ngIf="column.field != 'action'">
+              {{ data[column.field] }}
+          </td>
+  
+        </ng-container>
       </tr>
     </tbody>
   </nz-table>
+</nz-card>
