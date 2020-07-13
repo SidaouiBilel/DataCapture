@@ -10,13 +10,15 @@ const R_MIN = {type:'MIN_CHECK', name:'Minimun Value Check',parameters:{'min':{t
 const R_INTERVAL = {type:'INTERVAL_CHECK', name:'Interval Value Check',parameters:{'max':{type:'integer' , label:'Max'}, 'min':{type:'integer', label:'Min'}}}
 const R_REFERENCE = {type:'REFRENCE_CHECK', name:'Reference Value Check',parameters:{'refrenceType':{type:'reference',label:'Type'}}}
 const R_FORMAT = {type:'FORMAT_CHECK', name:'Format Check',parameters:{'regex':{type:'string',label:'REGEX'}}}
+const R_MANDATORY = {type:'EMPTY_CHECK', name:'Empty Cell Check',parameters:{}}
 
 const RULES = [
   R_MAX,
   R_MIN,
   R_INTERVAL,
   R_REFERENCE,
-  R_FORMAT
+  R_FORMAT,
+  R_MANDATORY
 ]
 
 @Component({

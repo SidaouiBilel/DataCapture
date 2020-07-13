@@ -39,7 +39,7 @@
 
         <ng-container *ngFor="let r of data.rules; let i = index">
             <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
-                <nz-card nzHoverable [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name" [nzExtra]="extraTemplate">
+                <nz-card [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name" [nzExtra]="extraTemplate">
                     <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
                         <nz-form-item *ngFor="let p of keys(params)">
                       
