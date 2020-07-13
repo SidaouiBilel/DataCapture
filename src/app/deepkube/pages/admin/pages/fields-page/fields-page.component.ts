@@ -40,7 +40,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
         this.load_data()
     });
 
-    // this.openConfig(null)
+    this.openConfig(null)
   }
 
   load_data(){
@@ -79,4 +79,5 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 }

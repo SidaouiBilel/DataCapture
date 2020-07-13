@@ -1,28 +1,88 @@
 
 
+        <h4 nz-typography><i nz-icon nzType="form" nzTheme="outline"></i> Target Field</h4>
 
- <nz-form-item *ngFor='let f of form'>
-    <nz-form-label [nzSpan]="7" [nzRequired]="f.mandatory">{{f.name}}</nz-form-label>
-    <nz-form-control [nzSpan]="14">
-        <ng-container [ngSwitch]="f.type">
-        <div *ngSwitchCase="'text'">
-            {{data[f.field]}}
+        <nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="index = $event">
+            <nz-step nzTitle="General"></nz-step>
+            <nz-step nzTitle="Rules"></nz-step>
+        </nz-steps>
+
+        
+        <div *ngIf='index == 0'>
+            <nz-divider nzText="General"></nz-divider>
+        <nz-form-item *ngFor='let f of form'>
+            <nz-form-label [nzSpan]="7" [nzRequired]="f.mandatory">{{f.name}}</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+                <ng-container [ngSwitch]="f.type">
+                <div *ngSwitchCase="'text'">
+                    {{data[f.field]}}
+                </div>
+
+                <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
+
+                <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
+                    <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+                </nz-select>
+
+                <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
+                
+                </ng-container>
+        
+            </nz-form-control>
+        </nz-form-item>
+
         </div>
 
-        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
 
-        <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
-            <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
-        </nz-select>
+        <div *ngIf='index == 1'>
+            <nz-divider nzText="Rules"></nz-divider>
 
-        <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
+        <ng-container *ngFor="let r of data.rules; let i = index">
+            <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
+                <nz-card nzHoverable [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name" [nzExtra]="extraTemplate">
+                    <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
+                        <nz-form-item *ngFor="let p of keys(params)">
+                      
+                            <nz-form-label [nzSpan]="7" >{{params[p].label}}</nz-form-label>
+                            <nz-form-control [nzSpan]="14">
+                              <input [(ngModel)]='r[p]' nz-input/>         
+                            </nz-form-control>
+                          </nz-form-item>
+                    </ng-container>
         
+                    <ng-template #extraTemplate>
+                        <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
+                      </ng-template>
+                  </nz-card>
+                 
+            </ng-container>
+
+            <ng-template #noCheckFound>
+                <div class="ma-b">
+                    <button nzBlock nz-button nzType='danger' (click)="removeRule(i)" ><b>{{r.type}}</b> NOT FOUND</button>
+                </div>
+            </ng-template>
+            
+            <ng-template #extraTemplate>
+                <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
+              </ng-template>
+
         </ng-container>
+            
    
-    </nz-form-control>
-  </nz-form-item>
+
+          <button nz-button nz-dropdown [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
+            Add
+            <i nz-icon nzType="down"></i>
+          </button>
+          <nz-dropdown-menu #rulesMenu="nzDropdownMenu">
+            <ul nz-menu>
+              <li *ngFor="let rule of RULES_LIST" nz-menu-item  (click)="addRule($event, rule)">{{rule.name}}</li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
 
 <ng-template #modalFooter>
-    <button nz-button nzType="default" [disabled]="!canClose()" (click)="close()">Cancel</button>
-    <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">{{edit? "Save": "Create"}}</button>
+    <button nz-button nzType="link" [disabled]="!canClose()" (click)="close()">Cancel</button>
+    <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">Save</button>
 </ng-template>
