@@ -1,0 +1,82 @@
+<nz-layout class="full-h">
+  <!-- Header -->
+  <nz-header>
+
+    <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
+      <a [routerLink]="['/datacapture/projects']">
+        <img class="header-icon" [class.header-icon-collapsed]="isCollapsed" src="../../../../assets/images/logo.png"
+          alt="logo">
+        <h1 *ngIf="!isCollapsed">DataCapture</h1>
+      </a>
+    </div>
+
+    <nz-input-group class="search-box" [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="Find projects, clusters, datasets..." />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+
+  </nz-header>
+
+  <nz-layout>
+    <!-- Sidebar -->
+    <ng-container *ngIf="true">
+      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200px" nzTheme="light">
+        <ul nz-menu nzMode="inline" class="sider-menu" [nzInlineCollapsed]="isCollapsed">
+          <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('stacks')"  [routerLink]="['/datacapture/stacks']">
+            <i nz-icon nzType="hdd"></i>
+            <span>Stacks</span>
+          </li> -->
+          <li nz-menu-item [nzSelected]="isPrimaryPage('admin')"  [routerLink]="['/datacapture/admin']">
+            <i nz-icon nzType="tool"></i>
+            <span>Administration</span>
+          </li>
+          <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('upload')"  [routerLink]="['/datacapture/upload']">
+            <i nz-icon nzType="upload"></i>
+            <span>Upload</span>
+          </li> -->
+          <li nz-submenu nzIcon="upload" nzTitle="Upload">
+            <ul>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
+                <i nz-icon nzType="import"></i>
+                <span>Import</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/upload/preview']">
+                <i nz-icon nzType="file-done"></i>
+                <span>Preview</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('mapping')" [routerLink]="['/datacapture/upload/mapping']">
+                <i nz-icon nzType="arrows-alt"></i>
+                <span>Mapping</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('cleansing')" [routerLink]="['/datacapture/upload/cleansing']">
+                <i nz-icon nzType="monitor"></i>
+                <span>Cleansing</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('uploading')" [routerLink]="['/datacapture/upload/uploading']">
+                <i nz-icon nzType="upload"></i>
+                <span>Upload</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nz-sider>
+    </ng-container>
+
+    <!-- Content -->
+    <nz-layout class="inner-layout">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item *ngFor="let item of pageList; let i = index">
+          <a [routerLink]="[getLinkByIndex(i)]">
+            <i nz-icon [nzType]="matchNameWithIcons(item)"></i>
+            <span *ngIf="item != 'home'">{{item | titlecase}}</span>
+          </a>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

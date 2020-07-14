@@ -16,7 +16,7 @@
     "typeRoots": [ "../node_modules/@types" ],
     "paths": {
       "@app/*": ["app/*"],
-      "@ws/*": ["app/deepkube/pages/project/workspaces/*"],
+      "@ws/*": ["app/datacapture/pages/project/workspaces/*"],
       "@assets/*": ["assets/*"],
       "@src/*": ["src/*"],
       "@env/*": [

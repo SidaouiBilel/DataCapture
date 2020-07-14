@@ -35,7 +35,7 @@ import {NzNotificationService} from 'ng-zorro-antd';
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
-          name: 'DeepKube'
+          name: 'DataCapture'
         }),
 
     // Shared

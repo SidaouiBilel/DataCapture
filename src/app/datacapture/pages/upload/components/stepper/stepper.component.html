@@ -1,0 +1,12 @@
+<nz-steps nzType="navigation" nzSize="small" [nzCurrent]="getStepIndex()">
+  <nz-step nzTitle="Import" nzSubtitle="" [nzStatus]="onStepChangeStatus('import')"
+    [routerLink]="['/datacapture/upload/import']"> </nz-step>
+  <nz-step nzTitle="Preview" nzSubtitle="" [nzStatus]="onStepChangeStatus('preview')"
+    [routerLink]="['/datacapture/upload/preview']"> </nz-step>
+  <nz-step nzTitle="Mapping" nzSubtitle="" [nzStatus]="onStepChangeStatus('mapping')"
+    [routerLink]="['/datacapture/upload/mapping']"> </nz-step>
+  <nz-step nzTitle="Cleansing" nzSubtitle="" [nzStatus]="onStepChangeStatus('cleansing')"
+    [routerLink]="['/datacapture/upload/cleansing']"> </nz-step>
+  <nz-step nzTitle="Upload" nzSubtitle="" [nzStatus]="onStepChangeStatus('uploading')"
+    [routerLink]="['/datacapture/upload/uploading']"> </nz-step>
+</nz-steps>

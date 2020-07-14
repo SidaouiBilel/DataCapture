@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "deepkube": {
+    "datacapture": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/deepkube",
+            "outputPath": "dist/datacapture",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,7 +27,11 @@
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
               },
-              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "assets/monaco-editor/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "assets/monaco-editor/"
+              }
             ],
             "styles": [
               "src/theme.less",
@@ -76,18 +80,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "deepkube:build"
+            "browserTarget": "datacapture:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "deepkube:build:production"
+              "browserTarget": "datacapture:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "deepkube:build"
+            "browserTarget": "datacapture:build"
           }
         },
         "test": {
@@ -124,19 +128,20 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "deepkube:serve"
+            "devServerTarget": "datacapture:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "deepkube:serve:production"
+              "devServerTarget": "datacapture:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "deepkube",
+  "defaultProject": "datacapture",
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": false
   }
 }

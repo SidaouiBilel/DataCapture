@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {DeepKubeModule} from '@app/deepkube/deepkube.module';
+import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 registerLocaleData(en);
@@ -35,7 +35,7 @@ const ngZorroConfig: NzConfig = {
 
     // DevTools
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    DeepKubeModule,
+    DataCaptureModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

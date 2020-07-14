@@ -4,16 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'deepkube/stacks',
+    redirectTo: 'datacapture/upload',
     pathMatch: 'full'
   },
   {
-    path: 'deepkube',
-    loadChildren: './deepkube/deepkube.module#DeepKubeModule',
+    path: 'datacapture',
+    loadChildren: './datacapture/datacapture.module#DataCaptureModule',
   },
   {
     path: '**',
-    redirectTo: 'deepkube/stacks'
+    redirectTo: 'datacapture/upload'
   }
 ];
 

@@ -1,0 +1,47 @@
+<div class="full-width stacks-container">
+  <div class="lists">
+    <app-stack-select-list icon="crown" title="Default" color="primary" [data]="default" [selectedId]="selectedId"
+      (selectionChanged)="selectionChanged($event)"></app-stack-select-list>
+    <app-stack-select-list icon="build" title="Custom" [data]="custom" [selectedId]="selectedId"
+      (selectionChanged)="selectionChanged($event)"></app-stack-select-list>
+  </div>
+  <div class="details">
+    <ng-container *ngIf="selectedId < 0">
+      <nz-card class="details-card-empty">
+        <nz-empty [nzNotFoundContent]="'Select a stack or create a new one.'">
+        </nz-empty>
+      </nz-card>
+    </ng-container>
+    <ng-container *ngIf="selectedId >= 0">
+      <nz-card class="details-card">
+        <h2 nz-title nzEditable [(nzContent)]="default[0].name">{{default[0].name}}</h2>
+        <nz-divider></nz-divider>
+
+        <nz-card class="full-width">
+          <h4 nz-title>Description</h4>
+          <p>{{description}}</p>
+        </nz-card>
+
+
+        <nz-card class="full-width">
+          <h4 nz-title>Stack</h4>
+          <p>Base Image <span nz-text><code>datacapture/datacapture-minimal:latest</code></span></p>
+          <p>Additional installs</p>
+          <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code" class="code-editor"></ngx-monaco-editor>
+          <p>Init script</p>
+          <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code" class="code-editor"></ngx-monaco-editor>
+        </nz-card>
+
+        <nz-card class="full-width">
+          <h4 nz-title>Workspaces</h4>
+          <nz-transfer [nzDataSource]="list" [nzDisabled]="disabled" [nzTitles]="['All', 'Selected']"
+            (nzSelectChange)="select($event)" (nzChange)="change($event)">
+          </nz-transfer>
+        </nz-card>
+
+
+        <button nz-button nzType="primary">Save</button>
+      </nz-card>
+    </ng-container>
+  </div>
+</div>
