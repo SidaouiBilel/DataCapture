@@ -11,6 +11,8 @@ import { UploadComponent } from './components/upload/upload.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { uploadReducers } from './store/upload.state';
+import { ImportEffects } from './store/effects/import.effect';
+import { FileImportService } from './services/file-import.service';
 
 
 const components = [
@@ -28,12 +30,13 @@ const components = [
     UploadRoutingModule,
     SharedModule,
     StoreModule.forFeature('upload', uploadReducers),
-    EffectsModule.forFeature([])
+    EffectsModule.forFeature([ImportEffects])
   ],
   declarations: [...components],
   exports: [
   ],
   providers : [
+    FileImportService
   ],
   entryComponents: [
   ]

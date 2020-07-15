@@ -11,6 +11,9 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { AgGridModule } from '@ag-grid-community/angular';
+import { SortableHeaderComponent } from './shared/gridReusables/header-component/sortable-header.component';
+import { HeaderEditComponent } from './shared/gridReusables/edit-component/header-edit.component';
 
 registerLocaleData(en);
 // This is used to configure the placement of the snackbars
@@ -36,6 +39,9 @@ const ngZorroConfig: NzConfig = {
     // DevTools
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     DataCaptureModule,
+
+    // Grid
+    AgGridModule.withComponents([SortableHeaderComponent, HeaderEditComponent])
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

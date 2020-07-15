@@ -1,18 +1,10 @@
 export interface Import {
   imported: boolean ;
   importing: boolean ;
+  error: boolean;
   selectedFile: FileData ;
-  selectedSheet: number;
   fileData: Sheet;
   progress: number;
-  fileType: string;
-  cedantName: string;
-  currency: string;
-  writtenEarned: string;
-  programName: string;
-  uwy: string;
-  dataType: string;
-  dataAOD: Date;
 }
 
 export interface SheetData {

@@ -36,7 +36,7 @@
             <i nz-icon nzType="upload"></i>
             <span>Upload</span>
           </li> -->
-          <li nz-submenu nzIcon="upload" nzTitle="Upload">
+          <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="true">
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>

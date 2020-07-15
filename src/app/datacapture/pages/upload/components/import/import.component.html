@@ -1,1 +1,63 @@
-<p>import works!</p>
+<div class="main-container flex-box">
+  <!-- Header -->
+  <div class="importHeader" nz-row>
+    <div nz-col nzSpan="18">
+      <span class="text-success" *ngIf="(importState$ | async).imported">
+        {{(importState$ | async)?.selectedFile?.token}}
+      </span>
+    </div>
+    <div nz-col nzSpan="6" class="text-right">
+      <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Next Step" nzTooltipPlacement="left" (click)="goToPreview()"><i nz-icon
+          nzType="caret-right"></i></button>
+      <button nz-button nzType="danger" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Reset" nzTooltipPlacement="left" (click)="cancelUpload()"><i nz-icon
+          nzType="close"></i></button>
+    </div>
+  </div>
+
+  <!-- If The file isn't uploaded -->
+  <div class="flex-child" *ngIf="!(importState$ | async)?.error && !(importState$ | async)?.imported">
+    <nz-spin class="flex-box" [nzSpinning]="(importState$ | async)?.importing">
+      <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false"
+        [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
+        (nzChange)="handleChange($event)">
+        <p class="ant-upload-drag-icon">
+          <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">Click or drag file to this area to import</p>
+        <p class="ant-upload-hint">
+          Once selected the file will be automatically uploaded into our server.
+        </p>
+      </nz-upload>
+    </nz-spin>
+  </div>
+
+  <!-- If the file was uploaded successfully -->
+  <div class="flex-child centerBox" *ngIf="(importState$ | async)?.imported">
+    <nz-result nzStatus="success" nzTitle="Your file has been uploaded successfully."
+      nzSubTitle="You may proceed to the next step.">
+      <div nz-result-extra>
+        <button nz-button nzType="primary" (click)="goToPreview()">Next</button>
+        <button nz-button nzType="danger" (click)="cancelUpload()">Cancel</button>
+      </div>
+    </nz-result>
+  </div>
+
+  <!-- If the file was not uploaded -->
+  <div class="flex-child centerBox" *ngIf="(importState$ | async)?.error">
+    <div class="flex-child" *ngIf="(importState$ | async)?.error">
+      <nz-result nzStatus="error" nzTitle="An error occured when attempting to upload the file."
+        nzSubTitle="Please try again or contact us.">
+        <div nz-result-extra>
+          <button nz-button nzType="danger" (click)="cancelUpload()">Cancel</button>
+        </div>
+      </nz-result>
+    </div>
+  </div>
+
+  <!-- If the file is getting uploaded -->
+  <!-- <div class="flex-child loader" *ngIf="(importState$ | async)?.importing">
+    <nz-progress nzType="circle" [nzPercent]="(importState$ | async)?.progress" [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }"></nz-progress>
+  </div> -->
+</div>

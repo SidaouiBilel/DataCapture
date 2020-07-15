@@ -1,0 +1,36 @@
+.main-container {
+  padding: 0 24px 24px 24px;
+  height: 100%;
+}
+
+.flex-box {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.flex-child {
+  flex: 1 1 auto;
+}
+
+.importHeader {
+  padding-bottom: 24px;
+}
+
+.loader {
+  text-align: center;
+  padding: 12%
+}
+
+:host ::ng-deep .ant-spin-container {
+  flex: 1 1 auto;
+}
+
+.centerBox {
+  height: 100%;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center;
+  align-items: center;
+}

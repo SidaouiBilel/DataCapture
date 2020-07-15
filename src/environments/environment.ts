@@ -5,12 +5,8 @@
 export const environment = {
   production: false,
   test: false,
-  projects: 'http://dev.deepkube.io/api/projects',
-  environments: 'http://dev.deepkube.io/api/objects/environments',
-  clusters: 'http://dev.deepkube.io/api/clusters',
-  datasets: 'http://dev.deepkube.io/api/datasets',
-
-  admin: 'https://dcm-admin.azurewebsites.net/'
+  admin: 'https://dcm-admin.azurewebsites.net/',
+  upload: 'http://localhost:5000/import/'
 };
 
 /*
