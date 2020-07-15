@@ -23,9 +23,13 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     new Column('Label', 'label'),
     new Column('Name', 'name'),
     new Column('Description', 'description'),
-    new Column('Category', 'category'),
+    new Column('Mandatory', 'mandatory'),
+    new Column('Editable', 'editable'),
+    // new Column('Category', 'category'),
     new Column('Type', 'type'),
   ];
+
+  loading
 
   constructor(private route: ActivatedRoute, private ds: DomainService, private modal: NzModalService, private router: Router) {}
 
@@ -40,13 +44,15 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
        this.load_data();
     });
 
-    this.openConfig(null)
+    // this.openConfig(null)
   }
 
   load_data(){
+    this.loading = true
     this.ds.getTargetFields(this.id).subscribe(fields => {
       this.list$.next(fields);
-    });
+      this.loading = false
+    }, err=> this.loading = false);
   }
 
   ngOnDestroy() {

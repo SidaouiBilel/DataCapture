@@ -24,6 +24,8 @@
                     <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
                 </nz-select>
 
+                <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
+
                 <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
                 
                 </ng-container>
@@ -40,15 +42,38 @@
         <ng-container *ngFor="let r of data.rules; let i = index">
             <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
                 <nz-card [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name" [nzExtra]="extraTemplate">
-                    <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
-                        <nz-form-item *ngFor="let p of keys(params)">
-                      
-                            <nz-form-label [nzSpan]="7" >{{params[p].label}}</nz-form-label>
-                            <nz-form-control [nzSpan]="14">
-                              <input [(ngModel)]='r[p]' nz-input/>         
-                            </nz-form-control>
-                          </nz-form-item>
-                    </ng-container>
+                    <nz-card-meta [nzDescription]="RULES_MAP[r.type].description" ></nz-card-meta>
+                    <div class="ma-t">
+                        <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
+                            <nz-form-item *ngFor="let p of params">
+                          
+                                <nz-form-label [nzSpan]="7" >{{p.label}}</nz-form-label>
+                                <nz-form-control [nzSpan]="14">
+    
+                                    <ng-container [ngSwitch]="p.type">
+                                    
+                                        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='r[p.name]' nz-input rows="2"></textarea>
+                        
+                                        <nz-select style="width: 100%;" [(ngModel)]='r[p.name]' *ngSwitchCase="'select'">
+                                            <nz-option *ngFor='let o of p.options' [nzValue]="o.key" [nzLabel]="o.value"></nz-option>
+                                        </nz-select>
+                        
+                                        <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
+                        
+                                        <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input/>   
+                                        
+                                    </ng-container>
+        
+                                         
+                                  </nz-form-control>
+                                
+                                
+                                
+                              </nz-form-item>
+    
+    
+                        </ng-container>
+                    </div>
         
                     <ng-template #extraTemplate>
                         <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
@@ -71,13 +96,13 @@
             
    
 
-          <button nz-button nz-dropdown [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
+          <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
             Add
             <i nz-icon nzType="down"></i>
           </button>
           <nz-dropdown-menu #rulesMenu="nzDropdownMenu">
             <ul nz-menu>
-              <li *ngFor="let rule of RULES_LIST" nz-menu-item  (click)="addRule($event, rule)">{{rule.name}}</li>
+              <li nz-tooltip [nzTooltipTitle]="rule.description" *ngFor="let rule of RULES_LIST" nz-menu-item  (click)="addRule($event, rule)">{{rule.name}}</li>
             </ul>
           </nz-dropdown-menu>
         </div>

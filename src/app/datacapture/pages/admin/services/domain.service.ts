@@ -31,4 +31,8 @@ export class DomainService {
     return this.http.post( this.url + `domain/${domain_id}/fields`, target_field)
   }
 
+  getDomainChecks(domain_id){
+    return this.http.get( this.url + `domain/${domain_id}/checks`)
+  }
+
 }
