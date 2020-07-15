@@ -10,7 +10,8 @@ export const environment = {
   clusters: 'http://dev.deepkube.io/api/clusters',
   datasets: 'http://dev.deepkube.io/api/datasets',
 
-  admin: 'https://dcm-admin.azurewebsites.net/'
+  // admin: 'https://dcm-admin.azurewebsites.net/'
+  admin: 'http://localhost:5000/'
 };
 
 /*

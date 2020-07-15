@@ -24,6 +24,8 @@
                     <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
                 </nz-select>
 
+                <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
+
                 <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
                 
                 </ng-container>
@@ -40,12 +42,13 @@
         <ng-container *ngFor="let r of data.rules; let i = index">
             <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
                 <nz-card [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name" [nzExtra]="extraTemplate">
+                    <nz-card-meta [nzDescription]="RULES_MAP[r.type].description" ></nz-card-meta>
                     <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
-                        <nz-form-item *ngFor="let p of keys(params)">
+                        <nz-form-item *ngFor="let p of params">
                       
-                            <nz-form-label [nzSpan]="7" >{{params[p].label}}</nz-form-label>
+                            <nz-form-label [nzSpan]="7" >{{p.label}}</nz-form-label>
                             <nz-form-control [nzSpan]="14">
-                              <input [(ngModel)]='r[p]' nz-input/>         
+                              <input [(ngModel)]='r[p.name]' nz-input/>         
                             </nz-form-control>
                           </nz-form-item>
                     </ng-container>
@@ -71,7 +74,7 @@
             
    
 
-          <button nz-button nz-dropdown [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
+          <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
             Add
             <i nz-icon nzType="down"></i>
           </button>

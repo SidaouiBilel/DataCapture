@@ -23,7 +23,9 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     new Column('Label', 'label'),
     new Column('Name', 'name'),
     new Column('Description', 'description'),
-    new Column('Category', 'category'),
+    new Column('Mandatory', 'mandatory'),
+    new Column('Editable', 'editable'),
+    // new Column('Category', 'category'),
     new Column('Type', 'type'),
   ];
 
