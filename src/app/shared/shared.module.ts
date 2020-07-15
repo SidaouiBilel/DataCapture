@@ -56,6 +56,7 @@ const SharedModules = [
   exports: [
     ...SharedModules,
     PageHeaderComponent,
+    DataGridComponent
   ],
   providers: [
     UtilsService

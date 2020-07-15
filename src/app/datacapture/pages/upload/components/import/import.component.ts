@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState } from '@app/core';
 import { UploadChangeParam } from 'ng-zorro-antd/upload';
 import { Store } from '@ngrx/store';
-import { ActionUploadFile, ActionImportReset } from '../../store/actions/import.actions';
+import { ActionUploadFile, ActionImportReset, ActionSaveFile } from '../../store/actions/import.actions';
 import { Observable } from 'rxjs';
 import { Import } from '../../store/models/import.model';
 import { selectImport } from '../../store/upload.selectors';
@@ -45,6 +45,7 @@ export class ImportComponent implements OnInit {
         file: [file]
       };
       this.store.dispatch(new ActionUploadFile({file: uploadedFile, importing: false, imported: true, error: false, progress: 100}));
+      this.store.dispatch(new ActionSaveFile(file.response));
       this.notification.success(`${file.name} file uploaded successfully.`);
     } else if (status === 'error') {
       this.store.dispatch(new ActionUploadFile({file: null, importing: false, imported: false, error: true, progress: null}));

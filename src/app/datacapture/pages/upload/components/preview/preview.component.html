@@ -2,6 +2,9 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
+      <nz-select ngModel="sheet" class="selectStyleSheet" (ngModelChange)="selectSheet($event)">
+        <nz-option *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" [nzValue]="i" [nzLabel]="sheet"></nz-option>
+      </nz-select>
     </div>
     <div nz-col nzSpan="6" class="text-right">
       <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
@@ -14,5 +17,13 @@
         nzTooltipTitle="Reset" nzTooltipPlacement="left" (click)="cancelUpload()"><i nz-icon
           nzType="close"></i></button>
     </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="flex-box" *ngIf="(selectedSheet$ | async)">
+    <app-data-grid [loading]="loading$ | async" [headers]="headers$ | async" [rowData]="data$ | async"
+      [totalRecords]="totalRecords$ | async" [nrows]="numberOfRows" [selectedSheet]="selectedSheet$ | async"
+      (lazyload)="onLazyLoad($event)" (goToLastPage)="onBtLast($event)">
+    </app-data-grid>
   </div>
 </div>

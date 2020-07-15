@@ -23,6 +23,12 @@ export function ImportReducer(state: Import = initialState, action: any): Import
         progress: action.payload.progress
       };
 
+    case ImportActionTypes.SAVE_FILE:
+      return {
+        ...state,
+        fileData: {metaData: action.payload, sheets: Object.keys(action.payload.worksheets_map), data: []}
+      };
+
     case ImportActionTypes.RESET:
       return initialState;
 

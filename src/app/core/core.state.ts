@@ -22,7 +22,7 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({keys: ['auth', 'pages'], rehydrate: true})(reducer);
+  return localStorageSync({keys: ['auth', 'upload'], rehydrate: true})(reducer);
 }
 
 export const metaReducers: MetaReducer<AppState>[] = [
