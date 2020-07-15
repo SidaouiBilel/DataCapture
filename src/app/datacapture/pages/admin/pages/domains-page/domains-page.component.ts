@@ -59,6 +59,17 @@ export class DomainsPageComponent implements OnInit {
     });
   }
 
+  showDeleteConfirm(data): void {
+    let confirmModal = this.modal.confirm({
+      nzTitle: 'Confirm Domain Deletion',
+      nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be discarded',
+      nzOnOk: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'))
+    });
+  }
+
   getAvatar(d:any){
     return (d.name || ' ')[0]
   }
