@@ -29,6 +29,8 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     new Column('Type', 'type'),
   ];
 
+  loading
+
   constructor(private route: ActivatedRoute, private ds: DomainService, private modal: NzModalService, private router: Router) {}
 
   onBack(){
@@ -46,9 +48,11 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   }
 
   load_data(){
+    this.loading = true
     this.ds.getTargetFields(this.id).subscribe(fields => {
       this.list$.next(fields);
-    });
+      this.loading = false
+    }, err=> this.loading = false);
   }
 
   ngOnDestroy() {
