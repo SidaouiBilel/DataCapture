@@ -2,7 +2,7 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
-      <nz-select ngModel="sheet" class="selectStyleSheet" (ngModelChange)="selectSheet($event)">
+      <nz-select [(ngModel)]="selectedSheet" class="selectStyleSheet" (ngModelChange)="selectSheet($event)">
         <nz-option *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" [nzValue]="i" [nzLabel]="sheet"></nz-option>
       </nz-select>
     </div>

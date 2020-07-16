@@ -20,7 +20,8 @@ export class PreviewComponent implements OnInit {
   // ag-grid
   numberOfRows = 1500;
   page = 0;
-  public datatest;
+  datatest: any;
+  selectedSheet: number;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   totalRecords$: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -33,6 +34,7 @@ export class PreviewComponent implements OnInit {
               private service: FileImportService) {
     this.fileMetaData$ = this.store.select(selectFileData);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
+    this.selectedSheet$.subscribe((res) => { this.selectedSheet = res; });
   }
 
   ngOnInit() {
