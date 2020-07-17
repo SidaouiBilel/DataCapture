@@ -6,6 +6,7 @@ import { ActionImportReset, ImportActionTypes, ActionSaveFile } from './../actio
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FileImportService } from '../../services/file-import.service';
+import { SaveMappedSources } from '../actions/mapping.actions';
 
 @Injectable()
 export class ImportEffects {
@@ -31,9 +32,10 @@ export class ImportEffects {
   onSave = this.actions$.pipe(
     ofType<ActionSaveFile>(ImportActionTypes.SAVE_FILE),
     map((action) => {
-      this.service.getFileMetaData(action.payload).subscribe((res) => {
-        console.log(res);
-      });
+      const headers = action.payload.headers;
+      const mappedSources = {};
+      headers.forEach((e) => {mappedSources[e] = false; });
+      this.store$.dispatch(new SaveMappedSources(mappedSources));
     })
   )
 }

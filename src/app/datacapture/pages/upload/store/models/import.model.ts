@@ -16,6 +16,7 @@ export interface Sheet {
   metaData: any;
   data: SheetData[];
   sheets: string[];
+  headers: string[];
 }
 export interface FileData {
   token: string;

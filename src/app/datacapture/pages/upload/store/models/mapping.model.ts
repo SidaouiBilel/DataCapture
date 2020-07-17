@@ -1,5 +1,5 @@
 export interface Mapping {
-  mappingFields: any;
+  mappingFields: MappingField[];
   mappedSources: any;
   mandatories: any;
   selectedMappingSheet: string;
@@ -7,7 +7,14 @@ export interface Mapping {
 }
 
 export interface MappingField {
-  name: string;
+  created_on: Date;
+  description: string;
+  editable: boolean;
+  id: string;
+  label: string;
   mandatory: boolean;
+  name: string;
+  rules: any;
+  type: string;
   value: string;
 }

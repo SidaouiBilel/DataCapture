@@ -8,7 +8,6 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
-import { DndModule } from 'ngx-drag-drop';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { AgGridModule} from '@ag-grid-community/angular';
 import { SortableHeaderComponent } from './gridReusables/header-component/sortable-header.component';
@@ -29,7 +28,6 @@ const SharedModules = [
   NzGridModule,
   ReactiveFormsModule,
   MonacoEditorModule,
-  DndModule,
   NzModalModule,
 ];
 

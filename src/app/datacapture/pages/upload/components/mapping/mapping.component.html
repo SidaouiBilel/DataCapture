@@ -1,1 +1,84 @@
-<p>HASSEN WAS HERE!</p>
+<div class="main-container flex-box">
+  <!-- Header -->
+  <div class="importHeader" nz-row>
+    <div nz-col nzSpan="18">
+      <button nz-button nzType="primary" (click)="applyMapping()">Apply Mapping</button>
+    </div>
+    <div nz-col nzSpan="6" class="text-right">
+      <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToPreview()"><i nz-icon
+          nzType="caret-left"></i></button>
+      <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Next Step" nzTooltipPlacement="left" (click)="goToCleansing()"><i nz-icon
+          nzType="caret-right"></i></button>
+      <button nz-button nzType="danger" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Reset" nzTooltipPlacement="left" (click)="cancelUpload()"><i nz-icon
+          nzType="close"></i></button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="flex-box mt-4">
+    <div class="mapping-container">
+      <!-- Sources -->
+      <div class="sources">
+        <nz-card class="h-100 w-100">
+          <div class="sources-items">
+            <div class="source-title">
+              SOURCE FIELDS
+            </div>
+            <div class="scroll-box">
+              <div class="source-list">
+                <div class="source-item-box" [class.mapped]="mappedSources[item]" [dndDraggable]="item"
+                  *ngFor="let item of (fileData$ |async)?.headers">
+                  {{item}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-card>
+      </div>
+      <!-- Targets -->
+      <div class="targets">
+        <nz-card class="h-100 w-100">
+          <div class="sources-items">
+            <div class="target-title">
+              <span>TARGET FIELDS</span>
+              <div [ngSwitch]="(mandatories$ | async)">
+                <span *ngSwitchCase='0' class="text-success">
+                  <i nz-icon nzType="check" nzTheme="outline"></i><b> ALL MANDATORIES HAVE BEEN MAPPED</b>
+                </span>
+                <span *ngSwitchDefault class="text-danger"><b>{{(mandatories$ | async)}}</b>
+                  MANDATORY MISSING</span>
+              </div>
+            </div>
+            <div class="scroll-box">
+              <div class="source-list">
+                <div class="target-item-box" *ngFor="let item of (mappingFields$|async); let i = index;"
+                  [class.mandatory-row]="item.mandatory">
+                  <div class="mapped-item-list dropHintClass" dndDropzone (dndDrop)="onItemDrop($event,i)"
+                    [dndDragoverClass]="'dropOverClass'">
+                    <div nz-row>
+                      <div nz-col nzSpan="18">
+                        <div *ngIf="item.value" class="badge badge-primary" selected>
+                          {{item.value}}
+                          <i nz-icon nzType="close" nzTheme="outline" (click)="onRemoveClick(item,i)"></i>
+                        </div>
+                      </div>
+                      <div nz-col nzSpan="6">
+                        <span [class.mandatory]="item.mandatory">
+                          {{item.label}}
+                          <span *ngIf="item.mandatory">*</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</div>

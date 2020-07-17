@@ -13,7 +13,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { uploadReducers } from './store/upload.state';
 import { ImportEffects } from './store/effects/import.effect';
 import { FileImportService } from './services/file-import.service';
-
+import { MappingService } from './services/mapping.service';
+import { NgDragDropModule } from 'ng-drag-drop';
+import { DndModule } from 'ngx-drag-drop';
 
 const components = [
   UploadComponentComponent,
@@ -30,13 +32,17 @@ const components = [
     UploadRoutingModule,
     SharedModule,
     StoreModule.forFeature('upload', uploadReducers),
-    EffectsModule.forFeature([ImportEffects])
+    EffectsModule.forFeature([ImportEffects]),
+    // Drag and Drop
+    DndModule,
+    NgDragDropModule.forRoot(),
   ],
   declarations: [...components],
   exports: [
   ],
   providers : [
-    FileImportService
+    FileImportService,
+    MappingService
   ],
   entryComponents: [
   ]

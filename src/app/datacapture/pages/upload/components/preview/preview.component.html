@@ -20,8 +20,9 @@
   </div>
 
   <!-- Grid -->
-  <div class="flex-box" *ngIf="(selectedSheet$ | async)">
-    <app-data-grid [loading]="loading$ | async" [headers]="headers$ | async" [rowData]="data$ | async"
+  <div class="flex-child mt-4" *ngIf="!(loading$ | async)">
+    <!-- {{loading$ | async}} -->
+    <app-data-grid [headers]="headers$ | async" [rowData]="data$ | async"
       [totalRecords]="totalRecords$ | async" [nrows]="numberOfRows" [selectedSheet]="selectedSheet$ | async"
       (lazyload)="onLazyLoad($event)" (goToLastPage)="onBtLast($event)">
     </app-data-grid>

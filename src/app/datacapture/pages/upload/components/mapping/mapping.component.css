@@ -1,0 +1,173 @@
+.main-container {
+  padding: 0 24px 24px 24px;
+  height: 100%;
+}
+
+.flex-box {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.mapping-container {
+  height: 100%;
+  max-height: 100%;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: flex-start space-between;
+  align-items: flex-start;
+}
+
+.sources {
+  place-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 100%;
+  max-width: 30%;
+  height: 100%;
+  max-height: 100%;
+  padding-bottom: 1px;
+  transition: all 0.2s ease-in;
+  border: 1px solid #fff;
+}
+
+.sources:hover {
+  border: 1px solid #40a9ff;
+  cursor: pointer;
+  box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.targets {
+  place-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 100%;
+  max-width: 70%;
+  height: 100%;
+  max-height: 100%;
+  padding-bottom: 1px;
+  transition: all 0.2s ease-in;
+  border: 1px solid #fff;
+}
+
+.target-title {
+  display: flex;
+  flex-direction: row;
+  place-content: space-between;
+}
+
+.source-title,
+.target-title {
+  padding: 1em 1.5em;
+  text-transform: uppercase;
+  height: 50px;
+}
+
+.scroll-box {
+  overflow: auto;
+  max-height: 64vh;
+}
+
+.sources-items {
+  height: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: stretch space-between;
+  align-items: stretch;
+  max-width: 100%;
+  width: 100%;
+}
+
+.source-list {
+  width: 100%;
+  max-width: 100%;
+  min-height: 20px;
+  display: block;
+  overflow: hidden;
+}
+
+.source-item-box {
+  padding: 15.5px 20px;
+  border-bottom: solid 1px #ccc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+}
+
+.target-item-box {
+  padding: 6px;
+  border-bottom: solid 1px #ccc;
+  box-sizing: border-box;
+  min-height: 51px;
+}
+
+.dndDragging {
+  z-index: 100;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.source-item-box:last-child,
+.target-item-box:last-child {
+  border: none;
+}
+
+.source-handle {
+  color: #ccc;
+  cursor: move;
+  margin-left: 5px;
+}
+
+:host ::ng-deep .ant-card-body {
+  padding: 0 !important;
+}
+
+.target-box.mandatory-row:not(.mapped) {
+  background: #fce4ec !important;
+
+}
+
+.mandatory {
+  color: #d81b60;
+}
+
+.mapped-item-list {
+  width: 100%;
+  min-height: 20px;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: transparent;
+  border-radius: 4px;
+  height: 100%;
+  height: 40px;
+  padding: 7px;
+}
+
+.mapped {
+  background: white !important;
+  font-weight: bold;
+  border-left: 5px solid #d5e5f9 !important;
+}
+
+.dropHintClass {
+  border-color: lightgrey;
+  background: rgb(235, 235, 235);
+}
+
+.dropOverClass {
+  background: lightgrey;
+}
+
+:host ::ng-deep .badge {
+  padding: 7px 20px !important;
+}

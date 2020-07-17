@@ -48,6 +48,7 @@ export class PreviewComponent implements OnInit {
 
   selectSheet(index: any): void {
     this.store.dispatch(new ActionSelectSheet(index));
+    this.grabPreviewData(index);
   }
 
   private grabPreviewData(index: number): void {
@@ -62,10 +63,10 @@ export class PreviewComponent implements OnInit {
                                      fileData.metaData.worksheets_map[fileData.sheets[index]],
                                      this.numberOfRows)
                         .subscribe((res) => {
-                          this.totalRecords$.next(Number(res.total_line_number));
+                          this.totalRecords$.next(Number(res.total));
                           this.headers$.next(res.headers);
                           this.data$.next(res.data);
-                          this.store.dispatch(new ActionSaveFile({...fileData, data: res.data}));
+                          this.store.dispatch(new ActionSaveFile({...fileData, data: res.data, headers: res.headers}));
                           this.loading$.next(false);
                           this.datatest = res.data;
                         });

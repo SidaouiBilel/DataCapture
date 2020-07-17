@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { GridOptions } from 'ag-grid-community';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
+import { PreviewComponent } from '@app/datacapture/pages/upload/components/preview/preview.component';
 
 @Component({
   selector: 'app-data-grid',
@@ -71,7 +72,7 @@ export class DataGridComponent {
   public paginationPageSize;
   public sideBar: false;
 
-  constructor(private importService: FileImportService, private store$: Store<AppState>) {
+  constructor(private importService: FileImportService, private store$: Store<AppState>, private preview: PreviewComponent) {
     this.gridOptions = {} as GridOptions;
     this.defaultColDef = {
         resizable: true,
@@ -86,26 +87,21 @@ export class DataGridComponent {
     this.loadingCellRendererParams = { loadingMessage: 'One moment please...'};
     this.paginationPageSize = 50;
     // // mei2 solution v1
-    // importContainer.headers$.subscribe((header) => {
-    //   // console.log('= header =');
-    //   // console.log(header)
-    //   this.headerLoaded = header;
-    //   this.getLoadedData();
-    //   });
-    // importContainer.data$.subscribe((data) => {
-    //   // console.log('= data =');
-    //   // console.log(data)
-    // this.dataLoaded = data;
-    // this.getLoadedData();
-    // });
-    // importContainer.fileMetaData$.subscribe((data) => {
-    //   this.fileMetaData = data;
-    //   this.getLoadedData();
-
-    // });
-    // importContainer.importData$.subscribe((data) => {
-    //   // console.log('= imported data =')
-    //   // console.log(data)
+    preview.headers$.subscribe((header) => {
+      // console.log('= header =');
+      // console.log(header)
+      this.headerLoaded = header;
+      this.getLoadedData();
+    });
+    preview.data$.subscribe((data) => {
+      this.dataLoaded = data;
+      this.getLoadedData();
+    });
+    preview.fileMetaData$.subscribe((data) => {
+      this.fileMetaData = data;
+      this.getLoadedData();
+    });
+    // preview.importData$.subscribe((data) => {
     //   this.fileImported = data;
     //   this.fileData = data.fileData;
     //   this.selectedSheet = data.selectedSheet;
