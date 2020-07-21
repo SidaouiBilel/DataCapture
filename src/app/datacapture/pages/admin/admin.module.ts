@@ -8,15 +8,17 @@ import { DomainsPageComponent } from './pages/domains-page/domains-page.componen
 import { SharedModule } from '@app/shared';
 import { DomainConfigModalComponent } from './modals/domain-config-modal/domain-config-modal.component';
 import { FieldModalComponent } from './modals/field-modal/field-modal.component';
+import { SuperDomainsPageComponent } from './pages/super-domains-page/super-domains-page.component';
+import { SuperDomainConfigModalComponent } from './modals/super-domain-config-modal/super-domain-config-modal.component';
 
 
 @NgModule({
-  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent, FieldModalComponent],
+  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent,SuperDomainConfigModalComponent, FieldModalComponent, SuperDomainsPageComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule
   ],
-  entryComponents:[DomainConfigModalComponent, FieldModalComponent]
+  entryComponents:[DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent]
 })
 export class AdminModule { }

@@ -28,14 +28,23 @@
             <i nz-icon nzType="hdd"></i>
             <span>Stacks</span>
           </li> -->
-          <li nz-menu-item [nzSelected]="isPrimaryPage('admin')"  [routerLink]="['/datacapture/admin']">
-            <i nz-icon nzType="tool"></i>
-            <span>Administration</span>
-          </li>
+       
           <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('upload')"  [routerLink]="['/datacapture/upload']">
             <i nz-icon nzType="upload"></i>
             <span>Upload</span>
           </li> -->
+          <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
+            <ul>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/admin/category']">
+                <!-- <i nz-icon nzType="import"></i> -->
+                <span>Category</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/admin/domains']">
+                <!-- <i nz-icon nzType="file-done"></i> -->
+                <span>Domains</span>
+              </li>
+            </ul>
+          </li>
           <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="true">
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">

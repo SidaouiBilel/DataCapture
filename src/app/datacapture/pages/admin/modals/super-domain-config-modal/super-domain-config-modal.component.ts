@@ -4,10 +4,10 @@ import { DomainService } from '../../services/domain.service';
 import { EntityModal } from '../entity-modal';
 
 @Component({
-  selector: 'app-domain-config-modal',
-  templateUrl: './domain-config-modal.component.html'
+  selector: 'app-super-domain-config-modal',
+  templateUrl: './super-domain-config-modal.component.html'
 })
-export class DomainConfigModalComponent extends EntityModal implements OnInit {
+export class SuperDomainConfigModalComponent extends EntityModal implements OnInit {
 
 
   constructor(private mr: NzModalRef, private ds:DomainService) {
@@ -33,7 +33,7 @@ export class DomainConfigModalComponent extends EntityModal implements OnInit {
   save(){
     if (this.canSave()){
       this.loading = false
-      this.ds.saveDomain(this.data).subscribe(res=>{
+      this.ds.saveSuperDomain(this.data).subscribe(res=>{
         this.modalrRef.close(true)
       })
     }
