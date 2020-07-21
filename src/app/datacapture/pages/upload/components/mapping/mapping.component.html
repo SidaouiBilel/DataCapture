@@ -2,7 +2,9 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
-      <button nz-button nzType="primary" (click)="applyMapping()">Apply Mapping</button>
+      <!-- <button nz-button nzType="primary" class="mr-4" nzGhost (click)="applyMapping()">Previous Mappings</button> -->
+      <button nz-button nzType="primary" nzGhost (click)="applyMapping()">Save Mapping</button>
+      <button nz-button nzType="primary" class="ml-4" (click)="applyMapping()">Apply Mapping</button>
     </div>
     <div nz-col nzSpan="6" class="text-right">
       <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip

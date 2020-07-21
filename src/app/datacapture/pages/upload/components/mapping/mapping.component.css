@@ -40,6 +40,12 @@
   box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
 }
 
+.targets:hover {
+  border: 1px solid #40a9ff;
+  cursor: pointer;
+  box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
+}
+
 .targets {
   place-content: center;
   align-items: center;
@@ -101,6 +107,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   cursor: move;
+  white-space: nowrap;
 }
 
 .target-item-box {
