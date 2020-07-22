@@ -28,14 +28,14 @@ export class ImportEffects {
     })
   );
 
-  @Effect({ dispatch: false})
-  onSave = this.actions$.pipe(
-    ofType<ActionSaveFile>(ImportActionTypes.SAVE_FILE),
-    map((action) => {
-      const headers = action.payload.headers;
-      const mappedSources = {};
-      headers.forEach((e) => {mappedSources[e] = false; });
-      this.store$.dispatch(new SaveMappedSources(mappedSources));
-    })
-  )
+  // @Effect({ dispatch: false})
+  // onSave = this.actions$.pipe(
+  //   ofType<ActionSaveFile>(ImportActionTypes.SAVE_FILE),
+  //   map((action) => {
+  //     const headers = action.payload.headers;
+  //     const mappedSources = {};
+  //     headers.forEach((e) => {mappedSources[e] = false; });
+  //     this.store$.dispatch(new SaveMappedSources(mappedSources));
+  //   })
+  // )
 }

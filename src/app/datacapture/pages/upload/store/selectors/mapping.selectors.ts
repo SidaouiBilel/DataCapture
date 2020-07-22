@@ -17,9 +17,9 @@ export const selectMandatories = createSelector(
   (object: Mapping) => object.mandatories
 );
 
-export const selectMappingSheet = createSelector(
+export const selectMappingId = createSelector(
   SelectMapping,
-  (object: Mapping) => object.selectedMappingSheet
+  (object: Mapping) => object.mappingId
 );
 
 export const selectSheetsTypes = createSelector(

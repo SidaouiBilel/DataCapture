@@ -3,12 +3,18 @@ import { Action } from '@ngrx/store';
 export enum ImportActionTypes {
   UPLOAD_FILE = '[Import] upload file',
   SAVE_FILE = '[Import] Save Uploaded File',
+  SELECT_DOMAIN = '[Import] Select Domain',
   RESET = '[Import] Reset'
 }
 
 export class ActionUploadFile implements Action {
   readonly type = ImportActionTypes.UPLOAD_FILE;
   constructor(readonly payload: any) {}
+}
+
+export class ActionSelectDomain implements Action {
+  readonly type = ImportActionTypes.SELECT_DOMAIN;
+  constructor(readonly payload: string) {}
 }
 
 export class ActionSaveFile implements Action {
@@ -20,4 +26,4 @@ export class ActionImportReset implements Action {
   readonly type = ImportActionTypes.RESET;
 }
 
-export type ImportActions = ActionImportReset | ActionUploadFile |ActionSaveFile;
+export type ImportActions = ActionImportReset | ActionUploadFile | ActionSaveFile | ActionSelectDomain;

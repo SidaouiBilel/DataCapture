@@ -2,9 +2,9 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
-      <span class="text-success" *ngIf="(importState$ | async).imported">
-        {{(importState$ | async)?.selectedFile?.token}}
-      </span>
+      <nz-select [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
+        <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
+      </nz-select>
     </div>
     <div nz-col nzSpan="6" class="text-right">
       <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
@@ -15,6 +15,8 @@
           nzType="close"></i></button>
     </div>
   </div>
+
+  <nz-divider [nzText]="(importState$ | async)?.selectedFile?.token" nzOrientation="left"></nz-divider>
 
   <!-- If The file isn't uploaded -->
   <div class="flex-child" *ngIf="!(importState$ | async)?.error && !(importState$ | async)?.imported">

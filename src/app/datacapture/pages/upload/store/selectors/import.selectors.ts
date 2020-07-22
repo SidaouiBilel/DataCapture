@@ -31,3 +31,8 @@ export const selectFileData = createSelector(
   selectImport,
   (object: Import) => object.fileData
 );
+
+export const selectDomain = createSelector(
+  selectImport,
+  (object: Import) => object.selectedDomain
+);

@@ -2,8 +2,7 @@ import { AuthState } from './auth.models';
 import { AuthActions, AuthActionTypes } from './auth.actions';
 
 export const initialState: AuthState = {
-  isAuthenticated: false,
-  domain: 'B09C2351B7B64554ADB488CD2E239693'
+  isAuthenticated: false
 };
 
 export function authReducer(
