@@ -28,10 +28,7 @@ export class MappingService {
       file: sheetId,
       mapping_id: mappingId,
       domainId,
-      mapping: targets.map(t => ({
-        source: [t.value],
-        target: t.name,
-      }))
+      mapping: targets.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if(e) { return e; }})
     };
   }
 }

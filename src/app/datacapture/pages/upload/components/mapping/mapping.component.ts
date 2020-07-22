@@ -44,6 +44,12 @@ export class MappingComponent implements OnInit {
       .subscribe(([domain, fileData, selectedSheet]) => {
         this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]])
           .subscribe((res) => {
+            // Create mapped Source
+            const mappedSources = {};
+            Object.keys(res.columns_details).forEach((e) => {mappedSources[e] = res.columns_details[e].isMapped; });
+            this.store.dispatch(new SaveMappedSources(mappedSources));
+            // Update Mapping Fields
+            this.reInitMappingFields();
             this.store.dispatch(new SaveMappingId(res.mapping_id));
             const mappingFieldsNames = this.mappingFields.map((e) => e.name);
             res.mappings.forEach(element => {
@@ -55,8 +61,24 @@ export class MappingComponent implements OnInit {
               }
             });
             this.store.dispatch(new SaveMappingFields(this.mappingFields));
+
+            // Update Source Fields
+            Object.keys(this.mappedSources).forEach(element => {
+              if (res.columns_details[element]) {
+                this.mappedSources[element] = res.columns_details[element].isMapped;
+              }
+            });
           });
       });
+  }
+
+  reInitMappingFields() {
+    this.mappingFields.forEach((element, index) => {
+      const refObj = {...element};
+      refObj.value = null;
+      this.mappingFields[index] = refObj;
+    });
+    this.store.dispatch(new SaveMappingFields(this.mappingFields));
   }
 
   onItemDrop(source, index: number): void {
