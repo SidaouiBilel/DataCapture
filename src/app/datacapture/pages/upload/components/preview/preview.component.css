@@ -16,3 +16,12 @@
 .selectStyleSheet {
   width: 40%;
 }
+
+:host nz-divider {
+  /* margin: 0 !important; */
+  margin: 0 0 24px 0 !important;
+}
+
+:host ::ng-deep .ant-divider-inner-text {
+  color: #28a745!important;
+}

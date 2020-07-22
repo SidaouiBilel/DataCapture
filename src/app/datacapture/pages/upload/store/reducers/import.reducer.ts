@@ -9,6 +9,7 @@ export const initialState: Import = {
   selectedFile : null,
   fileData : {metaData: null, sheets: [], data: [], headers: []},
   progress : null,
+  selectedDomain: null
 };
 
 export function ImportReducer(state: Import = initialState, action: any): Import {
@@ -21,6 +22,12 @@ export function ImportReducer(state: Import = initialState, action: any): Import
         imported: action.payload.imported,
         error: action.payload.error,
         progress: action.payload.progress
+      };
+
+    case ImportActionTypes.SELECT_DOMAIN:
+      return {
+        ...state,
+        selectedDomain: action.payload
       };
 
     case ImportActionTypes.SAVE_FILE:

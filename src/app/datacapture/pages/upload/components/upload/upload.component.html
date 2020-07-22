@@ -1,1 +1,15 @@
-<p>upload works!</p>
+<div class="main-container flex-box">
+  <!-- Header -->
+  <div class="importHeader" nz-row>
+    <div nz-col nzSpan="18">
+    </div>
+    <div nz-col nzSpan="6" class="text-right">
+      <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToCleansing()"><i nz-icon
+          nzType="caret-left"></i></button>
+      <button nz-button nzType="danger" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
+        nzTooltipTitle="Reset" nzTooltipPlacement="left" (click)="cancelUpload()"><i nz-icon
+          nzType="close"></i></button>
+    </div>
+  </div>
+</div>

@@ -57,16 +57,15 @@ export class PreviewComponent implements OnInit {
         this.fileMetaData$.pipe(take(1)).subscribe((fileData: Sheet) => {
           if (fileData.metaData) {
             this.loading$.next(true);
-            this.service.getFileData(fileData.metaData.filename,
-                                     fileData.metaData.filetype,
-                                     this.page,
+            this.service.getFileData(this.page,
                                      fileData.metaData.worksheets_map[fileData.sheets[index]],
                                      this.numberOfRows)
                         .subscribe((res) => {
                           this.totalRecords$.next(Number(res.total));
                           this.headers$.next(res.headers);
                           this.data$.next(res.data);
-                          this.store.dispatch(new ActionSaveFile({...fileData, data: res.data, headers: res.headers}));
+                          const data = [...res.data].splice(0, 10);
+                          this.store.dispatch(new ActionSaveFile({...fileData, data, headers: res.headers}));
                           this.loading$.next(false);
                           this.datatest = res.data;
                         });

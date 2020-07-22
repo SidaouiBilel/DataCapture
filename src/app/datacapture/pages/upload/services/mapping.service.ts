@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class MappingService {
 
   applyMapping(targets: any[], fileData: any, worksheetIndex: number) {
     return this.http.post(environment.mapping, this.getMappingBody(targets, fileData, worksheetIndex));
+  }
+
+  getAutomaticMapping(domainId: string, SheetId: string): Observable<any> {
+    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}`);
   }
 
   private getMappingBody(targets: any[], fileData: any, worksheetIndex: number): any {

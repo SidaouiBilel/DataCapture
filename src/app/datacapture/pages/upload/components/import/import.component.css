@@ -14,7 +14,11 @@
 }
 
 .importHeader {
-  padding-bottom: 24px;
+  padding-bottom: 18px;
+}
+
+.selectStyleSheet {
+  width: 40%;
 }
 
 .loader {
@@ -33,4 +37,20 @@
   display: flex;
   place-content: center;
   align-items: center;
+  border: 1px dashed #d9d9d9;
+  margin-bottom: 24px;
+}
+
+.centerBox:hover {
+  border: 1px dashed #40a9ff;
+  box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
+}
+
+:host nz-divider {
+  /* margin: 0 !important; */
+  margin: 0 0 24px 0 !important;
+}
+
+:host ::ng-deep .ant-divider-inner-text {
+  color: #28a745!important;
 }

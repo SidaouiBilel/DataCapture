@@ -7,7 +7,7 @@ export const initialState: Mapping = {
   mappingFields : [],
   mappedSources : {},
   mandatories: {},
-  selectedMappingSheet: '',
+  mappingId: '',
   sheetsTypes: {}
 };
 
@@ -29,10 +29,10 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
         sheetsTypes: action.payload
       };
 
-    case MappingActionTypes.SaveMappingSheet:
+    case MappingActionTypes.SaveMappingId:
   return {
         ...state,
-        selectedMappingSheet: action.payload
+        mappingId: action.payload
       };
 
     case MappingActionTypes.SaveMappedSources:

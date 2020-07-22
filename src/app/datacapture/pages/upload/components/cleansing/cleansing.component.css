@@ -1,0 +1,10 @@
+.main-container {
+  padding: 0 24px 24px 24px;
+  height: 100%;
+}
+
+.flex-box {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}

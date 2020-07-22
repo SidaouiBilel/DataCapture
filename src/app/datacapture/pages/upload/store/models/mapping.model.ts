@@ -2,7 +2,7 @@ export interface Mapping {
   mappingFields: MappingField[];
   mappedSources: any;
   mandatories: any;
-  selectedMappingSheet: string;
+  mappingId: string;
   sheetsTypes: any;
 }
 
