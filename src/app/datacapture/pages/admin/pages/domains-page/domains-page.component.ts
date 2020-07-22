@@ -51,7 +51,7 @@ export class DomainsPageComponent implements OnInit {
     console.log(obj)
 
     const modal = this.modal.create({
-      nzTitle: 'Domain Configuration',
+      nzTitle: 'Category Configuration',
       nzFooter:[],
       nzContent: DomainConfigModalComponent,
       nzComponentParams: {
@@ -72,11 +72,10 @@ export class DomainsPageComponent implements OnInit {
   showDeleteConfirm(data): void {
     let confirmModal = this.modal.confirm({
       nzTitle: 'Confirm Domain Deletion',
-      nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be discarded',
-      nzOnOk: () =>
-        new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log('Oops errors!'))
+      nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be erased',
+      nzOnOk: () => {
+        this.ds.deleteDomain(data).subscribe(()=> this.load_data())
+      }
     });
   }
 

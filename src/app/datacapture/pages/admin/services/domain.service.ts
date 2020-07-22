@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 
 @Injectable({
@@ -21,6 +21,15 @@ export class DomainService {
 
   saveDomain(domain){
     return this.http.post( this.url + "domain/", domain)
+  }
+
+  deleteDomain(domain){
+    return this.http.request('DELETE', this.url + "domain/", {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        }),
+        body: domain
+    })
   }
 
   getById(domain_id){

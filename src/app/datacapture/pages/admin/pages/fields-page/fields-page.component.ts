@@ -6,6 +6,8 @@ import { Column } from '../../models/column';
 import { FieldModalComponent } from '../../modals/field-modal/field-modal.component';
 import { Field } from '../../models/field';
 import { NzModalService } from 'ng-zorro-antd';
+import { TargetFieldsService } from '../../services/fields.service';
+import { NotificationService } from '@app/core';
 
 @Component({
   selector: 'app-fields-page',
@@ -30,11 +32,12 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   ];
 
   loading
+  uploadURI
 
-  constructor(private route: ActivatedRoute, private ds: DomainService, private modal: NzModalService, private router: Router) {}
+  constructor(private notification: NotificationService, private route: ActivatedRoute, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
 
   onBack(){
-    this.router.navigate(['/datacapture/admin']);
+    this.router.navigate(['/datacapture/admin/category', this.id]);
   }
 
 
@@ -49,7 +52,8 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
 
   load_data(){
     this.loading = true
-    this.ds.getTargetFields(this.id).subscribe(fields => {
+    this.uploadURI = this.ds.fileUploadUrl(this.id)
+    this.ds.get(this.id).subscribe(fields => {
       this.list$.next(fields);
       this.loading = false
     }, err=> this.loading = false);
@@ -84,6 +88,29 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
         this.load_data();
       }
     });
+  }
+
+  showDeleteConfirm(data): void {
+    let confirmModal = this.modal.confirm({
+      nzTitle: 'Confirm Target Field Deletion',
+      nzContent: 'This action is irreversible.',
+      nzOnOk: () =>
+        this.ds.delete(this.id, data).subscribe(()=> this.load_data())
+    });
+  }
+
+  handleChange(info: any): void {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+      this.loading = true
+    }
+    if (info.file.status === 'done') {
+      this.notification.success(`Fields updated successfully from file ${info.file.name}.`);
+      this.load_data()
+    } else if (info.file.status === 'error') {
+      this.notification.error(`Failed to update.`);
+      this.load_data()
+    }
   }
 
 }

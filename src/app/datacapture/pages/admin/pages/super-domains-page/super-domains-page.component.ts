@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Domain } from 'domain';
 import { SuperDomain } from '../../models/super-domain';
 import { SuperDomainConfigModalComponent } from '../../modals/super-domain-config-modal/super-domain-config-modal.component';
+import { SuperDomainService } from '../../services/super-domain.service';
 
 @Component({
   selector: 'app-super-domains-page',
@@ -16,14 +17,14 @@ import { SuperDomainConfigModalComponent } from '../../modals/super-domain-confi
 })
 export class SuperDomainsPageComponent implements OnInit {
 
-  constructor(public ds: DomainService, public modal: NzModalService, private router:Router) { }
+  constructor(public ds: SuperDomainService, public modal: NzModalService, private router:Router) { }
 
   loading_list = [{}]
 
   domains$ = new BehaviorSubject<any>([])
   loading = false
 
-  displayList = true
+  displayList = false
 
   ngOnInit() {
     this.load_data()
@@ -32,7 +33,7 @@ export class SuperDomainsPageComponent implements OnInit {
   load_data(){
     this.loading = true,
     this.domains$.next(this.loading_list)
-    this.ds.getAllSuper().subscribe(dms=> {
+    this.ds.get().subscribe(dms=> {
       this.loading = false
       this.domains$.next(dms)
     })
@@ -67,15 +68,10 @@ export class SuperDomainsPageComponent implements OnInit {
       nzTitle: 'Confirm Super Domain Deletion',
       nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be discarded',
       nzOnOk: () =>
-        new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log('Oops errors!'))
+        this.ds.delete(data).subscribe(()=> this.load_data())
     });
   }
 
-  getAvatar(d:any){
-    return (d.name || ' ')[0]
-  }
 
   navigate(r){
     this.router.navigate(r)

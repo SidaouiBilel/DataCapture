@@ -28,40 +28,16 @@
 
 <div nz-row [nzGutter]="14">
   <div nz-col class="gutter-row" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
-    <nz-card class="inner-box" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
-      <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
-        <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="titleTemplate" [nzDescription]="descTemplate">
-        </nz-card-meta>
-        <!-- <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{d.name}}" nzDescription="{{d.description}}"></nz-card-meta> -->
 
-        <ng-template #titleTemplate>
-          <small>{{d.identifier}}</small>
-          <h3>{{d.name}} </h3>
-        </ng-template>
-        <ng-template #descTemplate>
-          <i>{{d.created_on}}</i>
-          <br>
-          <p>{{d.description}}</p>
-        </ng-template>
+    <nz-card class="inner-box">
 
-        <ng-template #avatarTemplate>
-          <nz-avatar [nzText]="getAvatar(d)" [nzShape]="'square'" [nzSize]="'large'"
-            style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
-        </ng-template>
-        <ng-template #actionSetting>
-          <i nz-icon nzType="setting" (click)="openConfig(d)"></i>
-        </ng-template>
-        <ng-template #actionEdit>
-          <i nz-icon nzType="table" (click)="navigate(['/datacapture/admin/category', d.id])"></i>
-        </ng-template>
-        <ng-template #actionReference>
-          <i nz-icon nzType="minus"></i>
-        </ng-template>
-        <ng-template #actionEllipsis>
-          <i nz-icon nzType="delete" (click)='showDeleteConfirm(d)'></i>
-        </ng-template>
-
-      </nz-skeleton>
+      <app-domain-card 
+        [data]='d'
+        (delete)='showDeleteConfirm(d)'
+        (edit)='openConfig(d)'
+        (categories)="navigate(['/datacapture/admin/category', d.id])"
+      ></app-domain-card>
+      
     </nz-card>
   </div>
 

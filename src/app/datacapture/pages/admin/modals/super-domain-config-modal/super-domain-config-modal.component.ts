@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core'
 import { NzModalRef } from 'ng-zorro-antd';
 import { DomainService } from '../../services/domain.service';
 import { EntityModal } from '../entity-modal';
+import { SuperDomainService } from '../../services/super-domain.service';
 
 @Component({
   selector: 'app-super-domain-config-modal',
@@ -10,7 +11,7 @@ import { EntityModal } from '../entity-modal';
 export class SuperDomainConfigModalComponent extends EntityModal implements OnInit {
 
 
-  constructor(private mr: NzModalRef, private ds:DomainService) {
+  constructor(private mr: NzModalRef, private ds:SuperDomainService) {
     super(mr)
    }
 
@@ -33,7 +34,7 @@ export class SuperDomainConfigModalComponent extends EntityModal implements OnIn
   save(){
     if (this.canSave()){
       this.loading = false
-      this.ds.saveSuperDomain(this.data).subscribe(res=>{
+      this.ds.save(this.data).subscribe(res=>{
         this.modalrRef.close(true)
       })
     }

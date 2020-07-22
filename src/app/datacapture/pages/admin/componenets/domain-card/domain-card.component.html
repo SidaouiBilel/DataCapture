@@ -1,0 +1,74 @@
+<nz-page-header class="site-page-header">
+    <!--breadcrumb-->
+    <!-- <nz-breadcrumb nz-page-header-breadcrumb>
+      <nz-breadcrumb-item>{{data.id}}</nz-breadcrumb-item>
+      
+    </nz-breadcrumb> -->
+
+    <!--avatar-->
+    <nz-avatar nz-page-header-avatar [nzText]="getAvatar(data)" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+ 
+
+    <!--title-->
+    <nz-page-header-title>{{data.name}}</nz-page-header-title>
+
+    <!--subtitle-->
+    <!-- <nz-page-header-subtitle>{{data.description}}</nz-page-header-subtitle> -->
+
+    <!--tags-->
+    <nz-page-header-tags>
+      <nz-tag [nzColor]="'green'">ACTIVE</nz-tag>
+    </nz-page-header-tags>
+
+    <!--extra-->
+    <nz-page-header-extra>
+     
+      <button (click)='edit.emit(data)' nz-button style="border: none; padding: 0">
+        <i nz-icon nzType="edit" nzTheme="outline" ></i>
+      </button>
+
+      <button (click)='delete.emit(data)' nz-button style="border: none; padding: 0">
+        <i nz-icon nzType="delete" nzTheme="outline" ></i>
+      </button>
+
+
+      <button nz-button nzNoAnimation nz-dropdown [nzDropdownMenu]="menu" style="border: none; padding: 0">
+        <i nz-icon nzType="ellipsis" nzTheme="outline" ></i>
+      </button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li (click)='categories.emit(data)' nz-menu-item>Categories</li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-page-header-extra>
+
+    <!--content-->
+    <nz-page-header-content>
+        
+      <p nz-paragraph>
+        <i nz-icon nzType="clock-circle" nzTheme="outline"></i> {{data.created_on}}
+        <br>
+        <i nz-icon nzType="edit" nzTheme="outline"></i> {{data.created_on}}
+      </p>
+      
+        
+      <div nz-row>
+        <div class="content">
+
+          <p nz-paragraph class="dom-description">
+            {{data.description}}
+          </p>
+          
+          <!-- <div class="content-link">
+            <a (click)='edit.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" alt="start" />Edit </a>
+            <a (click)='categories.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" alt="info" />Categories </a>
+            <a (click)='delete.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" alt="doc" />Delete </a>
+          </div> -->
+
+        </div>
+        <!-- <div class="content-image">
+          <img src="https://gw.alipayobjects.com/zos/antfincdn/K%24NnlsB%26hz/pageHeader.svg" alt="content" />
+        </div> -->
+      </div>
+    </nz-page-header-content>
+  </nz-page-header>

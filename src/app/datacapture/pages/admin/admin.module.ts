@@ -10,10 +10,11 @@ import { DomainConfigModalComponent } from './modals/domain-config-modal/domain-
 import { FieldModalComponent } from './modals/field-modal/field-modal.component';
 import { SuperDomainsPageComponent } from './pages/super-domains-page/super-domains-page.component';
 import { SuperDomainConfigModalComponent } from './modals/super-domain-config-modal/super-domain-config-modal.component';
+import { DomainCardComponent } from './componenets/domain-card/domain-card.component';
 
 
 @NgModule({
-  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent,SuperDomainConfigModalComponent, FieldModalComponent, SuperDomainsPageComponent],
+  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent,SuperDomainConfigModalComponent, FieldModalComponent, SuperDomainsPageComponent, DomainCardComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
