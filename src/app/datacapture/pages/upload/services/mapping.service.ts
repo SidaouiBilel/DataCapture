@@ -15,21 +15,19 @@ export class MappingService {
     return this.http.get( environment.admin + `domain/${domainId}/fields`);
   }
 
-  applyMapping(targets: any[], fileData: any, worksheetIndex: number) {
-    return this.http.post(environment.mapping, this.getMappingBody(targets, fileData, worksheetIndex));
+  updateMapping(targets: any[], mappingId: string, sheetId: string, domainId: string) {
+    return this.http.post(environment.mapping + '/', this.getMappingBody(targets, mappingId, sheetId, domainId));
   }
 
   getAutomaticMapping(domainId: string, SheetId: string): Observable<any> {
     return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}`);
   }
 
-  private getMappingBody(targets: any[], fileData: any, worksheetIndex: number): any {
-    // console.log(fileData);
+  private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {
     return {
-      filename: fileData.metaData.file_id,
-      worksheet: fileData.sheets[worksheetIndex],
-      worksheet_id: fileData.metaData.worksheets_map[fileData.sheets[worksheetIndex]],
-      lob_id: '1',
+      file: sheetId,
+      mapping_id: mappingId,
+      domainId,
       mapping: targets.map(t => ({
         source: [t.value],
         target: t.name,
