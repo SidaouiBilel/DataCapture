@@ -15,6 +15,10 @@ export class DomainService {
     return this.http.get( this.url + "domain/")
   }
 
+  getAllBySuperId(super_id){
+    return this.http.get( this.url + "domain/super/" + super_id)
+  }
+
   saveDomain(domain){
     return this.http.post( this.url + "domain/", domain)
   }
@@ -35,4 +39,11 @@ export class DomainService {
     return this.http.get( this.url + `domain/${domain_id}/checks`)
   }
 
+  getAllSuper(){
+    return this.http.get( this.url + "domain/super")
+  }
+
+  saveSuperDomain(domain){
+    return this.http.post( this.url + "domain/super/", domain)
+  }
 }

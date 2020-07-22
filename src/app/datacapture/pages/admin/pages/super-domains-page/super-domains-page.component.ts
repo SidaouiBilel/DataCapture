@@ -3,20 +3,20 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { DomainConfigModalComponent } from '../../modals/domain-config-modal/domain-config-modal.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Domain } from '../../models/domain';
+import { Router } from '@angular/router';
+import { Domain } from 'domain';
+import { SuperDomain } from '../../models/super-domain';
+import { SuperDomainConfigModalComponent } from '../../modals/super-domain-config-modal/super-domain-config-modal.component';
 
 @Component({
-  selector: 'app-domains-page',
-  templateUrl: './domains-page.component.html',
-  styleUrls: ['./domains-page.component.css'],
+  selector: 'app-super-domains-page',
+  templateUrl: './super-domains-page.component.html',
+  styleUrls: ['./super-domains-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DomainsPageComponent implements OnInit {
-  sub: any;
-  super_domain_id = null
+export class SuperDomainsPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, public ds: DomainService, public modal: NzModalService, private router:Router) { }
+  constructor(public ds: DomainService, public modal: NzModalService, private router:Router) { }
 
   loading_list = [{}]
 
@@ -26,16 +26,13 @@ export class DomainsPageComponent implements OnInit {
   displayList = true
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.super_domain_id = params.id;
-      this.load_data();
-   });
+    this.load_data()
   }
 
   load_data(){
     this.loading = true,
     this.domains$.next(this.loading_list)
-    this.ds.getAllBySuperId(this.super_domain_id).subscribe(dms=> {
+    this.ds.getAllSuper().subscribe(dms=> {
       this.loading = false
       this.domains$.next(dms)
     })
@@ -44,18 +41,14 @@ export class DomainsPageComponent implements OnInit {
 
   openConfig(data) {
     let edit = data? true:false
-    let obj = new Domain(this.super_domain_id)
-    if (data) {
-      obj = {...data};
-    }
-    console.log(obj)
+    data = {...data} || new SuperDomain()
 
     const modal = this.modal.create({
       nzTitle: 'Domain Configuration',
       nzFooter:[],
-      nzContent: DomainConfigModalComponent,
+      nzContent: SuperDomainConfigModalComponent,
       nzComponentParams: {
-        data: obj,
+        data: data,
         edit: edit
       },
     });
@@ -71,7 +64,7 @@ export class DomainsPageComponent implements OnInit {
 
   showDeleteConfirm(data): void {
     let confirmModal = this.modal.confirm({
-      nzTitle: 'Confirm Domain Deletion',
+      nzTitle: 'Confirm Super Domain Deletion',
       nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be discarded',
       nzOnOk: () =>
         new Promise((resolve, reject) => {
