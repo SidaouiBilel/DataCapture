@@ -8,19 +8,15 @@ import { SuperDomainsPageComponent } from './pages/super-domains-page/super-doma
 
 const routes: Routes = [
   {
-    path: 'category/:id',
-    component: DomainsPageComponent
-  },
-  {
-    path: 'category',
+    path: 'domains/:id/category',
     component: DomainsPageComponent
   },
   {
     path: 'domains',
-    component: SuperDomainsPageComponent
+    component: SuperDomainsPageComponent,
   },
   {
-    path: 'fields/:id',
+    path: 'domains/:subid/category/:id/fields',
     component: FieldsPageComponent
   },
   {

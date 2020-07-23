@@ -16,6 +16,7 @@ import { NotificationService } from '@app/core';
 })
 export class FieldsPageComponent implements OnInit, OnDestroy {
   id: number;
+  subid: any;
   private sub: any;
 
   list$ = new BehaviorSubject<any>([])
@@ -37,13 +38,14 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   constructor(private notification: NotificationService, private route: ActivatedRoute, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
 
   onBack(){
-    this.router.navigate(['/datacapture/admin/category', this.id]);
+    this.router.navigate(['/datacapture/admin/domains', this.subid, 'category']);
   }
 
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = params.id;
+       this.subid = params.subid;
        this.load_data();
     });
 

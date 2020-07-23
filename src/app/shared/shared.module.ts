@@ -15,6 +15,7 @@ import { HeaderGroupComponent } from './gridReusables/header-group-component/hea
 import { HeaderEditComponent } from './gridReusables/edit-component/header-edit.component';
 import { HeaderGeocodeComponent } from './gridReusables/geocode-component/header-geocode.component';
 import { HeaderSuppComponent } from './gridReusables/supp-component/header-supp.component';
+import { GridComponent } from './grid/grid.component';
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
 // For example, All the modules of the ANT JS Library.
@@ -50,11 +51,13 @@ const SharedModules = [
     HeaderEditComponent,
     HeaderGeocodeComponent,
     HeaderSuppComponent,
+    GridComponent,
   ],
   exports: [
     ...SharedModules,
     PageHeaderComponent,
-    DataGridComponent
+    DataGridComponent,
+    GridComponent
   ],
   providers: [
     UtilsService

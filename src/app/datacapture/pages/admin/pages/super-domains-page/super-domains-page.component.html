@@ -29,13 +29,13 @@
 <div nz-row [nzGutter]="14">
   <div nz-col class="gutter-row" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
 
-    <nz-card class="inner-box">
+    <nz-card class="inner-box super-domain-card">
 
       <app-domain-card 
         [data]='d'
         (delete)='showDeleteConfirm(d)'
         (edit)='openConfig(d)'
-        (categories)="navigate(['/datacapture/admin/category', d.id])"
+        (categories)="navigate(['/datacapture/admin/domains', d.id, 'category'])"
       ></app-domain-card>
       
     </nz-card>

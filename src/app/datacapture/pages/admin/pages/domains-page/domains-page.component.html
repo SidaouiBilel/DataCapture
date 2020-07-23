@@ -2,7 +2,7 @@
 <!-- <nz-card style="width: 300px;margin-top: 16px" [nzLoading]="loading">
   <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Card title" nzDescription="This is the description"></nz-card-meta>
 </nz-card> -->
-<nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/domin'])" nzBackIcon nzTitle="Categories" nzSubtitle="Manage Domain categories">
+<nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/domains/'])" nzBackIcon nzTitle="Categories" nzSubtitle="Manage Domain categories">
   <!-- <nz-page-header-content>
     <div class="content">
       <div class="extra">
@@ -64,7 +64,7 @@
           <a (click)="openConfig(d)"><i nz-icon nzType="setting"></i> EDIT</a>
         </ng-template>
         <ng-template #actionEdit>
-          <a (click)="navigate(['/datacapture/admin/fields', d.id])"><i nz-icon nzType="table"></i> FIELD MANAGEMENT</a>
+          <a (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'category', d.id, 'fields'])"><i nz-icon nzType="table"></i> FIELD MANAGEMENT</a>
         </ng-template>
         <ng-template #actionReference>
           <i nz-icon nzType="minus"></i>
