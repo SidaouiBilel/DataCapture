@@ -16,6 +16,7 @@ import { FileImportService } from './services/file-import.service';
 import { MappingService } from './services/mapping.service';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DndModule } from 'ngx-drag-drop';
+import { CleansingService } from './services/cleansing.service';
 
 const components = [
   UploadComponentComponent,
@@ -42,7 +43,8 @@ const components = [
   ],
   providers : [
     FileImportService,
-    MappingService
+    MappingService,
+    CleansingService
   ],
   entryComponents: [
   ]
