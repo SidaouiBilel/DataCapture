@@ -22,4 +22,8 @@ export class CleansingService {
   getJobResult(filename: string, worksheet: string, page: number, nrows: number): Observable<any> {
     return this.http.get(environment.cleansing + `/results?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}`);
   }
+
+  poolResult(filename: string, worksheet: string, page: number, nrows: number){
+    
+  }
 }
