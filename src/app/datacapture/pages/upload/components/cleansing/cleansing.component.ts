@@ -30,7 +30,7 @@ export class CleansingComponent implements OnInit {
       .subscribe(([domain, fileData, selectedSheet]) => {
         this.service.startJob(fileData.metaData.file_id, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain)
           .subscribe((res) => {
-            console.log(res);
+            if (res.job_id) {}
           });
       });
   }
