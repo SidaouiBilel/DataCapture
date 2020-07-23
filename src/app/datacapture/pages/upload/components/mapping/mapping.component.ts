@@ -45,9 +45,12 @@ export class MappingComponent implements OnInit {
         this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]])
           .subscribe((res) => {
             // Create mapped Source
-            const mappedSources = {};
-            Object.keys(res.columns_details).forEach((e) => {mappedSources[e] = res.columns_details[e].isMapped; });
-            this.store.dispatch(new SaveMappedSources(mappedSources));
+            if (res.columns_details) {
+              const mappedSources = {};
+              Object.keys(res.columns_details).forEach((e) => {mappedSources[e] = res.columns_details[e].isMapped; });
+              this.store.dispatch(new SaveMappedSources(mappedSources));
+            }
+
             // Update Mapping Fields
             this.reInitMappingFields();
             this.store.dispatch(new SaveMappingId(res.mapping_id));

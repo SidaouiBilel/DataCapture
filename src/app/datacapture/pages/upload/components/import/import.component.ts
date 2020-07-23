@@ -19,7 +19,7 @@ import { SaveMappingFields } from '../../store/actions/mapping.actions';
   styleUrls: ['./import.component.css']
 })
 export class ImportComponent implements OnInit {
-  url = urls.environment.upload;
+  url: string;
   domains: any[];
   selectedDomain: any;
   // Store
@@ -31,7 +31,10 @@ export class ImportComponent implements OnInit {
               private service: FileImportService) {
     this.importState$ = this.store.select(selectImport);
     this.selectedDomain$ = this.store.select(selectDomain);
-    this.selectedDomain$.pipe(take(1)).subscribe((domain) => this.selectedDomain = domain);
+    this.selectedDomain$.pipe(take(1)).subscribe((domain) => {
+      this.selectedDomain = domain;
+      this.url = urls.environment.upload + '?domainId=' + domain;
+    });
     this.domains = [];
   }
 
