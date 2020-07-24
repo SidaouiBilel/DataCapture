@@ -20,10 +20,10 @@ export class CleansingService {
   }
 
   getJobResult(filename: string, worksheet: string, page: number, nrows: number): Observable<any> {
-    return this.http.get(environment.cleansing + `/results?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}`);
+    return this.http.get(environment.cleansing + `/results?filename=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&worksheet=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&page=1&nrows=10`);
   }
 
-  getJobData(filename: string, worksheet: string, page: number, nrows: number): Observable<any> {
-    return this.http.get(environment.cleansing + `exposures?filename=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&worksheet=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&page=1&worksheet_id=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&nrows=100`);
+  getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number): Observable<any> {
+    return this.http.get(environment.cleansing + `/exposures?filename=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&domain_id=B09C2351B7B64554ADB488CD2E239693&worksheet=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&page=1&worksheet_id=f8476d5e632643133a1c7f73b2461cc18b40b11b6334e7271ba3faae531bbd97&nrows=100`);
   }
 }

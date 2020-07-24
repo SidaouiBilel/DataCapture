@@ -2,12 +2,12 @@
     <!--breadcrumb-->
     <!-- <nz-breadcrumb nz-page-header-breadcrumb>
       <nz-breadcrumb-item>{{data.id}}</nz-breadcrumb-item>
-      
+
     </nz-breadcrumb> -->
 
     <!--avatar-->
     <nz-avatar nz-page-header-avatar [nzText]="getAvatar(data)" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
- 
+
 
     <!--title-->
     <nz-page-header-title>{{data.name}}</nz-page-header-title>
@@ -22,7 +22,7 @@
 
     <!--extra-->
     <nz-page-header-extra>
-     
+
       <button (click)='edit.emit(data)' nz-button style="border: none; padding: 0">
         <i nz-icon nzType="edit" nzTheme="outline" ></i>
       </button>
@@ -44,21 +44,21 @@
 
     <!--content-->
     <nz-page-header-content>
-        
+
       <p nz-paragraph>
-        <i nz-icon nzType="clock-circle" nzTheme="outline"></i> {{data.created_on}}
+        <!-- <i nz-icon nzType="clock-circle" nzTheme="outline"></i> {{data?.created_on}} -->
         <br>
-        <i nz-icon nzType="edit" nzTheme="outline"></i> {{data.created_on}}
+        <!-- <i nz-icon nzType="edit" nzTheme="outline"></i> {{data.created_on}} -->
       </p>
-      
-        
+
+
       <div nz-row>
         <div class="content">
 
           <p nz-paragraph class="dom-description">
             {{data.description}}
           </p>
-          
+
           <!-- <div class="content-link">
             <a (click)='edit.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" alt="start" />Edit </a>
             <a (click)='categories.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" alt="info" />Categories </a>

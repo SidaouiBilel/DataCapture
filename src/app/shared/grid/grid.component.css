@@ -1,0 +1,7 @@
+::ng-deep .error-cell {
+  background-color: #ffa1a1;
+}
+
+::ng-deep .warning-cell {
+  background-color: #f0a878;
+}

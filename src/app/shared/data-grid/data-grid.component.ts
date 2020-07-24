@@ -87,17 +87,17 @@ export class DataGridComponent {
     this.loadingCellRendererParams = { loadingMessage: 'One moment please...'};
     this.paginationPageSize = 50;
     // // mei2 solution v1
-    preview.headers$.subscribe((header) => {
+    this.preview.headers$.subscribe((header) => {
       // console.log('= header =');
       // console.log(header)
       this.headerLoaded = header;
       this.getLoadedData();
     });
-    preview.data$.subscribe((data) => {
+    this.preview.data$.subscribe((data) => {
       this.dataLoaded = data;
       this.getLoadedData();
     });
-    preview.fileMetaData$.subscribe((data) => {
+    this.preview.fileMetaData$.subscribe((data) => {
       this.fileMetaData = data;
       this.getLoadedData();
     });

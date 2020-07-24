@@ -4,7 +4,7 @@ import {IHeaderGroupAngularComp} from '@ag-grid-community/angular';
 
 @Component({
     templateUrl: 'header-geocode.component.html',
-    styleUrls: ['header-geocode.component.scss']
+    styleUrls: ['header-geocode.component.css']
 })
 export class HeaderGeocodeComponent implements OnDestroy, IHeaderGroupAngularComp {
     public params: IHeaderGroupParams;
@@ -22,9 +22,5 @@ export class HeaderGeocodeComponent implements OnDestroy, IHeaderGroupAngularCom
 
     invokeGeocodeMethod() {
         console.log(' (header-geocode) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ invokeGeocodeMethod => do something here ');
-    };
-
-    /* onExpandChanged() {
-        this.expanded = this.params.columnGroup.getOriginalColumnGroup().isExpanded()
-    } */
+    }
 }

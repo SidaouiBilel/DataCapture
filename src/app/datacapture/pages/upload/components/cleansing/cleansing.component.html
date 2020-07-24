@@ -18,7 +18,6 @@
 
   <!-- Grid -->
   <div class="flex-child mt-4">
-    <app-grid></app-grid>
-
+    <app-grid [columnDefs]="headers$ | async" [rowData]="data$ | async" [totalRecords]="totalRecords$ | async" [results]="results$ | async"></app-grid>
   </div>
 </div>

@@ -8,14 +8,9 @@ import { INoRowsOverlayAngularComp } from '@ag-grid-community/angular';
 })
 export class HeaderEditComponent implements INoRowsOverlayAngularComp {
   public value;
-    public params: IHeaderGroupParams;
-    // public expanded: boolean;
+  public params: IHeaderGroupParams;
 
   agInit(params): void {
     this.value = params.value;
   }
-
-    /* onExpandChanged() {
-        this.expanded = this.params.columnGroup.getOriginalColumnGroup().isExpanded()
-    } */
 }
