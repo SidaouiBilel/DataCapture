@@ -10,11 +10,6 @@ import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { AgGridModule} from '@ag-grid-community/angular';
-import { SortableHeaderComponent } from './gridReusables/header-component/sortable-header.component';
-import { HeaderGroupComponent } from './gridReusables/header-group-component/header-group.component';
-import { HeaderEditComponent } from './gridReusables/edit-component/header-edit.component';
-import { HeaderGeocodeComponent } from './gridReusables/geocode-component/header-geocode.component';
-import { HeaderSuppComponent } from './gridReusables/supp-component/header-supp.component';
 import { GridComponent } from './grid/grid.component';
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -35,22 +30,11 @@ const SharedModules = [
 @NgModule({
   imports: [
     ...SharedModules,
-    AgGridModule.withComponents([
-      SortableHeaderComponent,
-      HeaderGroupComponent,
-      HeaderEditComponent,
-      HeaderGeocodeComponent,
-      HeaderSuppComponent,
-    ]),
+    AgGridModule.withComponents([]),
   ],
   declarations: [
     PageHeaderComponent,
     DataGridComponent,
-    SortableHeaderComponent,
-    HeaderGroupComponent,
-    HeaderEditComponent,
-    HeaderGeocodeComponent,
-    HeaderSuppComponent,
     GridComponent,
   ],
   exports: [
