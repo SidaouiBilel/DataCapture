@@ -2,7 +2,7 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
-      <nz-select [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
+      <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
         <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
       </nz-select>
     </div>

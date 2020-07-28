@@ -6,6 +6,7 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { MappingComponent } from './components/mapping/mapping.component';
 import { CleansingComponent } from './components/cleansing/cleansing.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { UploadGuard } from './guards/upload.guard';
 
 const routes: Routes = [
   {
@@ -14,23 +15,33 @@ const routes: Routes = [
       children: [
         {
           path: 'import',
-          component: ImportComponent
+          component: ImportComponent,
+          canActivate: [UploadGuard],
+          data: {route: 'IMPORT'}
         },
         {
           path: 'preview',
-          component: PreviewComponent
+          component: PreviewComponent,
+          canActivate: [UploadGuard],
+          data: {route: 'PREVIEW'}
         },
         {
           path: 'mapping',
-          component: MappingComponent
+          component: MappingComponent,
+          canActivate: [UploadGuard],
+          data: {route: 'MAPPING'}
         },
         {
           path: 'cleansing',
-          component: CleansingComponent
+          component: CleansingComponent,
+          canActivate: [UploadGuard],
+          data: {route: 'CLEANSING'}
         },
         {
           path: 'uploading',
-          component: UploadComponent
+          component: UploadComponent,
+          canActivate: [UploadGuard],
+          data: {route: 'UPLOAD'}
         },
         {
           path: '**',

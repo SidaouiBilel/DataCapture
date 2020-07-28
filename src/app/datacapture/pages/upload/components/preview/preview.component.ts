@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppState } from '@app/core';
+import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset, ActionSaveFile } from '../../store/actions/import.actions';
 import { Sheet } from '../../store/models/import.model';
@@ -18,9 +18,8 @@ import { ActionSelectSheet } from '../../store/actions/preview.actions';
 })
 export class PreviewComponent implements OnInit {
   // ag-grid
-  numberOfRows = 1500;
+  numberOfRows = 25;
   page = 0;
-  datatest: any;
   selectedSheet: number;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -31,7 +30,8 @@ export class PreviewComponent implements OnInit {
   selectedSheet$: Observable<number>;
   constructor(private store: Store<AppState>,
               private router: Router,
-              private service: FileImportService) {
+              private service: FileImportService,
+              private notification: NotificationService) {
     this.fileMetaData$ = this.store.select(selectFileData);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.selectedSheet$.subscribe((res) => { this.selectedSheet = res; });
@@ -62,12 +62,18 @@ export class PreviewComponent implements OnInit {
                                      this.numberOfRows)
                         .subscribe((res) => {
                           this.totalRecords$.next(Number(res.total));
-                          this.headers$.next(res.headers);
-                          this.data$.next(res.data);
+                          const headers = res.headers.map((e) => ({field: e, headerName: e}));
+                          const dataTable = res.data.map((e) => {
+                            const et = {};
+                            e.map((element, i) => { const head = res.headers[i];  et[head] = element; });
+                            return et;
+                          });
+                          this.headers$.next(headers);
+                          this.data$.next(dataTable);
                           const data = [...res.data].splice(0, 10);
                           this.store.dispatch(new ActionSaveFile({...fileData, data, headers: res.headers}));
                           this.loading$.next(false);
-                          this.datatest = res.data;
+                          console.log(dataTable)
                         });
           }
         });
@@ -101,6 +107,10 @@ export class PreviewComponent implements OnInit {
 
 
   goToMapping(): void {
-    this.router.navigate(['/datacapture/upload/mapping']);
+    if ( this.selectedSheet !== null ) {
+      this.router.navigate(['/datacapture/upload/mapping']);
+    } else {
+      this.notification.warn('Please select a sheet.')
+    }
   }
 }

@@ -18,6 +18,33 @@
 
   <!-- Grid -->
   <div class="flex-child mt-4">
-    <app-grid [columnDefs]="headers$ | async" [rowData]="data$ | async" [totalRecords]="totalRecords$ | async" [results]="results$ | async"></app-grid>
+    <nz-table #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
+      [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows"
+      [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)">
+      <thead>
+        <tr>
+          <th nzCustomFilter *ngFor="let head of (headers$ | async)">{{head.headerName}}
+            <i nz-th-extra class="ant-table-filter-icon" nz-icon nz-dropdown #dropdown="nzDropdown" nzType="search"
+              [nzDropdownMenu]="menu" [class.ant-table-filter-open]="dropdown.nzVisible" nzTrigger="click"
+              nzPlacement="bottomRight" [nzClickHide]="false" nzTableFilter></i>
+
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <div class="search-box">
+                <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                <button nz-button nzSize="small" nzType="primary" (click)="search(head.field)" class="search-button">
+                  Search
+                </button>
+                <button nz-button nzSize="small" (click)="reset()">Reset</button>
+              </div>
+            </nz-dropdown-menu>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td *ngFor="let head of (headers$ | async)" [class.error-cell]="inError(i, head.field)">{{ data[head.field] }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
   </div>
 </div>

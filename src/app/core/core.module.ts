@@ -39,7 +39,7 @@ import {NzNotificationService} from 'ng-zorro-antd';
         }),
 
     // Shared
-    SharedModule
+    // SharedModule
   ],
   declarations: [],
   providers: [

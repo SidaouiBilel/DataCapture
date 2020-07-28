@@ -19,6 +19,7 @@ import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
 export class MappingComponent implements OnInit {
   mappingFields: any;
   mappedSources: any;
+  mandatories: number;
   // Store
   mappingFields$: Observable<any>;
   fileData$: Observable<any>;
@@ -37,6 +38,7 @@ export class MappingComponent implements OnInit {
     this.domain$ = this.store.select(selectDomain);
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
+    this.mandatories$.subscribe((res) => { this.mandatories = res; });
   }
 
   ngOnInit() {
@@ -125,7 +127,11 @@ export class MappingComponent implements OnInit {
 
 
   goToCleansing(): void {
-    this.router.navigate(['/datacapture/upload/cleansing']);
+    if (this.mandatories === 0 ) {
+      this.router.navigate(['/datacapture/upload/cleansing']);
+    } else {
+      this.notification.warn('Please map all the mandatory fields');
+    }
   }
 
 }

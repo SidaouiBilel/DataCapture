@@ -17,6 +17,7 @@ import { MappingService } from './services/mapping.service';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DndModule } from 'ngx-drag-drop';
 import { CleansingService } from './services/cleansing.service';
+import { UploadGuard } from './guards/upload.guard';
 
 const components = [
   UploadComponentComponent,
@@ -44,7 +45,8 @@ const components = [
   providers : [
     FileImportService,
     MappingService,
-    CleansingService
+    CleansingService,
+    UploadGuard
   ],
   entryComponents: [
   ]

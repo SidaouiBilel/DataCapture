@@ -9,9 +9,10 @@ import { selectImport } from '../../store/upload.selectors';
 import { Router } from '@angular/router';
 import { FileImportService } from '../../services/file-import.service';
 import * as urls from '@env/environment';
-import { selectDomain } from '../../store/selectors/import.selectors';
+import { selectDomain, selectFileData } from '../../store/selectors/import.selectors';
 import { take } from 'rxjs/operators';
 import { SaveMappingFields } from '../../store/actions/mapping.actions';
+import { exit } from 'process';
 
 @Component({
   selector: 'app-import',
@@ -22,16 +23,22 @@ export class ImportComponent implements OnInit {
   url: string;
   domains: any[];
   selectedDomain: any;
+  fileData: any;
   // Store
   importState$: Observable<Import>;
   selectedDomain$: Observable<string>;
+  fileData$: Observable<any>
   constructor(private notification: NotificationService,
               private store: Store<AppState>,
               private router: Router,
               private service: FileImportService) {
     this.importState$ = this.store.select(selectImport);
     this.selectedDomain$ = this.store.select(selectDomain);
-    this.selectedDomain$.pipe(take(1)).subscribe((domain) => {
+    this.fileData$ = this.store.select(selectFileData);
+    this.fileData$.subscribe((fileData) => {
+      this.fileData = fileData;
+    })
+    this.selectedDomain$.subscribe((domain) => {
       this.selectedDomain = domain;
       this.url = urls.environment.upload + '?domainId=' + domain;
     });
@@ -81,6 +88,14 @@ export class ImportComponent implements OnInit {
   }
 
   goToPreview(): void {
+    if ( !this.selectedDomain ) {
+      this.notification.warn('Please select a domain.');
+      return;
+    }
+    if ( !this.fileData.metaData ) {
+      this.notification.warn('Please import your file.');
+      return;
+    }
     this.router.navigate(['/datacapture/upload/preview']);
   }
 }
