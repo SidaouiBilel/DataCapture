@@ -10,6 +10,8 @@ import { UploadingReducer } from './reducers/uploading.reducer';
 import { CleansingReducer } from './reducers/cleansing.reducer';
 import { MappingReducer } from './reducers/mapping.reducer';
 import { ImportReducer } from './reducers/import.reducer';
+import { TransformationReducer } from '../components/transformation/store/transformation.state';
+import { Transformation } from '../components/transformation/store/transformation.model';
 
 export const FEATURE_NAME = 'upload';
 export const selectupload = createFeatureSelector<State, UploadState>(
@@ -21,7 +23,8 @@ export const uploadReducers: ActionReducerMap<UploadState> = {
   preview: PreviewReducer,
   mapping: MappingReducer,
   cleansing: CleansingReducer,
-  uploading: UploadingReducer
+  uploading: UploadingReducer,
+  transformation: TransformationReducer
 };
 
 export interface UploadState {
@@ -30,6 +33,7 @@ export interface UploadState {
   mapping: Mapping;
   cleansing: Cleansing;
   uploading: Uploading;
+  transformation: Transformation;
 }
 
 export interface State extends AppState {

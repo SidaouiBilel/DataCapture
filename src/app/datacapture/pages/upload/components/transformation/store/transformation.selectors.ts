@@ -1,0 +1,23 @@
+import { selectupload, UploadState } from '../../../store/upload.state';
+import { createSelector } from '@ngrx/store';
+import { Transformation } from './transformation.model';
+
+export const selectTranformation = createSelector(
+  selectupload,
+  (object: UploadState) => object.transformation
+);
+
+export const selectTranformationNodes = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.nodes
+);
+
+export const selectTranformationNode = (index) => createSelector(
+  selectTranformation,
+  (object: Transformation) => object.nodes[index]
+);
+
+export const selectTranformationNodesStatus = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.validation_states
+);

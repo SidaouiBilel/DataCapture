@@ -12,7 +12,7 @@ export class DomainCardComponent implements OnInit {
 
   @Input() data: SuperDomain
 
-  @Output() categories = new EventEmitter<any>()
+  @Output() collections = new EventEmitter<any>()
   @Output() edit = new EventEmitter<any>()
   @Output() delete = new EventEmitter<any>()
 

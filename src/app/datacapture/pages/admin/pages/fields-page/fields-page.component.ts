@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomainService } from '../../services/domain.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { Column } from '../../models/column';
 import { FieldModalComponent } from '../../modals/field-modal/field-modal.component';
 import { Field } from '../../models/field';
 import { NzModalService } from 'ng-zorro-antd';
 import { TargetFieldsService } from '../../services/fields.service';
 import { NotificationService } from '@app/core';
+import { ChecksService } from '../../services/checks.service';
 
 @Component({
   selector: 'app-fields-page',
@@ -20,25 +21,26 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   private sub: any;
 
   list$ = new BehaviorSubject<any>([])
+  checks$ = new BehaviorSubject<any>({})
 
   columns = [
     new Column('', 'action'),
     new Column('Label', 'label'),
-    new Column('Name', 'name'),
+    new Column('Type', 'type'),
+    // new Column('Name', 'name'),
     new Column('Description', 'description'),
     new Column('Mandatory', 'mandatory'),
     new Column('Editable', 'editable'),
-    // new Column('Category', 'category'),
-    new Column('Type', 'type'),
+    new Column('Rules', 'rules'),
   ];
 
   loading
   uploadURI
 
-  constructor(private notification: NotificationService, private route: ActivatedRoute, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
+  constructor(private notification: NotificationService, private route: ActivatedRoute, private cs:ChecksService, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
 
   onBack(){
-    this.router.navigate(['/datacapture/admin/domains', this.subid, 'category']);
+    this.router.navigate(['/datacapture/admin/domains', this.subid, 'collection']);
   }
 
 
@@ -55,10 +57,12 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   load_data(){
     this.loading = true
     this.uploadURI = this.ds.fileUploadUrl(this.id)
-    this.ds.get(this.id).subscribe(fields => {
+
+    forkJoin(this.ds.get(this.id),this.cs.getDomainChecksMap(this.id)).subscribe(([fields, checks])=>{
       this.list$.next(fields);
+      this.checks$.next(checks);
       this.loading = false
-    }, err=> this.loading = false);
+    }, err=> this.loading = false)
   }
 
   ngOnDestroy() {

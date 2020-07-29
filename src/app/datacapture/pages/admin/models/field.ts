@@ -4,6 +4,6 @@ export class Field{
     name
     description
     type
-    category
+    collection
 
 }

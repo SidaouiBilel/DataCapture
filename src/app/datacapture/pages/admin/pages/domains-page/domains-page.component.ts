@@ -23,7 +23,7 @@ export class DomainsPageComponent implements OnInit {
   domains$ = new BehaviorSubject<any>([])
   loading = false
 
-  displayList = true
+  displayList = false
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -51,7 +51,7 @@ export class DomainsPageComponent implements OnInit {
     console.log(obj)
 
     const modal = this.modal.create({
-      nzTitle: 'Category Configuration',
+      nzTitle: 'Collection Configuration',
       nzFooter:[],
       nzContent: DomainConfigModalComponent,
       nzComponentParams: {
@@ -74,7 +74,19 @@ export class DomainsPageComponent implements OnInit {
       nzTitle: 'Confirm Domain Deletion',
       nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be erased',
       nzOnOk: () => {
+        this.loading = true
         this.ds.deleteDomain(data).subscribe(()=> this.load_data())
+      }
+    });
+  }
+
+  showCopyConfirm(data): void {
+    let confirmModal = this.modal.confirm({
+      nzTitle: 'Confirm Domain Duplication',
+      nzContent: 'This action is irreversible. Target Fields will be duplicated for this collection.',
+      nzOnOk: () => {
+        this.loading = true
+        this.ds.duplicateDomain(data).subscribe(()=> this.load_data())
       }
     });
   }

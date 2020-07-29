@@ -1,0 +1,31 @@
+<nz-card [nzTitle]='title' [nzSize]="'small'" [style.border-color]="transofrmation?.color" class="transformation-card">
+
+
+    <div>
+        <ng-template #paramsHost></ng-template>
+    </div>
+
+    <div class="flex between">
+        <div>
+            <div><i><app-bool-icon [b]='params.applied'></app-bool-icon> Applied</i></div>
+            <div><i><app-bool-icon [b]='params.valid'  ></app-bool-icon> Valid</i></div>
+        </div>
+        <button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    </div>
+
+</nz-card>
+
+<ng-template #title>
+    <div class="flex between">
+
+        <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(-1)'><i nz-icon nzType="left"></i></button>
+        
+        <div >
+            {{transofrmation?.label}}
+        </div>
+
+        <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(1)' ><i nz-icon nzType="right"></i></button>
+
+    </div>
+
+</ng-template>

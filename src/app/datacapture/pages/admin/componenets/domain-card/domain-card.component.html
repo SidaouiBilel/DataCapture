@@ -1,9 +1,9 @@
 <nz-page-header class="site-page-header">
     <!--breadcrumb-->
-    <!-- <nz-breadcrumb nz-page-header-breadcrumb>
+    <nz-breadcrumb nz-page-header-breadcrumb>
       <nz-breadcrumb-item>{{data.id}}</nz-breadcrumb-item>
       
-    </nz-breadcrumb> -->
+    </nz-breadcrumb>
 
     <!--avatar-->
     <nz-avatar nz-page-header-avatar [nzText]="getAvatar(data)" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
@@ -16,9 +16,9 @@
     <!-- <nz-page-header-subtitle>{{data.description}}</nz-page-header-subtitle> -->
 
     <!--tags-->
-    <nz-page-header-tags>
+    <!-- <nz-page-header-tags>
       <nz-tag [nzColor]="'green'">ACTIVE</nz-tag>
-    </nz-page-header-tags>
+    </nz-page-header-tags> -->
 
     <!--extra-->
     <nz-page-header-extra>
@@ -26,30 +26,34 @@
       <button (click)='edit.emit(data)' nz-button style="border: none; padding: 0">
         <i nz-icon nzType="edit" nzTheme="outline" ></i>
       </button>
+      <nz-divider nzType="vertical"></nz-divider>
 
       <button (click)='delete.emit(data)' nz-button style="border: none; padding: 0">
         <i nz-icon nzType="delete" nzTheme="outline" ></i>
       </button>
+      
 
 
-      <button nz-button nzNoAnimation nz-dropdown [nzDropdownMenu]="menu" style="border: none; padding: 0">
+      <!-- <button nz-button nzNoAnimation nz-dropdown [nzDropdownMenu]="menu" style="border: none; padding: 0">
         <i nz-icon nzType="ellipsis" nzTheme="outline" ></i>
       </button>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-          <li (click)='categories.emit(data)' nz-menu-item>Categories</li>
+          <li (click)='collections.emit(data)' nz-menu-item>Collections</li>
         </ul>
-      </nz-dropdown-menu>
+      </nz-dropdown-menu> -->
     </nz-page-header-extra>
 
     <!--content-->
     <nz-page-header-content>
         
-      <p nz-paragraph>
-        <i nz-icon nzType="clock-circle" nzTheme="outline"></i> {{data.created_on}}
-        <br>
-        <i nz-icon nzType="edit" nzTheme="outline"></i> {{data.created_on}}
-      </p>
+      <div nz-paragraph>
+        <i nz-icon nzType="clock-circle" nzTheme="outline"></i> <i> Created On</i> {{data.created_on | date: 'dd/mm/yyyy HH:MM'}}
+        <nz-divider nzType="vertical"></nz-divider>
+        <i nz-icon nzType="edit" nzTheme="outline"></i> <i> Modified On</i> {{data.modified_on | date: 'dd/mm/yyyy HH:MM'}}
+        <nz-divider nzType="vertical"></nz-divider>
+        <i>Status </i> <nz-tag [nzColor]="'green'">ACTIVE</nz-tag>
+      </div>
       
         
       <div nz-row>
@@ -59,11 +63,12 @@
             {{data.description}}
           </p>
           
-          <!-- <div class="content-link">
-            <a (click)='edit.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" alt="start" />Edit </a>
-            <a (click)='categories.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" alt="info" />Categories </a>
-            <a (click)='delete.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" alt="doc" />Delete </a>
-          </div> -->
+          <div class="content-link">
+            <button (click)='collections.emit(data)' nz-button nzType="default"><i nz-icon nzType="block" nzTheme="outline"></i>Collections</button>
+            <!-- <a (click)='edit.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg" alt="start" />Edit </a> -->
+            <!-- <a (click)='collections.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" alt="info" />Collections </a> -->
+            <!-- <a (click)='delete.emit(data)'> <img src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" alt="doc" />Delete </a> -->
+          </div>
 
         </div>
         <!-- <div class="content-image">

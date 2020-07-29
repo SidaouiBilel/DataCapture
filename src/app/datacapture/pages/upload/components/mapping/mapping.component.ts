@@ -10,6 +10,8 @@ import { SaveMappingFields, SaveMappedSources, SaveMappingId } from '../../store
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
+import { TransformationPipeComponent } from '../transformation/transformation-pipe/transformation-pipe.component';
+import { NzDrawerService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-mapping',
@@ -27,7 +29,7 @@ export class MappingComponent implements OnInit {
   selectedSheet$: Observable<any>;
   domain$: Observable<string>;
   mappingId$: Observable<string>;
-  constructor(private store: Store<AppState>, private service: MappingService, private router: Router, private notification: NotificationService) {
+  constructor(private store: Store<AppState>, private service: MappingService, private router: Router, private notification: NotificationService, private drawerService: NzDrawerService) {
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
@@ -40,6 +42,8 @@ export class MappingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.openTransPipe()
+
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet]) => {
         this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]])
@@ -126,6 +130,15 @@ export class MappingComponent implements OnInit {
 
   goToCleansing(): void {
     this.router.navigate(['/datacapture/upload/cleansing']);
+  }
+
+  openTransPipe(): void {
+    const drawerRef = this.drawerService.create<TransformationPipeComponent, { value: string }, string>({
+      nzTitle: 'Transformation Pipe',
+      nzPlacement: 'bottom',
+      nzWrapClassName: 'drawer-wrapper-full-height',
+      nzContent: TransformationPipeComponent,
+    });
   }
 
 }

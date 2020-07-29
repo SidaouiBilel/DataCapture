@@ -17,6 +17,10 @@ import { MappingService } from './services/mapping.service';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DndModule } from 'ngx-drag-drop';
 import { CleansingService } from './services/cleansing.service';
+import { TransformationPipeComponent } from './components/transformation/transformation-pipe/transformation-pipe.component';
+import { TransformationNodeComponent } from './components/transformation/transformation-node/transformation-node.component';
+import { TransformationInterfaceComponent } from './components/transformation/transformations/transformation-interface/transformation-interface.component';
+import { FormatterComponent } from './components/transformation/transformations/transformation-interface/format/formatter/formatter.component';
 
 const components = [
   UploadComponentComponent,
@@ -25,7 +29,11 @@ const components = [
   MappingComponent,
   CleansingComponent,
   PreviewComponent,
-  UploadComponent
+  UploadComponent,
+  TransformationPipeComponent,
+  TransformationNodeComponent, 
+  TransformationInterfaceComponent,
+  FormatterComponent
 ];
 
 @NgModule({
@@ -47,6 +55,7 @@ const components = [
     CleansingService
   ],
   entryComponents: [
+    TransformationPipeComponent, TransformationInterfaceComponent, FormatterComponent
   ]
 })
 export class UploadModule {}

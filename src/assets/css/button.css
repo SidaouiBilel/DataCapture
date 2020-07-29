@@ -1,0 +1,9 @@
+button.ghost{
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+button.ma{
+    margin-right: 7px;
+}

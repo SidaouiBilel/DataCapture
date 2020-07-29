@@ -23,6 +23,10 @@ export class DomainService {
     return this.http.post( this.url + "domain/", domain)
   }
 
+  duplicateDomain(domain){
+    return this.http.put( this.url + "domain/", domain)
+  }
+
   deleteDomain(domain){
     return this.http.request('DELETE', this.url + "domain/", {
       headers: new HttpHeaders({

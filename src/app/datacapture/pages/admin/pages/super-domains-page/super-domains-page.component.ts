@@ -20,11 +20,11 @@ export class SuperDomainsPageComponent implements OnInit {
   constructor(public ds: SuperDomainService, public modal: NzModalService, private router:Router) { }
 
   loading_list = [{}]
-
-  domains$ = new BehaviorSubject<any>([])
   loading = false
 
-  displayList = false
+  domains$ = new BehaviorSubject<any>([])
+
+  displayList = true
 
   ngOnInit() {
     this.load_data()

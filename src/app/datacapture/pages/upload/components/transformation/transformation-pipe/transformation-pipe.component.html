@@ -1,0 +1,41 @@
+<!-- <button nz-button nz-dropdown nzType='primary' [nzDropdownMenu]="ts">
+    Add Transformation
+    <i nz-icon nzType="down"></i>
+  </button>
+  
+  <nz-dropdown-menu #ts="nzDropdownMenu">
+    <ul nz-menu >
+      <li 
+        *ngFor='let t of tarnsformations' 
+        nz-menu-item
+        (click)='addTransformation(t)'
+        >{{t.label}}</li>
+    </ul>
+  </nz-dropdown-menu> -->
+
+<i>Add a Transformer</i>
+
+<span *ngFor='let t of tarnsformations' >
+  <nz-divider nzType="vertical"></nz-divider>
+  <button nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label">
+    <!-- {{t.label}} -->
+    <i nz-icon [nzType]="t.icon || 'sliders'" nzTheme="outline"></i>
+  </button>
+</span>
+
+<div class="trans-container">
+
+    <!-- <i nz-icon nzType="caret-right" nzTheme="outline"></i> -->
+    <i nz-icon nzType="api" nzTheme="outline"  class="trans-arrow trans-start-arrow" [ngClass]="{'trans-arrow-circle': (pipe$ | async)?.length == 0 }"></i>
+    <div class="trans-block" *ngFor='let node of pipe$ | async; let i = index' >
+      <i *ngIf='i!=0' class="trans-arrow" nz-icon nzType="right" nzTheme="outline"></i>
+      <app-transformation-node [index]=i [params]='node'></app-transformation-node>
+    </div>
+</div>
+
+<div class="pipe-buttons">
+  <button nz-button nz-dropdown nzType='link' (click)='onReset()'>Reset</button>
+  <nz-divider nzType="vertical"></nz-divider>
+  <button nz-button nz-dropdown nzType='primary' class="ma">Save</button>
+  <button nz-button nz-dropdown nzType='deafualt'>Apply</button>
+</div>

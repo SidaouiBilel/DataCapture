@@ -15,7 +15,6 @@
 </nz-page-header>
 <!-- </nz-card> -->
 
-
 <div nz-row class='ma-b'>
 
   <div nz-col [nzSpan]='18'>
@@ -66,15 +65,33 @@
       <tr *ngFor="let data of list$ | async">
         
         <ng-container  *ngFor="let column of columns">
-          <td *ngIf="column.field == 'action'">
-            <button nz-button  (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
-            <button nz-button  (click)='showDeleteConfirm(data)'><i nz-icon nzType="delete"></i></button>
-          </td>
-          <td *ngIf="column.field != 'action'">
-              {{ data[column.field] }}
-          </td>
-  
+          <ng-container [ngSwitch]="column.field">
+
+            <td *ngSwitchCase="'action'">
+              <button nz-button class="ghost" (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
+              <button nz-button class="ghost" (click)='showDeleteConfirm(data)'><i nz-icon nzType="delete"></i></button>
+            </td>
+
+            <td *ngSwitchCase="'rules'">
+              <span *ngFor="let rule of data.rules; let i = index">
+                <span *ngIf='i!=0'>, </span>{{ (checks$ | async)[rule.type].name }}
+              </span>
+            </td>
+            <td *ngSwitchCase="'mandatory'"><app-bool-icon [b]='data[column.field]'></app-bool-icon> </td>
+            <td *ngSwitchCase="'editable'" ><app-bool-icon [b]='data[column.field]'></app-bool-icon> </td>
+            
+
+            
+
+            <td *ngSwitchDefault>
+                {{ data[column.field] }}
+            </td>
+
+
+
+          </ng-container>
         </ng-container>
+
       </tr>
     </tbody>
   </nz-table>
