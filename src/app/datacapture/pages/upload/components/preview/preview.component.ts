@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppState } from '@app/core';
+import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset, ActionSaveFile } from '../../store/actions/import.actions';
 import { Sheet } from '../../store/models/import.model';
@@ -18,9 +18,8 @@ import { ActionSelectSheet } from '../../store/actions/preview.actions';
 })
 export class PreviewComponent implements OnInit {
   // ag-grid
-  numberOfRows = 1500;
-  page = 0;
-  datatest: any;
+  numberOfRows = 10;
+  page = 1;
   selectedSheet: number;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -31,7 +30,8 @@ export class PreviewComponent implements OnInit {
   selectedSheet$: Observable<number>;
   constructor(private store: Store<AppState>,
               private router: Router,
-              private service: FileImportService) {
+              private service: FileImportService,
+              private notification: NotificationService) {
     this.fileMetaData$ = this.store.select(selectFileData);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.selectedSheet$.subscribe((res) => { this.selectedSheet = res; });
@@ -46,6 +46,16 @@ export class PreviewComponent implements OnInit {
     });
   }
 
+  onPageChange(event: number): void {
+    this.page = event;
+    this.grabPreviewData(this.selectedSheet);
+  }
+
+  onSizeChange(event: number): void {
+    this.numberOfRows = event;
+    this.grabPreviewData(this.selectedSheet)
+  }
+
   selectSheet(index: any): void {
     this.store.dispatch(new ActionSelectSheet(index));
     this.grabPreviewData(index);
@@ -54,9 +64,9 @@ export class PreviewComponent implements OnInit {
   private grabPreviewData(index: number): void {
     try {
       if (index !== null) {
+        this.loading$.next(true);
         this.fileMetaData$.pipe(take(1)).subscribe((fileData: Sheet) => {
           if (fileData.metaData) {
-            this.loading$.next(true);
             this.service.getFileData(this.page,
                                      fileData.metaData.worksheets_map[fileData.sheets[index]],
                                      this.numberOfRows)
@@ -64,31 +74,15 @@ export class PreviewComponent implements OnInit {
                           this.totalRecords$.next(Number(res.total));
                           this.headers$.next(res.headers);
                           this.data$.next(res.data);
-                          const data = [...res.data].splice(0, 10);
-                          this.store.dispatch(new ActionSaveFile({...fileData, data, headers: res.headers}));
+                          this.store.dispatch(new ActionSaveFile({...fileData, data: res.data, headers: res.headers}));
                           this.loading$.next(false);
-                          this.datatest = res.data;
                         });
           }
         });
       }
     } catch (error) {
-
+      this.notification.error(error.message);
     }
-  }
-
-  onLazyLoad(event) {
-    this.page = Math.floor((event.first + 1) / this.numberOfRows);
-    this.selectedSheet$.pipe(take(1)).subscribe(index => {
-      this.grabPreviewData(index);
-    });
-  }
-
-  onBtLast(lastPageChanged) {
-    const index = lastPageChanged.selectedSheet;
-    this.page = lastPageChanged.lastPage;
-    this.numberOfRows = lastPageChanged.newNrows;
-    this.grabPreviewData(index);
   }
 
   cancelUpload(): void {
@@ -101,6 +95,10 @@ export class PreviewComponent implements OnInit {
 
 
   goToMapping(): void {
-    this.router.navigate(['/datacapture/upload/mapping']);
+    if ( this.selectedSheet !== null ) {
+      this.router.navigate(['/datacapture/upload/mapping']);
+    } else {
+      this.notification.warn('Please select a sheet.');
+    }
   }
 }

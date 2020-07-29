@@ -22,6 +22,7 @@ import { TransformationNodeComponent } from './components/transformation/transfo
 import { TransformationInterfaceComponent } from './components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { FormatterComponent } from './components/transformation/transformations/transformation-interface/format/formatter/formatter.component';
 import { ColumnsInputComponent } from './components/transformation/shared/columns-input/columns-input.component';
+import { UploadGuard } from './guards/upload.guard';
 
 const components = [
   UploadComponentComponent,
@@ -53,7 +54,8 @@ const components = [
   providers : [
     FileImportService,
     MappingService,
-    CleansingService
+    CleansingService,
+    UploadGuard
   ],
   entryComponents: [
     TransformationPipeComponent, TransformationInterfaceComponent, FormatterComponent

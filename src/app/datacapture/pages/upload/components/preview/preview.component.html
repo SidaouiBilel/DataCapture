@@ -21,10 +21,20 @@
 
   <!-- Grid -->
   <div class="flex-child mt-4" *ngIf="!(loading$ | async)">
-    <!-- {{loading$ | async}} -->
-    <app-data-grid [headers]="headers$ | async" [rowData]="data$ | async"
-      [totalRecords]="totalRecords$ | async" [nrows]="numberOfRows" [selectedSheet]="selectedSheet$ | async"
-      (lazyload)="onLazyLoad($event)" (goToLastPage)="onBtLast($event)">
-    </app-data-grid>
+    <nz-table #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
+      [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows" [nzScroll]="{ x: '50vw' }"
+      [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)" (nzPageSizeChange)="onSizeChange($event)">
+      <thead>
+        <tr>
+          <th *ngFor="let head of (headers$ | async)">{{head}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td *ngFor="let head of (headers$ | async); let j = index" >{{ data[j] }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
   </div>
 </div>

@@ -12,18 +12,20 @@ export class CleansingService {
   }
 
   startJob(filename: string,  worksheetId: string, domainId: string): Observable<any> {
-    return this.http.get(environment.cleansing + `?filename=${filename}&worksheet_id=${worksheetId}&domain_id=${domainId}`);
+    // tslint:disable-next-line: max-line-length
+    return this.http.post(environment.cleansing + `?filename=${filename}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}`, {});
   }
 
   getJobMetaData(jobId: string): Observable<any> {
     return this.http.get(environment.cleansing + `/metadata?job_id=${jobId}`);
   }
 
-  getJobResult(filename: string, worksheet: string, page: number, nrows: number): Observable<any> {
-    return this.http.get(environment.cleansing + `/results?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}`);
+  getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get(environment.cleansing + `/exposures?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}&domain_id=${domainId}`);
   }
 
-  poolResult(filename: string, worksheet: string, page: number, nrows: number){
-    
+  getJobResult(filename: string, worksheet: string, page: number, nrows: number): Observable<any> {
+    return this.http.get(environment.cleansing + `/results?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}`);
   }
 }
