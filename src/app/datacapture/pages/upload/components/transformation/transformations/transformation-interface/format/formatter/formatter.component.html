@@ -1,8 +1,9 @@
-<form class="login-form" (ngSubmit)="submitForm()">
+{{data | json}}
+
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your username!">
-        <nz-input-group nzPrefixIcon="user">
-          <input type="text" nz-input  placeholder="Username" />
+      <nz-form-control>
+        <nz-input-group>
+          <app-columns-input [(ngModel)]='data.column'></app-columns-input>
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
@@ -13,4 +14,3 @@
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
-  </form>

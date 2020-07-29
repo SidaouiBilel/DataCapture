@@ -1,0 +1,3 @@
+<nz-select class="column-input" [(ngModel)]="value">
+    <nz-option *ngFor='let o of (columns$ | async)' [nzValue]="o" [nzLabel]="o"></nz-option>
+</nz-select>

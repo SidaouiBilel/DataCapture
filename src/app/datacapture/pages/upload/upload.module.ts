@@ -21,6 +21,7 @@ import { TransformationPipeComponent } from './components/transformation/transfo
 import { TransformationNodeComponent } from './components/transformation/transformation-node/transformation-node.component';
 import { TransformationInterfaceComponent } from './components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { FormatterComponent } from './components/transformation/transformations/transformation-interface/format/formatter/formatter.component';
+import { ColumnsInputComponent } from './components/transformation/shared/columns-input/columns-input.component';
 
 const components = [
   UploadComponentComponent,
@@ -46,7 +47,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, ColumnsInputComponent],
   exports: [
   ],
   providers : [

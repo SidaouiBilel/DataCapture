@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FileImportService } from '../../services/file-import.service';
 import { SaveMappedSources } from '../actions/mapping.actions';
+import { ResetTransformation } from '../../components/transformation/store/transformation.actions';
 
 @Injectable()
 export class ImportEffects {
@@ -24,6 +25,7 @@ export class ImportEffects {
     ofType<ActionImportReset>(ImportActionTypes.RESET),
     // withLatestFrom(this.store$.select( selectSelectedFile )),
     map((action) => {
+      this.store$.dispatch(new ResetTransformation())
       this.router.navigate(['/datacapture/upload/import']);
     })
   );

@@ -19,7 +19,7 @@
   <nz-divider nzType="vertical"></nz-divider>
   <button nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label">
     <!-- {{t.label}} -->
-    <i nz-icon [nzType]="t.icon || 'sliders'" nzTheme="outline"></i>
+    <i nz-icon [nzType]="t.icon || 'sliders'"></i>
   </button>
 </span>
 
@@ -28,14 +28,17 @@
     <!-- <i nz-icon nzType="caret-right" nzTheme="outline"></i> -->
     <i nz-icon nzType="api" nzTheme="outline"  class="trans-arrow trans-start-arrow" [ngClass]="{'trans-arrow-circle': (pipe$ | async)?.length == 0 }"></i>
     <div class="trans-block" *ngFor='let node of pipe$ | async; let i = index' >
-      <i *ngIf='i!=0' class="trans-arrow" nz-icon nzType="right" nzTheme="outline"></i>
+      <i *ngIf='i!=0' class="trans-arrow" nz-icon nzType="right"></i>
       <app-transformation-node [index]=i [params]='node'></app-transformation-node>
     </div>
 </div>
 
 <div class="pipe-buttons">
-  <button nz-button nz-dropdown nzType='link' (click)='onReset()'>Reset</button>
+  <button nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
   <nz-divider nzType="vertical"></nz-divider>
-  <button nz-button nz-dropdown nzType='primary' class="ma">Save</button>
-  <button nz-button nz-dropdown nzType='deafualt'>Apply</button>
+  <button nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Load"><i nz-icon nzType="download"></i></button>
+  <nz-divider nzType="vertical"></nz-divider>
+  <button nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save"><i nz-icon nzType="save"></i></button>
+  <nz-divider nzType="vertical"></nz-divider>
+  <button nzShape='round' nz-button nz-tooltip nzTooltipTitle="Apply" nzType='primary' style="min-width: 70px;"><i nz-icon nzType="caret-right"></i></button>
 </div>
