@@ -17,6 +17,10 @@
   width: 40%;
 }
 
+:host th,td {
+  white-space: nowrap;
+}
+
 :host nz-divider {
   /* margin: 0 !important; */
   margin: 0 0 24px 0 !important;

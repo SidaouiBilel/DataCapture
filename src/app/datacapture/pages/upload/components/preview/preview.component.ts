@@ -18,8 +18,8 @@ import { ActionSelectSheet } from '../../store/actions/preview.actions';
 })
 export class PreviewComponent implements OnInit {
   // ag-grid
-  numberOfRows = 25;
-  page = 0;
+  numberOfRows = 10;
+  page = 1;
   selectedSheet: number;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -46,6 +46,16 @@ export class PreviewComponent implements OnInit {
     });
   }
 
+  onPageChange(event: number): void {
+    this.page = event;
+    this.grabPreviewData(this.selectedSheet);
+  }
+
+  onSizeChange(event: number): void {
+    this.numberOfRows = event;
+    this.grabPreviewData(this.selectedSheet)
+  }
+
   selectSheet(index: any): void {
     this.store.dispatch(new ActionSelectSheet(index));
     this.grabPreviewData(index);
@@ -54,47 +64,25 @@ export class PreviewComponent implements OnInit {
   private grabPreviewData(index: number): void {
     try {
       if (index !== null) {
+        this.loading$.next(true);
         this.fileMetaData$.pipe(take(1)).subscribe((fileData: Sheet) => {
           if (fileData.metaData) {
-            this.loading$.next(true);
             this.service.getFileData(this.page,
                                      fileData.metaData.worksheets_map[fileData.sheets[index]],
                                      this.numberOfRows)
                         .subscribe((res) => {
                           this.totalRecords$.next(Number(res.total));
-                          const headers = res.headers.map((e) => ({field: e, headerName: e}));
-                          const dataTable = res.data.map((e) => {
-                            const et = {};
-                            e.map((element, i) => { const head = res.headers[i];  et[head] = element; });
-                            return et;
-                          });
-                          this.headers$.next(headers);
-                          this.data$.next(dataTable);
-                          const data = [...res.data].splice(0, 10);
-                          this.store.dispatch(new ActionSaveFile({...fileData, data, headers: res.headers}));
+                          this.headers$.next(res.headers);
+                          this.data$.next(res.data);
+                          this.store.dispatch(new ActionSaveFile({...fileData, data: res.data, headers: res.headers}));
                           this.loading$.next(false);
-                          console.log(dataTable)
                         });
           }
         });
       }
     } catch (error) {
-
+      this.notification.error(error.message);
     }
-  }
-
-  onLazyLoad(event) {
-    this.page = Math.floor((event.first + 1) / this.numberOfRows);
-    this.selectedSheet$.pipe(take(1)).subscribe(index => {
-      this.grabPreviewData(index);
-    });
-  }
-
-  onBtLast(lastPageChanged) {
-    const index = lastPageChanged.selectedSheet;
-    this.page = lastPageChanged.lastPage;
-    this.numberOfRows = lastPageChanged.newNrows;
-    this.grabPreviewData(index);
   }
 
   cancelUpload(): void {
@@ -110,7 +98,7 @@ export class PreviewComponent implements OnInit {
     if ( this.selectedSheet !== null ) {
       this.router.navigate(['/datacapture/upload/mapping']);
     } else {
-      this.notification.warn('Please select a sheet.')
+      this.notification.warn('Please select a sheet.');
     }
   }
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgZorroAntdModule, NZ_I18N, en_US, NzConfig, NZ_CONFIG, NzMessageService } from 'ng-zorro-antd';
+import { NZ_I18N, en_US, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -11,7 +11,6 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { AgGridModule } from '@ag-grid-community/angular';
 
 registerLocaleData(en);
 // This is used to configure the placement of the snackbars
@@ -37,9 +36,6 @@ const ngZorroConfig: NzConfig = {
     // DevTools
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     DataCaptureModule,
-
-    // Grid
-    AgGridModule.withComponents([])
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

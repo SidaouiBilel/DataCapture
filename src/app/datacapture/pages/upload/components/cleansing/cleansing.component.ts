@@ -67,6 +67,11 @@ export class CleansingComponent implements OnInit {
       });
   }
 
+  onSizeChange(event: number): void {
+    this.numberOfRows = event;
+    this.getData();
+  }
+
   search(filter: string): void {
     this.not.warn(filter);
   }
