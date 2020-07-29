@@ -1,0 +1,25 @@
+<nz-form-item class="m-0">
+    <nz-form-control>
+        <nz-input-group nzCompact >
+            <button 
+                nz-tooltip nzTooltipTitle='Pre Mapping Transformation Pipe'
+                nzGhost nz-button nzType='primary' class="pipe-icon">
+                <i nz-icon nzType="box-plot"></i>
+            </button>
+            <nz-select (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="min-width: 200px" nzPlaceHolder='Transformation Pipe'>
+                <nz-option
+                    [nzValue]='null'
+                    nzLabel='None'
+                ></nz-option>
+                <nz-option *ngFor='let o of (domain_pipes$ | async)'
+                    [nzValue]='o.id'
+                    [nzLabel]='o.name'
+                ></nz-option>
+            </nz-select>
+            <button  [disabled]='!(activeId$ | async)' nz-button (click)='onEditClick()'><i nz-icon nzType="edit"></i></button>
+            <button  class="pipe-icon-last" nz-button (click)='onAddClick()'><i nz-icon nzType="plus"></i></button>
+        </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <ng-template #prefix><i nz-icon nzType="box-plot"></i></ng-template>

@@ -1,16 +1,24 @@
-{{data | json}}
+<form nz-form [nzLayout]="'horizontal'">
 
     <nz-form-item>
-      <nz-form-control>
-        <nz-input-group>
-          <app-columns-input [(ngModel)]='data.column'></app-columns-input>
-        </nz-input-group>
+      <nz-form-label [nzSm]="8">Column</nz-form-label>
+      <nz-form-control [nzSm]="16">
+          <app-columns-input [(ngModel)]='data.column' (change)='onDataChanged()' name='column'></app-columns-input>
       </nz-form-control>
     </nz-form-item>
+
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your Password!">
-        <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input  placeholder="Password" />
-        </nz-input-group>
+      <nz-form-label [nzSm]="8">From</nz-form-label>
+      <nz-form-control [nzSm]="16">
+        <input nz-input [(ngModel)]='data.from' (change)='onDataChanged()' name='from' />
       </nz-form-control>
     </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">To</nz-form-label>
+      <nz-form-control [nzSm]="16">
+          <input nz-input [(ngModel)]='data.to' (change)='onDataChanged()' name='to'/>
+      </nz-form-control>
+    </nz-form-item>
+
+</form>

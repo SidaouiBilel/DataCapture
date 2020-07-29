@@ -1,11 +1,14 @@
 <div class="main-container flex-box">
   <!-- Header -->
   <div class="importHeader" nz-row>
-    <div nz-col nzSpan="18">
+    <div nz-col nzSpan="9">
       <nz-select [(ngModel)]="selectedSheet" class="selectStyleSheet" (ngModelChange)="selectSheet($event)">
         <nz-option *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" [nzValue]="i" [nzLabel]="sheet"></nz-option>
       </nz-select>
     </div>
+
+    <div nz-col nzSpan="9"><app-active-transformation-input></app-active-transformation-input></div>
+    
     <div nz-col nzSpan="6" class="text-right">
       <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
         nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToImport()"><i nz-icon

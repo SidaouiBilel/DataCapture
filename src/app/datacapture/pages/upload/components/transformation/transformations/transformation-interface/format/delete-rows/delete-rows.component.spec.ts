@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ColumnsInputComponent } from './columns-input.component';
+import { DeleteRowsComponent } from './delete-rows.component';
 
-describe('ColumnsInputComponent', () => {
-  let component: ColumnsInputComponent;
-  let fixture: ComponentFixture<ColumnsInputComponent>;
+describe('DeleteRowsComponent', () => {
+  let component: DeleteRowsComponent;
+  let fixture: ComponentFixture<DeleteRowsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColumnsInputComponent ]
+      declarations: [ DeleteRowsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ColumnsInputComponent);
+    fixture = TestBed.createComponent(DeleteRowsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,6 +5,8 @@ export enum TransformationActionTypes {
   DELETE_NODE = '[TRANS] DELETE NODE',
   UPDATE_NODE = '[TRANS] UPDATE NODE',
   RESET = '[TRANS] RESET',
+  LOAD = '[TRANS] LOAD',
+  FLIP = '[TRANS] EXPAND/COLLAPSE',
 }
 
 export class AddTransNode implements Action {
@@ -27,4 +29,14 @@ export class ResetTransformation implements Action {
   constructor() {}
 }
 
-export type TransformationAction = AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;
+export class TransformationFlipExpand implements Action {
+  readonly type = TransformationActionTypes.FLIP;
+  constructor() {}
+}
+
+export class LoadTransformation implements Action {
+  readonly type = TransformationActionTypes.LOAD;
+  constructor(readonly payload: any) {}
+}
+
+export type TransformationAction = LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;

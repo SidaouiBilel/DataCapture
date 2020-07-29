@@ -10,7 +10,9 @@ export const environment = {
   // upload: 'http://localhost:5000/import/',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   // mapping: 'http://localhost:5001/mapping',
-  cleansing: 'https://dcm-check.azurewebsites.net/check'
+  cleansing: 'https://dcm-check.azurewebsites.net/check',
+  // TRANSFORMATION
+  transform: 'https://dcm-transforming.azurewebsites.net/transfo/'
 };
 
 /*

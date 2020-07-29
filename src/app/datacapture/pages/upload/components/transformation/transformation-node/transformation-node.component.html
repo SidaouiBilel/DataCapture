@@ -1,16 +1,14 @@
 <nz-card [nzTitle]='title' [nzSize]="'small'" [style.border-color]="transofrmation?.color" class="transformation-card">
 
 
-    <div>
+    <div [hidden]='(expanded$ | async)'>
         <ng-template #paramsHost></ng-template>
     </div>
 
     <div class="flex between">
-        <div>
-            <div><i><app-bool-icon [b]='params.applied'></app-bool-icon> Applied</i></div>
-            <div><i><app-bool-icon [b]='params.valid'  ></app-bool-icon> Valid</i></div>
-        </div>
-        <button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+        <div><i><app-bool-icon [b]='params.valid'  ></app-bool-icon> Valid</i></div>
+        <div><button *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()' class="ma"><i nz-icon nzType="tool"></i></button></div>
+        <div><button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button></div>
     </div>
 
 </nz-card>
@@ -23,8 +21,9 @@
         <div >
             {{transofrmation?.label}}
         </div>
-
+        
         <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(1)' ><i nz-icon nzType="right"></i></button>
+        
 
     </div>
 

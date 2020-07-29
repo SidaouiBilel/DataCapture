@@ -1,5 +1,6 @@
 export interface Transformation{
     nodes:any[]
     validation_states:boolean[]
-    valid:boolean
+    expanded:boolean
+    loaded_transformation: any
 }
