@@ -6,8 +6,8 @@
     </div>
 
     <div class="flex between">
-        <div><i><app-bool-icon [b]='params.valid'  ></app-bool-icon> Valid</i></div>
-        <div><button *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()' class="ma"><i nz-icon nzType="tool"></i></button></div>
+        <div><button *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="tool"></i></button></div>
+        <div><app-bool-icon [b]='params.valid'  ></app-bool-icon></div>
         <div><button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button></div>
     </div>
 

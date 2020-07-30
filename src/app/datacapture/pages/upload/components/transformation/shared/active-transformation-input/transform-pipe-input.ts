@@ -3,12 +3,8 @@ import { map } from 'rxjs/operators';
 import { TranformationDrawerService } from '../../services/tranformation-drawer.service';
 import { TranformationService } from '../../services/tranformation.service';
 
-@Component({
-  selector: 'app-active-transformation-input',
-  templateUrl: './active-transformation-input.component.html',
-  styleUrls: ['./active-transformation-input.component.css']
-})
-export class ActiveTransformationInputComponent implements OnInit {
+export class TransformPipeInput implements OnInit {
+  
   pm$: any;
 
   modes = [
@@ -40,10 +36,6 @@ export class ActiveTransformationInputComponent implements OnInit {
     this.drawer.openEditor()
   }
 
-  onClearClick(){
-    this.service.setActive(null)
-  }
-
   onAddClick(){
     this.service.setActive(null)
     this.drawer.openEditor()
@@ -59,5 +51,4 @@ export class ActiveTransformationInputComponent implements OnInit {
   updatePreviewMode(mode){
     this.service.upadatePreviewMode(mode)
   }
-
 }

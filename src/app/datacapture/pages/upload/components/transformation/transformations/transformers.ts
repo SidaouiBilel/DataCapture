@@ -7,6 +7,5 @@ export const TRANSFORMATIONS = [
     { type: 'delete-rows', label: 'Delete Rows', icon: 'scissor', component: DeleteRowsComponent},
     { type: 'delete-column', label: 'Delete Column', icon: 'scissor', icon_rotation: 90 , component: DeleteColumnComponent},
     { type: 'replace', label: 'Replace' , icon: 'font-size', component: FormatterComponent},
-    { type: 'merge', label: 'Merge' , icon:'link', component: MergerComponent},
-    // { type: 'replace', label: 'Replace', icon: 'sort-ascending' },
+    { type: 'merge', label: 'Merge' , icon:'link', component: MergerComponent}
   ]; 

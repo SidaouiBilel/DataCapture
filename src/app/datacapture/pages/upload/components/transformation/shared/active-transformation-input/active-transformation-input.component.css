@@ -5,3 +5,7 @@
 .pipe-icon-last{
     border-radius: 0 20px 20px 0 !important;
 }
+
+[nz-button]{
+    margin: 0 5px;
+}

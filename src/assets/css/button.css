@@ -7,3 +7,7 @@ button.ghost{
 button.ma{
     margin-right: 7px;
 }
+
+.button-spacing [nz-button]{
+    margin: 0 5px;
+}

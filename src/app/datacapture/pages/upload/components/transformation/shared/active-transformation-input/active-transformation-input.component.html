@@ -40,6 +40,9 @@
     <button
         nz-tooltip nzTooltipTitle='Edit Pipe'  
         nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)' nz-button (click)='onEditClick()'><i nz-icon nzType="edit"></i></button>
+    <button
+        nz-tooltip nzTooltipTitle='Remove Pipe'  
+        nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)' nz-button (click)='onClearClick()'><i nz-icon nzType="stop"></i></button>
     <button  
         nz-tooltip nzTooltipTitle='Create Pipe'  
         nzShape='circle' class="ghost" nz-button (click)='onAddClick()'><i nz-icon nzType="plus"></i></button>
