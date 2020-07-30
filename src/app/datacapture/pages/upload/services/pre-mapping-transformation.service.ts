@@ -13,9 +13,17 @@ export class PreMappingTransformationService {
   constructor(private http: HttpClient) {
   }
 
-  startJob(filename: string,  worksheetId: string, domainId: string): Observable<any> {
-    // tslint:disable-next-line: max-line-length
-    return this.http.post(environment.cleansing + `?filename=${filename}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}`, {});
+  startJob(fileid: string,  sheetid: string, pipeid: string): Observable<any> {
+    return this.http.get( `${this.url}${fileid}/${sheetid}/${pipeid}`);
   }
 
+  getResult(fileid: any, page: any, nrows=10) {
+    // return this.http.get( `${this.url}preview/removeit?page=${page}&nrows=${nrows}&filename=${fileid.replace(/\//g,'\\\\')}`);
+    const body = {
+      page:page,
+      nrows:nrows,
+      filename:fileid
+    }
+    return this.http.post( `${this.url}preview`, body);
+  }
 }
