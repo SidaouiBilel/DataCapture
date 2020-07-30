@@ -3,7 +3,8 @@
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
       <nz-select [(ngModel)]="selectedSheet" class="selectStyleSheet" (ngModelChange)="selectSheet($event)">
-        <nz-option *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" [nzValue]="i" [nzLabel]="sheet"></nz-option>
+        <nz-option *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" [nzValue]="i" [nzLabel]="sheet">
+        </nz-option>
       </nz-select>
     </div>
     <div nz-col nzSpan="6" class="text-right">
@@ -21,18 +22,17 @@
 
   <!-- Grid -->
   <div class="flex-child mt-4" *ngIf="!(loading$ | async)">
-    <nz-table #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
-      [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows" [nzScroll]="{ x: '50vw' }"
-      [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)" (nzPageSizeChange)="onSizeChange($event)">
+    <nz-table #basicTable [nzData]="data$ | async" [nzBordered]="true" [nzFrontPagination]="false"
+      [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows"
+      [nzScroll]="{ x: '50vw' }" [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)">
       <thead>
         <tr>
-          <th *ngFor="let head of (headers$ | async)">{{head}}
-          </th>
+          <th *ngFor="let head of (headers$ | async)">{{head}}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
-          <td *ngFor="let head of (headers$ | async); let j = index" >{{ data[j] }}</td>
+          <td *ngFor="let head of (headers$ | async); let j = index">{{ data[j] }}</td>
         </tr>
       </tbody>
     </nz-table>

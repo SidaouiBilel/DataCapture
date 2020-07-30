@@ -178,3 +178,7 @@
 :host ::ng-deep .badge {
   padding: 7px 20px !important;
 }
+
+::ng-deep button:focus {
+  outline: none !important
+}

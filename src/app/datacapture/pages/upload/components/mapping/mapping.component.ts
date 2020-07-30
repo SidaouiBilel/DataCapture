@@ -30,7 +30,11 @@ export class MappingComponent implements OnInit {
   selectedSheet$: Observable<any>;
   domain$: Observable<string>;
   mappingId$: Observable<string>;
-  constructor(private store: Store<AppState>, private service: MappingService, private router: Router, private notification: NotificationService, private drawerService: NzDrawerService) {
+  constructor(private store: Store<AppState>,
+              private service: MappingService,
+              private router: Router,
+              private notification: NotificationService,
+              private drawerService: NzDrawerService) {
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
@@ -44,7 +48,7 @@ export class MappingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.openTransPipe()
+    // this.openTransPipe();
 
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet]) => {
