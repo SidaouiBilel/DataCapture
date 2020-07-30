@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectActivePipe } from '../../../transformation/store/transformation.selectors';
+import { selectActivePipe, selectActivePipeId } from '../../../transformation/store/transformation.selectors';
 import { selectFileData, selectSelectedFile, selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { AppState } from '@app/core';
 import { merge, combineLatest, BehaviorSubject, Subject } from 'rxjs';
@@ -17,7 +17,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
 
   // DECLARATIONS
   fileData$
-  activePipe$
+  activePipeId$
   selectedSheet$
 
   // SUBSCRIPTIONS
@@ -25,11 +25,12 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   paginator$
 
   // TABLE DATA
-  loading$ = new BehaviorSubject<boolean>(false)
   data$ = new BehaviorSubject<any>(null)
   headers$ = new BehaviorSubject<any>(null)
   
   // METADATA
+  error$ = new Subject<string>()
+  loading$ = new BehaviorSubject<boolean>(false)
   page$ = new BehaviorSubject<number>(1)
   generatedFileId$ = new Subject<string>()
 
@@ -40,7 +41,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
     this.selectedSheet$ = this.store.select(selectSelectedSheet)
     this.fileData$ = this.store.select(selectFileMetaData)
    
-    this.activePipe$ = this.store.select(selectActivePipe)
+    this.activePipeId$ = this.store.select(selectActivePipeId)
   }
   ngOnDestroy(): void {
     this.combiner$.unsubscribe()
@@ -49,17 +50,22 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // LISTEN FOR CONFIG CHANGES
-    this.combiner$ = combineLatest(this.fileData$, this.activePipe$, this.selectedSheet$).subscribe(
-      ([file, pipe, sheetIndex]:any)=>{
+    this.combiner$ = combineLatest(this.fileData$, this.activePipeId$, this.selectedSheet$).subscribe(
+      ([file, pipeId, sheetIndex]:any)=>{
+        this.onReset()
         const fileId = file.file_id
         const sheetId = String(Object.values(file.worksheets_map)[sheetIndex])
-        const pipeId = pipe.id
         
-        this.loading$.next(true)
-        this.service.startJob(fileId, sheetId, pipeId).subscribe(preTransformedFileid=>{
+        if(file && pipeId && sheetId){
+
+          this.loading$.next(true)
+          this.service.startJob(fileId, sheetId, pipeId).subscribe(preTransformedFileid=>{
           this.page$.next(1)
           this.generatedFileId$.next(preTransformedFileid.transformed_file_id)
-        })
+        }, this.onError)
+        }else{
+          this.onError('MISSING DATA')
+        }
         
       }
     )
@@ -70,13 +76,29 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
         if ( fileid && page ){
           this.loading$.next(true)
           
-          this.service.getResult(fileid, page).subscribe(result=>{
+          this.service.getResult(fileid, page).subscribe((result:any)=>{
               this.loading$.next(false)
-              this.data$.next(result)
-            }, err=> this.loading$.next(false))
+
+              this.data$.next(result.data)
+              this.headers$.next(result.headers)
+
+            }, this.onError)
         }
       }
     )
+  }
+
+  onError = (err)=>{
+    this.onReset()
+    this.error$.next(err)
+  }
+
+  onReset(){
+    this.error$.next(null)
+
+    this.data$.next(null)
+    this.headers$.next(null)
+    this.loading$.next(false)
   }
 
 }

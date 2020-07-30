@@ -23,5 +23,7 @@
 
     </div>
   </div> -->
-
-  {{data$ | async | json}}
+  <b>ERROR</b>{{this.error$ | async}}
+  <b>Loading</b>{{loading$ | async | json}}
+  <b>Headers</b>{{headers$ | async | json}}
+  <b>Data</b>{{data$ | async | json}}
