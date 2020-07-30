@@ -13,29 +13,26 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class TranformationService {
 
-  url = environment.transform
-
-  domain_id = null
-  
+  url = environment.transform;
+  domain_id = null;
   domain_pipes$ = new ReplaySubject<any>()
   active$: Observable<any>;
   previewMode$: Observable<any>;
 
   constructor(
-    private http: HttpClient, 
-    private drawerService: NzDrawerService, 
+    private http: HttpClient,
+    private drawerService: NzDrawerService,
     private modalService: NzModalService,
-    private store:Store<AppState>,
-    ) { 
+    private store: Store<AppState>) {
     this.store.select(selectDomain).subscribe((domain_id)=> {
       if (this.domain_id && this.domain_id != domain_id){
         this.setActive(null)
       }
       this.domain_id = domain_id
       this.loadDomainPipes()
-    }) 
-    this.active$ = this.store.select(selectActivePipe) 
-    this.previewMode$ = this.store.select(selectPreviewMode) 
+    })
+    this.active$ = this.store.select(selectActivePipe)
+    this.previewMode$ = this.store.select(selectPreviewMode)
   }
 
   save(nodes, domain_id, pipe_info){
