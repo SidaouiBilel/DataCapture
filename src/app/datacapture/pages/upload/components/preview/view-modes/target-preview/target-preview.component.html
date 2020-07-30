@@ -1,1 +1,25 @@
-<p>target-preview works!</p>
+
+  <div class="height-1 flex-1">
+    <div class="height-1 ">
+
+      <nz-table
+      #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
+      [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows"
+      [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)" (nzPageSizeChange)="onSizeChange($event)"
+      nzSize='small'
+      >
+      <thead>
+        <tr>
+          <th *ngFor="let head of (headers$ | async)">{{head}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td *ngFor="let head of (headers$ | async);" >{{ data[head] }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    </div>
+  </div>

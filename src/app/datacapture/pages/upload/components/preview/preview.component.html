@@ -30,10 +30,11 @@
     </div>
   </div>
 
+  <div class="mt-4"></div>
   <!-- Grid -->
   <ng-container [ngSwitch]='previewMode$ | async'>
     <ng-container *ngSwitchCase='"SOURCE"' >
-        <div class="flex-child mt-4" *ngIf="!(loading$ | async)">
+        <div class="flex-child" *ngIf="!(loading$ | async)">
           <nz-table #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
           [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows" [nzScroll]="{ x: '50vw' }"
           [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)" (nzPageSizeChange)="onSizeChange($event)">

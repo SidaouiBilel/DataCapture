@@ -11,4 +11,12 @@
             <app-columns-input mode='multiple' [(ngModel)]='data.columns' name='columns' (change)='onDataChanged()'></app-columns-input>
         </nz-form-control>
       </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8">Seperator</nz-form-label>
+        <nz-form-control [nzSm]="16">
+            <input nz-input [(ngModel)]='data.seperator' (change)='onDataChanged()' name='seperator'/>
+        </nz-form-control>
+      </nz-form-item>
+  
 </form>
