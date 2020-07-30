@@ -1,44 +1,53 @@
-<!-- <button nz-button nz-dropdown nzType='primary' [nzDropdownMenu]="ts">
-    Add Transformation
-    <i nz-icon nzType="down"></i>
-  </button>
+
+
+<!-- TOOLBAR -->
+  <div class="flex start button-spacing">
+    
+
+    <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'" [nzRotate]='t.icon_rotation || 0'></i></button>
+    <nz-divider nzType="vertical"></nz-divider>
+
+    <button class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Expand/Collapse"><i nz-icon nzType="fullscreen"></i></button>    
+    <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
+    
+    <nz-divider nzType="vertical"></nz-divider>
+    
+    <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete" (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    <button class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()'>
+      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+    </button>
+    
+    <nz-divider nzType="vertical"></nz-divider>
+    
+    <button nzShape='round' nz-button nz-tooltip nzTooltipTitle="Apply" nzType='primary'><i nz-icon nzType="caret-right"></i></button>
   
-  <nz-dropdown-menu #ts="nzDropdownMenu">
-    <ul nz-menu >
-      <li 
-        *ngFor='let t of tarnsformations' 
-        nz-menu-item
-        (click)='addTransformation(t)'
-        >{{t.label}}</li>
-    </ul>
-  </nz-dropdown-menu> -->
+    
+  </div>
 
-<i>Add a Transformer</i>
-
-<span *ngFor='let t of tarnsformations' >
-  <nz-divider nzType="vertical"></nz-divider>
-  <button nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label">
-    <!-- {{t.label}} -->
-    <i nz-icon [nzType]="t.icon || 'sliders'"></i>
-  </button>
-</span>
-
+  <!-- PIPE NODES LIST -->
 <div class="trans-container">
-
-    <!-- <i nz-icon nzType="caret-right" nzTheme="outline"></i> -->
-    <i nz-icon nzType="api" nzTheme="outline"  class="trans-arrow trans-start-arrow" [ngClass]="{'trans-arrow-circle': (pipe$ | async)?.length == 0 }"></i>
+    <i nz-icon nzType="api" nzTheme="outline"  class="trans-arrow trans-start-arrow trans-arrow-circle"></i>
     <div class="trans-block" *ngFor='let node of pipe$ | async; let i = index' >
-      <i *ngIf='i!=0' class="trans-arrow" nz-icon nzType="right"></i>
+      <i class="trans-arrow" > </i>
       <app-transformation-node [index]=i [params]='node'></app-transformation-node>
     </div>
 </div>
 
-<div class="pipe-buttons">
-  <button nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
-  <nz-divider nzType="vertical"></nz-divider>
-  <button nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Load"><i nz-icon nzType="download"></i></button>
-  <nz-divider nzType="vertical"></nz-divider>
-  <button nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save"><i nz-icon nzType="save"></i></button>
-  <nz-divider nzType="vertical"></nz-divider>
-  <button nzShape='round' nz-button nz-tooltip nzTooltipTitle="Apply" nzType='primary' style="min-width: 70px;"><i nz-icon nzType="caret-right"></i></button>
-</div>
+
+
+<!-- PIPE INFO -->
+<nz-descriptions [nzSize]='"small"' [nzColon]='false' [nzColumn]="4">
+  <nz-descriptions-item nzTitle="Pipe Name">
+    <nz-input-group [nzSuffix]="iicon">
+      <input class="ghost" style="width: 200px;" nz-input placeholder="..." [(ngModel)]="name" />
+      <ng-template #iicon><i nz-icon nzType="edit"></i></ng-template>
+ 
+    </nz-input-group>
+  </nz-descriptions-item>
+  <ng-container *ngIf='(active$ | async); let pipe'>
+    <nz-descriptions-item nzTitle="Domain ID"><nz-tag [nzColor]="'#87d068'">{{pipe.domain_id}}</nz-tag></nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Created On">{{(pipe.created_on) | date: 'dd/mm/yyyy HH:MM'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Last Modifed">{{(pipe.modified_on) | date: 'dd/mm/yyyy HH:MM'}}</nz-descriptions-item>
+  </ng-container>
+  
+</nz-descriptions>

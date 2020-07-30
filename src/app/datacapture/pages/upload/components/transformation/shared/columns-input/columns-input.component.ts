@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { selectMappedSources } from '@app/datacapture/pages/upload/store/selectors/mapping.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
@@ -12,6 +12,10 @@ import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
   providers: [MakeProvider(ColumnsInputComponent)]
 })
 export class ColumnsInputComponent extends AbstractValueAccessor implements OnInit {
+
+  _value = null
+
+  @Input() mode = 'default'
 
   columns$
   

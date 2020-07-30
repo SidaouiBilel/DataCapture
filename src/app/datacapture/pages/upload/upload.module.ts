@@ -23,6 +23,14 @@ import { TransformationInterfaceComponent } from './components/transformation/tr
 import { FormatterComponent } from './components/transformation/transformations/transformation-interface/format/formatter/formatter.component';
 import { ColumnsInputComponent } from './components/transformation/shared/columns-input/columns-input.component';
 import { UploadGuard } from './guards/upload.guard';
+import { MergerComponent } from './components/transformation/transformations/transformation-interface/format/merger/merger.component';
+import { DeleteColumnComponent } from './components/transformation/transformations/transformation-interface/format/delete-column/delete-column.component';
+import { DeleteRowsComponent } from './components/transformation/transformations/transformation-interface/format/delete-rows/delete-rows.component';
+import { ActiveTransformationInputComponent } from './components/transformation/shared/active-transformation-input/active-transformation-input.component';
+import { TransformationLoaderComponent } from './components/transformation/shared/transformation-loader/transformation-loader.component';
+import { TransformationSaverComponent } from './components/transformation/shared/transformation-saver/transformation-saver.component';
+import { TranformationService } from './components/transformation/services/tranformation.service';
+import { TranformationDrawerService } from './components/transformation/services/tranformation-drawer.service';
 
 const components = [
   UploadComponentComponent,
@@ -48,17 +56,19 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, ColumnsInputComponent],
+  declarations: [...components, ColumnsInputComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent, ActiveTransformationInputComponent, TransformationLoaderComponent, TransformationSaverComponent],
   exports: [
   ],
   providers : [
     FileImportService,
     MappingService,
     CleansingService,
-    UploadGuard
+    UploadGuard,
+    TranformationDrawerService,
+    TranformationService
   ],
   entryComponents: [
-    TransformationPipeComponent, TransformationInterfaceComponent, FormatterComponent
+    TransformationPipeComponent, TransformationInterfaceComponent, FormatterComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent
   ]
 })
 export class UploadModule {}

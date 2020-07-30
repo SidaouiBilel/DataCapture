@@ -2,8 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolve
 import { TransformationInterfaceComponent } from '../transformations/transformation-interface/transformation-interface.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { DeleteTransNode } from '../store/transformation.actions';
+import { DeleteTransNode, UpdateTransNode } from '../store/transformation.actions';
 import { TRANSFORMATIONS } from '../transformations/transformers';
+import { selectPipeExpanded } from '../store/transformation.selectors';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-transformation-node',
@@ -20,6 +22,8 @@ export class TransformationNodeComponent implements OnInit {
 
   transofrmation
 
+  expanded$
+
   params
   @Input() index
   @Input("params") set _params(value){
@@ -28,7 +32,9 @@ export class TransformationNodeComponent implements OnInit {
     this.loadComponent();
   }  
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private store: Store<AppState>) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private store: Store<AppState>, private modalService: NzModalService) { 
+    this.expanded$ =  this.store.select(selectPipeExpanded)
+  }
 
   ngOnInit() {
   }
@@ -45,10 +51,15 @@ export class TransformationNodeComponent implements OnInit {
     }
   }
 
+  getTranformerComponent(){
+    const component = this.transofrmation.component || TransformationInterfaceComponent
+
+    return component
+  }
   loadComponent() {
     if (this.transofrmation){
 
-      const component = this.transofrmation.component || TransformationInterfaceComponent
+      const component = this.getTranformerComponent()
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
 
       const viewContainerRef = this.paramsHost;
@@ -58,16 +69,32 @@ export class TransformationNodeComponent implements OnInit {
       const transformationRef = viewContainerRef.createComponent(componentFactory);
       this.transformationComponent = (<TransformationInterfaceComponent>transformationRef.instance)
 
-      this.transformationComponent.data = this.params;
-      this.transformationComponent.validationStatus.subscribe(valid=>{
-        console.log(valid)
-        this.params.valid = true
+      this.transformationComponent.setData(this.params);
+      this.transformationComponent.dataChanged.subscribe(data=>{
+        this.onDataChanged(data)
       })
-      this.transformationComponent.validate()
     }
+  }
+
+  onDataChanged(data){
+    this.store.dispatch(new UpdateTransNode(data, this.index))
   }
 
   onDelete(){
     this.store.dispatch(new DeleteTransNode(this.index))
+  }
+
+  showCompAsModal(): void {
+    const modal:any = this.modalService.create({
+      nzTitle: this.transofrmation.label,
+      nzContent: this.getTranformerComponent(),
+      nzComponentParams:{
+        data: {...this.params}
+      },
+      nzOnOk:()=>{
+        const instance: TransformationInterfaceComponent = modal.getContentComponent()
+        this.onDataChanged(instance.data)
+      }
+    });
   }
 }
