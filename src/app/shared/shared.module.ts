@@ -9,6 +9,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
 import { BoolIconComponent } from './bool-icon/bool-icon.component';
+import { AutoTableHeightDirective } from './directives/auto-table-height.directive';
+
+// import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
 // For example, All the modules of the ANT JS Library.
@@ -22,7 +25,7 @@ const SharedModules = [
   NzGridModule,
   ReactiveFormsModule,
   MonacoEditorModule,
-  NzModalModule,
+  NzModalModule
 ];
 
 @NgModule({
@@ -32,11 +35,13 @@ const SharedModules = [
   declarations: [
     PageHeaderComponent,
     BoolIconComponent,
+    AutoTableHeightDirective,
   ],
   exports: [
     ...SharedModules,
     PageHeaderComponent,
-    BoolIconComponent
+    BoolIconComponent,
+    AutoTableHeightDirective,
   ],
   providers: [
     UtilsService

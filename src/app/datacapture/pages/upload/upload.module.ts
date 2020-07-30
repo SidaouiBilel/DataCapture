@@ -31,6 +31,7 @@ import { TransformationLoaderComponent } from './components/transformation/share
 import { TransformationSaverComponent } from './components/transformation/shared/transformation-saver/transformation-saver.component';
 import { TranformationService } from './components/transformation/services/tranformation.service';
 import { TranformationDrawerService } from './components/transformation/services/tranformation-drawer.service';
+import { TargetPreviewComponent } from './components/preview/view-modes/target-preview/target-preview.component';
 
 const components = [
   UploadComponentComponent,
@@ -56,7 +57,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, ColumnsInputComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent, ActiveTransformationInputComponent, TransformationLoaderComponent, TransformationSaverComponent],
+  declarations: [...components, ColumnsInputComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent, ActiveTransformationInputComponent, TransformationLoaderComponent, TransformationSaverComponent, TargetPreviewComponent],
   exports: [
   ],
   providers : [

@@ -34,3 +34,7 @@
 .search-button {
   margin-right: 8px;
 }
+
+th, td {
+  white-space: nowrap;
+}

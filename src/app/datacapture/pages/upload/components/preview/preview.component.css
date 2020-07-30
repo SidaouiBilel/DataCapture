@@ -23,7 +23,7 @@
 
 :host nz-divider {
   /* margin: 0 !important; */
-  margin: 0 0 24px 0 !important;
+  /* margin: 0 0 24px 0 !important; */
 }
 
 :host ::ng-deep .ant-divider-inner-text {
