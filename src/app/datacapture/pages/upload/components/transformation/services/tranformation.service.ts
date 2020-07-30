@@ -5,14 +5,12 @@ import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectDomain } from '../../../store/selectors/import.selectors';
-import { LoadTransformation, UpdateTransNode } from '../store/transformation.actions';
-import { selectActivePipe } from '../store/transformation.selectors';
+import { LoadTransformation, UpdateTransNode, SetPreviewMode } from '../store/transformation.actions';
+import { selectActivePipe, selectPreviewMode } from '../store/transformation.selectors';
 import { BehaviorSubject, Observable, Subject, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TranformationService {
 
   url = environment.transform
@@ -20,7 +18,8 @@ export class TranformationService {
   domain_id = null
   
   domain_pipes$ = new ReplaySubject<any>()
-  active$;
+  active$: Observable<any>;
+  previewMode$: Observable<any>;
 
   constructor(
     private http: HttpClient, 
@@ -29,11 +28,14 @@ export class TranformationService {
     private store:Store<AppState>,
     ) { 
     this.store.select(selectDomain).subscribe((domain_id)=> {
+      if (this.domain_id && this.domain_id != domain_id){
+        this.setActive(null)
+      }
       this.domain_id = domain_id
-      this.setActive(null)
       this.loadDomainPipes()
     }) 
     this.active$ = this.store.select(selectActivePipe) 
+    this.previewMode$ = this.store.select(selectPreviewMode) 
   }
 
   save(nodes, domain_id, pipe_info){
@@ -47,7 +49,6 @@ export class TranformationService {
     return this.http.post(`${this.url}`,pipe).pipe(
       tap(()=> this.loadDomainPipes()),
       tap((active)=> {
-        console.log({active})
         this.setActive(active)
       }),
     )
@@ -81,5 +82,9 @@ export class TranformationService {
 
   loadDomainPipes(){
     this.getInContext().subscribe(res=> this.domain_pipes$.next(res))
+  }
+
+  upadatePreviewMode(mode: any) {
+    this.store.dispatch(new SetPreviewMode(mode))
   }
 }

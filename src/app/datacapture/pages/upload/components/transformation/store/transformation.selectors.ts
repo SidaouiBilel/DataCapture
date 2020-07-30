@@ -31,3 +31,8 @@ export const selectTranformationNodesStatus = createSelector(
   selectTranformation,
   (object: Transformation) => object.validation_states
 );
+
+export const selectPreviewMode = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.previwMode
+);

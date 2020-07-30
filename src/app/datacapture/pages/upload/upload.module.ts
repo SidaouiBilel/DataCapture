@@ -64,7 +64,8 @@ const components = [
     MappingService,
     CleansingService,
     UploadGuard,
-    TranformationDrawerService
+    TranformationDrawerService,
+    TranformationService
   ],
   entryComponents: [
     TransformationPipeComponent, TransformationInterfaceComponent, FormatterComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent

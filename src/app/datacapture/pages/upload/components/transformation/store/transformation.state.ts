@@ -1,12 +1,12 @@
 import { Transformation } from './transformation.model';
 import { TransformationActionTypes } from './transformation.actions';
-import { INITIAL_STATE } from '@ngrx/store';
 
 export const initialState: Transformation = {
     nodes:[],
     validation_states:[],
     expanded: true,
-    loaded_transformation: null 
+    loaded_transformation: null,
+    previwMode:'SOURCE'
 }
 
 const ACTIONS = TransformationActionTypes
@@ -54,6 +54,10 @@ export function TransformationReducer(state: Transformation = initialState, acti
             nodes = pipe.nodes || []
         }
         return {...state, loaded_transformation: pipe, nodes: nodes}
+    }
+
+    case ACTIONS.SET_PREVIEW_MODE:{
+        return {...state, previwMode: action.mode}
     }
     
     case ACTIONS.RESET:{

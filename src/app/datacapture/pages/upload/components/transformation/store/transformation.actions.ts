@@ -7,6 +7,7 @@ export enum TransformationActionTypes {
   RESET = '[TRANS] RESET',
   LOAD = '[TRANS] LOAD',
   FLIP = '[TRANS] EXPAND/COLLAPSE',
+  SET_PREVIEW_MODE = '[TRANS] SET_PREVIEW_MODE',
 }
 
 export class AddTransNode implements Action {
@@ -39,4 +40,9 @@ export class LoadTransformation implements Action {
   constructor(readonly payload: any) {}
 }
 
-export type TransformationAction = LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;
+export class SetPreviewMode implements Action {
+  readonly type = TransformationActionTypes.SET_PREVIEW_MODE;
+  constructor(readonly mode: any) {}
+}
+
+export type TransformationAction = SetPreviewMode | LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;

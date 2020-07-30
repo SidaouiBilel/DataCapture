@@ -9,11 +9,19 @@ import { TranformationService } from '../../services/tranformation.service';
   styleUrls: ['./active-transformation-input.component.css']
 })
 export class ActiveTransformationInputComponent implements OnInit {
+  pm$: any;
+
+  modes = [
+    {mode:"TARGET", icon:"file-sync", tooltip: 'View Target'}, 
+    {mode:"SOURCE", icon:"file-text", tooltip: 'View Source'}]
 
   constructor(
     private service: TranformationService,
     private drawer: TranformationDrawerService
     ) {}
+
+
+  type= 2
 
   activeId$
   domain_pipes$
@@ -21,6 +29,7 @@ export class ActiveTransformationInputComponent implements OnInit {
   ngOnInit() {
     this.activeId$ = this.service.active$.pipe(map((e:any)=>(e)?e.id:null))
     this.domain_pipes$ = this.service.domain_pipes$
+    this.pm$ = this.service.previewMode$
   }
 
   loadPipes(){
@@ -41,5 +50,9 @@ export class ActiveTransformationInputComponent implements OnInit {
       const active = pipes.find(e=>e.id==activeId)
       this.service.setActive(active)
     }).unsubscribe()
+  }
+
+  updatePreviewMode(mode){
+    this.service.upadatePreviewMode(mode)
   }
 }
