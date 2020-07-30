@@ -10,8 +10,6 @@ import { SaveMappingFields, SaveMappedSources, SaveMappingId } from '../../store
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
-import { TransformationPipeComponent } from '../transformation/transformation-pipe/transformation-pipe.component';
-import { NzDrawerService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-mapping',
@@ -30,7 +28,10 @@ export class MappingComponent implements OnInit {
   selectedSheet$: Observable<any>;
   domain$: Observable<string>;
   mappingId$: Observable<string>;
-  constructor(private store: Store<AppState>, private service: MappingService, private router: Router, private notification: NotificationService) {
+  constructor(private store: Store<AppState>,
+              private service: MappingService,
+              private router: Router,
+              private notification: NotificationService) {
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
