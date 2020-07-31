@@ -20,12 +20,9 @@ export class CleansingService {
     return this.http.get(environment.cleansing + `/metadata?job_id=${jobId}`);
   }
 
-  getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number): Observable<any> {
+  getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number, filter: string, sort: any[]): Observable<any> {
+    const payload = {filter, sort};
     // tslint:disable-next-line: max-line-length
-    return this.http.get(environment.cleansing + `/exposures?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}&domain_id=${domainId}`);
-  }
-
-  getJobResult(filename: string, worksheet: string, page: number, nrows: number): Observable<any> {
-    return this.http.get(environment.cleansing + `/results?filename=${filename}&worksheet=${worksheet}&page=${page}&nrows=${nrows}`);
+    return this.http.post(environment.cleansing + `/data?filename=${filename}&worksheet=${worksheet}&worksheet_id=${worksheet}&page=${page}&nrows=${nrows}&domain_id=${domainId}`, payload);
   }
 }

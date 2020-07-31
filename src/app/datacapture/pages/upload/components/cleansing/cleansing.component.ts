@@ -17,11 +17,9 @@ import { CleansingService } from '../../services/cleansing.service';
 export class CleansingComponent implements OnInit {
   // Data Table Related
   numberOfRows = 25;
-  page = 1;
   results$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  totalRecords$: BehaviorSubject<number> = new BehaviorSubject(0);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   // Store
@@ -38,47 +36,28 @@ export class CleansingComponent implements OnInit {
     this.fileData$.subscribe((res) => {this.fileData = res; });
     this.domain$.subscribe((domain) => { this.domain = domain; });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
+    const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    this.service.startJob(this.fileData.metaData.file_id, worksheet, this.domain).subscribe((job) => {});
   }
 
   ngOnInit() {
-    this.getData();
-  }
-
-  getData(): void {
-    const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    this.loading$.next(true);
-    this.service.startJob(this.fileData.metaData.file_id, worksheet, this.domain)
-      .subscribe((job) => {
-        if (job.job_id) {
-          forkJoin(
-            this.service.getJobData(this.fileData.metaData.file_id, worksheet, this.domain, this.page , this.numberOfRows),
-            this.service.getJobResult(this.fileData.metaData.file_id, worksheet, this.page , this.numberOfRows)
-          ).subscribe(([res, errors]) => {
-              this.totalRecords$.next(Number(res.total) * 20);
-              this.headers$.next(res.headers);
-              this.data$.next(res.data);
-              this.loading$.next(false);
-              this.results$.next(errors);
-            });
-        }
-      }, (err) => {
-        this.not.error(err.message);
-      });
   }
 
   serverSideDatasource = () => {
     const that = this;
     return {
       getRows(params) {
-        that.page = params.request.endRow / that.numberOfRows;
+        const page = (params.request.endRow / that.numberOfRows) - 1;
         const worksheet = that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
-        forkJoin(
-          that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, that.page , that.numberOfRows),
-          that.service.getJobResult(that.fileData.metaData.file_id, worksheet, that.page , that.numberOfRows)
-        ).subscribe(([res, errors]: [any, any]) => {
+        that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, page , that.numberOfRows, '', [])
+        .subscribe((res) => {
+          if (page <= 1) {
+            that.headers$.next(res.headers);
+            that.results$.next(res.results);
+          }
           if (res.data.length) {
             const lastRow = () => {
-              if ( res.data.total >= 1 ) { return res.data.total; } else { return -1; }
+              if ( res.data.length < that.numberOfRows  ) { return (page * that.numberOfRows) + res.data.length; } else { return -1; }
             };
             params.successCallback(res.data, lastRow());
           } else {
@@ -90,7 +69,6 @@ export class CleansingComponent implements OnInit {
       }
     };
   }
-
   fetchData(params: any): void {
     const datasource = this.serverSideDatasource();
     params.api.setServerSideDatasource(datasource);

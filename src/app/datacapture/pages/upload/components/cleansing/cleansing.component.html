@@ -20,7 +20,7 @@
 
   <!-- Grid -->
   <div class="flex-child mt-4">
-    <app-data-grid [columnDefs]="headers$ | async" [rowData]="data$ | async" [totalRecords]="totalRecords$ | async"
-      [results]="results$ | async" (gridReady)="fetchData($event)"></app-data-grid>
+    <app-data-grid [columnDefs]="headers$ | async" [results]="results$ | async" [paginationPageSize]="numberOfRows"
+      (gridReady)="fetchData($event)"></app-data-grid>
   </div>
 </div>
