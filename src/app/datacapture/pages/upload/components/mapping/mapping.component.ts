@@ -56,9 +56,12 @@ export class MappingComponent implements OnInit {
             this.updateMappingFields(res);
             this.store.dispatch(new SaveMappingId(res.mapping_id));
             // Update Source Fields
-            const columns = {};
-            Object.keys(res.columns_details).forEach(e => columns[e] = res.columns_details[e].isMapped);
-            this.store.dispatch(new SaveMappedSources({...this.mappedSources, ...columns}));
+            Object.keys(res.columns_details).forEach(e => {
+              if (res.columns_details[e]) {
+                this.mappedSources[e] = res.columns_details[e].isMapped;
+              }
+            });
+            this.store.dispatch(new SaveMappedSources(this.mappedSources));
           });
       });
   }
