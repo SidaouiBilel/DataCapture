@@ -36,24 +36,7 @@
   <!-- Grid -->
   <ng-container [ngSwitch]='previewMode$ | async'>
     <ng-container *ngSwitchCase='"SOURCE"'>
-      <div class="flex-child" *ngIf="!(loading$ | async)">
-        <nz-table #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
-          [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows"
-          [nzScroll]="{ x: '50vw' }" [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)"
-          (nzPageSizeChange)="onSizeChange($event)">
-          <thead>
-            <tr>
-              <th *ngFor="let head of (headers$ | async)">{{head}}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of basicTable.data; let i = index">
-              <td *ngFor="let head of (headers$ | async); let j = index">{{ data[j] }}</td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </div>
+      <app-target-preview></app-target-preview>
     </ng-container>
 
     <app-target-preview *ngSwitchCase='"TARGET"'></app-target-preview>

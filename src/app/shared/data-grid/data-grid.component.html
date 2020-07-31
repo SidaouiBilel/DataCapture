@@ -9,8 +9,8 @@
   [paginationPageSize]="paginationPageSize"
   [enterMovesDown]="true"
   [enterMovesDownAfterEdit]="true"
-  [cacheBlockSize]="25"
-  [maxBlocksInCache]="10"
+  [cacheBlockSize]="paginationPageSize"
+  [maxBlocksInCache]="5"
   [blockLoadDebounceMillis]="100"
   (gridReady)="gridReady.emit($event)">
 </ag-grid-angular>

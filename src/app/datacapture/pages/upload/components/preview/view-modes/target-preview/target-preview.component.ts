@@ -15,24 +15,24 @@ import { PreMappingTransformationService } from '@app/datacapture/pages/upload/s
 export class TargetPreviewComponent implements OnInit, OnDestroy {
 
   // DECLARATIONS
-  fileData$
-  activePipe$
-  selectedSheet$
+  fileData$;
+  activePipe$;
+  selectedSheet$;
 
   // SUBSCRIPTIONS
-  paginator$
+  paginator$;
 
   // TABLE DATA
   headers$ = new BehaviorSubject<any>(null)
   totalRecords$ = new Subject<any>()
-  
+
   // METADATA
   error$ = new BehaviorSubject<string>(null)
   loading$ = new BehaviorSubject<boolean>(false)
   page$ = new BehaviorSubject<number>(1)
   size$ = new BehaviorSubject<number>(25)
-  generatedFileId$
-  gridReady$ = new Subject<string>()
+  generatedFileId$;
+  gridReady$ = new Subject<string>();
 
   constructor(
     private store: Store<AppState>,
