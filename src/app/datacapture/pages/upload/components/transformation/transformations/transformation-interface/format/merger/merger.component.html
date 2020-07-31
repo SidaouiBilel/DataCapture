@@ -2,7 +2,8 @@
     <nz-form-item>
       <nz-form-label [nzSm]="8">Destination</nz-form-label>
       <nz-form-control [nzSm]="16">
-          <app-columns-input [(ngModel)]='data.destination' name='destination' (change)='onDataChanged()'></app-columns-input>
+        <input nz-input [(ngModel)]='data.destination' (change)='onDataChanged()' name='destination'/>
+          <!-- <app-columns-input [(ngModel)]='data.destination' name='destination' (change)='onDataChanged()'></app-columns-input> -->
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

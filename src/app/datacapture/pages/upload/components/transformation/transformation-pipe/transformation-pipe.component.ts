@@ -85,6 +85,11 @@ export class TransformationPipeComponent implements OnInit {
     )
   }
 
+  onSaveAndApply(){
+    this.pipes.upadatePreviewMode('TARGET')
+    this.onSave()
+  }
+
   onDelete(){
     this.active$.subscribe(
       (active:any) =>{

@@ -34,7 +34,7 @@ export class TranformationService {
     this.active$ = this.store.select(selectActivePipe)
     this.previewMode$ = this.store.select(selectPreviewMode)
   }
-
+  
   save(nodes, domain_id, pipe_info){
     const pipe = {
       ...pipe_info,
