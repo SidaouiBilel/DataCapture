@@ -33,6 +33,7 @@ import { TranformationService } from './components/transformation/services/tranf
 import { TranformationDrawerService } from './components/transformation/services/tranformation-drawer.service';
 import { TargetPreviewComponent } from './components/preview/view-modes/target-preview/target-preview.component';
 import { SourcePreviewComponent } from './components/preview/view-modes/source-preview/source-preview.component';
+import { TransformationEffects } from './components/transformation/store/transformation.effect';
 
 const components = [
   UploadComponentComponent,
@@ -53,7 +54,7 @@ const components = [
     UploadRoutingModule,
     SharedModule,
     StoreModule.forFeature('upload', uploadReducers),
-    EffectsModule.forFeature([ImportEffects]),
+    EffectsModule.forFeature([ImportEffects, TransformationEffects]),
     // Drag and Drop
     DndModule,
     NgDragDropModule.forRoot(),

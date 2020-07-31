@@ -8,6 +8,7 @@ export enum TransformationActionTypes {
   LOAD = '[TRANS] LOAD',
   FLIP = '[TRANS] EXPAND/COLLAPSE',
   SET_PREVIEW_MODE = '[TRANS] SET_PREVIEW_MODE',
+  UPDATE_FILE_PATH = '[TRANS] UPDATE_FILE_PATH',
 }
 
 export class AddTransNode implements Action {
@@ -45,4 +46,9 @@ export class SetPreviewMode implements Action {
   constructor(readonly mode: any) {}
 }
 
-export type TransformationAction = SetPreviewMode | LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;
+export class UpdateTransformedFilePath implements Action {
+  readonly type = TransformationActionTypes.UPDATE_FILE_PATH;
+  constructor(readonly filePath: any) {}
+}
+
+export type TransformationAction = UpdateTransformedFilePath | SetPreviewMode | LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;

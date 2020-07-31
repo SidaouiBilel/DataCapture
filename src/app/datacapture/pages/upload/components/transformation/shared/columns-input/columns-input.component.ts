@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { reduce, map } from 'rxjs/operators';
 import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
+import { selectFileHeaders } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 
 @Component({
   selector: 'app-columns-input',
@@ -21,7 +22,7 @@ export class ColumnsInputComponent extends AbstractValueAccessor implements OnIn
   
   constructor(private store: Store<AppState>) { 
     super()
-    this.columns$ = this.store.select(selectMappedSources).pipe(map((dict)=> Object.keys(dict) ));
+    this.columns$ = this.store.select(selectFileHeaders)
   }
 
   ngOnInit() {

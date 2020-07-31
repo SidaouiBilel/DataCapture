@@ -5,8 +5,10 @@ export const initialState: Transformation = {
     nodes:[],
     validation_states:[],
     expanded: true,
-    loaded_transformation: null,
-    previwMode:'SOURCE'
+    activePipe: null,
+    previwMode:'SOURCE',
+
+    transformedFilePath:null
 }
 
 const ACTIONS = TransformationActionTypes
@@ -53,13 +55,17 @@ export function TransformationReducer(state: Transformation = initialState, acti
         if (pipe){
             nodes = pipe.nodes || []
         }
-        return {...state, loaded_transformation: pipe, nodes: nodes}
+        return {...state, activePipe: pipe, nodes: nodes}
     }
 
     case ACTIONS.SET_PREVIEW_MODE:{
         return {...state, previwMode: action.mode}
     }
     
+    case ACTIONS.UPDATE_FILE_PATH:{
+        return {...state, transformedFilePath: action.filePath}
+    }
+
     case ACTIONS.RESET:{
         return {...initialState}
     }

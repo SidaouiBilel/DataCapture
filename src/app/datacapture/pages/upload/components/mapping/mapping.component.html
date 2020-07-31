@@ -31,7 +31,7 @@
             <div class="scroll-box">
               <div class="source-list">
                 <div class="source-item-box" [class.mapped]="mappedSources[item]" [dndDraggable]="item"
-                  *ngFor="let item of (fileData$ |async)?.headers">
+                  *ngFor="let item of keys(mappedSources)">
                   {{item}}
                 </div>
               </div>

@@ -19,7 +19,7 @@ export const selectPipeExpanded = createSelector(
 
 export const selectActivePipe = createSelector(
   selectTranformation,
-  (object: Transformation) => object.loaded_transformation
+  (object: Transformation) => object.activePipe
 );
 
 export const selectActivePipeId = createSelector(
@@ -40,4 +40,10 @@ export const selectTranformationNodesStatus = createSelector(
 export const selectPreviewMode = createSelector(
   selectTranformation,
   (object: Transformation) => object.previwMode
+);
+
+
+export const selectTransformedFilePath = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.transformedFilePath
 );

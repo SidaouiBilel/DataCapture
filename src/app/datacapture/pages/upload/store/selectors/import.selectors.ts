@@ -32,6 +32,11 @@ export const selectFileData = createSelector(
   (object: Import) => object.fileData
 );
 
+export const selectFileHeaders = createSelector(
+  selectFileData,
+  (object: Sheet) => object.headers
+);
+
 export const selectFileMetaData = createSelector(
   selectFileData,
   (object: Sheet) => object.metaData

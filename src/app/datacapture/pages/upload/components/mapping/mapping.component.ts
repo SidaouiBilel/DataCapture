@@ -20,6 +20,7 @@ export class MappingComponent implements OnInit {
   mappingFields: any;
   mappedSources: any;
   mandatories: number;
+  keys = Object.keys;
   // Store
   mappingFields$: Observable<any>;
   fileData$: Observable<any>;
@@ -38,7 +39,7 @@ export class MappingComponent implements OnInit {
     this.mandatories$   = this.store.select(selectMandatories);
     this.mappingId$     = this.store.select(selectMappingId);
     this.fileData$      = this.store.select(selectFileData);
-    this.domain$ = this.store.select(selectDomain);
+    this.domain$        = this.store.select(selectDomain);
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
@@ -49,33 +50,15 @@ export class MappingComponent implements OnInit {
       .subscribe(([domain, fileData, selectedSheet]) => {
         this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]])
           .subscribe((res) => {
-            // Create mapped Source
-            if (res.columns_details) {
-              const mappedSources = {};
-              Object.keys(res.columns_details).forEach((e) => {mappedSources[e] = res.columns_details[e].isMapped; });
-              this.store.dispatch(new SaveMappedSources(mappedSources));
-            }
-
+            // Reinit Sources
+            Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
             // Update Mapping Fields
-            this.reInitMappingFields();
+            this.updateMappingFields(res);
             this.store.dispatch(new SaveMappingId(res.mapping_id));
-            const mappingFieldsNames = this.mappingFields.map((e) => e.name);
-            res.mappings.forEach(element => {
-              const index = mappingFieldsNames.indexOf(element.target);
-              if (index >= 0 && element.source.length > 0) {
-                const refObj = {...this.mappingFields[index]};
-                refObj.value = element.source[0];
-                this.mappingFields[index] = refObj;
-              }
-            });
-            this.store.dispatch(new SaveMappingFields(this.mappingFields));
-
             // Update Source Fields
-            Object.keys(this.mappedSources).forEach(element => {
-              if (res.columns_details[element]) {
-                this.mappedSources[element] = res.columns_details[element].isMapped;
-              }
-            });
+            const columns = {};
+            Object.keys(res.columns_details).forEach(e => columns[e] = res.columns_details[e].isMapped);
+            this.store.dispatch(new SaveMappedSources({...this.mappedSources, ...columns}));
           });
       });
   }
@@ -85,6 +68,20 @@ export class MappingComponent implements OnInit {
       const refObj = {...element};
       refObj.value = null;
       this.mappingFields[index] = refObj;
+    });
+    this.store.dispatch(new SaveMappingFields(this.mappingFields));
+  }
+
+  updateMappingFields(res: any) {
+    this.reInitMappingFields();
+    const mappingFieldsNames = this.mappingFields.map((e) => e.name);
+    res.mappings.forEach(element => {
+      const index = mappingFieldsNames.indexOf(element.target);
+      if (index >= 0 && element.source.length > 0) {
+        const refObj = {...this.mappingFields[index]};
+        refObj.value = element.source[0];
+        this.mappingFields[index] = refObj;
+      }
     });
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
   }
@@ -127,7 +124,6 @@ export class MappingComponent implements OnInit {
   goToPreview(): void {
     this.router.navigate(['/datacapture/upload/preview']);
   }
-
 
   goToCleansing(): void {
     if (this.mandatories === 0 ) {

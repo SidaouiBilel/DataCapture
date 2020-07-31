@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectActivePipe, selectActivePipeId } from '../../../transformation/store/transformation.selectors';
-import { selectFileData, selectSelectedFile, selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
+import { selectActivePipe, selectActivePipeId, selectTransformedFilePath } from '../../../transformation/store/transformation.selectors';
+import { selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { AppState } from '@app/core';
 import { merge, combineLatest, BehaviorSubject, Subject } from 'rxjs';
 import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { PreMappingTransformationService } from '@app/datacapture/pages/upload/services/pre-mapping-transformation.service';
-import { combineAll } from 'rxjs/operators';
 
 @Component({
   selector: 'app-target-preview',
@@ -21,7 +20,6 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   selectedSheet$
 
   // SUBSCRIPTIONS
-  combiner$
   paginator$
 
   // TABLE DATA
@@ -33,7 +31,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   loading$ = new BehaviorSubject<boolean>(false)
   page$ = new BehaviorSubject<number>(1)
   size$ = new BehaviorSubject<number>(25)
-  generatedFileId$ = new Subject<string>()
+  generatedFileId$
   gridReady$ = new Subject<string>()
 
   constructor(
@@ -42,42 +40,24 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
     ) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet)
     this.fileData$ = this.store.select(selectFileMetaData)
-   
+    this.generatedFileId$ = this.store.select(selectTransformedFilePath)
     this.activePipe$ = this.store.select(selectActivePipe)
   }
   ngOnDestroy(): void {
-    this.combiner$.unsubscribe()
     this.paginator$.unsubscribe()
   }
 
   ngOnInit() {
-    // LISTEN FOR CONFIG CHANGES
-    this.combiner$ = combineLatest(this.fileData$, this.activePipe$, this.selectedSheet$).subscribe(
-      ([file, pipe, sheetIndex]:any)=>{
-        this.onReset()
-        const fileId = file.file_id
-        const sheetId = String(Object.values(file.worksheets_map)[sheetIndex])
-        const pipeId = (pipe)? pipe.id: null
-        
-        if(file && pipe && sheetId){
-          this.loading$.next(true)
-          this.service.startJob(fileId, sheetId, pipeId).subscribe(preTransformedFileid=>{
-          this.page$.next(1)
-          this.generatedFileId$.next(preTransformedFileid.transformed_file_id)
-        }, this.onError)
-        }else{
-          this.onError('Parameters Missing')
-        }
-        
-      }
-    )
 
     // LISTEN FOR PAGINATION OR FILE CHANGES
     this.paginator$ = combineLatest(this.generatedFileId$, this.page$, this.gridReady$, this.size$).subscribe(
       ([fileid, page, gridApi, size]:any)=>{
-
+        this.onReset()
         if ( fileid && page ){
+          // REFRESH GRID IN HERE
           this.generateDataSource(fileid, page, size, gridApi)
+        } else {
+          this.onError('MISSING PARAMETER')
         }
       }
     )
