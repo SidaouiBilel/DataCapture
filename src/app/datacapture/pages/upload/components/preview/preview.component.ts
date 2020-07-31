@@ -29,7 +29,7 @@ export class PreviewComponent implements OnInit {
   // Store
   fileMetaData$: Observable<Sheet>;
   selectedSheet$: Observable<number>;
-  previewMode$: Observable<"SOURCE" | "TARGET">;
+  previewMode$: Observable<'SOURCE' | 'TARGET'>;
   constructor(private store: Store<AppState>,
               private router: Router,
               private service: FileImportService,
@@ -37,7 +37,7 @@ export class PreviewComponent implements OnInit {
     this.fileMetaData$ = this.store.select(selectFileData);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.selectedSheet$.subscribe((res) => { this.selectedSheet = res; });
-    this.previewMode$ = this.store.select(selectPreviewMode)
+    this.previewMode$ = this.store.select(selectPreviewMode);
   }
 
   ngOnInit() {
