@@ -7,7 +7,9 @@
     <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'" [nzRotate]='t.icon_rotation || 0'></i></button>
     <nz-divider nzType="vertical"></nz-divider>
 
-    <button class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Expand/Collapse"><i nz-icon nzType="fullscreen"></i></button>    
+    <button *ngIf='(expanded$ | async)'  class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Expand"><i nz-icon nzType="fullscreen"></i></button>    
+    <button *ngIf='!(expanded$ | async)' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Collapse"><i nz-icon nzType="un-fullscreen"></i></button>  
+
     <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
     
     <nz-divider nzType="vertical"></nz-divider>

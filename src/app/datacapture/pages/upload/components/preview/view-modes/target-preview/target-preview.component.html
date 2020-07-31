@@ -2,11 +2,11 @@
 
   <div class="flex-1 flex" *ngIf='(error$ | async)'>
     <div class="flex colunm">
-      <span nz-text nzType='danger'>
+      <span nz-text nzType='danger' nz-tooltip [nzTooltipTitle]='error$ | async | json'>
         <i nz-icon nzType="api" style="font-size: 64px"></i>
       </span>
       <div class="mt-3">
-        <div>{{error$ | async | json}}</div>
+        <!-- <div>{{error$ | async | json}}</div> -->
         <span nz-text>Click <i>View Source</i> or select a <i>Transformation Pipe</i> in the toolbar above. </span>
       </div>
     </div>

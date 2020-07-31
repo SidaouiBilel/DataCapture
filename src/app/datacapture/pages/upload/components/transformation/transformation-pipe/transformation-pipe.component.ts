@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzDrawerRef } from 'ng-zorro-antd';
-import { selectTranformationNodes } from '../store/transformation.selectors';
+import { selectTranformationNodes, selectPipeExpanded } from '../store/transformation.selectors';
 import { AddTransNode, ResetTransformation, TransformationFlipExpand } from '../store/transformation.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
@@ -27,14 +27,17 @@ export class TransformationPipeComponent implements OnInit {
   name = null
   saved = false
 
+  expanded$;
+
   constructor(
     private drawerRef: NzDrawerRef<string>, 
     private store: Store<AppState>,
     private pipes: TranformationService
     ) {
-    this.pipe$ = this.store.select(selectTranformationNodes)
-    this.domain$ = this.store.select(selectDomain)
-    this.active$ = this.pipes.active$
+    this.pipe$ = this.store.select(selectTranformationNodes);
+    this.domain$ = this.store.select(selectDomain);
+    this.expanded$ = this.store.select(selectPipeExpanded);
+    this.active$ = this.pipes.active$;
 
     this.active$.subscribe((active)=> {
         this.name = (active)?active.name:null,

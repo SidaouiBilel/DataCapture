@@ -34,8 +34,8 @@ export class SourcePreviewComponent implements OnInit {
     this.paginator$ = combineLatest(this.size$, this.fileData$, this.selectedSheet$, this.gridReady$)
       .subscribe(([size, file, selectedSheet, grid]) => {
         this.onReset();
-        if (selectedSheet) {
-          const worksheet = file.metaData.worksheets_map[file.sheets[selectedSheet]];
+        const worksheet = file.metaData.worksheets_map[file.sheets[selectedSheet]];
+        if (worksheet) {
           this.generateDataSource(grid, worksheet, size);
         }
       });
@@ -54,7 +54,17 @@ export class SourcePreviewComponent implements OnInit {
             that.headers$.next(res.headers.map(h => ({field: h})));
           }
           const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
-          params.successCallback(res.data, lastRow());
+          const data = [];
+          for (let row of res.data){
+            const rowObject = {}
+            let i = 0;
+            for (let h of res.headers){
+              rowObject[h] = row[i];
+              i++;
+            }
+            data.push(rowObject);
+          }
+          params.successCallback(data, lastRow());
         }, (error) => {
             params.failCallback();
             // that.onError(error);
