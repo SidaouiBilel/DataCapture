@@ -25,7 +25,7 @@ export class ImportEffects {
     ofType<ActionImportReset>(ImportActionTypes.RESET),
     // withLatestFrom(this.store$.select( selectSelectedFile )),
     map((action) => {
-      this.store$.dispatch(new ResetTransformation())
+      this.store$.dispatch(new ResetTransformation());
       this.router.navigate(['/datacapture/upload/import']);
     })
   );

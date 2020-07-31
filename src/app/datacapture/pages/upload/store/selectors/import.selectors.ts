@@ -41,3 +41,8 @@ export const selectDomain = createSelector(
   selectImport,
   (object: Import) => object.selectedDomain
 );
+
+export const selectHeaders = createSelector(
+  selectImport,
+  (object: Import) => object.fileData.headers
+);

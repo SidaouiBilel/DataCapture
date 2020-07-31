@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { selectMappedSources } from '@app/datacapture/pages/upload/store/selectors/mapping.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { reduce, map } from 'rxjs/operators';
 import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
+import { selectHeaders } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 
 @Component({
   selector: 'app-columns-input',
@@ -12,16 +11,13 @@ import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
   providers: [MakeProvider(ColumnsInputComponent)]
 })
 export class ColumnsInputComponent extends AbstractValueAccessor implements OnInit {
+  _value = null;
+  @Input() mode = 'default';
+  columns$;
 
-  _value = null
-
-  @Input() mode = 'default'
-
-  columns$
-  
-  constructor(private store: Store<AppState>) { 
-    super()
-    this.columns$ = this.store.select(selectMappedSources).pipe(map((dict)=> Object.keys(dict) ));
+  constructor(private store: Store<AppState>) {
+    super();
+    this.columns$ = this.store.select(selectHeaders);
   }
 
   ngOnInit() {
