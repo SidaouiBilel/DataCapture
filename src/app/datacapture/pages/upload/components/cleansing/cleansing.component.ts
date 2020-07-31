@@ -78,7 +78,7 @@ export class CleansingComponent implements OnInit {
         ).subscribe(([res, errors]: [any, any]) => {
           if (res.data.length) {
             const lastRow = () => {
-              if ( res.data.total >= 1 ) { return res.data.total; } else { return res.data.total; }
+              if ( res.data.total >= 1 ) { return res.data.total; } else { return -1; }
             };
             params.successCallback(res.data, lastRow());
           } else {
