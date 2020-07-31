@@ -56,7 +56,7 @@ export class SourcePreviewComponent implements OnInit {
           const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
           const data = [];
           for (let row of res.data){
-            const rowObject = {}
+            const rowObject = {};
             let i = 0;
             for (let h of res.headers){
               rowObject[h] = row[i];
