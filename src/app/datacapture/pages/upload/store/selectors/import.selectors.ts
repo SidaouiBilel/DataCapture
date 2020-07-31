@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { selectImport } from '../upload.selectors';
-import { Import } from '../models/import.model';
+import { Import, Sheet } from '../models/import.model';
 
 export const selectImported = createSelector(
   selectImport,
@@ -30,6 +30,11 @@ export const selectError = createSelector(
 export const selectFileData = createSelector(
   selectImport,
   (object: Import) => object.fileData
+);
+
+export const selectFileMetaData = createSelector(
+  selectFileData,
+  (object: Sheet) => object.metaData
 );
 
 export const selectDomain = createSelector(

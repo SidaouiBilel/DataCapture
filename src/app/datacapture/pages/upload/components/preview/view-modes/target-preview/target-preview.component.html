@@ -1,4 +1,4 @@
-
+<!-- 
   <div class="height-1 flex-1">
     <div class="height-1 ">
 
@@ -22,4 +22,8 @@
     </nz-table>
 
     </div>
-  </div>
+  </div> -->
+  <b>ERROR</b>{{this.error$ | async}}
+  <b>Loading</b>{{loading$ | async | json}}
+  <b>Headers</b>{{headers$ | async | json}}
+  <b>Data</b>{{data$ | async | json}}

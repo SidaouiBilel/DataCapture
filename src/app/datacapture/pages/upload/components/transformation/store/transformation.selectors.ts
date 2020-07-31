@@ -22,6 +22,11 @@ export const selectActivePipe = createSelector(
   (object: Transformation) => object.loaded_transformation
 );
 
+export const selectActivePipeId = createSelector(
+  selectActivePipe,
+  (object: any) => (object)? object.id : null
+);
+
 export const selectTranformationNode = (index) => createSelector(
   selectTranformation,
   (object: Transformation) => object.nodes[index]

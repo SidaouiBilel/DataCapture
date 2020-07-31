@@ -12,6 +12,7 @@ export const environment = {
   // mapping: 'http://localhost:5001/mapping',
   cleansing: 'https://dcm-check.azurewebsites.net/check',
   // TRANSFORMATION
+  // transform: 'http://localhost:5000/transfo/'
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/'
 };
 
