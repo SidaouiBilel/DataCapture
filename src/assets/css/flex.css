@@ -16,8 +16,20 @@
     justify-content: flex-start;
 }
 
+.flex.top{
+    align-items: flex-start;
+}
+
+.flex.colunm.start{
+    align-items: flex-start;
+}
+
 .flex.colunm{
     flex-direction: column;
+}
+
+.flex.row{
+    flex-direction: row;
 }
 
 .flex-1{

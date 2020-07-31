@@ -5,3 +5,7 @@
 ::ng-deep .warning-cell {
   background-color: #f0a878;
 }
+
+:host{
+  display: contents;
+}

@@ -1,29 +1,20 @@
-<!-- 
-  <div class="height-1 flex-1">
-    <div class="height-1 ">
 
-      <nz-table
-      #basicTable [nzData]="data$ | async" nzShowSizeChanger [nzBordered]="true" [nzFrontPagination]="false"
-      [nzLoading]="loading$ | async" [nzTotal]="(totalRecords$ | async)" [nzPageSize]="numberOfRows"
-      [nzPageIndex]="page" (nzPageIndexChange)="onPageChange($event)" (nzPageSizeChange)="onSizeChange($event)"
-      nzSize='small'
-      >
-      <thead>
-        <tr>
-          <th *ngFor="let head of (headers$ | async)">{{head}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data; let i = index">
-          <td *ngFor="let head of (headers$ | async);" >{{ data[head] }}</td>
-        </tr>
-      </tbody>
-    </nz-table>
+<div class="flex flex-1 colunm">
 
+  <div class="flex-1 flex" *ngIf='(error$ | async)'>
+    <div class="flex colunm">
+      <span nz-text nzType='danger'>
+        <i nz-icon nzType="api"  style="font-size: 64px"></i>
+      </span>
+      <div class="mt-3">
+        <div>{{error$ | async | json}}</div>
+        <span nz-text>Click <i>View Source</i> or select a <i>Transformation Pipe</i> in the toolbar above. </span>
+      </div>
     </div>
-  </div> -->
-  <b>ERROR</b>{{this.error$ | async}}
-  <b>Loading</b>{{loading$ | async | json}}
-  <b>Headers</b>{{headers$ | async | json}}
-  <b>Data</b>{{data$ | async | json}}
+  </div>
+
+  <app-data-grid *ngIf='!(error$ | async)' class="flex-1"
+    [paginationPageSize]='size$ | async'
+    [columnDefs]="headers$ | async" (gridReady)="this.gridReady$.next($event)"></app-data-grid>
+ 
+</div>

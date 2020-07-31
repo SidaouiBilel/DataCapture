@@ -1,6 +1,27 @@
+<div class="flex start top">
 
+  <div style="max-width: 300px;">
 
-<!-- TOOLBAR -->
+    <!-- PIPE INFO -->
+    <nz-descriptions [nzSize]='"small"' [nzColon]='false' [nzColumn]="1">
+      <nz-descriptions-item nzTitle="Pipe Name">
+        <nz-input-group [nzSuffix]="iicon">
+          <input class="ghost" style="width: 200px;" nz-input placeholder="..." [(ngModel)]="name" />
+          <ng-template #iicon><i nz-icon nzType="edit"></i></ng-template>
+          
+        </nz-input-group>
+      </nz-descriptions-item>
+      <ng-container *ngIf='(active$ | async); let pipe'>
+        <!-- <nz-descriptions-item nzTitle="Domain ID"><nz-tag [nzColor]="'#87d068'">{{pipe.domain_id}}</nz-tag></nz-descriptions-item> -->
+        <nz-descriptions-item nzTitle="Created On">{{(pipe.created_on) | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Last Modifed">{{(pipe.modified_on) | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
+      </ng-container>
+      
+    </nz-descriptions> 
+  </div>
+
+  <div class="flex-1">
+    <!-- TOOLBAR -->
   <div class="flex start button-spacing">
     
 
@@ -19,7 +40,7 @@
     
     <nz-divider nzType="vertical"></nz-divider>
     
-    <button nzShape='round' nz-button nz-tooltip nzTooltipTitle="Apply" nzType='primary'><i nz-icon nzType="caret-right"></i></button>
+    <button nzShape='round' nz-button nz-tooltip nzTooltipTitle="Apply" nzType='primary' (click)='onSaveAndApply()'><i nz-icon nzType="caret-right"></i></button>
   
     
   </div>
@@ -33,21 +54,7 @@
     </div>
 </div>
 
+  </div>
 
 
-<!-- PIPE INFO -->
-<nz-descriptions [nzSize]='"small"' [nzColon]='false' [nzColumn]="4">
-  <nz-descriptions-item nzTitle="Pipe Name">
-    <nz-input-group [nzSuffix]="iicon">
-      <input class="ghost" style="width: 200px;" nz-input placeholder="..." [(ngModel)]="name" />
-      <ng-template #iicon><i nz-icon nzType="edit"></i></ng-template>
- 
-    </nz-input-group>
-  </nz-descriptions-item>
-  <ng-container *ngIf='(active$ | async); let pipe'>
-    <nz-descriptions-item nzTitle="Domain ID"><nz-tag [nzColor]="'#87d068'">{{pipe.domain_id}}</nz-tag></nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Created On">{{(pipe.created_on) | date: 'dd/mm/yyyy HH:MM'}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Last Modifed">{{(pipe.modified_on) | date: 'dd/mm/yyyy HH:MM'}}</nz-descriptions-item>
-  </ng-container>
-  
-</nz-descriptions>
+</div>
