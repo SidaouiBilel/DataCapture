@@ -25,14 +25,14 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   // TABLE DATA
   headers$ = new BehaviorSubject<any>(null)
   totalRecords$ = new Subject<any>()
-  
+
   // METADATA
   error$ = new BehaviorSubject<string>(null)
   loading$ = new BehaviorSubject<boolean>(false)
   page$ = new BehaviorSubject<number>(1)
   size$ = new BehaviorSubject<number>(25)
   generatedFileId$
-  gridReady$ = new Subject<string>()
+  gridReady$ = new Subject<string>();
 
   constructor(
     private store:Store<AppState>,
@@ -74,6 +74,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
     this.headers$.next(null)
     this.loading$.next(false)
   }
+
   generateDataSource(fileid, page, size,gridApi){
     const that = this;
     gridApi.api.setServerSideDatasource({
@@ -87,7 +88,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
               that.headers$.next(res.headers.map(h=>({field:h})))
             }
             const lastRow = () =>  (page <= res.last_page - 2)? -1: res.total
-            params.successCallback(res.data, lastRow()); 
+            params.successCallback(res.data, lastRow());
           }, (error) => {
             params.failCallback();
             that.onError(error)
