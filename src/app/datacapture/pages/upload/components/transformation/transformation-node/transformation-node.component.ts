@@ -70,6 +70,7 @@ export class TransformationNodeComponent implements OnInit {
       this.transformationComponent = (transformationRef.instance) as TransformationInterfaceComponent;
 
       this.transformationComponent.setData(this.params);
+      this.transformationComponent.index = this.index;
       this.transformationComponent.dataChanged.subscribe(data => this.onDataChanged(data))
     }
   }

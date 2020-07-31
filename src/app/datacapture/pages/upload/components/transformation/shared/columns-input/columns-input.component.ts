@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
 import { selectFileHeaders } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
+import { selectInputCloumnsByIndex } from '../../store/transformation.selectors';
 
 @Component({
   selector: 'app-columns-input',
@@ -12,7 +13,12 @@ import { selectFileHeaders } from '@app/datacapture/pages/upload/store/selectors
 })
 export class ColumnsInputComponent extends AbstractValueAccessor implements OnInit {
   _value = null;
+
   @Input() mode = 'default';
+  @Input('nodeIndex') set nodeIndex(index){
+    this.columns$ = this.store.select(selectInputCloumnsByIndex(index));
+  };
+
   columns$;
   
   constructor(private store: Store<AppState>) { 

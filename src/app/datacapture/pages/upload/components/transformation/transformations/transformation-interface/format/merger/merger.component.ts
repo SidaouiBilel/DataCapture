@@ -17,7 +17,6 @@ export class MergerComponent extends TransformationInterfaceComponent implements
 
   setData(data){
     super.setData(data)
-    
     this.data.columns = this.data.columns || []
   }
 }

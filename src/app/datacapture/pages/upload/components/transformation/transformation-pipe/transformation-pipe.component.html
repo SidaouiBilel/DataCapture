@@ -8,7 +8,7 @@
     <nz-divider nzType="vertical"></nz-divider>
 
     <button *ngIf='(expanded$ | async)'  class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Expand"><i nz-icon nzType="fullscreen"></i></button>    
-    <button *ngIf='!(expanded$ | async)' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Collapse"><i nz-icon nzType="fullscreen-exit"></i></button>  
+    <button *ngIf='!(expanded$ | async)' class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Collapse"><i nz-icon nzType="fullscreen-exit"></i></button>  
 
     <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
     

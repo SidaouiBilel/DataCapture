@@ -12,7 +12,7 @@ export class TransformationInterfaceComponent implements OnInit {
   data: any = {};
   index = null;
 
-  form_orientation = 'horizontal'
+  form_orientation = 'horizontal';
   
   constructor() { }
 
@@ -21,15 +21,18 @@ export class TransformationInterfaceComponent implements OnInit {
   }
 
   validate(){
-    this.validationStatus.emit(true)
+    return true;
   }
 
   onDataChanged(){
-    this.dataChanged.emit(this.data)
+    // VALIDATE
+    this.dataChanged.emit(this.data);
+    // VALIDATE AND EMIT ERRORS
+    this.validationStatus.emit(this.validate());
   }
 
   setData(data){
-    this.data = data
+    this.data = data;
   }
 
 }
