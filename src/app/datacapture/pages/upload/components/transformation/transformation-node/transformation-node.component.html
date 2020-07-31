@@ -7,7 +7,8 @@
 
     <div class="flex between">
         <div><button *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="tool"></i></button></div>
-        <div><app-bool-icon [b]='params.valid'  ></app-bool-icon></div>
+        <!-- <div><app-bool-icon [b]='params.valid'  ></app-bool-icon></div> -->
+        <div></div>
         <div><button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button></div>
     </div>
 

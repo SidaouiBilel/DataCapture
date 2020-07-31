@@ -49,15 +49,17 @@
         
         
     <nz-divider nzType='vertical'></nz-divider>
-        
+    
     
     <button *ngFor='let m of modes' 
-    nzShape='round'
+    
     nz-tooltip [nzTooltipTitle]='m.tooltip' 
     [ngClass]='{"ghost": (m.mode!=(pm$ | async))}'
     nz-button [nzType]='(m.mode==(pm$ | async))?"primary":"default"'
     (click)='updatePreviewMode(m.mode)'
     ><i nz-icon [nzType]="m.icon"></i>
-        <!-- {{(m.mode==(pm$ | async))? m.mode:''}} -->
+        {{m.label}}
     </button>
+
+    <nz-divider nzType='vertical'></nz-divider>
 </div>

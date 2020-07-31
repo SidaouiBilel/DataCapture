@@ -1,9 +1,45 @@
-<div class="flex start top">
 
-  <div style="max-width: 300px;">
+  <div >
+    <!-- TOOLBAR -->
+  <div class="flex start button-spacing">
+    
+
+    <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'" [nzRotate]='t.icon_rotation || 0'></i></button>
+    <nz-divider nzType="vertical"></nz-divider>
+
+    <button *ngIf='(expanded$ | async)'  class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Expand"><i nz-icon nzType="fullscreen"></i></button>    
+    <button *ngIf='!(expanded$ | async)' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Collapse"><i nz-icon nzType="un-fullscreen"></i></button>  
+
+    <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
+    
+    <nz-divider nzType="vertical"></nz-divider>
+    
+    <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete" (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    <button class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()'>
+      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+    </button>
+    
+    <nz-divider nzType="vertical"></nz-divider>
+    
+    <button nzShape='round' nz-button nzType='primary' (click)='onSaveAndApply()'>
+      Save and Apply <i nz-icon nzType="caret-right"></i>
+    </button>
+  
+    
+  </div>
+
+  <!-- PIPE NODES LIST -->
+<div class="trans-container">
+    <i nz-icon nzType="api" nzTheme="outline"  class="trans-arrow trans-start-arrow trans-arrow-circle"></i>
+    <div class="trans-block" *ngFor='let node of pipe$ | async; let i = index' >
+      <i class="trans-arrow" > </i>
+      <app-transformation-node [index]=i [params]='node'></app-transformation-node>
+    </div>
+</div>
+
 
     <!-- PIPE INFO -->
-    <nz-descriptions [nzSize]='"small"' [nzColon]='false' [nzColumn]="1">
+    <nz-descriptions [nzSize]='"small"' [nzColon]='false' [nzColumn]="4">
       <nz-descriptions-item nzTitle="Pipe Name">
         <nz-input-group [nzSuffix]="iicon">
           <input class="ghost" style="width: 200px;" nz-input placeholder="..." [(ngModel)]="name" />
@@ -19,42 +55,3 @@
       
     </nz-descriptions> 
   </div>
-
-  <div class="flex-1">
-    <!-- TOOLBAR -->
-  <div class="flex start button-spacing">
-    
-
-    <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'" [nzRotate]='t.icon_rotation || 0'></i></button>
-    <nz-divider nzType="vertical"></nz-divider>
-
-    <button class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle="Expand/Collapse"><i nz-icon nzType="fullscreen"></i></button>    
-    <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon nzType="reload"></i></button>
-    
-    <nz-divider nzType="vertical"></nz-divider>
-    
-    <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete" (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
-    <button class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()'>
-      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
-    </button>
-    
-    <nz-divider nzType="vertical"></nz-divider>
-    
-    <button nzShape='round' nz-button nz-tooltip nzTooltipTitle="Apply" nzType='primary' (click)='onSaveAndApply()'><i nz-icon nzType="caret-right"></i></button>
-  
-    
-  </div>
-
-  <!-- PIPE NODES LIST -->
-<div class="trans-container">
-    <i nz-icon nzType="api" nzTheme="outline"  class="trans-arrow trans-start-arrow trans-arrow-circle"></i>
-    <div class="trans-block" *ngFor='let node of pipe$ | async; let i = index' >
-      <i class="trans-arrow" > </i>
-      <app-transformation-node [index]=i [params]='node'></app-transformation-node>
-    </div>
-</div>
-
-  </div>
-
-
-</div>

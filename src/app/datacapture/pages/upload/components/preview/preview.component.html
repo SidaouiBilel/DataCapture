@@ -35,14 +35,8 @@
   <div class="mt-3"></div>
   <!-- Grid -->
   <ng-container [ngSwitch]='previewMode$ | async'>
-    <ng-container *ngSwitchCase='"SOURCE"'>
-      <app-target-preview></app-target-preview>
-    </ng-container>
-
+    <app-source-preview *ngSwitchCase='"SOURCE"'></app-source-preview>
     <app-target-preview *ngSwitchCase='"TARGET"'></app-target-preview>
-    <!-- TODO -->
-    <!-- <app-source-preview *ngSwitchCase='"SOURCE"'></app-source-preview> -->
-
   </ng-container>
 
 

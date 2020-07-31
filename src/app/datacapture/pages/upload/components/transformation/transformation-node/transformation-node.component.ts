@@ -18,7 +18,7 @@ export class TransformationNodeComponent implements OnInit {
   @Output() delete = new EventEmitter()
 
   @ViewChild('paramsHost', {static: true, read: ViewContainerRef}) paramsHost: ViewContainerRef;
-  transformationComponent: TransformationInterfaceComponent
+  transformationComponent: TransformationInterfaceComponent;
 
   transofrmation
 
@@ -43,19 +43,19 @@ export class TransformationNodeComponent implements OnInit {
     if (this.params && this.params.type){
       for (let t of TRANSFORMATIONS){
         if (t.type == this.params.type){
-          this.transofrmation = t
-
-          break
+          this.transofrmation = t;
+          break;
         }
       }
     }
   }
 
   getTranformerComponent(){
-    const component = this.transofrmation.component || TransformationInterfaceComponent
+    const component = this.transofrmation.component || TransformationInterfaceComponent;
 
-    return component
+    return component;
   }
+
   loadComponent() {
     if (this.transofrmation){
 
@@ -67,12 +67,10 @@ export class TransformationNodeComponent implements OnInit {
       // viewContainerRef.clear();
 
       const transformationRef = viewContainerRef.createComponent(componentFactory);
-      this.transformationComponent = (<TransformationInterfaceComponent>transformationRef.instance)
+      this.transformationComponent = (transformationRef.instance) as TransformationInterfaceComponent;
 
       this.transformationComponent.setData(this.params);
-      this.transformationComponent.dataChanged.subscribe(data=>{
-        this.onDataChanged(data)
-      })
+      this.transformationComponent.dataChanged.subscribe(data => this.onDataChanged(data))
     }
   }
 
@@ -89,7 +87,8 @@ export class TransformationNodeComponent implements OnInit {
       nzTitle: this.transofrmation.label,
       nzContent: this.getTranformerComponent(),
       nzComponentParams:{
-        data: {...this.params}
+        data: {...this.params},
+        index: this.index
       },
       nzOnOk:()=>{
         const instance: TransformationInterfaceComponent = modal.getContentComponent()
