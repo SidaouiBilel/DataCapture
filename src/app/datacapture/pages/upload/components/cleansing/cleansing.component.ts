@@ -41,29 +41,6 @@ export class CleansingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getData();
-  }
-
-  getData(): void {
-    const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    this.loading$.next(true);
-    this.service.startJob(this.fileData.metaData.file_id, worksheet, this.domain)
-      .subscribe((job) => {
-        if (job.job_id) {
-          forkJoin(
-            this.service.getJobData(this.fileData.metaData.file_id, worksheet, this.domain, this.page , this.numberOfRows),
-            this.service.getJobResult(this.fileData.metaData.file_id, worksheet, this.page , this.numberOfRows)
-          ).subscribe(([res, errors]) => {
-              this.totalRecords$.next(Number(res.total) * 20);
-              this.headers$.next(res.headers);
-              this.data$.next(res.data);
-              this.loading$.next(false);
-              this.results$.next(errors);
-            });
-        }
-      }, (err) => {
-        this.not.error(err.message);
-      });
   }
 
   serverSideDatasource = () => {
@@ -72,13 +49,11 @@ export class CleansingComponent implements OnInit {
       getRows(params) {
         that.page = params.request.endRow / that.numberOfRows;
         const worksheet = that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
-        forkJoin(
-          that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, that.page , that.numberOfRows),
-          that.service.getJobResult(that.fileData.metaData.file_id, worksheet, that.page , that.numberOfRows)
-        ).subscribe(([res, errors]: [any, any]) => {
+        that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, that.page , that.numberOfRows, '', [])
+        .subscribe((res) => {
           if (res.data.length) {
             const lastRow = () => {
-              if ( res.data.total >= 1 ) { return res.data.total; } else { return -1; }
+              if ( res.data.length <= res.total ) { return res.total; } else { return -1; }
             };
             params.successCallback(res.data, lastRow());
           } else {
