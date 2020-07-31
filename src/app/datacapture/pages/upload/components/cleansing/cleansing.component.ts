@@ -16,10 +16,9 @@ import { CleansingService } from '../../services/cleansing.service';
 })
 export class CleansingComponent implements OnInit {
   // Data Table Related
-  numberOfRows = 10;
+  numberOfRows = 25;
   page = 1;
-  searchValue = "";
-  results: any;
+  results$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   totalRecords$: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -59,7 +58,7 @@ export class CleansingComponent implements OnInit {
               this.headers$.next(res.headers);
               this.data$.next(res.data);
               this.loading$.next(false);
-              this.results = errors;
+              this.results$.next(errors);
             });
         }
       }, (err) => {
@@ -67,32 +66,34 @@ export class CleansingComponent implements OnInit {
       });
   }
 
-  onSizeChange(event: number): void {
-    this.numberOfRows = event;
-    this.getData();
+  serverSideDatasource = () => {
+    const that = this;
+    return {
+      getRows(params) {
+        that.page = params.request.endRow / that.numberOfRows;
+        const worksheet = that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
+        forkJoin(
+          that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, that.page , that.numberOfRows),
+          that.service.getJobResult(that.fileData.metaData.file_id, worksheet, that.page , that.numberOfRows)
+        ).subscribe(([res, errors]: [any, any]) => {
+          if (res.data.length) {
+            const lastRow = () => {
+              if ( res.data.total >= 1 ) { return res.data.total; } else { return res.data.total; }
+            };
+            params.successCallback(res.data, lastRow());
+          } else {
+            params.successCallback({columnFieldName: 'No results Found'});
+          }
+        }, (error) => {
+          params.failCallback();
+        });
+      }
+    };
   }
 
-  search(filter: string): void {
-    this.not.warn(filter);
-  }
-
-  inError(i: number, header: string): boolean {
-    const index = i + (10 * (this.page - 1));
-    if (this.results[index] && this.results[index][header]) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  reset(): void {
-    this.searchValue = '';
-    this.getData();
-  }
-
-  onPageChange(param: number): void {
-    this.page = param;
-    this.getData();
+  fetchData(params: any): void {
+    const datasource = this.serverSideDatasource();
+    params.api.setServerSideDatasource(datasource);
   }
 
   cancelUpload(): void {

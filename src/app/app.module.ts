@@ -35,7 +35,7 @@ const ngZorroConfig: NzConfig = {
 
     // DevTools
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    DataCaptureModule,
+    DataCaptureModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

@@ -5,11 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule, NzModalModule } from 'ng-zorro-antd';
 import { PageHeaderComponent } from './page-header/page-header.component';
-import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
 import { BoolIconComponent } from './bool-icon/bool-icon.component';
 import { AutoTableHeightDirective } from './directives/auto-table-height.directive';
+import { DataGridComponent } from './data-grid/data-grid.component';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -22,7 +23,6 @@ const SharedModules = [
   NgZorroAntdModule,
   FormsModule,
   HttpClientModule,
-  NzGridModule,
   ReactiveFormsModule,
   MonacoEditorModule,
   NzModalModule
@@ -31,17 +31,20 @@ const SharedModules = [
 @NgModule({
   imports: [
     ...SharedModules,
+    AgGridModule,
   ],
   declarations: [
     PageHeaderComponent,
     BoolIconComponent,
     AutoTableHeightDirective,
+    DataGridComponent,
   ],
   exports: [
     ...SharedModules,
     PageHeaderComponent,
     BoolIconComponent,
     AutoTableHeightDirective,
+    DataGridComponent
   ],
   providers: [
     UtilsService

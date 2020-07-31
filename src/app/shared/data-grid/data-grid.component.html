@@ -1,0 +1,16 @@
+<ag-grid-angular #agGrid
+  class="ag-theme-balham"
+  style="width: 100%; height: 100%;"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [rowModelType]="'serverSide'"
+  [rowData]="rowData"
+  [modules]="modules"
+  [paginationPageSize]="paginationPageSize"
+  [enterMovesDown]="true"
+  [enterMovesDownAfterEdit]="true"
+  [cacheBlockSize]="25"
+  [maxBlocksInCache]="10"
+  [blockLoadDebounceMillis]="100"
+  (gridReady)="gridReady.emit($event)">
+</ag-grid-angular>
