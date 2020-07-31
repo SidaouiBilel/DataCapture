@@ -35,8 +35,8 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   gridReady$ = new Subject<string>()
 
   constructor(
-    private store:Store<AppState>,
-    private service:PreMappingTransformationService
+    private store: Store<AppState>,
+    private service: PreMappingTransformationService
     ) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet)
     this.fileData$ = this.store.select(selectFileMetaData)
@@ -74,24 +74,24 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
     this.headers$.next(null)
     this.loading$.next(false)
   }
-  generateDataSource(fileid, page, size,gridApi){
+  generateDataSource(fileid, page, size,gridApi) {
     const that = this;
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         let page = params.request.endRow / size;
-          that.loading$.next(true)
-          that.service.getResult(fileid, page, size).subscribe((res:any) => {
-            that.loading$.next(false)
-            if(page <= 1){
-              that.totalRecords$.next(res.total)
-              that.headers$.next(res.headers.map(h=>({field:h})))
-            }
-            const lastRow = () =>  (page <= res.last_page - 2)? -1: res.total
-            params.successCallback(res.data, lastRow()); 
-          }, (error) => {
-            params.failCallback();
-            that.onError(error)
-          });
+        that.loading$.next(true)
+        that.service.getResult(fileid, page, size).subscribe((res:any) => {
+          that.loading$.next(false)
+          if(page <= 1){
+            that.totalRecords$.next(res.total)
+            that.headers$.next(res.headers.map(h=>({field:h})))
+          }
+          const lastRow = () =>  (page <= res.last_page - 2)? -1: res.total
+          params.successCallback(res.data, lastRow()); 
+        }, (error) => {
+          params.failCallback();
+          that.onError(error)
+        });
         }
     })
   }

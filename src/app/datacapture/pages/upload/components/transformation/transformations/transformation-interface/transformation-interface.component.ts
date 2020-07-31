@@ -8,7 +8,9 @@ export class TransformationInterfaceComponent implements OnInit {
 
   @Output() validationStatus = new EventEmitter<boolean>()
   @Output() dataChanged = new EventEmitter<any>()
-  data: any = {}
+
+  data: any = {};
+  index = null;
 
   form_orientation = 'horizontal'
   

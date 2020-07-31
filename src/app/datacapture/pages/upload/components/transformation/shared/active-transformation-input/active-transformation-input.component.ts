@@ -12,8 +12,8 @@ export class ActiveTransformationInputComponent implements OnInit {
   pm$: any;
 
   modes = [
-    {mode:"SOURCE", icon:"file-text", tooltip: 'View Source'},
-    {mode:"TARGET", icon:"thunderbolt", tooltip: 'View Target'}, 
+    {mode:"SOURCE", icon:"file-text", tooltip: 'View Source', label:'Source'},
+    {mode:"TARGET", icon:"thunderbolt", tooltip: 'View Target', label:'Target'}, 
   ]
 
   constructor(

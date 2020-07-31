@@ -51,10 +51,8 @@ export class TransformationPipeComponent implements OnInit {
   }
 
   addTransformation(t){
-    // TODO STORE ADD TRANSFORMATION
     const rule = {type:t.type, applied:false , valid:false}
     this.store.dispatch(new AddTransNode(rule))
-    // this.pipe$.push(rule)
   }
 
   changeOrder(index, direction){
