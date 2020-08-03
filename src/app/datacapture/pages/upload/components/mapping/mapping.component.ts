@@ -57,7 +57,7 @@ export class MappingComponent implements OnInit {
             this.store.dispatch(new SaveMappingId(res.mapping_id));
             // Update Source Fields
             Object.keys(res.columns_details).forEach(e => {
-              if (res.columns_details[e]) {
+              if (this.mappedSources[e]) {
                 this.mappedSources[e] = res.columns_details[e].isMapped;
               }
             });

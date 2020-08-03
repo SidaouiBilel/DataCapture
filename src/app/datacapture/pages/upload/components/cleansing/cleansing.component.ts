@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset } from '../../store/actions/import.actions';
-import { Observable, forkJoin, BehaviorSubject } from 'rxjs';
+import { Observable, forkJoin, BehaviorSubject, combineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
+import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 
 @Component({
   selector: 'app-cleansing',
@@ -16,44 +17,77 @@ import { CleansingService } from '../../services/cleansing.service';
 })
 export class CleansingComponent implements OnInit {
   // Data Table Related
+  domain: string;
+  results: any;
+  worksheet: any;
+  fileData: any;
   numberOfRows = 25;
-  results$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  selectedSheet: number;
+  // BS
+  metaData$: BehaviorSubject<any> = new BehaviorSubject({});
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-
   // Store
-  fileData: any;
-  domain: string;
-  selectedSheet: number;
   selectedSheet$: Observable<any>;
   domain$: Observable<string>;
   fileData$: Observable<any>;
-  constructor(private router: Router, private store: Store<AppState>, private service: CleansingService, private not: NotificationService) {
+  worksheet$: Observable<any>;
+  constructor(private router: Router,
+              private store: Store<AppState>,
+              private service: CleansingService,
+              private not: NotificationService) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.fileData$      = this.store.select(selectFileData);
     this.domain$        = this.store.select(selectDomain);
+    this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.fileData$.subscribe((res) => {this.fileData = res; });
     this.domain$.subscribe((domain) => { this.domain = domain; });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    this.service.startJob(this.fileData.metaData.file_id, worksheet, this.domain).subscribe((job) => {});
+    this.worksheet$.subscribe((res) => { this.worksheet = res.split('/')[4]; });
+    forkJoin(this.fileData$.pipe(take(1)), this.worksheet$.pipe(take(1)))
+      .subscribe(([fileData, worksheet]) => {
+        // const ws: string = worksheet.split('/')[4];
+        const ws = fileData.metaData.worksheets_map[fileData.sheets[this.selectedSheet]];
+        this.service.startJob(fileData.metaData.file_id, ws, this.domain).subscribe((job) => {
+          if (job) {
+            this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
+              this.metaData$.next(metaData);
+            });
+          }
+        });
+      });
   }
 
   ngOnInit() {
   }
 
-  serverSideDatasource = () => {
+  serverSideDatasource = (grid) => {
     const that = this;
     return {
       getRows(params) {
         const page = (params.request.endRow / that.numberOfRows) - 1;
         const worksheet = that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
-        that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, page , that.numberOfRows, '', [])
-        .subscribe((res) => {
-          if (page <= 1) {
-            that.headers$.next(res.headers);
-            that.results$.next(res.results);
+        let adaptedFilter = '';
+        let adaptedSort = [];
+        Object.keys(params.request.filterModel).forEach((e) => {
+          adaptedFilter = adaptedFilter + `{${e}} ${params.request.filterModel[e].type} '${params.request.filterModel[e].filter}' && `;
+        });
+        adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
+        adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
+        // tslint:disable-next-line: max-line-length
+        that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort)
+        .subscribe((res: any) => {
+          const newErrors = {};
+          Object.keys(res.results).forEach((e: string) => {
+            const ind = Number(e) + ( that.numberOfRows * page);
+            newErrors[ind] =  res.results[e];
+          });
+          that.results = {...that.results, ...newErrors};
+          const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
+          if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
+            that.headers$.next([...headers]);
+            grid.api.setColumnDefs(that.setHeadersLogic(headers, res.headers));
           }
           if (res.data.length) {
             const lastRow = () => {
@@ -65,13 +99,60 @@ export class CleansingComponent implements OnInit {
           }
         }, (error) => {
           params.failCallback();
+          that.not.error(error.message);
         });
       }
     };
   }
+
   fetchData(params: any): void {
-    const datasource = this.serverSideDatasource();
+    const datasource = this.serverSideDatasource(params);
     params.api.setServerSideDatasource(datasource);
+  }
+
+  setHeadersLogic(headers: any, types: any): any {
+    if (headers) {
+      headers.map((h, ind) => {
+        const cellClass = (params) => {
+          const f = params.colDef.field;
+          const i = params.rowIndex;
+          try {
+            if (this.results[i][f].errors.length > 0) {
+              return 'error-cell';
+            }
+          } catch (error) {}
+          try {
+            if (this.results[i][f].warnings.length > 0) {
+              return 'warning-cell';
+            }
+          } catch (error) {}
+          return null;
+        };
+        h.cellClass = cellClass;
+        // Sort
+        h.sortable = true;
+        // Filter
+        h.filterParams = {suppressAndOrCondition: true, buttons: ['reset', 'apply'], debounceMs: 200, closeOnApply: true};
+        switch (types[ind].type) {
+          case 'string':
+            h.filter = 'agTextColumnFilter';
+            break;
+          case 'int':
+            h.filter = 'agNumberColumnFilter';
+            break;
+          case 'double':
+            h.filter = 'agNumberColumnFilter';
+            break;
+          case 'date':
+            h.filter = 'agDateColumnFilter';
+            break;
+          default:
+            break;
+        }
+        return h;
+      });
+    }
+    return headers;
   }
 
   cancelUpload(): void {

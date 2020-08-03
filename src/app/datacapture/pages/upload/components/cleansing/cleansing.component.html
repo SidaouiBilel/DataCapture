@@ -2,6 +2,15 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
+      <div class="flex start">
+        <span class="mr-4">Total Errors </span>
+        <nz-badge [nzOverflowCount]="99999999" [nzCount]="(metaData$ | async)?.totalErrors"></nz-badge>
+        <nz-divider class="error" nzType="vertical"></nz-divider>
+        <span class="ml-4 mr-4">Total Rows in Error </span>
+        <nz-badge [nzOverflowCount]="99999999" [nzCount]="(metaData$ | async)?.uniqueErrorLines"></nz-badge>
+        <nz-divider class="error" nzType="vertical"></nz-divider>
+        <!-- <nz-badge [nzOverflowCount]="'+'" [nzCount]="(metaData$ | async)?.uniqueErrorLines"></nz-badge> -->
+      </div>
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <div class="flex end">
@@ -18,9 +27,10 @@
     </div>
   </div>
 
+  <!-- jobResult -->
   <!-- Grid -->
   <div class="flex-child mt-4">
-    <app-data-grid [columnDefs]="headers$ | async" [results]="results$ | async" [paginationPageSize]="numberOfRows"
-      (gridReady)="fetchData($event)"></app-data-grid>
+    <app-data-grid [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows" (gridReady)="fetchData($event)">
+    </app-data-grid>
   </div>
 </div>

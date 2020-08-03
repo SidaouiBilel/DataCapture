@@ -6,10 +6,12 @@
   [rowModelType]="'serverSide'"
   [rowData]="rowData"
   [modules]="modules"
+  [animateRows]="true"
   [enterMovesDown]="true"
   [enterMovesDownAfterEdit]="true"
   [cacheBlockSize]="paginationPageSize"
-  [maxBlocksInCache]="5"
-  [blockLoadDebounceMillis]="100"
+  [maxBlocksInCache]="10"
   (gridReady)="gridReady.emit($event)">
 </ag-grid-angular>
+<!-- {{results | json}} -->
+<!-- [blockLoadDebounceMillis]="100" -->

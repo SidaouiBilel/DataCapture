@@ -30,6 +30,10 @@
   flex: 1 1 auto;
 }
 
+:host ::ng-deep .ant-divider-inner-text {
+  color: #28a745 !important;
+}
+
 .centerBox {
   height: 100%;
   flex-direction: row;
@@ -46,7 +50,7 @@
   box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
 }
 
-:host nz-divider {
+:host nz-divider.horiz {
   /* margin: 0 !important; */
   margin: 0 0 24px 0 !important;
 }

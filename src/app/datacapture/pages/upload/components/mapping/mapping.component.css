@@ -182,3 +182,7 @@
 ::ng-deep button:focus {
   outline: none !important
 }
+
+:host ::ng-deep .ant-divider-inner-text {
+  color: #28a745 !important;
+}

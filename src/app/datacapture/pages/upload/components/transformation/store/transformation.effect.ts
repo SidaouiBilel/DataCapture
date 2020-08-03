@@ -29,24 +29,26 @@ export class TransformationEffects {
     withLatestFrom(this.store$.select( selectSelectedSheet )),
     withLatestFrom(this.store$.select( selectFileData )),
     map(([[[action, pipe], sheetIndex], file]) => {
-      const sheetId = String(Object.values(file.metaData.worksheets_map)[sheetIndex])
-      const pipeId = (pipe)? pipe.id: null
-      if(file && file.metaData && pipeId && sheetId){
-        const fileId = file.metaData.file_id
-        this.job.startJob(fileId, sheetId, pipeId).subscribe(res=> { 
-          const id = res.transformed_file_id
-          this.store$.dispatch(new UpdateTransformedFilePath(id))  
-          this.job.getResult(id, 1, 0).subscribe((jobRes:any)=>{
-            const mappingSources = {};
-            jobRes.headers.forEach((e) => {mappingSources[e] = false})
-            this.store$.dispatch(new SaveMappedSources(mappingSources));
-          })
-        })
-      } else {
-        const mappingSources = {};
-        file.headers.forEach((e) => {mappingSources[e] = false;})
-        this.store$.dispatch(new SaveMappedSources(mappingSources));
-        this.store$.dispatch(new UpdateTransformedFilePath(null))
+      if (file.metaData) {
+        const sheetId = String(Object.values(file.metaData.worksheets_map)[sheetIndex]);
+        const pipeId = (pipe) ? pipe.id : null;
+        if ( file && file.metaData && pipeId && sheetId) {
+          const fileId = file.metaData.file_id;
+          this.job.startJob(fileId, sheetId, pipeId).subscribe(res => {
+            const id = res.transformed_file_id;
+            this.store$.dispatch(new UpdateTransformedFilePath(id));
+            this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
+              const mappingSources = {};
+              jobRes.headers.forEach((e) => {mappingSources[e] = false; });
+              this.store$.dispatch(new SaveMappedSources(mappingSources));
+            });
+          });
+        } else {
+          const mappingSources = {};
+          file.headers.forEach((e) => {mappingSources[e] = false; });
+          this.store$.dispatch(new SaveMappedSources(mappingSources));
+          this.store$.dispatch(new UpdateTransformedFilePath(null));
+        }
       }
     })
   );

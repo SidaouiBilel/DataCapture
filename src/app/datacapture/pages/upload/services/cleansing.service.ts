@@ -20,6 +20,7 @@ export class CleansingService {
     return this.http.get(environment.cleansing + `/metadata?job_id=${jobId}`);
   }
 
+  // tslint:disable-next-line: max-line-length
   getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number, filter: string, sort: any[]): Observable<any> {
     const payload = {filter, sort};
     // tslint:disable-next-line: max-line-length
