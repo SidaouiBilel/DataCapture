@@ -39,14 +39,21 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'MAPPING': {
-        if (this.selectedSheet != null) {
+        if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null) {
             return true;
         } else {
             return false;
         }
       }
       case 'CLEANSING': {
-        if (this.mandatories === 0) {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0) {
+            return true;
+        } else {
+            return false;
+        }
+      }
+      case 'UPLOAD': {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0) {
             return true;
         } else {
             return false;

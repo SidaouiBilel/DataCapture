@@ -17,20 +17,17 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./transformation-pipe.component.css']
 })
 export class TransformationPipeComponent implements OnInit {
-
-  tarnsformations = TRANSFORMATIONS
-
+  // Data
+  tarnsformations = TRANSFORMATIONS;
+  saved = false;
+  name = null;
+  // Store
   pipe$ = null;
   domain$ = null;
-
   active$;
-  name = null
-  saved = false
-
   expanded$;
-
   constructor(
-    private drawerRef: NzDrawerRef<string>, 
+    private drawerRef: NzDrawerRef<string>,
     private store: Store<AppState>,
     private pipes: TranformationService
     ) {
@@ -39,10 +36,10 @@ export class TransformationPipeComponent implements OnInit {
     this.expanded$ = this.store.select(selectPipeExpanded);
     this.active$ = this.pipes.active$;
 
-    this.active$.subscribe((active)=> {
-        this.name = (active)?active.name:null,
-        this.saved = (active && active.id)?true:false
-    })
+    this.active$.subscribe((active: any) => {
+        this.name = (active) ? active.name : null,
+        this.saved = (active && active.id) ? true : false;
+    });
   }
 
   close(): void {
@@ -53,53 +50,53 @@ export class TransformationPipeComponent implements OnInit {
 
   }
 
-  addTransformation(t){
-    const rule = {type:t.type, applied:false , valid:false}
-    this.store.dispatch(new AddTransNode(rule))
+  addTransformation(t) {
+    const rule = {type: t.type, applied: false , valid: false};
+    this.store.dispatch(new AddTransNode(rule));
   }
 
-  changeOrder(index, direction){
+  changeOrder(index, direction) {
     // TODO STORE CHENGE ORDER
   }
 
-  onReset(){
-    this.store.dispatch(new ResetTransformation())
+  onReset() {
+    this.store.dispatch(new ResetTransformation());
   }
 
-  onFlipCollapse(){
-    this.store.dispatch(new TransformationFlipExpand())
+  onFlipCollapse() {
+    this.store.dispatch(new TransformationFlipExpand());
   }
 
-  onSave(){
+  onSave() {
     forkJoin(this.pipe$.pipe(take(1)), this.domain$.pipe(take(1)), this.active$.pipe(take(1))).subscribe(
-      ([nodes, domain_id, active]:any) =>{
+      ([nodes, domainId, active]: any) => {
         let info = {
-          id:null,
+          id: null,
           name: this.name,
           description: null
+        };
+        if (active) {
+          info = {...active, ...info , id: active.id};
         }
-        if (active){
-          info = {...active, ...info , id: active.id}
-        }
-        this.pipes.save(nodes, domain_id, info).subscribe(()=> this.afterSave())
+        this.pipes.save(nodes, domainId, info).subscribe(() => this.afterSave());
       }
-    )
+    );
   }
 
-  onSaveAndApply(){
-    this.pipes.upadatePreviewMode('TARGET')
-    this.onSave()
+  onSaveAndApply() {
+    this.pipes.upadatePreviewMode('TARGET');
+    this.onSave();
   }
 
-  onDelete(){
+  onDelete() {
     this.active$.subscribe(
-      (active:any) =>{
-        this.pipes.delete(active).subscribe(()=> this.afterSave())
+      (active: any) => {
+        this.pipes.delete(active).subscribe(() => this.afterSave());
       }
-    ).unsubscribe()
+    ).unsubscribe();
   }
 
-  afterSave(){
-    this.drawerRef.close()
+  afterSave() {
+    this.drawerRef.close();
   }
 }

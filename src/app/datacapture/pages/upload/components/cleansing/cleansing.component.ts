@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ import { selectTransformedFilePath } from '../transformation/store/transformatio
   templateUrl: './cleansing.component.html',
   styleUrls: ['./cleansing.component.css']
 })
-export class CleansingComponent implements OnInit {
+export class CleansingComponent implements OnInit, OnDestroy {
   // Data Table Related
   domain: string;
   results: any;
@@ -44,7 +44,7 @@ export class CleansingComponent implements OnInit {
     this.fileData$.subscribe((res) => {this.fileData = res; });
     this.domain$.subscribe((domain) => { this.domain = domain; });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    this.worksheet$.subscribe((res) => { this.worksheet = res.split('/')[4]; });
+    this.worksheet$.subscribe((res) => { if (res) this.worksheet = res.split('/')[4]; });
     forkJoin(this.fileData$.pipe(take(1)), this.worksheet$.pipe(take(1)))
       .subscribe(([fileData, worksheet]) => {
         // const ws: string = worksheet.split('/')[4];
@@ -60,6 +60,10 @@ export class CleansingComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    // this.worksheet$.unsubscribe();
   }
 
   serverSideDatasource = (grid) => {
