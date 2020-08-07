@@ -1,87 +1,84 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectDomain } from '../../../store/selectors/import.selectors';
-import { LoadTransformation, UpdateTransNode, SetPreviewMode } from '../store/transformation.actions';
+import { LoadTransformation, SetPreviewMode } from '../store/transformation.actions';
 import { selectActivePipe, selectPreviewMode } from '../store/transformation.selectors';
-import { BehaviorSubject, Observable, Subject, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class TranformationService {
 
   url = environment.transform;
-  domain_id = null;
-  domain_pipes$ = new ReplaySubject<any>()
+  domainId = null;
+  domainPipes$ = new ReplaySubject<any>();
   active$: Observable<any>;
   previewMode$: Observable<any>;
 
   constructor(
     private http: HttpClient,
-    private drawerService: NzDrawerService,
-    private modalService: NzModalService,
     private store: Store<AppState>) {
-    this.store.select(selectDomain).subscribe((domain_id)=> {
-      if (this.domain_id && this.domain_id != domain_id){
-        this.setActive(null)
+    this.store.select(selectDomain).subscribe((domainId) => {
+      if (this.domainId && this.domainId !== domainId) {
+        this.setActive(null);
       }
-      this.domain_id = domain_id
-      this.loadDomainPipes()
-    })
-    this.active$ = this.store.select(selectActivePipe)
-    this.previewMode$ = this.store.select(selectPreviewMode)
+      this.domainId = domainId;
+      this.loadDomainPipes();
+    });
+    this.active$ = this.store.select(selectActivePipe);
+    this.previewMode$ = this.store.select(selectPreviewMode);
   }
-  
-  save(nodes, domain_id, pipe_info){
+
+  save(nodes, domainId, pipeInfo) {
     const pipe = {
-      ...pipe_info,
+      ...pipeInfo,
       modified_on: new Date(),
-      nodes: nodes,
-      domain_id: domain_id,
-    }
+      nodes,
+      domain_id: domainId,
+    };
 
-    return this.http.post(`${this.url}`,pipe).pipe(
-      tap(()=> this.loadDomainPipes()),
-      tap((active)=> {
-        this.setActive(active)
+    return this.http.post(`${this.url}`, pipe).pipe(
+      tap(() => this.loadDomainPipes()),
+      tap((active) => {
+        this.setActive(active);
       }),
-    )
+    );
   }
 
-  delete(pipe_info){
-    return this.http.request('DELETE', `${this.url}`,{
+  delete(pipeInfo) {
+    return this.http.request('DELETE', `${this.url}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         }),
-        body: {...pipe_info, modified_on: new Date()}
+        body: {...pipeInfo, modified_on: new Date()}
     }).pipe(
-      tap(()=> this.loadDomainPipes()),
-      tap((active)=> {
-        this.setActive(null)
+      tap(() => this.loadDomainPipes()),
+      tap((active) => {
+        this.setActive(null);
       }),
-    )
+    );
   }
 
-  setActive(active){
-    this.store.dispatch(new LoadTransformation(active))
+  setActive(active) {
+    this.store.dispatch(new LoadTransformation(active));
   }
 
-  get(domain_id){
-    return this.http.get(`${this.url}${domain_id}`)
+  get(domainId) {
+    return this.http.get(`${this.url}${domainId}`);
   }
 
-  getInContext(){
-    return this.get(this.domain_id)
+  getInContext() {
+    return this.get(this.domainId);
   }
 
-  loadDomainPipes(){
-    this.getInContext().subscribe(res=> this.domain_pipes$.next(res))
+  loadDomainPipes() {
+    this.getInContext().subscribe(res => this.domainPipes$.next(res));
   }
 
   upadatePreviewMode(mode: any) {
-    this.store.dispatch(new SetPreviewMode(mode))
+    this.store.dispatch(new SetPreviewMode(mode));
   }
 }

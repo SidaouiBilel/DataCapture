@@ -1,37 +1,53 @@
-.trans-container{
-    overflow-y: auto;
-    margin: 14px 0;
-    padding: 14px;
-    border-radius: 20px;
-
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    background: #fff3f3;
+.flex-c {
+  height: 100% !important;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: stretch flex-start;
+  align-items: stretch;
+  max-width: 100%;
 }
 
-.trans-block{
-    display: flex;
-    align-items: center;
-    min-height: min-content;
-    min-width: min-content;
+.trans-container {
+  max-height: 50vh;
+  overflow-y: auto;
+
+  margin: 14px 0;
+  padding: 14px;
+  border-radius: 20px;
+  background: #fff3f3;
+  flex: 1 1 0%;
+
+  height: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center flex-start;
+  align-items: center;
 }
 
-.trans-arrow{
-    min-width: 1px;
-    font-size: 20px;
-    color: rgb(255 255 255);
-    background: #7e9ef8;
-    padding: 1px 10px;
+.trans-block {
+  display: flex;
+  align-items: center;
+  min-height: min-content;
+  min-width: min-content;
 }
 
-.trans-start-arrow{
-    transition: all 0.2s;
-    padding: 10px;
-    border-radius: 50% 0 0 50%;
+.trans-arrow {
+  min-width: 1px;
+  font-size: 20px;
+  color: rgb(255 255 255);
+  background: #7e9ef8;
+  padding: 10px 1px;
 }
 
-.trans-arrow-circle{
-    border-radius: 50%;
-    padding:10px;
+.trans-start-arrow {
+  transition: all 0.2s;
+  padding: 10px;
+  border-radius: 50% 0 0 50%;
+}
+
+.trans-arrow-circle {
+  border-radius: 50%;
+  padding: 10px;
 }

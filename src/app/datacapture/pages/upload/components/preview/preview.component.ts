@@ -19,6 +19,8 @@ import { selectPreviewMode } from '../transformation/store/transformation.select
 })
 export class PreviewComponent implements OnInit {
   // ag-grid
+  target: any;
+  isVisible = true;
   numberOfRows = 10;
   page = 1;
   selectedSheet: number;

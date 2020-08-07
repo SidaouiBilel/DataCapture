@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { AppState, NotificationService } from '@app/core';
+import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { TranformationService } from '../services/tranformation.service';
 import { LoadTransformation, TransformationActionTypes, UpdateTransformedFilePath } from './transformation.actions';
 import { selectActivePipe } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
-import { selectFileMetaData, selectFileData } from '../../../store/selectors/import.selectors';
+import { selectFileData } from '../../../store/selectors/import.selectors';
 import { selectSelectedSheet } from '../../../store/selectors/preview.selectors';
 import { SaveMappedSources } from '../../../store/actions/mapping.actions';
+import { ImportActionTypes, ActionSaveFile } from '../../../store/actions/import.actions';
 
 @Injectable()
 export class TransformationEffects {
@@ -24,7 +24,7 @@ export class TransformationEffects {
 
   @Effect({ dispatch: false })
   onReset = this.actions$.pipe(
-    ofType<LoadTransformation>(TransformationActionTypes.LOAD) ,
+    ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE) ,
     withLatestFrom(this.store$.select( selectActivePipe )),
     withLatestFrom(this.store$.select( selectSelectedSheet )),
     withLatestFrom(this.store$.select( selectFileData )),

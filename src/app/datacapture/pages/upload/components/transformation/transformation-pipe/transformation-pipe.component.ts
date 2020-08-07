@@ -8,7 +8,7 @@ import { TRANSFORMATIONS } from '../transformations/transformers';
 import { TranformationService } from '../services/tranformation.service';
 import { take } from 'rxjs/operators';
 import { selectDomain } from '../../../store/selectors/import.selectors';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 
 @Component({
@@ -24,10 +24,10 @@ export class TransformationPipeComponent implements OnInit {
   // Store
   pipe$ = null;
   domain$ = null;
-  active$;
+  active$: Observable<any>;
   expanded$;
   constructor(
-    private drawerRef: NzDrawerRef<string>,
+    // private drawerRef: NzDrawerRef<string>,
     private store: Store<AppState>,
     private pipes: TranformationService
     ) {
@@ -43,7 +43,7 @@ export class TransformationPipeComponent implements OnInit {
   }
 
   close(): void {
-    this.drawerRef.close(null);
+    // this.drawerRef.close(null);
   }
 
   ngOnInit() {
@@ -97,6 +97,6 @@ export class TransformationPipeComponent implements OnInit {
   }
 
   afterSave() {
-    this.drawerRef.close();
+    // this.drawerRef.close();
   }
 }
