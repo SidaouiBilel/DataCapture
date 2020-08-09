@@ -11,7 +11,10 @@
   [enterMovesDownAfterEdit]="true"
   [cacheBlockSize]="paginationPageSize"
   [maxBlocksInCache]="10"
+  [stopEditingWhenGridLosesFocus]="true"
+  [enableCellChangeFlash]="true"
+  [frameworkComponents]="frameworkComponents"
+  (cellValueChanged)="cellValueChanged.emit($event)"
   (gridReady)="gridReady.emit($event)">
 </ag-grid-angular>
-<!-- {{results | json}} -->
 <!-- [blockLoadDebounceMillis]="100" -->

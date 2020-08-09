@@ -1,0 +1,25 @@
+:host {
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ffa1a1;
+  overflow: hidden;
+  pointer-events: none;
+  /* transition: opacity 1s; */
+  background: white !important;
+}
+
+:host.ag-tooltip-hiding {
+  opacity: 1;
+}
+.custom-tooltip {
+  background-color: white !important;
+}
+
+.custom-tooltip p:first-of-type {
+  font-weight: bold;
+}
+
+p {
+  margin: 0;
+}

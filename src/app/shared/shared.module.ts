@@ -11,6 +11,7 @@ import { BoolIconComponent } from './bool-icon/bool-icon.component';
 import { AutoTableHeightDirective } from './directives/auto-table-height.directive';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { AgGridModule } from '@ag-grid-community/angular';
+import { CustomTooltipComponent } from './custom-tooltip/custom-tooltip.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -28,26 +29,31 @@ const SharedModules = [
   NzModalModule
 ];
 
+const Components = [
+  PageHeaderComponent,
+  BoolIconComponent,
+  AutoTableHeightDirective,
+  DataGridComponent,
+  CustomTooltipComponent,
+];
+
 @NgModule({
   imports: [
     ...SharedModules,
     AgGridModule,
   ],
   declarations: [
-    PageHeaderComponent,
-    BoolIconComponent,
-    AutoTableHeightDirective,
-    DataGridComponent,
+    ...Components
   ],
   exports: [
     ...SharedModules,
-    PageHeaderComponent,
-    BoolIconComponent,
-    AutoTableHeightDirective,
-    DataGridComponent
+    ...Components
   ],
   providers: [
     UtilsService
+  ],
+  entryComponents: [
+    CustomTooltipComponent
   ]
 })
 export class SharedModule {}
