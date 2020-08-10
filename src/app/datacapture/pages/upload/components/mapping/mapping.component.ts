@@ -46,23 +46,30 @@ export class MappingComponent implements OnInit {
   }
 
   ngOnInit() {
-    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
-      .subscribe(([domain, fileData, selectedSheet]) => {
-        this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]])
-          .subscribe((res) => {
-            // Reinit Sources
-            Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
-            // Update Mapping Fields
-            this.updateMappingFields(res);
-            this.store.dispatch(new SaveMappingId(res.mapping_id));
-            // Update Source Fields
-            Object.keys(res.columns_details).forEach(e => {
-              if (this.mappedSources[e]) {
-                this.mappedSources[e] = res.columns_details[e].isMapped;
-              }
+    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
+      .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
+        if (mappingId) {
+          const x = this.notification.loading('Loading automatic mapping');
+          this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], '')
+            .subscribe((res) => {
+              // Reinit Sources
+              Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
+              // Update Mapping Fields
+              this.updateMappingFields(res);
+              this.store.dispatch(new SaveMappingId(res.mapping_id));
+              // Update Source Fields
+              Object.keys(res.columns_details).forEach(e => {
+                if (this.mappedSources[e]) {
+                  this.mappedSources[e] = res.columns_details[e].isMapped;
+                }
+              });
+              this.store.dispatch(new SaveMappedSources(this.mappedSources));
+              this.notification.close(x);
+            }, (err) => {
+              this.notification.error(err.message);
+              this.notification.close(x);
             });
-            this.store.dispatch(new SaveMappedSources(this.mappedSources));
-          });
+          }
       });
   }
 

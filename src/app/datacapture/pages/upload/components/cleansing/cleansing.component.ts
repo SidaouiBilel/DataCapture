@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -16,7 +16,7 @@ import { CustomTooltipComponent } from '@app/shared/custom-tooltip/custom-toolti
   templateUrl: './cleansing.component.html',
   styleUrls: ['./cleansing.component.css']
 })
-export class CleansingComponent implements OnInit, OnDestroy {
+export class CleansingComponent implements OnInit {
   // Data Table Related
   grid: any;
   domain: string;
@@ -64,10 +64,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-    // this.worksheet$.unsubscribe();
-  }
-
   serverSideDatasource = (grid: any) => {
     const that = this;
     return {
@@ -112,6 +108,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   fetchData(params: any): void {
+    this.results = [];
     const datasource = this.serverSideDatasource(params);
     params.api.setServerSideDatasource(datasource);
     this.grid = params;
@@ -178,16 +175,43 @@ export class CleansingComponent implements OnInit, OnDestroy {
       modifications: {[params.data.row_index]: params.newValue}
     });
     this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, payload).subscribe((res: any) => {
-      this.not.success('Success');
       this.fetchData(this.grid);
+      this.not.success('Success');
      }, (err) => {
        this.not.error(err.message);
-     });
+    });
   }
 
-  fillOperation = (params: any) => {
-    return 'false';
-  }
+  // fillOperation = (params: any) => {
+  //   this.lockEdit$.next(false);
+  //   console.log(params);
+  //   switch (params.direction) {
+  //     case 'down':
+  //       const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+  //       const payload = {columns: []};
+  //       payload.columns = params.values.map((e) => {
+  //         return {
+  //           column: params.column.colDef.field,
+  //           modifications: null
+  //         };
+  //       })
+  //       // .push({
+  //       //   column: params.colDef.field,
+  //       //   modifications: {[params.data.row_index]: params.newValue}
+  //       // });
+  //       // this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, payload).subscribe((res: any) => {
+  //       //   this.not.success('Success');
+  //       //   this.fetchData(this.grid);
+  //       //  }, (err) => {
+  //       //    this.not.error(err.message);
+  //       //  });
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+  //   return 'false';
+  // }
 
   cancelUpload(): void {
     this.store.dispatch(new ActionImportReset());
