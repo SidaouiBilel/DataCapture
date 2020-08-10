@@ -30,7 +30,8 @@
   <!-- jobResult -->
   <!-- Grid -->
   <div class="flex-child mt-4">
-    <app-data-grid [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows" (gridReady)="fetchData($event)">
+    <app-data-grid [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows" [fillOperation]="fillOperation"
+      (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
   </div>
 </div>

@@ -9,6 +9,7 @@ import { selectFileData, selectDomain } from '../../store/selectors/import.selec
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
+import { CustomTooltipComponent } from '@app/shared/custom-tooltip/custom-tooltip.component';
 
 @Component({
   selector: 'app-cleansing',
@@ -17,6 +18,7 @@ import { selectTransformedFilePath } from '../transformation/store/transformatio
 })
 export class CleansingComponent implements OnInit, OnDestroy {
   // Data Table Related
+  grid: any;
   domain: string;
   results: any;
   worksheet: any;
@@ -44,7 +46,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.fileData$.subscribe((res) => {this.fileData = res; });
     this.domain$.subscribe((domain) => { this.domain = domain; });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    this.worksheet$.subscribe((res) => { if (res) this.worksheet = res.split('/')[4]; });
+    this.worksheet$.subscribe((res) => { if (res) { this.worksheet = res.split('/')[4]; } });
     forkJoin(this.fileData$.pipe(take(1)), this.worksheet$.pipe(take(1)))
       .subscribe(([fileData, worksheet]) => {
         // const ws: string = worksheet.split('/')[4];
@@ -56,7 +58,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             });
           }
         });
-      });
+      }).unsubscribe();
   }
 
   ngOnInit() {
@@ -66,7 +68,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     // this.worksheet$.unsubscribe();
   }
 
-  serverSideDatasource = (grid) => {
+  serverSideDatasource = (grid: any) => {
     const that = this;
     return {
       getRows(params) {
@@ -112,6 +114,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   fetchData(params: any): void {
     const datasource = this.serverSideDatasource(params);
     params.api.setServerSideDatasource(datasource);
+    this.grid = params;
   }
 
   setHeadersLogic(headers: any, types: any): any {
@@ -133,6 +136,14 @@ export class CleansingComponent implements OnInit, OnDestroy {
           return null;
         };
         h.cellClass = cellClass;
+        h.resizable = true;
+        // Tooltip
+        h.tooltipComponent = 'customTooltip';
+        // h.tooltipField = h.field;
+        h.tooltipComponentParams = {error: this.results};
+        h.tooltipValueGetter = (params) => {
+          return { value: params.value };
+        };
         // Sort
         h.sortable = true;
         // Filter
@@ -159,6 +170,25 @@ export class CleansingComponent implements OnInit, OnDestroy {
     return headers;
   }
 
+  editCell(params: any): void {
+    const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    const payload = {columns: []};
+    payload.columns.push({
+      column: params.colDef.field,
+      modifications: {[params.data.row_index]: params.newValue}
+    });
+    this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, payload).subscribe((res: any) => {
+      this.not.success('Success');
+      this.fetchData(this.grid);
+     }, (err) => {
+       this.not.error(err.message);
+     });
+  }
+
+  fillOperation = (params: any) => {
+    return 'false';
+  }
+
   cancelUpload(): void {
     this.store.dispatch(new ActionImportReset());
   }
@@ -166,7 +196,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
   goToMapping(): void {
     this.router.navigate(['/datacapture/upload/mapping']);
   }
-
 
   goToUpload(): void {
     this.router.navigate(['/datacapture/upload/uploading']);

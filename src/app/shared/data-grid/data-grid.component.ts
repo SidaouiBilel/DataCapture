@@ -10,16 +10,17 @@ import { CustomTooltipComponent } from '../custom-tooltip/custom-tooltip.compone
 export class DataGridComponent implements OnInit {
   @Input() columnDefs: any;
   @Input() totalRecords;
-  frameworkComponents = { customTooltip: CustomTooltipComponent};
   @Input() rowData: [];
   @Input() defaultColDef;
   @Input() paginationPageSize = 50;
+  @Input() fillOperation: (args: any) => void;
 
   @Output() gridReady: EventEmitter<any> = new EventEmitter<any>();
   @Output() cellValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
   public loadingCellRendererParams = { loadingMessage: 'One moment please...'};
   public modules: any[] = AllEnterpriseModules;
+  public frameworkComponents = { customTooltip: CustomTooltipComponent};
 
   ngOnInit() {
   }
