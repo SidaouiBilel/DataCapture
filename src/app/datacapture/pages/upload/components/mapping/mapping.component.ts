@@ -27,7 +27,7 @@ export class MappingComponent implements OnInit {
   mappedSources$: Observable<any>; // sources that are mapped
   mandatories$: Observable<any>; // Mandatories
   selectedSheet$: Observable<any>;
-  domain$: Observable<string>;
+  domain$: Observable<any>;
   mappingId$: Observable<string>;
   constructor(private store: Store<AppState>,
               private service: MappingService,
@@ -48,9 +48,9 @@ export class MappingComponent implements OnInit {
   ngOnInit() {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
-        if (mappingId) {
+        // if (mappingId) {
           const x = this.notification.loading('Loading automatic mapping');
-          this.service.getAutomaticMapping(domain, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], '')
+          this.service.getAutomaticMapping(domain.id, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], '')
             .subscribe((res) => {
               // Reinit Sources
               Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
@@ -69,7 +69,7 @@ export class MappingComponent implements OnInit {
               this.notification.error(err.message);
               this.notification.close(x);
             });
-          }
+          // }
       });
   }
 

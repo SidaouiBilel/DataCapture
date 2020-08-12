@@ -2,9 +2,10 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
-      <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
+      <!-- <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
         <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
-      </nz-select>
+      </nz-select> -->
+      <button nz-button class="w-50" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">{{ selectedDomain?.name }}</button>
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
@@ -59,3 +60,13 @@
     </div>
   </div>
 </div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of keys(domains)" nz-submenu [nzTitle]="item">
+      <ul>
+        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain.identifier, domain.name)">{{domain.name}}</li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>

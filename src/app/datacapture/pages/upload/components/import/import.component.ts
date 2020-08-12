@@ -24,10 +24,11 @@ export class ImportComponent implements OnInit {
   domains: any[];
   selectedDomain: any;
   fileData: any;
+  keys = Object.keys;
   // Store
   importState$: Observable<Import>;
-  selectedDomain$: Observable<string>;
-  fileData$: Observable<any>
+  selectedDomain$: Observable<any>;
+  fileData$: Observable<any>;
   constructor(private notification: NotificationService,
               private store: Store<AppState>,
               private router: Router,
@@ -38,24 +39,26 @@ export class ImportComponent implements OnInit {
     this.fileData$.subscribe((fileData) => {
       this.fileData = fileData;
     })
-    this.selectedDomain$.subscribe((domain) => {
-      this.selectedDomain = domain;
-      this.url = urls.environment.upload + '?domainId=' + domain;
+    this.selectedDomain$.subscribe((domain: any) => {
+      if (domain) {
+        this.selectedDomain = domain;
+        this.url = urls.environment.upload + '?domainId=' + domain.id;
+      }
     });
     this.domains = [];
   }
 
   ngOnInit() {
-    this.service.getAll().subscribe((domains: any[]) => {
-      this.domains = domains.map((e) => ({id: e.id, name: e.name}));
+    this.service.getAllSuper().subscribe((domains: any) => {
+      this.domains = domains.resultat;
     });
   }
 
-  selectDomain(event: string): void {
+  selectDomain(event: string, name: string): void {
     this.service.getTargetFields(event).subscribe((res: any) => {
       this.store.dispatch(new SaveMappingFields(res));
     });
-    this.store.dispatch(new ActionSelectDomain(event));
+    this.store.dispatch(new ActionSelectDomain({id: event, name}));
   }
 
   handleChange({ file, fileList }: UploadChangeParam): void {

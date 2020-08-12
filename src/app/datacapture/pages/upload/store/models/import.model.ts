@@ -5,7 +5,7 @@ export interface Import {
   selectedFile: FileData ;
   fileData: Sheet;
   progress: number;
-  selectedDomain: string;
+  selectedDomain: any;
 }
 
 export interface SheetData {

@@ -78,7 +78,7 @@ export class TransformationPipeComponent implements OnInit {
         if (active) {
           info = {...active, ...info , id: active.id};
         }
-        this.pipes.save(nodes, domainId, info).subscribe(() => this.afterSave());
+        this.pipes.save(nodes, domainId.id, info).subscribe(() => this.afterSave());
       }
     );
   }

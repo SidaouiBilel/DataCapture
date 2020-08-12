@@ -22,10 +22,10 @@ export class TranformationService {
     private http: HttpClient,
     private store: Store<AppState>) {
     this.store.select(selectDomain).subscribe((domainId) => {
-      if (this.domainId && this.domainId !== domainId) {
+      if (this.domainId && this.domainId !== domainId.id) {
         this.setActive(null);
       }
-      this.domainId = domainId;
+      this.domainId = domainId.id;
       this.loadDomainPipes();
     });
     this.active$ = this.store.select(selectActivePipe);

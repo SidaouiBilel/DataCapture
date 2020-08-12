@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -25,6 +25,7 @@ export class CleansingComponent implements OnInit {
   fileData: any;
   numberOfRows = 25;
   selectedSheet: number;
+  modifications: any = {columns: []};
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -32,9 +33,16 @@ export class CleansingComponent implements OnInit {
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   // Store
   selectedSheet$: Observable<any>;
-  domain$: Observable<string>;
+  domain$: Observable<any>;
   fileData$: Observable<any>;
   worksheet$: Observable<any>;
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.syncWithServer();
+    }
+  }
   constructor(private router: Router,
               private store: Store<AppState>,
               private service: CleansingService,
@@ -44,7 +52,7 @@ export class CleansingComponent implements OnInit {
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.fileData$.subscribe((res) => {this.fileData = res; });
-    this.domain$.subscribe((domain) => { this.domain = domain; });
+    this.domain$.subscribe((domain) => { if (domain) { this.domain = domain.id; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { if (res) { this.worksheet = res.split('/')[4]; } });
     forkJoin(this.fileData$.pipe(take(1)), this.worksheet$.pipe(take(1)))
@@ -168,50 +176,27 @@ export class CleansingComponent implements OnInit {
   }
 
   editCell(params: any): void {
+    // Check if the modification exists
+    const i = this.modifications.columns.map((e) => e.column).indexOf(params.colDef.field);
+    if (i >= 0) {
+      this.modifications.columns[i].modifications[params.data.row_index] = params.newValue;
+    } else {
+      this.modifications.columns.push({
+        column: params.colDef.field,
+        modifications: {[params.data.row_index]: params.newValue}
+      });
+    }
+  }
+
+  syncWithServer(): void {
     const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    const payload = {columns: []};
-    payload.columns.push({
-      column: params.colDef.field,
-      modifications: {[params.data.row_index]: params.newValue}
-    });
-    this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, payload).subscribe((res: any) => {
+    this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, this.modifications).subscribe((res: any) => {
       this.fetchData(this.grid);
       this.not.success('Success');
      }, (err) => {
        this.not.error(err.message);
     });
   }
-
-  // fillOperation = (params: any) => {
-  //   this.lockEdit$.next(false);
-  //   console.log(params);
-  //   switch (params.direction) {
-  //     case 'down':
-  //       const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-  //       const payload = {columns: []};
-  //       payload.columns = params.values.map((e) => {
-  //         return {
-  //           column: params.column.colDef.field,
-  //           modifications: null
-  //         };
-  //       })
-  //       // .push({
-  //       //   column: params.colDef.field,
-  //       //   modifications: {[params.data.row_index]: params.newValue}
-  //       // });
-  //       // this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, payload).subscribe((res: any) => {
-  //       //   this.not.success('Success');
-  //       //   this.fetchData(this.grid);
-  //       //  }, (err) => {
-  //       //    this.not.error(err.message);
-  //       //  });
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-  //   return 'false';
-  // }
 
   cancelUpload(): void {
     this.store.dispatch(new ActionImportReset());

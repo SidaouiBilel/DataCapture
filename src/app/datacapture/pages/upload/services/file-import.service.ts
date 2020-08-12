@@ -16,6 +16,10 @@ export class FileImportService {
     return this.http.get( environment.admin + 'domain/');
   }
 
+  getAllSuper() {
+    return this.http.get( environment.admin + 'domain/all/super');
+  }
+
   getTargetFields(domainId: string) {
     return this.http.get( environment.admin + `domain/${domainId}/fields`);
   }
