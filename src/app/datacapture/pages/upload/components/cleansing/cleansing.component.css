@@ -21,6 +21,6 @@
   margin-left: 30px !important;
 }
 
-:host ::ng-deep .ag-theme-balham .ag-row-odd {
-  background-color: white !important;
+:host ::ng-deep .ag-theme-balham .ag-header {
+  background-color: #f0f0f0 !important;
 }

@@ -70,6 +70,9 @@ export class CleansingComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.not.warn('When editing do not forget to click on Alt+S to save the modifications.');
+    }, 4000);
   }
 
   serverSideDatasource = (grid: any) => {
@@ -94,8 +97,13 @@ export class CleansingComponent implements OnInit {
             newErrors[ind] =  res.results[e];
           });
           that.results = {...that.results, ...newErrors};
-          const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
           if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
+            const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
+            headers.unshift({
+              headerName: '#',
+              field: 'row_index',
+              valueGetter: 'node.rowIndex + 1'
+            });
             that.headers$.next([...headers]);
             grid.api.setColumnDefs(that.setHeadersLogic(headers, res.headers));
           }
@@ -105,7 +113,7 @@ export class CleansingComponent implements OnInit {
             };
             params.successCallback(res.data, lastRow());
           } else {
-            params.successCallback({columnFieldName: 'No results Found'});
+            params.successCallback([], 0);
           }
         }, (error) => {
           params.failCallback();
@@ -125,51 +133,66 @@ export class CleansingComponent implements OnInit {
   setHeadersLogic(headers: any, types: any): any {
     if (headers) {
       headers.map((h, ind) => {
-        const cellClass = (params) => {
-          const f = params.colDef.field;
-          const i = params.rowIndex;
-          try {
-            if (this.results[i][f].errors.length > 0) {
-              return 'error-cell';
-            }
-          } catch (error) {}
-          try {
-            if (this.results[i][f].warnings.length > 0) {
-              return 'warning-cell';
-            }
-          } catch (error) {}
-          return null;
-        };
-        h.cellClass = cellClass;
-        h.resizable = true;
-        // Tooltip
-        h.tooltipComponent = 'customTooltip';
-        // h.tooltipField = h.field;
-        h.tooltipComponentParams = {error: this.results};
-        h.tooltipValueGetter = (params) => {
-          return { value: params.value };
-        };
-        // Sort
-        h.sortable = true;
-        // Filter
-        h.filterParams = {suppressAndOrCondition: true, buttons: ['reset', 'apply'], debounceMs: 200, closeOnApply: true};
-        switch (types[ind].type) {
-          case 'string':
-            h.filter = 'agTextColumnFilter';
-            break;
-          case 'int':
-            h.filter = 'agNumberColumnFilter';
-            break;
-          case 'double':
-            h.filter = 'agNumberColumnFilter';
-            break;
-          case 'date':
-            h.filter = 'agDateColumnFilter';
-            break;
-          default:
-            break;
+        if (h.headerName !== '#') {
+          const cellClass = (params) => {
+            const f = params.colDef.field;
+            const i = params.rowIndex;
+            try {
+              if (this.results[i][f].errors.length > 0) {
+                return 'error-cell';
+              }
+            } catch (error) {}
+            try {
+              if (this.results[i][f].warnings.length > 0) {
+                return 'warning-cell';
+              }
+            } catch (error) {}
+            return null;
+          };
+          h.cellClass = cellClass;
+          h.cellStyle = {'font-family': 'Roboto,Helvetica,Arial,sans-serif', color: '#363636', 'border-right': '1px solid #ccc'};
+          h.resizable = true;
+          // h.suppressSizeToFit = false;
+          // Tooltip
+          h.tooltipComponent = 'customTooltip';
+          // h.tooltipField = h.field;
+          h.tooltipComponentParams = {error: this.results};
+          h.tooltipValueGetter = (params) => {
+            return { value: params.value };
+          };
+          // Sort
+          h.sortable = true;
+          // Filter
+          h.filterParams = {suppressAndOrCondition: true, buttons: ['reset', 'apply'], debounceMs: 200, closeOnApply: true};
+          switch (types[(ind - 1)].type) {
+            case 'string':
+              h.filter = 'agTextColumnFilter';
+              break;
+            case 'int':
+              h.filter = 'agNumberColumnFilter';
+              break;
+            case 'double':
+              h.filter = 'agNumberColumnFilter';
+              break;
+            case 'date':
+              h.filter = 'agDateColumnFilter';
+              break;
+            default:
+              break;
+          }
+          return h;
+        } else {
+          h.width = 40;
+          h.minWidth = 40;
+          h.maxWidth = 60;
+          // h.suppressSizeToFit = false;
+          h.suppressMenu = true;
+          h.resizable = true;
+          h.editable = false;
+          h.cellStyle = {'font-family': 'Roboto,Helvetica,Arial,sans-serif', color: '#363636', 'border-right': '1px solid #ccc'};
+          h.cellClass = (params) => 'index-cell';
+          return h;
         }
-        return h;
       });
     }
     return headers;
