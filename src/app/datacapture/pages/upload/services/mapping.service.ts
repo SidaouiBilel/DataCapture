@@ -20,7 +20,7 @@ export class MappingService {
   }
 
   getAutomaticMapping(domainId: string, SheetId: string, name: string): Observable<any> {
-    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=test`);
+    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}`);
   }
 
   private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {

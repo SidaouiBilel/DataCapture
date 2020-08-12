@@ -39,7 +39,7 @@ export class CleansingComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
+    if (event.key === 's' && event.altKey === true) {
       this.syncWithServer();
     }
   }
