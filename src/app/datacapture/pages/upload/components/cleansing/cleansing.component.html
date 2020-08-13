@@ -2,12 +2,21 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
+      <div class="flex start">
+        <span class="mr-4">Total Errors </span>
+        <nz-badge [nzOverflowCount]="99999999" [nzCount]="(metaData$ | async)?.totalErrors"></nz-badge>
+        <nz-divider class="error" nzType="vertical"></nz-divider>
+        <span class="ml-4 mr-4">Total Rows in Error </span>
+        <nz-badge [nzOverflowCount]="99999999" [nzCount]="(metaData$ | async)?.uniqueErrorLines"></nz-badge>
+        <nz-divider class="error" nzType="vertical"></nz-divider>
+        <!-- <nz-badge [nzOverflowCount]="'+'" [nzCount]="(metaData$ | async)?.uniqueErrorLines"></nz-badge> -->
+      </div>
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <div class="flex end">
-        <button nz-button nzType="default" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Previous Step"
+        <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Previous Step"
           nzTooltipPlacement="left" (click)="goToMapping()"><i nz-icon nzType="caret-left"></i> Previous</button>
-        <button nz-button nzType="default" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+        <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
           nzTooltipPlacement="left" (click)="goToUpload()">Next<i nz-icon nzType="caret-right"></i></button>
         <nz-divider nzType='vertical'></nz-divider>
         <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
@@ -18,9 +27,11 @@
     </div>
   </div>
 
+  <!-- jobResult -->
   <!-- Grid -->
   <div class="flex-child mt-4">
-    <app-data-grid [columnDefs]="headers$ | async" [results]="results$ | async" [paginationPageSize]="numberOfRows"
-      (gridReady)="fetchData($event)"></app-data-grid>
+    <app-data-grid [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
+      (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
+    </app-data-grid>
   </div>
 </div>

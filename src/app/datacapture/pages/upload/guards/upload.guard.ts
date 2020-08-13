@@ -15,7 +15,7 @@ export class UploadGuard implements CanActivate {
   mandatories: number;
   // Store
   fileData$: Observable<any>;
-  selectedDomain$: Observable<string>;
+  selectedDomain$: Observable<any>;
   selectedSheet$: Observable<number>;
   mandatories$: Observable<number>;
   constructor(private store: Store<AppState>) {
@@ -24,7 +24,7 @@ export class UploadGuard implements CanActivate {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
     this.fileData$.subscribe((res) => {this.fileData = res; });
-    this.selectedDomain$.subscribe((domain) => { this.selectedDomain = domain; });
+    this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
   }
@@ -39,14 +39,21 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'MAPPING': {
-        if (this.selectedSheet != null) {
+        if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null) {
             return true;
         } else {
             return false;
         }
       }
       case 'CLEANSING': {
-        if (this.mandatories === 0) {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0) {
+            return true;
+        } else {
+            return false;
+        }
+      }
+      case 'UPLOAD': {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0) {
             return true;
         } else {
             return false;

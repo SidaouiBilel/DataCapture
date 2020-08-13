@@ -34,8 +34,8 @@ export class SourcePreviewComponent implements OnInit {
     this.paginator$ = combineLatest(this.size$, this.fileData$, this.selectedSheet$, this.gridReady$)
       .subscribe(([size, file, selectedSheet, grid]) => {
         this.onReset();
-        const worksheet = file.metaData.worksheets_map[file.sheets[selectedSheet]];
-        if (worksheet) {
+        if (file.metaData) {
+          const worksheet = file.metaData.worksheets_map[file.sheets[selectedSheet]];
           this.generateDataSource(grid, worksheet, size);
         }
       });

@@ -44,9 +44,18 @@ const components = [
   PreviewComponent,
   UploadComponent,
   TransformationPipeComponent,
-  TransformationNodeComponent, 
+  TransformationNodeComponent,
   TransformationInterfaceComponent,
-  FormatterComponent
+  FormatterComponent,
+  ColumnsInputComponent,
+  MergerComponent,
+  DeleteColumnComponent,
+  DeleteRowsComponent,
+  ActiveTransformationInputComponent,
+  TransformationLoaderComponent,
+  TransformationSaverComponent,
+  TargetPreviewComponent,
+  SourcePreviewComponent
 ];
 
 @NgModule({
@@ -59,7 +68,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, ColumnsInputComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent, ActiveTransformationInputComponent, TransformationLoaderComponent, TransformationSaverComponent, TargetPreviewComponent, SourcePreviewComponent],
+  declarations: [...components],
   exports: [
   ],
   providers : [
@@ -71,7 +80,12 @@ const components = [
     TranformationService
   ],
   entryComponents: [
-    TransformationPipeComponent, TransformationInterfaceComponent, FormatterComponent, MergerComponent, DeleteColumnComponent, DeleteRowsComponent
+    TransformationPipeComponent,
+    TransformationInterfaceComponent,
+    FormatterComponent,
+    MergerComponent,
+    DeleteColumnComponent,
+    DeleteRowsComponent
   ]
 })
 export class UploadModule {}

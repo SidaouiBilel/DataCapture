@@ -6,6 +6,10 @@
   background-color: #f0a878;
 }
 
+::ng-deep .index-cell {
+  background-color: #f0f0f0 !important;
+}
+
 :host{
   display: contents;
 }

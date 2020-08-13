@@ -4,51 +4,50 @@ import { TranformationDrawerService } from '../../services/tranformation-drawer.
 import { TranformationService } from '../../services/tranformation.service';
 
 export class TransformPipeInput implements OnInit {
-  
   pm$: any;
+  activeId$;
+  domainPipes$;
 
+  type = 2;
   modes = [
-    {mode:"TARGET", icon:"file-sync", tooltip: 'View Target'}, 
-    {mode:"SOURCE", icon:"file-text", tooltip: 'View Source'}]
-
+    {mode: 'TARGET', icon: 'file-sync', tooltip: 'View Target'},
+    {mode: 'SOURCE', icon: 'file-text', tooltip: 'View Source'}
+  ];
   constructor(
     private service: TranformationService,
     private drawer: TranformationDrawerService
     ) {}
 
 
-  type= 2
 
-  activeId$
-  domain_pipes$
 
   ngOnInit() {
-    this.activeId$ = this.service.active$.pipe(map((e:any)=>(e)?e.id:null))
-    this.domain_pipes$ = this.service.domain_pipes$
-    this.pm$ = this.service.previewMode$
+    this.activeId$ = this.service.active$.pipe(map((e: any) => (e) ? e.id : null));
+    this.domainPipes$ = this.service.domainPipes$;
+    this.pm$ = this.service.previewMode$;
   }
 
-  loadPipes(){
-    this.service.getInContext().subscribe((l)=>this.domain_pipes$.next(l))
+  loadPipes() {
+    this.service.getInContext().subscribe((l) => this.domainPipes$.next(l));
   }
 
-  onEditClick(){
-    this.drawer.openEditor()
+  onEditClick() {
+    this.drawer.openEditor();
   }
 
-  onAddClick(){
-    this.service.setActive(null)
-    this.drawer.openEditor()
+  onAddClick() {
+    this.service.setActive(null);
+    this.drawer.openEditor();
   }
 
-  onActiveChanged(activeId){
-    this.domain_pipes$.subscribe((pipes:any[])=>{
-      const active = pipes.find(e=>e.id==activeId)
-      this.service.setActive(active)
-    }).unsubscribe()
+  onActiveChanged(activeId) {
+    this.domainPipes$.subscribe((pipes: any[]) => {
+      const active = pipes.find(e => e.id === activeId);
+      this.service.setActive(active);
+    }).unsubscribe();
   }
 
-  updatePreviewMode(mode){
-    this.service.upadatePreviewMode(mode)
+  updatePreviewMode(mode) {
+    this.service.upadatePreviewMode(mode);
   }
 }

@@ -1,113 +1,113 @@
+<h4 nz-typography><i nz-icon nzType="form" nzTheme="outline"></i> Target Field</h4>
+
+<nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="index = $event">
+  <nz-step nzTitle="General"></nz-step>
+  <nz-step nzTitle="Rules"></nz-step>
+</nz-steps>
 
 
-        <h4 nz-typography><i nz-icon nzType="form" nzTheme="outline"></i> Target Field</h4>
+<div *ngIf='index == 0'>
+  <nz-divider nzText="General"></nz-divider>
+  <nz-form-item *ngFor='let f of form'>
+    <nz-form-label [nzSpan]="7" [nzRequired]="f.mandatory">{{f.name}}</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <ng-container [ngSwitch]="f.type">
+        <div *ngSwitchCase="'text'">
+          {{data[f.field]}}
+        </div>
 
-        <nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="index = $event">
-            <nz-step nzTitle="General"></nz-step>
-            <nz-step nzTitle="Rules"></nz-step>
-        </nz-steps>
+        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
 
-        
-        <div *ngIf='index == 0'>
-            <nz-divider nzText="General"></nz-divider>
-        <nz-form-item *ngFor='let f of form'>
-            <nz-form-label [nzSpan]="7" [nzRequired]="f.mandatory">{{f.name}}</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-                <ng-container [ngSwitch]="f.type">
-                <div *ngSwitchCase="'text'">
-                    {{data[f.field]}}
-                </div>
+        <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
+          <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+        </nz-select>
 
-                <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
+        <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
 
-                <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
-                    <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
-                </nz-select>
+        <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
 
-                <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
+      </ng-container>
 
-                <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
-                
+    </nz-form-control>
+  </nz-form-item>
+
+</div>
+
+
+<div *ngIf='index == 1'>
+  <nz-divider nzText="Rules"></nz-divider>
+
+  <ng-container *ngFor="let r of data.rules; let i = index">
+    <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
+      <nz-card [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name"
+        [nzExtra]="extraTemplate">
+        <nz-card-meta [nzDescription]="RULES_MAP[r.type].description"></nz-card-meta>
+        <div class="ma-t">
+          <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
+            <nz-form-item *ngFor="let p of params">
+
+              <nz-form-label [nzSpan]="7">{{p.label}}</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+
+                <ng-container [ngSwitch]="p.type">
+
+                  <textarea *ngSwitchCase="'textarea'" [(ngModel)]='r[p.name]' nz-input rows="2"></textarea>
+
+                  <nz-select style="width: 100%;" [(ngModel)]='r[p.name]' *ngSwitchCase="'select'">
+                    <nz-option *ngFor='let o of p.options' [nzValue]="o.key" [nzLabel]="o.value"></nz-option>
+                  </nz-select>
+
+                  <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
+
+                  <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input />
+
                 </ng-container>
-        
-            </nz-form-control>
-        </nz-form-item>
 
+
+              </nz-form-control>
+
+
+
+            </nz-form-item>
+
+
+          </ng-container>
         </div>
 
+        <ng-template #extraTemplate>
+          <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
+        </ng-template>
+      </nz-card>
 
-        <div *ngIf='index == 1'>
-            <nz-divider nzText="Rules"></nz-divider>
+    </ng-container>
 
-        <ng-container *ngFor="let r of data.rules; let i = index">
-            <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
-                <nz-card [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name" [nzExtra]="extraTemplate">
-                    <nz-card-meta [nzDescription]="RULES_MAP[r.type].description" ></nz-card-meta>
-                    <div class="ma-t">
-                        <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
-                            <nz-form-item *ngFor="let p of params">
-                          
-                                <nz-form-label [nzSpan]="7" >{{p.label}}</nz-form-label>
-                                <nz-form-control [nzSpan]="14">
-    
-                                    <ng-container [ngSwitch]="p.type">
-                                    
-                                        <textarea *ngSwitchCase="'textarea'" [(ngModel)]='r[p.name]' nz-input rows="2"></textarea>
-                        
-                                        <nz-select style="width: 100%;" [(ngModel)]='r[p.name]' *ngSwitchCase="'select'">
-                                            <nz-option *ngFor='let o of p.options' [nzValue]="o.key" [nzLabel]="o.value"></nz-option>
-                                        </nz-select>
-                        
-                                        <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
-                        
-                                        <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input/>   
-                                        
-                                    </ng-container>
-        
-                                         
-                                  </nz-form-control>
-                                
-                                
-                                
-                              </nz-form-item>
-    
-    
-                        </ng-container>
-                    </div>
-        
-                    <ng-template #extraTemplate>
-                        <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
-                      </ng-template>
-                  </nz-card>
-                 
-            </ng-container>
+    <ng-template #noCheckFound>
+      <div class="ma-b">
+        <button nzBlock nz-button nzType='danger' (click)="removeRule(i)"><b>{{r.type}}</b> NOT FOUND</button>
+      </div>
+    </ng-template>
 
-            <ng-template #noCheckFound>
-                <div class="ma-b">
-                    <button nzBlock nz-button nzType='danger' (click)="removeRule(i)" ><b>{{r.type}}</b> NOT FOUND</button>
-                </div>
-            </ng-template>
-            
-            <ng-template #extraTemplate>
-                <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
-              </ng-template>
+    <ng-template #extraTemplate>
+      <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
+    </ng-template>
 
-        </ng-container>
-            
-   
+  </ng-container>
 
-          <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
-            Add
-            <i nz-icon nzType="down"></i>
-          </button>
-          <nz-dropdown-menu #rulesMenu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-tooltip [nzTooltipTitle]="rule.description" *ngFor="let rule of RULES_LIST" nz-menu-item  (click)="addRule($event, rule)">{{rule.name}}</li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
+
+
+  <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
+    Add
+    <i nz-icon nzType="down"></i>
+  </button>
+  <nz-dropdown-menu #rulesMenu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-tooltip [nzTooltipTitle]="rule.description" *ngFor="let rule of RULES_LIST" nz-menu-item
+        (click)="addRule($event, rule)">{{rule.name}}</li>
+    </ul>
+  </nz-dropdown-menu>
+</div>
 
 <ng-template #modalFooter>
-    <button nz-button nzType="link" [disabled]="!canClose()" (click)="close()">Cancel</button>
-    <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">Save</button>
+  <button nz-button nzType="link" [disabled]="!canClose()" (click)="close()">Cancel</button>
+  <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">Save</button>
 </ng-template>

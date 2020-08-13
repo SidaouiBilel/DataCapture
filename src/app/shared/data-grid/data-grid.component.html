@@ -1,15 +1,25 @@
 <ag-grid-angular #agGrid
   class="ag-theme-balham"
   style="width: 100%; height: 100%;"
-  [columnDefs]="columnDefs"
-  [defaultColDef]="defaultColDef"
-  [rowModelType]="'serverSide'"
+  [rowStyle] = "{background: 'white'}"
   [rowData]="rowData"
   [modules]="modules"
-  [enterMovesDown]="true"
-  [enterMovesDownAfterEdit]="true"
+  [columnDefs]="columnDefs"
+  [animateRows]="true"
+  [rowModelType]="'serverSide'"
+  [defaultColDef]="defaultColDef"
   [cacheBlockSize]="paginationPageSize"
-  [maxBlocksInCache]="5"
-  [blockLoadDebounceMillis]="100"
+  [enterMovesDown]="true"
+  [maxBlocksInCache]="10"
+  [suppressMenuHide]="true"
+  [enableCellChangeFlash]="true"
+  [enterMovesDownAfterEdit]="true"
+  [stopEditingWhenGridLosesFocus]="true"
+  [frameworkComponents]="frameworkComponents"
+  (cellValueChanged)="cellValueChanged.emit($event)"
   (gridReady)="gridReady.emit($event)">
 </ag-grid-angular>
+<!-- [blockLoadDebounceMillis]="100" -->
+  <!-- [fillOperation]="fillOperation" -->
+  <!-- [enableRangeSelection]="true"
+  [enableFillHandle]="true" -->

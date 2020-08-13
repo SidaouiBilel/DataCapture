@@ -11,15 +11,15 @@ import { NzModalRef } from 'ng-zorro-antd';
 })
 export class FieldModalComponent extends EntityModal implements OnInit {
 
-  RULES_LIST = []
-  RULES_MAP = {}
+  RULES_LIST = [];
+  RULES_MAP = {};
 
   form = [
-    { name:'label', 
+    { name: 'label',
       field: 'label',
       mandatory: true,
     },
-    { name:'Type', 
+    { name: 'Type',
       field: 'type',
       mandatory: true,
       type:'select',
@@ -30,15 +30,15 @@ export class FieldModalComponent extends EntityModal implements OnInit {
         {value:'date', label:'Date'},
       ]
     },
-    { name:'Editable', 
+    { name:'Editable',
       field: 'editable',
       type:'checkbox',
     },
-    { name:'Mandatory', 
+    { name:'Mandatory',
       field: 'mandatory',
       type:'checkbox',
     },
-    { name:'Description', 
+    { name:'Description',
       field: 'description',
       mandatory: false,
       type:'textarea'
@@ -112,9 +112,9 @@ export class FieldModalComponent extends EntityModal implements OnInit {
   }
 
   addRule(e, rule){
-    
+
     this.data.rules = this.data.rules || []
-    
+
     let newRule = {
       type:rule.id,
     }

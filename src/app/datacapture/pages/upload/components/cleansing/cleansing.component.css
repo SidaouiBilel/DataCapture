@@ -16,3 +16,11 @@
 :host ::ng-deep .ant-divider-inner-text {
   color: #28a745 !important;
 }
+
+:host ::ng-deep nz-divider.error {
+  margin-left: 30px !important;
+}
+
+:host ::ng-deep .ag-theme-balham .ag-header {
+  background-color: #f0f0f0 !important;
+}

@@ -2,21 +2,23 @@
   <!-- Header -->
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
-      <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
+      <!-- <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
         <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
-      </nz-select>
+      </nz-select> -->
+      <button nz-button class="w-50" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">{{ selectedDomain?.name }}</button>
     </div>
-    <div nz-col nzSpan="6" class="text-right">
-      <button nz-button nzType="primary" class="mr-4" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
-        nzTooltipTitle="Next Step" nzTooltipPlacement="left" (click)="goToPreview()"><i nz-icon
-          nzType="caret-right"></i></button>
-      <button nz-button nzType="danger" nzSize="small" [nzGhost]="true" nzShape="circle" nz-tooltip
-        nzTooltipTitle="Reset" nzTooltipPlacement="left" (click)="cancelUpload()"><i nz-icon
-          nzType="close"></i></button>
+    <div nz-col nzSpan="6" class="text-right button-spacing">
+      <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+          nzTooltipPlacement="left" (click)="goToPreview()">Next<i nz-icon nzType="caret-right"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
+          (click)="cancelUpload()">
+          <i nz-icon nzType="close"></i>
+        </button>
     </div>
   </div>
 
-  <nz-divider [nzText]="(importState$ | async)?.selectedFile?.token" nzOrientation="left"></nz-divider>
+  <nz-divider class="horiz" [nzText]="(importState$ | async)?.selectedFile?.token" nzOrientation="left"></nz-divider>
 
   <!-- If The file isn't uploaded -->
   <div class="flex-child" *ngIf="!(importState$ | async)?.error && !(importState$ | async)?.imported">
@@ -58,3 +60,13 @@
     </div>
   </div>
 </div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of keys(domains)" nz-submenu [nzTitle]="item">
+      <ul>
+        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain.identifier, domain.name)">{{domain.name}}</li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>
