@@ -6,7 +6,7 @@
                 nzGhost nz-button nzType='primary' class="pipe-icon">
                 <i nz-icon nzType="api"></i>
             </button>
-            <nz-select (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="min-width: 200px" nzPlaceHolder='Transformation Pipe'>
+            <nz-select (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="width: 100px" nzPlaceHolder='Transformation Pipe'>
                 <nz-option *ngFor='let o of (domain_pipes$ | async)'
                     [nzValue]='o.id'
                     [nzLabel]='o.name'
