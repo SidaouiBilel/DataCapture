@@ -12,6 +12,7 @@ import { selectInputCloumnsByIndex } from '../../store/transformation.selectors'
   providers: [MakeProvider(ColumnsInputComponent)]
 })
 export class ColumnsInputComponent extends AbstractValueAccessor implements OnInit {
+  
   _value = null;
 
   @Input() mode = 'default';
