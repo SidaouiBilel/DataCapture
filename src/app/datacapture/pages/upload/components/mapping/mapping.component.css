@@ -186,3 +186,13 @@
 :host ::ng-deep .ant-divider-inner-text {
   color: #28a745 !important;
 }
+
+::ng-deep .vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep .vertical-center-modal .ant-modal {
+  top: 0;
+}
