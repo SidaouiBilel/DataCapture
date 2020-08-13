@@ -11,7 +11,7 @@ export class MappingService {
   constructor(private http: HttpClient) {
   }
 
-  getTargetFields(domainId: string){
+  getTargetFields(domainId: string) {
     return this.http.get( environment.admin + `domain/${domainId}/fields`);
   }
 
@@ -20,7 +20,7 @@ export class MappingService {
   }
 
   getAutomaticMapping(domainId: string, SheetId: string, name: string): Observable<any> {
-    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}`);
+    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=test`);
   }
 
   private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {

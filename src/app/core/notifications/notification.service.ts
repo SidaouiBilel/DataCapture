@@ -41,9 +41,10 @@ export class NotificationService {
     });
   }
 
-  warn(message: string) {
+  warn(message: string, duration?: number) {
+    if (!duration) { duration = 2500; }
     this.show(message, 'WARNING', {
-      nzDuration: 2500,
+      nzDuration: duration,
       nzAnimate: true,
       nzPlacement: 'topRight'
     });

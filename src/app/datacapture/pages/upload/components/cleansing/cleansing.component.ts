@@ -71,7 +71,7 @@ export class CleansingComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.not.warn('When editing do not forget to click on Alt+S to save the modifications.');
+      this.not.warn('When editing do not forget to click on Alt+S to save the modifications.', 5000);
     }, 4000);
   }
 
