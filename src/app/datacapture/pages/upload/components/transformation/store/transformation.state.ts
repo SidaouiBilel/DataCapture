@@ -3,6 +3,7 @@ import { TransformationActionTypes } from './transformation.actions';
 
 export const initialState: Transformation = {
     nodes:[],
+    editedPipeInfo: null,
     validation_states:[],
     expanded: true,
     activePipe: null,
@@ -52,10 +53,17 @@ export function TransformationReducer(state: Transformation = initialState, acti
     case ACTIONS.LOAD:{
         const pipe = action.payload
         let nodes = []
+        let editedPipeInfo = null
         if (pipe){
             nodes = pipe.nodes || []
+            editedPipeInfo = {...pipe}
         }
-        return {...state, activePipe: pipe, nodes: nodes}
+        return {...state, activePipe: pipe, nodes: nodes, editedPipeInfo: editedPipeInfo}
+    }
+
+    case ACTIONS.UPDATE_EDITED:{
+        const editedPipeInfo = {...action.payload};
+        return {...state, editedPipeInfo: editedPipeInfo}
     }
 
     case ACTIONS.SET_PREVIEW_MODE:{

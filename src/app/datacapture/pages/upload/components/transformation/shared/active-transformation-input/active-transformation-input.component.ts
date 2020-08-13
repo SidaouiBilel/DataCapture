@@ -10,6 +10,7 @@ import { TranformationService } from '../../services/tranformation.service';
 })
 export class ActiveTransformationInputComponent implements OnInit {
   pm$: any;
+  expanded$: any;
 
   modes = [
     {mode: 'SOURCE', icon: 'file-text', tooltip: 'View Source', label: 'Source'},
@@ -30,6 +31,11 @@ export class ActiveTransformationInputComponent implements OnInit {
     this.activeId$ = this.service.active$.pipe(map((e: any) => (e) ? e.id : null));
     this.domainPipes$ = this.service.domainPipes$;
     this.pm$ = this.service.previewMode$;
+    this.expanded$ = this.service.expanded$;
+  }
+
+  onFlipCollapse() {
+    this.service.flipCollapse();
   }
 
   loadPipes() {

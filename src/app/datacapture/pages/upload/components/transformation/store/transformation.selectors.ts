@@ -39,6 +39,11 @@ export const selectTranformationPipe = createSelector(
   (object: Transformation) => object.nodes
 );
 
+export const selectEdiedTranformationPipeInfo = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.editedPipeInfo
+);
+
 export const selectTranformationNodesStatus = createSelector(
   selectTranformation,
   (object: Transformation) => object.validation_states

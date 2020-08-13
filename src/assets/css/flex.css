@@ -16,15 +16,20 @@
     justify-content: flex-start;
 }
 
+.flex.stretch{
+    align-items: stretch;
+}
+
+
 .flex.top{
     align-items: flex-start;
 }
 
-.flex.colunm.start{
+.flex.column.start{
     align-items: flex-start;
 }
 
-.flex.colunm{
+.flex.column{
     flex-direction: column;
 }
 
@@ -39,4 +44,10 @@
 .height-1{
     max-height: 100%;
     min-height: 100%;
+}
+
+.flex-scroll{
+    flex: 1 1 0%;
+    height: 0;
+    overflow-y: auto;
 }

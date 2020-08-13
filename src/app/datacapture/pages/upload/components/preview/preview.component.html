@@ -1,4 +1,4 @@
-<div class="main-container">
+<!-- <div class="main-container">
   <div nz-row class="h-100">
     <div nz-col class="h-100 pr-4" [nzXs]="isVisible ? 24 : 0" [nzSm]="isVisible ? 24 : 0" [nzMd]="isVisible ? 18 : 0"
       [nzLg]="isVisible ? 14 : 0" [nzXl]="isVisible ? 12 : 0" [nzXXl]="isVisible ? 8 : 0">
@@ -20,7 +20,6 @@
     <div nz-col class="h-100" [nzXs]="isVisible ? 24 : 24" [nzSm]="isVisible ? 24 : 24" [nzMd]="isVisible ? 6 : 24"
     [nzLg]="isVisible ? 10 : 24" [nzXl]="isVisible ? 12 : 24" [nzXXl]="isVisible ? 16 : 24">
       <div class="flex-box">
-        <!-- Header -->
         <div class="importHeader" nz-row>
           <div nz-col nzSpan="18">
             <button *ngIf="!isVisible" nz-button nzSize="middle" nzShape="circle" (click)="isVisible = !isVisible">
@@ -36,7 +35,6 @@
                     [nzLabel]="sheet"></nz-option>
                 </nz-select>
               </div>
-              <!-- <app-active-transformation-input></app-active-transformation-input> -->
             </div>
           </div>
           <div nz-col nzSpan="6" class="text-right button-spacing mb-3">
@@ -55,7 +53,6 @@
           </div>
         </div>
 
-        <!-- Grid -->
         <ng-container [ngSwitch]='previewMode$ | async'>
           <app-source-preview *ngSwitchCase='"SOURCE"'></app-source-preview>
           <app-target-preview *ngSwitchCase='"TARGET"'></app-target-preview>
@@ -65,4 +62,37 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<!-- <div class="main-container"> -->
+<div class="main-container">
+  
+  <div class="h-100 flex stretch column">
+
+      <div class="toolbar mb-3 flex start">
+        <!-- <ng-container *ngIf='expanded$ | async'>
+          <app-transformation-toolbar></app-transformation-toolbar>
+          <nz-divider nzType='vertical'></nz-divider>
+        </ng-container> -->
+          <app-active-transformation-input></app-active-transformation-input>
+      </div>
+
+      <div class="preview-content flex stretch flex-1 h-100">
+        <div *ngIf='expanded$ | async' class="sidebar-pipe mr-3">
+          <app-transformation-side-bar></app-transformation-side-bar>
+        </div>
+
+        <div class="preview-grid flex column stretch flex-1 h-100">
+          <ng-container [ngSwitch]='previewMode$ | async'>
+            <app-source-preview *ngSwitchCase='"SOURCE"'></app-source-preview>
+            <app-target-preview *ngSwitchCase='"TARGET"'></app-target-preview>
+          </ng-container>
+
+          <app-sheet-selector></app-sheet-selector>
+        </div>
+        
+      </div>
+    
+  </div>
 </div>
+

@@ -1,55 +1,42 @@
-<nz-form-item *ngIf='type==1' class="m-0">
-  <nz-form-control>
-    <nz-input-group nzCompact>
-      <button nz-tooltip nzTooltipTitle='Pre Mapping Transformation Pipe' nzGhost nz-button nzType='primary'
-        class="pipe-icon">
-        <i nz-icon nzType="api"></i>
-      </button>
-      <nz-select (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="min-width: 200px"
-        nzPlaceHolder='Transformation Pipe'>
-        <nz-option *ngFor='let o of (domainPipes$ | async)' [nzValue]='o.id' [nzLabel]='o.name'></nz-option>
-      </nz-select>
-      <button [disabled]='!(activeId$ | async)' nz-button (click)='onEditClick()'><i nz-icon nzType="edit"></i></button>
-      <button class="pipe-icon-last" nz-button (click)='onAddClick()'><i nz-icon nzType="plus"></i></button>
-    </nz-input-group>
-  </nz-form-control>
-</nz-form-item>
 
-
-<div class="flex center" *ngIf='type==2'>
-  <nz-divider nzType='vertical'></nz-divider>
-  <button nz-tooltip nzTooltipTitle='Edit Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
-    nz-button (click)='onEditClick()'>
-    <i nz-icon nzType="edit"></i>
+  <!-- <button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Pre Mapping Transformation Pipe' nzShape='round' nz-button
+  nzType='primary' class="mr-2">
+  <i nz-icon nzType="api"></i>
+  <span *ngIf='(expanded$ | async)'>Open Menu</span>
+  <span *ngIf='!(expanded$ | async)'>Close</span>
+  </button> -->
+  <button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation' nzShape='circle' nz-button class="mr-2">
+  <i nz-icon nzType="menu-unfold"></i>
   </button>
-  <button nz-tooltip nzTooltipTitle='Remove Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
-    nz-button (click)='onClearClick()'>
-    <i nz-icon nzType="stop"></i>
-  </button>
-  <button nz-tooltip nzTooltipTitle='Create Pipe' nzShape='circle' class="ghost" nz-button (click)='onAddClick()'>
-    <i nz-icon nzType="plus"></i>
-  </button>
-  <nz-divider nzType='vertical'></nz-divider>
-  <button *ngFor='let m of modes' nz-tooltip [nzTooltipTitle]='m.tooltip' [ngClass]='{"ghost": (m.mode!=(pm$ | async))}'
-    nz-button [nzType]='(m.mode==(pm$ | async))?"primary":"default"' (click)='updatePreviewMode(m.mode)'><i nz-icon
-      [nzType]="m.icon"></i>
-    {{m.label}}
-  </button>
-  <nz-divider nzType='vertical'></nz-divider>
-</div>
-
-<div class="flex center mt-3 pr-4">
-  <nz-divider nzType='vertical'></nz-divider>
-
-  <button nz-tooltip nzTooltipTitle='Pre Mapping Transformation Pipe' nzShape='circle' nzGhost nz-button
-    nzType='primary' class="mr-2">
-    <i nz-icon nzType="api"></i>
+  <button *ngIf='(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation' nzShape='circle' nz-button class="mr-2">
+  <i nz-icon nzType="menu-fold"></i>
   </button>
 
   <nz-divider nzType='vertical'></nz-divider>
 
   <nz-select class="ghost" (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async'
-    style="flex: 1 1 0%;" nzPlaceHolder='Transformation Pipe'>
+    style="width: 150px;" nzPlaceHolder='None'>
     <nz-option *ngFor='let o of (domainPipes$ | async)' [nzValue]='o.id' [nzLabel]='o.name'></nz-option>
   </nz-select>
-</div>
+
+  <!-- <nz-divider nzType='vertical'></nz-divider> -->
+
+  <!-- <button nz-tooltip nzTooltipTitle='Edit Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
+    nz-button (click)='onEditClick()'>
+    <i nz-icon nzType="edit"></i>
+  </button> -->
+  <button nz-tooltip nzTooltipTitle='Remove Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
+    nz-button (click)='onClearClick()'>
+    <i nz-icon nzType="stop"></i>
+  </button>
+  <!-- <button nz-tooltip nzTooltipTitle='Create Pipe' nzShape='circle' class="ghost" nz-button (click)='onAddClick()'>
+    <i nz-icon nzType="plus"></i>
+  </button> -->
+  <nz-divider nzType='vertical'></nz-divider>
+  <button *ngFor='let m of modes' nz-tooltip [nzTooltipTitle]='m.tooltip' [ngClass]='{"ghost": (m.mode!=(pm$ | async))}'
+    nz-button [nzType]='(m.mode==(pm$ | async))?"primary":"default"' (click)='updatePreviewMode(m.mode)'
+    nzShape='round'
+    ><i nz-icon
+      [nzType]="m.icon"></i>
+    {{m.label}}
+  </button>

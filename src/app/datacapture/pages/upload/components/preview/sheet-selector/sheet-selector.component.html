@@ -1,0 +1,14 @@
+
+
+<nz-tabset class='sheet-selector' 
+nzSize='small' 
+nzType='card' 
+nzTabPosition="bottom" 
+[nzSelectedIndex]="selectedSheet$ | async" 
+(nzSelectedIndexChange)='selectSheet($event)'>
+        <nz-tab
+            *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index"
+          [nzTitle]="sheet"
+        >
+        </nz-tab>
+      </nz-tabset>
