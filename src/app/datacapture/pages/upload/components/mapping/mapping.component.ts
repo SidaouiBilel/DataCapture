@@ -10,6 +10,9 @@ import { SaveMappingFields, SaveMappedSources, SaveMappingId } from '../../store
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NzModalService, NzModalRef } from 'ng-zorro-antd';
+import { PreviousMappingsComponent } from './previous-mappings/previous-mappings.component';
 
 @Component({
   selector: 'app-mapping',
@@ -21,6 +24,9 @@ export class MappingComponent implements OnInit {
   mappedSources: any;
   mandatories: number;
   keys = Object.keys;
+  isVisible: boolean;
+  isOkLoading: boolean;
+  validateForm: FormGroup;
   // Store
   mappingFields$: Observable<any>;
   fileData$: Observable<any>;
@@ -32,6 +38,8 @@ export class MappingComponent implements OnInit {
   constructor(private store: Store<AppState>,
               private service: MappingService,
               private router: Router,
+              private fb: FormBuilder,
+              private modalService: NzModalService,
               private notification: NotificationService) {
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
@@ -43,43 +51,30 @@ export class MappingComponent implements OnInit {
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
+    this.validateForm = this.fb.group({name: [null, [Validators.required]]});
+    this.validate();
   }
 
   ngOnInit() {
-    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
-      .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
-        // if (mappingId) {
-          const x = this.notification.loading('Loading automatic mapping');
-          this.service.getAutomaticMapping(domain.id, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], '')
-            .subscribe((res) => {
-              // Reinit Sources
-              Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
-              // Update Mapping Fields
-              this.updateMappingFields(res);
-              this.store.dispatch(new SaveMappingId(res.mapping_id));
-              // Update Source Fields
-              Object.keys(res.columns_details).forEach(e => {
-                if (this.mappedSources[e]) {
-                  this.mappedSources[e] = res.columns_details[e].isMapped;
-                }
-              });
-              this.store.dispatch(new SaveMappedSources(this.mappedSources));
-              this.notification.close(x);
-            }, (err) => {
-              this.notification.error(err.message);
-              this.notification.close(x);
-            });
-          // }
-      });
+    this.mappingId$.pipe(take(1)).subscribe(([mappingId]) => {
+      if (!mappingId) {
+        this.isVisible = true;
+      }
+    });
   }
 
-  reInitMappingFields() {
+  reInitMappingFields(): void {
     this.mappingFields.forEach((element, index) => {
       const refObj = {...element};
       refObj.value = null;
       this.mappingFields[index] = refObj;
     });
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
+  }
+
+  onUpdateSources(source): void {
+    this.mappedSources[source.data] = true;
+    this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
   updateMappingFields(res: any) {
@@ -96,6 +91,82 @@ export class MappingComponent implements OnInit {
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
   }
 
+  handleOk(): void {
+    this.validate();
+    if (this.validateForm.valid) {
+      forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
+        .subscribe(([domain, fileData, selectedSheet]) => {
+        const x = this.notification.loading('Loading automatic mapping');
+        const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
+        this.service.getAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value)
+          .subscribe((res) => {
+            this.updateLocalMapping(res);
+            this.store.dispatch(new SaveMappedSources(this.mappedSources));
+            this.notification.close(x);
+            this.isVisible = false;
+            this.isOkLoading = false;
+          }, (err) => {
+            this.notification.error(err.message);
+            this.notification.close(x);
+            this.isVisible = false;
+            this.isOkLoading = false;
+          });
+        });
+    }
+  }
+
+  validate(): void {
+    this.validateForm.controls.name.markAsDirty();
+    this.validateForm.controls.name.updateValueAndValidity();
+  }
+
+  previousMappings(): void {
+    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
+    .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
+      this.service.getPreviouslyMappings(domain.id).subscribe((mappings: any[]) => {
+        const modal: NzModalRef = this.modalService.create({
+          nzTitle: 'Previously Saved Mappings',
+          nzClosable: false,
+          nzWrapClassName: 'vertical-center-modal',
+          nzWidth: 'xXL',
+          nzContent: PreviousMappingsComponent,
+          nzOkText: null,
+          nzComponentParams: {
+            mappings,
+            mappingId
+          },
+        });
+        modal.afterClose.subscribe((id) => {
+          if (id) {
+            // Apply the mapping
+            const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
+            this.service.getMappingById(domain.id, ws, id).subscribe((res: any) => {
+              this.updateLocalMapping(res);
+              this.notification.success('The mapping was applied successfully.');
+            }, (err) => {
+              this.notification.error(err.message);
+            });
+          }
+        });
+      });
+    });
+  }
+
+  updateLocalMapping(res: any): void {
+    // Reinit Sources
+    Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
+    // Update Mapping Fields
+    this.updateMappingFields(res);
+    this.store.dispatch(new SaveMappingId(res.mapping_id));
+    // Update Source Fields
+    Object.keys(res.columns_details).forEach(e => {
+      if (e in this.mappedSources) {
+        this.mappedSources[e] = res.columns_details[e].isMapped;
+      }
+    });
+    this.store.dispatch(new SaveMappedSources(this.mappedSources));
+  }
+
   onItemDrop(source, index: number): void {
     const refObj = {...this.mappingFields[index]};
     refObj.value = source.data;
@@ -110,11 +181,6 @@ export class MappingComponent implements OnInit {
     this.mappingFields[index] = refObj;
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
     this.onUpdateSources(source);
-  }
-
-  onUpdateSources(source): void {
-      this.mappedSources[source.data] = true;
-      this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
   updateMapping(): void {
@@ -142,5 +208,4 @@ export class MappingComponent implements OnInit {
       this.notification.warn('Please map all the mandatory fields');
     }
   }
-
 }
