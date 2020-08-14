@@ -15,6 +15,10 @@ export class SuperDomainService {
     return this.http.get( this.url + "domain/super")
   }
 
+  getHierarchy(){
+    return this.http.get( this.url + "domain/super/hierarchy")
+  }
+
   save(domain){
     return this.http.post( this.url + "domain/super/", domain)
   }

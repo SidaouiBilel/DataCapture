@@ -11,10 +11,14 @@ import { FieldModalComponent } from './modals/field-modal/field-modal.component'
 import { SuperDomainsPageComponent } from './pages/super-domains-page/super-domains-page.component';
 import { SuperDomainConfigModalComponent } from './modals/super-domain-config-modal/super-domain-config-modal.component';
 import { DomainCardComponent } from './componenets/domain-card/domain-card.component';
+import { DomainsHierarchyComponent } from './componenets/domains-hierarchy/domains-hierarchy.component';
+import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
+import { CollectionDetailsComponent } from './pages/collection-details/collection-details.component';
+import { CollectionCardComponent } from './componenets/collection-card/collection-card.component';
 
 
 @NgModule({
-  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent,SuperDomainConfigModalComponent, FieldModalComponent, SuperDomainsPageComponent, DomainCardComponent],
+  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent,SuperDomainConfigModalComponent, FieldModalComponent, SuperDomainsPageComponent, DomainCardComponent, DomainsHierarchyComponent, AdminLayoutComponent, CollectionDetailsComponent, CollectionCardComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

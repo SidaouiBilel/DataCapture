@@ -1,0 +1,21 @@
+<nz-card [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading'>
+    <nz-descriptions>
+        <nz-descriptions-item nzTitle="Name">{{data?.name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Created On">{{data?.created_on}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Modified On">{{data?.modified_on}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="ID"><nz-tag>{{data?.id}}</nz-tag></nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Description">
+          {{data?.description}}
+        </nz-descriptions-item>
+      </nz-descriptions>
+</nz-card>
+
+<ng-template #extraTemplate>
+    <div class="button-spacing">
+        <button class='ghost' nzShape='circle' nz-button (click)='onEdit()'><i nz-icon nzType="edit"></i></button>
+        <button class='ghost' nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    </div>
+</ng-template>
+<ng-template #titleTemplate>
+    <i nz-icon nzType="block" nzTheme="outline"></i> Collection Details
+</ng-template>

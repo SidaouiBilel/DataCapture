@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomainService } from '../../services/domain.service';
 import { BehaviorSubject, forkJoin } from 'rxjs';
@@ -16,7 +16,7 @@ import { ChecksService } from '../../services/checks.service';
   styleUrls: ['./fields-page.component.css']
 })
 export class FieldsPageComponent implements OnInit, OnDestroy {
-  id: number;
+  @Input() id: number;
   subid: any;
   private sub: any;
 
@@ -37,16 +37,16 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   loading
   uploadURI
 
-  constructor(private notification: NotificationService, private route: ActivatedRoute, private cs:ChecksService, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
-
+  
   onBack(){
     this.router.navigate(['/datacapture/admin/domains', this.subid, 'collection']);
   }
-
+  
+  constructor(private notification: NotificationService, private route: ActivatedRoute, private cs:ChecksService, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-       this.id = params.id;
+    this.sub = this.route.parent.params.subscribe(params => {
+       this.id = params.id || this.id;
        this.subid = params.subid;
        this.load_data();
     });

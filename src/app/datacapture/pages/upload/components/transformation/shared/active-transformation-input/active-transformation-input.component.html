@@ -1,10 +1,3 @@
-
-  <!-- <button (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Pre Mapping Transformation Pipe' nzShape='round' nz-button
-  nzType='primary' class="mr-2">
-  <i nz-icon nzType="api"></i>
-  <span *ngIf='(expanded$ | async)'>Open Menu</span>
-  <span *ngIf='!(expanded$ | async)'>Close</span>
-  </button> -->
   <button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation' nzShape='circle' nz-button class="mr-2">
   <i nz-icon nzType="menu-unfold"></i>
   </button>
@@ -19,20 +12,13 @@
     <nz-option *ngFor='let o of (domainPipes$ | async)' [nzValue]='o.id' [nzLabel]='o.name'></nz-option>
   </nz-select>
 
-  <!-- <nz-divider nzType='vertical'></nz-divider> -->
-
-  <!-- <button nz-tooltip nzTooltipTitle='Edit Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
-    nz-button (click)='onEditClick()'>
-    <i nz-icon nzType="edit"></i>
-  </button> -->
   <button nz-tooltip nzTooltipTitle='Remove Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
     nz-button (click)='onClearClick()'>
     <i nz-icon nzType="stop"></i>
   </button>
-  <!-- <button nz-tooltip nzTooltipTitle='Create Pipe' nzShape='circle' class="ghost" nz-button (click)='onAddClick()'>
-    <i nz-icon nzType="plus"></i>
-  </button> -->
+
   <nz-divider nzType='vertical'></nz-divider>
+  
   <button *ngFor='let m of modes' nz-tooltip [nzTooltipTitle]='m.tooltip' [ngClass]='{"ghost": (m.mode!=(pm$ | async))}'
     nz-button [nzType]='(m.mode==(pm$ | async))?"primary":"default"' (click)='updatePreviewMode(m.mode)'
     nzShape='round'
