@@ -34,6 +34,7 @@ import { TranformationDrawerService } from './components/transformation/services
 import { TargetPreviewComponent } from './components/preview/view-modes/target-preview/target-preview.component';
 import { SourcePreviewComponent } from './components/preview/view-modes/source-preview/source-preview.component';
 import { TransformationEffects } from './components/transformation/store/transformation.effect';
+import { PreviousMappingsComponent } from './components/mapping/previous-mappings/previous-mappings.component';
 
 const components = [
   UploadComponentComponent,
@@ -55,7 +56,8 @@ const components = [
   TransformationLoaderComponent,
   TransformationSaverComponent,
   TargetPreviewComponent,
-  SourcePreviewComponent
+  SourcePreviewComponent,
+  PreviousMappingsComponent
 ];
 
 @NgModule({
@@ -85,7 +87,8 @@ const components = [
     FormatterComponent,
     MergerComponent,
     DeleteColumnComponent,
-    DeleteRowsComponent
+    DeleteRowsComponent,
+    PreviousMappingsComponent
   ]
 })
 export class UploadModule {}

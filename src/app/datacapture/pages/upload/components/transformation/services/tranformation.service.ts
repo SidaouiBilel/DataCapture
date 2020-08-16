@@ -26,9 +26,9 @@ export class TranformationService {
         if (this.domainId && (this.domainId !== domainId.id)) {
           this.setActive(null);
         }
+        this.domainId = domainId.id;
+        this.loadDomainPipes();
       }
-      this.domainId = domainId.id;
-      this.loadDomainPipes();
     });
     this.active$ = this.store.select(selectActivePipe);
     this.previewMode$ = this.store.select(selectPreviewMode);
