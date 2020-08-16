@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
 import { FileImportService } from '../../services/file-import.service';
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { ActionSelectSheet } from '../../store/actions/preview.actions';
-import { selectPreviewMode } from '../transformation/store/transformation.selectors';
+import { selectPreviewMode, selectPipeExpanded } from '../transformation/store/transformation.selectors';
 
 @Component({
   selector: 'app-preview',
@@ -32,6 +32,8 @@ export class PreviewComponent implements OnInit {
   fileMetaData$: Observable<Sheet>;
   selectedSheet$: Observable<number>;
   previewMode$: Observable<'SOURCE' | 'TARGET'>;
+  expanded$: Observable<boolean>;
+
   constructor(private store: Store<AppState>,
               private router: Router,
               private service: FileImportService,
@@ -40,6 +42,8 @@ export class PreviewComponent implements OnInit {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.selectedSheet$.subscribe((res) => { this.selectedSheet = res; });
     this.previewMode$ = this.store.select(selectPreviewMode);
+
+    this.expanded$ = this.store.select(selectPipeExpanded);
   }
 
   ngOnInit() {

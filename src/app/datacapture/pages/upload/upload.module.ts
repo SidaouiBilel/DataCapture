@@ -35,6 +35,9 @@ import { TargetPreviewComponent } from './components/preview/view-modes/target-p
 import { SourcePreviewComponent } from './components/preview/view-modes/source-preview/source-preview.component';
 import { TransformationEffects } from './components/transformation/store/transformation.effect';
 import { PreviousMappingsComponent } from './components/mapping/previous-mappings/previous-mappings.component';
+import { TransformationSideBarComponent } from './components/transformation/transformation-side-bar/transformation-side-bar.component';
+import { TransformationToolbarComponent } from './components/transformation/transformation-toolbar/transformation-toolbar.component';
+import { SheetSelectorComponent } from './components/preview/sheet-selector/sheet-selector.component';
 
 const components = [
   UploadComponentComponent,
@@ -70,7 +73,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent],
   exports: [
   ],
   providers : [

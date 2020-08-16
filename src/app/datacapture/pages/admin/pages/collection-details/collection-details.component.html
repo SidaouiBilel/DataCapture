@@ -1,0 +1,20 @@
+<div class="flex stretch column h-100 w-100">
+
+    <app-collection-card [loading]='laoding$ | async' [data]='collection$ | async'></app-collection-card>
+
+    <div class="card-container mt-2 w-100">
+        <nz-tabset nzLinkRouter [nzTabPosition]="'top'" [nzType]="'card'">
+            <nz-tab>
+        <a nz-tab-link [routerLink]="['fields']"><i nz-icon nzType="unordered-list"></i> Target Fields</a>
+        </nz-tab>
+        <nz-tab>
+            <a nz-tab-link [routerLink]="['references']"><i nz-icon nzType="font-size"></i> References</a>
+        </nz-tab>
+    </nz-tabset>
+    </div>
+
+    <div class="flex-1 w-100 flex-scroll">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

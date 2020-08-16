@@ -4,10 +4,14 @@ import { environment } from '@env/environment';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectDomain } from '../../../store/selectors/import.selectors';
-import { LoadTransformation, SetPreviewMode } from '../store/transformation.actions';
-import { selectActivePipe, selectPreviewMode } from '../store/transformation.selectors';
-import { Observable, ReplaySubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo } from '../store/transformation.actions';
+import { selectActivePipe,
+        selectPreviewMode,
+        selectPipeExpanded,
+        selectTranformationNodes,
+        selectEdiedTranformationPipeInfo } from '../store/transformation.selectors';
+import { Observable, ReplaySubject, forkJoin } from 'rxjs';
+import { tap, take } from 'rxjs/operators';
 
 @Injectable()
 export class TranformationService {
@@ -16,61 +20,61 @@ export class TranformationService {
   domainId = null;
   domainPipes$ = new ReplaySubject<any>();
   active$: Observable<any>;
+  expanded$: Observable<boolean>;
   previewMode$: Observable<any>;
+  edited$: Observable<any>;
+  nodes$: Observable<any>;
+  domain$: Observable<any>;
 
   constructor(
     private http: HttpClient,
     private store: Store<AppState>) {
-    this.store.select(selectDomain).subscribe((domainId) => {
-      if (domainId) {
-        if (this.domainId && (this.domainId !== domainId.id)) {
-          this.setActive(null);
+      this.store.select(selectDomain).subscribe((domainId) => {
+        if (domainId) {
+          if (this.domainId && (this.domainId !== domainId.id)) {
+            this.setActive(null);
+          }
         }
         this.domainId = domainId.id;
         this.loadDomainPipes();
-      }
-    });
-    this.active$ = this.store.select(selectActivePipe);
-    this.previewMode$ = this.store.select(selectPreviewMode);
+      });
+      this.edited$ = this.store.select(selectEdiedTranformationPipeInfo);
+      this.active$ = this.store.select(selectActivePipe);
+      this.previewMode$ = this.store.select(selectPreviewMode);
+      this.expanded$ = this.store.select(selectPipeExpanded);
+      this.nodes$ = this.store.select(selectTranformationNodes);
   }
 
-  save(nodes, domainId, pipeInfo) {
-    const pipe = {
-      ...pipeInfo,
-      modified_on: new Date(),
-      nodes,
-      domain_id: domainId,
-    };
-
+  save(pipe) {
     return this.http.post(`${this.url}`, pipe).pipe(
       tap(() => this.loadDomainPipes()),
       tap((active) => {
         this.setActive(active);
       }),
-    );
-  }
+      );
+    }
 
-  delete(pipeInfo) {
-    return this.http.request('DELETE', `${this.url}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+    delete(pipeInfo) {
+      return this.http.request('DELETE', `${this.url}`, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
         }),
         body: {...pipeInfo, modified_on: new Date()}
-    }).pipe(
-      tap(() => this.loadDomainPipes()),
-      tap((active) => {
-        this.setActive(null);
-      }),
-    );
-  }
+      }).pipe(
+        tap(() => this.loadDomainPipes()),
+        tap((active) => {
+          this.setActive(null);
+        }),
+        );
+      }
 
-  setActive(active) {
-    this.store.dispatch(new LoadTransformation(active));
-  }
+      setActive(active) {
+        this.store.dispatch(new LoadTransformation(active));
+      }
 
-  get(domainId) {
-    return this.http.get(`${this.url}${domainId}`);
-  }
+      get(domainId) {
+        return this.http.get(`${this.url}${domainId}`);
+      }
 
   getInContext() {
     return this.get(this.domainId);
@@ -82,5 +86,32 @@ export class TranformationService {
 
   upadatePreviewMode(mode: any) {
     this.store.dispatch(new SetPreviewMode(mode));
+  }
+
+  flipCollapse() {
+    this.store.dispatch(new TransformationFlipExpand());
+  }
+
+  updateEdited(pipeInfo: any) {
+    this.store.dispatch(new UpdateEditedPipeInfo(pipeInfo))
+  }
+
+  saveEdited() {
+    console.log(this.edited$)
+    forkJoin(this.nodes$.pipe(take(1)), this.edited$.pipe(take(1))).subscribe(
+      ([nodes, edited]: any) => {
+        const pipe:any = {
+          name: edited.name,
+          description: edited.description,
+          modified_on: new Date(),
+          created_on: edited.created_on || new Date(),
+          nodes,
+          domain_id: this.domainId,
+          id: edited.id
+        };
+
+        this.save(pipe).subscribe();
+      }
+    );
   }
 }

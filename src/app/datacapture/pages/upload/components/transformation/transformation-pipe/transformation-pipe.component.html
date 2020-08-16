@@ -1,52 +1,3 @@
-<div class="h-100 flex-c">
-  <!-- TOOLBAR -->
-  <div class="flex center button-spacing">
-    <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default'
-      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
-        [nzRotate]='t.icon_rotation || 0'></i></button>
-    <nz-divider nzType="vertical"></nz-divider>
-
-    <button *ngIf='(expanded$ | async)' class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip
-      nzTooltipTitle="Expand"><i nz-icon nzType="fullscreen"></i></button>
-    <button *ngIf='!(expanded$ | async)' class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip
-      nzTooltipTitle="Collapse"><i nz-icon nzType="fullscreen-exit"></i></button>
-
-    <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon
-        nzType="reload"></i></button>
-
-    <nz-divider nzType="vertical"></nz-divider>
-
-    <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
-      (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
-    <button class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()'>
-      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
-    </button>
-    <button class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save and Apply" (click)='onSaveAndApply()'>
-      <nz-badge [nzDot]='!saved'><i nz-icon nzType="cloud-sync"></i></nz-badge>
-    </button>
-    <!--
-    <nz-divider nzType="vertical"></nz-divider>
-    <button nzShape='round' nz-button nzType='primary' (click)='onSaveAndApply()'>
-      Save and Apply <i nz-icon nzType="caret-right"></i>
-    </button> -->
-  </div>
-
-  <!-- PIPE INFO -->
-  <!-- <nz-descriptions [nzSize]='"small"' [nzColon]='false' [nzColumn]="4">
-    <nz-descriptions-item nzTitle="Pipe Name">
-      <nz-input-group [nzSuffix]="iicon">
-        <input class="ghost" style="width: 200px;" nz-input placeholder="..." [(ngModel)]="name" />
-        <ng-template #iicon><i nz-icon nzType="edit"></i></ng-template>
-
-      </nz-input-group>
-    </nz-descriptions-item>
-    <ng-container *ngIf='(active$ | async); let pipe'>
-      <nz-descriptions-item nzTitle="Created On">{{(pipe.created_on) | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Last Modifed">{{(pipe.modified_on) | date: 'dd/MM/yyyy HH:mm'}}
-      </nz-descriptions-item>
-    </ng-container>
-
-  </nz-descriptions> -->
 
   <!-- PIPE NODES LIST -->
   <div class="trans-container">
@@ -58,4 +9,3 @@
       </div>
     </ng-container>
   </div>
-</div>

@@ -1,0 +1,46 @@
+<div class="button-spacing">
+<!-- 
+  <button *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip
+      nzTooltipTitle="Expand"><i nz-icon nzType="menu-fold"></i></button>
+
+  <nz-divider nzType="vertical"></nz-divider> -->
+
+    <ng-container *ngIf='showTransformation'>
+      <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default'
+      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
+      [nzRotate]='t.icon_rotation || 0'></i></button>
+    </ng-container>
+
+    <ng-container *ngIf='showActions'>
+        <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
+        (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+      <button nzType='primary' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()'>
+        <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+      </button>
+    </ng-container>
+    <!-- <nz-divider nzType="vertical"></nz-divider> -->
+
+    <!-- <button *ngIf='(expanded$ | async)' class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip
+      nzTooltipTitle="Expand"><i nz-icon nzType="fullscreen"></i></button>
+    <button *ngIf='!(expanded$ | async)' class='ghost' nzShape='circle' nz-button (click)='onFlipCollapse()' nz-tooltip
+      nzTooltipTitle="Collapse"><i nz-icon nzType="fullscreen-exit"></i></button> -->
+
+    <!-- <button class='ghost' nzShape='circle' nz-button (click)='onReset()' nz-tooltip nzTooltipTitle="reset"><i nz-icon
+        nzType="reload"></i></button>
+
+    <nz-divider nzType="vertical"></nz-divider> -->
+
+    <!-- <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
+      (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    <button nzType='primary' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()'>
+      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+    </button> -->
+    <!-- <button nzType='primary' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save and Apply" (click)='onSaveAndApply()'>
+      <nz-badge [nzDot]='!saved'><i nz-icon nzType="cloud-sync"></i></nz-badge>
+    </button> -->
+    <!--
+    <nz-divider nzType="vertical"></nz-divider>
+    <button nzShape='round' nz-button nzType='primary' (click)='onSaveAndApply()'>
+      Save and Apply <i nz-icon nzType="caret-right"></i>
+    </button> -->
+  </div>

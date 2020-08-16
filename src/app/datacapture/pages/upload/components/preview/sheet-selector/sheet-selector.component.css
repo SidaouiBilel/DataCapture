@@ -1,0 +1,6 @@
+::ng-deep .sheet-selector.ant-tabs-bottom .ant-tabs-bottom-bar {
+    margin-top: 0px;
+    margin-bottom: 0;
+    border-top: none;
+    border-bottom: none;
+}

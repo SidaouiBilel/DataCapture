@@ -68,19 +68,7 @@ export class TransformationPipeComponent implements OnInit {
   }
 
   onSave() {
-    forkJoin(this.pipe$.pipe(take(1)), this.domain$.pipe(take(1)), this.active$.pipe(take(1))).subscribe(
-      ([nodes, domainId, active]: any) => {
-        let info = {
-          id: null,
-          name: this.name,
-          description: null
-        };
-        if (active) {
-          info = {...active, ...info , id: active.id};
-        }
-        this.pipes.save(nodes, domainId.id, info).subscribe(() => this.afterSave());
-      }
-    );
+    this.pipes.saveEdited();
   }
 
   onSaveAndApply() {

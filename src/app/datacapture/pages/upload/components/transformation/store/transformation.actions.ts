@@ -4,6 +4,7 @@ export enum TransformationActionTypes {
   ADD_NODE = '[TRANS] ADD NODE',
   DELETE_NODE = '[TRANS] DELETE NODE',
   UPDATE_NODE = '[TRANS] UPDATE NODE',
+  UPDATE_EDITED = '[TRANS] UPDATE_EDITED',
   RESET = '[TRANS] RESET',
   LOAD = '[TRANS] LOAD',
   FLIP = '[TRANS] EXPAND/COLLAPSE',
@@ -51,4 +52,9 @@ export class UpdateTransformedFilePath implements Action {
   constructor(readonly filePath: any) {}
 }
 
-export type TransformationAction = UpdateTransformedFilePath | SetPreviewMode | LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;
+export class UpdateEditedPipeInfo implements Action {
+  readonly type = TransformationActionTypes.UPDATE_EDITED;
+  constructor(readonly payload: any) {}
+}
+
+export type TransformationAction = UpdateEditedPipeInfo | UpdateTransformedFilePath | SetPreviewMode | LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;
