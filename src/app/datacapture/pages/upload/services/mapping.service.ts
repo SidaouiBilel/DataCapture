@@ -7,12 +7,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class MappingService {
-  getPreviouslyMappings(id: any) {
-    return new Observable()
-  }
-  getMappingById(id: any, ws: any, id1: any) {
-    return new Observable()
-  }
 
   constructor(private http: HttpClient) {
   }
