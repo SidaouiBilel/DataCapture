@@ -34,8 +34,8 @@ export class TranformationService {
           if (this.domainId && (this.domainId !== domainId.id)) {
             this.setActive(null);
           }
+          this.domainId = domainId.id;
         }
-        this.domainId = domainId.id;
         this.loadDomainPipes();
       });
       this.edited$ = this.store.select(selectEdiedTranformationPipeInfo);
