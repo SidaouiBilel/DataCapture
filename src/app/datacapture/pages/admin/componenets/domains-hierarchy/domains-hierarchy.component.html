@@ -1,21 +1,13 @@
 <nz-card class="hierarchy-card" nzTitle='Domains Hierarchy' nzSize='small'>
-
-    <nz-input-group [nzSuffix]="suffixIcon">
-        <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-      <nz-tree
-        nzShowIcon
-        [nzData]="nodes$ | async"
-        [nzSearchValue]="searchValue"
-        (nzClick)="onElementClick($event)"
-        [nzSelectedKeys]='activetedKey'
-      >
-      </nz-tree>
-
-      <!-- (nzExpandChange)="nzEvent($event)" -->
-      <!-- (nzSearchValueChange)="nzEvent($event)" -->
-
+  <nz-input-group [nzSuffix]="suffixIcon">
+    <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+  </nz-input-group>
+  <ng-template #suffixIcon>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
+  <nz-tree nzShowIcon [nzData]="nodes$ | async" [nzSearchValue]="searchValue" (nzClick)="onElementClick($event)"
+    [nzSelectedKeys]='activetedKey'>
+  </nz-tree>
+  <!-- (nzExpandChange)="nzEvent($event)" -->
+  <!-- (nzSearchValueChange)="nzEvent($event)" -->
 </nz-card>
