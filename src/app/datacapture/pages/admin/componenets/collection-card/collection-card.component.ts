@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CollectionEditor } from '../../services/collection-editor.service';
 
 @Component({
   selector: 'app-collection-card',
@@ -10,9 +11,20 @@ export class CollectionCardComponent implements OnInit {
   @Input() data;
   @Input() loading;
 
-  constructor() { }
+  constructor(private editor: CollectionEditor) { }
 
   ngOnInit() {
   }
 
+  onEdit() {
+
+  }
+
+  onCopy() {
+
+  }
+
+  onDelete() {
+
+  }
 }

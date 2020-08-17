@@ -3,7 +3,7 @@
     <app-collection-card [loading]='laoding$ | async' [data]='collection$ | async'></app-collection-card>
 
     <div class="card-container mt-2 w-100">
-        <nz-tabset nzLinkRouter [nzTabPosition]="'top'" [nzType]="'card'">
+        <nz-tabset nzLinkRouter [nzTabPosition]="'top'">
             <nz-tab>
         <a nz-tab-link [routerLink]="['fields']"><i nz-icon nzType="unordered-list"></i> Target Fields</a>
         </nz-tab>
