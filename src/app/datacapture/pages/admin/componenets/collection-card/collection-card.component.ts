@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CollectionEditor } from '../../services/collection-editor.service';
 
 @Component({
@@ -11,20 +11,27 @@ export class CollectionCardComponent implements OnInit {
   @Input() data;
   @Input() loading;
 
-  constructor(private editor: CollectionEditor) { }
+  @Output() edited = new EventEmitter<boolean>();
+  @Output() deleted = new EventEmitter<boolean>();
+
+  constructor(private editor: CollectionEditor ) { }
 
   ngOnInit() {
   }
 
   onEdit() {
-
+    this.editor.openConfig(this.data, this.data.super_domain_id).subscribe(()=>{
+      this.edited.emit(true)
+    })
   }
-
+  
   onCopy() {
-
+    this.editor.showCopyConfirm(this.data)
   }
 
   onDelete() {
-
+    this.editor.showDeleteConfirm(this.data).subscribe(()=>{
+      this.deleted.emit(true)
+    })
   }
 }

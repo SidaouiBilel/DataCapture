@@ -1,16 +1,26 @@
 <div class="flex start column h-100" style="max-width: 300px;">
     
-    <div class="w-100 p-2">
-            <input nz-input (change)='onChanged()' placeholder='Name' class="mb-2" [(ngModel)]="pipeInfo.name"/>
-            <input nz-input (change)='onChanged()' placeholder='Description' class="mb-2" [(ngModel)]="pipeInfo.description"/>
-    </div>
-
+    
     <div class="flex between w-100">
         <app-transformation-toolbar [showTransformation]='true'></app-transformation-toolbar>
-        <app-transformation-toolbar [showActions]='true'></app-transformation-toolbar>
+
     </div>
     <div class="flex-scroll w-100 pipe-bg">
         <app-transformation-pipe></app-transformation-pipe>
     </div>
-    
+
+    <div class="w-100 flex between mt-1">
+        <button class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Edit" nz-dropdown [nzDropdownMenu]="editMenu"><i nz-icon nzType="edit"></i></button>
+        <app-transformation-toolbar [showActions]='true'></app-transformation-toolbar>
+    </div>
+
 </div>
+
+<nz-dropdown-menu #editMenu="nzDropdownMenu">
+    <ul nz-menu>
+        <div class="w-100 p-2">
+            <input nz-input (change)='onChanged()' placeholder='Name' class="mb-2" [(ngModel)]="pipeInfo.name"/>
+            <input nz-input (change)='onChanged()' placeholder='Description' class="mb-2" [(ngModel)]="pipeInfo.description"/>
+        </div>
+    </ul>
+  </nz-dropdown-menu>

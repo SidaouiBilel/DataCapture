@@ -38,6 +38,7 @@ import { PreviousMappingsComponent } from './components/mapping/previous-mapping
 import { TransformationSideBarComponent } from './components/transformation/transformation-side-bar/transformation-side-bar.component';
 import { TransformationToolbarComponent } from './components/transformation/transformation-toolbar/transformation-toolbar.component';
 import { SheetSelectorComponent } from './components/preview/sheet-selector/sheet-selector.component';
+import { FilterComponent } from './components/transformation/transformations/transformation-interface/format/filter/filter.component';
 
 const components = [
   UploadComponentComponent,
@@ -73,7 +74,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent],
+  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent],
   exports: [
   ],
   providers : [
@@ -91,7 +92,8 @@ const components = [
     MergerComponent,
     DeleteColumnComponent,
     DeleteRowsComponent,
-    PreviousMappingsComponent
+    PreviousMappingsComponent,
+    FilterComponent
   ]
 })
 export class UploadModule {}

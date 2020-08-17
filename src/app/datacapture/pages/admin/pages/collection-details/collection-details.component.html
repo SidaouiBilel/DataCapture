@@ -1,6 +1,14 @@
 <div class="flex stretch column h-100 w-100">
 
-  <app-collection-card [loading]='laoding$ | async' [data]='collection$ | async'></app-collection-card>
+  <app-collection-card 
+  [loading]='laoding$ | async' 
+  [data]='collection$ | async'
+  (edited)='loadData()'
+  (deleted)='exit()'
+  >
+
+
+</app-collection-card>
 
     <div class="card-container mt-2 w-100">
         <nz-tabset nzLinkRouter [nzTabPosition]="'top'">
@@ -13,7 +21,7 @@
     </nz-tabset>
   </div>
 
-  <div class="flex-1 w-100 flex-scroll bg-white">
+  <div class="flex-1 w-100 flex-scroll">
     <router-outlet></router-outlet>
   </div>
 

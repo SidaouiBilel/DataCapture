@@ -6,14 +6,22 @@
 
   <div class="button-spacing flex">
     <button class="ghost" *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="tool"></i></button>
-    <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(1)'><i nz-icon nzType="up"></i></button>
-    <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(-1)'><i nz-icon nzType="down"></i></button>
-    <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    <!-- <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(1)'><i nz-icon nzType="up"></i></button> -->
+    <!-- <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(-1)'><i nz-icon nzType="down"></i></button> -->
+    <!-- <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button> -->
   </div>
 </nz-card>
 
 <ng-template #title>
-  <div class="text-center">
-    {{transofrmation?.label}}
+  <div class="flex between">
+    <div class="flex start">
+      <nz-badge [nzCount]="index + 1" [nzStyle]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }"></nz-badge>
+      <div class="ml-2">{{transofrmation?.label}}</div>
+    </div>
+
+    <div>
+      <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    </div>
+    
   </div>
 </ng-template>

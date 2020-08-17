@@ -3,6 +3,7 @@ import { DomainService } from '../../services/domain.service';
 import { take, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AdminNavigator } from '../../services/admin-navigator.service';
 
 @Component({
   selector: 'app-collection-details',
@@ -11,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CollectionDetailsComponent implements OnInit {
 
-  constructor(private service: DomainService, private route: ActivatedRoute) { }
+  constructor(private service: DomainService, private route: ActivatedRoute, private nav: AdminNavigator) { }
 
   collection$:any
   subid;
@@ -28,5 +29,9 @@ export class CollectionDetailsComponent implements OnInit {
   loadData() {
     this.laoding$.next(true)
     this.collection$ = this.service.getById(this.id).pipe(take(1), tap(() => this.laoding$.next(false)));
+  }
+
+  exit(){
+    this.nav.goToSuperDomainCollections(this.subid)
   }
 }

@@ -39,50 +39,23 @@
 <!-- <button nz-button nzType="primary"><i nz-icon nzType="download"></i></button> -->
 
 <div nz-row [nzGutter]="14">
-  <div nz-col class="gutter-row" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
-    <nz-card class="inner-box" [nzActions]="[actionSetting, duplicate,actionEllipsis]">
-      <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
-        <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="titleTemplate" [nzDescription]="descTemplate">
-        </nz-card-meta>
-        <!-- <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{d.name}}" nzDescription="{{d.description}}"></nz-card-meta> -->
+  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
 
-        <ng-template #titleTemplate>
-          <small>{{d.identifier}}</small>
-          <h3>{{d.name}} </h3>
-        </ng-template>
-        <ng-template #descTemplate>
-          <i>{{d.created_on}}</i>
-          <br>
-          <p>{{d.description}}</p>
-        </ng-template>
-
-        <ng-template #avatarTemplate>
-          <nz-avatar [nzText]="getAvatar(d)" [nzShape]="'cirlce'" [nzSize]="'large'"
-            style="color:#154e52; background-color:#44d4d4;"></nz-avatar>
-        </ng-template>
-        <ng-template #actionSetting>
-          <a (click)="openConfig(d)"><i nz-icon nzType="setting"></i> Edit</a>
-        </ng-template>
-        <ng-template #actionEdit>
-          <a (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'fields'])"><i nz-icon nzType="table"></i> Fields</a>
-        </ng-template>
-        <ng-template #duplicate>
-          <a  (click)='showCopyConfirm(d)'><i nz-icon nzType="copy"></i> Copy</a>
-        </ng-template>
-        <ng-template #actionReference>
-          <i nz-icon nzType="minus"></i>
-        </ng-template>
-        <ng-template #actionEllipsis>
-          <a (click)='showDeleteConfirm(d)'><i nz-icon nzType="delete"></i> Delete</a>
-        </ng-template>
-
-      </nz-skeleton>
-
+    <app-collection-card 
+      [data]='d'
+      [loading]='loading'
+      (edited)='load_data()'
+      (deleted)='load_data()'
+    >
+      <!-- <nz-divider></nz-divider> -->
       <button 
       (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'fields'])"
       nz-button nzType="default"><i nz-icon nzType="unordered-list"></i>Target Fields</button>
-      <button nz-button nzType="default"><i nz-icon nzType="font-size" nzTheme="outline"></i>Refrence Data</button>
-    </nz-card>
+      <button nz-button nzType="default"
+      (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'references'])"
+      ><i nz-icon nzType="font-size" nzTheme="outline"></i>Refrence Data</button>
+    </app-collection-card>
+
   </div>
 
 </div>
