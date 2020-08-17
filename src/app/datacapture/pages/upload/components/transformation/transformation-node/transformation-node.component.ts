@@ -6,6 +6,7 @@ import { DeleteTransNode, UpdateTransNode } from '../store/transformation.action
 import { TRANSFORMATIONS } from '../transformations/transformers';
 import { selectPipeExpanded } from '../store/transformation.selectors';
 import { NzModalService } from 'ng-zorro-antd';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-transformation-node',
@@ -22,7 +23,7 @@ export class TransformationNodeComponent implements OnInit {
 
   transofrmation
 
-  expanded$
+  expanded$ = new BehaviorSubject(false)
 
   params
   @Input() index
@@ -33,7 +34,7 @@ export class TransformationNodeComponent implements OnInit {
   }  
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private store: Store<AppState>, private modalService: NzModalService) { 
-    this.expanded$ =  this.store.select(selectPipeExpanded)
+    // this.expanded$ =  this.store.select(selectPipeExpanded)
   }
 
   ngOnInit() {

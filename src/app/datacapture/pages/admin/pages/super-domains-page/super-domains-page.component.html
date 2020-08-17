@@ -30,9 +30,9 @@
 <!-- <button nz-button nzType="primary"><i nz-icon nzType="download"></i></button> -->
 
 <div nz-row [nzGutter]="14">
-  <div nz-col class="gutter-row" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
+  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
 
-    <nz-card class="inner-box super-domain-card">
+    <!-- <nz-card class="inner-box super-domain-card"> -->
 
       <app-domain-card
         [data]='d'
@@ -41,7 +41,7 @@
         (collections)="navigate(['/datacapture/admin/domains', d.id, 'collection'])"
       ></app-domain-card>
       
-    </nz-card>
+    <!-- </nz-card> -->
   </div>
 
 </div>

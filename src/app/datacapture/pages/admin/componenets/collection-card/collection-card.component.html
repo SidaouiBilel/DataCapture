@@ -1,22 +1,27 @@
-<nz-card [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading'>
-    <nz-descriptions>
-        <nz-descriptions-item nzTitle="Name">{{data?.name}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Created On">{{data?.created_on}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Modified On">{{data?.modified_on}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="ID"><nz-tag>{{data?.id}}</nz-tag></nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Description">
-          {{data?.description}}
-        </nz-descriptions-item>
-      </nz-descriptions>
-</nz-card>
 
 <ng-template #extraTemplate>
-    <div class="button-spacing">
-        <button class='ghost' nzShape='circle' nz-button (click)='onEdit()'><i nz-icon nzType="edit"></i></button>
-        <button class='ghost' nzShape='circle' nz-button (click)='onCopy()'><i nz-icon nzType="copy"></i></button>
-        <button class='ghost' nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    <div class="button-spacing ghost" >
+        <button  nzShape='circle' nz-button (click)='onEdit()'><i nz-icon nzType="edit"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button  nzShape='circle' nz-button (click)='onCopy()'><i nz-icon nzType="copy"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button  nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
     </div>
 </ng-template>
 <ng-template #titleTemplate>
-    <i nz-icon nzType="block" nzTheme="outline"></i> Collection Details
+    <div class="flex start">
+        <nz-avatar [nzSize]="42" nzIcon="block" style="background-color:#87d068;"></nz-avatar>
+        <div class="ml-3 flex column start">
+            <div class="text-muted"><small>{{data?.id}}</small></div>
+            <h4>{{data?.name}}</h4>
+        </div>
+    </div>
 </ng-template>
+
+<ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
+<ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
+
+<nz-card class="collection-card" [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading'>
+    <app-meta [data]='data'></app-meta>
+      <ng-content></ng-content>
+</nz-card>

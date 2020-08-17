@@ -13,6 +13,7 @@ import { combineLatest } from 'rxjs';
 export class DomainsHierarchyComponent implements OnInit {
   nodes$: any;
   searchValue: '';
+  expandedKey = null;
   activetedKey = null;
 
   constructor(
@@ -22,7 +23,8 @@ export class DomainsHierarchyComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.nodes$ = this.service.getHierarchy().pipe(take(1),
+
+    this.nodes$ = this.service.hierarchy$.pipe(
       map((superDoms: any[]) => superDoms.map(superDom => ({
                                                           title: superDom.name,
                                                           key: superDom.id,
@@ -40,9 +42,12 @@ export class DomainsHierarchyComponent implements OnInit {
     ).pipe(tap(() => combineLatest(this.nav.activeDomain$, this.nav.activeSubDomina$).subscribe(
       ([domain, subDomain]) => {
         this.activetedKey = [subDomain || domain];
-        console.log(this.activetedKey)
+        
+        this.expandedKey = [domain] 
       }
     )));
+
+    this.service.loadHierarchy()
   }
 
   onElementClick(element: any){

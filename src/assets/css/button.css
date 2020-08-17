@@ -11,3 +11,9 @@ button.ma{
 .button-spacing [nz-button]{
     margin: 0 2px;
 }
+
+.button-spacing.ghost [nz-button]{
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}

@@ -15,10 +15,31 @@ import { DomainsHierarchyComponent } from './componenets/domains-hierarchy/domai
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
 import { CollectionDetailsComponent } from './pages/collection-details/collection-details.component';
 import { CollectionCardComponent } from './componenets/collection-card/collection-card.component';
+import { CollectionEditor } from './services/collection-editor.service';
+import { TreePipe } from './pipes/tree.pipe';
+import { MetaComponent } from './componenets/meta/meta.component';
 
 
 @NgModule({
-  declarations: [RefernceDataPageComponent, FieldsPageComponent, DomainsPageComponent, DomainConfigModalComponent,SuperDomainConfigModalComponent, FieldModalComponent, SuperDomainsPageComponent, DomainCardComponent, DomainsHierarchyComponent, AdminLayoutComponent, CollectionDetailsComponent, CollectionCardComponent],
+  declarations: [
+    RefernceDataPageComponent, 
+    FieldsPageComponent, 
+    DomainsPageComponent, 
+    DomainConfigModalComponent,
+    SuperDomainConfigModalComponent,
+    FieldModalComponent, 
+    SuperDomainsPageComponent,
+    DomainCardComponent,
+    DomainsHierarchyComponent,
+    AdminLayoutComponent,
+    CollectionDetailsComponent,
+    CollectionCardComponent,
+    TreePipe,
+    MetaComponent,
+  ],
+  providers:[
+    CollectionEditor
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

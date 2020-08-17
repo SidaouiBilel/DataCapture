@@ -4,20 +4,20 @@
   }
 
   .card-container ::ng-deep .ant-tabs-card .ant-tabs-content .ant-tabs-tabpane {
-    background: #fff;
+    /* background: #fff; */
     padding: 16px;
   }
 
   .card-container ::ng-deep .ant-tabs-card .ant-tabs-bar {
-    border-color: #fff;
+    /* border-color: #fff; */
   }
 
   .card-container ::ng-deep .ant-tabs-card .ant-tabs-bar .ant-tabs-tab {
-    border-color: transparent;
-    background: transparent;
+    /* border-color: transparent; */
+    /* background: transparent; */
   }
 
   .card-container ::ng-deep .ant-tabs-card .ant-tabs-bar .ant-tabs-tab-active {
-    border-color: #fff;
-    background: #fff;
+    /* border-color: #fff; */
+    /* background: #fff; */
   }

@@ -1,80 +1,26 @@
-<!-- <div class="main-container">
-  <div nz-row class="h-100">
-    <div nz-col class="h-100 pr-4" [nzXs]="isVisible ? 24 : 0" [nzSm]="isVisible ? 24 : 0" [nzMd]="isVisible ? 18 : 0"
-      [nzLg]="isVisible ? 14 : 0" [nzXl]="isVisible ? 12 : 0" [nzXXl]="isVisible ? 8 : 0">
-      <nz-affix class="h-100" [nzTarget]="target" id="affix-container-target">
-        <button nz-button nzSize="middle" nzShape="circle" (click)="isVisible = !isVisible">
-          <i nz-icon nzType="left"></i>
-        </button>
-
-        <div class="menu-header">
-          <app-active-transformation-input></app-active-transformation-input>
-        </div>
-
-        <div class="menu-body">
-          <app-transformation-pipe></app-transformation-pipe>
-        </div>
-      </nz-affix>
-    </div>
-
-    <div nz-col class="h-100" [nzXs]="isVisible ? 24 : 24" [nzSm]="isVisible ? 24 : 24" [nzMd]="isVisible ? 6 : 24"
-    [nzLg]="isVisible ? 10 : 24" [nzXl]="isVisible ? 12 : 24" [nzXXl]="isVisible ? 16 : 24">
-      <div class="flex-box">
-        <div class="importHeader" nz-row>
-          <div nz-col nzSpan="18">
-            <button *ngIf="!isVisible" nz-button nzSize="middle" nzShape="circle" (click)="isVisible = !isVisible">
-              <i nz-icon nzType="right"></i>
-            </button>
-            <div class="flex start">
-              <div>
-                <button class="mr-2" nzGhost nzShape='circle' nz-button nzType='primary'><i nz-icon
-                    nzType="copy"></i></button>
-                <nz-select style="width: 200px;" [(ngModel)]="selectedSheet" class="selectStyleSheet ghost"
-                  (ngModelChange)="selectSheet($event)">
-                  <nz-option *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" [nzValue]="i"
-                    [nzLabel]="sheet"></nz-option>
-                </nz-select>
-              </div>
-            </div>
-          </div>
-          <div nz-col nzSpan="6" class="text-right button-spacing mb-3">
-            <div class="flex end">
-              <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
-                nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToImport()"><i nz-icon
-                  nzType="caret-left"></i> Previous</button>
-              <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
-                nzTooltipPlacement="left" (click)="goToMapping()">Next<i nz-icon nzType="caret-right"></i></button>
-              <nz-divider nzType='vertical'></nz-divider>
-              <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset"
-                nzTooltipPlacement="left" (click)="cancelUpload()">
-                <i nz-icon nzType="close"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <ng-container [ngSwitch]='previewMode$ | async'>
-          <app-source-preview *ngSwitchCase='"SOURCE"'></app-source-preview>
-          <app-target-preview *ngSwitchCase='"TARGET"'></app-target-preview>
-        </ng-container>
-
-
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class="main-container"> -->
 <div class="main-container">
 
   <div class="h-100 flex stretch column">
 
-    <div class="toolbar mb-3 flex start">
+    <div class="toolbar mb-3 flex between">
       <!-- <ng-container *ngIf='expanded$ | async'>
           <app-transformation-toolbar></app-transformation-toolbar>
           <nz-divider nzType='vertical'></nz-divider>
         </ng-container> -->
       <app-active-transformation-input></app-active-transformation-input>
+
+      <div class="button-spacing">
+        <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
+          nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToImport()"><i nz-icon
+            nzType="caret-left"></i> Previous</button>
+        <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+          nzTooltipPlacement="left" (click)="goToMapping()">Next<i nz-icon nzType="caret-right"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset"
+          nzTooltipPlacement="left" (click)="cancelUpload()">
+          <i nz-icon nzType="close"></i>
+        </button>
+      </div>
 
     </div>
 
