@@ -15,6 +15,10 @@ export class MappingService {
     return this.http.get( environment.admin + `domain/${domainId}/fields`);
   }
 
+  checkName(domainId: string, name: string) {
+    return this.http.get(environment.mapping + `/check?domainId=${domainId}&name=${name}`);
+  }
+
   getPreviouslyMappings(domainId: string) {
     return this.http.get( environment.mapping + `/previous-mappings/${domainId}`);
   }
@@ -27,8 +31,9 @@ export class MappingService {
     return this.http.post(environment.mapping + '/', this.getMappingBody(targets, mappingId, sheetId, domainId));
   }
 
-  getAutomaticMapping(domainId: string, SheetId: string, name: string): Observable<any> {
-    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=${name}`);
+  getAutomaticMapping(domainId: string, SheetId: string, name: string, transformed?: string): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=${name}${transformed ? '&transformed=' + transformed : ''}`);
   }
 
   private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {

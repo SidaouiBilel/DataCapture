@@ -11,9 +11,9 @@ export class CleansingService {
   constructor(private http: HttpClient) {
   }
 
-  startJob(filename: string,  worksheetId: string, domainId: string, isTransformed: boolean): Observable<any> {
+  startJob(filename: string,  worksheetId: string, domainId: string, isTransformed: boolean, mappingId: string): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.post(environment.cleansing + `?filename=${filename}&isTransformed=${isTransformed}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}`, {});
+    return this.http.post(environment.cleansing + `?filename=${filename}&mappingId=${mappingId}&isTransformed=${isTransformed}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}`, {});
   }
 
   getJobMetaData(jobId: string): Observable<any> {
@@ -21,14 +21,15 @@ export class CleansingService {
   }
 
   // tslint:disable-next-line: max-line-length
-  getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number, filter: string, sort: any[], isTransformed: boolean): Observable<any> {
+  getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number, filter: string, sort: any[], isTransformed: boolean, mappingId: string): Observable<any> {
     const payload = {filter, sort};
     // tslint:disable-next-line: max-line-length
-    return this.http.post(environment.cleansing + `/data?filename=${filename}&isTransformed=${isTransformed}&worksheet=${worksheet}&worksheet_id=${worksheet}&page=${page}&nrows=${nrows}&domain_id=${domainId}`, payload);
+    return this.http.post(environment.cleansing + `/data?mappingId=${mappingId}&filename=${filename}&isTransformed=${isTransformed}&worksheet=${worksheet}&worksheet_id=${worksheet}&page=${page}&nrows=${nrows}&domain_id=${domainId}`, payload);
   }
 
-  editCell(filename: string,  worksheetId: string, domainId: string, payload: any, isTransformed: boolean): Observable<any> {
+  // tslint:disable-next-line: max-line-length
+  editCell(filename: string,  worksheetId: string, domainId: string, payload: any, isTransformed: boolean, mappingId: string): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.post(environment.cleansing + `?filename=${filename}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}&isTransformed=${isTransformed}`, payload);
+    return this.http.post(environment.cleansing + `?mappingId=${mappingId}&filename=${filename}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}&isTransformed=${isTransformed}`, payload);
   }
 }
