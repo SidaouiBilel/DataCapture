@@ -54,19 +54,16 @@ export class CleansingComponent implements OnInit {
     this.fileData$.subscribe((res) => {this.fileData = res; });
     this.domain$.subscribe((domain) => { if (domain) { this.domain = domain.id; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    this.worksheet$.subscribe((res) => { if (res) { this.worksheet = res.split('/')[4]; } });
-    forkJoin(this.fileData$.pipe(take(1)), this.worksheet$.pipe(take(1)))
-      .subscribe(([fileData, worksheet]) => {
-        // const ws: string = worksheet.split('/')[4];
-        const ws = fileData.metaData.worksheets_map[fileData.sheets[this.selectedSheet]];
-        this.service.startJob(fileData.metaData.file_id, ws, this.domain).subscribe((job) => {
-          if (job) {
-            this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
-              this.metaData$.next(metaData);
-            });
-          }
+    this.worksheet$.subscribe((res) => { this.worksheet = res; });
+    const isTransformed = this.worksheet !== null;
+    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed).subscribe((job) => {
+      if (job) {
+        this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
+          this.metaData$.next(metaData);
         });
-      }).unsubscribe();
+      }
+    });
   }
 
   ngOnInit() {
@@ -80,7 +77,8 @@ export class CleansingComponent implements OnInit {
     return {
       getRows(params) {
         const page = (params.request.endRow / that.numberOfRows) - 1;
-        const worksheet = that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
+        const isTransformed = that.worksheet !== null;
+        const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
         let adaptedFilter = '';
         let adaptedSort = [];
         Object.keys(params.request.filterModel).forEach((e) => {
@@ -89,7 +87,7 @@ export class CleansingComponent implements OnInit {
         adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
         adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
         // tslint:disable-next-line: max-line-length
-        that.service.getJobData(that.fileData.metaData.file_id, worksheet, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort)
+        that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed)
         .subscribe((res: any) => {
           const newErrors = {};
           Object.keys(res.results).forEach((e: string) => {
@@ -212,8 +210,9 @@ export class CleansingComponent implements OnInit {
   }
 
   syncWithServer(): void {
-    const worksheet = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    this.service.editCell(this.fileData.metaData.file_id, worksheet, this.domain, this.modifications).subscribe((res: any) => {
+    const isTransformed = this.worksheet !== null;
+    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed).subscribe((res: any) => {
       this.fetchData(this.grid);
       this.not.success('Success');
      }, (err) => {

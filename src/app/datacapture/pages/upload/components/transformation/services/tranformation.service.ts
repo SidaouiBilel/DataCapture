@@ -5,17 +5,17 @@ import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectDomain } from '../../../store/selectors/import.selectors';
 import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo } from '../store/transformation.actions';
-import { selectActivePipe, 
-        selectPreviewMode, 
-        selectPipeExpanded, 
-        selectTranformationNodes, 
+import { selectActivePipe,
+        selectPreviewMode,
+        selectPipeExpanded,
+        selectTranformationNodes,
         selectEdiedTranformationPipeInfo } from '../store/transformation.selectors';
 import { Observable, ReplaySubject, forkJoin } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
 
 @Injectable()
 export class TranformationService {
-  
+
   url = environment.transform;
   domainId = null;
   domainPipes$ = new ReplaySubject<any>();
@@ -25,7 +25,7 @@ export class TranformationService {
   edited$: Observable<any>;
   nodes$: Observable<any>;
   domain$: Observable<any>;
-  
+
   constructor(
     private http: HttpClient,
     private store: Store<AppState>) {
@@ -34,8 +34,8 @@ export class TranformationService {
           if (this.domainId && (this.domainId !== domainId.id)) {
             this.setActive(null);
           }
+          this.domainId = domainId.id;
         }
-        this.domainId = domainId.id;
         this.loadDomainPipes();
       });
       this.edited$ = this.store.select(selectEdiedTranformationPipeInfo);
@@ -44,7 +44,7 @@ export class TranformationService {
       this.expanded$ = this.store.select(selectPipeExpanded);
       this.nodes$ = this.store.select(selectTranformationNodes);
   }
-  
+
   save(pipe) {
     return this.http.post(`${this.url}`, pipe).pipe(
       tap(() => this.loadDomainPipes()),
@@ -53,7 +53,7 @@ export class TranformationService {
       }),
       );
     }
-    
+
     delete(pipeInfo) {
       return this.http.request('DELETE', `${this.url}`, {
         headers: new HttpHeaders({
@@ -67,15 +67,15 @@ export class TranformationService {
         }),
         );
       }
-      
+
       setActive(active) {
         this.store.dispatch(new LoadTransformation(active));
       }
-      
+
       get(domainId) {
         return this.http.get(`${this.url}${domainId}`);
       }
-      
+
   getInContext() {
     return this.get(this.domainId);
   }
@@ -83,15 +83,15 @@ export class TranformationService {
   loadDomainPipes() {
     this.getInContext().subscribe(res => this.domainPipes$.next(res));
   }
-  
+
   upadatePreviewMode(mode: any) {
     this.store.dispatch(new SetPreviewMode(mode));
   }
-  
+
   flipCollapse() {
     this.store.dispatch(new TransformationFlipExpand());
   }
-  
+
   updateEdited(pipeInfo: any) {
     this.store.dispatch(new UpdateEditedPipeInfo(pipeInfo))
   }
