@@ -97,9 +97,9 @@
   </div>
 </div>
 
-<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzCancelText]="null"
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible"
   [nzOkLoading]="isOkLoading" [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping"
-  (nzOnOk)="handleOk()">
+  (nzOnOk)="handleOk()" (nzOnCancel)="isVisible = false">
   <form nz-form [formGroup]="validateForm">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Mapping Name</nz-form-label>
