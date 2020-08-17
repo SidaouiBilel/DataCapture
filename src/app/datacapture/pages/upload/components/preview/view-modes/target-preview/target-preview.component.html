@@ -1,6 +1,6 @@
-<div class="flex flex-1 column">
+<div class="flex flex-1 column start">
 
-  <div class="flex-1 flex" *ngIf='(error$ | async)'>
+  <div class="flex-1 flex w-100" *ngIf='(error$ | async)'>
     <div class="flex column">
       <span nz-text nzType='danger' nz-tooltip [nzTooltipTitle]='error$ | async | json'>
         <i nz-icon nzType="api" style="font-size: 64px"></i>
@@ -12,7 +12,10 @@
     </div>
   </div>
 
-  <app-data-grid *ngIf='!(error$ | async)' class="flex-1" [paginationPageSize]='size$ | async'
+  <ng-container *ngIf='!(error$ | async)'>
+    <app-data-grid  class="flex-1" [paginationPageSize]='size$ | async'
     [columnDefs]="headers$ | async" (gridReady)="this.gridReady$.next($event)"></app-data-grid>
+    <app-sheet-selector></app-sheet-selector>
+  </ng-container>
 
 </div>

@@ -2,6 +2,9 @@
   <div [hidden]='(expanded$ | async)'>
   <!-- <div> -->
     <ng-template #paramsHost></ng-template>
+
+    <app-node-status [valid]='(status$ | async)[0]' [messages]='(status$ | async)[1]'></app-node-status>
+    
   </div>
 
   <div class="button-spacing flex">

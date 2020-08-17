@@ -31,8 +31,4 @@ export class TransformationInterfaceComponent implements OnInit {
     this.validationStatus.emit(this.validate());
   }
 
-  setData(data){
-    this.data = data;
-  }
-
 }

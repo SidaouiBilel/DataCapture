@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 export enum TransformationActionTypes {
   ADD_NODE = '[TRANS] ADD NODE',
+  UPDATE_NODE_STATUS = '[TRANS] UPDATE_NODE_STATUS',
   DELETE_NODE = '[TRANS] DELETE NODE',
   UPDATE_NODE = '[TRANS] UPDATE NODE',
   UPDATE_EDITED = '[TRANS] UPDATE_EDITED',
@@ -57,4 +58,18 @@ export class UpdateEditedPipeInfo implements Action {
   constructor(readonly payload: any) {}
 }
 
-export type TransformationAction = UpdateEditedPipeInfo | UpdateTransformedFilePath | SetPreviewMode | LoadTransformation | TransformationFlipExpand | AddTransNode | UpdateTransNode | DeleteTransNode | ResetTransformation;
+export class UpdateNodeStatus implements Action {
+  readonly type = TransformationActionTypes.UPDATE_NODE_STATUS;
+  constructor(readonly index: any, readonly status: any) {}
+}
+
+export type TransformationAction =  UpdateNodeStatus 
+                                    | UpdateEditedPipeInfo 
+                                    | UpdateTransformedFilePath 
+                                    | SetPreviewMode 
+                                    | LoadTransformation 
+                                    | TransformationFlipExpand 
+                                    | AddTransNode 
+                                    | UpdateTransNode 
+                                    | DeleteTransNode 
+                                    | ResetTransformation;

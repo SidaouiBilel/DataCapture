@@ -39,6 +39,7 @@ import { TransformationSideBarComponent } from './components/transformation/tran
 import { TransformationToolbarComponent } from './components/transformation/transformation-toolbar/transformation-toolbar.component';
 import { SheetSelectorComponent } from './components/preview/sheet-selector/sheet-selector.component';
 import { FilterComponent } from './components/transformation/transformations/transformation-interface/format/filter/filter.component';
+import { NodeStatusComponent } from './components/transformation/shared/node-status/node-status.component';
 
 const components = [
   UploadComponentComponent,
@@ -74,7 +75,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent],
+  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent],
   exports: [
   ],
   providers : [

@@ -21,7 +21,7 @@ export function TransformationReducer(state: Transformation = initialState, acti
         const nodes = [...state.nodes]
         const validation_states = [...state.validation_states]
         nodes.push(action.payload)
-        validation_states.push(true)
+        validation_states.push([])
         return {...state, nodes: nodes, validation_states:validation_states}
     } 
 
@@ -31,10 +31,17 @@ export function TransformationReducer(state: Transformation = initialState, acti
         const validation_states = [...state.validation_states]
         console.log(action)
         nodes[i] = action.payload
-        validation_states[i] = true
+        validation_states[i] = []
 
         return {...state, nodes: nodes, validation_states:validation_states}
     }
+
+    case ACTIONS.UPDATE_NODE_STATUS:{
+        const validation_states = [...state.validation_states]
+        validation_states[action.index] = action.status
+        return {...state, validation_states:validation_states}
+    }
+
 
     case ACTIONS.DELETE_NODE:{
         const i = action.index
@@ -53,12 +60,16 @@ export function TransformationReducer(state: Transformation = initialState, acti
     case ACTIONS.LOAD:{
         const pipe = action.payload
         let nodes = []
+        const validation_states = []
         let editedPipeInfo = null
         if (pipe){
             nodes = pipe.nodes || []
+            for (let n of nodes ){
+                validation_states.push([]) 
+            }
             editedPipeInfo = {...pipe}
         }
-        return {...state, activePipe: pipe, nodes: nodes, editedPipeInfo: editedPipeInfo}
+        return {...state, activePipe: pipe, nodes: nodes, editedPipeInfo: editedPipeInfo, validation_states: validation_states}
     }
 
     case ACTIONS.UPDATE_EDITED:{

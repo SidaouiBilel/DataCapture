@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { DeleteTransNode, UpdateTransNode } from '../store/transformation.actions';
 import { TRANSFORMATIONS } from '../transformations/transformers';
-import { selectPipeExpanded } from '../store/transformation.selectors';
+import { selectPipeExpanded, selectTranformationNodeStatus } from '../store/transformation.selectors';
 import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
 
@@ -26,7 +26,13 @@ export class TransformationNodeComponent implements OnInit {
   expanded$ = new BehaviorSubject(false)
 
   params
-  @Input() index
+  status$
+  index 
+  @Input('index') set _index(value) {
+    this.index = value
+
+    this.status$ = this.store.select(selectTranformationNodeStatus(this.index))
+  }
   @Input("params") set _params(value){
     this.params = {...value}
     this.updateTransformation()
@@ -70,7 +76,7 @@ export class TransformationNodeComponent implements OnInit {
       const transformationRef = viewContainerRef.createComponent(componentFactory);
       this.transformationComponent = (transformationRef.instance) as TransformationInterfaceComponent;
 
-      this.transformationComponent.setData(this.params);
+      this.transformationComponent.data = this.params;
       this.transformationComponent.index = this.index;
       this.transformationComponent.dataChanged.subscribe(data => this.onDataChanged(data))
     }

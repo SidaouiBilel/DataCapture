@@ -3,4 +3,10 @@
     margin-bottom: 0;
     border-top: none;
     border-bottom: none;
+
+}
+
+::ng-deep .sheet-selector * {
+    transition: none !important;
+    
 }

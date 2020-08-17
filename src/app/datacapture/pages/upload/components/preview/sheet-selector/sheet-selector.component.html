@@ -1,8 +1,9 @@
 
 
 <nz-tabset class='sheet-selector' 
-nzSize='small' 
+[nzSize]='"small"' 
 nzType='card' 
+[nzAnimated]='false'
 nzTabPosition="bottom" 
 [nzSelectedIndex]="selectedSheet$ | async" 
 (nzSelectedIndexChange)='selectSheet($event)'>

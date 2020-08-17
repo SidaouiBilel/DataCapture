@@ -4,13 +4,14 @@ import { Action, Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { TranformationService } from '../services/tranformation.service';
-import { LoadTransformation, TransformationActionTypes, UpdateTransformedFilePath } from './transformation.actions';
-import { selectActivePipe } from './transformation.selectors';
+import { LoadTransformation, TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus } from './transformation.actions';
+import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
-import { selectFileData } from '../../../store/selectors/import.selectors';
+import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
 import { selectSelectedSheet } from '../../../store/selectors/preview.selectors';
 import { SaveMappedSources } from '../../../store/actions/mapping.actions';
 import { ImportActionTypes, ActionSaveFile } from '../../../store/actions/import.actions';
+import { TransformerFactory } from '../transformations/transformers';
 
 @Injectable()
 export class TransformationEffects {
@@ -49,6 +50,34 @@ export class TransformationEffects {
           this.store$.dispatch(new SaveMappedSources(mappingSources));
           this.store$.dispatch(new UpdateTransformedFilePath(null));
         }
+      }
+    })
+  );
+
+  @Effect({ dispatch: false })
+  onNodesUpdated = this.actions$.pipe(
+    ofType(TransformationActionTypes.ADD_NODE, TransformationActionTypes.DELETE_NODE, TransformationActionTypes.UPDATE_NODE) ,
+    withLatestFrom(this.store$.select( selectTranformationNodes )),
+    withLatestFrom(this.store$.select( selectHeaders )),
+    map(([[action, nodes], headers]) => {
+      const nodeStatuses = []
+      let i = 0
+      for (let n of nodes){
+        const transformer: Transformer | any = TransformerFactory(n.type)
+        if (transformer && transformer.getErrors){
+          // HANDLE ERRORS
+          const previousNodes = nodes.slice(0, Math.max((i), 0))
+          nodeStatuses.push(transformer.getErrors(n, previousNodes, headers))
+        }else{
+          nodeStatuses.push([])
+        }
+        i++;
+      }
+      // UPDATE STORE
+      i = 0
+      for (let s of nodeStatuses){
+        this.store$.dispatch(new UpdateNodeStatus(i, s))
+        i++
       }
     })
   );

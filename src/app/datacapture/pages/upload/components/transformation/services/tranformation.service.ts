@@ -9,7 +9,8 @@ import { selectActivePipe,
         selectPreviewMode,
         selectPipeExpanded,
         selectTranformationNodes,
-        selectEdiedTranformationPipeInfo } from '../store/transformation.selectors';
+        selectEdiedTranformationPipeInfo, 
+        selectTranformationValid} from '../store/transformation.selectors';
 import { Observable, ReplaySubject, forkJoin } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
 
@@ -25,6 +26,7 @@ export class TranformationService {
   edited$: Observable<any>;
   nodes$: Observable<any>;
   domain$: Observable<any>;
+  canSave$: Observable<any>;
 
   constructor(
     private http: HttpClient,
@@ -43,6 +45,7 @@ export class TranformationService {
       this.previewMode$ = this.store.select(selectPreviewMode);
       this.expanded$ = this.store.select(selectPipeExpanded);
       this.nodes$ = this.store.select(selectTranformationNodes);
+      this.canSave$ = this.store.select(selectTranformationValid);
   }
 
   save(pipe) {

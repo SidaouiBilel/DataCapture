@@ -1,0 +1,11 @@
+<!-- <i *ngIf='valid' nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i> -->
+
+<div class="flex start" *ngIf='!valid'>
+
+    <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+
+    <div class="ml-2">
+        <div *ngFor='let m of messages'><span nz-typography nzType="danger"><small>{{m.reason}}</small></span></div>
+    </div>
+
+</div>

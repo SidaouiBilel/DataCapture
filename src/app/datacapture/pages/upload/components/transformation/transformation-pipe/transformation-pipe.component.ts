@@ -26,6 +26,8 @@ export class TransformationPipeComponent implements OnInit {
   domain$ = null;
   active$: Observable<any>;
   expanded$;
+  canSave$;
+
   constructor(
     // private drawerRef: NzDrawerRef<string>,
     private store: Store<AppState>,
@@ -40,6 +42,8 @@ export class TransformationPipeComponent implements OnInit {
         this.name = (active) ? active.name : null,
         this.saved = (active && active.id) ? true : false;
     });
+
+    this.canSave$ = this.pipes.canSave$
   }
 
   close(): void {
