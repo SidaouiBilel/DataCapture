@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Observer } from 'rxjs';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { SaveMappingFields, SaveMappedSources, SaveMappingId } from '../../store
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { PreviousMappingsComponent } from './previous-mappings/previous-mappings.component';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
@@ -29,6 +29,7 @@ export class MappingComponent implements OnInit {
   isOkLoading: boolean;
   validateForm: FormGroup;
   worksheet: any;
+  domain: any;
   // Store
   mappingFields$: Observable<any>;
   fileData$: Observable<any>;
@@ -53,10 +54,11 @@ export class MappingComponent implements OnInit {
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
+    this.domain$.subscribe((res) => { this.domain = res; });
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
-    this.validateForm = this.fb.group({name: [null, [Validators.required]]});
+    this.validateForm = this.fb.group({name: [null, [Validators.required], [this.nameValidator.bind(this)]]});
     this.validate();
   }
 
@@ -97,7 +99,7 @@ export class MappingComponent implements OnInit {
   }
 
   handleOk(): void {
-    this.validate();
+    // this.validate();
     const x = this.notification.loading('Loading automatic mapping');
     if (this.validateForm.valid) {
       forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
@@ -118,6 +120,9 @@ export class MappingComponent implements OnInit {
             this.isOkLoading = false;
           });
         });
+    } else {
+      this.notification.close(x);
+      this.notification.error('An error Occured');
     }
   }
 
@@ -198,6 +203,17 @@ export class MappingComponent implements OnInit {
           });
       });
   }
+
+  nameValidator = (control: FormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
+    this.service.checkName(this.domain.id, control.value).subscribe((res) => {
+      if (res) {
+        observer.next({ error: true, duplicated: true });
+      } else {
+        observer.next(null);
+      }
+      observer.complete();
+    });
+  })
 
   cancelUpload(): void {
     this.store.dispatch(new ActionImportReset());

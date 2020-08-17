@@ -103,8 +103,16 @@
   <form nz-form [formGroup]="validateForm">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Mapping Name</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please enter a name.">
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
         <input nz-input formControlName="name" id="name" />
+        <ng-template #errorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please name your mapping.
+          </ng-container>
+          <ng-container *ngIf="control.hasError('duplicated')">
+            A mapping with this name already exists.
+          </ng-container>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
   </form>

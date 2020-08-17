@@ -32,7 +32,8 @@ export class MappingService {
   }
 
   getAutomaticMapping(domainId: string, SheetId: string, name: string, transformed?: string): Observable<any> {
-    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=${name}&transformed=${transformed}`);
+    // tslint:disable-next-line: max-line-length
+    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=${name}${transformed ? '&transformed=' + transformed : ''}`);
   }
 
   private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {
