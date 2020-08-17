@@ -45,6 +45,7 @@ export class MappingComponent implements OnInit {
               private fb: FormBuilder,
               private modalService: NzModalService,
               private notification: NotificationService) {
+    this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
@@ -52,7 +53,6 @@ export class MappingComponent implements OnInit {
     this.mappingId$     = this.store.select(selectMappingId);
     this.fileData$      = this.store.select(selectFileData);
     this.domain$        = this.store.select(selectDomain);
-    this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
     this.domain$.subscribe((res) => { this.domain = res; });
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });

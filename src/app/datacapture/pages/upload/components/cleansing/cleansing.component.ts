@@ -10,6 +10,7 @@ import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { CustomTooltipComponent } from '@app/shared/custom-tooltip/custom-tooltip.component';
+import { selectMappingId } from '../../store/selectors/mapping.selectors';
 
 @Component({
   selector: 'app-cleansing',
@@ -25,6 +26,7 @@ export class CleansingComponent implements OnInit {
   fileData: any;
   numberOfRows = 25;
   selectedSheet: number;
+  mappingId: string;
   modifications: any = {columns: []};
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -36,6 +38,7 @@ export class CleansingComponent implements OnInit {
   domain$: Observable<any>;
   fileData$: Observable<any>;
   worksheet$: Observable<any>;
+  mappingId$: Observable<any>;
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
@@ -48,16 +51,18 @@ export class CleansingComponent implements OnInit {
               private service: CleansingService,
               private not: NotificationService) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
+    this.mappingId$     = this.store.select(selectMappingId);
     this.fileData$      = this.store.select(selectFileData);
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.fileData$.subscribe((res) => {this.fileData = res; });
+    this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.domain$.subscribe((domain) => { if (domain) { this.domain = domain.id; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed).subscribe((job) => {
+    this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed, this.mappingId).subscribe((job) => {
       if (job) {
         this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
@@ -87,7 +92,7 @@ export class CleansingComponent implements OnInit {
         adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
         adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
         // tslint:disable-next-line: max-line-length
-        that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed)
+        that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
         .subscribe((res: any) => {
           const newErrors = {};
           Object.keys(res.results).forEach((e: string) => {
@@ -212,7 +217,8 @@ export class CleansingComponent implements OnInit {
   syncWithServer(): void {
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed).subscribe((res: any) => {
+    // tslint:disable-next-line: max-line-length
+    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId).subscribe((res: any) => {
       this.fetchData(this.grid);
       this.not.success('Success');
      }, (err) => {
