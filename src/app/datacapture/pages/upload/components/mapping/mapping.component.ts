@@ -13,6 +13,7 @@ import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { PreviousMappingsComponent } from './previous-mappings/previous-mappings.component';
+import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 
 @Component({
   selector: 'app-mapping',
@@ -27,6 +28,7 @@ export class MappingComponent implements OnInit {
   isVisible: boolean;
   isOkLoading: boolean;
   validateForm: FormGroup;
+  worksheet: any;
   // Store
   mappingFields$: Observable<any>;
   fileData$: Observable<any>;
@@ -35,6 +37,7 @@ export class MappingComponent implements OnInit {
   selectedSheet$: Observable<any>;
   domain$: Observable<any>;
   mappingId$: Observable<string>;
+  worksheet$: Observable<any>;
   constructor(private store: Store<AppState>,
               private service: MappingService,
               private router: Router,
@@ -48,6 +51,8 @@ export class MappingComponent implements OnInit {
     this.mappingId$     = this.store.select(selectMappingId);
     this.fileData$      = this.store.select(selectFileData);
     this.domain$        = this.store.select(selectDomain);
+    this.worksheet$     = this.store.select(selectTransformedFilePath);
+    this.worksheet$.subscribe((res) => { this.worksheet = res; });
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
@@ -93,15 +98,16 @@ export class MappingComponent implements OnInit {
 
   handleOk(): void {
     this.validate();
+    const x = this.notification.loading('Loading automatic mapping');
     if (this.validateForm.valid) {
       forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
         .subscribe(([domain, fileData, selectedSheet]) => {
-        const x = this.notification.loading('Loading automatic mapping');
         const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
-        this.service.getAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value)
+        this.service.getAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.worksheet)
           .subscribe((res) => {
             this.updateLocalMapping(res);
             this.store.dispatch(new SaveMappedSources(this.mappedSources));
+            this.notification.success(`The new mapping ${this.validateForm.controls.name.value} was saved successfully.`);
             this.notification.close(x);
             this.isVisible = false;
             this.isOkLoading = false;

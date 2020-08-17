@@ -10,6 +10,10 @@
         (click)='updateMapping()'>
         <i nz-icon nzType="cloud-sync"></i>
       </button>
+      <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
+        (click)='isVisible = true'>
+        <i nz-icon nzType="save"></i>
+      </button>
       <!-- <span>Applied Mapping: </span>
       <span> {{(mappingId$ |async)}} </span> -->
     </div>
