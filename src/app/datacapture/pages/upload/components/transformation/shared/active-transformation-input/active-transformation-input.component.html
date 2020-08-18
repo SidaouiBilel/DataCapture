@@ -1,21 +1,23 @@
-  <button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation' nzShape='circle' nz-button class="mr-2">
-  <i nz-icon nzType="menu-unfold"></i>
+  <button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
+    nzShape='circle' nz-button class="mr-2">
+    <i nz-icon nzType="menu-unfold"></i>
   </button>
-  <button *ngIf='(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation' nzShape='circle' nz-button class="mr-2">
-  <i nz-icon nzType="menu-fold"></i>
+  <button *ngIf='(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
+    nzShape='circle' nz-button class="mr-2">
+    <i nz-icon nzType="menu-fold"></i>
   </button>
 
   <nz-divider nzType='vertical'></nz-divider>
 
-  <i nz-icon nzType="share-alt" nzTheme="outline"></i>
-  <nz-select class="ghost" (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async'
-    style="width: 200px;" nzPlaceHolder='None'>
+  <i nz-icon nzType="share-alt" nzTheme="outline" class="mr-2"></i>
+  <nz-select class="ghost" (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="width: 200px;"
+    nzPlaceHolder='None'>
     <nz-option nzCustomContent *ngFor='let o of (domainPipes$ | async)' [nzValue]='o.id' [nzLabel]='o.name'>
       <div>{{o.name}}</div>
-      <div><small>{{o.description}}</small></div>
+      <div nz-tooltip nzTooltipPlacement="bottom" [nzTooltipTitle]='o.description' class="ellipsis"><small>{{o.description}}</small></div>
 
     </nz-option>
-    
+
   </nz-select>
 
   <button nz-tooltip nzTooltipTitle='Remove Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
@@ -24,11 +26,9 @@
   </button>
 
   <nz-divider nzType='vertical'></nz-divider>
-  
+
   <button *ngFor='let m of modes' nz-tooltip [nzTooltipTitle]='m.tooltip' [ngClass]='{"ghost": (m.mode!=(pm$ | async))}'
     nz-button [nzType]='(m.mode==(pm$ | async))?"primary":"default"' (click)='updatePreviewMode(m.mode)'
-    nzShape='round'
-    ><i nz-icon
-      [nzType]="m.icon"></i>
+    nzShape='round'><i nz-icon [nzType]="m.icon"></i>
     {{m.label}}
   </button>
