@@ -8,6 +8,8 @@
     <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
     </div>
     
+    <app-display-changer></app-display-changer>
+
     <div>
       <nz-input-group [nzSuffix]="suffixIconSearch">
         <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Collections" />
@@ -20,12 +22,15 @@
   </div>
 
   
-<div class="flex-1 flex-scroll p-2 bg-grey">
-  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
+<div class="flex-1 flex-scroll bg-grey" >
+  <div nz-row nzType='flex' nzAlign='stretch'>
 
-    <!-- <nz-card class="inner-box super-domain-card"> -->
+    <div nz-col class="gutter-row"  [nzSpan]="(s.displayList$ | async)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
+      
+      <!-- <nz-card class="inner-box super-domain-card"> -->
 
       <app-collection-card 
+      [class]='(s.displayList$ | async)?"":"h-100"'
       [data]='d'
       [loading]='loading'
       (edited)='load_data()'
@@ -39,7 +44,8 @@
         ><i nz-icon nzType="font-size" nzTheme="outline"></i>Refrence Data</button>
       </div>
     </app-collection-card>
-      
+    
+  </div>
     <!-- </nz-card> -->
   </div>
 

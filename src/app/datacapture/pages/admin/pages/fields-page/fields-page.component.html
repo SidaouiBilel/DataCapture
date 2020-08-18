@@ -69,8 +69,11 @@
           <ng-container [ngSwitch]="column.field">
 
             <td *ngSwitchCase="'action'">
-              <button nz-button class="ghost" (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
-              <button nz-button class="ghost" (click)='showDeleteConfirm(data)'><i nz-icon nzType="delete"></i></button>
+              <div class="button-spacing">
+                <button nz-button class="ghost" (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
+                <nz-divider nzType='vertical'></nz-divider>
+                <button nz-button class="ghost" (click)='showDeleteConfirm(data)'><i nz-icon nzType="delete"></i></button>
+              </div>
             </td>
 
             <td *ngSwitchCase="'rules'">

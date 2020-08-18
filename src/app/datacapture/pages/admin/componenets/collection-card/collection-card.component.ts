@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CollectionEditor } from '../../services/collection-editor.service';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-collection-card',
@@ -10,11 +11,15 @@ export class CollectionCardComponent implements OnInit {
 
   @Input() data;
   @Input() loading;
+  @Input() class;
+  small
 
   @Output() edited = new EventEmitter<boolean>();
   @Output() deleted = new EventEmitter<boolean>();
 
-  constructor(private editor: CollectionEditor ) { }
+  constructor(private editor: CollectionEditor, public s : StoreService) { 
+    s.displaySize$.subscribe((size)=> this.small = (size == 'small'))
+  }
 
   ngOnInit() {
   }

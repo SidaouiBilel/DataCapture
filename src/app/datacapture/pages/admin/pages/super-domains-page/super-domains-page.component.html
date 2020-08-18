@@ -7,6 +7,8 @@
       <button nz-button class='ghost' (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Domain</button>
       <button nz-button class="ghost" nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
     </div>
+
+    <app-display-changer></app-display-changer>
     
     <div>
       <nz-input-group [nzSuffix]="suffixIconSearch">
@@ -19,11 +21,14 @@
 
   </div>
 
-  
-<div class="flex-1 flex-scroll p-2 bg-grey">
-  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
 
-      <app-domain-card
+  
+  <div class="flex-1 flex-scroll bg-grey" >
+    <div nz-row nzType='flex' nzAlign='stretch'>
+        <div nz-col class="gutter-row" [nzSpan]="(s.displayList$ | async)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
+
+      <app-domain-card 
+        [class]='(s.displayList$ | async)?"":"h-100"'
         [loading]='loading'
         [data]='d'
         (delete)='showDeleteConfirm(d)'
@@ -34,6 +39,7 @@
     <!-- </nz-card> -->
   </div>
 
+</div>
 </div>
 
 

@@ -3,10 +3,6 @@
   /* margin-right: 14px; */
 }
 
-::ng-deep.ant-card-meta-avatar{
-  padding-top: 21px;
-}
-
 :host{
   display: contents;
 }

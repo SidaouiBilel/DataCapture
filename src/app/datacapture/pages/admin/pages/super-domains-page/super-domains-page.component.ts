@@ -8,6 +8,7 @@ import { Domain } from 'domain';
 import { SuperDomain } from '../../models/super-domain';
 import { SuperDomainConfigModalComponent } from '../../modals/super-domain-config-modal/super-domain-config-modal.component';
 import { SuperDomainService } from '../../services/super-domain.service';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-super-domains-page',
@@ -17,16 +18,16 @@ import { SuperDomainService } from '../../services/super-domain.service';
 })
 export class SuperDomainsPageComponent implements OnInit {
 
-  constructor(public ds: SuperDomainService, public modal: NzModalService, private router:Router) { }
-
+  constructor(public ds: SuperDomainService, public modal: NzModalService, private router:Router, public s: StoreService) { 
+  }
+  
   loading_list = [{}]
   loading = false
-
   searchTerm
-
   domains$ = new BehaviorSubject<any>([])
 
-  displayList = true
+
+
 
   ngOnInit() {
     this.load_data()
