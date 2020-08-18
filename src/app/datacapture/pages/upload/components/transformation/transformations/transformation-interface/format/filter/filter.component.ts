@@ -17,5 +17,18 @@ export class FilterComponent extends TransformationInterfaceComponent implements
   ngOnInit() {
   }
 
+  onAddCondition(){
+    this.data.conditions = this.data.conditions || []
+    this.data.conditions.push({})
+    
+    this.onDataChanged()
+  }
+
+  onRemoveCondition(i){
+    this.data.conditions.splice(i,1)
+    
+    this.onDataChanged()
+  }
+
 
 }

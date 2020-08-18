@@ -5,17 +5,25 @@
 <!-- </nz-card> -->
 
 <div class="hierarchy-card">
-  <nz-input-group [nzSuffix]="suffixIcon" class="mb-2">
-    <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
-  </nz-input-group>
-  <ng-template #suffixIcon>
-    <i nz-icon nzType="search"></i>
-  </ng-template>
-  <nz-tree nzShowIcon [nzData]="nodes$ | async | treeFilter: searchValue" (nzClick)="onElementClick($event)"
-    [nzSelectedKeys]='activetedKey'
-    [nzExpandedKeys] = 'expandedKey'
-    [nzExpandAll]='searchValue?.length > 0'
+<!-- 
+  <div>
+    <button nz-button class="ghost" nzBlock (click)="onSeeAllClick()">See All</button>
+  </div> -->
 
-    >
-  </nz-tree>
+        <nz-input-group [nzSuffix]="suffixIcon">
+          <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    <div>
+      <nz-tree nzShowIcon [nzData]="nodes$ | async | treeFilter: searchValue" (nzClick)="onElementClick($event)"
+      [nzSelectedKeys]='activetedKey'
+      [nzExpandedKeys] = 'expandedKey'
+      [nzExpandAll]='searchValue?.length > 0'
+      >
+    </nz-tree>  
+  
+  </div>
+
 </div>

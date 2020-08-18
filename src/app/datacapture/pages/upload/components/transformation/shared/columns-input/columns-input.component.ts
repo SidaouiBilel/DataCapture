@@ -15,6 +15,7 @@ export class ColumnsInputComponent extends AbstractValueAccessor implements OnIn
   
   _value = null;
 
+  @Input() nzSize = 'default';
   @Input() mode = 'default';
   @Input('nodeIndex') set nodeIndex(index){
     this.columns$ = this.store.select(selectInputCloumnsByIndex(index));

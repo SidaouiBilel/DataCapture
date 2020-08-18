@@ -35,6 +35,10 @@ export class AdminNavigator {
     this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection', colid, 'fields'])
   }
 
+  goToDomains(){
+    this.router.navigate(['datacapture', 'admin', 'domains'])
+  }
+
   goToDomainRefrences(id){
     this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection'])
   }

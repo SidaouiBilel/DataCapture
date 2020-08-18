@@ -34,7 +34,7 @@ export class TransformationNodeComponent implements OnInit {
     this.status$ = this.store.select(selectTranformationNodeStatus(this.index))
   }
   @Input("params") set _params(value){
-    this.params = {...value}
+    this.params = JSON.parse(JSON.stringify(value))
     this.updateTransformation()
     this.loadComponent();
   }  

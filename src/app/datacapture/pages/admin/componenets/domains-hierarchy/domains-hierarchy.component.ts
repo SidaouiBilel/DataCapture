@@ -67,5 +67,8 @@ export class DomainsHierarchyComponent implements OnInit {
     const superDomain = node.origin.info;
     this.nav.goToSuperDomainCollections(superDomain.id);
   }
+  onSeeAllClick(){
+    this.nav.goToDomains()
+  }
 
 }

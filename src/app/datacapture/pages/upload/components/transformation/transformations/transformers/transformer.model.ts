@@ -91,14 +91,17 @@ export class Merge extends Transformer{
 
 export class Filter extends Transformer{
 
-    type =  'filter'; label= 'Filter'; icon= 'filter'; component= FilterComponent;
+    type =  'filter'; label= 'Filter Lines'; icon= 'filter'; component= FilterComponent;
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
-        if (params.column == null || params.column == '' ) errors.push(new NodeError('column', 'Column missing'))
-        if (params.condition == null || params.condition == '' ) errors.push(new NodeError('condition', 'Condition Missing'))
-
-        if (params.op == null || params.op == '' ) errors.push(new NodeError('op', 'Operator missing'))
+        let i = 0
+        for (let c of params.conditions){
+            if (c.column == null || c.column == '' ) errors.push(new NodeError('column', `Column ${i+1} missing`))
+            if (c.condition == null || c.condition == '' ) errors.push(new NodeError('condition', `Condition ${i+1} Missing`))   
+            if (c.op == null || c.op == '' ) errors.push(new NodeError('op', `Operator ${i+1} missing`))
+            i++
+        }
 
         return errors
     };

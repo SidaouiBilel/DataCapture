@@ -4,6 +4,6 @@
     
     <nz-divider nzType='vertical'></nz-divider>
     
-    <button (click)='s.changeDisplaySize("small")'   [ngClass]="{'ghost':(s.displaySize$ | async) != 'small'}" class="ghost" nz-button ><i nz-icon nzType="minus"></i></button>
-    <button (click)='s.changeDisplaySize("default")' [ngClass]="{'ghost':(s.displaySize$ | async) != 'default'}" class="ghost" nz-button ><i nz-icon nzType="plus"></i></button>
+    <button (click)='s.changeDisplaySize("default")' [ngClass]="{'ghost':(s.displaySize$ | async) != 'default'}" class="ghost" nz-button ><i nz-icon nzType="plus-square"></i></button>
+    <button (click)='s.changeDisplaySize("small")'   [ngClass]="{'ghost':(s.displaySize$ | async) != 'small'}" class="ghost" nz-button ><i nz-icon nzType="minus-square"></i></button>
   </div>
