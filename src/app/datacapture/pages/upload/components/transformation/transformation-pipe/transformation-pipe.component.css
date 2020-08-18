@@ -25,10 +25,18 @@
 
 .trans-arrow {
   min-width: 1px;
+  min-height: 1px;
+  content: '';
   font-size: 20px;
   color: rgb(255 255 255);
   background: #7e9ef8;
-  padding: 10px 1px;
+  padding: 5px 1px;
+}
+
+.trans-arrow.alt {
+  color: rgb(255 255 255);
+    background: #d2d2d2;
+    padding: 5px 80px;
 }
 
 .trans-start-arrow {

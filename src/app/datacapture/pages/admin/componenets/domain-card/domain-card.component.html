@@ -19,7 +19,7 @@
 <ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
 <ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
 
-<nz-card class="collection-card" [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading'>
+<nz-card class="domain-card" [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading'>
   <app-meta [data]='data'></app-meta>
 
   <button (click)='collections.emit(data)' nz-button nzType="default"><i nz-icon nzType="block"

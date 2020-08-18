@@ -11,6 +11,7 @@ export class DomainCardComponent implements OnInit {
   constructor() { }
 
   @Input() data: SuperDomain
+  @Input() loading: boolean
 
   @Output() collections = new EventEmitter<any>()
   @Output() edit = new EventEmitter<any>()

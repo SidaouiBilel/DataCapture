@@ -1,40 +1,30 @@
-<!-- <nz-switch [(ngModel)]="loading"></nz-switch> -->
-<!-- <nz-card style="width: 300px;margin-top: 16px" [nzLoading]="loading">
-  <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Card title" nzDescription="This is the description"></nz-card-meta>
-</nz-card> -->
-<nz-page-header class="site-page-header" nzTitle="Domains" nzSubtitle="Manage Domains">
+<div class="flex-1 flex stretch column h-100">
+  <nz-page-header class="site-page-header" nzTitle="Domains" nzSubtitle="Manage Domains"></nz-page-header>
 
-</nz-page-header>
+  <div class="flex between mb-2">
 
-<div nz-row>
-
-  <div nz-col [nzSpan]='18'>
-
-    <button nz-button nzType="primary" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Domain</button>
-
-    <button nz-button class="ghost" nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
-    <!-- <button (click)='displayList=false' nz-button nzType="default"><i nz-icon nzType="appstore"></i></button> -->
-    <!-- <button (click)='displayList=true' nz-button nzType="default"><i nz-icon nzType="unordered-list"></i></button> -->
+    <div class="button-spacing">
+      <button nz-button class='ghost' (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Domain</button>
+      <button nz-button class="ghost" nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
+    </div>
+    
+    <div>
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Domains" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
 
   </div>
 
-  <div nz-col [nzSpan]='6'>
-    <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="Filter Domains" />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <i nz-icon nzType="search"></i>
-    </ng-template>
-  </div>
-</div>
-<!-- <button nz-button nzType="primary"><i nz-icon nzType="download"></i></button> -->
-
-<div nz-row [nzGutter]="14">
-  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
-
-    <!-- <nz-card class="inner-box super-domain-card"> -->
+  
+<div class="flex-1 flex-scroll p-2 bg-grey">
+  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
 
       <app-domain-card
+        [loading]='loading'
         [data]='d'
         (delete)='showDeleteConfirm(d)'
         (edit)='openConfig(d)'
@@ -43,6 +33,9 @@
       
     <!-- </nz-card> -->
   </div>
+
+</div>
+
 
 </div>
 

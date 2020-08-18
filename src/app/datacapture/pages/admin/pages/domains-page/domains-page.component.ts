@@ -27,6 +27,8 @@ export class DomainsPageComponent implements OnInit {
   domains$ = new BehaviorSubject<any>([])
   loading = false
 
+  searchTerm
+  
   displayList = true
 
   ngOnInit() {

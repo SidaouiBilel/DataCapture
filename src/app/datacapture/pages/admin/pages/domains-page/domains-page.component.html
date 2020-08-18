@@ -1,62 +1,50 @@
-<!-- <nz-switch [(ngModel)]="loading"></nz-switch> -->
-<!-- <nz-card style="width: 300px;margin-top: 16px" [nzLoading]="loading">
-  <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Card title" nzDescription="This is the description"></nz-card-meta>
-</nz-card> -->
-<nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/domains/'])" nzBackIcon nzTitle="Collections" nzSubtitle="Manage Domain collections">
-  <!-- <nz-page-header-content>
-    <div class="content">
-      <div class="extra">
-        <div>
-          <nz-statistic nzTitle="Status" nzValue="Pending"></nz-statistic>
-          <nz-statistic nzTitle="Price" [nzValue]="568.08" nzPrefix="$" style="margin: 0 32px"></nz-statistic>
-        </div>
-      </div>
-    </div>
-  </nz-page-header-content> -->
+<div class="flex-1 flex stretch column h-100">
+  <nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/domains/'])" nzBackIcon nzTitle="Collections" nzSubtitle="Manage Domain collections"></nz-page-header>
 
-</nz-page-header>
-<div nz-row>
+  <div class="flex between mb-2">
 
-  <div nz-col [nzSpan]='18'>
-
-    <button nz-button nzType="primary" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
-
+    <div class="button-spacing">
+      <button nz-button class="ghost" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
     <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
-    <!-- <button (click)='displayList=false' nz-button nzType="default"><i nz-icon nzType="appstore"></i></button>
-    <button (click)='displayList=true' nz-button nzType="default"><i nz-icon nzType="unordered-list"></i></button> -->
+    </div>
+    
+    <div>
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Collections" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
 
   </div>
 
-  <div nz-col [nzSpan]='6'>
-    <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="Filter Collections" />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <i nz-icon nzType="search"></i>
-    </ng-template>
-  </div>
-</div>
-<!-- <button nz-button nzType="primary"><i nz-icon nzType="download"></i></button> -->
+  
+<div class="flex-1 flex-scroll p-2 bg-grey">
+  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
 
-<div nz-row [nzGutter]="14">
-  <div nz-col class="gutter-row mb-2" [nzSpan]="(displayList)?24:8" *ngFor="let d of domains$ | async">
+    <!-- <nz-card class="inner-box super-domain-card"> -->
 
-    <app-collection-card 
+      <app-collection-card 
       [data]='d'
       [loading]='loading'
       (edited)='load_data()'
-      (deleted)='load_data()'
-    >
-      <!-- <nz-divider></nz-divider> -->
-      <button 
-      (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'fields'])"
-      nz-button nzType="default"><i nz-icon nzType="unordered-list"></i>Target Fields</button>
-      <button nz-button nzType="default"
-      (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'references'])"
-      ><i nz-icon nzType="font-size" nzTheme="outline"></i>Refrence Data</button>
+      (deleted)='load_data()'>
+      <div class="button-spacing">
+        <button 
+        (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'fields'])"
+        nz-button nzType="default"><i nz-icon nzType="unordered-list"></i>Target Fields</button>
+        <button nz-button nzType="default"
+        (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'references'])"
+        ><i nz-icon nzType="font-size" nzTheme="outline"></i>Refrence Data</button>
+      </div>
     </app-collection-card>
-
+      
+    <!-- </nz-card> -->
   </div>
+
+</div>
+
 
 </div>
 

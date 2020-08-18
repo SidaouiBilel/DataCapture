@@ -18,6 +18,7 @@ import { CollectionCardComponent } from './componenets/collection-card/collectio
 import { CollectionEditor } from './services/collection-editor.service';
 import { TreePipe } from './pipes/tree.pipe';
 import { MetaComponent } from './componenets/meta/meta.component';
+import { SimpleFilterPipe } from './pipes/simple-filter.pipe';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MetaComponent } from './componenets/meta/meta.component';
     CollectionCardComponent,
     TreePipe,
     MetaComponent,
+    SimpleFilterPipe,
   ],
   providers:[
     CollectionEditor

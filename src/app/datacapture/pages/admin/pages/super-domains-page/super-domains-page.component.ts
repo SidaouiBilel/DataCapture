@@ -22,6 +22,8 @@ export class SuperDomainsPageComponent implements OnInit {
   loading_list = [{}]
   loading = false
 
+  searchTerm
+
   domains$ = new BehaviorSubject<any>([])
 
   displayList = true
