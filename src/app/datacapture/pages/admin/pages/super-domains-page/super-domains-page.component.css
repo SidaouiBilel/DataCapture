@@ -1,21 +1,3 @@
-[nz-button] {
-    margin-right: 8px;
-    margin-bottom: 12px;
-  }
-
 .inner-box{
   margin-bottom: 14px;
-  /* margin-right: 14px; */
 }
-/* 
-::ng-deep.inner-box .ant-card-body{
-  padding: 0;
-} */
-/* 
-::ng-deep.ant-card-meta-avatar{
-  padding-top: 21px;
-}
-
-::ng-deep.super-domain-card .ant-card-body{
-  padding: 0;
-} */

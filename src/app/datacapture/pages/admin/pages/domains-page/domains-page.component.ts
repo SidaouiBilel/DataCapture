@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Domain } from '../../models/domain';
 import { CollectionEditor } from '../../services/collection-editor.service';
 import { tap, take } from 'rxjs/operators';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-domains-page',
@@ -17,9 +18,9 @@ import { tap, take } from 'rxjs/operators';
 export class DomainsPageComponent implements OnInit {
   sub: any;
   super_domain_id = null
-
+  
   constructor(private route: ActivatedRoute, public ds: DomainService, public modal: NzModalService, private router:Router, 
-    private editor: CollectionEditor
+    private editor: CollectionEditor, public s: StoreService
     ) { }
 
   loading_list = [{}]
@@ -27,6 +28,8 @@ export class DomainsPageComponent implements OnInit {
   domains$ = new BehaviorSubject<any>([])
   loading = false
 
+  searchTerm
+  
   displayList = true
 
   ngOnInit() {

@@ -1,5 +1,9 @@
 
-<div nz-paragraph>
+<p nz-paragraph class="dom-description">
+    {{data?.description}}
+    </p>
+
+<div nz-paragraph class="mb-2">
     <i nz-icon nzType="clock-circle" nzTheme="outline"></i> <i> Created On</i>
     {{data?.created_on | date: 'dd/MM/yyyy HH:mm'}}
     <nz-divider nzType="vertical"></nz-divider>
@@ -9,7 +13,3 @@
     <i>Status </i>
     <nz-tag [nzColor]="'green'">ACTIVE</nz-tag> -->
 </div>
-
-<p nz-paragraph class="dom-description">
-    {{data?.description}}
-    </p>

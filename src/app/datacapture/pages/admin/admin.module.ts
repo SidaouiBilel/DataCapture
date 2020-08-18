@@ -18,6 +18,11 @@ import { CollectionCardComponent } from './componenets/collection-card/collectio
 import { CollectionEditor } from './services/collection-editor.service';
 import { TreePipe } from './pipes/tree.pipe';
 import { MetaComponent } from './componenets/meta/meta.component';
+import { SimpleFilterPipe } from './pipes/simple-filter.pipe';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AdminReducer, FEATURE_NAME } from './store/admin.state';
+import { DisplayChangerComponent } from './componenets/display-changer/display-changer.component';
 
 
 @NgModule({
@@ -36,6 +41,8 @@ import { MetaComponent } from './componenets/meta/meta.component';
     CollectionCardComponent,
     TreePipe,
     MetaComponent,
+    SimpleFilterPipe,
+    DisplayChangerComponent,
   ],
   providers:[
     CollectionEditor
@@ -43,7 +50,10 @@ import { MetaComponent } from './componenets/meta/meta.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    SharedModule
+    SharedModule,
+
+    StoreModule.forFeature(FEATURE_NAME, AdminReducer),
+    EffectsModule.forFeature([]),
   ],
   entryComponents:[DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent]
 })

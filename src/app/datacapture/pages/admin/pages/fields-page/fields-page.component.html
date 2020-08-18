@@ -19,16 +19,17 @@
 
   <div nz-col [nzSpan]='18'>
 
-    <button nz-button nzType="primary" (click)='openConfig(null)'  ><i nz-icon nzType="plus"></i>Add Target Field</button>
+    <button nz-button class='ghost' (click)='openConfig(null)'  ><i nz-icon nzType="plus"></i>Add Target Field</button>
 
-    <button nz-button nzType="default" (click)="load_data()"  ><i nz-icon nzType="reload"></i></button>
-
+    
     <nz-upload
       [nzAction]="uploadURI"
       [nzHeaders]="{ authorization: 'authorization-text' }"
       (nzChange)="handleChange($event)"
-    >
-      <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
+      >
+      <button nz-button  class='ghost'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
+
+      <button nz-button class='ghost' (click)="load_data()"  ><i nz-icon nzType="reload"></i></button>
     </nz-upload>
     
   </div>
@@ -68,8 +69,11 @@
           <ng-container [ngSwitch]="column.field">
 
             <td *ngSwitchCase="'action'">
-              <button nz-button class="ghost" (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
-              <button nz-button class="ghost" (click)='showDeleteConfirm(data)'><i nz-icon nzType="delete"></i></button>
+              <div class="button-spacing">
+                <button nz-button class="ghost" (click)='openConfig(data)'><i nz-icon nzType="edit"></i></button>
+                <nz-divider nzType='vertical'></nz-divider>
+                <button nz-button class="ghost" (click)='showDeleteConfirm(data)'><i nz-icon nzType="delete"></i></button>
+              </div>
             </td>
 
             <td *ngSwitchCase="'rules'">

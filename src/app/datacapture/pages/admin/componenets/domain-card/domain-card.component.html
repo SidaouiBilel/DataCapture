@@ -8,7 +8,7 @@
 </ng-template>
 <ng-template #titleTemplate>
   <div class="flex start">
-      <nz-avatar [nzSize]="42" nzIcon="folder" style="background-color:#f56a00;"></nz-avatar>
+      <nz-avatar *ngIf='!small' [nzSize]="42" nzIcon="folder" style="background-color:#f56a00;"></nz-avatar>
       <div class="ml-3 flex column start">
           <div class="text-muted"><small>{{data?.id}}</small></div>
           <h4>{{data?.name}}</h4>
@@ -19,9 +19,8 @@
 <ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
 <ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
 
-<nz-card class="collection-card" [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading'>
-  <app-meta [data]='data'></app-meta>
-
+<nz-card class="domain-card" [ngClass]='class' [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading' [nzSize]='s.displaySize$ | async'>
+  <app-meta *ngIf='!small' [data]='data'></app-meta>
   <button (click)='collections.emit(data)' nz-button nzType="default"><i nz-icon nzType="block"
     nzTheme="outline"></i>Collections</button>
     <ng-content></ng-content>
