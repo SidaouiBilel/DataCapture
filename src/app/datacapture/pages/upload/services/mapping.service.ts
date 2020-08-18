@@ -24,7 +24,7 @@ export class MappingService {
   }
 
   getMappingById(domainId: string, SheetId: string, mappingId: string) {
-    return this.http.get(environment.mapping + `/apply?file=${SheetId}&domainId=${domainId}&name=${name}&mappingId=${mappingId}`);
+    return this.http.get(environment.mapping + `/apply?file=${SheetId}&domainId=${domainId}&mappingId=${mappingId}`);
   }
 
   updateMapping(targets: any[], mappingId: string, sheetId: string, domainId: string) {

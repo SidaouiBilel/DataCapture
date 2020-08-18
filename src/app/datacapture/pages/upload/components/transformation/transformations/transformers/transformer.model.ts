@@ -5,10 +5,10 @@ import { FormatterComponent } from '../transformation-interface/format/formatter
 import { MergerComponent } from '../transformation-interface/format/merger/merger.component'
 import { FilterComponent } from '../transformation-interface/format/filter/filter.component'
 
-export class Transformer{ 
-    type 
-    label 
-    icon 
+export class Transformer{
+    type
+    label
+    icon
     component
 
     getErrors = (params, previousNodes, headers): any=>{
@@ -25,9 +25,9 @@ export class NodeError{
 }
 
 export class DeleteRow extends Transformer{
-    type = 'delete-rows'; 
-    label = 'Delete Rows'; 
-    icon = 'scissor'; 
+    type = 'delete-rows';
+    label = 'Delete Rows';
+    icon = 'scissor';
     component = DeleteRowsComponent;
 
     getErrors = (params, previousNodes, headers)=>{
@@ -45,11 +45,11 @@ export class DeleteColumns extends Transformer{
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
-        if (!params.columns || (params.columns && params.columns.length == 0 ) ) 
+        if (!params.columns || (params.columns && params.columns.length == 0 ) )
             errors.push(new NodeError('columns', 'Missing Column'))
         else {
             const previousHeaders: any[] = getPreviousHeader(headers, previousNodes)
-            
+
             for ( let column of params.columns ){
                 if ( previousHeaders.indexOf(column) < 0 ){
                     // errors.push(new NodeError('columns', `${column} does not exist`))
@@ -68,7 +68,7 @@ export class Replace extends Transformer{
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
-      
+
         if (params.column == null || params.column == '' ) errors.push(new NodeError('column', 'Column missing'))
         return errors
     };
@@ -80,10 +80,10 @@ export class Merge extends Transformer{
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
-        if (!params.columns || (params.columns && params.columns.length == 0 ) ) 
+        if (!params.columns || (params.columns && params.columns.length == 0 ) )
             errors.push(new NodeError('columns', 'Missing Column'))
 
-        if (params.from == null || params.from == '' ) errors.push(new NodeError('destination', 'Destination Missing'))
+        if (params.destination == null || params.destination == '' ) errors.push(new NodeError('destination', 'Destination Missing'))
 
         return errors
     };
