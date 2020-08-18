@@ -4,7 +4,7 @@ import { environment } from '@env/environment';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectDomain } from '../../../store/selectors/import.selectors';
-import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo } from '../store/transformation.actions';
+import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode } from '../store/transformation.actions';
 import { selectActivePipe,
         selectPreviewMode,
         selectPipeExpanded,
@@ -116,5 +116,10 @@ export class TranformationService {
         this.save(pipe).subscribe();
       }
     );
+  }
+
+  addTransformaion(rule){
+    // const rule = {type: transformer.type};
+    this.store.dispatch(new AddTransNode(rule));
   }
 }

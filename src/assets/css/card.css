@@ -37,5 +37,9 @@
 .bg-grey{
     background-color: #e7e7e7;
     border-radius: 10px;
-    padding: 0.3rem;
+    padding: 0.2rem;
+}
+
+.gutter-row{
+    padding: 0.1rem;
 }

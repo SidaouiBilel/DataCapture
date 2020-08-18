@@ -16,6 +16,8 @@
   [enterMovesDownAfterEdit]="true"
   [stopEditingWhenGridLosesFocus]="true"
   [frameworkComponents]="frameworkComponents"
+  [getContextMenuItems]="contextMenu"
+  [enableRangeSelection]="rangeSelection"
   (cellValueChanged)="cellValueChanged.emit($event)"
   (gridReady)="gridReady.emit($event)">
 </ag-grid-angular>

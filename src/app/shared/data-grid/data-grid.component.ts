@@ -13,6 +13,8 @@ export class DataGridComponent implements OnInit {
   @Input() rowData: [];
   @Input() defaultColDef;
   @Input() paginationPageSize = 50;
+  @Input() contextMenu = null;
+  @Input() rangeSelection = false;
   // @Input() fillOperation: (args: any) => void;
 
   @Output() gridReady: EventEmitter<any> = new EventEmitter<any>();

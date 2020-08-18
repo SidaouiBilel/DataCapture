@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
 import { DomainConfigModalComponent } from '../../modals/domain-config-modal/domain-config-modal.component';
 import { Router } from '@angular/router';
 import { Domain } from 'domain';
@@ -9,6 +9,7 @@ import { SuperDomain } from '../../models/super-domain';
 import { SuperDomainConfigModalComponent } from '../../modals/super-domain-config-modal/super-domain-config-modal.component';
 import { SuperDomainService } from '../../services/super-domain.service';
 import { StoreService } from '../../services/store.service';
+import { NotificationService } from '@app/core';
 
 @Component({
   selector: 'app-super-domains-page',
@@ -18,7 +19,13 @@ import { StoreService } from '../../services/store.service';
 })
 export class SuperDomainsPageComponent implements OnInit {
 
-  constructor(public ds: SuperDomainService, public modal: NzModalService, private router:Router, public s: StoreService) { 
+  constructor(
+    public ds: SuperDomainService, 
+    public modal: NzModalService, 
+    private router:Router, 
+    public s: StoreService,
+    private msg: NotificationService
+  ) { 
   }
   
   loading_list = [{}]
@@ -34,10 +41,13 @@ export class SuperDomainsPageComponent implements OnInit {
   }
 
   load_data(){
-    this.loading = true,
-    this.domains$.next(this.loading_list)
-    this.ds.get().subscribe(dms=> {
-      this.loading = false
+    this.loading = true;
+    this.domains$.next(this.loading_list);
+    let msg = this.msg.loading('Loading Domains');
+
+    this.ds.get().subscribe((dms)=> {
+      this.loading = false;
+      this.msg.close(msg);
       this.domains$.next(dms)
     })
 
