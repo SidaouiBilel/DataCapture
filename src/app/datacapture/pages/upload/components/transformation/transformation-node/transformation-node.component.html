@@ -3,17 +3,24 @@
   <!-- <div> -->
     <ng-template #paramsHost></ng-template>
 
-    <app-node-status [valid]='((status$ | async) || [])[0]' [messages]='((status$ | async) || [])[1]'></app-node-status>
-
+    
   </div>
-
+  
   <div class="button-spacing flex">
-    <button class="ghost" *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="tool"></i></button>
-    <!-- <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(1)'><i nz-icon nzType="up"></i></button> -->
-    <!-- <button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(-1)'><i nz-icon nzType="down"></i></button> -->
-    <!-- <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button> -->
+    <!-- <button class="ghost" nzShape='circle' nz-button nz-dropdown [nzDropdownMenu]="menu"><i nz-icon nzType="up"></i></button> -->
   </div>
 </nz-card>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <!-- <button class="ghost" *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="tool"></i></button> -->
+    <!-- <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button> -->
+    <li nz-menu-item><button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button></li>
+    <li nz-menu-item><button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(-1)'><i nz-icon nzType="down"></i></button></li>
+    <li nz-menu-item><button class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(+1)'><i nz-icon nzType="up"></i></button></li>
+    
+  </ul>
+</nz-dropdown-menu>
 
 <ng-template #title>
   <div class="flex between">
@@ -21,9 +28,10 @@
       <nz-badge [nzCount]="index + 1" [nzStyle]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }"></nz-badge>
       <div class="ml-2">{{transofrmation?.label}}</div>
     </div>
-
+    
     <div>
-      <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+      <button class="ghost" nzShape='circle' nz-button nz-dropdown [nzDropdownMenu]="menu"><i nz-icon nzType="ellipsis" nzTheme="outline"></i></button>
+      <app-node-status [valid]='((status$ | async) || [])[0]' [messages]='((status$ | async) || [])[1]'></app-node-status>
     </div>
 
   </div>

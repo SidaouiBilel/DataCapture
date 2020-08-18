@@ -14,6 +14,7 @@ export class DataGridComponent implements OnInit {
   @Input() defaultColDef;
   @Input() paginationPageSize = 50;
   @Input() contextMenu = null;
+  @Input() mainContextMenu = null;
   @Input() rangeSelection = false;
   // @Input() fillOperation: (args: any) => void;
 

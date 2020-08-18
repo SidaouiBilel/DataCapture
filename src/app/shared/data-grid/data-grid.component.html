@@ -17,6 +17,7 @@
   [stopEditingWhenGridLosesFocus]="true"
   [frameworkComponents]="frameworkComponents"
   [getContextMenuItems]="contextMenu"
+  [getMainMenuItems]="mainContextMenu"
   [enableRangeSelection]="rangeSelection"
   (cellValueChanged)="cellValueChanged.emit($event)"
   (gridReady)="gridReady.emit($event)">
