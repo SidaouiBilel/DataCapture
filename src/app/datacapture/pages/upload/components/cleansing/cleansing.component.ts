@@ -33,6 +33,7 @@ export class CleansingComponent implements OnInit {
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  lock$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   // Store
   selectedSheet$: Observable<any>;
   domain$: Observable<any>;
@@ -66,6 +67,7 @@ export class CleansingComponent implements OnInit {
       if (job) {
         this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
+          this.lock$.next(true);
         });
       }
     });
@@ -81,46 +83,50 @@ export class CleansingComponent implements OnInit {
     const that = this;
     return {
       getRows(params) {
-        const page = (params.request.endRow / that.numberOfRows) - 1;
-        const isTransformed = that.worksheet !== null;
-        const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
-        let adaptedFilter = '';
-        let adaptedSort = [];
-        Object.keys(params.request.filterModel).forEach((e) => {
-          adaptedFilter = adaptedFilter + `{${e}} ${params.request.filterModel[e].type} '${params.request.filterModel[e].filter}' && `;
-        });
-        adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
-        adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
-        // tslint:disable-next-line: max-line-length
-        that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
-        .subscribe((res: any) => {
-          const newErrors = {};
-          Object.keys(res.results).forEach((e: string) => {
-            const ind = Number(e) + ( that.numberOfRows * page);
-            newErrors[ind] =  res.results[e];
-          });
-          that.results = {...that.results, ...newErrors};
-          if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
-            const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
-            headers.unshift({
-              headerName: '#',
-              field: 'row_index',
-              valueGetter: 'node.rowIndex + 1'
+        that.lock$.subscribe((isLocked: boolean) => {
+          if (isLocked) {
+            const page = (params.request.endRow / that.numberOfRows) - 1;
+            const isTransformed = that.worksheet !== null;
+            const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
+            let adaptedFilter = '';
+            let adaptedSort = [];
+            Object.keys(params.request.filterModel).forEach((e) => {
+              adaptedFilter = adaptedFilter + `{${e}} ${params.request.filterModel[e].type} '${params.request.filterModel[e].filter}' && `;
             });
-            that.headers$.next([...headers]);
-            grid.api.setColumnDefs(that.setHeadersLogic(headers, res.headers));
+            adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
+            adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
+            // tslint:disable-next-line: max-line-length
+            that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
+            .subscribe((res: any) => {
+              const newErrors = {};
+              Object.keys(res.results).forEach((e: string) => {
+                const ind = Number(e) + ( that.numberOfRows * page);
+                newErrors[ind] =  res.results[e];
+              });
+              that.results = {...that.results, ...newErrors};
+              if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
+                const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
+                headers.unshift({
+                  headerName: '#',
+                  field: 'row_index',
+                  valueGetter: 'node.rowIndex + 1'
+                });
+                that.headers$.next([...headers]);
+                grid.api.setColumnDefs(that.setHeadersLogic(headers, res.headers));
+              }
+              if (res.data.length) {
+                const lastRow = () => {
+                  if ( res.data.length < that.numberOfRows  ) { return (page * that.numberOfRows) + res.data.length; } else { return -1; }
+                };
+                params.successCallback(res.data, lastRow());
+              } else {
+                params.successCallback([], 0);
+              }
+            }, (error) => {
+              params.failCallback();
+              that.not.error(error.message);
+            });
           }
-          if (res.data.length) {
-            const lastRow = () => {
-              if ( res.data.length < that.numberOfRows  ) { return (page * that.numberOfRows) + res.data.length; } else { return -1; }
-            };
-            params.successCallback(res.data, lastRow());
-          } else {
-            params.successCallback([], 0);
-          }
-        }, (error) => {
-          params.failCallback();
-          that.not.error(error.message);
         });
       }
     };
