@@ -13,6 +13,8 @@
 .collection-card .ant-avatar.ant-avatar-icon, 
 .domain-card     .ant-avatar.ant-avatar-icon{
     line-height: 40px !important;
+    min-height: 42px;
+    min-width: 42px;
 }
 .collection-card.ant-card, 
 .domain-card.ant-card,
