@@ -76,7 +76,7 @@ export class ImportComponent implements OnInit {
         data: [],
         headers: [],
         file: [file]
-      };
+      }; 
       this.store.dispatch(new ActionUploadFile({file: uploadedFile, importing: false, imported: true, error: false, progress: 100}));
       // tslint:disable-next-line: max-line-length
       this.store.dispatch(new ActionSaveFile({metaData: file.response, sheets: Object.keys(file.response.worksheets_map), data: [], headers: []}));

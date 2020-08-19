@@ -5,11 +5,11 @@
       <!-- <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
         <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
       </nz-select> -->
-      <div nz-tooltip nzTooltipTitle="Collection Selection">
+      <div>
         <i nz-icon nzType="block" nzTheme="outline"></i>
-      <button class="ghost" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+      <button nz-tooltip nzTooltipTitle="Collection Selection" class="ghost" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
         <div  style="min-width:200px" class="flex between">
-          <div class="flex-1 text-left">{{ selectedDomain?.name }}</div>
+          <div class="flex-1 text-left">{{ (selectedDomain?.name) || 'None' }}</div>
           <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"></i>
         </div>
       </button>
