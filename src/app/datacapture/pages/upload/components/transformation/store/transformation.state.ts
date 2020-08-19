@@ -1,5 +1,6 @@
 import { Transformation } from './transformation.model';
 import { TransformationActionTypes } from './transformation.actions';
+import { swapArrayElements } from '@app/shared/utils/arrays.utils';
 
 export const initialState: Transformation = {
     nodes:[],
@@ -50,6 +51,15 @@ export function TransformationReducer(state: Transformation = initialState, acti
 
         nodes.splice(i, 1)
         validation_states.splice(i, 1)
+        return {...state, nodes: nodes, validation_states:validation_states}
+    }
+
+    case ACTIONS.UPDATE_NODE_ORDER:{
+        const index = action.index
+        const newIndex = action.step + index
+        const nodes = swapArrayElements([...state.nodes], index, newIndex)
+        const validation_states = swapArrayElements([...state.validation_states], index, newIndex)
+
         return {...state, nodes: nodes, validation_states:validation_states}
     }
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolve
 import { TransformationInterfaceComponent } from '../transformations/transformation-interface/transformation-interface.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { DeleteTransNode, UpdateTransNode } from '../store/transformation.actions';
+import { DeleteTransNode, UpdateTransNode, UpdateNodeOrder } from '../store/transformation.actions';
 import { TRANSFORMATIONS } from '../transformations/transformers';
 import { selectPipeExpanded, selectTranformationNodeStatus } from '../store/transformation.selectors';
 import { NzModalService } from 'ng-zorro-antd';
@@ -88,6 +88,10 @@ export class TransformationNodeComponent implements OnInit {
 
   onDelete(){
     this.store.dispatch(new DeleteTransNode(this.index))
+  }
+
+  onChangeOrder(step){
+    this.store.dispatch(new UpdateNodeOrder(this.index, step))
   }
 
   showCompAsModal(): void {

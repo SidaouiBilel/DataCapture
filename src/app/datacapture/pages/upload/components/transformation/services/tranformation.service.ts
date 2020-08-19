@@ -4,7 +4,7 @@ import { environment } from '@env/environment';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectDomain } from '../../../store/selectors/import.selectors';
-import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode } from '../store/transformation.actions';
+import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode, UpdateNodeOrder } from '../store/transformation.actions';
 import { selectActivePipe,
         selectPreviewMode,
         selectPipeExpanded,
@@ -134,5 +134,11 @@ export class TranformationService {
   addTransformaion(rule){
     // const rule = {type: transformer.type};
     this.store.dispatch(new AddTransNode(rule));
+    this.msg.default('Transformation Node Added')
+  }
+  swapTransformaion(o, n){
+    // const rule = {type: transformer.type};
+    this.store.dispatch(new UpdateNodeOrder(o,n));
+    this.msg.default('Transformation Nodes Swapped')
   }
 }

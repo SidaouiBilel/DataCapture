@@ -15,8 +15,8 @@
   <ul nz-menu>
     <!-- <button class="ghost" *ngIf='(expanded$ | async)' nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="tool"></i></button> -->
     <!-- <button class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button> -->
-    <li nz-menu-item><button nz-tooltip nzTooltipTitle='order up' class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(+1)'><i nz-icon nzType="up"></i></button></li>
-    <li nz-menu-item><button nz-tooltip nzTooltipTitle='order down' class="ghost" nzShape='circle' nz-button (click)='changeOrder.emit(-1)'><i nz-icon nzType="down"></i></button></li>
+    <li nz-menu-item><button nz-tooltip nzTooltipTitle='order up' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(-1)'><i nz-icon nzType="up"></i></button></li>
+    <li nz-menu-item><button nz-tooltip nzTooltipTitle='order down' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(+1)'><i nz-icon nzType="down"></i></button></li>
     <li nz-menu-item><button nz-tooltip nzTooltipTitle='delete' class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button></li>
     
   </ul>
