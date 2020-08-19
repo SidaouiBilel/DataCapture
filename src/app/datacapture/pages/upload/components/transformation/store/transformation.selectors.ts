@@ -103,3 +103,15 @@ export const selectTranformationValid = createSelector(
     (nodesValid, InfoValid) => nodesValid && InfoValid
 );
 
+export const selectActivePipeModified = createSelector(
+  selectTranformationNodes, selectEdiedTranformationPipeInfo,
+    (nodes, edited) => {
+      if(edited){
+        if (JSON.stringify(edited.nodes) != JSON.stringify(nodes) )
+          return true
+      }
+
+      return false
+    }
+);
+

@@ -11,9 +11,15 @@
         (click)='onDelete()'><i nz-icon nzType="delete"></i>
         </button>
 
-      <button nzType='primary' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save" (click)='onSave()' [disabled]='!(canSave$ | async)'>
-        <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
-      </button>
+        <button  
+        [nzType]='saveBtnType$ | async'
+        [ngClass]='ghostBtn$ | async'
+        nzShape='circle' 
+        nz-button nz-tooltip nzTooltipTitle="Save" 
+        (click)='onSave()' 
+        [disabled]='!(canSave$ | async)'>
+          <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+        </button>
 
     </ng-container>
   </div>

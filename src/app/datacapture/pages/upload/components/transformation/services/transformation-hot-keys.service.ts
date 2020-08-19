@@ -27,7 +27,7 @@ export class TransformationHotKeysService  extends Hotkeys{
 
    openHelpModal() {
     if(!this.helpModal && !this.helpModalDelay){
-      this.helpModalDelay = interval(1000).pipe(take(1)).subscribe(()=>{
+      this.helpModalDelay = interval(0).pipe(take(1)).subscribe(()=>{
         this.helpModal = this.msg.create({nzContent: TransformationPreviewHelpComponent, nzClosable:false})
         this.helpModal.nzAfterClose.subscribe(()=>{
           this.helpModal = null; 
@@ -50,7 +50,7 @@ export class TransformationHotKeysService  extends Hotkeys{
   }
 
   register(subscriptions = []){
-    this.press$ = this.addShortcut({ keys: 'shift' }).subscribe(() => {
+    this.press$ = this.addShortcut({ keys: 'shift.h' }).subscribe(() => {
       this.openHelpModal();
     });
 

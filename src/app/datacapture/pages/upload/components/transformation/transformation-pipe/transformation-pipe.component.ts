@@ -27,6 +27,7 @@ export class TransformationPipeComponent implements OnInit {
   active$: Observable<any>;
   expanded$;
   canSave$;
+  modified$;
 
   constructor(
     // private drawerRef: NzDrawerRef<string>,
@@ -44,6 +45,7 @@ export class TransformationPipeComponent implements OnInit {
     });
 
     this.canSave$ = this.pipes.canSave$
+    this.modified$ = this.pipes.modified$
   }
 
   close(): void {
