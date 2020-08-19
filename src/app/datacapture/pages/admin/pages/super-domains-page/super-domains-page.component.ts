@@ -44,11 +44,16 @@ export class SuperDomainsPageComponent implements OnInit {
     this.loading = true;
     this.domains$.next(this.loading_list);
     let msg = this.msg.loading('Loading Domains');
-
+    
     this.ds.get().subscribe((dms)=> {
       this.loading = false;
       this.msg.close(msg);
       this.domains$.next(dms)
+    }, err=>{
+      this.msg.close(msg)
+      this.domains$.next([]);
+      this.loading = false;
+      this.msg.error('Failed to load Domains')
     })
 
   }
