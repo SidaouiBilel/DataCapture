@@ -1,0 +1,26 @@
+<ng-template #modalTitle>
+</ng-template>
+
+<div nz-typography nzType="secondary" class="mb-3" >
+    <i nz-icon [nzType]='"info-circle"'></i>
+    <span class="ml-2">Shortcuts</span>
+</div>
+
+<nz-list >
+    <nz-list-item *ngFor='let s of shortcuts' class="w-100" nzSize='small'>
+        <div class="flex between w-100" >
+            <div>
+                <i nz-icon [nzType]='s.icon'></i>
+                <span nz-typography class="ml-3">{{s.name}}</span>
+            </div>
+    
+            <div>
+                <nz-tag>{{s.shortcut}}</nz-tag>
+            </div>
+    
+        </div>
+    </nz-list-item>
+  </nz-list>
+
+
+<!-- <ng-template #modalFooter></ng-template> -->

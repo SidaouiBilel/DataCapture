@@ -8,6 +8,10 @@ import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selecto
 import { PreMappingTransformationService } from '@app/datacapture/pages/upload/services/pre-mapping-transformation.service';
 import { TRANSFORMATIONS } from '../../../transformation/transformations/transformers';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
+import { Hotkeys } from '@app/shared/services/hot-keys.service';
+import { take } from 'rxjs/operators';
+import { capitalize, shortcutString } from '@app/shared/utils/strings.utils';
+import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
 
 @Component({
   selector: 'app-target-preview',
@@ -36,10 +40,13 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   generatedFileId$;
   gridReady$ = new Subject<string>();
 
+  gridApi = null
+
   constructor(
     private store: Store<AppState>,
     private service: PreMappingTransformationService,
-    private transformService: TranformationService
+    private transformService: TranformationService,
+    private hotkeys: TransformationHotKeysService
     ) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet)
     this.fileData$ = this.store.select(selectFileMetaData)
@@ -48,6 +55,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.paginator$.unsubscribe()
+    this.hotkeys.unregister()
   }
 
   ngOnInit() {
@@ -64,6 +72,11 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
         }
       }
     )
+
+    this.hotkeys.register([
+      ...TRANSFORMATIONS.map(t=>this.hotkeys.addShortcut({ keys: t.shortcut }).subscribe(()=> this.addTransformer(t, this.gridApi))),
+      this.hotkeys.addShortcut({ keys: 'shift.s' }).subscribe(()=> this.transformService.saveEdited())
+    ])
   }
 
   onError = (err)=>{
@@ -79,6 +92,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   }
   generateDataSource(fileid, page, size,gridApi) {
     const that = this;
+    that.gridApi = gridApi
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         let page = params.request.endRow / size;
@@ -102,7 +116,6 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   }
 
   addTransformer = (transformer, params)=>{
-    console.log({params})
     const rule = transformer.getRuleFromGrid(params)
     this.transformService.addTransformaion(rule)
   }
@@ -113,8 +126,9 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
       name: t.label,
       tooltip: t.description,
       action: () => {
-        that.addTransformer(t, params)
-      }
+        that.addTransformer(t, this.gridApi)
+      },
+      shortcut: shortcutString(t.shortcut)
     }))
   }
 
@@ -139,8 +153,7 @@ getMainContextMenuItems = (params) => {
   var result = [
     {
       disabled: true,
-      name: 'Transformations',  
-      // icon: this.icon
+      name: 'Transformations',
     },
     'separator',
     ...this.getTransformationsMenu(params),

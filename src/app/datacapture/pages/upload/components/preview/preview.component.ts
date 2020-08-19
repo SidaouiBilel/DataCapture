@@ -37,7 +37,8 @@ export class PreviewComponent implements OnInit {
   constructor(private store: Store<AppState>,
               private router: Router,
               private service: FileImportService,
-              private notification: NotificationService) {
+              private notification: NotificationService,
+              ) {
     this.fileMetaData$ = this.store.select(selectFileData);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.selectedSheet$.subscribe((res) => { this.selectedSheet = res; });

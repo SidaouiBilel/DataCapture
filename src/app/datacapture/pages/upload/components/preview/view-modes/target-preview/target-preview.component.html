@@ -21,7 +21,10 @@
     [columnDefs]="headers$ | async" 
     [rangeSelection]='true'
     (gridReady)="this.gridReady$.next($event)"></app-data-grid>
-    <app-sheet-selector></app-sheet-selector>
+    <div class="flex between w-100">
+      <app-sheet-selector></app-sheet-selector>
+      <div><small nz-typography nzType='secondary'>hold <nz-tag>Shift</nz-tag>for shotcuts</small></div>
+    </div>
   </ng-container>
 
 </div>

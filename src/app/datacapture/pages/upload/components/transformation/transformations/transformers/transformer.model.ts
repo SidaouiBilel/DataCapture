@@ -4,6 +4,7 @@ import { getPreviousHeader } from '../../shared/utils/transformers.util'
 import { FormatterComponent } from '../transformation-interface/format/formatter/formatter.component'
 import { MergerComponent } from '../transformation-interface/format/merger/merger.component'
 import { FilterComponent } from '../transformation-interface/format/filter/filter.component'
+import { Column } from '@app/datacapture/pages/admin/models/column'
 
 export class Transformer{
     type
@@ -12,6 +13,7 @@ export class Transformer{
     component
     icon_rotation = 0
     description = 'Description Template'
+    shortcut = null
 
     getErrors = (params, previousNodes, headers): any=>{
         return []
@@ -41,6 +43,7 @@ export class DeleteRow extends Transformer{
     label = 'Delete Rows';
     icon = 'scissor';
     component = DeleteRowsComponent;
+    shortcut = 'shift.d'
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -65,7 +68,7 @@ export class DeleteRow extends Transformer{
 
 export class DeleteColumns extends Transformer{
 
-    type = 'delete-column'; label= 'Delete Columns'; icon= 'scissor'; icon_rotation= 90; component= DeleteColumnComponent;
+    type = 'delete-column'; label= 'Delete Columns'; icon= 'scissor'; icon_rotation= 90; component= DeleteColumnComponent;shortcut = 'shift.alt.d'
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -86,14 +89,21 @@ export class DeleteColumns extends Transformer{
     };
 
     getRuleFromGrid(params){
+        const columns = []
+        const ranges = params.api.getCellRanges()
+        for (let range of ranges){
+            columns.push(...range.columns.map( (c) => c.colId ))
+        }
         return {
             ...this.getRule(),
-            columns: [params.column.colId]
+            columns: columns
         }
     }
 }
 
 export class Replace extends Transformer{
+
+    shortcut = 'shift.r'
 
     type =  'replace'; label= 'Replace'; icon= 'font-size'; component= FormatterComponent;
 
@@ -105,8 +115,19 @@ export class Replace extends Transformer{
     };
 
     getRuleFromGrid(params){
-        const column = params.column.colId
-        const from = params.value
+        let column = null
+        let index = null
+        let from = null
+
+        const range = params.api.getCellRanges()[0]
+
+        if (range) 
+            column = range.startColumn.colId
+            index = range.startRow.RowIndex
+            from = params.api.getRowNode(index)
+
+            // .getValue(column, index)
+
         return {
             ...this.getRule(),
             column,
@@ -117,6 +138,7 @@ export class Replace extends Transformer{
 
 export class Merge extends Transformer{
 
+    shortcut = 'shift.m'
     type =  'merge'; label= 'Merge'; icon= 'link'; component= MergerComponent;
 
     getErrors = (params, previousNodes, headers)=>{
@@ -130,18 +152,25 @@ export class Merge extends Transformer{
     };
 
     getRuleFromGrid(params){
-        const range = params.api.getCellRanges()[0]
-        const columns  = range.columns.map( (c) => c.colId )
-
+        const columns = []
+        const ranges = params.api.getCellRanges()
+        for (let range of ranges){
+            columns.push(...range.columns.map( (c) => c.colId ))
+        }
+        const separator = '-'
+        const destination = columns.join(separator)
         return {
             ...this.getRule(),
-            columns
+            columns,
+            destination,
+            separator
         }
     }
 }
 
 export class Filter extends Transformer{
 
+    shortcut = 'shift.f'
     type =  'filter'; label= 'Filter Lines'; icon= 'filter'; component= FilterComponent;
 
     getErrors = (params, previousNodes, headers)=>{

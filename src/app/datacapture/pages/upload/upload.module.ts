@@ -40,6 +40,8 @@ import { TransformationToolbarComponent } from './components/transformation/tran
 import { SheetSelectorComponent } from './components/preview/sheet-selector/sheet-selector.component';
 import { FilterComponent } from './components/transformation/transformations/transformation-interface/format/filter/filter.component';
 import { NodeStatusComponent } from './components/transformation/shared/node-status/node-status.component';
+import { TransformationPreviewHelpComponent } from './components/transformation/modals/transformation-preview-help/transformation-preview-help.component';
+import { TransformationHotKeysService } from './components/transformation/services/transformation-hot-keys.service';
 
 const components = [
   UploadComponentComponent,
@@ -75,7 +77,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent],
+  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent, TransformationPreviewHelpComponent],
   exports: [
   ],
   providers : [
@@ -84,7 +86,8 @@ const components = [
     CleansingService,
     UploadGuard,
     TranformationDrawerService,
-    TranformationService
+    TranformationService,
+    TransformationHotKeysService
   ],
   entryComponents: [
     TransformationPipeComponent,
@@ -94,7 +97,8 @@ const components = [
     DeleteColumnComponent,
     DeleteRowsComponent,
     PreviousMappingsComponent,
-    FilterComponent
+    FilterComponent,
+    TransformationPreviewHelpComponent
   ]
 })
 export class UploadModule {}
