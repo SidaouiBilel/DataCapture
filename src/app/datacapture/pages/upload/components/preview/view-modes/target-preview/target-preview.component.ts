@@ -87,7 +87,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
           that.loading$.next(false)
           if(page <= 1){
             that.totalRecords$.next(res.total)
-            const headers = res.headers.map(h=>({field:h, headerName:h, editable:false}))
+            const headers = res.headers.map(h=>({field:h, headerName:h, editable:false, menuTabs:['generalMenuTab']}))
             // headers.unshift({headerName: '#',field: 'row_index',valueGetter: 'node.rowIndex + 1'});
             that.headers$.next(headers)
           }

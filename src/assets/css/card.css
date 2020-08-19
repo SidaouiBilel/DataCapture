@@ -1,9 +1,13 @@
-.collection-card .ant-card-head, 
-.domain-card     .ant-card-head{
+.collection-card        .ant-card-head, 
+.domain-card            .ant-card-head,
+.transformation-card    .ant-card-head
+{
     border: none;
 }
-.collection-card .ant-card-body, 
-.domain-card     .ant-card-body{
+.collection-card        .ant-card-body, 
+.domain-card            .ant-card-body,
+.transformation-card    .ant-card-body
+{
     padding-top: 0;
 }
 .collection-card .ant-avatar.ant-avatar-icon, 
