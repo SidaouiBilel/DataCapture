@@ -1,5 +1,6 @@
-<i *ngIf='valid' nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
-<i *ngIf='!valid' nz-tooltip [nzTooltipTitle]='errors' nz-icon [nzType]="'close-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'"></i>
+<i *ngIf='valid' nz-icon [nzType]="'check-circle'"  nz-tooltip nzTooltipTitle='Valid'  [nzTheme]="'twotone'" [nzTwotoneColor]="'lightgrey'" ></i>
+<!-- <i *ngIf='valid' nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i> -->
+<i *ngIf='!valid' nz-tooltip [nzTooltipTitle]='errors' nz-icon [nzType]="'warning'" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'"></i>
 
 <ng-template #errors>
     <div *ngFor='let m of messages'><span>{{m.reason}}</span></div>
