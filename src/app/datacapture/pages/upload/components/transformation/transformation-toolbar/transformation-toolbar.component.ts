@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TransformationPipeComponent } from '../transformation-pipe/transformation-pipe.component';
 import { Store } from '@ngrx/store';
 import { TranformationService } from '../services/tranformation.service';
-import { AppState } from '@app/core';
+import { AppState } from '@app/core'; 
 import { map } from 'rxjs/operators';
 
 @Component({

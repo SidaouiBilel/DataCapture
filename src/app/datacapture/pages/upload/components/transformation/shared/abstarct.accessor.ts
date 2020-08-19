@@ -8,6 +8,10 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
     _value: any = '';
     get value(): any { return this._value; };
     set value(v: any) {
+      this.setValue(v)
+    }
+
+    setValue(v){
       if (v !== this._value) {
         this._value = v;
         this.onChange(v);

@@ -10,11 +10,11 @@
   <nz-divider nzType='vertical'></nz-divider>
 
   <i nz-icon nzType="share-alt" nzTheme="outline" class="mr-2"></i>
-  <nz-select class="ghost" (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="width: 200px;"
+  <nz-select class="ghost" (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="width: 200px;" [nzDropdownMatchSelectWidth]='false'
     nzPlaceHolder='None'>
     <nz-option nzCustomContent *ngFor='let o of (domainPipes$ | async)' [nzValue]='o.id' [nzLabel]='o.name'>
       <div>{{o.name}}</div>
-      <div nz-tooltip nzTooltipPlacement="bottom" [nzTooltipTitle]='o.description' class="ellipsis"><small>{{o.description}}</small></div>
+      <div class="ellipsis"><small>{{o.description}}</small></div>
 
     </nz-option>
 

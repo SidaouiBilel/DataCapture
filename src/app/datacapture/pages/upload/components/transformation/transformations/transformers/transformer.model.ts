@@ -79,7 +79,7 @@ export class DeleteColumns extends Transformer{
 
             for ( let column of params.columns ){
                 if ( previousHeaders.indexOf(column) < 0 ){
-                    // errors.push(new NodeError('columns', `${column} does not exist`))
+                    errors.push(new NodeError('columns', `${column} does not exist`))
                 }
 
             }
