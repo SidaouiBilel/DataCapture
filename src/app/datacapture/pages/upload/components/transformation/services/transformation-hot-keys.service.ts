@@ -5,8 +5,8 @@ import { DOCUMENT } from '@angular/common';
 import { NotificationService } from '@app/core';
 import { NzModalService } from 'ng-zorro-antd';
 import { TransformationPreviewHelpComponent } from '../modals/transformation-preview-help/transformation-preview-help.component';
-import { delay, take } from 'rxjs/operators';
-import { interval } from 'rxjs';
+import { delay, take, withLatestFrom } from 'rxjs/operators';
+import { interval, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class TransformationHotKeysService  extends Hotkeys{
   press$: any;
 
   subscriptions = null
+  registeredHostkeys$ = new BehaviorSubject([])
 
   constructor(private _eventManager: EventManager,
     @Inject(DOCUMENT) private _document: Document, private msg: NzModalService) {
@@ -27,8 +28,15 @@ export class TransformationHotKeysService  extends Hotkeys{
 
    openHelpModal() {
     if(!this.helpModal && !this.helpModalDelay){
-      this.helpModalDelay = interval(0).pipe(take(1)).subscribe(()=>{
-        this.helpModal = this.msg.create({nzContent: TransformationPreviewHelpComponent, nzClosable:false})
+      this.helpModalDelay = interval(0).pipe(take(1), withLatestFrom(this.registeredHostkeys$))
+        .subscribe(([timeout ,registered])=>{
+        this.helpModal = this.msg.create({
+          nzContent: TransformationPreviewHelpComponent, 
+          nzComponentParams:{
+            shortcuts: registered
+          },
+          nzClosable:false
+        })
         this.helpModal.nzAfterClose.subscribe(()=>{
           this.helpModal = null; 
           this.helpModalDelay = null;
@@ -49,7 +57,7 @@ export class TransformationHotKeysService  extends Hotkeys{
     this.helpModalDelay = null;
   }
 
-  register(subscriptions = []){
+  register(toRegister = []){
     this.press$ = this.addShortcut({ keys: 'shift.h' }).subscribe(() => {
       this.openHelpModal();
     });
@@ -58,7 +66,12 @@ export class TransformationHotKeysService  extends Hotkeys{
       this.closeHelpModal();
     });
 
-    this.subscriptions = subscriptions
+    
+    this.subscriptions = []
+    for (let r of toRegister){
+      this.subscriptions.push(this.addShortcut({ keys: r.key }).subscribe(r.action))
+    }
+    this.registeredHostkeys$.next(toRegister)
   }
 
   unregister(){
@@ -66,5 +79,6 @@ export class TransformationHotKeysService  extends Hotkeys{
     this.release$.unsubscribe()
 
     for (let s of this.subscriptions) s.unsubscribe()
+    this.registeredHostkeys$.next([])
   }
 }

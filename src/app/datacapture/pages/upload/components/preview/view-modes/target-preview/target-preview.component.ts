@@ -74,8 +74,10 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
     )
 
     this.hotkeys.register([
-      ...TRANSFORMATIONS.map(t=>this.hotkeys.addShortcut({ keys: t.shortcut }).subscribe(()=> this.addTransformer(t, this.gridApi))),
-      this.hotkeys.addShortcut({ keys: 'shift.s' }).subscribe(()=> this.transformService.saveEdited())
+      ...this.getTransformationsMenu(),
+      ...this.getExtraMenuItems()
+      // ...TRANSFORMATIONS.map(t=>this.hotkeys.addShortcut({ keys: t.shortcut }).subscribe(()=> this.addTransformer(t, this.gridApi))),
+      // this.hotkeys.addShortcut({ keys: 'shift.alt.s' }).subscribe(()=> this.transformService.saveEdited())
     ])
   }
 
@@ -120,7 +122,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
     this.transformService.addTransformaion(rule)
   }
 
-  getTransformationsMenu=(params)=>{
+  getTransformationsMenu=()=>{
     const that = this;
     return TRANSFORMATIONS.map(t=>({
       name: t.label,
@@ -128,8 +130,34 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
       action: () => {
         that.addTransformer(t, this.gridApi)
       },
-      shortcut: shortcutString(t.shortcut)
+      shortcut: shortcutString(t.shortcut),
+      key:t.shortcut,
+      icon: t.icon,
     }))
+  }
+
+  getExtraMenuItems=()=>{
+    const that = this;
+    const HKSave = 'shift.alt.s'
+    const HLFlip = 'shift.e'
+    return [
+      {
+        name: 'Save',
+        tooltip: 'Save and Apply pipe modification',
+        action: ()=> that.transformService.saveEdited(),
+        shortcut: shortcutString(HKSave),
+        key: HKSave,
+        icon: 'save',
+      },
+      {
+        name: 'Flip Menu',
+        tooltip: 'Fold or Unfold Pipe Menu',
+        action: ()=> that.transformService.flipCollapse(),
+        shortcut: shortcutString(HLFlip),
+        key: HLFlip,
+        icon: 'menu-fold',
+      }
+    ]
   }
 
   getContextMenuItems = (params) => {  
@@ -140,7 +168,9 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
       // icon: this.icon
     },
     'separator',
-    ...this.getTransformationsMenu(params),
+    ...this.getTransformationsMenu(),
+    'separator',
+    ...this.getExtraMenuItems(),
     'separator',
     'copy',
     'separator',
@@ -156,7 +186,9 @@ getMainContextMenuItems = (params) => {
       name: 'Transformations',
     },
     'separator',
-    ...this.getTransformationsMenu(params),
+    ...this.getTransformationsMenu(),
+    'separator',
+    ...this.getExtraMenuItems(),
     'separator',
     'copy',
   ];

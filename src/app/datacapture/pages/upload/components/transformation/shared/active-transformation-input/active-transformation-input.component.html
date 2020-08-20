@@ -1,12 +1,21 @@
-  <button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
-    nzShape='circle' nz-button class="mr-2">
-    <i nz-icon nzType="menu-unfold"></i>
-  </button>
-  <button *ngIf='(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
+
+<button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
+      nzShape='circle' nz-button class="mr-2">
+      <i nz-icon nzType="menu-unfold"></i>
+    </button>
+    <button *ngIf='(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
     nzShape='circle' nz-button class="mr-2">
     <i nz-icon nzType="menu-fold"></i>
   </button>
 
+<ng-container *ngIf='nodesModified$ | async'>
+  <nz-divider nzType='vertical'></nz-divider>
+  <nz-badge style='margin-left:7px' *ngIf='(canSave$ | async)' nzStatus="processing" ></nz-badge> 
+  <nz-badge style='margin-left:7px' *ngIf='!(canSave$ | async)' nzStatus="error"></nz-badge> 
+</ng-container>
+
+  
+  
   <nz-divider nzType='vertical'></nz-divider>
 
   <i nz-icon nzType="share-alt" nzTheme="outline" class="mr-2"></i>

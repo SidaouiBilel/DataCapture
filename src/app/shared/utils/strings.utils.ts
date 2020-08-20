@@ -7,3 +7,10 @@ export const shortcutString = (shortcut) => {
   return (shortcut)?shortcut.split('.').map((e:string)=>capitalize(e)).join('+'): null
 }
 
+export const isStrEmpty = (s) => {
+  return (s == null ||s == '' ) 
+}
+
+
+
+

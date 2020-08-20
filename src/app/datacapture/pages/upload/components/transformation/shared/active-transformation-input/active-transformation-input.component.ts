@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { TranformationDrawerService } from '../../services/tranformation-drawer.service';
 import { TranformationService } from '../../services/tranformation.service';
+import { Arraylength } from '@app/shared/utils/arrays.utils';
 
 @Component({
   selector: 'app-active-transformation-input',
@@ -11,6 +12,9 @@ import { TranformationService } from '../../services/tranformation.service';
 export class ActiveTransformationInputComponent implements OnInit {
   pm$: any;
   expanded$: any;
+  nodesCount$
+  nodesModified$
+  canSave$
 
   modes = [
     {mode: 'SOURCE', icon: 'file-text', tooltip: 'View Source', label: 'Source'},
@@ -20,7 +24,12 @@ export class ActiveTransformationInputComponent implements OnInit {
   constructor(
     private service: TranformationService,
     private drawer: TranformationDrawerService
-    ) {}
+    )
+  {
+    this.nodesCount$ = this.service.nodes$.pipe(map(Arraylength))
+    this.nodesModified$ = this.service.modified$
+    this.canSave$ = this.service.canSave$
+  }
 
 
   type = 2;
