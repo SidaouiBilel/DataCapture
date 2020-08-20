@@ -1,17 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest, Observable } from 'rxjs';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { selectFileData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
+import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { PreviewGridComponent } from '../preview-grid.component';
+import { TranformationService } from '../../../transformation/services/tranformation.service';
+import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
 
 @Component({
   selector: 'app-source-preview',
   templateUrl: './source-preview.component.html',
   styleUrls: ['./source-preview.component.css']
 })
-export class SourcePreviewComponent implements OnInit {
+export class SourcePreviewComponent extends PreviewGridComponent implements OnInit, OnDestroy {
   // Store
   fileData$: Observable<any>;
   selectedSheet$: Observable<any>;
@@ -25,7 +29,14 @@ export class SourcePreviewComponent implements OnInit {
   size$ = new BehaviorSubject<number>(25);
   gridReady$ = new Subject<string>();
 
-  constructor(private service: FileImportService, private store: Store<AppState>) {
+  constructor(
+    private service: FileImportService, 
+    private store: Store<AppState>,
+    _transformService: TranformationService,
+    _hotkeys: TransformationHotKeysService
+    ) {
+      super(_transformService, _hotkeys)
+
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.fileData$ = this.store.select(selectFileData);
   }
@@ -39,10 +50,17 @@ export class SourcePreviewComponent implements OnInit {
           this.generateDataSource(grid, worksheet, size);
         }
       });
+
+    this.registerHotKey()
+  }
+
+  ngOnDestroy(){
+    this.unregisterHotKey()
   }
 
   generateDataSource(gridApi: any, worksheet: string, size: number) {
     const that = this;
+    this.gridApi = gridApi
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
@@ -51,7 +69,10 @@ export class SourcePreviewComponent implements OnInit {
           that.loading$.next(false);
           if (page <= 1) {
             that.totalRecords$.next(res.total);
-            that.headers$.next(res.headers.map(h => ({field: h})));
+            const headers = res.headers.map(h => ({field: h}))
+            headers.unshift(INDEX_HEADER)
+            that.headers$.next(headers);
+            
           }
           const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
           const data = [];

@@ -10,6 +10,16 @@
         <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
         (click)='onDelete()'><i nz-icon nzType="delete"></i>
         </button>
+        <button 
+        *ngIf='saved' 
+        nzShape='circle' nz-button nz-tooltip 
+        nzTooltipTitle="Save as New"
+        (click)='onSaveAsNew()'
+        [nzType]='saveBtnType$ | async'
+        [ngClass]='ghostBtn$ | async'
+        [disabled]='!(canSave$ | async)'
+        ><i nz-icon nzType="copy"></i>
+        </button>
 
         <button  
         [nzType]='saveBtnType$ | async'

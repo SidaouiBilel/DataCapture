@@ -1,47 +1,24 @@
 <ng-template #modalTitle></ng-template>
 
-<!-- <div nz-typography nzType="secondary" class="mb-3" >
+<div nz-typography nzType="secondary" class="mb-3" >
     <i nz-icon [nzType]='"info-circle"'></i>
-    <span class="ml-2">Shortcuts</span>
-</div> -->
+    <span class="ml-2">Hotkeys</span>
+</div> 
 
-<!-- <nz-list nzSize='small'>
+<nz-list nzSize='small'>
     <nz-list-item *ngFor='let s of shortcuts' nzSize='small'>
-        <div class="flex between" >
+        <div class="flex between w-100" >
             <div>
                 <i nz-icon [nzType]='s.icon'></i>
-                <span nz-typography class="ml-3">{{s.name}}</span>
+                <span nz-typography class="ml-2">{{s.name}}</span>
             </div>
     
-            <div>
+            <div class="ml-2">
                 <nz-tag>{{s.shortcut}}</nz-tag>
             </div>
     
         </div>
     </nz-list-item>
-  </nz-list> -->
-
-  <div class="flex start">
-    <span class="flex"  nz-typography nzType="secondary" class="mr-3" >
-        <i nz-icon [nzType]='"info-circle"'></i>
-        <span class="ml-2">Hotkyes</span>
-    </span>
-
-      <div class="flex" *ngFor='let s of shortcuts; let i = index' nzSize='small'>
-          <nz-divider *ngIf='i!=0' nzType='vertical'></nz-divider>
-          <div class="flex between" >
-              <div>
-                  <i nz-icon [nzType]='s.icon'></i>
-                  <span nz-typography class="ml-2">{{s.name}}</span>
-                </div>
-                
-                <div class="ml-2">
-                    <nz-tag class="mr-0">{{s.shortcut}}</nz-tag>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-
+  </nz-list>
 
 <ng-template #modalFooter></ng-template>

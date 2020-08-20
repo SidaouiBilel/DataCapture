@@ -76,6 +76,10 @@ export class TransformationPipeComponent implements OnInit {
   onSave() {
     this.pipes.saveEdited();
   }
+  
+  onSaveAsNew() {
+    this.pipes.saveEdited(true);
+  }
 
   onSaveAndApply() {
     this.pipes.upadatePreviewMode('TARGET');

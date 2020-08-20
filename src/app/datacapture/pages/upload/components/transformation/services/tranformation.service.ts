@@ -107,7 +107,7 @@ export class TranformationService {
     this.store.dispatch(new UpdateEditedPipeInfo(pipeInfo))
   }
 
-  saveEdited() {
+  saveEdited(asNew=false) {
     this.canSave$.pipe(take(1)).subscribe((canSave)=>{
       if(canSave){
         forkJoin(this.nodes$.pipe(take(1)), this.edited$.pipe(take(1))).subscribe(
@@ -121,6 +121,9 @@ export class TranformationService {
               domain_id: this.domainId,
               id: edited.id
             };
+
+            // SAVE AS NEW
+            if(asNew) pipe.id = null;
             
             this.save(pipe).subscribe(()=> this.msg.success('Pipe Saved.'));
           }

@@ -61,8 +61,10 @@ export class DeleteRow extends Transformer{
         let from = 1
         let to = 1
         if(range){
-            from  = range.startRow.rowIndex + 1
-            to    = range.endRow.rowIndex + 1
+            const start = range.startRow.rowIndex + 1
+            const end =  range.endRow.rowIndex + 1
+            from  = Math.min(start, end)
+            to    = Math.max(start, end)
         }
 
         return {

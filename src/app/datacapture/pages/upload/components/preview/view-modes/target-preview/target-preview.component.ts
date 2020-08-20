@@ -12,13 +12,15 @@ import { Hotkeys } from '@app/shared/services/hot-keys.service';
 import { take } from 'rxjs/operators';
 import { capitalize, shortcutString } from '@app/shared/utils/strings.utils';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
+import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { PreviewGridComponent } from '../preview-grid.component';
 
 @Component({
   selector: 'app-target-preview',
   templateUrl: './target-preview.component.html',
   styleUrls: ['./target-preview.component.css']
 })
-export class TargetPreviewComponent implements OnInit, OnDestroy {
+export class TargetPreviewComponent extends PreviewGridComponent implements OnInit, OnDestroy {
 
   // DECLARATIONS
   fileData$;
@@ -45,17 +47,19 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private service: PreMappingTransformationService,
-    private transformService: TranformationService,
-    private hotkeys: TransformationHotKeysService
+    _transformService: TranformationService,
+    _hotkeys: TransformationHotKeysService
     ) {
-    this.selectedSheet$ = this.store.select(selectSelectedSheet)
-    this.fileData$ = this.store.select(selectFileMetaData)
-    this.generatedFileId$ = this.store.select(selectTransformedFilePath)
-    this.activePipe$ = this.store.select(selectActivePipe)
+      super(_transformService, _hotkeys)
+
+      this.selectedSheet$ = this.store.select(selectSelectedSheet)
+      this.fileData$ = this.store.select(selectFileMetaData)
+      this.generatedFileId$ = this.store.select(selectTransformedFilePath)
+      this.activePipe$ = this.store.select(selectActivePipe)
   }
   ngOnDestroy(): void {
     this.paginator$.unsubscribe()
-    this.hotkeys.unregister()
+    this.unregisterHotKey()
   }
 
   ngOnInit() {
@@ -73,12 +77,7 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
       }
     )
 
-    this.hotkeys.register([
-      ...this.getTransformationsMenu(),
-      ...this.getExtraMenuItems()
-      // ...TRANSFORMATIONS.map(t=>this.hotkeys.addShortcut({ keys: t.shortcut }).subscribe(()=> this.addTransformer(t, this.gridApi))),
-      // this.hotkeys.addShortcut({ keys: 'shift.alt.s' }).subscribe(()=> this.transformService.saveEdited())
-    ])
+    this.registerHotKey()
   }
 
   onError = (err)=>{
@@ -103,8 +102,14 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
           that.loading$.next(false)
           if(page <= 1){
             that.totalRecords$.next(res.total)
-            const headers = res.headers.map(h=>({field:h, headerName:h, editable:false, menuTabs:['generalMenuTab']}))
-            // headers.unshift({headerName: '#',field: 'row_index',valueGetter: 'node.rowIndex + 1'});
+            const headers = res.headers.map(h=>(
+              {field:h, 
+               headerName:h, 
+               editable:false, 
+               resizable: true,
+              }
+            ))
+            headers.unshift(INDEX_HEADER)
             that.headers$.next(headers)
           }
           const lastRow = () =>  (page <= res.last_page - 2)? -1: res.total
@@ -115,83 +120,5 @@ export class TargetPreviewComponent implements OnInit, OnDestroy {
         });
         }
     })
-  }
-
-  addTransformer = (transformer, params)=>{
-    const rule = transformer.getRuleFromGrid(params)
-    this.transformService.addTransformaion(rule)
-  }
-
-  getTransformationsMenu=()=>{
-    const that = this;
-    return TRANSFORMATIONS.map(t=>({
-      name: t.label,
-      tooltip: t.description,
-      action: () => {
-        that.addTransformer(t, this.gridApi)
-      },
-      shortcut: shortcutString(t.shortcut),
-      key:t.shortcut,
-      icon: t.icon,
-    }))
-  }
-
-  getExtraMenuItems=()=>{
-    const that = this;
-    const HKSave = 'shift.alt.s'
-    const HLFlip = 'shift.e'
-    return [
-      {
-        name: 'Save',
-        tooltip: 'Save and Apply pipe modification',
-        action: ()=> that.transformService.saveEdited(),
-        shortcut: shortcutString(HKSave),
-        key: HKSave,
-        icon: 'save',
-      },
-      {
-        name: 'Flip Menu',
-        tooltip: 'Fold or Unfold Pipe Menu',
-        action: ()=> that.transformService.flipCollapse(),
-        shortcut: shortcutString(HLFlip),
-        key: HLFlip,
-        icon: 'menu-fold',
-      }
-    ]
-  }
-
-  getContextMenuItems = (params) => {  
-    var result = [
-    {
-      disabled: true,
-      name: 'Transformations',  
-      // icon: this.icon
-    },
-    'separator',
-    ...this.getTransformationsMenu(),
-    'separator',
-    ...this.getExtraMenuItems(),
-    'separator',
-    'copy',
-    'separator',
-    'export',
-  ];
-  return result;
-}
-
-getMainContextMenuItems = (params) => {  
-  var result = [
-    {
-      disabled: true,
-      name: 'Transformations',
-    },
-    'separator',
-    ...this.getTransformationsMenu(),
-    'separator',
-    ...this.getExtraMenuItems(),
-    'separator',
-    'copy',
-  ];
-    return result;
   }
 }

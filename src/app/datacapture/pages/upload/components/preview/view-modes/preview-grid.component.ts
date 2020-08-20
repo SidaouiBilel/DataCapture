@@ -1,110 +1,132 @@
 import { OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
-import { AppState } from '@app/core';
-import { combineLatest, BehaviorSubject, Subject } from 'rxjs';
-import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
-import { PreMappingTransformationService } from '@app/datacapture/pages/upload/services/pre-mapping-transformation.service';
+import { TransformationHotKeysService } from '../../transformation/services/transformation-hot-keys.service';
+import { TranformationService } from '../../transformation/services/tranformation.service';
+import { shortcutString } from '@app/shared/utils/strings.utils';
+import { TRANSFORMATIONS } from '../../transformation/transformations/transformers';
 
 
 export class PreviewGridComponent implements OnInit, OnDestroy {
+  gridApi: any;
 
-  // DECLARATIONS
-  fileData$;
-  selectedSheet$;
-
-  // SUBSCRIPTIONS
-  combiner$;
-  paginator$;
-
-  // TABLE DATA
-  data$ = new BehaviorSubject<any>(null);
-  headers$ = new BehaviorSubject<any>(null);
-  totalRecords$ = new Subject<any>();
-
-  // METADATA
-  error$ = new Subject<string>();
-  loading$ = new BehaviorSubject<boolean>(false);
-  page$ = new BehaviorSubject<number>(1);
-  size$ = new BehaviorSubject<number>(25);
-  gridReady$ = new Subject<string>();
-
-  constructor(private store: Store<AppState>, private service: PreMappingTransformationService) {
-    this.selectedSheet$ = this.store.select(selectSelectedSheet);
-    this.fileData$ = this.store.select(selectFileMetaData);
+  constructor(private transformService: TranformationService, private hotkeys: TransformationHotKeysService) {
+    
+  }
+  ngOnInit(): void {
+    this.registerHotKey()
   }
 
   ngOnDestroy(): void {
-    this.combiner$.unsubscribe();
-    this.paginator$.unsubscribe();
+    this.unregisterHotKey()
   }
 
-  getParamObservable() {
-    return combineLatest(this.fileData$, this.selectedSheet$);
+  registerHotKey() {
+    this.hotkeys.register([
+      ...this.getViewModes(),
+      ...this.getTransformationsMenu(),
+      ...this.getExtraMenuItems()
+    ])
   }
 
-  paramObservableOnSubscribe = (params) => {
-    this.onReset();
-    const fileId = params.file.file_id;
-    const sheetId = String(Object.values(params.file.worksheets_map)[params.sheetIndex]);
-    const pipeId = (params.pipe) ? params.pipe.id : null;
-    if (fileId && pipeId && sheetId) {
-      this.loading$.next(true)
-      this.service.startJob(fileId, sheetId, pipeId).subscribe(preTransformedFileid => {
-      this.page$.next(1);
-    }, this.onError);
-    } else {
-      this.onError('MISSING_DATA');
-    }
+  unregisterHotKey() {
+    this.hotkeys.unregister()
+  }
+  
+  addTransformer = (transformer, params)=>{
+    const rule = transformer.getRuleFromGrid(params)
+    this.transformService.addTransformaion(rule)
   }
 
-  ngOnInit() {
-    // LISTEN FOR CONFIG CHANGES
-    this.combiner$ = this.getParamObservable().subscribe(this.paramObservableOnSubscribe);
-
-    // LISTEN FOR PAGINATION OR FILE CHANGES
-    // this.paginator$ = combineLatest(this.generatedFileId$, this.page$, this.gridReady$, this.size$).subscribe(
-    //   ([fileid, page, gridApi, size]:any)=>{
-
-    //     if ( fileid && page ){
-    //       this.generateDataSource(fileid, page, size, gridApi)
-    //     }
-    //   }
-    // )
-  }
-
-  onError = (err) => {
-    this.onReset();
-    this.error$.next(err);
-  }
-
-  onReset() {
-    this.error$.next(null);
-    this.data$.next(null);
-    this.headers$.next(null);
-    this.loading$.next(false);
-  }
-
-  generateDataSource(fileid, page, size, gridApi) {
+  getTransformationsMenu=()=>{
     const that = this;
-    gridApi.api.setServerSideDatasource({
-      getRows(params) {
-        const page = params.request.endRow / size;
-        that.loading$.next(true);
-        that.service.getResult(fileid, page, size).subscribe((res: any) => {
-          that.loading$.next(false);
-          if (page <= 1) {
-            that.totalRecords$.next(res.total);
-            that.headers$.next(res.headers.map(h => ({field: h})));
-          }
-          const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
-          params.successCallback(res.data, lastRow());
-        }, (error) => {
-          params.failCallback();
-        });
-      }
-    });
+    return TRANSFORMATIONS.map(t=>({
+      name: t.label,
+      tooltip: t.description,
+      action: () => {
+        that.addTransformer(t, this.gridApi)
+      },
+      shortcut: shortcutString(t.shortcut),
+      key:t.shortcut,
+      icon: t.icon,
+    }))
   }
 
+  getExtraMenuItems=()=>{
+    const that = this;
+    const HKSave = 'ctrl.s'
+    const HKSaveNew = 'ctrl.alt.s'
+    const HLFlip = 'e'
+    return [
+      {
+        name: 'Save',
+        tooltip: 'Save and Apply pipe modification',
+        action: ()=> that.transformService.saveEdited(),
+        shortcut: shortcutString(HKSave),
+        key: HKSave,
+        icon: 'save',
+      },
+      {
+        name: 'Save As New',
+        tooltip: 'Save and Apply a new pipe modification',
+        action: ()=> that.transformService.saveEdited(true),
+        shortcut: shortcutString(HKSaveNew),
+        key: HKSaveNew,
+        icon: 'copy',
+      },
+      {
+        name: 'Fold/Unfold Menu',
+        tooltip: 'Fold or Unfold Pipe Menu',
+        action: ()=> that.transformService.flipCollapse(),
+        shortcut: shortcutString(HLFlip),
+        key: HLFlip,
+        icon: 'menu-fold',
+      }
+    ]
+  }
+
+  getContextMenuItems = (params) => {  
+  return this.getMainContextMenuItems(params);
+}
+
+getMainContextMenuItems = (params) => {  
+  var result = [
+    {
+      name: 'Add Transformation',
+      subMenu: this.getTransformationsMenu().map(e=>({...e, icon:null}))
+    },
+    {
+      name: 'View Mode',
+      subMenu: this.getViewModes().map(e=>({...e, icon:null}))
+    },
+    ...this.getExtraMenuItems().map(e=>({...e, icon:null})),
+    'separator',
+    'copy',
+    'export'
+  ];
+    return result;
+  }
+
+  getViewModes(){
+    const that = this 
+    const HLTarget = 't'
+    const HLSource = 's'
+    return [
+      {
+        name: 'Source',
+        tooltip: 'View Source',
+        action: ()=> that.transformService.upadatePreviewMode('SOURCE'),
+        shortcut: shortcutString(HLSource),
+        key: HLSource,
+        icon: 'file',
+      },
+      {
+        name: 'Target',
+        tooltip: 'View Target',
+        action: ()=> that.transformService.upadatePreviewMode('TARGET'),
+        shortcut: shortcutString(HLTarget),
+        key: HLTarget,
+        icon: 'thunderbolt',
+      }
+    ]
+  }
 
 }
