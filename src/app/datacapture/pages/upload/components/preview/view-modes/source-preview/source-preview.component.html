@@ -4,8 +4,5 @@
     [mainContextMenu]="getMainContextMenuItems" 
     [rangeSelection]='true'
     [columnDefs]="headers$ | async" (gridReady)="gridReady$.next($event)"></app-data-grid>
-  <div class="flex between w-100">
-    <app-sheet-selector></app-sheet-selector>
-    <div><small nz-typography nzType='secondary'><span class="mr-2">Hotkeys</span> <nz-tag>(Hold) H</nz-tag></small></div>
-  </div>
+  <app-grid-bottom-toolbar></app-grid-bottom-toolbar>
 </div>

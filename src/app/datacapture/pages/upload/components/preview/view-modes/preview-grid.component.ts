@@ -52,9 +52,9 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
 
   getExtraMenuItems=()=>{
     const that = this;
-    const HKSave = 'ctrl.s'
-    const HKSaveNew = 'ctrl.alt.s'
-    const HLFlip = 'e'
+    const HKSave = 'control.s'
+    const HKSaveNew = 'control.alt.s'
+    const HLFlip = 'alt.e'
     return [
       {
         name: 'Save',
@@ -107,8 +107,8 @@ getMainContextMenuItems = (params) => {
 
   getViewModes(){
     const that = this 
-    const HLTarget = 't'
-    const HLSource = 's'
+    const HLTarget = 'alt.t'
+    const HLSource = 'alt.s'
     return [
       {
         name: 'Source',

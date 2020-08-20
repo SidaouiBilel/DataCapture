@@ -42,6 +42,7 @@ import { FilterComponent } from './components/transformation/transformations/tra
 import { NodeStatusComponent } from './components/transformation/shared/node-status/node-status.component';
 import { TransformationPreviewHelpComponent } from './components/transformation/modals/transformation-preview-help/transformation-preview-help.component';
 import { TransformationHotKeysService } from './components/transformation/services/transformation-hot-keys.service';
+import { GridBottomToolbarComponent } from './components/preview/view-modes/grid-bottom-toolbar/grid-bottom-toolbar.component';
 
 const components = [
   UploadComponentComponent,
@@ -77,7 +78,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent, TransformationPreviewHelpComponent],
+  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent, TransformationPreviewHelpComponent, GridBottomToolbarComponent],
   exports: [
   ],
   providers : [

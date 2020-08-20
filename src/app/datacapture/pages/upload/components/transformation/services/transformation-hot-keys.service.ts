@@ -21,6 +21,8 @@ export class TransformationHotKeysService  extends Hotkeys{
   subscriptions = null
   registeredHostkeys$ = new BehaviorSubject([])
 
+  helpHotkey = 'alt.h'
+
   constructor(private _eventManager: EventManager,
     @Inject(DOCUMENT) private _document: Document, private msg: NzModalService) {
     super(_eventManager, _document)
@@ -28,7 +30,7 @@ export class TransformationHotKeysService  extends Hotkeys{
 
    openHelpModal() {
     if(!this.helpModal && !this.helpModalDelay){
-      this.helpModalDelay = interval(0).pipe(take(1), withLatestFrom(this.registeredHostkeys$))
+      this.helpModalDelay = interval(200).pipe(take(1), withLatestFrom(this.registeredHostkeys$))
         .subscribe(([timeout ,registered])=>{
         this.helpModal = this.msg.create({
           nzContent: TransformationPreviewHelpComponent, 
@@ -60,11 +62,11 @@ export class TransformationHotKeysService  extends Hotkeys{
   }
 
   register(toRegister = []){
-    this.press$ = this.addShortcut({ keys: 'h' }).subscribe(() => {
+    this.press$ = this.addShortcut({ keys: this.helpHotkey }).subscribe(() => {
       this.openHelpModal();
     });
 
-    this.release$ = this.addShortcut({ keys: 'h' }, 'keyup').subscribe(() => {
+    this.release$ = this.addShortcut({ keys: this.helpHotkey }, 'keyup').subscribe(() => {
       this.closeHelpModal();
     });
 
