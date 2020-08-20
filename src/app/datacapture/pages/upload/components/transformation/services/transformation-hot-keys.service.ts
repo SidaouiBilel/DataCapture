@@ -32,10 +32,12 @@ export class TransformationHotKeysService  extends Hotkeys{
         .subscribe(([timeout ,registered])=>{
         this.helpModal = this.msg.create({
           nzContent: TransformationPreviewHelpComponent, 
+          nzWidth: 'fit-content',
           nzComponentParams:{
             shortcuts: registered
           },
-          nzClosable:false
+          nzClosable:false,
+          nzWrapClassName:"modal-bottom-left"
         })
         this.helpModal.nzAfterClose.subscribe(()=>{
           this.helpModal = null; 
@@ -58,11 +60,11 @@ export class TransformationHotKeysService  extends Hotkeys{
   }
 
   register(toRegister = []){
-    this.press$ = this.addShortcut({ keys: 'shift.h' }).subscribe(() => {
+    this.press$ = this.addShortcut({ keys: 'h' }).subscribe(() => {
       this.openHelpModal();
     });
 
-    this.release$ = this.addShortcut({ keys: 'shift' }, 'keyup').subscribe(() => {
+    this.release$ = this.addShortcut({ keys: 'h' }, 'keyup').subscribe(() => {
       this.closeHelpModal();
     });
 
