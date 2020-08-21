@@ -140,7 +140,9 @@ export class Replace extends Transformer{
         if (range) {
             column = range.startColumn.colId
             let cellValues = new Set()
-            for (let index = range.startRow.rowIndex; index <= range.endRow.rowIndex; index++) 
+            const start = Math.min(range.startRow.rowIndex, range.endRow.rowIndex)
+            const end = Math.max(range.startRow.rowIndex, range.endRow.rowIndex)
+            for (let index = start; index <= end; index++) 
                 cellValues.add(GAPICellValue(params.api, column, index))
             
             from = Array.from(cellValues).join('|') 

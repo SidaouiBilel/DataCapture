@@ -69,7 +69,12 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
           that.loading$.next(false);
           if (page <= 1) {
             that.totalRecords$.next(res.total);
-            const headers = res.headers.map(h => ({field: h}))
+            const headers = res.headers.map(h => ({
+              field: h,
+              headerName:h, 
+              editable:false, 
+              resizable: true,
+            }))
             headers.unshift(INDEX_HEADER)
             that.headers$.next(headers);
             
