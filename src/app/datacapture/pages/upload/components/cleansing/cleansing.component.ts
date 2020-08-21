@@ -4,14 +4,12 @@ import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { Observable, forkJoin, BehaviorSubject, combineLatest } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
-import { CustomTooltipComponent } from '@app/shared/custom-tooltip/custom-tooltip.component';
 import { selectMappingId } from '../../store/selectors/mapping.selectors';
-import { TransformationHotKeysService } from '../transformation/services/transformation-hot-keys.service';
+import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 
 @Component({
   selector: 'app-cleansing',
@@ -41,17 +39,10 @@ export class CleansingComponent implements OnInit {
   fileData$: Observable<any>;
   worksheet$: Observable<any>;
   mappingId$: Observable<any>;
-
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent): void {
-    if (event.key === 's' && event.altKey === true) {
-      this.syncWithServer();
-    }
-  }
   constructor(private router: Router,
               private store: Store<AppState>,
               private service: CleansingService,
-              public hotkeys: TransformationHotKeysService,
+              public hotkeys: CleansingHotKeysService,
               private not: NotificationService) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mappingId$     = this.store.select(selectMappingId);

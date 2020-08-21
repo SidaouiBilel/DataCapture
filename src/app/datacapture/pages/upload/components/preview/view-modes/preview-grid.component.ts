@@ -60,7 +60,7 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
       icon: 'copy',
       alwaysShow: true
       }
-    ]
+    ];
   }
 
   getExtraMenuItems = () => {

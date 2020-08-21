@@ -39,12 +39,12 @@
     <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
       (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
-    <div class="flex end">
+    <!-- <div class="flex end">
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async) | hotkeysFilter: (controlPressed | async) : (shiftPressed | async) : (altPressed | async)'></app-shortcuts-list>
       <nz-divider nzType='vertical'></nz-divider>
       <div><small nz-typography nzType='secondary'><span class="mr-2">All Hotkeys</span>
         <nz-tag><span *ngIf='hold'>(Hold)</span> {{hotkey}}</nz-tag>
       </small></div>
-    </div>
+    </div> -->
   </div>
 </div>
