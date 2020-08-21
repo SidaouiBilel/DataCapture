@@ -46,7 +46,7 @@ export class DeleteRow extends Transformer{
     label = 'Delete Rows';
     icon = 'scissor';
     component = DeleteRowsComponent;
-    shortcut = 'shift.d'
+    shortcut = 'control.d'
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -77,7 +77,7 @@ export class DeleteRow extends Transformer{
 
 export class DeleteColumns extends Transformer{
 
-    type = 'delete-column'; label= 'Delete Columns'; icon= 'scissor'; icon_rotation= 90; component= DeleteColumnComponent;shortcut = 'shift.alt.d'
+    type = 'delete-column'; label= 'Delete Columns'; icon= 'scissor'; icon_rotation= 90; component= DeleteColumnComponent;shortcut = 'control.alt.d'
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -108,7 +108,7 @@ export class DeleteColumns extends Transformer{
 
 export class Replace extends Transformer{
 
-    shortcut = 'shift.r'
+    shortcut = 'control.r'
 
     type =  'replace'; label= 'Replace'; icon= 'font-size'; component= FormatterComponent;
 
@@ -155,7 +155,7 @@ export class Replace extends Transformer{
 
 export class Merge extends Transformer{
 
-    shortcut = 'shift.m'
+    shortcut = 'control.m'
     type =  'merge'; label= 'Merge'; icon= 'link'; component= MergerComponent;
 
     getErrors = (params, previousNodes, headers)=>{
@@ -193,7 +193,7 @@ export class Merge extends Transformer{
 
 export class Filter extends Transformer{
 
-    shortcut = 'shift.f'
+    shortcut = 'control.f'
     type =  'filter'; 
     label= 'Filter Lines'; 
     icon= 'filter'; 

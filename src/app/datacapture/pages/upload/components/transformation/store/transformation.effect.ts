@@ -56,7 +56,12 @@ export class TransformationEffects {
 
   @Effect({ dispatch: false })
   onNodesUpdated = this.actions$.pipe(
-    ofType(TransformationActionTypes.ADD_NODE, TransformationActionTypes.DELETE_NODE, TransformationActionTypes.UPDATE_NODE) ,
+    ofType(
+      TransformationActionTypes.ADD_NODE, 
+      TransformationActionTypes.DELETE_NODE, 
+      TransformationActionTypes.UPDATE_NODE,
+      TransformationActionTypes.UPDATE_FILE_PATH,
+    ) ,
     withLatestFrom(this.store$.select( selectTranformationNodes )),
     withLatestFrom(this.store$.select( selectHeaders )),
     map(([[action, nodes], headers]) => {

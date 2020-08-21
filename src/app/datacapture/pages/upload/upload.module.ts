@@ -43,6 +43,9 @@ import { NodeStatusComponent } from './components/transformation/shared/node-sta
 import { TransformationPreviewHelpComponent } from './components/transformation/modals/transformation-preview-help/transformation-preview-help.component';
 import { TransformationHotKeysService } from './components/transformation/services/transformation-hot-keys.service';
 import { GridBottomToolbarComponent } from './components/preview/view-modes/grid-bottom-toolbar/grid-bottom-toolbar.component';
+import { ShortcutsListComponent } from './components/transformation/shared/shortcuts-list/shortcuts-list.component';
+import { HotkeysFilterPipe } from './components/transformation/pipes/hotkeys-filter.pipe';
+import { ShortcutsListHorizontalComponent } from './components/transformation/shared/shortcuts-list-horizontal/shortcuts-list-horizontal.component';
 
 const components = [
   UploadComponentComponent,
@@ -78,7 +81,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent, TransformationPreviewHelpComponent, GridBottomToolbarComponent],
+  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent, TransformationPreviewHelpComponent, GridBottomToolbarComponent, ShortcutsListComponent, HotkeysFilterPipe, ShortcutsListHorizontalComponent],
   exports: [
   ],
   providers : [

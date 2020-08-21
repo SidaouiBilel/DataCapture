@@ -52,8 +52,8 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
 
   getExtraMenuItems=()=>{
     const that = this;
-    const HKSave = 'control.s'
-    const HKSaveNew = 'control.alt.s'
+    const HKSave = 'control.shift.s'
+    const HKSaveNew = 'control.s'
     const HLFlip = 'alt.e'
     return [
       {
@@ -63,6 +63,7 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         shortcut: shortcutString(HKSave),
         key: HKSave,
         icon: 'save',
+        alwaysShow:true
       },
       {
         name: 'Save As New',
@@ -71,6 +72,7 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         shortcut: shortcutString(HKSaveNew),
         key: HKSaveNew,
         icon: 'copy',
+        alwaysShow:true
       },
       {
         name: 'Fold/Unfold Menu',
@@ -79,6 +81,7 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         shortcut: shortcutString(HLFlip),
         key: HLFlip,
         icon: 'menu-fold',
+        alwaysShow:true
       }
     ]
   }

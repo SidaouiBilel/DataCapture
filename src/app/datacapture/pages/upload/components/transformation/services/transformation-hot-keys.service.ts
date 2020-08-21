@@ -17,11 +17,12 @@ export class TransformationHotKeysService  extends Hotkeys{
   helpModalDelay = null
   release$: any;
   press$: any;
-
+  helpHotkey = 'alt.h'
+  helpHoldTime = 0
   subscriptions = null
+  closeListener$: any;
   registeredHostkeys$ = new BehaviorSubject([])
 
-  helpHotkey = 'alt.h'
 
   constructor(private _eventManager: EventManager,
     @Inject(DOCUMENT) private _document: Document, private msg: NzModalService) {
@@ -30,7 +31,7 @@ export class TransformationHotKeysService  extends Hotkeys{
 
    openHelpModal() {
     if(!this.helpModal && !this.helpModalDelay){
-      this.helpModalDelay = interval(200).pipe(take(1), withLatestFrom(this.registeredHostkeys$))
+      this.helpModalDelay = interval(this.helpHoldTime).pipe(take(1), withLatestFrom(this.registeredHostkeys$))
         .subscribe(([timeout ,registered])=>{
         this.helpModal = this.msg.create({
           nzContent: TransformationPreviewHelpComponent, 
@@ -41,23 +42,25 @@ export class TransformationHotKeysService  extends Hotkeys{
           nzClosable:false,
           nzWrapClassName:"modal-bottom-left"
         })
-        this.helpModal.nzAfterClose.subscribe(()=>{
-          this.helpModal = null; 
-          this.helpModalDelay = null;
-        })
+        const modal = this.helpModal
+        const modalClose = this.addShortcut({keys:null}).subscribe((e)=> {modal.close(); modalClose.unsubscribe()})
+        modal.nzAfterClose.subscribe(()=>this.afterHelpModalClosed())
       })
     }
     
   }
   
   closeHelpModal(){
-    if(this.helpModal){
-      this.helpModal.close()
-    }
-    if(this.helpModalDelay){
-      this.helpModalDelay.unsubscribe()
-    }
+    if(this.helpModalDelay) this.helpModalDelay.unsubscribe()
+    if(this.closeListener$) this.closeListener$.unsubscribe()
+    if(this.helpModal)      this.helpModal.close()
+    
+    this.afterHelpModalClosed()
+  }
+
+  afterHelpModalClosed(){
     this.helpModal = null; 
+    this.closeListener$ = null;
     this.helpModalDelay = null;
   }
 
@@ -66,9 +69,11 @@ export class TransformationHotKeysService  extends Hotkeys{
       this.openHelpModal();
     });
 
-    this.release$ = this.addShortcut({ keys: this.helpHotkey }, 'keyup').subscribe(() => {
-      this.closeHelpModal();
-    });
+    if(this.helpHoldTime)
+      this.release$ = this.addShortcut({ keys: this.helpHotkey }, 'keyup').subscribe(() => {
+          this.closeHelpModal();
+        });
+      
 
     
     this.subscriptions = []
@@ -79,10 +84,13 @@ export class TransformationHotKeysService  extends Hotkeys{
   }
 
   unregister(){
-    this.press$.unsubscribe()
-    this.release$.unsubscribe()
+    this.closeHelpModal()
+
+    if(this.press$) this.press$.unsubscribe()
+    if(this.release$) this.release$.unsubscribe()
+
+    this.registeredHostkeys$.next([])
 
     for (let s of this.subscriptions) s.unsubscribe()
-    this.registeredHostkeys$.next([])
   }
 }

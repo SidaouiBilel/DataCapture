@@ -1,0 +1,20 @@
+<table class="short-table">
+    <tbody>
+        <tr *ngFor='let s of shortcuts; let i = index' [ngClass]="{'border-top':i}">
+            <td><i nz-icon class="mr-2" [nzType]='s.icon'></i></td>
+            <td>{{s.name}}</td>
+            <td><i>{{s.tooltip}}</i></td>
+            <td class="text-right"><nz-tag class="m-0">{{s.shortcut}}</nz-tag></td>
+        </tr>
+    </tbody>
+</table>
+
+<style>
+    .short-table{
+        border: none;   
+    }
+
+    .short-table td{
+        padding: 7px 5px;  
+    }
+</style>

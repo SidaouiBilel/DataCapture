@@ -78,9 +78,9 @@ export class TranformationService {
 
       setActive(active) {
         this.store.dispatch(new LoadTransformation(active));
-        if(active){
-          this.msg.default(`Pipe "${active.name}" set as active`)
-        }
+        // if(active){
+        //   this.msg.default(`Pipe "${active.name}" set as active`)
+        // }
       }
 
       get(domainId) {

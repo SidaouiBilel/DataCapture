@@ -1,24 +1,10 @@
 <ng-template #modalTitle></ng-template>
 
-<div nz-typography nzType="secondary" class="mb-3" >
-    <i nz-icon [nzType]='"info-circle"'></i>
-    <span class="ml-2">Hotkeys</span>
-</div> 
+  <div nz-typography>
+    <i nz-icon nzType='info-circle' class='mr-2'></i>
+    <span>Help</span>
+  </div>
 
-<nz-list nzSize='small'>
-    <nz-list-item *ngFor='let s of shortcuts' nzSize='small'>
-        <div class="flex between w-100" >
-            <div>
-                <i nz-icon [nzType]='s.icon'></i>
-                <span nz-typography class="ml-2">{{s.name}}</span>
-            </div>
-    
-            <div class="ml-2">
-                <nz-tag>{{s.shortcut}}</nz-tag>
-            </div>
-    
-        </div>
-    </nz-list-item>
-  </nz-list>
+  <app-shortcuts-list-horizontal [shortcuts]='shortcuts'></app-shortcuts-list-horizontal>
 
 <ng-template #modalFooter></ng-template>
