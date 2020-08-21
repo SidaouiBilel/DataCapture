@@ -19,9 +19,7 @@ export class TransformationHotKeysService  extends Hotkeys{
   press$: any;
   helpHotkey = 'alt.h'
   helpHoldTime = 0
-  subscriptions = null
   closeListener$: any;
-  registeredHostkeys$ = new BehaviorSubject([])
 
 
   constructor(private _eventManager: EventManager,
@@ -74,13 +72,7 @@ export class TransformationHotKeysService  extends Hotkeys{
           this.closeHelpModal();
         });
       
-
-    
-    this.subscriptions = []
-    for (let r of toRegister){
-      this.subscriptions.push(this.addShortcut({ keys: r.key }).subscribe(r.action))
-    }
-    this.registeredHostkeys$.next(toRegister)
+    super.register(toRegister)
   }
 
   unregister(){
@@ -89,8 +81,6 @@ export class TransformationHotKeysService  extends Hotkeys{
     if(this.press$) this.press$.unsubscribe()
     if(this.release$) this.release$.unsubscribe()
 
-    this.registeredHostkeys$.next([])
-
-    for (let s of this.subscriptions) s.unsubscribe()
+    super.unregister()
   }
 }
