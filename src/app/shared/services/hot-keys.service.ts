@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { EventManager } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { FlashCellsEvent } from '@ag-grid-enterprise/all-modules';
 
 type Options = {
   element: any;
