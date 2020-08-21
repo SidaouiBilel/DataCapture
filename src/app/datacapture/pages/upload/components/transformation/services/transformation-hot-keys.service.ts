@@ -68,8 +68,10 @@ export class TransformationHotKeysService  extends Hotkeys {
       this.release$ = this.addShortcut({ keys: this.helpHotkey }, 'keyup').subscribe(() => {
           this.closeHelpModal();
         });
-      super.register(toRegister);
-    }
+
+      }
+      
+    super.register(toRegister);
   }
 
   unregister() {
