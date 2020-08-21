@@ -10,6 +10,7 @@ import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { selectMappingId } from '../../store/selectors/mapping.selectors';
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
+import { shortcutString } from '@app/shared/utils/strings.utils';
 
 @Component({
   selector: 'app-cleansing',
@@ -27,6 +28,7 @@ export class CleansingComponent implements OnInit {
   selectedSheet: number;
   mappingId: string;
   modifications: any = {columns: []};
+  keys = Object.keys;
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -67,9 +69,25 @@ export class CleansingComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.not.warn('When editing do not forget to click on Alt+S to save the modifications.', 5000);
-    }, 4000);
+    this.hotkeys.register([
+      ...this.saveModifications()
+    ]);
+  }
+
+  saveModifications = () => {
+    const that = this;
+    const HKSave = 'control.s';
+    return [
+      {
+        name: 'Save modifications',
+        tooltip: 'Save and Apply cleansing modifications',
+        action: () => that.syncWithServer(),
+        shortcut: shortcutString(HKSave),
+        key: HKSave,
+        icon: 'save',
+        alwaysShow: true
+      }
+    ];
   }
 
   serverSideDatasource = (grid: any) => {

@@ -6,8 +6,7 @@ import { NzModalService } from 'ng-zorro-antd';
 @Injectable({
   providedIn: 'root'
 })
-export class CleansingHotKeysService  extends Hotkeys {
-
+export class CleansingHotKeysService extends Hotkeys {
 
   constructor(private _eventManager: EventManager, @Inject(DOCUMENT) private _document: Document, private msg: NzModalService) {
     super(_eventManager, _document);

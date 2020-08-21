@@ -8,7 +8,8 @@
         <nz-badge nz-tooltip nzTooltipTitle="Total Rows in Error" [nzOverflowCount]="99999999"
           [nzCount]="(metaData$ | async)?.uniqueErrorLines"></nz-badge>
         <nz-divider class="error" nzType="vertical"></nz-divider>
-        <button nz-tooltip nzTooltipTitle='Details' nzShape='round' class="ghost" nz-button>
+        <button nz-tooltip nzTooltipTitle='Details' nz-popover [nzPopoverContent]="contentTemplate"
+          nzPopoverPlacement="bottom" nzShape='round' class="ghost" nzPopoverTrigger="click" nz-button>
           <i nz-icon nzType="exception"></i>
         </button>
         <button nz-tooltip nzTooltipTitle='Save modifications' nzShape='round' class="ghost" nz-button
@@ -39,12 +40,15 @@
     <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
       (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
-    <!-- <div class="flex end">
-      <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async) | hotkeysFilter: (controlPressed | async) : (shiftPressed | async) : (altPressed | async)'></app-shortcuts-list>
-      <nz-divider nzType='vertical'></nz-divider>
-      <div><small nz-typography nzType='secondary'><span class="mr-2">All Hotkeys</span>
-        <nz-tag><span *ngIf='hold'>(Hold)</span> {{hotkey}}</nz-tag>
-      </small></div>
-    </div> -->
+    <div class="w-100 flex end">
+      <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
+    </div>
   </div>
 </div>
+
+<ng-template #contentTemplate>
+  <div *ngFor="let item of (metaData$ | async)?.jobResult">
+    <span class="pr-2"><small>{{ keys(item)[0]}}:</small></span>
+    <span class="text-danger">{{ item[keys(item)[0]] }}</span>
+  </div>
+</ng-template>
