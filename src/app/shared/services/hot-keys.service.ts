@@ -15,7 +15,7 @@ export class Hotkeys {
     element: this.document,
   }
     
-  subscriptions = null
+  subscriptions = []
   registeredHostkeys$ = new BehaviorSubject([])
   
   constructor(private eventManager: EventManager,
