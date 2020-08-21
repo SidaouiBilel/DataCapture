@@ -68,7 +68,17 @@ const components = [
   TransformationSaverComponent,
   TargetPreviewComponent,
   SourcePreviewComponent,
-  PreviousMappingsComponent
+  PreviousMappingsComponent,
+  TransformationSideBarComponent,
+  TransformationToolbarComponent,
+  SheetSelectorComponent,
+  FilterComponent,
+  NodeStatusComponent,
+  TransformationPreviewHelpComponent,
+  GridBottomToolbarComponent,
+  ShortcutsListComponent,
+  HotkeysFilterPipe,
+  ShortcutsListHorizontalComponent
 ];
 
 @NgModule({
@@ -81,7 +91,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, TransformationSideBarComponent, TransformationToolbarComponent, SheetSelectorComponent, FilterComponent, NodeStatusComponent, TransformationPreviewHelpComponent, GridBottomToolbarComponent, ShortcutsListComponent, HotkeysFilterPipe, ShortcutsListHorizontalComponent],
+  declarations: [...components],
   exports: [
   ],
   providers : [
