@@ -116,6 +116,8 @@ getMainContextMenuItems = (params) => {
     ...this.getExtraMenuItems().map(e => ({...e, icon: null})),
     'separator',
     'copy',
+    'copyWithHeaders',
+    'autoSizeAll',
     'export'
   ];
   return result;

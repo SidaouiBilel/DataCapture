@@ -16,11 +16,9 @@ export class TransformationHotKeysService  extends Hotkeys {
   helpModalDelay = null;
   release$: any;
   press$: any;
-  helpHotkey = 'alt.h';
-  helpHoldTime = 0;
-  subscriptions = null;
+  helpHotkey = 'alt.h'
+  helpHoldTime = 0
   closeListener$: any;
-  registeredHostkeys$ = new BehaviorSubject([]);
 
 
   constructor(private _eventManager: EventManager,
@@ -70,20 +68,14 @@ export class TransformationHotKeysService  extends Hotkeys {
       this.release$ = this.addShortcut({ keys: this.helpHotkey }, 'keyup').subscribe(() => {
           this.closeHelpModal();
         });
+      super.register(toRegister);
     }
-    this.subscriptions = [];
-    for (const r of toRegister) {
-      this.subscriptions.push(this.addShortcut({ keys: r.key }).subscribe(r.action));
-    }
-    this.registeredHostkeys$.next(toRegister);
   }
 
   unregister() {
     this.closeHelpModal();
     if (this.press$) { this.press$.unsubscribe(); }
     if (this.release$) { this.release$.unsubscribe(); }
-    this.registeredHostkeys$.next([]);
-
-    for (const s of this.subscriptions) { s.unsubscribe(); }
+    super.unregister();
   }
 }

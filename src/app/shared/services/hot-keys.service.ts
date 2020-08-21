@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { EventManager } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { FlashCellsEvent } from '@ag-grid-enterprise/all-modules';
 
 type Options = {
@@ -16,6 +16,9 @@ export class Hotkeys {
     element: this.document,
   }
     
+  subscriptions = null
+  registeredHostkeys$ = new BehaviorSubject([])
+  
   constructor(private eventManager: EventManager,
               @Inject(DOCUMENT) private document: Document) {
   }
@@ -39,5 +42,19 @@ export class Hotkeys {
         dispose();
       };
     })
+  }
+
+  register(toRegister = []){
+    this.subscriptions = []
+    for (let r of toRegister){
+      this.subscriptions.push(this.addShortcut({ keys: r.key }).subscribe(r.action))
+    }
+    this.registeredHostkeys$.next(toRegister)
+  }
+
+  unregister(){
+    this.registeredHostkeys$.next([])
+
+    for (let s of this.subscriptions) s.unsubscribe()
   }
 }
