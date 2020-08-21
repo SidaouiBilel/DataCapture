@@ -84,7 +84,7 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         action: ()=> that.transformService.saveEdited(true),
         shortcut: shortcutString(HKSaveNew),
         key: HKSaveNew,
-        icon: 'diff',
+        icon: "diff",
         alwaysShow: true
       },
       {

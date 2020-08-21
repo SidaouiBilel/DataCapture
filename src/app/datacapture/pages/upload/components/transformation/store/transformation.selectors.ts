@@ -4,6 +4,7 @@ import { Transformation } from './transformation.model';
 import { selectHeaders } from '../../../store/selectors/import.selectors';
 import { max } from 'rxjs/operators';
 import { getPreviousHeader } from '../shared/utils/transformers.util';
+import { isStrEmpty } from '@app/shared/utils/strings.utils';
 
 export const selectTranformation = createSelector(
   selectupload,
@@ -84,7 +85,7 @@ export const selectInputCloumnsByIndex = (index) => createSelector(
 
 export const selectTranformationInfoValid = createSelector(
   selectEdiedTranformationPipeInfo,
-  (object: any) => (object)? object.name : false
+  (object: any) => (object)? !isStrEmpty(object.name) : false
 );
 
 export const selectTranformationNodesValid = createSelector(

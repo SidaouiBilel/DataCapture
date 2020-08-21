@@ -11,9 +11,12 @@ import { selectActivePipe,
         selectTranformationNodes,
         selectEdiedTranformationPipeInfo, 
         selectTranformationValid,
-        selectActivePipeModified} from '../store/transformation.selectors';
-import { Observable, ReplaySubject, forkJoin } from 'rxjs';
+        selectActivePipeModified,
+        selectTranformationInfoValid,
+        selectTranformationNodesValid} from '../store/transformation.selectors';
+import { Observable, ReplaySubject, forkJoin, combineLatest } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
+import { TransformerFactory } from '../transformations/transformers';
 
 @Injectable()
 export class TranformationService {
@@ -108,7 +111,11 @@ export class TranformationService {
   }
 
   saveEdited(asNew=false) {
-    this.canSave$.pipe(take(1)).subscribe((canSave)=>{
+    combineLatest(
+      this.canSave$, 
+      this.store.select(selectTranformationInfoValid), 
+      this.store.select(selectTranformationNodesValid),
+    ).pipe(take(1)).subscribe(([canSave, validInfo, validNodes])=>{
       if(canSave){
         forkJoin(this.nodes$.pipe(take(1)), this.edited$.pipe(take(1))).subscribe(
           ([nodes, edited]: any) => {
@@ -129,18 +136,20 @@ export class TranformationService {
           }
           );
         }else{
-          this.msg.error('Cannot save pipe yet.')
+          const message = ['Cannot save pipe:']
+          if (!validNodes)  message.push("<b>&#8226 All nodes must be valid</b>")
+          if (!validInfo)   message.push("<b>&#8226 Missing pipe information</b>")
+          this.msg.error(message.join("<br />"))
         }
       })
   }
 
   addTransformaion(rule){
-    // const rule = {type: transformer.type};
     this.store.dispatch(new AddTransNode(rule));
-    this.msg.default('Transformation Node Added')
+    this.msg.default(`<b>${TransformerFactory(rule.type).label}</b> Added`)
   }
+  
   swapTransformaion(o, n){
-    // const rule = {type: transformer.type};
     this.store.dispatch(new UpdateNodeOrder(o,n));
     this.msg.default('Transformation Nodes Swapped')
   }
