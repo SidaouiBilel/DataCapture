@@ -3,6 +3,7 @@ import { TransformationHotKeysService } from '../../transformation/services/tran
 import { TranformationService } from '../../transformation/services/tranformation.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { TRANSFORMATIONS } from '../../transformation/transformations/transformers';
+import { HKViewTarget, HKViewSource } from '@app/shared/models/hotkeys.model';
 
 
 export class PreviewGridComponent implements OnInit, OnDestroy {
@@ -125,25 +126,9 @@ getMainContextMenuItems = (params) => {
 
   getViewModes() {
     const that = this;
-    const HLTarget = 'alt.t';
-    const HLSource = 'alt.s';
     return [
-      {
-        name: 'Source',
-        tooltip: 'View Source',
-        action: () => that.transformService.upadatePreviewMode('SOURCE'),
-        shortcut: shortcutString(HLSource),
-        key: HLSource,
-        icon: 'file',
-      },
-      {
-        name: 'Target',
-        tooltip: 'View Target',
-        action: () => that.transformService.upadatePreviewMode('TARGET'),
-        shortcut: shortcutString(HLTarget),
-        key: HLTarget,
-        icon: 'thunderbolt',
-      }
+      new HKViewTarget({action: () => that.transformService.upadatePreviewMode('TARGET')}),
+      new HKViewSource({action: () => that.transformService.upadatePreviewMode('Source')}),
     ];
   }
 

@@ -1,6 +1,6 @@
 import { shortcutString } from "../utils/strings.utils"
 
-class HotKey{
+export class HotKey{
 
     name: string
     tooltip: string
@@ -12,6 +12,8 @@ class HotKey{
 
     constructor(hotkey : Partial<HotKey> = {} ){
         this.shortcut = shortcutString(this.key)
+
+        this.action =  hotkey.action
     }
 
     setAction(func){
@@ -22,10 +24,24 @@ class HotKey{
 
 }
 
-class HKPaste extends HotKey{
+export class HKPaste extends HotKey{
     name = 'paste'
     tooltip = 'paste'
     key = 'control.v'
     icon = 'paste'
     alwaysShow = true
+}
+
+export class HKViewSource extends HotKey{
+    name: 'Source'
+    tooltip: 'View Source'
+    key: 'alt.s'
+    icon: 'file'
+}
+
+export class HKViewTarget extends HotKey{
+    name: 'Target'
+    tooltip: 'View Source'
+    key: 'alt.t'
+    icon: 'thunderbolt'
 }
