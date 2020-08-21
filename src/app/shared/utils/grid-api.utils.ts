@@ -22,7 +22,7 @@ export const GAPIColumnsInRange = (api) => {
     const columns = []
     const ranges = api.getCellRanges()
     for (let range of ranges){
-        columns.push(...range.columns.map( (c) => c.colId ))
+        columns.push(...range.columns.map( (c) => c.colDef.field ))
     }
     return columns
 }

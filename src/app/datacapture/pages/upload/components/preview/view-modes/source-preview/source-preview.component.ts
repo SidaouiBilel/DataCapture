@@ -61,6 +61,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   generateDataSource(gridApi: any, worksheet: string, size: number) {
     const that = this;
     this.gridApi = gridApi
+    console.log(this.gridApi)
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
