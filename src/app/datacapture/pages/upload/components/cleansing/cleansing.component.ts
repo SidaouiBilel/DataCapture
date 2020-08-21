@@ -11,6 +11,7 @@ import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { CustomTooltipComponent } from '@app/shared/custom-tooltip/custom-tooltip.component';
 import { selectMappingId } from '../../store/selectors/mapping.selectors';
+import { TransformationHotKeysService } from '../transformation/services/transformation-hot-keys.service';
 
 @Component({
   selector: 'app-cleansing',
@@ -50,6 +51,7 @@ export class CleansingComponent implements OnInit {
   constructor(private router: Router,
               private store: Store<AppState>,
               private service: CleansingService,
+              public hotkeys: TransformationHotKeysService,
               private not: NotificationService) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mappingId$     = this.store.select(selectMappingId);

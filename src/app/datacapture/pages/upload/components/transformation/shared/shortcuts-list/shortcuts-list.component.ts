@@ -5,9 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './shortcuts-list.component.html',
 })
 export class ShortcutsListComponent implements OnInit {
-
-  @Input() shortcuts
-  
+  @Input() shortcuts;
   constructor() { }
 
   ngOnInit() {
