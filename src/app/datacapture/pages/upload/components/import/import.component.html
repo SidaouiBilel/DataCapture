@@ -31,7 +31,7 @@
   <!-- If The file isn't uploaded -->
   <div class="flex-child" *ngIf="!(importState$ | async)?.error && !(importState$ | async)?.imported">
     <nz-spin class="flex-box" [nzSpinning]="(importState$ | async)?.importing">
-      <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false"
+      <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false" [nzDisabled]="!(selectedDomain?.id)"
         [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
         (nzChange)="handleChange($event)">
         <p class="ant-upload-drag-icon">

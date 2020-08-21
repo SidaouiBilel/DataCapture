@@ -25,7 +25,7 @@
         <span [class.text-success]="item.id == mappingId">{{item.name || 'Undefined'}}</span>
       </ng-template>
       <ng-template #nzDescription>
-        <span [class.text-success]="item.id == mappingId">{{item.id || 'Undefined'}}</span>
+        <span [style.visibility]="'hidden'" [class.text-success]="item.id == mappingId">{{item.id || 'Undefined'}}</span>
       </ng-template>
     </nz-list-item>
   </ng-template>
