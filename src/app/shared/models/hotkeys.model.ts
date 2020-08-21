@@ -12,8 +12,6 @@ export class HotKey{
 
     constructor(hotkey : Partial<HotKey> = {} ){
         this.shortcut = shortcutString(this.key)
-
-        this.action =  hotkey.action
     }
 
     setAction(func){
@@ -30,18 +28,30 @@ export class HKPaste extends HotKey{
     key = 'control.v'
     icon = 'paste'
     alwaysShow = true
+
+    constructor(hotkey : Partial<HotKey> = {} ){
+        super(hotkey)
+    }
 }
 
 export class HKViewSource extends HotKey{
-    name: 'Source'
-    tooltip: 'View Source'
-    key: 'alt.s'
-    icon: 'file'
+    name = 'Source'
+    tooltip = 'View Source'
+    key = 'alt.s'
+    icon = 'file'
+    
+    constructor(hotkey : Partial<HotKey> = {} ){
+        super(hotkey)
+    }
 }
 
 export class HKViewTarget extends HotKey{
-    name: 'Target'
-    tooltip: 'View Source'
-    key: 'alt.t'
-    icon: 'thunderbolt'
+    name = 'Target'
+    tooltip = 'View Source'
+    key = 'alt.t'
+    icon = 'thunderbolt'
+    
+    constructor(hotkey : Partial<HotKey> = {} ){
+        super(hotkey)
+    }
 }
