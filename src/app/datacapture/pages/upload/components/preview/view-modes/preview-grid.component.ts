@@ -23,7 +23,8 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
     this.hotkeys.register([
       ...this.getViewModes(),
       ...this.getTransformationsMenu(),
-      ...this.getExtraMenuItems()
+      ...this.getExtraMenuItems(),
+      ...this.getGridPredifinedItems()
     ])
   }
 
@@ -50,10 +51,24 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
     }))
   }
 
+  getGridPredifinedItems(){
+    const HKcopy = 'control.c'
+    return [
+      {name: 'Copy',
+      tooltip: 'Copy Selected Range',
+      action: null,
+      shortcut: shortcutString(HKcopy),
+      key: HKcopy,
+      icon: 'copy',
+      alwaysShow:true
+      }
+    ]
+  }
+
   getExtraMenuItems=()=>{
     const that = this;
-    const HKSave = 'control.shift.s'
-    const HKSaveNew = 'control.s'
+    const HKSave = 'control.s'
+    const HKSaveNew = 'control.shift.s'
     const HLFlip = 'alt.e'
     return [
       {
@@ -71,7 +86,7 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         action: ()=> that.transformService.saveEdited(true),
         shortcut: shortcutString(HKSaveNew),
         key: HKSaveNew,
-        icon: 'copy',
+        icon: 'diff',
         alwaysShow:true
       },
       {
