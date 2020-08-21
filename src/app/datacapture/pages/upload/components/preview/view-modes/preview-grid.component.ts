@@ -8,15 +8,13 @@ import { TRANSFORMATIONS } from '../../transformation/transformations/transforme
 export class PreviewGridComponent implements OnInit, OnDestroy {
   gridApi: any;
 
-  constructor(private transformService: TranformationService, private hotkeys: TransformationHotKeysService) {
-    
-  }
+  constructor(private transformService: TranformationService, private hotkeys: TransformationHotKeysService) {}
   ngOnInit(): void {
-    this.registerHotKey()
+    this.registerHotKey();
   }
 
   ngOnDestroy(): void {
-    this.unregisterHotKey()
+    this.unregisterHotKey();
   }
 
   registerHotKey() {
@@ -25,34 +23,34 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
       ...this.getTransformationsMenu(),
       ...this.getExtraMenuItems(),
       ...this.getGridPredifinedItems()
-    ])
+    ]);
   }
 
   unregisterHotKey() {
-    this.hotkeys.unregister()
-  }
-  
-  addTransformer = (transformer, params)=>{
-    const rule = transformer.getRuleFromGrid(params)
-    this.transformService.addTransformaion(rule)
+    this.hotkeys.unregister();
   }
 
-  getTransformationsMenu=()=>{
+  addTransformer = (transformer, params) => {
+    const rule = transformer.getRuleFromGrid(params);
+    this.transformService.addTransformaion(rule);
+  }
+
+  getTransformationsMenu = () => {
     const that = this;
-    return TRANSFORMATIONS.map(t=>({
+    return TRANSFORMATIONS.map(t => ({
       name: t.label,
       tooltip: t.description,
       action: () => {
-        that.addTransformer(t, this.gridApi)
+        that.addTransformer(t, this.gridApi);
       },
       shortcut: shortcutString(t.shortcut),
-      key:t.shortcut,
+      key: t.shortcut,
       icon: t.icon,
-    }))
+    }));
   }
 
-  getGridPredifinedItems(){
-    const HKcopy = 'control.c'
+  getGridPredifinedItems() {
+    const HKcopy = 'control.c';
     return [
       {name: 'Copy',
       tooltip: 'Copy Selected Range',
@@ -60,25 +58,25 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
       shortcut: shortcutString(HKcopy),
       key: HKcopy,
       icon: 'copy',
-      alwaysShow:true
+      alwaysShow: true
       }
-    ]
+    ];
   }
 
-  getExtraMenuItems=()=>{
+  getExtraMenuItems = () => {
     const that = this;
-    const HKSave = 'control.s'
-    const HKSaveNew = 'control.shift.s'
-    const HLFlip = 'alt.e'
+    const HKSave = 'control.s';
+    const HKSaveNew = 'control.shift.s';
+    const HLFlip = 'alt.e';
     return [
       {
         name: 'Save',
         tooltip: 'Save and Apply pipe modification',
-        action: ()=> that.transformService.saveEdited(),
+        action: () => that.transformService.saveEdited(),
         shortcut: shortcutString(HKSave),
         key: HKSave,
         icon: 'save',
-        alwaysShow:true
+        alwaysShow: true
       },
       {
         name: 'Save As New',
@@ -87,53 +85,53 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         shortcut: shortcutString(HKSaveNew),
         key: HKSaveNew,
         icon: 'diff',
-        alwaysShow:true
+        alwaysShow: true
       },
       {
         name: 'Fold/Unfold Menu',
         tooltip: 'Fold or Unfold Pipe Menu',
-        action: ()=> that.transformService.flipCollapse(),
+        action: () => that.transformService.flipCollapse(),
         shortcut: shortcutString(HLFlip),
         key: HLFlip,
         icon: 'menu-fold',
-        alwaysShow:true
+        alwaysShow: true
       }
     ]
   }
 
-  getContextMenuItems = (params) => {  
+  getContextMenuItems = (params) => {
   return this.getMainContextMenuItems(params);
 }
 
-getMainContextMenuItems = (params) => {  
-  var result = [
+getMainContextMenuItems = (params) => {
+  const result = [
     {
       name: 'Add Transformation',
-      subMenu: this.getTransformationsMenu().map(e=>({...e, icon:null}))
+      subMenu: this.getTransformationsMenu().map(e => ({...e, icon: null}))
     },
     {
       name: 'View Mode',
-      subMenu: this.getViewModes().map(e=>({...e, icon:null}))
+      subMenu: this.getViewModes().map(e => ({...e, icon: null}))
     },
-    ...this.getExtraMenuItems().map(e=>({...e, icon:null})),
+    ...this.getExtraMenuItems().map(e => ({...e, icon: null})),
     'separator',
     'copy',
     'copyWithHeaders',
     'autoSizeAll',
     'export'
   ];
-    return result;
+  return result;
   }
 
-  getViewModes(){
-    const that = this 
-    const HLTarget = 'alt.t'
-    const HLSource = 'alt.s'
+  getViewModes() {
+    const that = this;
+    const HLTarget = 'alt.t';
+    const HLSource = 'alt.s';
     return [
       {
         name: 'Source',
         tooltip: 'View Source',
-        action: ()=> that.transformService.upadatePreviewMode('SOURCE'),
+        action: () => that.transformService.upadatePreviewMode('SOURCE'),
         shortcut: shortcutString(HLSource),
         key: HLSource,
         icon: 'file',
@@ -141,12 +139,12 @@ getMainContextMenuItems = (params) => {
       {
         name: 'Target',
         tooltip: 'View Target',
-        action: ()=> that.transformService.upadatePreviewMode('TARGET'),
+        action: () => that.transformService.upadatePreviewMode('TARGET'),
         shortcut: shortcutString(HLTarget),
         key: HLTarget,
         icon: 'thunderbolt',
       }
-    ]
+    ];
   }
 
 }

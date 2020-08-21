@@ -12,41 +12,35 @@ import { permutation, arrangement } from '@app/shared/utils/arrays.utils';
 export class GridBottomToolbarComponent implements OnInit, OnDestroy {
   hotkey: any;
   hold: any;
+  listeners = [];
 
-  shiftPressed=new BehaviorSubject(false)
-  altPressed=new BehaviorSubject(false)
-  controlPressed=new BehaviorSubject(false)
-
-  listeners = []
-
+  shiftPressed = new BehaviorSubject(false);
+  altPressed = new BehaviorSubject(false);
+  controlPressed = new BehaviorSubject(false);
   constructor(public hotkeys: TransformationHotKeysService) { }
-  
-  ngOnInit() {
-    this.hotkey = shortcutString(this.hotkeys.helpHotkey)
-    this.hold = this.hotkeys.helpHoldTime
-    
-    
-    const updateKeys = (event)=>{
-      if(event.key === "s" && event.ctrlKey)
-        event.preventDefault()
 
+  ngOnInit() {
+    this.hotkey = shortcutString(this.hotkeys.helpHotkey);
+    this.hold = this.hotkeys.helpHoldTime;
+    const updateKeys = (event) => {
+      if( event.key === 's' && event.ctrlKey) {
+        event.preventDefault();
+      }
       this.controlPressed.next(event.ctrlKey);
       this.shiftPressed.next(event.shiftKey);
       this.altPressed.next(event.altKey);
-    }
-
-    this.listeners = []
-
-    for (let a of arrangement(['control', 'shift', 'alt'])){
-      const options = {keys: a.join(".")}
-      this.listeners.push(this.hotkeys.addShortcut(options, 'keydown').subscribe(updateKeys))
-      this.listeners.push(this.hotkeys.addShortcut(options, 'keyup'  ).subscribe(updateKeys))
+    };
+    this.listeners = [];
+    for (const a of arrangement(['control', 'shift', 'alt'])) {
+      const options = {keys: a.join('.')};
+      this.listeners.push(this.hotkeys.addShortcut(options, 'keydown').subscribe(updateKeys));
+      this.listeners.push(this.hotkeys.addShortcut(options, 'keyup'  ).subscribe(updateKeys));
     }
   }
-  
+
   ngOnDestroy(): void {
-    for (let s of this.listeners){
-      s.unsubscribe()
+    for (const s of this.listeners) {
+      s.unsubscribe();
     }
   }
 }
