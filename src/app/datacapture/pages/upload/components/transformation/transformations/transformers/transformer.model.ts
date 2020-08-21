@@ -123,7 +123,8 @@ export class Replace extends Transformer{
             }
         }
         if(params.to == params.from){
-            errors.push(new NodeError('from|to', 'From and To should be different'))
+            errors.push(new NodeError('from', 'From and To should be different'))
+            errors.push(new NodeError('to', ''))
         }
 
         return errors
@@ -138,11 +139,11 @@ export class Replace extends Transformer{
         
         if (range) {
             column = range.startColumn.colId
-            let cellValues = []
+            let cellValues = new Set()
             for (let index = range.startRow.rowIndex; index <= range.endRow.rowIndex; index++) 
-            cellValues.push(GAPICellValue(params.api, column, index))
+                cellValues.add(GAPICellValue(params.api, column, index))
             
-            from = cellValues.join('|') 
+            from = Array.from(cellValues).join('|') 
         }
 
         return {
