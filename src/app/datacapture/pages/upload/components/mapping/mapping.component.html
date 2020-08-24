@@ -10,6 +10,9 @@
         (click)='updateMapping()'>
         <i nz-icon nzType="cloud-sync"></i>
       </button>
+      <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" disabled nz-button>
+        <i nz-icon nzType="reload"></i>
+      </button>
       <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
         (click)='isVisible = true'>
         <i nz-icon nzType="save"></i>
@@ -97,9 +100,9 @@
   </div>
 </div>
 
-<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible"
-  [nzOkLoading]="isOkLoading" [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping"
-  (nzOnOk)="handleOk()" (nzOnCancel)="isVisible = false">
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzOkLoading]="isOkLoading"
+  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping" (nzOnOk)="handleOk()"
+  (nzOnCancel)="isVisible = false">
   <form nz-form [formGroup]="validateForm">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Mapping Name</nz-form-label>

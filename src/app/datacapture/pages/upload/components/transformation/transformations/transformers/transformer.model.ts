@@ -138,7 +138,7 @@ export class Replace extends Transformer{
         const range = params.api.getCellRanges()[0]
         
         if (range) {
-            column = range.startColumn.colId
+            column = range.startColumn.colDef.field
             let cellValues = new Set()
             const start = Math.min(range.startRow.rowIndex, range.endRow.rowIndex)
             const end = Math.max(range.startRow.rowIndex, range.endRow.rowIndex)

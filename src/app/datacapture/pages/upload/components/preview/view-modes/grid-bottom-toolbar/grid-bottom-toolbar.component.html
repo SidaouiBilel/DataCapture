@@ -3,7 +3,7 @@
     <div class="flex end">
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async) | hotkeysFilter: (controlPressed | async) : (shiftPressed | async) : (altPressed | async)'></app-shortcuts-list>
       <nz-divider nzType='vertical'></nz-divider>
-      <div><small nz-typography nzType='secondary'><span class="mr-2">All Hotkeys</span> 
+      <div><small nz-typography nzType='secondary'><span class="mr-2">Help</span> 
         <nz-tag><span *ngIf='hold'>(Hold)</span> {{hotkey}}</nz-tag>
       </small></div>
     </div>
