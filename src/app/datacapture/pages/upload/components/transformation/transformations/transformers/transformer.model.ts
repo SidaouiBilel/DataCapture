@@ -6,7 +6,7 @@ import { MergerComponent } from '../transformation-interface/format/merger/merge
 import { FilterComponent } from '../transformation-interface/format/filter/filter.component'
 import { Column } from '@app/datacapture/pages/admin/models/column'
 import { isStrEmpty } from '@app/shared/utils/strings.utils'
-import { GAPIColumnsInRange, GAPICellValue } from '@app/shared/utils/grid-api.utils'
+import { GAPIColumnsInRange, GAPICellValue, GAPSeletedRowRange } from '@app/shared/utils/grid-api.utils'
 import { isArrayEmpty } from '@app/shared/utils/arrays.utils'
 
 export class Transformer{
@@ -216,7 +216,8 @@ export class Filter extends Transformer{
     };
 
     getRuleFromGrid(params){
-        const columns = GAPIColumnsInRange(params.api)
+        const columns   = GAPIColumnsInRange(params.api)
+        const rowsRange = GAPSeletedRowRange(params.api)
         return {
             ...this.getRule(),
             conditions: columns.map((c=> ({column: c})))

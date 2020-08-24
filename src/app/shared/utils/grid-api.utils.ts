@@ -1,6 +1,6 @@
 export const INDEX_NAME = '$_NODE_INDEX'
     export const INDEX_HEADER = {
-        headerName: "#",
+        headerName: "",
         colId: INDEX_NAME,
         valueGetter: "node.rowIndex + 1",
         width : 40,
@@ -31,6 +31,19 @@ export const GAPICellValue = (api, colId, rowIndex) => {
     const rowModel = api.rowModel
     const rowNode = rowModel.getRow(rowIndex)
     return (rowNode)? rowNode.data[colId]: null
+}
+
+export const GAPSeletedRowRange = (api) => {
+    const range = api.getCellRanges()[0]
+    let from = 1
+    let to = 1
+    if(range){
+        const start = range.startRow.rowIndex + 1
+        const end =  range.endRow.rowIndex + 1
+        from  = Math.min(start, end)
+        to    = Math.max(start, end)
+    }
+    return {from, to}
 }
 
 

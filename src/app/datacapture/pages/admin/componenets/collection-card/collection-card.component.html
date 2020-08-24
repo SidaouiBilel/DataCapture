@@ -10,12 +10,12 @@
 </ng-template>
 <ng-template #titleTemplate>
     <div class="flex start wrap">
-        <nz-avatar *ngIf='!small' [nzSize]="42" nzIcon="block" style="background-color:#87d068;"></nz-avatar>
-        <div class="ml-3 flex column start">
-            <!-- <div class="text-muted"><small>{{data?.id}}</small></div> -->
-            <h4>{{data?.name}}</h4>
-        </div>
-    </div>
+      
+            <h4>
+                <nz-avatar *ngIf='!small' [nzSize]="42" nzIcon="block" style="background-color:#87d068;"></nz-avatar>
+                {{data?.name}}
+                </h4>
+                </div>
 </ng-template>
 
 <ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>

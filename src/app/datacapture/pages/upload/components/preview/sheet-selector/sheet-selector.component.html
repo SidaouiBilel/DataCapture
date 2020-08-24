@@ -1,16 +1,28 @@
 <div class="flex start wrap">
   <i nz-icon nzType="copy" nzTheme="twotone" class="m-2"></i>
-<nz-tabset class='sheet-selector' 
+<!-- <nz-tabset class='sheet-selector' 
 [nzSize]='"small"' 
 nzType='card' 
-[nzAnimated]='false'
 nzTabPosition="bottom" 
-[nzSelectedIndex]="selectedSheet$ | async" 
-(nzSelectedIndexChange)='selectSheet($event)'>
+[nzSelectedIndex]="selectedSheet$ | async"
+>
         <nz-tab
             *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index"
           [nzTitle]="sheet"
+          (nzClick)='onSheetSelected(i)'
         >
         </nz-tab>
-      </nz-tabset>
+      </nz-tabset> -->
+
+    <div class="sheet-selector">
+      <button  
+      nz-tooltip
+      [nzTooltipTitle]='sheet'
+      nz-button
+      [ngClass]='{"active": (selectedSheet$ | async) == i}' 
+      *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" 
+      (click)='onSheetSelected(i)'>
+        {{sheet}}
+      </button>
+    </div>
 </div>
