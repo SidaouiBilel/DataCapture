@@ -63,11 +63,6 @@ export class MappingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mappingId$.pipe(take(1)).subscribe(([mappingId]) => {
-      if (!mappingId) {
-        this.isVisible = true;
-      }
-    });
   }
 
   reInitMappingFields(): void {
@@ -77,11 +72,6 @@ export class MappingComponent implements OnInit {
       this.mappingFields[index] = refObj;
     });
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
-  }
-
-  onUpdateSources(source): void {
-    this.mappedSources[source.data] = true;
-    this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
   updateMappingFields(res: any) {
@@ -124,6 +114,26 @@ export class MappingComponent implements OnInit {
       this.notification.close(x);
       this.notification.error('An error Occured');
     }
+  }
+
+  loadAutoMapping(): void {
+    const x = this.notification.loading('Loading automatic mapping');
+    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
+      .subscribe(([domain, fileData, selectedSheet]) => {
+      const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
+      this.service.loadAutoMappingById(domain.id, ws, this.worksheet)
+        .subscribe((res) => {
+          this.updateLocalMapping(res);
+          this.store.dispatch(new SaveMappedSources(this.mappedSources));
+          this.notification.success(`The mapping was loaded successfully.`);
+          this.notification.close(x);
+        }, (err) => {
+          this.notification.error(err.message);
+          this.notification.close(x);
+          this.isVisible = false;
+          this.isOkLoading = false;
+        });
+      });
   }
 
   validate(): void {
@@ -183,7 +193,7 @@ export class MappingComponent implements OnInit {
     refObj.value = source.data;
     this.mappingFields[index] = refObj;
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
-    this.onUpdateSources(source);
+    this.onUpdateSources(source, false);
   }
 
   onRemoveClick(source, index: number): void {
@@ -191,7 +201,20 @@ export class MappingComponent implements OnInit {
     refObj.value = null;
     this.mappingFields[index] = refObj;
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
-    this.onUpdateSources(source);
+    this.onUpdateSources(source, true);
+  }
+
+  onUpdateSources(source, remove: boolean): void {
+    // to do check if the source data exist on other columns before setting to false
+    if (remove) {
+      const exist = this.mappingFields.map((e) => e.value).filter((e) => {if (e) { return e; } }).indexOf(source.value);
+      if (exist < 0) {
+        this.mappedSources[source.value] = false;
+      }
+    } else {
+      this.mappedSources[source.data] = true;
+    }
+    this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
   updateMapping(): void {
