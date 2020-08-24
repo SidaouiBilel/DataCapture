@@ -27,6 +27,11 @@ export class MappingService {
     return this.http.get(environment.mapping + `/apply?file=${SheetId}&domainId=${domainId}&mappingId=${mappingId}`);
   }
 
+  loadAutoMappingById(domainId: string, SheetId: string, transformed?: string) {
+     // tslint:disable-next-line: max-line-length
+     return this.http.get(environment.mapping + `/load_auto?file=${SheetId}&domainId=${domainId}${transformed ? '&transformed=' + transformed : ''}`);
+  }
+
   updateMapping(targets: any[], mappingId: string, sheetId: string, domainId: string) {
     return this.http.post(environment.mapping + '/', this.getMappingBody(targets, mappingId, sheetId, domainId));
   }

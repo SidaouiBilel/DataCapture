@@ -65,7 +65,7 @@ export class MappingComponent implements OnInit {
   ngOnInit() {
     this.mappingId$.pipe(take(1)).subscribe(([mappingId]) => {
       if (!mappingId) {
-        this.isVisible = true;
+        // this.isVisible = true;
       }
     });
   }
@@ -124,6 +124,26 @@ export class MappingComponent implements OnInit {
       this.notification.close(x);
       this.notification.error('An error Occured');
     }
+  }
+
+  loadAutoMapping(): void {
+    const x = this.notification.loading('Loading automatic mapping');
+    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
+      .subscribe(([domain, fileData, selectedSheet]) => {
+      const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
+      this.service.loadAutoMappingById(domain.id, ws, this.worksheet)
+        .subscribe((res) => {
+          this.updateLocalMapping(res);
+          this.store.dispatch(new SaveMappedSources(this.mappedSources));
+          this.notification.success(`The mapping was loaded successfully.`);
+          this.notification.close(x);
+        }, (err) => {
+          this.notification.error(err.message);
+          this.notification.close(x);
+          this.isVisible = false;
+          this.isOkLoading = false;
+        });
+      });
   }
 
   validate(): void {
