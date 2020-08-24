@@ -27,6 +27,7 @@ export class CleansingComponent implements OnInit {
   numberOfRows = 25;
   selectedSheet: number;
   mappingId: string;
+  jobId: string;
   modifications: any = {columns: []};
   keys = Object.keys;
   // BS
@@ -60,6 +61,7 @@ export class CleansingComponent implements OnInit {
     const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
     this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed, this.mappingId).subscribe((job) => {
       if (job) {
+        this.jobId = job.job_id;
         this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
           this.lock$.next(true);
@@ -237,6 +239,12 @@ export class CleansingComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId).subscribe((res: any) => {
       this.fetchData(this.grid);
+      if (this.jobId) {
+        this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
+          this.metaData$.next(metaData);
+          this.lock$.next(true);
+        });
+      }
       this.not.success('Success');
      }, (err) => {
        this.not.error(err.message);

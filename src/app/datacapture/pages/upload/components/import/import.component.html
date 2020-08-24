@@ -6,23 +6,24 @@
         <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
       </nz-select> -->
       <div>
-        <i nz-icon nzType="block" nzTheme="outline"></i>
-      <button class="ghost" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
-        <div  style="min-width:200px" class="flex between">
-          <div class="flex-1 text-left">{{ (selectedDomain?.name) || 'None' }}</div>
-          <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"></i>
-        </div>
-      </button>
+        <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(selectedDomain?.name)"></i>
+        <button class="ghost" [class.req-input]="!(selectedDomain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+          <div style="min-width:200px" class="flex between">
+            <div class="flex-1 text-left">{{ (selectedDomain?.name) || 'None' }}</div>
+            <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"
+              [class.text-danger]="!(selectedDomain?.name)"></i>
+          </div>
+        </button>
       </div>
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
-          nzTooltipPlacement="left" (click)="goToPreview()">Next<i nz-icon nzType="caret-right"></i></button>
-        <nz-divider nzType='vertical'></nz-divider>
-        <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
-          (click)="cancelUpload()">
-          <i nz-icon nzType="close"></i>
-        </button>
+        nzTooltipPlacement="left" (click)="goToPreview()">Next<i nz-icon nzType="caret-right"></i></button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
+        (click)="cancelUpload()">
+        <i nz-icon nzType="close"></i>
+      </button>
     </div>
   </div>
 
@@ -74,7 +75,7 @@
     <li *ngFor="let item of keys(domains)" nz-submenu [nzTitle]="domainTemplate">
       <ng-template #domainTemplate>
         <i nz-icon nzType="folder" nzTheme="outline"></i>
-          {{item}}
+        {{item}}
       </ng-template>
       <ul>
         <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain.identifier, domain.name)">

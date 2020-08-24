@@ -68,3 +68,7 @@
   border-radius: 4px;
   outline: none;
 }
+
+.req-input {
+  border: 1px solid tomato;
+}
