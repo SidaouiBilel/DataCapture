@@ -95,7 +95,7 @@ export class MappingComponent implements OnInit {
       forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
         .subscribe(([domain, fileData, selectedSheet]) => {
         const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
-        this.service.getAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.worksheet)
+        this.service.postAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.mappingFields, this.worksheet)
           .subscribe((res) => {
             this.updateLocalMapping(res);
             this.store.dispatch(new SaveMappedSources(this.mappedSources));

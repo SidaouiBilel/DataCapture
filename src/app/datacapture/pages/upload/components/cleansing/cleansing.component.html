@@ -4,9 +4,9 @@
     <div nz-col nzSpan="18">
       <div class="flex start">
         <nz-badge class="mr-3" nz-tooltip nzTooltipTitle="Total errors" [nzOverflowCount]="99999999"
-          [nzCount]="(metaData$ | async)?.totalErrors"></nz-badge>
+          [nzCount]="(metaData$ | async)?.totalErrors || 0" [nzShowZero]="true"></nz-badge>
         <nz-badge nz-tooltip nzTooltipTitle="Total Rows in Error" [nzOverflowCount]="99999999"
-          [nzCount]="(metaData$ | async)?.uniqueErrorLines"></nz-badge>
+          [nzCount]="(metaData$ | async)?.uniqueErrorLines || 0" [nzShowZero]="true"></nz-badge>
         <nz-divider class="error" nzType="vertical"></nz-divider>
         <button nz-tooltip nzTooltipTitle='Details' nz-popover [nzPopoverContent]="contentTemplate"
           nzPopoverPlacement="bottom" nzShape='round' class="ghost" nzPopoverTrigger="click" nz-button>
