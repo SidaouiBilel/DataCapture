@@ -4,14 +4,15 @@ import { DeleteRowsComponent } from './transformation-interface/format/delete-ro
 import { DeleteColumnComponent } from './transformation-interface/format/delete-column/delete-column.component';
 import { FilterComponent } from './transformation-interface/format/filter/filter.component';
 import { DeleteRow, DeleteColumns, Replace, Merge, Filter, FilterAndReplace } from './transformers/transformer.model';
+import { FindAndReplaceComponent } from './transformation-interface/format/find-and-replace/find-and-replace.component';
 
 export const TRANSFORMATIONS = [
-    new DeleteRow(),
-    new DeleteColumns(),
-    new Replace(),
-    new Merge(),
-    new Filter(),
-    new FilterAndReplace()
+    new DeleteRow().setComponent(DeleteRowsComponent),
+    new DeleteColumns().setComponent(DeleteColumnComponent),
+    new Replace().setComponent(FormatterComponent),
+    new Merge().setComponent(MergerComponent),
+    new Filter().setComponent(FilterComponent),
+    new FilterAndReplace().setComponent(FindAndReplaceComponent),
   ]; 
 
 export const TransformerFactory = (type) => {

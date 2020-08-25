@@ -33,6 +33,12 @@ export class Transformer{
     getRuleFromGrid(params){
         return this.getRule()
     }
+
+    setComponent(comp){
+        this.component = comp
+
+        return this
+    }
 }
 
 export class NodeError{
@@ -47,7 +53,7 @@ export class DeleteRow extends Transformer{
     type = 'delete-rows';
     label = 'Delete Rows';
     icon = 'scissor';
-    component = DeleteRowsComponent;
+    
     shortcut = 'control.d'
 
     getErrors = (params, previousNodes, headers)=>{
@@ -79,7 +85,7 @@ export class DeleteRow extends Transformer{
 
 export class DeleteColumns extends Transformer{
 
-    type = 'delete-column'; label= 'Delete Columns'; icon= 'scissor'; icon_rotation= 90; component= DeleteColumnComponent;shortcut = 'control.alt.d'
+    type = 'delete-column'; label= 'Delete Columns'; icon= 'scissor'; icon_rotation= 90; shortcut = 'control.alt.d'
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -112,7 +118,7 @@ export class Replace extends Transformer{
 
     shortcut = 'control.r'
 
-    type =  'replace'; label= 'Replace'; icon= 'font-size'; component= FormatterComponent;
+    type =  'replace'; label= 'Replace'; icon= 'font-size'; 
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -161,7 +167,7 @@ export class Replace extends Transformer{
 export class Merge extends Transformer{
 
     shortcut = 'control.m'
-    type =  'merge'; label= 'Merge'; icon= 'link'; component= MergerComponent;
+    type =  'merge'; label= 'Merge'; icon= 'link'; 
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -202,7 +208,7 @@ export class Filter extends Transformer{
     type =  'filter'; 
     label= 'Filter Lines'; 
     icon= 'filter'; 
-    component= FilterComponent;
+    
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -234,7 +240,7 @@ export class FilterAndReplace extends Transformer{
     type =  'find-replace'; 
     label= 'Find & Replace'; 
     icon= 'file-search'; 
-    component= FindAndReplaceComponent;
+    
 
     getErrors = (params, previousNodes, headers)=>{
         return [
