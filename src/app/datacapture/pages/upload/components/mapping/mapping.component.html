@@ -6,7 +6,7 @@
         (click)='previousMappings()'>
         <i nz-icon nzType="hourglass"></i>
       </button>
-      <button nz-tooltip nzTooltipTitle='Update mapping' nzShape='circle' class="ghost" nz-button
+      <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost" nz-button
         (click)='updateMapping()'>
         <i nz-icon nzType="cloud-sync"></i>
       </button>

@@ -239,12 +239,12 @@ export class CleansingComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId).subscribe((res: any) => {
       this.fetchData(this.grid);
-      if (this.jobId) {
-        this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
-          this.metaData$.next(metaData);
-          this.lock$.next(true);
-        });
-      }
+      // if (this.jobId) {
+      //   this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
+      //     this.metaData$.next(metaData);
+      //     this.lock$.next(true);
+      //   });
+      // }
       this.not.success('Success');
      }, (err) => {
        this.not.error(err.message);
