@@ -1,28 +1,26 @@
-<div class="flex start wrap">
+<div class="flex start"  (resized)='onResize($event)'>
   <i nz-icon nzType="copy" nzTheme="twotone" class="m-2"></i>
-<!-- <nz-tabset class='sheet-selector' 
-[nzSize]='"small"' 
-nzType='card' 
-nzTabPosition="bottom" 
-[nzSelectedIndex]="selectedSheet$ | async"
->
-        <nz-tab
-            *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index"
-          [nzTitle]="sheet"
-          (nzClick)='onSheetSelected(i)'
-        >
-        </nz-tab>
-      </nz-tabset> -->
 
     <div class="sheet-selector">
       <button  
       nz-tooltip
-      [nzTooltipTitle]='sheet'
+      [nzTooltipTitle]='e.sheet'
       nz-button
-      [ngClass]='{"active": (selectedSheet$ | async) == i}' 
-      *ngFor="let sheet of (fileMetaData$|async)?.sheets; let i = index" 
-      (click)='onSheetSelected(i)'>
-        {{sheet}}
+      [ngClass]='{"active": (selectedSheet$ | async) == e.index}' 
+      *ngFor="let e of (sheets$|async) | sheetsFilter: (max$ | async)" 
+      (click)='onSheetSelected(e.index)'>
+        {{e.sheet}}
       </button>
+      <button 
+        nz-button 
+        *ngIf="showDropdown$ | async"
+        nz-tooltip  nzTooltipTitle='Rest of the sheets' 
+        nz-dropdown [nzDropdownMenu]="sheetsMenu"><i nz-icon nzType='down'></i></button>
+      <nz-dropdown-menu #sheetsMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-tooltip *ngFor="let e of (sheets$|async) | sheetsFilter: (max$ | async) : true"  nz-menu-item
+          (click)='onSheetSelected(e.index)'>{{e.sheet}}</li>
+        </ul>
+      </nz-dropdown-menu>
     </div>
 </div>

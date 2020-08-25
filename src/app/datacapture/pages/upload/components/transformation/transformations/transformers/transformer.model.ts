@@ -224,3 +224,17 @@ export class Filter extends Transformer{
         }
     }
 }
+
+
+export class FilterAndReplace extends Transformer{
+
+    shortcut = 'control.alt.r'
+    type =  'find-replace'; 
+    label= 'Find & Replace'; 
+    icon= 'file-search'; 
+    // component= FilterComponent;
+
+    getErrors = (params, previousNodes, headers)=>{
+        return []
+    };
+}

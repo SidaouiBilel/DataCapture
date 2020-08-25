@@ -47,6 +47,7 @@ import { ShortcutsListComponent } from './components/transformation/shared/short
 import { HotkeysFilterPipe } from './components/transformation/pipes/hotkeys-filter.pipe';
 import { ShortcutsListHorizontalComponent } from './components/transformation/shared/shortcuts-list-horizontal/shortcuts-list-horizontal.component';
 import { SheetSelectionConfirmComponent } from './components/preview/sheet-selector/sheet-selection-confirm/sheet-selection-confirm.component';
+import { SheetsFilterPipe } from './components/preview/sheet-selector/sheets-filter.pipe';
 
 const components = [
   UploadComponentComponent,
@@ -92,7 +93,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, SheetSelectionConfirmComponent],
+  declarations: [...components, SheetSelectionConfirmComponent, SheetsFilterPipe],
   exports: [
   ],
   providers : [

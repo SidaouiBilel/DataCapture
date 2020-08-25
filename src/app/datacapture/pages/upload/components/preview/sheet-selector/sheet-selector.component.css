@@ -10,3 +10,7 @@
     white-space: nowrap;
     overflow:hidden
 }
+
+:host{
+    flex: 1;
+}

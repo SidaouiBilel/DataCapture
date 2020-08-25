@@ -12,6 +12,7 @@ import { AutoTableHeightDirective } from './directives/auto-table-height.directi
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { CustomTooltipComponent } from './custom-tooltip/custom-tooltip.component';
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -26,7 +27,8 @@ const SharedModules = [
   HttpClientModule,
   ReactiveFormsModule,
   MonacoEditorModule,
-  NzModalModule
+  NzModalModule,
+  AngularResizedEventModule
 ];
 
 const Components = [
