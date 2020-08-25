@@ -66,6 +66,7 @@ export class SheetSelectorComponent implements OnInit{
           this.selectSheet(index)
         else {
           this.pipe.setActive(null)
+          this.pipe.upadatePreviewMode('SOURCE')
           this.selectSheet(index)
         }
       }

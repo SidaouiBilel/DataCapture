@@ -14,7 +14,6 @@
       <button 
         nz-button 
         *ngIf="showDropdown$ | async"
-        nz-tooltip  nzTooltipTitle='Rest of the sheets' 
         nz-dropdown [nzDropdownMenu]="sheetsMenu"><i nz-icon nzType='down'></i></button>
       <nz-dropdown-menu #sheetsMenu="nzDropdownMenu">
         <ul nz-menu>
