@@ -56,6 +56,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
 
   ngOnDestroy(){
     this.unregisterHotKey()
+    if(this.paginator$) this.paginator$.unsubscribe()
   }
 
   generateDataSource(gridApi: any, worksheet: string, size: number) {
