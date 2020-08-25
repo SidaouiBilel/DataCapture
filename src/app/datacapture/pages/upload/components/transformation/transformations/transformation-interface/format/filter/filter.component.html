@@ -19,7 +19,7 @@
         <nz-form-label [nzSm]="8">Operation</nz-form-label>
         <nz-form-control [nzSm]="16">
           <nz-select nzSize='small' [(ngModel)]='c.op' [ngModelOptions]=" {standalone: true}" (ngModelChange)='onDataChanged()' nzPlaceHolder='None'>
-            <nz-option *ngFor='let o of operations' [nzValue]='o' [nzLabel]='o'></nz-option>
+            <nz-option *ngFor='let o of operations' [nzValue]='o.value' [nzLabel]='o.label'></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
