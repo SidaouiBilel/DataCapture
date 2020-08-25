@@ -1,12 +1,12 @@
-::ng-deep .sheet-selector.ant-tabs-bottom .ant-tabs-bottom-bar {
-    margin-top: 0px;
-    margin-bottom: 0;
+::ng-deep .sheet-selector [nz-button] {
     border-top: none;
-    border-bottom: none;
 
-}
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
-::ng-deep .sheet-selector * {
-    transition: none !important;
-    
+    margin-right: 2px;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden
 }

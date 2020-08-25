@@ -1,6 +1,8 @@
 
 <div class="flex-1 flex stretch column h-100">
 
+  <div class="flex"><app-display-changer></app-display-changer></div>
+
   <app-collection-card 
   [loading]='laoding$ | async' 
   [data]='collection$ | async'

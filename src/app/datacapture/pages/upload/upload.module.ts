@@ -46,6 +46,7 @@ import { GridBottomToolbarComponent } from './components/preview/view-modes/grid
 import { ShortcutsListComponent } from './components/transformation/shared/shortcuts-list/shortcuts-list.component';
 import { HotkeysFilterPipe } from './components/transformation/pipes/hotkeys-filter.pipe';
 import { ShortcutsListHorizontalComponent } from './components/transformation/shared/shortcuts-list-horizontal/shortcuts-list-horizontal.component';
+import { SheetSelectionConfirmComponent } from './components/preview/sheet-selector/sheet-selection-confirm/sheet-selection-confirm.component';
 
 const components = [
   UploadComponentComponent,
@@ -91,7 +92,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, SheetSelectionConfirmComponent],
   exports: [
   ],
   providers : [
@@ -112,7 +113,8 @@ const components = [
     DeleteRowsComponent,
     PreviousMappingsComponent,
     FilterComponent,
-    TransformationPreviewHelpComponent
+    TransformationPreviewHelpComponent,
+    SheetSelectionConfirmComponent
   ]
 })
 export class UploadModule {}

@@ -4,6 +4,12 @@
 {
     border: none;
 }
+.collection-card        .ant-card-head-title, 
+.domain-card            .ant-card-head-title,
+.transformation-card    .ant-card-head-title
+{
+    white-space: pre-line;
+}
 .collection-card        .ant-card-body, 
 .domain-card            .ant-card-body,
 .transformation-card    .ant-card-body

@@ -63,3 +63,33 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+
+/* TODO MEDIA QURIES FOR FLEX */
+/* @media(max-width: 1333px) {
+    .grid-item {
+      flex-basis: 33.33%;
+    }
+  } */
+  /* @media(max-width: 1073px) {
+     .grid-item {
+      flex-basis: 33.33%;
+    }
+  } */
+  @media(max-width: 815px) {
+    .admin-hierarchy-flex{
+        flex-basis: 100%;
+    }
+    .admin-content-flex{
+        flex-basis: 100%;
+    }
+    .admin-flex {
+        flex-wrap: wrap;
+        align-content: flex-start;
+    }
+  /* }
+  @media(max-width: 555px) {
+    .grid-item {
+      flex-basis: 100%;
+    } */
+  }
