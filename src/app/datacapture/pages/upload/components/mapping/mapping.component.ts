@@ -220,7 +220,7 @@ export class MappingComponent implements OnInit {
   updateMapping(): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
-        this.service.updateMapping(this.mappingFields, mappingId, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain)
+        this.service.updateMapping(this.mappingFields, mappingId, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain.id)
           .subscribe((res) => {
             this.notification.success('The mapping is successfully updated');
           });
