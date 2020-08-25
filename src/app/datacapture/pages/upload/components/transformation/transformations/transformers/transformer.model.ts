@@ -8,6 +8,8 @@ import { Column } from '@app/datacapture/pages/admin/models/column'
 import { isStrEmpty } from '@app/shared/utils/strings.utils'
 import { GAPIColumnsInRange, GAPICellValue, GAPSeletedRowRange } from '@app/shared/utils/grid-api.utils'
 import { isArrayEmpty } from '@app/shared/utils/arrays.utils'
+import { FindAndReplaceComponent } from '../transformation-interface/format/find-and-replace/find-and-replace.component'
+import { PostConstruct } from '@ag-grid-enterprise/all-modules'
 
 export class Transformer{
     type
@@ -232,9 +234,20 @@ export class FilterAndReplace extends Transformer{
     type =  'find-replace'; 
     label= 'Find & Replace'; 
     icon= 'file-search'; 
-    // component= FilterComponent;
+    component= FindAndReplaceComponent;
 
     getErrors = (params, previousNodes, headers)=>{
-        return []
+        return [
+            ...(new Filter().getErrors(params, previousNodes, headers)),
+            ...(new Replace().getErrors(params, previousNodes, headers))
+        ]
     };
+
+    getRuleFromGrid = (params) =>{
+        return {
+            ...(new Filter().getRuleFromGrid(params)),
+            ...(new Replace().getRuleFromGrid(params)),
+            ...this.getRule()
+        }
+    }
 }

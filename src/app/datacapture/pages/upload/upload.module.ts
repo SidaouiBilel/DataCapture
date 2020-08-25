@@ -48,6 +48,7 @@ import { HotkeysFilterPipe } from './components/transformation/pipes/hotkeys-fil
 import { ShortcutsListHorizontalComponent } from './components/transformation/shared/shortcuts-list-horizontal/shortcuts-list-horizontal.component';
 import { SheetSelectionConfirmComponent } from './components/preview/sheet-selector/sheet-selection-confirm/sheet-selection-confirm.component';
 import { SheetsFilterPipe } from './components/preview/sheet-selector/sheets-filter.pipe';
+import { FindAndReplaceComponent } from './components/transformation/transformations/transformation-interface/format/find-and-replace/find-and-replace.component';
 
 const components = [
   UploadComponentComponent,
@@ -80,7 +81,10 @@ const components = [
   GridBottomToolbarComponent,
   ShortcutsListComponent,
   HotkeysFilterPipe,
-  ShortcutsListHorizontalComponent
+  ShortcutsListHorizontalComponent,
+  SheetSelectionConfirmComponent, 
+  SheetsFilterPipe, 
+  FindAndReplaceComponent
 ];
 
 @NgModule({
@@ -93,7 +97,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, SheetSelectionConfirmComponent, SheetsFilterPipe],
+  declarations: [...components],
   exports: [
   ],
   providers : [
@@ -115,7 +119,8 @@ const components = [
     PreviousMappingsComponent,
     FilterComponent,
     TransformationPreviewHelpComponent,
-    SheetSelectionConfirmComponent
+    SheetSelectionConfirmComponent,
+    FindAndReplaceComponent
   ]
 })
 export class UploadModule {}

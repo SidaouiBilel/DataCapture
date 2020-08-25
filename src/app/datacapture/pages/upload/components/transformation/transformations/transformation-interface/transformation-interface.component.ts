@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-transformation-interface',
@@ -6,11 +6,10 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class TransformationInterfaceComponent implements OnInit {
 
-  @Output() validationStatus = new EventEmitter<boolean>()
   @Output() dataChanged = new EventEmitter<any>()
 
-  data: any = {};
-  index = null;
+  @Input() data: any = {};
+  @Input() index = null;
 
   form_orientation = 'horizontal';
   
@@ -27,8 +26,7 @@ export class TransformationInterfaceComponent implements OnInit {
   onDataChanged(){
     // VALIDATE
     this.dataChanged.emit(this.data);
-    // VALIDATE AND EMIT ERRORS
-    this.validationStatus.emit(this.validate());
   }
+  
 
 }
