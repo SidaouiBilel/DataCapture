@@ -7,6 +7,7 @@ import { TRANSFORMATIONS } from '../transformations/transformers';
 import { selectPipeExpanded, selectTranformationNodeStatus } from '../store/transformation.selectors';
 import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
+import { deepCopy } from '@app/shared/utils/objects.utils';
 
 @Component({
   selector: 'app-transformation-node',
@@ -99,7 +100,7 @@ export class TransformationNodeComponent implements OnInit {
       nzTitle: this.transofrmation.label,
       nzContent: this.getTranformerComponent(),
       nzComponentParams:{
-        data: {...this.params},
+        data: deepCopy(this.params),
         index: this.index,
         size: 'default'
       },
