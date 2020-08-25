@@ -8,12 +8,12 @@ import { ITooltipAngularComp } from '@ag-grid-community/angular';
 })
 export class CustomTooltipComponent implements ITooltipAngularComp  {
   private params: any;
-  private data: any;
+  // private data: any;
   errors = [];
   field = '';
   agInit(params): void {
     this.params = params;
-    this.data = params.api.getDisplayedRowAtIndex(params.rowIndex).data;
+    // this.data = params.api.getDisplayedRowAtIndex(params.rowIndex).data;
     this.field = params.colDef.headerName;
     if (params.error[params.rowIndex][params.colDef.field]) {
       this.errors = params.error[params.rowIndex][params.colDef.field].errors;

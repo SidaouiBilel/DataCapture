@@ -36,9 +36,16 @@ export class MappingService {
     return this.http.post(environment.mapping + '/', this.getMappingBody(targets, mappingId, sheetId, domainId));
   }
 
-  getAutomaticMapping(domainId: string, SheetId: string, name: string, transformed?: string): Observable<any> {
+  postAutomaticMapping(domainId: string, SheetId: string, name: string, mapping: any, transformed?: string): Observable<any> {
+    const payload = {
+      file: SheetId,
+      domainId,
+      name,
+      transformed,
+      mapping: mapping.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if(e) { return e; }})
+    };
     // tslint:disable-next-line: max-line-length
-    return this.http.get(environment.mapping + `/?file=${SheetId}&domainId=${domainId}&name=${name}${transformed ? '&transformed=' + transformed : ''}`);
+    return this.http.post(environment.mapping + `/save`, payload);
   }
 
   private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {

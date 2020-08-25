@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -17,7 +17,7 @@ import { shortcutString } from '@app/shared/utils/strings.utils';
   templateUrl: './cleansing.component.html',
   styleUrls: ['./cleansing.component.css']
 })
-export class CleansingComponent implements OnInit {
+export class CleansingComponent implements OnInit, OnDestroy {
   // Data Table Related
   grid: any;
   domain: string;
@@ -74,6 +74,10 @@ export class CleansingComponent implements OnInit {
     this.hotkeys.register([
       ...this.saveModifications()
     ]);
+  }
+
+  ngOnDestroy() {
+    this.hotkeys.unregister();
   }
 
   saveModifications = () => {
@@ -242,10 +246,11 @@ export class CleansingComponent implements OnInit {
       if (this.jobId) {
         this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
-          this.lock$.next(true);
+          this.not.success('Success');
+        }, (err) => {
+          this.not.error(err.message);
         });
       }
-      this.not.success('Success');
      }, (err) => {
        this.not.error(err.message);
     });
