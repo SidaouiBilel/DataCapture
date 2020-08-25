@@ -29,3 +29,7 @@
 .ma-t {
     margin-top: 12px
 }
+
+[nz-typography][size='small']{
+    font-size: 80%;
+}

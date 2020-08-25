@@ -11,6 +11,8 @@ export class TransformationInterfaceComponent implements OnInit {
   @Input() data: any = {};
   @Input() index = null;
 
+  @Input() size = 'small';
+
   form_orientation = 'horizontal';
   
   constructor() { }

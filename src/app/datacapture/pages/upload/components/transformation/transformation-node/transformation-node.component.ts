@@ -30,7 +30,7 @@ export class TransformationNodeComponent implements OnInit {
   index 
   @Input('index') set _index(value) {
     this.index = value
-
+    
     this.status$ = this.store.select(selectTranformationNodeStatus(this.index))
   }
   @Input("params") set _params(value){
@@ -100,7 +100,8 @@ export class TransformationNodeComponent implements OnInit {
       nzContent: this.getTranformerComponent(),
       nzComponentParams:{
         data: {...this.params},
-        index: this.index
+        index: this.index,
+        size: 'default'
       },
       nzOnOk:()=>{
         const instance: TransformationInterfaceComponent = modal.getContentComponent()
