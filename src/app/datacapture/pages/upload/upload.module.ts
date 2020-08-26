@@ -49,6 +49,8 @@ import { ShortcutsListHorizontalComponent } from './components/transformation/sh
 import { SheetSelectionConfirmComponent } from './components/preview/sheet-selector/sheet-selection-confirm/sheet-selection-confirm.component';
 import { SheetsFilterPipe } from './components/preview/sheet-selector/sheets-filter.pipe';
 import { FindAndReplaceComponent } from './components/transformation/transformations/transformation-interface/format/find-and-replace/find-and-replace.component';
+import { PipeChangesAlertComponent } from './components/preview/pipe-changes-alert/pipe-changes-alert.component';
+import { DefaultValueComponent } from './components/transformation/transformations/transformation-interface/format/default-value/default-value.component';
 
 const components = [
   UploadComponentComponent,
@@ -84,7 +86,9 @@ const components = [
   ShortcutsListHorizontalComponent,
   SheetSelectionConfirmComponent, 
   SheetsFilterPipe, 
-  FindAndReplaceComponent
+  FindAndReplaceComponent,
+  PipeChangesAlertComponent,
+  DefaultValueComponent
 ];
 
 @NgModule({
@@ -120,7 +124,9 @@ const components = [
     FilterComponent,
     TransformationPreviewHelpComponent,
     SheetSelectionConfirmComponent,
-    FindAndReplaceComponent
+    FindAndReplaceComponent,
+    PipeChangesAlertComponent,
+    DefaultValueComponent
   ]
 })
 export class UploadModule {}

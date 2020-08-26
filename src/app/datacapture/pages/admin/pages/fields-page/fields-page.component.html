@@ -21,15 +21,15 @@
 
     <button nz-button class='ghost' (click)='openConfig(null)'  ><i nz-icon nzType="plus"></i>Add Target Field</button>
 
+    <button nz-button class='ghost' (click)="load_data()"  ><i nz-icon nzType="reload"></i></button>
     
     <nz-upload
       [nzAction]="uploadURI"
       [nzHeaders]="{ authorization: 'authorization-text' }"
       (nzChange)="handleChange($event)"
       >
+      
       <button nz-button  class='ghost'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
-
-      <button nz-button class='ghost' (click)="load_data()"  ><i nz-icon nzType="reload"></i></button>
     </nz-upload>
     
   </div>

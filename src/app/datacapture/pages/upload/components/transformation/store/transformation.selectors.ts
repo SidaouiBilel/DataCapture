@@ -110,6 +110,8 @@ export const selectActivePipeModified = createSelector(
       if(edited){
         if (JSON.stringify(edited.nodes) != JSON.stringify(nodes) )
           return true
+      } else {
+        return nodes.length > 0
       }
 
       return false

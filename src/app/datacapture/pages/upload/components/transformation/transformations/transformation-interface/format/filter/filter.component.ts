@@ -9,15 +9,20 @@ import { TransformationInterfaceComponent } from '../../transformation-interface
 export class FilterComponent extends TransformationInterfaceComponent implements OnInit  {
 
   operations = [
-    {value: '>', label: 'Greater'},
-    {value: '<', label: 'Lesser'}, 
-    {value: '>=', label: 'Greater or Equal'},
-    {value: '<=', label: 'Lesser or Equal'},
-    {value: '==', label: 'Equal'},
-    {value: '!=', label: 'Not Equal'}, 
-    {value: 'contains', label: 'Contains'}, 
-    {value: 'startswith', label: 'Starts With'}, 
-    {value: 'endswith', label: 'Ends With'},
+    {label:'Numbers', operations:[
+      {value: '>', label: 'Greater'},
+      {value: '<', label: 'Lesser'}, 
+      {value: '>=', label: 'Greater or Equal'},
+      {value: '<=', label: 'Lesser or Equal'},
+      {value: '==', label: 'Equal'},
+      {value: '!=', label: 'Not Equal'}
+    ]},
+    {label:'Strings', operations:[
+      {value: 'match', label: 'Matches(REGEX)'}, 
+      {value: 'contains', label: 'Contains'}, 
+      {value: 'startswith', label: 'Starts With'}, 
+      {value: 'endswith', label: 'Ends With'},
+    ]}
   ]
   
   constructor() { 

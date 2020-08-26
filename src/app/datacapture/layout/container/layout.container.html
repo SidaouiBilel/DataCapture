@@ -1,45 +1,42 @@
-<nz-layout class="full-h">
+<nz-layout class="full-h" [ngClass]='settings.appSize$ | async'>
   <!-- Header -->
   <nz-header>
-
-    <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
-      <a [routerLink]="['/datacapture/projects']">
-        <img class="header-icon" [class.header-icon-collapsed]="isCollapsed" src="../../../../assets/images/logo.png"
-          alt="logo">
-        <h1 *ngIf="!isCollapsed">DataCapture</h1>
-      </a>
+    <div class="flex between top">
+      <div>
+        <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
+        <a [routerLink]="['/datacapture/projects']">
+          <img class="header-icon" [class.header-icon-collapsed]="isCollapsed" src="../../../../assets/images/logo.png"
+            alt="logo">
+            <h1 *ngIf="!isCollapsed">DataCapture</h1>
+          </a>
+        </div>
     </div>
-<!--
-    <nz-input-group class="search-box" [nzSuffix]="suffixIconSearch">
+    <!--
+      <nz-input-group class="search-box" [nzSuffix]="suffixIconSearch">
       <input type="text" nz-input placeholder="Find projects, clusters, datasets..." />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <i nz-icon nzType="search"></i>
     </ng-template> -->
-
+      <div class="button-spacing">
+        <button [ngClass]='{"active":(settings.appSize$ | async)=="default"}' class='ghost' nzShape='circle' nz-button nzType='primary' (click)='settings.setDefaultSize()'><i nz-icon nzType="zoom-out"></i></button>
+        <button [ngClass]='{"active":(settings.appSize$ | async)=="compact"}' class='ghost' nzShape='circle' nz-button nzType='primary'  (click)='settings.setCompactSize()'><i nz-icon nzType="zoom-in"></i></button>
+      </div>
+    </div>
+    
   </nz-header>
 
   <nz-layout>
     <!-- Sidebar -->
     <ng-container *ngIf="true">
-      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200px" nzTheme="light">
+      <nz-sider   nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200px" nzTheme="light">
         <ul nz-menu nzMode="inline" class="sider-menu" [nzInlineCollapsed]="isCollapsed">
-          <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('stacks')"  [routerLink]="['/datacapture/stacks']">
-            <i nz-icon nzType="hdd"></i>
-            <span>Stacks</span>
-          </li> -->
-
-          <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('upload')"  [routerLink]="['/datacapture/upload']">
-            <i nz-icon nzType="upload"></i>
-            <span>Upload</span>
-          </li> -->
+          
           <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
             <ul>
-              <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/admin/category']">
-                <span>Category</span>
-              </li> -->
+             
               <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/admin/domains']">
-                <!-- <i nz-icon nzType="file-done"></i> -->
+               
                 <span>Domains</span>
               </li>
             </ul>
@@ -73,8 +70,8 @@
     </ng-container>
 
     <!-- Content -->
-    <nz-layout class="inner-layout">
-      <nz-breadcrumb>
+  <nz-layout class="inner-layout" >
+      <nz-breadcrumb >
         <nz-breadcrumb-item *ngFor="let item of pageList; let i = index">
           <a [routerLink]="[getLinkByIndex(i)]">
             <i nz-icon [nzType]="matchNameWithIcons(item)"></i>

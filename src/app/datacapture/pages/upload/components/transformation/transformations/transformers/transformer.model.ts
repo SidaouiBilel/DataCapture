@@ -19,6 +19,7 @@ export class Transformer{
     icon_rotation = 0
     description = 'Description Template'
     shortcut = null
+    collapse = false
 
     getErrors = (params, previousNodes, headers): any=>{
         return []
@@ -171,8 +172,9 @@ export class Merge extends Transformer{
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
-        if (isArrayEmpty(params.columns))
-            errors.push(new NodeError('columns', 'Missing Column'))
+        if (isArrayEmpty(params.columns)){
+            // errors.push(new NodeError('columns', 'Missing Column'))
+        }
         else{
             const previousHeaders: any[] = getPreviousHeader(headers, previousNodes)
 
@@ -239,7 +241,9 @@ export class FilterAndReplace extends Transformer{
     shortcut = 'control.alt.r'
     type =  'find-replace'; 
     label= 'Find & Replace'; 
-    icon= 'file-search'; 
+    icon= 'funnel-plot'; 
+    
+    collapse = true
     
 
     getErrors = (params, previousNodes, headers)=>{
@@ -257,3 +261,18 @@ export class FilterAndReplace extends Transformer{
         }
     }
 }
+
+export class DefaultValue extends Transformer{
+
+    type =  'default-value'; 
+    label= 'Defaulted Column'; 
+    icon= 'file-add'; 
+    collapse = true
+
+    getErrors = (params, previousNodes, headers)=>{
+        const errors = []
+        if (isStrEmpty(params.destination)) errors.push(new NodeError('destination', 'Destination Missing'))
+        return errors
+    };
+}
+

@@ -23,6 +23,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AdminReducer, FEATURE_NAME } from './store/admin.state';
 import { DisplayChangerComponent } from './componenets/display-changer/display-changer.component';
+import { FieldInputComponent } from './componenets/field-input/field-input.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { DisplayChangerComponent } from './componenets/display-changer/display-c
     MetaComponent,
     SimpleFilterPipe,
     DisplayChangerComponent,
+    FieldInputComponent,
   ],
   providers:[
     CollectionEditor

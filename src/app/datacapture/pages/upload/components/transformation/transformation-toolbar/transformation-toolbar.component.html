@@ -1,9 +1,25 @@
 <div class="button-spacing">
 
     <ng-container *ngIf='showTransformation'>
-      <button class='ghost' *ngFor='let t of tarnsformations' nzShape='circle' nz-button nzType='default'
-      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
-      [nzRotate]='t.icon_rotation || 0'></i></button>
+      <div class="flex between w-100">
+        <div class="flex-1">
+          <button class='ghost' *ngFor='let t of (shownTrans$ | async)' nzShape='circle' nz-button nzType='default'
+          (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
+          [nzRotate]='t.icon_rotation || 0'></i></button>
+        </div>
+        
+        <div class="ml-3">
+          <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon nzType="ellipsis" [nzRotate]='90'></i></button>
+          <nz-dropdown-menu #collapsedTrans="nzDropdownMenu">
+            <ul nz-menu>
+              <li *ngFor='let t of (collapsedTrans$ | async)' (click)='addTransformation(t)' nz-menu-item>
+                <i nz-icon [nzType]="t.icon || 'sliders'"[nzRotate]='t.icon_rotation || 0'></i>
+                <span class="ml-2">{{t.label}}</span>
+            </li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+      </div>
     </ng-container>
 
     <ng-container *ngIf='showActions'>

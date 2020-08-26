@@ -10,6 +10,7 @@ export const getPreviousHeader = (headers, previousNodes) => {
           }
           break;
         case 'merge':
+        case 'default-value':
           if (t.destination){
             all.add(t.destination);
           }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NotificationService, AppState, selectRouterState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 
 @Component({
   selector: 'app-layout',
@@ -16,8 +17,10 @@ export class LayoutContainer {
   pageList: string[];
   // Store Router State
   router$: Observable<any>;
+  settings
 
-  constructor(private notification: NotificationService, private store: Store<AppState>) {
+  constructor(private notification: NotificationService, private store: Store<AppState>,  settings: AppSettingsService) {
+    this.settings = settings
     this.router$ = this.store.select(selectRouterState);
     this.router$.subscribe((res) => {
       try {
@@ -27,6 +30,8 @@ export class LayoutContainer {
         this.notification.error(error.message);
       }
     });
+
+    settings.appSize$.subscribe(size=> this.isCollapsed=(size == 'compact')?true:false)
   }
 
   // This is used to select the primary pqge in the sidebqr

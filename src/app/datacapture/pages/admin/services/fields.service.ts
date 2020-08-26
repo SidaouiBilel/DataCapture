@@ -15,6 +15,10 @@ export class TargetFieldsService {
     return this.http.get( this.url + `domain/${domain_id}/fields`)
   }
 
+  getSimple(domain_id){
+    return this.http.get( this.url + `domain/${domain_id}/fields/simple`)
+  }
+
   save(domain_id, target_field){
     return this.http.post( this.url + `domain/${domain_id}/fields`, target_field)
   }

@@ -3,10 +3,6 @@
   <div class="h-100 flex stretch column">
 
     <div class="toolbar mb-3 flex between">
-      <!-- <ng-container *ngIf='expanded$ | async'>
-          <app-transformation-toolbar></app-transformation-toolbar>
-          <nz-divider nzType='vertical'></nz-divider>
-        </ng-container> -->
       <app-active-transformation-input></app-active-transformation-input>
 
       <div class="button-spacing">
@@ -14,7 +10,7 @@
           nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToImport()"><i nz-icon
             nzType="caret-left"></i> Previous</button>
         <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
-          nzTooltipPlacement="left" (click)="goToMapping()">Next<i nz-icon nzType="caret-right"></i></button>
+          nzTooltipPlacement="left" (click)="onNext()">Next<i nz-icon nzType="caret-right"></i></button>
         <nz-divider nzType='vertical'></nz-divider>
         <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset"
           nzTooltipPlacement="left" (click)="cancelUpload()">

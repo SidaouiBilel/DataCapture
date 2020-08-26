@@ -14,6 +14,8 @@ export class HotkeysFilterPipe implements PipeTransform {
     if(shiftPressed)    include.push('shift') ; else exclude.push('shift')
     if(altPressed)      include.push('alt'); else exclude.push('alt')
 
+    keys = keys.filter(k=>k.shortcut)
+
     keys = keys.filter(k => {
       const splitKeys:string[] = k.key.split(".")
       

@@ -45,10 +45,14 @@ export class Hotkeys {
 
   register(toRegister = []){
     this.subscriptions = []
+    const registered = []
     for (let r of toRegister){
-      this.subscriptions.push(this.addShortcut({ keys: r.key }).subscribe(r.action))
+      if(r.key) {
+        this.subscriptions.push(this.addShortcut({ keys: r.key }).subscribe(r.action))
+        registered.push(r)
+      }
     }
-    this.registeredHostkeys$.next(toRegister)
+    this.registeredHostkeys$.next(registered)
   }
 
   unregister(){
