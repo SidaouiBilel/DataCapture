@@ -51,6 +51,7 @@ import { SheetsFilterPipe } from './components/preview/sheet-selector/sheets-fil
 import { FindAndReplaceComponent } from './components/transformation/transformations/transformation-interface/format/find-and-replace/find-and-replace.component';
 import { PipeChangesAlertComponent } from './components/preview/pipe-changes-alert/pipe-changes-alert.component';
 import { DefaultValueComponent } from './components/transformation/transformations/transformation-interface/format/default-value/default-value.component';
+import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
 
 const components = [
   UploadComponentComponent,
@@ -109,6 +110,7 @@ const components = [
     MappingService,
     CleansingService,
     UploadGuard,
+    DeactivateUploadGuard,
     TranformationDrawerService,
     TranformationService,
     TransformationHotKeysService

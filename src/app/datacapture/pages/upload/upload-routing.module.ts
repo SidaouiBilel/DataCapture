@@ -7,6 +7,7 @@ import { MappingComponent } from './components/mapping/mapping.component';
 import { CleansingComponent } from './components/cleansing/cleansing.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { UploadGuard } from './guards/upload.guard';
+import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
           path: 'preview',
           component: PreviewComponent,
           canActivate: [UploadGuard],
+          canDeactivate: [DeactivateUploadGuard],
           data: {route: 'PREVIEW'}
         },
         {

@@ -1,6 +1,6 @@
 <div class="main-container flex-box">
   <!-- Header -->
-  <div class="importHeader" nz-row>
+  <div class="importHeader mb-2" nz-row>
     <div nz-col nzSpan="18">
       <button nz-tooltip nzTooltipTitle='Previous Mappings' nzShape='circle' class="ghost" nz-button
         (click)='previousMappings()'>
@@ -36,7 +36,7 @@
   </div>
 
   <!-- Body -->
-  <div class="flex-box mt-4" *ngIf="keys(mappedSources).length">
+  <div class="flex-box" *ngIf="keys(mappedSources).length">
     <div class="mapping-container">
       <!-- Sources -->
       <div class="sources">

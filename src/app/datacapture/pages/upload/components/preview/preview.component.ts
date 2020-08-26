@@ -43,16 +43,7 @@ export class PreviewComponent {
   }
   
   onNext(){
-    this.pipe.modified$.pipe(take(1)).subscribe(modified=>{
-      if(!modified) return this.goToMapping()
-
-      const modal = this.modal.create({nzContent: PipeChangesAlertComponent ,nzClosable: false, nzCloseIcon: null});
-
-      modal.afterClose.pipe(take(1)).subscribe((action)=> {
-        if(action == 'continue') return this.goToMapping()
-      })
-
-    })
+    return this.goToMapping()
   }
 
 }
