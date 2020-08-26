@@ -19,8 +19,8 @@
       <i nz-icon nzType="search"></i>
     </ng-template> -->
       <div class="button-spacing">
-        <button [ngClass]='{"active":(settings.appSize$ | async)=="default"}' class='ghost' nzShape='circle' nz-button nzType='primary' (click)='settings.setDefaultSize()'><i nz-icon nzType="zoom-out"></i></button>
-        <button [ngClass]='{"active":(settings.appSize$ | async)=="compact"}' class='ghost' nzShape='circle' nz-button nzType='primary'  (click)='settings.setCompactSize()'><i nz-icon nzType="zoom-in"></i></button>
+        <button *ngIf='(settings.appSize$ | async)!="default"' class='ghost' nzShape='circle' nz-button nzType='primary' (click)='settings.setDefaultSize()'><i nz-icon nzType="zoom-in"></i></button>
+        <button *ngIf='(settings.appSize$ | async)!="compact"' class='ghost' nzShape='circle' nz-button nzType='primary'  (click)='settings.setCompactSize()'><i nz-icon nzType="zoom-out"></i></button>
       </div>
     </div>
     

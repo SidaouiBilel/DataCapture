@@ -131,6 +131,6 @@ nz-content {
 }
 
 ::ng-deep .compact .ant-layout-header{
-  height: 50px;
-  line-height: 50px;
+  height: 48px;
+  line-height: 48px;
 }

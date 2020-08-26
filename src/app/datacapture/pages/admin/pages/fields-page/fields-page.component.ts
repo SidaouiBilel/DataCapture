@@ -9,6 +9,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { TargetFieldsService } from '../../services/fields.service';
 import { NotificationService } from '@app/core';
 import { ChecksService } from '../../services/checks.service';
+import { deepCopy } from '@app/shared/utils/objects.utils';
 
 @Component({
   selector: 'app-fields-page',
@@ -73,7 +74,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     const edit = data ? true : false;
     let obj =  new Field()
     if (data) {
-      obj = {...data};
+      obj = deepCopy(data);
     }
 
     const modal = this.modal.create({

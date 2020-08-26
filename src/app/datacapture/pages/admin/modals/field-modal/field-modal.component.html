@@ -39,7 +39,7 @@
 
   <ng-container *ngFor="let r of data.rules; let i = index">
     <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
-      <nz-card [nzBordered]='false' class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name"
+      <nz-card  class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name"
         [nzExtra]="extraTemplate">
         <nz-card-meta [nzDescription]="RULES_MAP[r.type].description"></nz-card-meta>
         <div class="ma-t">
