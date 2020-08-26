@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stepper',
@@ -14,7 +16,10 @@ export class StepperComponent implements OnInit {
   // Store Router State
   router$: Observable<any>;
 
-  constructor(private notification: NotificationService, private store: Store<AppState>) {
+  navType$
+  navClass$
+
+  constructor(private notification: NotificationService, private store: Store<AppState>, private setting: AppSettingsService) {
     this.router$ = this.store.select(selectRouterState);
     this.router$.subscribe((res) => {
       try {
@@ -24,6 +29,9 @@ export class StepperComponent implements OnInit {
         this.notification.error(error.message);
       }
     });
+
+    this.navType$ = this.setting.appSize$
+    // this.navClass$ = this.setting.appSize$.pipe(map((size)=> (size=='compact')? 'p-2':''))
   }
 
   ngOnInit() {

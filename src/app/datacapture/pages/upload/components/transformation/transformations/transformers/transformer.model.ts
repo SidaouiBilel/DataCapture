@@ -267,6 +267,7 @@ export class DefaultValue extends Transformer{
     type =  'default-value'; 
     label= 'Defaulted Column'; 
     icon= 'file-add'; 
+    shortcut = 'control.shift.d'
     collapse = true
 
     getErrors = (params, previousNodes, headers)=>{
