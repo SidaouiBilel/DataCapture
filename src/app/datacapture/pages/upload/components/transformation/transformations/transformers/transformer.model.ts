@@ -168,7 +168,7 @@ export class Replace extends Transformer{
 export class Merge extends Transformer{
 
     shortcut = 'control.m'
-    type =  'merge'; label= 'Merge'; icon= 'link'; 
+    type =  'merge'; label= 'Merge'; icon= 'link'; icon_rotation = 45;
 
     getErrors = (params, previousNodes, headers)=>{
         const errors = []
@@ -265,7 +265,7 @@ export class FilterAndReplace extends Transformer{
 export class DefaultValue extends Transformer{
 
     type =  'default-value'; 
-    label= 'Defaulted Column'; 
+    label= 'Default'; 
     icon= 'file-add'; 
     shortcut = 'control.shift.d'
     collapse = true
@@ -275,5 +275,31 @@ export class DefaultValue extends Transformer{
         if (isStrEmpty(params.destination)) errors.push(new NodeError('destination', 'Destination Missing'))
         return errors
     };
+}
+
+export class Splitter extends Transformer{
+
+    type =  'split'; 
+    label= 'Split'; 
+    icon= 'disconnect'; 
+    shortcut = 'control.alt.s'
+    collapse = true
+    icon_rotation = 45
+
+    getErrors = (params, previousNodes, headers)=>{
+        const errors = []
+        if (isStrEmpty(params.column)) errors.push(new NodeError('column', 'Column Missing'))
+        if (isStrEmpty(params.separator)) errors.push(new NodeError('separator', 'Separator Missing'))
+        return errors
+    };
+
+    getRuleFromGrid(params){
+        const columns = GAPIColumnsInRange(params.api)
+        return {
+            ...this.getRule(),
+            column: columns[0],
+            separator: '-'
+        }
+    }
 }
 

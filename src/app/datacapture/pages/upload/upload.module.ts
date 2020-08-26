@@ -52,6 +52,7 @@ import { FindAndReplaceComponent } from './components/transformation/transformat
 import { PipeChangesAlertComponent } from './components/preview/pipe-changes-alert/pipe-changes-alert.component';
 import { DefaultValueComponent } from './components/transformation/transformations/transformation-interface/format/default-value/default-value.component';
 import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
+import { SplitterComponent } from './components/transformation/transformations/transformation-interface/format/splitter/splitter.component';
 
 const components = [
   UploadComponentComponent,
@@ -89,7 +90,8 @@ const components = [
   SheetsFilterPipe, 
   FindAndReplaceComponent,
   PipeChangesAlertComponent,
-  DefaultValueComponent
+  DefaultValueComponent,
+  SplitterComponent
 ];
 
 @NgModule({
@@ -128,7 +130,8 @@ const components = [
     SheetSelectionConfirmComponent,
     FindAndReplaceComponent,
     PipeChangesAlertComponent,
-    DefaultValueComponent
+    DefaultValueComponent,
+    SplitterComponent
   ]
 })
 export class UploadModule {}

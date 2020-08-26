@@ -15,6 +15,12 @@ export const getPreviousHeader = (headers, previousNodes) => {
             all.add(t.destination);
           }
           break;
+          case 'split':
+            if (t.column){
+              all.add(`${t.column}_part_0`);
+              all.add(`${t.column}_part_1`);
+            }
+            break;
       }
     }
     return Array.from(all);

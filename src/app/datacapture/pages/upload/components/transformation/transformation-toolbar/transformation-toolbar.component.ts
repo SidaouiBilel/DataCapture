@@ -27,6 +27,7 @@ export class TransformationToolbarComponent extends TransformationPipeComponent 
     this.saveBtnType$     = this.toolbarpipes.modified$.pipe(map((m)=> m?"primary":"default"))
     this.ghostBtn$        = this.toolbarpipes.modified$.pipe(map((m)=> m?"":"ghost"))
 
+    console.table(this.tarnsformations.filter(n=>!n.collapse))
     this.shownTrans$.next(this.tarnsformations.filter(n=>!n.collapse))
     this.collapsedTrans$.next(this.tarnsformations.filter(n=>n.collapse))
   }

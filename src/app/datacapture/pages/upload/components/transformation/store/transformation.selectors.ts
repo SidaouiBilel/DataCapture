@@ -5,6 +5,7 @@ import { selectHeaders } from '../../../store/selectors/import.selectors';
 import { max } from 'rxjs/operators';
 import { getPreviousHeader } from '../shared/utils/transformers.util';
 import { isStrEmpty } from '@app/shared/utils/strings.utils';
+import { selectMappedSources } from '../../../store/selectors/mapping.selectors';
 
 export const selectTranformation = createSelector(
   selectupload,
@@ -74,7 +75,7 @@ export const selectTransformedFilePath = createSelector(
 );
 
 export const selectInputCloumnsByIndex = (index) => createSelector(
-  selectHeaders, selectTranformationPipe,
+  selectHeaders, selectTranformationPipe, selectMappedSources,
   (headers, pipe:any[]) => {
     const last = Math.max((index), 0)
     const previousNodes = pipe.slice(0, last)
