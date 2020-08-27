@@ -12,6 +12,7 @@ import { selectSelectedSheet } from '../../../store/selectors/preview.selectors'
 import { SaveMappedSources } from '../../../store/actions/mapping.actions';
 import { ImportActionTypes, ActionSaveFile } from '../../../store/actions/import.actions';
 import { TransformerFactory } from '../transformations/transformers';
+import { PreviewActionTypes } from '../../../store/actions/preview.actions';
 
 @Injectable()
 export class TransformationEffects {
@@ -25,7 +26,7 @@ export class TransformationEffects {
 
   @Effect({ dispatch: false })
   onReset = this.actions$.pipe(
-    ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE) ,
+    ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE, PreviewActionTypes.SelectSheet) ,
     withLatestFrom(this.store$.select( selectActivePipe )),
     withLatestFrom(this.store$.select( selectSelectedSheet )),
     withLatestFrom(this.store$.select( selectFileData )),

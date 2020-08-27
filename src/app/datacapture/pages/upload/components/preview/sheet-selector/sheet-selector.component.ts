@@ -62,8 +62,9 @@ export class SheetSelectorComponent implements OnInit{
     })
     modal.afterClose.pipe(take(1)).subscribe((result)=>{
       if(result){
-        if(result.keepPipe)
+        if(result.keepPipe){
           this.selectSheet(index)
+        }
         else {
           this.pipe.setActive(null)
           this.pipe.upadatePreviewMode('SOURCE')
