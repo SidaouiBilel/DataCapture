@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { ActionImportReset } from '../../store/actions/import.actions';
+import { selectUploadOverview } from '../../store/selectors/upload.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
@@ -10,8 +12,11 @@ import { ActionImportReset } from '../../store/actions/import.actions';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-
-  constructor(private router: Router, private store: Store<AppState>) { }
+  metaData$: Observable<any>;
+  selectedTags: string[] = [];
+  constructor(private router: Router, private store: Store<AppState>) {
+    this.metaData$ = this.store.select(selectUploadOverview);
+  }
 
   ngOnInit() {
   }
