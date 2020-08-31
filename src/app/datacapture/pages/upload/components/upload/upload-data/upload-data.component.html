@@ -1,4 +1,37 @@
-<button nz-button (click)="onUpload()">Touch me </button>
-<button nz-button (click)="checkUploadStatus()">Molest me </button>
+<nz-result [nzIcon]="icon" [nzTitle]="title">
+  <div nz-result-extra>
+    <button *ngIf="!(uploadingId$ | async)" class="upload" nz-button nzType="default" (click)="onUpload()">
+      <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+      Upload
+    </button>
 
-{{(result$ | async | json)}}
+    <button *ngIf="(uploadStatus$ | async) === 'ERROR'" nz-button nzType="danger" (click)="cancel.emit(true)">
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+      Cancel
+    </button>
+
+    <button *ngIf="(uploadStatus$ | async) === 'DONE'" nz-button nzType="default" (click)="cancel.emit(true)">
+      <i nz-icon nzType="check" nzTheme="outline"></i>
+      Upload Another file
+    </button>
+  </div>
+</nz-result>
+
+
+<ng-template #icon>
+  <!-- Ready -->
+  <nz-progress *ngIf="!['ERROR', 'DONE'].includes(uploadStatus$ | async)" nzType="circle" [nzPercent]="progress"
+    [nzFormat]="format" [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }"></nz-progress>
+  <!-- Success -->
+  <i nz-icon *ngIf="(uploadStatus$ | async) === 'DONE'" class="text-success" nzType="check-circle" nzTheme="fill"></i>
+  <!-- Error -->
+  <i nz-icon *ngIf="(uploadStatus$ | async) === 'ERROR'" class="text-danger" nzType="close-circle" nzTheme="fill"></i>
+</ng-template>
+
+<ng-template #title>
+  <div *ngIf="!(uploadingId$ | async)" class="ant-result-title"> You are all set to upload your data.</div>
+  <div *ngIf="!['ERROR', 'DONE'].includes(uploadStatus$ | async)" class="ant-result-title"> Uploading...</div>
+  <div *ngIf="(uploadStatus$ | async) === 'DONE'" class="ant-result-title"> Success</div>
+  <div *ngIf="(uploadStatus$ | async) === 'ERROR'" class="ant-result-title"> The upload has failed.</div>
+  {{result$ | async | json}}
+</ng-template>

@@ -1,6 +1,6 @@
 <div class="main-container flex-box">
   <!-- Header -->
-  <div class="importHeader mb-2" nz-row>
+  <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
@@ -19,6 +19,9 @@
   <div class="flex-box">
     <app-overview [metaData]="metaData$ |async" class="mt-4"></app-overview>
     <app-upload-tags [metaData]="metaData$ |async" (tagsChanged)="selectedTags = $event" class="mt-2"></app-upload-tags>
-    <app-upload-data [selectedTags]="selectedTags" [metaData]="metaData$ |async" class="mt-2"></app-upload-data>
+    <div class="flex-child mt-2">
+      <app-upload-data [selectedTags]="selectedTags" [metaData]="metaData$ |async" (cancel)="cancelUpload()"></app-upload-data>
+    </div>
+
   </div>
 </div>
