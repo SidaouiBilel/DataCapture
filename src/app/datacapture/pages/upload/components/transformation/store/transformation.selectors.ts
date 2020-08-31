@@ -74,8 +74,18 @@ export const selectTransformedFilePath = createSelector(
   (object: Transformation) => object.transformedFilePath
 );
 
+export const selectTransformationHeaders = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.tarnsformationHeaders
+);
+
+export const selectActiveHeaders = createSelector(
+  selectHeaders, selectTransformationHeaders, selectActivePipeId,
+  (sourceHeaders, targetHeaders, pipeId:any[]) => (pipeId)?targetHeaders:sourceHeaders
+);
+
 export const selectInputCloumnsByIndex = (index) => createSelector(
-  selectHeaders, selectTranformationPipe, selectMappedSources,
+  selectActiveHeaders, selectTranformationPipe, selectMappedSources,
   (headers, pipe:any[]) => {
     const last = Math.max((index), 0)
     const previousNodes = pipe.slice(0, last)

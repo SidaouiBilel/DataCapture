@@ -4,7 +4,7 @@ import { Action, Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { TranformationService } from '../services/tranformation.service';
-import { LoadTransformation, TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus } from './transformation.actions';
+import { LoadTransformation, TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders } from './transformation.actions';
 import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
 import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
@@ -31,25 +31,21 @@ export class TransformationEffects {
     withLatestFrom(this.store$.select( selectSelectedSheet )),
     withLatestFrom(this.store$.select( selectFileData )),
     map(([[[action, pipe], sheetIndex], file]) => {
-      if (file.metaData) {
+      if (file.metaData && sheetIndex !== null) {
         const sheetId = String(Object.values(file.metaData.worksheets_map)[sheetIndex]);
         const pipeId = (pipe) ? pipe.id : null;
-        if ( file && file.metaData && pipeId && sheetId) {
+        if ( file && file.metaData && pipeId && sheetId !== null) {
           const fileId = file.metaData.file_id;
           this.job.startJob(fileId, sheetId, pipeId).subscribe(res => {
             const id = res.transformed_file_id;
             this.store$.dispatch(new UpdateTransformedFilePath(id));
             this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
-              const mappingSources = {};
-              jobRes.headers.forEach((e) => {mappingSources[e] = false; });
-              this.store$.dispatch(new SaveMappedSources(mappingSources));
+              this.store$.dispatch(new UpdateTransformationHeaders(jobRes.headers));
             });
           });
         } else {
-          const mappingSources = {};
-          file.headers.forEach((e) => {mappingSources[e] = false; });
-          this.store$.dispatch(new SaveMappedSources(mappingSources));
           this.store$.dispatch(new UpdateTransformedFilePath(null));
+          this.store$.dispatch(new UpdateTransformationHeaders(null));
         }
       }
     })
