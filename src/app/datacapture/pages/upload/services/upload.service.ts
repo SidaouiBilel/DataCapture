@@ -31,7 +31,7 @@ export class UploadService {
       takeUntil(stop),
       switchMap(() => this.getStatus(flowId)),
       tap((status: any) => {
-        if (['ERROR', 'DONE'].includes(status.upload_status)) { stop.next(); }
+        if (status.id == null || ['ERROR', 'DONE'].includes(status.upload_status)) { stop.next(); }
         return status;
       }),
       catchError((err) => {stop.next(); return err; } )
