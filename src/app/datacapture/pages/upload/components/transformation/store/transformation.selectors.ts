@@ -85,7 +85,7 @@ export const selectActiveHeaders = createSelector(
 );
 
 export const selectInputCloumnsByIndex = (index) => createSelector(
-  selectActiveHeaders, selectTranformationPipe, selectMappedSources,
+  selectHeaders, selectTranformationPipe, selectMappedSources,
   (headers, pipe:any[]) => {
     const last = Math.max((index), 0)
     const previousNodes = pipe.slice(0, last)
