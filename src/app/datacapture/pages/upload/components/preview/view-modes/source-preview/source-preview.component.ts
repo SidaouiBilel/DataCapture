@@ -30,15 +30,13 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   gridReady$ = new Subject<string>();
 
   constructor(
-    private service: FileImportService, 
+    private service: FileImportService,
     private store: Store<AppState>,
     _transformService: TranformationService,
-    _hotkeys: TransformationHotKeysService
-    ) {
-      super(_transformService, _hotkeys)
-
-    this.selectedSheet$ = this.store.select(selectSelectedSheet);
-    this.fileData$ = this.store.select(selectFileData);
+    _hotkeys: TransformationHotKeysService) {
+      super(_transformService, _hotkeys);
+      this.selectedSheet$ = this.store.select(selectSelectedSheet);
+      this.fileData$ = this.store.select(selectFileData);
   }
 
   ngOnInit(): void {
@@ -55,8 +53,8 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   }
 
   ngOnDestroy(){
-    this.unregisterHotKey()
-    if(this.paginator$) this.paginator$.unsubscribe()
+    this.unregisterHotKey();
+    if (this.paginator$) { this.paginator$.unsubscribe(); }
   }
 
   generateDataSource(gridApi: any, worksheet: string, size: number) {
@@ -73,13 +71,13 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
             that.totalRecords$.next(res.total);
             const headers = res.headers.map(h => ({
               field: h,
-              headerName:h, 
-              editable:false, 
+              headerName:h,
+              editable:false,
               resizable: true,
             }))
             headers.unshift(INDEX_HEADER)
             that.headers$.next(headers);
-            
+
           }
           const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
           const data = [];

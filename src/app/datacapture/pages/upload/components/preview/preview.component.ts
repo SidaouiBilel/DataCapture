@@ -4,11 +4,7 @@ import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { selectPreviewMode, selectPipeExpanded } from '../transformation/store/transformation.selectors';
-import { TranformationService } from '../transformation/services/tranformation.service';
-import { NzModalService } from 'ng-zorro-antd';
-import { PipeChangesAlertComponent } from './pipe-changes-alert/pipe-changes-alert.component';
 
 @Component({
   selector: 'app-preview',
@@ -16,15 +12,11 @@ import { PipeChangesAlertComponent } from './pipe-changes-alert/pipe-changes-ale
   styleUrls: ['./preview.component.css']
 })
 export class PreviewComponent {
-  
+
   previewMode$: Observable<'SOURCE' | 'TARGET'>;
   expanded$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>,
-              private router: Router,
-              private modal: NzModalService,
-              private pipe: TranformationService
-              ) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.previewMode$ = this.store.select(selectPreviewMode);
     this.expanded$ = this.store.select(selectPipeExpanded);
   }
@@ -41,9 +33,9 @@ export class PreviewComponent {
   goToMapping(): void {
     this.router.navigate(['/datacapture/upload/mapping']);
   }
-  
-  onNext(){
-    return this.goToMapping()
+
+  onNext() {
+    return this.goToMapping();
   }
 
 }
