@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { UploadService } from './../../../services/upload.service';
 import { UploadingPayload } from './../../../models/uploading.model';
 import { AppState } from '@app/core';
@@ -15,9 +15,12 @@ import { selectUploadingId } from '../../../store/selectors/upload.selectors';
 export class UploadDataComponent implements OnInit, OnDestroy {
   @Input() metaData: any;
   @Input() selectedTags: any;
+  @Output() cancel: EventEmitter<any> = new EventEmitter<any>();
 
+  progress = 101;
   status$: any;
   result$: BehaviorSubject<any> = new BehaviorSubject(null);
+  uploadStatus$: BehaviorSubject<any> = new BehaviorSubject('READY');
   uploadingId$: Observable<string>;
   constructor(private service: UploadService, private store: Store<AppState>) {
     this.uploadingId$ = store.select(selectUploadingId);
@@ -45,16 +48,25 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       cleansing_job_id: this.metaData.cleansingId,
       transformation_id: this.metaData.transformationId
     };
+    this.progress = 0;
+    this.uploadStatus$.next('STARTED');
     this.service.upload(payload).subscribe((res: any) => {
-      console.log(res);
       this.store.dispatch(new ActionSaveUploadId(res));
     });
   }
 
   checkUploadStatus(id: string): void {
+    this.progress = 0;
+    this.uploadStatus$.next('STARTED');
     this.status$ = this.service.getUploadStatus(id).subscribe((res) => {
       this.result$.next(res);
+      this.uploadStatus$.next(res.upload_status);
+      if (['ERROR', 'DONE'].includes(res.upload_status)) {
+        if (this.status$) { this.status$.unsubscribe(); }
+      }
     });
   }
+
+  format = () => {if (this.progress === 101) { return 'Upload'; } else {return this.progress + '%';}};
 
 }

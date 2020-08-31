@@ -9,3 +9,6 @@
   flex-flow: column;
 }
 
+.flex-child {
+  flex: 1 1 auto;
+}
