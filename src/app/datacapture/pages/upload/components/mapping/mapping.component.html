@@ -102,7 +102,7 @@
 </div>
 
 <nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzOkLoading]="isOkLoading"
-  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping" (nzOnOk)="handleOk()"
+  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping" (nzOnOk)="saveNewMapping()"
   (nzOnCancel)="isVisible = false">
   <form nz-form [formGroup]="validateForm">
     <nz-form-item>

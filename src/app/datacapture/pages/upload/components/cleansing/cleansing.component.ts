@@ -11,6 +11,7 @@ import { selectTransformedFilePath } from '../transformation/store/transformatio
 import { selectMappingId } from '../../store/selectors/mapping.selectors';
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
+import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
 
 @Component({
   selector: 'app-cleansing',
@@ -62,6 +63,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed, this.mappingId).subscribe((job) => {
       if (job) {
         this.jobId = job.job_id;
+        this.store.dispatch(new ActionSaveJobId(job.job_id));
         this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
           this.lock$.next(true);

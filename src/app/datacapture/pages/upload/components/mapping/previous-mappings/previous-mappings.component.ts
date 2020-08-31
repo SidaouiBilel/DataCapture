@@ -11,7 +11,7 @@ export class PreviousMappingsComponent {
   @Input() mappingId: string;
   constructor(private modal: NzModalRef) { }
 
-  apply(id: string): void {
+  apply(id: any): void {
     this.modal.close(id);
   }
 }

@@ -29,7 +29,7 @@ export class FileImportService {
     .set('page', page + '')
     .set('lob', 0 + '')
     .set('nrows', nrows + '');
-    return this.http.get(environment.upload + 'data/' + worksheet, { params });
+    return this.http.get(environment.import + 'data/' + worksheet, { params });
   }
 
   public updateRow(filename: string, worksheet: string, worksheetId: string, nrows: number, page: number, num: number[], lines: string[]) {

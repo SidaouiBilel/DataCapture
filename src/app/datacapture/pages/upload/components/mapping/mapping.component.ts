@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MappingService } from '../../services/mapping.service';
 import { selectMappingFields, selectMappedSources, selectMandatories, selectMappingId } from './../../store/selectors/mapping.selectors';
-import { SaveMappingFields, SaveMappedSources, SaveMappingId } from '../../store/actions/mapping.actions';
+import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
@@ -88,9 +88,9 @@ export class MappingComponent implements OnInit {
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
   }
 
-  handleOk(): void {
+  saveNewMapping(): void {
     // this.validate();
-    const x = this.notification.loading('Loading automatic mapping');
+    const x = this.notification.loading('Saving new mapping');
     if (this.validateForm.valid) {
       forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
         .subscribe(([domain, fileData, selectedSheet]) => {
@@ -99,6 +99,7 @@ export class MappingComponent implements OnInit {
           .subscribe((res) => {
             this.updateLocalMapping(res);
             this.notification.success(`The new mapping ${this.validateForm.controls.name.value} was saved successfully.`);
+            this.store.dispatch(new SaveMappingName(this.validateForm.controls.name.value));
             this.notification.close(x);
             this.isVisible = false;
             this.isOkLoading = false;
@@ -155,12 +156,13 @@ export class MappingComponent implements OnInit {
             mappingId
           },
         });
-        modal.afterClose.subscribe((id) => {
-          if (id) {
+        modal.afterClose.subscribe((map) => {
+          if (map.id) {
             // Apply the mapping
             const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
-            this.service.getMappingById(domain.id, ws, id).subscribe((res: any) => {
+            this.service.getMappingById(domain.id, ws, map.id).subscribe((res: any) => {
               this.updateLocalMapping(res);
+              this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
             }, (err) => {
               this.notification.error(err.message);

@@ -43,7 +43,7 @@ export class ImportComponent implements OnInit {
     this.selectedDomain$.subscribe((domain: any) => {
       if (domain) {
         this.selectedDomain = domain;
-        this.url = urls.environment.upload + '?domainId=' + domain.id;
+        this.url = urls.environment.import + '?domainId=' + domain.id;
       }
     });
     this.domains = [];
@@ -72,7 +72,7 @@ export class ImportComponent implements OnInit {
         token: file.name,
         sheets: [],
         numberOfRows: [],
-        extenstion: file.name.split('.')[1],
+        extension: file.name.split('.')[1],
         data: [],
         headers: [],
         file: [file]

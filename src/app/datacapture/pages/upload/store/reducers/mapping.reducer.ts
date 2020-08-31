@@ -8,6 +8,7 @@ export const initialState: Mapping = {
   mappedSources : {},
   mandatories: {},
   mappingId: '',
+  mappingName: null,
   sheetsTypes: {}
 };
 
@@ -24,31 +25,37 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
       };
     }
     case MappingActionTypes.SaveSheetsTypes:
-  return {
+      return {
         ...state,
         sheetsTypes: action.payload
       };
 
     case MappingActionTypes.SaveMappingId:
-  return {
+      return {
         ...state,
         mappingId: action.payload
       };
 
+      case MappingActionTypes.SaveMappingName:
+      return {
+        ...state,
+        mappingName: action.payload
+      };
+
     case MappingActionTypes.SaveMappedSources:
-  return {
+      return {
         ...state,
         mappedSources: action.payload
       };
 
     case MappingActionTypes.SaveMandatories:
-  return {
+      return {
         ...state,
         mandatories: action.payload
       };
 
     case ImportActionTypes.RESET:
-  return initialState;
+      return initialState;
     default:
   return state;
   }

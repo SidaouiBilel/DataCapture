@@ -3,6 +3,7 @@ export interface Mapping {
   mappedSources: any;
   mandatories: any;
   mappingId: string;
+  mappingName: string;
   sheetsTypes: any;
 }
 

@@ -54,6 +54,10 @@ import { DefaultValueComponent } from './components/transformation/transformatio
 import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
 import { SplitterComponent } from './components/transformation/transformations/transformation-interface/format/splitter/splitter.component';
 import { MappingEffects } from './store/effects/mapping.effect';
+import { OverviewComponent } from './components/upload/overview/overview.component';
+import { UploadTagsComponent } from './components/upload/upload-tags/upload-tags.component';
+import { UploadService } from './services/upload.service';
+import { UploadDataComponent } from './components/upload/upload-data/upload-data.component';
 
 const components = [
   UploadComponentComponent,
@@ -105,7 +109,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, OverviewComponent, UploadTagsComponent, UploadDataComponent],
   exports: [
   ],
   providers : [
@@ -116,7 +120,8 @@ const components = [
     DeactivateUploadGuard,
     TranformationDrawerService,
     TranformationService,
-    TransformationHotKeysService
+    TransformationHotKeysService,
+    UploadService
   ],
   entryComponents: [
     TransformationPipeComponent,

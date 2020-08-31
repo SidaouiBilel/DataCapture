@@ -1,1 +1,3 @@
-export interface Cleansing {}
+export interface Cleansing {
+  jobId: string;
+}
