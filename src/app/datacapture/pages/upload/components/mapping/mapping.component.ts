@@ -98,7 +98,6 @@ export class MappingComponent implements OnInit {
         this.service.postAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.mappingFields, this.worksheet)
           .subscribe((res) => {
             this.updateLocalMapping(res);
-            this.store.dispatch(new SaveMappedSources(this.mappedSources));
             this.notification.success(`The new mapping ${this.validateForm.controls.name.value} was saved successfully.`);
             this.notification.close(x);
             this.isVisible = false;
@@ -124,7 +123,6 @@ export class MappingComponent implements OnInit {
       this.service.loadAutoMappingById(domain.id, ws, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res);
-          this.store.dispatch(new SaveMappedSources(this.mappedSources));
           this.notification.success(`The mapping was loaded successfully.`);
           this.notification.close(x);
         }, (err) => {
@@ -220,6 +218,7 @@ export class MappingComponent implements OnInit {
   updateMapping(): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
+        // tslint:disable-next-line: max-line-length
         this.service.updateMapping(this.mappingFields, mappingId, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain.id)
           .subscribe((res) => {
             this.notification.success('The mapping is successfully updated');

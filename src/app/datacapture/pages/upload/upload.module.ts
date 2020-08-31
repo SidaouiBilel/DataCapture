@@ -53,6 +53,7 @@ import { PipeChangesAlertComponent } from './components/preview/pipe-changes-ale
 import { DefaultValueComponent } from './components/transformation/transformations/transformation-interface/format/default-value/default-value.component';
 import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
 import { SplitterComponent } from './components/transformation/transformations/transformation-interface/format/splitter/splitter.component';
+import { MappingEffects } from './store/effects/mapping.effect';
 
 const components = [
   UploadComponentComponent,
@@ -86,8 +87,8 @@ const components = [
   ShortcutsListComponent,
   HotkeysFilterPipe,
   ShortcutsListHorizontalComponent,
-  SheetSelectionConfirmComponent, 
-  SheetsFilterPipe, 
+  SheetSelectionConfirmComponent,
+  SheetsFilterPipe,
   FindAndReplaceComponent,
   PipeChangesAlertComponent,
   DefaultValueComponent,
@@ -99,7 +100,7 @@ const components = [
     UploadRoutingModule,
     SharedModule,
     StoreModule.forFeature('upload', uploadReducers),
-    EffectsModule.forFeature([ImportEffects, TransformationEffects]),
+    EffectsModule.forFeature([ImportEffects, TransformationEffects, MappingEffects]),
     // Drag and Drop
     DndModule,
     NgDragDropModule.forRoot(),

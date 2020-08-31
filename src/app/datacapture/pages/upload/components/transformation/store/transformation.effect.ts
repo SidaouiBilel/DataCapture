@@ -4,13 +4,13 @@ import { Action, Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { TranformationService } from '../services/tranformation.service';
-import { LoadTransformation, TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders } from './transformation.actions';
+// tslint:disable-next-line: max-line-length
+import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders } from './transformation.actions';
 import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
 import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
 import { selectSelectedSheet } from '../../../store/selectors/preview.selectors';
-import { SaveMappedSources } from '../../../store/actions/mapping.actions';
-import { ImportActionTypes, ActionSaveFile } from '../../../store/actions/import.actions';
+import { ImportActionTypes } from '../../../store/actions/import.actions';
 import { TransformerFactory } from '../transformations/transformers';
 import { PreviewActionTypes } from '../../../store/actions/preview.actions';
 
@@ -54,32 +54,32 @@ export class TransformationEffects {
   @Effect({ dispatch: false })
   onNodesUpdated = this.actions$.pipe(
     ofType(
-      TransformationActionTypes.ADD_NODE, 
-      TransformationActionTypes.DELETE_NODE, 
+      TransformationActionTypes.ADD_NODE,
+      TransformationActionTypes.DELETE_NODE,
       TransformationActionTypes.UPDATE_NODE,
       TransformationActionTypes.UPDATE_FILE_PATH,
-    ) ,
+    ),
     withLatestFrom(this.store$.select( selectTranformationNodes )),
     withLatestFrom(this.store$.select( selectHeaders )),
     map(([[action, nodes], headers]) => {
-      const nodeStatuses = []
-      let i = 0
-      for (let n of nodes){
-        const transformer: Transformer | any = TransformerFactory(n.type)
-        if (transformer && transformer.getErrors){
+      const nodeStatuses = [];
+      let i = 0;
+      for (const n of nodes) {
+        const transformer: Transformer | any = TransformerFactory(n.type);
+        if (transformer && transformer.getErrors) {
           // HANDLE ERRORS
-          const previousNodes = nodes.slice(0, Math.max((i), 0))
-          nodeStatuses.push(transformer.getErrors(n, previousNodes, headers))
-        }else{
-          nodeStatuses.push([])
+          const previousNodes = nodes.slice(0, Math.max((i), 0));
+          nodeStatuses.push(transformer.getErrors(n, previousNodes, headers));
+        } else {
+          nodeStatuses.push([]);
         }
         i++;
       }
       // UPDATE STORE
-      i = 0
-      for (let s of nodeStatuses){
-        this.store$.dispatch(new UpdateNodeStatus(i, s))
-        i++
+      i = 0;
+      for (const s of nodeStatuses) {
+        this.store$.dispatch(new UpdateNodeStatus(i, s));
+        i++;
       }
     })
   );

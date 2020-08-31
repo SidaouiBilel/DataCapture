@@ -39,6 +39,9 @@ export class ImportEffects {
     map(([sheet, file]) => {
       const sheetId = String(Object.values(file.metaData.worksheets_map)[sheet.payload]);
       this.service.getFileData(1, sheetId, 0).subscribe((res) => {
+        const mappingSources = {};
+        res.headers.forEach((e) => { mappingSources[e] = false; });
+        this.store$.dispatch(new SaveMappedSources(mappingSources));
         this.store$.dispatch(new ActionSaveFile({...file, data: [], headers: res.headers}));
       });
     })
