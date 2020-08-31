@@ -12,6 +12,7 @@ export enum TransformationActionTypes {
   FLIP = '[TRANS] EXPAND/COLLAPSE',
   SET_PREVIEW_MODE = '[TRANS] SET_PREVIEW_MODE',
   UPDATE_FILE_PATH = '[TRANS] UPDATE_FILE_PATH',
+  UPDATE_TRANSFORMATION_HEADERS = '[TRANS] UPDATE_TRANSFORMATION_HEADERS',
 }
 
 export class AddTransNode implements Action {
@@ -69,6 +70,11 @@ export class UpdateNodeOrder implements Action {
   constructor(readonly index: number, readonly step: number) {}
 }
 
+export class UpdateTransformationHeaders implements Action {
+  readonly type = TransformationActionTypes.UPDATE_TRANSFORMATION_HEADERS;
+  constructor(readonly headers: string[]) {}
+}
+
 export type TransformationAction =  UpdateNodeStatus 
                                     | UpdateEditedPipeInfo 
                                     | UpdateTransformedFilePath 
@@ -79,4 +85,6 @@ export type TransformationAction =  UpdateNodeStatus
                                     | UpdateTransNode 
                                     | DeleteTransNode 
                                     | UpdateNodeOrder
-                                    | ResetTransformation;
+                                    | ResetTransformation
+                                    | UpdateTransformationHeaders
+                                    ;

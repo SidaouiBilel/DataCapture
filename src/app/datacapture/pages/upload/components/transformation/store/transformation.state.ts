@@ -10,7 +10,8 @@ export const initialState: Transformation = {
     activePipe: null,
     previwMode:'SOURCE',
 
-    transformedFilePath:null
+    transformedFilePath:null,
+    tarnsformationHeaders: null
 }
 
 const ACTIONS = TransformationActionTypes
@@ -85,6 +86,13 @@ export function TransformationReducer(state: Transformation = initialState, acti
     case ACTIONS.UPDATE_EDITED:{
         const editedPipeInfo = {...action.payload};
         return {...state, editedPipeInfo: editedPipeInfo}
+    }
+
+    case ACTIONS.UPDATE_TRANSFORMATION_HEADERS:{
+        let headers = [];
+        if ( action.headers )
+            headers = headers.concat(action.headers)
+        return {...state, tarnsformationHeaders: headers}
     }
 
     case ACTIONS.SET_PREVIEW_MODE:{
