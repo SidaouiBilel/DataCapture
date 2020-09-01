@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BoolIconComponent implements OnInit {
 
-  @Input() b = null
-  
+  @Input() b = null;
+
   constructor() { }
 
   ngOnInit() {

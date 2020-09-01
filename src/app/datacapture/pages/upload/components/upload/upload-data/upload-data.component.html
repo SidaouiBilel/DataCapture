@@ -34,10 +34,12 @@
   <div *ngIf="(uploadStatus$ | async) === 'DONE'" class="ant-result-title"> Success</div>
   <div *ngIf="(uploadStatus$ | async) === 'ERROR'" class="ant-result-title"> The upload has failed.</div>
   <!-- {{result$ | async | json}} -->
-  <nz-descriptions class="mt-4">
+  <nz-descriptions class="mt-4" *ngIf="['ERROR', 'DONE'].includes(uploadStatus$ | async)">
     <nz-descriptions-item nzTitle="Upload Start Time">{{(result$ | async)?.upload_start_time | date : 'medium'}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Upload End Time">{{(result$ | async)?.upload_end_time | date : 'medium'}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Upload Tags">{{(result$ | async)?.tags  | json }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Upload Tags">
+      <nz-tag *ngFor="let e of (result$ | async)?.upload_tags" [nzColor]="e.color">{{e.value}}</nz-tag>
+    </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Total Records">{{(result$ | async)?.total_records}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Inserted Records">{{(result$ | async)?.inserted_records}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Error"><span class="text-danger">{{(result$ | async)?.upload_errors}}</span></nz-descriptions-item>

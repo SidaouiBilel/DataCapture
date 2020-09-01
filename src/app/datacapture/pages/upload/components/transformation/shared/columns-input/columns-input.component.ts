@@ -12,20 +12,16 @@ import { selectInputCloumnsByIndex } from '../../store/transformation.selectors'
   providers: [MakeProvider(ColumnsInputComponent)]
 })
 export class ColumnsInputComponent extends AbstractValueAccessor implements OnInit {
-  
-  _value = null;
-
   @Input() nzSize = 'default';
   @Input() mode = 'default';
-  @Input('nodeIndex') set nodeIndex(index){
+  @Input('nodeIndex') set nodeIndex(index) {
     this.columns$ = this.store.select(selectInputCloumnsByIndex(index));
-  };
-
+  }
+  _value = null;
   columns$;
-  
-  constructor(private store: Store<AppState>) { 
-    super()
-    this.columns$ = this.store.select(selectFileHeaders)
+  constructor(private store: Store<AppState>) {
+    super();
+    this.columns$ = this.store.select(selectFileHeaders);
   }
 
   ngOnInit() {

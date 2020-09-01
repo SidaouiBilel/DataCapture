@@ -1,7 +1,0 @@
-<nz-list [ngClass]="(color=='primary')?'list-default':'list-custom'" [nzDataSource]="data" nzBordered nzSize="small"
-  [nzHeader]="header" [nzRenderItem]="smallItem">
-  <ng-template #header let-item><i nz-icon [nzType]="icon" nzTheme="outline"></i><b>{{title}}</b></ng-template>
-  <ng-template #smallItem let-item>
-    <nz-list-item class="stack" (click)="changeSelection(item.id)" [ngClass]="item.id == selectedId ? 'selected' : ''" [nzContent]="item.name"></nz-list-item>
-  </ng-template>
-</nz-list>

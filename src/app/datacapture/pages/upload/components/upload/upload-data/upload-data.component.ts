@@ -18,6 +18,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   @Output() cancel: EventEmitter<any> = new EventEmitter<any>();
 
   progress = 101;
+  colors = ['cyan', 'red', 'magenta', 'volcano', 'orange', 'gold', 'lime', 'green', 'blue', 'geekblue', 'purple'];
   status$: any;
   result$: BehaviorSubject<any> = new BehaviorSubject(null);
   uploadStatus$: BehaviorSubject<any> = new BehaviorSubject('READY');
@@ -59,6 +60,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
     this.progress = 0;
     this.uploadStatus$.next('STARTED');
     this.status$ = this.service.getUploadStatus(id).subscribe((res) => {
+      res.upload_tags = res.upload_tags.map((e) => ({color: this.getRandom(), value: e }));
       this.result$.next(res);
       this.uploadStatus$.next(res.upload_status);
       if (['ERROR', 'DONE'].includes(res.upload_status)) {
@@ -67,6 +69,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  format = () => {if (this.progress === 101) { return 'Upload'; } else {return this.progress + '%';}};
+  format = () => {if (this.progress === 101) { return 'Upload'; } else {return this.progress + '%'; }};
 
+  getRandom() { return this.colors[Math.floor(Math.random() * 11)]; }
 }
