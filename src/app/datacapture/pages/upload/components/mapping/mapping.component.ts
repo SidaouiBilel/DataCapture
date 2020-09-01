@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, forkJoin, Observer } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, forkJoin, Observer, combineLatest } from 'rxjs';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
@@ -20,7 +20,7 @@ import { selectTransformedFilePath } from '../transformation/store/transformatio
   templateUrl: './mapping.component.html',
   styleUrls: ['./mapping.component.css']
 })
-export class MappingComponent implements OnInit {
+export class MappingComponent implements OnInit, OnDestroy {
   mappingFields: any;
   mappedSources: any;
   mandatories: number;
@@ -39,6 +39,7 @@ export class MappingComponent implements OnInit {
   domain$: Observable<any>;
   mappingId$: Observable<string>;
   worksheet$: Observable<any>;
+  monitor$: any;
   constructor(private store: Store<AppState>,
               private service: MappingService,
               private router: Router,
@@ -61,8 +62,12 @@ export class MappingComponent implements OnInit {
     this.validateForm = this.fb.group({name: [null, [Validators.required], [this.nameValidator.bind(this)]]});
     this.validate();
   }
+  ngOnDestroy(): void {
+    if (this.monitor$) { this.monitor$.unsubscribe(); }
+  }
 
   ngOnInit() {
+    this.checkMappingSanity();
   }
 
   reInitMappingFields(): void {
@@ -164,6 +169,7 @@ export class MappingComponent implements OnInit {
               this.updateLocalMapping(res);
               this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
+              this.checkMappingSanity();
             }, (err) => {
               this.notification.error(err.message);
             });
@@ -208,7 +214,7 @@ export class MappingComponent implements OnInit {
     // to do check if the source data exist on other columns before setting to false
     if (remove) {
       const exist = this.mappingFields.map((e) => e.value).filter((e) => {if (e) { return e; } }).indexOf(source.value);
-      if (exist < 0) {
+      if (exist < 0 && source.value in this.mappedSources) {
         this.mappedSources[source.value] = false;
       }
     } else {
@@ -226,6 +232,27 @@ export class MappingComponent implements OnInit {
             this.notification.success('The mapping is successfully updated');
           });
       });
+  }
+
+  checkMappingSanity(): void {
+    this.monitor$ = forkJoin(
+      this.mappingFields$.pipe(take(1)),
+      this.mappedSources$.pipe(take(1))
+    ).subscribe(([mappingFields, mappedSources]) => {
+      const values = mappingFields.map((e) => e.value).filter((e) => {if (e) { return e; }});
+      const sources = Object.keys(mappedSources);
+      for (const iterator of values) {
+        if (sources.indexOf(iterator) < 0) {
+          this.modalService.warning({
+            nzTitle: 'Something is wrong with this mapping.',
+            nzWrapClassName: 'vertical-center-modal',
+            // tslint:disable-next-line: max-line-length
+            nzContent: 'It seems like some of the mapped columns does not exist in the file you imported. Please update it or choose another mapping.'
+          });
+          break;
+        }
+      }
+    });
   }
 
   nameValidator = (control: FormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
