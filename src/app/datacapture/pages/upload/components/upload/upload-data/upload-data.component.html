@@ -1,3 +1,6 @@
+<button nzGhost nz-button (click)="onUpload()">
+  <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+</button>
 <nz-result [nzIcon]="icon" [nzTitle]="title">
   <div nz-result-extra>
     <button *ngIf="!(uploadingId$ | async)" class="upload" nz-button nzType="default" (click)="onUpload()">
@@ -5,10 +8,12 @@
       Upload
     </button>
 
-    <button *ngIf="(uploadStatus$ | async) === 'ERROR'" nz-button nzType="danger" (click)="cancel.emit(true)">
-      <i nz-icon nzType="close" nzTheme="outline"></i>
-      Cancel
-    </button>
+    <ng-container *ngIf="(uploadStatus$ | async) === 'ERROR'">
+      <div class="button-spacing">
+        <button  nz-button nzType="primary" (click)="onUpload()"><i nz-icon nzType="reload" nzTheme="outline"></i>Retry</button>
+        <button  nz-button nzType="danger"  (click)="cancel.emit(true)"><i nz-icon nzType="close" nzTheme="outline"></i>Cancel</button>
+      </div>
+    </ng-container>
 
     <button *ngIf="(uploadStatus$ | async) === 'DONE'" nz-button nzType="default" (click)="cancel.emit(true)">
       <i nz-icon nzType="check" nzTheme="outline"></i>
@@ -30,7 +35,7 @@
 
 <ng-template #title>
   <div *ngIf="!(uploadingId$ | async)" class="ant-result-title"> You are all set to upload your data.</div>
-  <div *ngIf="!['ERROR', 'DONE'].includes(uploadStatus$ | async)" class="ant-result-title"> Uploading...</div>
+  <div *ngIf="(result$ | async) && !(['ERROR', 'DONE'].includes(uploadStatus$ | async))" class="ant-result-title">  <nz-spin nzSimple [nzSize]="'large'"></nz-spin> </div>
   <div *ngIf="(uploadStatus$ | async) === 'DONE'" class="ant-result-title"> Success</div>
   <div *ngIf="(uploadStatus$ | async) === 'ERROR'" class="ant-result-title"> The upload has failed.</div>
   <!-- {{result$ | async | json}} -->
