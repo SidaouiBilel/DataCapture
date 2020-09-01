@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable, BehaviorSubject, interval, Subject, timer } from 'rxjs';
 import { UploadingPayload } from '../models/uploading.model';
-import { takeUntil, switchMap, tap, catchError } from 'rxjs/operators';
+import { takeUntil, switchMap, tap, catchError, map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +27,23 @@ export class UploadService {
 
   getUploadStatus(flowId: any): Observable<any> {
     const stop = new Subject();
-    return timer(0, 2000).pipe(
+    const pool = new BehaviorSubject(true);
+    
+    const poolResult = pool.pipe(
       takeUntil(stop),
       switchMap(() => this.getStatus(flowId)),
       tap((status: any) => {
-        if (['ERROR', 'DONE'].includes(status.upload_status)) { stop.next(); }
-        return status;
+        if (['ERROR', 'DONE'].includes(status.upload_status)) { 
+          stop.next();
+          pool.complete() 
+        } else {
+          timer(2000).pipe(take(1)).subscribe(()=> pool.next(true))
+        }
       }),
-      catchError((err) => {stop.next(); return err; } )
+      catchError((err) => {stop.next(); pool.complete(); return err; } )
     );
+    pool.next(true)
+    return poolResult
   }
 
 }
