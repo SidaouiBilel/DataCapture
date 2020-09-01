@@ -16,6 +16,10 @@ const routes: Routes = [
           loadChildren : 'app/datacapture/pages/upload/upload.module#UploadModule'
         },
         {
+          path: 'dashboard',
+          loadChildren : 'app/datacapture/pages/dashboard/dashboard.module#DashboardModule'
+        },
+        {
           path: '**',
           redirectTo: 'admin'
         }

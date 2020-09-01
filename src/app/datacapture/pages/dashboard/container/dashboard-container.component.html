@@ -1,0 +1,73 @@
+<div class="dashboard-container">
+  <div class="flex-box">
+    <!-- Header -->
+    <div class="dashHeader" nz-row>
+      <div nz-col nzSpan="18">
+        <div>
+          <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(selectedDomain?.name)"></i>
+          <button class="ghost" [class.req-input]="!(selectedDomain?.name)" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+            <div style="min-width:200px" class="flex between">
+              <div class="flex-1 text-left">{{ (selectedDomain?.name) || 'None' }}</div>
+              <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"
+                [class.text-danger]="!(selectedDomain?.name)"></i>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div nz-col nzSpan="6" class="text-right button-spacing">
+      </div>
+    </div>
+
+    <nz-divider class="horiz" nzOrientation="left"></nz-divider>
+    <!-- Body -->
+    <div class="table" *ngIf="selectedDomain">
+      <nz-table #basicTable [nzData]="data">
+        <thead>
+          <tr>
+            <th>Collection</th>
+            <th>Inserted Records</th>
+            <th>Total Records</th>
+            <th>Upload Start Date</th>
+            <th>Upload End Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of basicTable.data">
+            <td>{{ selectedDomain.name }}</td>
+            <td>{{ e.inserted_records }}</td>
+            <td>{{ e.total_records }}</td>
+            <td>{{ e.upload_start_time | date:'medium' }}</td>
+            <td>{{ e.upload_end_time | date:'medium' }}</td>
+            <td>
+              <!-- <nz-badge *ngIf="e.upload_status === 'DONE'" nz-tooltip nzTooltipTitle="Done" nzStatus="success">
+              </nz-badge>
+              <nz-badge *ngIf="e.upload_status === 'ERROR'" nz-tooltip nzTooltipTitle="Error" nzStatus="error">
+              </nz-badge>
+              <nz-badge *ngIf="e.upload_status === 'RUNNING'" nz-tooltip nzTooltipTitle="Running" nzStatus="processing">
+              </nz-badge> -->
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of keys(domains)" nz-submenu [nzTitle]="domainTemplate">
+      <ng-template #domainTemplate>
+        <i nz-icon nzType="folder" nzTheme="outline"></i>
+        {{item}}
+      </ng-template>
+      <ul>
+        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain)">
+          <i nz-icon nzType="block" nzTheme="outline"></i>
+          {{domain.name}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>

@@ -58,6 +58,9 @@ export class LayoutContainer {
         case 'domains':
           return 'apartment';
 
+        case 'dashboard':
+          return 'dashboard';
+
         case 'upload':
           return 'upload';
 
