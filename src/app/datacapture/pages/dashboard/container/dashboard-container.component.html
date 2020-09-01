@@ -41,12 +41,12 @@
             <td>{{ e.upload_start_time | date:'medium' }}</td>
             <td>{{ e.upload_end_time | date:'medium' }}</td>
             <td>
-              <!-- <nz-badge *ngIf="e.upload_status === 'DONE'" nz-tooltip nzTooltipTitle="Done" nzStatus="success">
+              <nz-badge *ngIf="e.upload_status === 'DONE'" nz-tooltip nzTooltipTitle="Done" nzStatus="success">
               </nz-badge>
               <nz-badge *ngIf="e.upload_status === 'ERROR'" nz-tooltip nzTooltipTitle="Error" nzStatus="error">
               </nz-badge>
               <nz-badge *ngIf="e.upload_status === 'RUNNING'" nz-tooltip nzTooltipTitle="Running" nzStatus="processing">
-              </nz-badge> -->
+              </nz-badge>
             </td>
           </tr>
         </tbody>
