@@ -8,10 +8,6 @@ const routes: Routes = [
       component: LayoutContainer,
       children: [
         {
-          path: 'stacks',
-          loadChildren : 'app/datacapture/pages/stacks/stacks.module#StacksModule'
-        },
-        {
           path: 'admin',
           loadChildren : 'app/datacapture/pages/admin/admin.module#AdminModule'
         },
@@ -21,7 +17,7 @@ const routes: Routes = [
         },
         {
           path: '**',
-          redirectTo: 'stacks'
+          redirectTo: 'admin'
         }
       ]
   }

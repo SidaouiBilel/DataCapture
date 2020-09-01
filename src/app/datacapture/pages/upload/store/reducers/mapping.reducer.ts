@@ -57,7 +57,7 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
     case ImportActionTypes.RESET:
       return initialState;
     default:
-  return state;
+      return state;
   }
 }
 
