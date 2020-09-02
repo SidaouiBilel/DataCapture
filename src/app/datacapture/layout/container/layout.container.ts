@@ -67,8 +67,8 @@ export class LayoutContainer {
         case 'import':
           return 'import';
 
-        case 'preview':
-          return 'file-done';
+        case 'transform':
+          return 'sliders';
 
         case 'mapping':
           return 'arrows-alt';

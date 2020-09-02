@@ -1,51 +1,41 @@
 <div class="button-spacing">
 
-    <ng-container *ngIf='showTransformation'>
-      <div class="flex between w-100">
-        <div class="flex-1">
-          <button class='ghost' *ngFor='let t of (shownTrans$ | async)' nzShape='circle' nz-button nzType='default'
+  <ng-container *ngIf='showTransformation'>
+    <div class="flex between w-100">
+      <div class="flex-1">
+        <button class='ghost' *ngFor='let t of (shownTrans$ | async)' nzShape='circle' nz-button nzType='default'
           (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
-          [nzRotate]='t.icon_rotation || 0'></i></button>
-        </div>
-        
-        <div class="ml-3">
-          <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon nzType="ellipsis" [nzRotate]='90'></i></button>
-          <nz-dropdown-menu #collapsedTrans="nzDropdownMenu">
-            <ul nz-menu>
-              <li *ngFor='let t of (collapsedTrans$ | async)' (click)='addTransformation(t)' nz-menu-item>
-                <i nz-icon [nzType]="t.icon || 'sliders'"[nzRotate]='t.icon_rotation || 0'></i>
-                <span class="ml-2">{{t.label}}</span>
-            </li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
+            [nzRotate]='t.icon_rotation || 0'></i></button>
       </div>
-    </ng-container>
 
-    <ng-container *ngIf='showActions'>
-        <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
-        (click)='onDelete()'><i nz-icon nzType="delete"></i>
-        </button>
-        <button 
-        *ngIf='saved' 
-        nzShape='circle' nz-button nz-tooltip 
-        nzTooltipTitle="Save as New"
-        (click)='onSaveAsNew()'
-        [nzType]='saveBtnType$ | async'
-        [ngClass]='ghostBtn$ | async'
-        [disabled]='!(canSave$ | async)'
-        ><i nz-icon nzType="diff"></i>
-        </button>
+      <div class="ml-3">
+        <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon
+            nzType="ellipsis" [nzRotate]='90'></i></button>
+        <nz-dropdown-menu #collapsedTrans="nzDropdownMenu">
+          <ul nz-menu>
+            <li *ngFor='let t of (collapsedTrans$ | async)' (click)='addTransformation(t)' nz-menu-item>
+              <i nz-icon [nzType]="t.icon || 'sliders'" [nzRotate]='t.icon_rotation || 0'></i>
+              <span class="ml-2">{{t.label}}</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+  </ng-container>
 
-        <button  
-        [nzType]='saveBtnType$ | async'
-        [ngClass]='ghostBtn$ | async'
-        nzShape='circle' 
-        nz-button nz-tooltip nzTooltipTitle="Save" 
-        (click)='onSave()' 
-        [disabled]='!(canSave$ | async)'>
-          <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
-        </button>
+  <ng-container *ngIf='showActions'>
+    <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
+      (click)='onDelete()'><i nz-icon nzType="delete"></i>
+    </button>
+    <button *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save as New" (click)='onSaveAsNew()'
+      [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' [disabled]='!(canSave$ | async)'><i nz-icon
+        nzType="diff"></i>
+    </button>
 
-    </ng-container>
-  </div>
+    <button [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' nzShape='circle' nz-button nz-tooltip
+      nzTooltipTitle="Save" (click)='onSave()' [disabled]='!(canSave$ | async)'>
+      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+    </button>
+
+  </ng-container>
+</div>

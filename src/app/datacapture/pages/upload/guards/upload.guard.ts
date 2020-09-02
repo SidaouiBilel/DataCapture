@@ -5,21 +5,24 @@ import { Store } from '@ngrx/store';
 import { selectFileData, selectDomain } from '../store/selectors/import.selectors';
 import { Injectable } from '@angular/core';
 import { selectSelectedSheet } from './../store/selectors/preview.selectors';
-import { selectMandatories } from './../store/selectors/mapping.selectors';
+import { selectMandatories, selectMappingId } from './../store/selectors/mapping.selectors';
 
 @Injectable()
 export class UploadGuard implements CanActivate {
   fileData: any;
   selectedDomain: string;
+  mappingId: string;
   selectedSheet: number;
   mandatories: number;
   // Store
   fileData$: Observable<any>;
+  mappingId$: Observable<any>;
   selectedDomain$: Observable<any>;
   selectedSheet$: Observable<number>;
   mandatories$: Observable<number>;
   constructor(private store: Store<AppState>) {
     this.fileData$ = this.store.select(selectFileData);
+    this.mappingId$ = this.store.select(selectMappingId);
     this.selectedDomain$ = this.store.select(selectDomain);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
@@ -27,11 +30,12 @@ export class UploadGuard implements CanActivate {
     this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
+    this.mappingId$.subscribe((mappingId) => { this.mappingId = mappingId; });
   }
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     switch (next.data.route) {
-      case 'PREVIEW': {
+      case 'TRANSFORM': {
         if (this.fileData.metaData && this.selectedDomain) {
             return true;
         } else {
@@ -46,7 +50,7 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'CLEANSING': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0) {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.mappingId) {
             return true;
         } else {
             return false;

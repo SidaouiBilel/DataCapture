@@ -45,7 +45,7 @@ export class StepperComponent implements OnInit {
             if (this.pageList.includes('import')) {
               return 'process';
             }
-            if (this.pageList.includes('preview') ||
+            if (this.pageList.includes('transform') ||
                 this.pageList.includes('mapping') ||
                 this.pageList.includes('cleansing') ||
                 this.pageList.includes('uploading')) {
@@ -54,9 +54,9 @@ export class StepperComponent implements OnInit {
           }
           break;
         }
-        case 'preview': {
+        case 'transform': {
           if ( this.pageList.length > 0 ) {
-            if (this.pageList.includes('preview')) {
+            if (this.pageList.includes('transform')) {
               return 'process';
             }
             if (this.pageList.includes('mapping') ||
@@ -79,7 +79,7 @@ export class StepperComponent implements OnInit {
                 this.pageList.includes('uploading')) {
               return 'finish';
             }
-            if (this.pageList.includes('import') || this.pageList.includes('preview')) {
+            if (this.pageList.includes('import') || this.pageList.includes('transform')) {
               return 'wait';
             }
           }
@@ -93,7 +93,7 @@ export class StepperComponent implements OnInit {
             if (this.pageList.includes('uploading')) {
               return 'finish';
             }
-            if (this.pageList.includes('import') || this.pageList.includes('preview') || this.pageList.includes('mapping')) {
+            if (this.pageList.includes('import') || this.pageList.includes('transform') || this.pageList.includes('mapping')) {
               return 'wait';
             }
           }
@@ -104,7 +104,7 @@ export class StepperComponent implements OnInit {
             if (this.pageList.includes('uploading')) {
               return 'process';
             }
-            if (this.pageList.includes('import') || this.pageList.includes('preview') ||
+            if (this.pageList.includes('import') || this.pageList.includes('transform') ||
                 this.pageList.includes('mapping') || this.pageList.includes('cleansing')) {
               return 'wait';
             }
@@ -125,7 +125,7 @@ export class StepperComponent implements OnInit {
         if (this.pageList.includes('import')) {
           return 0;
         }
-        if (this.pageList.includes('preview')) {
+        if (this.pageList.includes('transform')) {
           return 1;
         }
         if (this.pageList.includes('mapping')) {

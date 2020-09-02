@@ -5,30 +5,23 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
   templateUrl: './transformation-interface.component.html',
 })
 export class TransformationInterfaceComponent implements OnInit {
-
-  @Output() dataChanged = new EventEmitter<any>()
-
   @Input() data: any = {};
   @Input() index = null;
-
   @Input() size = 'small';
-
+  @Output() dataChanged = new EventEmitter<any>();
   form_orientation = 'horizontal';
-  
   constructor() { }
 
 
   ngOnInit() {
   }
 
-  validate(){
+  validate() {
     return true;
   }
 
-  onDataChanged(){
+  onDataChanged() {
     // VALIDATE
     this.dataChanged.emit(this.data);
   }
-  
-
 }
