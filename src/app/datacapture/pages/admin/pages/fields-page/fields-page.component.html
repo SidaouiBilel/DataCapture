@@ -36,7 +36,7 @@
 
   <div nz-col [nzSpan]='6'>
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="Filter Domain Targets" />
+      <input type="text" nz-input [(ngModel)]='searchTerm' placeholder="Filter Domain Targets" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <i nz-icon nzType="search"></i>
@@ -63,7 +63,7 @@
     </thead>
     <tbody>
 
-      <tr *ngFor="let data of list$ | async">
+      <tr *ngFor="let data of list$ | async | filter :'label': searchTerm"">
         
         <ng-container  *ngFor="let column of columns">
           <ng-container [ngSwitch]="column.field">

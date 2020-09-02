@@ -37,6 +37,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
 
   loading
   uploadURI
+  searchTerm = ''
 
   
   onBack(){

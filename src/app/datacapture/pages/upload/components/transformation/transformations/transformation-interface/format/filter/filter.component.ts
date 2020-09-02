@@ -18,7 +18,7 @@ export class FilterComponent extends TransformationInterfaceComponent implements
       {value: '!=', label: 'Not Equal'}
     ]},
     {label:'Strings', operations:[
-      {value: 'match', label: 'Matches(REGEX)'}, 
+      {value: 'match', label: 'REGEX'}, 
       {value: 'contains', label: 'Contains'}, 
       {value: 'startswith', label: 'Starts With'}, 
       {value: 'endswith', label: 'Ends With'},

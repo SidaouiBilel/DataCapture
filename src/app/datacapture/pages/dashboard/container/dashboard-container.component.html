@@ -30,6 +30,7 @@
             <th>Total Records</th>
             <th>Upload Start Date</th>
             <th>Upload End Date</th>
+            <th>Tags</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -40,6 +41,9 @@
             <td>{{ e.total_records }}</td>
             <td>{{ e.upload_start_time | date:'medium' }}</td>
             <td>{{ e.upload_end_time | date:'medium' }}</td>
+            <td>
+              <nz-tag *ngFor='let tag of e.upload_tags'>{{tag}}</nz-tag>
+            </td>
             <td>
               <nz-badge *ngIf="e.upload_status === 'DONE'" nz-tooltip nzTooltipTitle="Done" nzStatus="success">
               </nz-badge>
