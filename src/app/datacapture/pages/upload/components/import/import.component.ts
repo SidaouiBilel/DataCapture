@@ -101,6 +101,6 @@ export class ImportComponent implements OnInit {
       this.notification.warn('Please import your file.');
       return;
     }
-    this.router.navigate(['/datacapture/upload/preview']);
+    this.router.navigate(['/datacapture/upload/transform']);
   }
 }

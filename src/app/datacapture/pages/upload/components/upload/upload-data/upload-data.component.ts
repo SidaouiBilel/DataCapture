@@ -49,8 +49,8 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       cleansing_job_id: this.metaData.cleansingId,
       transformation_id: this.metaData.transformationId
     };
-    this.progress = 0;
     this.uploadStatus$.next('STARTED');
+    this.progress = 0;
     this.service.upload(payload).subscribe((res: any) => {
       this.store.dispatch(new ActionSaveUploadId(res));
     });
@@ -69,7 +69,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  format = () => {if (this.progress === 101) { return 'Upload'; } else {return this.progress + '%'; }};
+  format = () => {if (this.progress === 101) { return 'Upload'; } else {return 'Uploading...'; }};
 
   getRandom() { return this.colors[Math.floor(Math.random() * 11)]; }
 }

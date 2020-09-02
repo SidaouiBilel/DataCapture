@@ -29,6 +29,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   isOkLoading: boolean;
   validateForm: FormGroup;
   worksheet: any;
+  mappingId: any;
   domain: any;
   // Store
   mappingFields$: Observable<any>;
@@ -55,6 +56,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.fileData$      = this.store.select(selectFileData);
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
+    this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.domain$.subscribe((res) => { this.domain = res; });
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
@@ -271,14 +273,18 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   goToPreview(): void {
-    this.router.navigate(['/datacapture/upload/preview']);
+    this.router.navigate(['/datacapture/upload/transform']);
   }
 
   goToCleansing(): void {
-    if (this.mandatories === 0 ) {
+    if (this.mandatories === 0) {
       this.router.navigate(['/datacapture/upload/cleansing']);
-    } else {
+    } else if (this.mandatories !== 0) {
       this.notification.warn('Please map all the mandatory fields');
+    }
+
+    if (! this.mappingId ) {
+      this.notification.warn('Please save your mapping or Apply one.');
     }
   }
 }

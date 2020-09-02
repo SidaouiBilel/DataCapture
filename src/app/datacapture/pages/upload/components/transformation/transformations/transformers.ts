@@ -9,16 +9,17 @@ import { DefaultValueComponent } from './transformation-interface/format/default
 import { SplitterComponent } from './transformation-interface/format/splitter/splitter.component';
 
 export const TRANSFORMATIONS = [
-    new DeleteRow().setComponent(DeleteRowsComponent),
-    new DeleteColumns().setComponent(DeleteColumnComponent),
-    new Replace().setComponent(FormatterComponent),
-    new Merge().setComponent(MergerComponent),
-    new Filter().setComponent(FilterComponent),
-    new FilterAndReplace().setComponent(FindAndReplaceComponent),
-    new DefaultValue().setComponent(DefaultValueComponent),
-    new Splitter().setComponent(SplitterComponent)
-  ]; 
+  new Filter().setComponent(FilterComponent),
+  new FilterAndReplace().setComponent(FindAndReplaceComponent),
+  new Merge().setComponent(MergerComponent),
+  new Replace().setComponent(FormatterComponent),
+  new DeleteColumns().setComponent(DeleteColumnComponent),
+  new DeleteRow().setComponent(DeleteRowsComponent),
+  new DefaultValue().setComponent(DefaultValueComponent),
+  new Splitter().setComponent(SplitterComponent)
+];
 
 export const TransformerFactory = (type) => {
-  return TRANSFORMATIONS.find(t=> t.type == type)
-} 
+  return TRANSFORMATIONS.find(t => t.type === type);
+}
+

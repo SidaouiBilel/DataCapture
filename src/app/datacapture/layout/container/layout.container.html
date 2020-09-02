@@ -7,7 +7,7 @@
           <a [routerLink]="['/datacapture/projects']">
             <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
               src="../../../../assets/images/logo.png" alt="logo">
-            <h1 *ngIf="!isCollapsed">DataCapture</h1>
+            <h1 *ngIf="!isCollapsed">C&C Data Factory</h1>
           </a>
         </div>
       </div>
@@ -50,9 +50,9 @@
                 <i nz-icon nzType="import"></i>
                 <span>Import</span>
               </li>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/upload/preview']">
-                <i nz-icon nzType="file-done"></i>
-                <span>Preview</span>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/upload/transform']">
+                <i nz-icon nzType="sliders"></i>
+                <span>Transform</span>
               </li>
               <li nz-menu-item [nzSelected]="isPrimaryPage('mapping')" [routerLink]="['/datacapture/upload/mapping']">
                 <i nz-icon nzType="arrows-alt"></i>

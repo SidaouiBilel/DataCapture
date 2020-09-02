@@ -38,14 +38,12 @@ export class TransformationPipeComponent implements OnInit {
     this.domain$ = this.store.select(selectDomain);
     this.expanded$ = this.store.select(selectPipeExpanded);
     this.active$ = this.pipes.active$;
-
     this.active$.subscribe((active: any) => {
         this.name = (active) ? active.name : null,
         this.saved = (active && active.id) ? true : false;
     });
-
-    this.canSave$ = this.pipes.canSave$
-    this.modified$ = this.pipes.modified$
+    this.canSave$ = this.pipes.canSave$;
+    this.modified$ = this.pipes.modified$;
   }
 
   close(): void {
@@ -76,7 +74,7 @@ export class TransformationPipeComponent implements OnInit {
   onSave() {
     this.pipes.saveEdited();
   }
-  
+
   onSaveAsNew() {
     this.pipes.saveEdited(true);
   }

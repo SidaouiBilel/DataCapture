@@ -9,7 +9,7 @@ import { selectActivePipe,
         selectPreviewMode,
         selectPipeExpanded,
         selectTranformationNodes,
-        selectEdiedTranformationPipeInfo, 
+        selectEdiedTranformationPipeInfo,
         selectTranformationValid,
         selectActivePipeModified,
         selectTranformationInfoValid,
@@ -107,19 +107,19 @@ export class TranformationService {
   }
 
   updateEdited(pipeInfo: any) {
-    this.store.dispatch(new UpdateEditedPipeInfo(pipeInfo))
+    this.store.dispatch(new UpdateEditedPipeInfo(pipeInfo));
   }
 
-  saveEdited(asNew=false) {
+  saveEdited(asNew= false) {
     combineLatest(
-      this.canSave$, 
-      this.store.select(selectTranformationInfoValid), 
+      this.canSave$,
+      this.store.select(selectTranformationInfoValid),
       this.store.select(selectTranformationNodesValid),
-    ).pipe(take(1)).subscribe(([canSave, validInfo, validNodes])=>{
-      if(canSave){
+    ).pipe(take(1)).subscribe(([canSave, validInfo, validNodes]) => {
+      if (canSave) {
         forkJoin(this.nodes$.pipe(take(1)), this.edited$.pipe(take(1))).subscribe(
           ([nodes, edited]: any) => {
-            const pipe:any = {
+            const pipe: any = {
               name: edited.name,
               description: edited.description,
               modified_on: new Date(),
@@ -130,27 +130,26 @@ export class TranformationService {
             };
 
             // SAVE AS NEW
-            if(asNew) pipe.id = null;
-            
-            this.save(pipe).subscribe(()=> this.msg.success('Pipe Saved.'));
+            if (asNew) { pipe.id = null; }
+            this.save(pipe).subscribe(() => this.msg.success('Pipe Saved.'));
           }
-          );
-        }else{
-          const message = ['Cannot save pipe:']
-          if (!validNodes)  message.push("<b>&#8226 All nodes must be valid</b>")
-          if (!validInfo)   message.push("<b>&#8226 Missing pipe information</b>")
-          this.msg.error(message.join("<br />"))
+        );
+        } else {
+          const message = ['Cannot save pipe:'];
+          if (!validNodes) {  message.push('<b>&#8226 All nodes must be valid</b>'); }
+          if (!validInfo) {   message.push('<b>&#8226 Missing pipe information</b>'); }
+          this.msg.error(message.join('<br />'));
         }
-      })
+      });
   }
 
-  addTransformaion(rule){
+  addTransformaion(rule) {
     this.store.dispatch(new AddTransNode(rule));
-    this.msg.default(`<b>${TransformerFactory(rule.type).label}</b> Added`)
+    this.msg.default(`<b>${TransformerFactory(rule.type).label}</b> Added`);
   }
-  
-  swapTransformaion(o, n){
-    this.store.dispatch(new UpdateNodeOrder(o,n));
-    this.msg.default('Transformation Nodes Swapped')
+
+  swapTransformaion(o, n) {
+    this.store.dispatch(new UpdateNodeOrder(o, n));
+    this.msg.default('Transformation Nodes Swapped');
   }
 }
