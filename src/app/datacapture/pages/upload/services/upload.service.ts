@@ -27,23 +27,16 @@ export class UploadService {
 
   getUploadStatus(flowId: any): Observable<any> {
     const stop = new Subject();
-    const pool = new BehaviorSubject(true);
     
-    const poolResult = pool.pipe(
+    return timer(0,2000).pipe(
       takeUntil(stop),
       switchMap(() => this.getStatus(flowId)),
       tap((status: any) => {
         if (['ERROR', 'DONE'].includes(status.upload_status)) { 
           stop.next();
-          pool.complete() 
-        } else {
-          timer(2000).pipe(take(1)).subscribe(()=> pool.next(true))
-        }
-      }),
-      catchError((err) => {stop.next(); pool.complete(); return err; } )
+        }}),
+      catchError((err) => {stop.next(); return err; } )
     );
-    pool.next(true)
-    return poolResult
   }
 
 }
