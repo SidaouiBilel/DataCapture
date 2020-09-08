@@ -37,6 +37,6 @@
 
     <div class="flex"><button class="ghost" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Add Predicate" (click)='onAddCondition()'><i nz-icon nzType="plus"></i></button></div>
 
-    <label nz-checkbox [ngModelOptions]=" {standalone: true}"  [(ngModel)]='data.reverse' (ngModelChange)='onDataChanged()' >Reverse Filter</label>
+    <label *ngIf='showReverse' nz-checkbox [ngModelOptions]=" {standalone: true}"  [(ngModel)]='data.reverse' (ngModelChange)='onDataChanged()' >Reverse Filter</label>
 
 </form>

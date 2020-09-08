@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TransformationInterfaceComponent } from '../../transformation-interface.component';
 
 @Component({
@@ -7,6 +7,9 @@ import { TransformationInterfaceComponent } from '../../transformation-interface
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent extends TransformationInterfaceComponent implements OnInit  {
+
+  @Input() showReverse = true
+  
   operations = [
     {
       label: 'Numbers', operations: [

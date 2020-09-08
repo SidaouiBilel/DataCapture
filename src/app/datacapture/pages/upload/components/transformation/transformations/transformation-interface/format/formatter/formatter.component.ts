@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TransformationInterfaceComponent } from '../../transformation-interface.component';
 
 @Component({
@@ -8,6 +8,8 @@ import { TransformationInterfaceComponent } from '../../transformation-interface
 })
 export class FormatterComponent extends TransformationInterfaceComponent implements OnInit  {
 
+  @Input() showFrom = true
+  
   constructor() { 
     super()
   }
