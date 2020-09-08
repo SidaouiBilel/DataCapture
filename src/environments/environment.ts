@@ -14,7 +14,7 @@ export const environment = {
   cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
   // cleansing: 'http://localhost:5000/check',
   // TRANSFORMATION
-  // transform: 'http://localhost:5000/transfo/'
+  // transform: 'http://localhost:5000/transfo/',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/'
 };
