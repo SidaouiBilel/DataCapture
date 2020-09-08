@@ -3,13 +3,15 @@
     background: '#f7f7f7', 'border-radius': '4px', border: '0px'}" [nzExpandedIcon]="expandedIcon">
     <!-- tags -->
 
-    <nz-select nzMode="tags" nzPlaceHolder="Tags" (ngModelChange)="tagsChanged.emit(selectedTags)"
+    <nz-select nzMode="tags" nzPlaceHolder="Tags" (ngModelChange)="onTagsChanged()"
       (nzOpenChange)="loadTags($event)" [(ngModel)]="selectedTags">
       <nz-option *ngFor="let tag of tags" [nzLabel]="tag" [nzValue]="tag"></nz-option>
       <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
         <i nz-icon nzType="loading" class="loading-icon"></i> Loading Tags...
       </nz-option>
     </nz-select>
+
+    {{selectedTags | json}}
   </nz-collapse-panel>
 </nz-collapse>
 
