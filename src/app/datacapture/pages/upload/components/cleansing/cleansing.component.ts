@@ -12,6 +12,8 @@ import { selectMappingId } from '../../store/selectors/mapping.selectors';
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { AuditComponent } from './audit/audit.component';
 
 @Component({
   selector: 'app-cleansing',
@@ -46,6 +48,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private store: Store<AppState>,
               private service: CleansingService,
+              private modalService: NzModalService,
               public hotkeys: CleansingHotKeysService,
               private not: NotificationService) {
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
@@ -80,6 +83,23 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.hotkeys.unregister();
+  }
+
+  auditTrial(): void {
+    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
+      const modal: NzModalRef = this.modalService.create({
+        nzTitle: 'Audit Trial',
+        nzClosable: false,
+        nzWrapClassName: 'vertical-center-modal',
+        nzWidth: 'xXL',
+        nzContent: AuditComponent,
+        nzOkText: null,
+        nzComponentParams: {
+          audits: res
+        },
+      });
+    });
   }
 
   saveModifications = () => {

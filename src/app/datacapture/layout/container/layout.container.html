@@ -35,7 +35,7 @@
         <ul nz-menu nzMode="inline" class="sider-menu" [nzInlineCollapsed]="isCollapsed">
           <li nz-menu-item [nzSelected]="isPrimaryPage('dashboard')" [routerLink]="['/datacapture/dashboard']">
             <i nz-icon nzType="dashboard"></i>
-            Dashboard
+            <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>
           </li>
           <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
             <ul>

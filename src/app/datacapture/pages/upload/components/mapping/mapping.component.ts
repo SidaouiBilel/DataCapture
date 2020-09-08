@@ -314,14 +314,14 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   goToCleansing(): void {
+    if (! this.mappingId ) {
+      this.notification.warn('Please save your mapping or Apply one.');
+      return;
+    }
     if (this.mandatories === 0) {
       this.router.navigate(['/datacapture/upload/cleansing']);
     } else if (this.mandatories !== 0) {
       this.notification.warn('Please map all the mandatory fields');
-    }
-
-    if (! this.mappingId ) {
-      this.notification.warn('Please save your mapping or Apply one.');
     }
   }
 }

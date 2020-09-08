@@ -58,6 +58,7 @@ import { OverviewComponent } from './components/upload/overview/overview.compone
 import { UploadTagsComponent } from './components/upload/upload-tags/upload-tags.component';
 import { UploadService } from './services/upload.service';
 import { UploadDataComponent } from './components/upload/upload-data/upload-data.component';
+import { AuditComponent } from './components/cleansing/audit/audit.component';
 
 const components = [
   UploadComponentComponent,
@@ -96,7 +97,11 @@ const components = [
   FindAndReplaceComponent,
   PipeChangesAlertComponent,
   DefaultValueComponent,
-  SplitterComponent
+  SplitterComponent,
+  OverviewComponent,
+  UploadTagsComponent,
+  UploadDataComponent,
+  AuditComponent
 ];
 
 @NgModule({
@@ -109,7 +114,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, OverviewComponent, UploadTagsComponent, UploadDataComponent],
+  declarations: [...components],
   exports: [
   ],
   providers : [
@@ -137,7 +142,8 @@ const components = [
     FindAndReplaceComponent,
     PipeChangesAlertComponent,
     DefaultValueComponent,
-    SplitterComponent
+    SplitterComponent,
+    AuditComponent
   ]
 })
 export class UploadModule {}

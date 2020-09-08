@@ -1,17 +1,27 @@
 :host {
-  position: absolute;
   padding: 10px;
+  position: absolute;
+  font-family: 'Ubuntu', sans-serif;
+  width: auto;
+  white-space: nowrap;
+  word-wrap: no-wrap;
   border-radius: 5px;
-  border: 1px solid #ffa1a1;
-  overflow: hidden;
-  pointer-events: none;
-  /* transition: opacity 1s; */
-  background: white !important;
+  background-color: #fff;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%);
+  transform-style: preserve-3d;
+  z-index: 200;
+  font-size: 0.9em;
+  display: block;
+  color: #D30423;
+  box-shadow: 1px 1px 20px rgba(211, 4, 35, 0.3);
 }
 
 :host.ag-tooltip-hiding {
   opacity: 1;
 }
+
 .custom-tooltip {
   background-color: white !important;
 }

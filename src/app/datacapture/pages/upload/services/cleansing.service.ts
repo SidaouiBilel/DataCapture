@@ -20,6 +20,10 @@ export class CleansingService {
     return this.http.get(environment.cleansing + `/metadata?job_id=${jobId}`);
   }
 
+  getAuditTrial(worksheetId: string, domainId: string): Observable<any> {
+    return this.http.get(environment.cleansing + `/modifications?worsheetId=${worksheetId}&domainId=${domainId}`);
+  }
+
   // tslint:disable-next-line: max-line-length
   getJobData(filename: string, worksheet: string, domainId: string, page: number, nrows: number, filter: string, sort: any[], isTransformed: boolean, mappingId: string): Observable<any> {
     const payload = {filter, sort};

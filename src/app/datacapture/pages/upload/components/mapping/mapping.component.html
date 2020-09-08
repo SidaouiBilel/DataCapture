@@ -1,23 +1,25 @@
 <div class="main-container flex-box">
   <!-- Header -->
   <div class="importHeader mb-2" nz-row>
-    <div nz-col nzSpan="18">
+    <div nz-col nzSpan="18" class="button-spacing">
       <button nz-tooltip nzTooltipTitle='Previous Mappings' nzShape='circle' class="ghost" nz-button
         (click)='previousMappings()'>
         <i nz-icon nzType="hourglass"></i>
       </button>
+      <nz-divider nzType='vertical'></nz-divider>
       <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost" nz-button
         (click)='updateMapping(mappingFields)'>
         <i nz-icon nzType="cloud-sync"></i>
       </button>
-      <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button
-        (click)="loadAutoMapping()">
-        <i nz-icon nzType="reload"></i>
-      </button>
       <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
-        (click)='isVisible = true'>
-        <i nz-icon nzType="save"></i>
-      </button>
+      (click)='isVisible = true'>
+      <i nz-icon nzType="save"></i>
+    </button>
+    <nz-divider nzType='vertical'></nz-divider>
+    <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button
+      (click)="loadAutoMapping()">
+      <i nz-icon nzType="reload"></i>
+    </button>
       <!-- <span>Applied Mapping: </span>
       <span> {{(mappingId$ |async)}} </span> -->
     </div>

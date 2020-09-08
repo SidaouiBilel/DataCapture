@@ -1,0 +1,14 @@
+<nz-collapse [nzAccordion]="true">
+  <nz-collapse-panel *ngFor="let panel of keys(audits); let first = first" [nzHeader]="panel" [nzActive]="first">
+    <nz-list [nzDataSource]="keys(audits[panel])" nzBordered nzSize="small" [nzRenderItem]="smallItem">
+      <ng-template #smallItem let-item>
+        <nz-list-item>
+          <div nz-row class="w-100">
+            <div nz-col nzSpan="6">{{item}}</div>
+            <div nz-col nzSpan="18">{{audits[panel][item] ? audits[panel][item] : 'Null'}}</div>
+          </div>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </nz-collapse-panel>
+</nz-collapse>
