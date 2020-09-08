@@ -18,6 +18,12 @@ export class UploadTagsComponent implements OnInit {
   ngOnInit() {
   }
 
+  onTagsChanged(): void {
+    setTimeout(() => {
+      this.tagsChanged.emit(this.selectedTags);
+    }, 1);
+  }
+
   loadTags(event: any): void {
     if (event) {
       this.isLoading = true;
