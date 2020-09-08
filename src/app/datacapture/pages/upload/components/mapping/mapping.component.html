@@ -7,7 +7,7 @@
         <i nz-icon nzType="hourglass"></i>
       </button>
       <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost" nz-button
-        (click)='updateMapping()'>
+        (click)='updateMapping(mappingFields)'>
         <i nz-icon nzType="cloud-sync"></i>
       </button>
       <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button

@@ -56,9 +56,6 @@ export class ImportComponent implements OnInit {
   }
 
   selectDomain(event: string, name: string): void {
-    this.service.getTargetFields(event).subscribe((res: any) => {
-      this.store.dispatch(new SaveMappingFields(res));
-    });
     this.store.dispatch(new ActionSelectDomain({id: event, name}));
   }
 

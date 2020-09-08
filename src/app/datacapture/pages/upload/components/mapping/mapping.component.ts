@@ -69,7 +69,44 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.checkMappingSanity();
+    this.getTargetFields();
+    if (this.mappingId) {
+      this.checkMappingSanity();
+    }
+  }
+
+  getTargetFields(): void {
+    this.service.getTargetFields(this.domain.id).subscribe((res: any) => {
+      if (this.mappingId) {
+        // do something
+        if (res.length) {
+          const mfIds = this.mappingFields.map((e) => e.id);
+          res = res.map((e) => {
+            const id = mfIds.indexOf(e.id);
+            if ( id >= 0) {
+              return this.mappingFields[id];
+            } else {
+              return e;
+            }
+          });
+          if (res.length !== this.mappingFields.length) {
+            this.modalService.info({
+              nzTitle: 'Changes Occured',
+              nzOkText: 'Update',
+              nzCancelText: 'Update Later',
+              nzWrapClassName: 'vertical-center-modal',
+              // tslint:disable-next-line: max-line-length
+              nzContent: `The target fields linked to this collection have been modified.
+                           We updated your local mapping. You can choose to update it now or later.`,
+              nzOnOk: () => this.updateMapping(res),
+              nzOnCancel: () => this.notification.warn(`Don't forget to update the mapping before moving to cleansing.`)
+            });
+          }
+        }
+
+      }
+      this.store.dispatch(new SaveMappingFields(res));
+    });
   }
 
   reInitMappingFields(): void {
@@ -225,11 +262,11 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
-  updateMapping(): void {
+  updateMapping(mappingFields: any): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
         // tslint:disable-next-line: max-line-length
-        this.service.updateMapping(this.mappingFields, mappingId, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain.id)
+        this.service.updateMapping(mappingFields, mappingId, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain.id)
           .subscribe((res) => {
             this.notification.success('The mapping is successfully updated');
           });
