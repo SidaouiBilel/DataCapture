@@ -10,9 +10,6 @@ import { Router } from '@angular/router';
 import { FileImportService } from '../../services/file-import.service';
 import * as urls from '@env/environment';
 import { selectDomain, selectFileData } from '../../store/selectors/import.selectors';
-import { take } from 'rxjs/operators';
-import { SaveMappingFields } from '../../store/actions/mapping.actions';
-import { exit } from 'process';
 import { ActionSelectSheet } from '../../store/actions/preview.actions';
 
 @Component({
@@ -41,8 +38,8 @@ export class ImportComponent implements OnInit {
       this.fileData = fileData;
     })
     this.selectedDomain$.subscribe((domain: any) => {
+      this.selectedDomain = domain;
       if (domain) {
-        this.selectedDomain = domain;
         this.url = urls.environment.import + '?domainId=' + domain.id;
       }
     });
