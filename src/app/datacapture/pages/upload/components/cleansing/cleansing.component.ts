@@ -35,6 +35,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   keys = Object.keys;
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
+  results$: BehaviorSubject<any> = new BehaviorSubject({});
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -86,12 +87,15 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   auditTrial(): void {
-    let ws 
-    if(this.worksheet) ws = this.worksheet.split('/').pop()
-    else ws = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    let ws;
+    if (this.worksheet) {
+      ws = this.worksheet.split('/').pop();
+    } else {
+      ws = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    }
     this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
-        nzTitle: 'Audit Trial',
+        nzTitle: 'Audit Trail',
         nzClosable: false,
         nzWrapClassName: 'vertical-center-modal',
         nzWidth: 'xXL',
@@ -145,6 +149,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
                 newErrors[ind] =  res.results[e];
               });
               that.results = {...that.results, ...newErrors};
+              that.results$.next(that.results);
               if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
                 const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
                 headers.unshift({
@@ -174,7 +179,8 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   fetchData(params: any): void {
-    this.results = [];
+    this.results = {};
+    this.results$.next({});
     const datasource = this.serverSideDatasource(params);
     params.api.setServerSideDatasource(datasource);
     this.grid = params;
@@ -206,7 +212,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
           // Tooltip
           h.tooltipComponent = 'customTooltip';
           // h.tooltipField = h.field;
-          h.tooltipComponentParams = {error: this.results};
+          h.tooltipComponentParams = {error: this.results$};
           h.tooltipValueGetter = (params) => {
             return { value: params.value };
           };

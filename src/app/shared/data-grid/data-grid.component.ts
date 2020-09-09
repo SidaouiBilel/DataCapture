@@ -20,7 +20,7 @@ export class DataGridComponent implements OnInit {
 
   @Input() gridOptions = {
     onRangeSelectionChanged: GAPIGridSelectionOverride,
-  };;
+  };
   // @Input() fillOperation: (args: any) => void;
 
   @Output() gridReady: EventEmitter<any> = new EventEmitter<any>();
@@ -49,7 +49,7 @@ export class DataGridComponent implements OnInit {
     } catch (e) {
       console.error(e);
     }
-    this.gridReady.emit(params)
+    this.gridReady.emit(params);
   }
 
 }

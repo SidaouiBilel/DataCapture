@@ -4,7 +4,7 @@
       <ng-template #smallItem let-item>
         <nz-list-item>
           <div nz-row class="w-100">
-            <div nz-col nzSpan="6">{{item}}</div>
+            <div nz-col nzSpan="6">{{item + 1}}</div>
             <div nz-col nzSpan="18">{{audits[panel][item] ? audits[panel][item] : 'Null'}}</div>
           </div>
         </nz-list-item>
