@@ -22,7 +22,7 @@
   [enableRangeSelection]="rangeSelection"
   [gridOptions]='gridOptions'
   (cellValueChanged)="cellValueChanged.emit($event)"
-  (gridReady)="gridReady.emit($event)">
+  (gridReady)="onGridReady($event)">
 </ag-grid-angular>
 <!-- [blockLoadDebounceMillis]="100" -->
   <!-- [fillOperation]="fillOperation" -->

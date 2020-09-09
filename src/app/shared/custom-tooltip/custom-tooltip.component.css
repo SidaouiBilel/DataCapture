@@ -1,7 +1,6 @@
 :host {
   padding: 10px;
   position: absolute;
-  font-family: 'Ubuntu', sans-serif;
   width: auto;
   white-space: nowrap;
   word-wrap: no-wrap;
@@ -12,10 +11,11 @@
   transform: translate(-50%);
   transform-style: preserve-3d;
   z-index: 200;
-  font-size: 0.9em;
   display: block;
-  color: #D30423;
   box-shadow: 1px 1px 20px rgba(211, 4, 35, 0.3);
+  /* font-size: 0.9em; */
+  /* color: #D30423; */
+  /* font-family: 'Ubuntu', sans-serif; */
 }
 
 :host.ag-tooltip-hiding {
@@ -26,10 +26,10 @@
   background-color: white !important;
 }
 
-.custom-tooltip p:first-of-type {
+/* .custom-tooltip p:first-of-type {
   font-weight: bold;
-}
+} */
 
-p {
+/* p {
   margin: 0;
-}
+} */

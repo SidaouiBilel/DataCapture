@@ -42,5 +42,14 @@ export class DataGridComponent implements OnInit {
     };
   }
 
+  onGridReady(params){
+    // REMOVE TOOLTIP DELAY
+    try {
+      (params.api as any).context.beanWrappers.tooltipManager.beanInstance.MOUSEOVER_SHOW_TOOLTIP_TIMEOUT = 500;
+    } catch (e) {
+      console.error(e);
+    }
+    this.gridReady.emit(params)
+  }
 
 }
