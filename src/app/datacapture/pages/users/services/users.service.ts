@@ -18,7 +18,6 @@ export class UsersService {
     const header = {
       headers: new HttpHeaders()
         .set('Authorization',  this.token)
-        .set('withCredentials', 'true')
     };
     return this.http.get(environment.auth + `user`,  header);
   }
