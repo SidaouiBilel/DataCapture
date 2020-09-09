@@ -44,13 +44,14 @@
       <div class="sources">
         <nz-card class="h-100 w-100">
           <div class="sources-items">
-            <div class="source-title">
-              SOURCE FIELDS
+            <div class="source-title flex-between">
+              <span>SOURCE FIELDS</span>
+              <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="search"/>
             </div>
             <div class="scroll-box">
               <div class="source-list">
                 <div class="source-item-box" [class.mapped]="mappedSources[item]" [dndDraggable]="item"
-                  *ngFor="let item of keys(mappedSources)">
+                  *ngFor="let item of keys(mappedSources) | filter: search">
                   {{item}}
                 </div>
               </div>

@@ -23,6 +23,7 @@ import { selectTransformedFilePath } from '../transformation/store/transformatio
 export class MappingComponent implements OnInit, OnDestroy {
   mappingFields: any;
   mappedSources: any;
+  search: string;
   mandatories: number;
   keys = Object.keys;
   isVisible: boolean;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationService, AppState, selectRouterState } from '@app/core';
+import { NotificationService, AppState, selectRouterState, ActionAuthLogout } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
@@ -17,10 +17,10 @@ export class LayoutContainer {
   pageList: string[];
   // Store Router State
   router$: Observable<any>;
-  settings
+  settings;
 
   constructor(private notification: NotificationService, private store: Store<AppState>,  settings: AppSettingsService) {
-    this.settings = settings
+    this.settings = settings;
     this.router$ = this.store.select(selectRouterState);
     this.router$.subscribe((res) => {
       try {
@@ -31,7 +31,7 @@ export class LayoutContainer {
       }
     });
 
-    settings.appSize$.subscribe(size=> this.isCollapsed=(size == 'compact')?true:false)
+    settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
   }
 
   // This is used to select the primary pqge in the sidebqr
@@ -51,6 +51,9 @@ export class LayoutContainer {
       switch (name) {
         case 'home':
           return 'home';
+
+        case 'users':
+          return 'user';
 
         case 'admin':
           return 'tool';
@@ -95,6 +98,10 @@ export class LayoutContainer {
     } catch (error) {
       this.notification.error(error.message);
     }
+  }
+
+  logout(): void {
+    this.store.dispatch(new ActionAuthLogout());
   }
 
   // This is used to toggle which sidebar to show

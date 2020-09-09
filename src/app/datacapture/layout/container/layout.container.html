@@ -23,6 +23,9 @@
           (click)='settings.setDefaultSize()'><i nz-icon nzType="zoom-in"></i></button>
         <button *ngIf='(settings.appSize$ | async)!="compact"' class='ghost' nzShape='circle' nz-button nzType='primary'
           (click)='settings.setCompactSize()'><i nz-icon nzType="zoom-out"></i></button>
+        <button class='ghost' nzShape='circle' nz-button nzType='primary' (click)="logout()">
+          <i nz-icon nzType="logout"></i>
+        </button>
       </div>
     </div>
 
@@ -39,7 +42,10 @@
           </li>
           <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
             <ul>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/admin/domains']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/users']">
+                <span>Users</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/admin/domains']">
                 <span>Domains</span>
               </li>
             </ul>

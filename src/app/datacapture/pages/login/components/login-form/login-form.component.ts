@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-login-form',
@@ -8,6 +9,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit {
   validateForm: FormGroup;
+  @Output() login: EventEmitter<any> = new EventEmitter<any>();
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -15,13 +17,16 @@ export class LoginFormComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
+    if (this.validateForm.valid) {
+      this.login.emit({email: this.validateForm.controls.email.value, password: this.validateForm.controls.password.value});
+    }
   }
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      email: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]
     });

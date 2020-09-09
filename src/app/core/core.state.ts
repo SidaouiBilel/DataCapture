@@ -40,7 +40,7 @@ export const selectAuthState = createFeatureSelector<AppState, AuthState>(
   'auth'
 );
 
-export const selectRouterState = createFeatureSelector<AppState,RouterReducerState<RouterStateUrl>>(
+export const selectRouterState = createFeatureSelector<AppState, RouterReducerState<RouterStateUrl>>(
   'router'
 );
 

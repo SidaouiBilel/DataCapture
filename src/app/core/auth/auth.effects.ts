@@ -26,7 +26,9 @@ export class AuthEffects {
   login = this.actions$.pipe(
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
     tap(() =>
-      this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: true })
+      setTimeout(() => {
+        this.router.navigate(['/datacapture/upload']);
+      }, 500)
     )
   );
 
@@ -34,7 +36,7 @@ export class AuthEffects {
   logout = this.actions$.pipe(
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
-      this.router.navigate(['']);
+      this.router.navigate(['/login']);
       this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: false });
     })
   );

@@ -19,6 +19,15 @@
   align-items: flex-start;
 }
 
+.flex-between {
+  height: 100%;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center space-between;
+  align-items: center;
+}
+
 .sources {
   place-content: center;
   align-items: center;

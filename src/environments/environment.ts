@@ -16,7 +16,8 @@ export const environment = {
   // TRANSFORMATION
   // transform: 'http://localhost:5000/transfo/',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-  upload: 'https://dcm-upload.azurewebsites.net/upload/'
+  upload: 'https://dcm-upload.azurewebsites.net/upload/',
+  auth: 'https://dcm-auth.azurewebsites.net/'
 };
 
 /*

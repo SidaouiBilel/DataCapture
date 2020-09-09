@@ -59,6 +59,7 @@ import { UploadTagsComponent } from './components/upload/upload-tags/upload-tags
 import { UploadService } from './services/upload.service';
 import { UploadDataComponent } from './components/upload/upload-data/upload-data.component';
 import { AuditComponent } from './components/cleansing/audit/audit.component';
+import { FilterPipe } from './pipe/source-filter.pipe';
 
 const components = [
   UploadComponentComponent,
@@ -101,7 +102,8 @@ const components = [
   OverviewComponent,
   UploadTagsComponent,
   UploadDataComponent,
-  AuditComponent
+  AuditComponent,
+  FilterPipe
 ];
 
 @NgModule({

@@ -11,6 +11,10 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { LoginComponent } from './datacapture/pages/login/container/login.component';
+import { LoginFormComponent } from './datacapture/pages/login/components/login-form/login-form.component';
+import { LoginService } from './datacapture/pages/login/service/login.service';
+import { LoginGuard } from './datacapture/pages/login/login.guard';
 
 registerLocaleData(en);
 // This is used to configure the placement of the snackbars
@@ -22,6 +26,8 @@ const ngZorroConfig: NzConfig = {
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    LoginFormComponent
   ],
   imports: [
   // Angular
@@ -40,6 +46,8 @@ const ngZorroConfig: NzConfig = {
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
+    LoginService,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

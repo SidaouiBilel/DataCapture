@@ -12,6 +12,10 @@ const routes: Routes = [
           loadChildren : 'app/datacapture/pages/admin/admin.module#AdminModule'
         },
         {
+          path: 'users',
+          loadChildren : 'app/datacapture/pages/users/users.module#UsersModule'
+        },
+        {
           path: 'upload',
           loadChildren : 'app/datacapture/pages/upload/upload.module#UploadModule'
         },
