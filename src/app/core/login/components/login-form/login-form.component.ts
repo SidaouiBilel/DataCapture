@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 
@@ -10,6 +10,7 @@ import { EventEmitter } from '@angular/core';
 export class LoginFormComponent implements OnInit {
   validateForm: FormGroup;
   @Output() login: EventEmitter<any> = new EventEmitter<any>();
+  @Input() loading = false
 
   submitForm(): void {
     // tslint:disable-next-line: forin
