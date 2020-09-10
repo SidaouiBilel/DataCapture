@@ -54,7 +54,7 @@ export class UsersComponent {
       first_name: form.controls.firstName.value,
       last_name: form.controls.lastName.value,
       email: form.controls.email.value,
-      password: form.controls.password.value,
+      password: form.controls.password ? form.controls.password.value : null,
       created_on: null,
       modified_on: null,
       id: form.controls.id.value

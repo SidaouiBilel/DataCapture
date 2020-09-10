@@ -15,13 +15,16 @@ export class AddUserComponent implements OnInit {
   constructor(private fb: FormBuilder, private notification: NotificationService) {}
 
   ngOnInit(): void {
+    const password = this.user ? {} : {
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      checkPassword: [null, [Validators.required, this.confirmationValidator]]
+    };
     this.validateForm = this.fb.group({
       firstName: [this.user ? this.user.first_name : null, [Validators.required]],
       lastName: [this.user ? this.user.last_name : null, [Validators.required]],
       email: [this.user ? this.user.email : null, [Validators.email, Validators.required]],
-      password: [null, [Validators.required, Validators.minLength(8)]],
-      checkPassword: [null, [Validators.required, this.confirmationValidator]],
       id: [this.user ? this.user.id : null],
+      ...password
     });
   }
 

@@ -1,7 +1,10 @@
-<div class="users-container p-3">
+<div class="users-container p-1">
+
+  <nz-page-header class="site-page-header" nzTitle="Users" nzSubtitle="Manage Users"></nz-page-header>
+
   <div nz-row class='ma-b'>
     <div nz-col [nzSpan]='18'>
-      <button nz-button class='ghost pl-0' (click)="addUser('The user was added successfully.', false)">
+      <button nz-button class='ghost' (click)="addUser('The user was added successfully.', false)">
         <i nz-icon nzType="plus"></i>Add User
       </button>
       <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
@@ -17,8 +20,8 @@
     </div>
   </div>
 
-  <div class="flex-box">
-    <nz-card class="fields-card ma-b h-100">
+  <div class="flex-box flex-scroll  bg-grey">
+    <nz-card class="fields-card ma-b h-100  bg-grey">
       <app-users-list [searchTerm]="searchUser" [reload$]="reload$" (updateUser)="editUser($event)"></app-users-list>
     </nz-card>
   </div>
