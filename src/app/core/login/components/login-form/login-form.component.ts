@@ -10,7 +10,7 @@ import { EventEmitter } from '@angular/core';
 export class LoginFormComponent implements OnInit {
   validateForm: FormGroup;
   @Output() login: EventEmitter<any> = new EventEmitter<any>();
-  @Input() loading = false
+  @Input() loading = false;
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -27,8 +27,8 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.required]],
-      password: [null, [Validators.required]],
+      email: [{value: null, disabled: this.loading}, [Validators.required]],
+      password: [{value: null, disabled: this.loading}, [Validators.required]],
       remember: [true]
     });
   }

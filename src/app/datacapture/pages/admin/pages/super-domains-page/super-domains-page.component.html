@@ -9,7 +9,7 @@
     </div>
 
     <app-display-changer></app-display-changer>
-    
+
     <div>
       <nz-input-group [nzSuffix]="suffixIconSearch">
         <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Domains" />
@@ -22,25 +22,21 @@
   </div>
 
 
-  
-  <div class="flex-1 flex-scroll bg-grey" >
+
+  <div class="flex-1 flex-scroll bg-grey">
     <div nz-row nzType='flex' nzAlign='stretch'>
-        <div nz-col class="gutter-row" [nzSpan]="(s.displayList$ | async)?24:8" *ngFor="let d of domains$ | async | filter :'name': searchTerm">
+      <div nz-col class="gutter-row" [nzSpan]="(s.displayList$ | async)?24:8"
+        *ngFor="let d of domains$ | async | filter :'name': searchTerm">
 
-      <app-domain-card 
-        [class]='(s.displayList$ | async)?"":"h-100"'
-        [loading]='loading'
-        [data]='d'
-        (delete)='showDeleteConfirm(d)'
-        (edit)='openConfig(d)'
-        (collections)="navigate(['/datacapture/admin/domains', d.id, 'collection'])"
-      ></app-domain-card>
-      
-    <!-- </nz-card> -->
+        <app-domain-card [class]='(s.displayList$ | async)?"":"h-100"' [loading]='loading' [data]='d'
+          (delete)='showDeleteConfirm(d)' (edit)='openConfig(d)'
+          (collections)="navigate(['/datacapture/admin/domains', d.id, 'collection'])"></app-domain-card>
+
+        <!-- </nz-card> -->
+      </div>
+
+    </div>
   </div>
-
-</div>
-</div>
 
 
 </div>

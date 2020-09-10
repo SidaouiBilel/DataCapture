@@ -1,5 +1,5 @@
 .users-container {
-  background-color: white;
+  /* background-color: white; */
   height: 100%;
   display: flex;
   flex-flow: column;
@@ -16,4 +16,8 @@
 
 ::ng-deep .fields-card .ant-table-small{
 border: 0;
+}
+
+:host ::ng-deep .ant-page-header {
+  padding-left: 16px !important;
 }

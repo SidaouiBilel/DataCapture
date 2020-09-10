@@ -17,7 +17,7 @@
       <input nz-input formControlName="email" id="email" />
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
+  <nz-form-item *ngIf="!user">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
     <nz-form-control [nzSm]="12" [nzXs]="24" [nzErrorTip]="userErrorTpl">
       <input nz-input type="password" id="password" formControlName="password"
@@ -32,7 +32,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
+  <nz-form-item *ngIf="!user">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
     <nz-form-control [nzSm]="12" [nzXs]="24" [nzErrorTip]="errorTpl">
       <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />

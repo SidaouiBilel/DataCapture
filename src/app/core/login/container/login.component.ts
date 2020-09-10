@@ -13,14 +13,14 @@ export class LoginComponent {
 
   constructor(private service: LoginService, private store: Store<AppState>) {}
 
-  loading$ = new BehaviorSubject(false)
+  loading$ = new BehaviorSubject(false);
 
   login(event: any): void {
-    this.loading$.next(true)
+    this.loading$.next(true);
     this.service.login(event.email, event.password).subscribe((res: any) => {
       // this.loading$.next(false)
       this.store.dispatch(new ActionAuthLogin());
       this.store.dispatch(new ActionSaveToken(res.Authorization));
-    }, err=> this.loading$.next(false));
+    }, err => this.loading$.next(false));
   }
 }

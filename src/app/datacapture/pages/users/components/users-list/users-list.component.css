@@ -1,35 +1,17 @@
-.content {
-  display: flex;
+:host ::ng-deep .ant-list-item-meta-avatar {
+  margin-left: 16px;
 }
 
-.extra>div {
-  display: flex;
-  width: max-content;
-  justify-content: flex-end;
+:host ::ng-deep .ant-list-vertical .ant-list-item-meta-title {
+  margin-bottom: 0;
 }
 
-@media (max-width: 576px) {
-  .content {
-    display: block;
-  }
-
-  .main {
-    width: 100%;
-    margin-bottom: 12px;
-  }
-
-  .extra {
-    width: 100%;
-    margin-left: 0;
-    text-align: left;
-  }
+:host ::ng-deep div.ant-typography {
+  margin-bottom: 6px !important;
 }
 
-[nz-button] {
-  margin-right: 8px;
-  /* margin-bottom: 12px; */
-}
-
-::ng-deep .content .ant-table-small>.ant-table-content>.ant-table-body {
-  margin: 0;
+.user-item {
+  background: white;
+  margin: 2px;
+  border-radius: 10px;
 }
