@@ -1,9 +1,9 @@
-export class Column{
-    label
-    field
+export class Column {
+  label;
+  field;
 
-    constructor(label,field){
-        this.label = label
-        this.field = field
-    }
+  constructor(label, field) {
+      this.label = label;
+      this.field = field;
+  }
 }

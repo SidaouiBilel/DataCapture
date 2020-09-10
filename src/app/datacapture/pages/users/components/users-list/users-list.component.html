@@ -1,1 +1,43 @@
-<p>users-list works!</p>
+<nz-table [nzData]="users$ | async" nzSize='small' [nzShowPagination]="false" [nzLoading]='loading'>
+  <thead>
+    <tr>
+      <ng-container *ngFor="let column of columns">
+        <th *ngIf="column.field == 'action'">
+          <!-- <button nz-button nzType="primary"  (click)='openConfig(null)'><i nz-icon nzType="plus"></i></button> -->
+        </th>
+        <th *ngIf="column.field != 'action'">
+          {{ column.label }}
+        </th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of users$ | async | userFilter :'label': searchTerm">
+      <ng-container *ngFor="let column of columns">
+        <ng-container [ngSwitch]="column.field">
+          <td *ngSwitchCase="'action'">
+            <div class="button-spacing">
+              <button nz-button nzShape="circle" class="ghost"><i nz-icon nzType="edit"></i></button>
+              <nz-divider nzType='vertical'></nz-divider>
+              <button nz-button nzShape="circle" class="ghost"><i nz-icon nzType="delete"></i></button>
+            </div>
+          </td>
+          <td *ngSwitchCase="'rules'">
+            <span *ngFor="let rule of data.rules; let i = index">
+              <!-- <span *ngIf='i!=0'>, </span>{{ (checks$ | async)[rule.type].name }} -->
+            </span>
+          </td>
+          <td *ngSwitchCase="'mandatory'">
+            <app-bool-icon [b]='data[column.field]'></app-bool-icon>
+          </td>
+          <td *ngSwitchCase="'editable'">
+            <app-bool-icon [b]='data[column.field]'></app-bool-icon>
+          </td>
+          <td *ngSwitchDefault>
+            {{ data[column.field] }}
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </tbody>
+</nz-table>
