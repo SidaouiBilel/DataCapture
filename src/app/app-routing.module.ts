@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './datacapture/pages/login/container/login.component';
-import { LoginGuard } from './datacapture/pages/login/login.guard';
+import { LoginComponent } from './core/login/container/login.component';
+import { LoginGuard } from './core/login/guards/login.guard';
 
 const routes: Routes = [
   {

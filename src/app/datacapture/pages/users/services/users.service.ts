@@ -19,6 +19,6 @@ export class UsersService {
       headers: new HttpHeaders()
         .set('Authorization',  this.token)
     };
-    return this.http.get(environment.auth + `user`,  header);
+    return this.http.get(environment.auth + `user/`,  header);
   }
 }

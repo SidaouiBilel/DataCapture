@@ -9,4 +9,4 @@ export * from './notifications/notification.service';
 export * from './router/router.state';
 export * from './title/title.service';
 export * from './core.state';
-export * from './core.module';
+// export * from './core.module';

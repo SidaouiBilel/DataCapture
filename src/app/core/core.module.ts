@@ -1,5 +1,4 @@
 import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -17,8 +16,8 @@ import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from '@app/shared/shared.module';
 import {NzNotificationService} from 'ng-zorro-antd';
+import { LoginModule } from './login/login.module';
 
 
 @NgModule({
@@ -27,19 +26,13 @@ import {NzNotificationService} from 'ng-zorro-antd';
     // CommonModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([AuthEffects]),
-    environment.production
-      ? []
-      : StoreDevtoolsModule.instrument({
-          name: 'DataCapture'
-        }),
-
-    // Shared
-    // SharedModule
+    environment.production ? [] : StoreDevtoolsModule.instrument({name: 'DataCapture'}),
+    // Login
+    LoginModule
   ],
   declarations: [],
   providers: [

@@ -6,10 +6,7 @@ export const initialState: AuthState = {
   token: null
 };
 
-export function authReducer(
-  state: AuthState = initialState,
-  action: AuthActions
-): AuthState {
+export function authReducer(state: AuthState = initialState, action: AuthActions): AuthState {
   switch (action.type) {
     case AuthActionTypes.SAVE:
       return { ...state, token: action.payload };

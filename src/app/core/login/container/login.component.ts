@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../service/login.service';
 import { AppState, ActionSaveToken, ActionAuthLogin } from '@app/core';
 import { Store } from '@ngrx/store';

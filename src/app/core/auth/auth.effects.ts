@@ -12,13 +12,11 @@ import {
   AuthActionTypes
 } from './auth.actions';
 
-export const AUTH_KEY = 'AUTH';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions<Action>,
-    private localStorageService: LocalStorageService,
     private router: Router
   ) {}
 
@@ -37,7 +35,6 @@ export class AuthEffects {
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
       this.router.navigate(['/login']);
-      this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: false });
     })
   );
 }

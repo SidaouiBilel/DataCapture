@@ -4,7 +4,7 @@ import { AppState, selectIsAuthenticated } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class LoginGuard implements CanActivate {
   isAuthenticated: boolean;
   isAuthenticated$: Observable<boolean>;
