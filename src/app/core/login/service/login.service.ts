@@ -10,4 +10,8 @@ export class LoginService {
   login(email: string, password: string) {
     return this.http.post(environment.auth + `auth/login`, {email, password});
   }
+
+  logout() {
+    return this.http.post(environment.auth + `auth/logout`, {});
+  }
 }

@@ -3,6 +3,7 @@ import { NotificationService, AppState, selectRouterState, ActionAuthLogout } fr
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
+import { LoginService } from '@app/core/login/service/login.service';
 
 @Component({
   selector: 'app-layout',
@@ -19,7 +20,10 @@ export class LayoutContainer {
   router$: Observable<any>;
   settings;
 
-  constructor(private notification: NotificationService, private store: Store<AppState>,  settings: AppSettingsService) {
+  constructor(private notification: NotificationService,
+              private service: LoginService,
+              private store: Store<AppState>,
+              settings: AppSettingsService) {
     this.settings = settings;
     this.router$ = this.store.select(selectRouterState);
     this.router$.subscribe((res) => {
@@ -101,7 +105,9 @@ export class LayoutContainer {
   }
 
   logout(): void {
-    this.store.dispatch(new ActionAuthLogout());
+    this.service.logout().subscribe((res) => {
+      this.store.dispatch(new ActionAuthLogout());
+    });
   }
 
   // This is used to toggle which sidebar to show
