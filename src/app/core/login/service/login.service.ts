@@ -14,4 +14,8 @@ export class LoginService {
   logout() {
     return this.http.post(environment.auth + `auth/logout`, {});
   }
+
+  info(token: string): any {
+    return this.http.get(environment.auth + `auth/info`);
+  }
 }
