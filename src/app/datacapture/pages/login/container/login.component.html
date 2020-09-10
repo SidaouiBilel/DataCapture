@@ -1,13 +1,29 @@
-<div class="login-container">
-  <div class="flex-box">
-    <div class="box">
-      <div class="flex-box">
-        <div class="mb-5">
-          <i nz-icon nzType="experiment" nzTheme="twotone"></i>
-          <span nz-typography class="text-primary">C&C</span>
-        </div>
-        <app-login-form (login)="login($event)"></app-login-form>
-      </div>
+<div class="bg-primary flex column" style="height: 100vh; background: linear-gradient(10deg, rgb(240 242 245) 50%, rgb(255 255 255/ 0%) 0%);">
+  <div class="flex-1"></div>
+  <div class='flex column mb-3' >
+    <img class="m-2" src="../../../../assets/images/logo.png" alt="logo">
+    <div class="flex">
+      <h2 nz-typography class="text-white font-weight-light m-0 mr-1" >C&C</h2>
+      <h2 nz-typography class="text-white font-weight-light m-0" style="opacity: 0.6;">Datafactory</h2>
     </div>
   </div>
+
+  <nz-card class="p-4 shadow mb-2 rounded">
+
+    <h3 nz-typography class="mb-0">Log In</h3>
+    <p nz-typography class="pb-2">to continue to the platform</p>
+
+    <app-login-form (login)="login($event)"></app-login-form>
+  </nz-card>
+  <button nz-button nzType='link'>Learn More</button>
+
+  <div class="flex column end flex-1">
+    <p nz-typography class="m-0">Powered By</p>
+
+    <div class="flex" style="font-size:30px">
+      <div nz-tooltip nzTooltipTitle='Microsoft Azure' class="m-3"><i nz-icon nzType="windows"></i></div>
+      <div nz-tooltip nzTooltipTitle='Ant Design' class="m-3"><i nz-icon nzType="ant-design"></i></div>
+    </div>
+  </div>
+  
 </div>
