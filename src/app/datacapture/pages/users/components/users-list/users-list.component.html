@@ -12,14 +12,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of users$ | async | userFilter :'label': searchTerm">
+    <tr *ngFor="let data of (users$ | async) | userFilter : 'first_name': searchTerm">
       <ng-container *ngFor="let column of columns">
         <ng-container [ngSwitch]="column.field">
           <td *ngSwitchCase="'action'">
             <div class="button-spacing">
-              <button nz-button nzShape="circle" class="ghost"><i nz-icon nzType="edit"></i></button>
+              <button nz-button nzShape="circle" class="ghost" (click)="updateUser.emit(data)">
+                <i nz-icon nzType="edit"></i>
+              </button>
               <nz-divider nzType='vertical'></nz-divider>
-              <button nz-button nzShape="circle" class="ghost"><i nz-icon nzType="delete"></i></button>
+              <button nz-button nzShape="circle" class="ghost" (click)="deleteUser(data.id)">
+                <i nz-icon nzType="delete"></i>
+              </button>
             </div>
           </td>
           <td *ngSwitchCase="'rules'">

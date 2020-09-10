@@ -13,4 +13,16 @@ export class UsersService {
   getUsers() {
     return this.http.get(environment.auth + `user/`);
   }
+
+  addUser(user: any): Observable<any> {
+    return this.http.post(environment.auth + `user/`, user);
+  }
+
+  editUser(user: any): Observable<any> {
+    return this.http.put(environment.auth + `user/`, user);
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(environment.auth + `user/${id}`);
+  }
 }
