@@ -36,9 +36,9 @@
   display: inline-block;
   margin: 0 0 0 10px;
   color: #fff;
-  font-weight: 600;
+  font-weight: 1000;
   font-size: 18px;
-  font-family: 'Ubuntu', sans-serif;
+  /* font-family: 'Ubuntu', sans-serif; */
   vertical-align: middle;
 }
 
