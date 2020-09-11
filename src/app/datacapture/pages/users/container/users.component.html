@@ -1,6 +1,7 @@
 <div class="users-container p-1">
 
-  <nz-page-header class="site-page-header" nzTitle="Users" nzSubtitle="Manage Users"></nz-page-header>
+  <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Users"></nz-page-header>
+  <ng-template #userTitle><i class="mr-2" nz-icon nzType="team" nzTheme="outline"></i>Users</ng-template>
 
   <div nz-row class='ma-b'>
     <div nz-col [nzSpan]='18'>
