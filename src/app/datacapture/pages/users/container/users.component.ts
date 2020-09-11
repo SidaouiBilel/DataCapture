@@ -21,12 +21,12 @@ export class UsersComponent {
 
   addUser(msg: string, edit: boolean, user?: Users): void {
     const modal: NzModalRef = this.modalService.create({
-      nzTitle: 'Add User',
+      nzTitle: edit ? 'Edit User' : 'Add User',
       nzClosable: false,
       nzWrapClassName: 'vertical-center-modal',
       nzWidth: 'xXL',
       nzContent: AddUserComponent,
-      nzOkText: 'Add',
+      nzOkText: edit ? 'Edit' : 'Add',
       nzComponentParams: {
         user
       },
@@ -41,9 +41,14 @@ export class UsersComponent {
               this.reload$.next(true);
               modal.close();
             });
+          } else {
+            this.notification.error('Invalid Form');
+            setTimeout(() => { modal.getInstance().nzOkLoading = false; }, 1000);
           }
+          return false;
         } catch (error) {
           this.notification.error(error);
+          modal.close();
         }
       }
     });
@@ -57,8 +62,14 @@ export class UsersComponent {
       password: form.controls.password ? form.controls.password.value : null,
       created_on: null,
       modified_on: null,
-      id: form.controls.id.value
+      id: form.controls.id.value,
+      roles: []
     };
+    // Add roles
+    const domains = Object.keys(form.controls).filter((e) => {if (e.includes('domain')) {return e; } });
+    domains.forEach((domain, i) => {
+      user.roles.push({role: form.controls['role' + i].value, domain_id: form.controls['domain' + i].value});
+    });
     console.log(user);
     if (edit) {
       return this.service.editUser(user);
@@ -72,6 +83,6 @@ export class UsersComponent {
   }
 
   editUser(user: Users): void {
-    this.addUser('The user was updated successfully.',true, user);
+    this.addUser('The user was updated successfully.', true, user);
   }
 }

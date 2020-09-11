@@ -6,4 +6,5 @@ export interface Users {
   password: string;
   last_name: string;
   modified_on: Date;
+  roles: any[];
 }

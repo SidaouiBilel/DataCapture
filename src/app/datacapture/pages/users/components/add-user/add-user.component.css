@@ -2,3 +2,12 @@
   width: 480px;
   max-width: 600px;
 }
+
+.roles-input {
+  width: 40%;
+  margin-right: 8px;
+}
+
+.add-button {
+  width: 60%;
+}

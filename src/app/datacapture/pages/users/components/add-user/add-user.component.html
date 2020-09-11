@@ -46,4 +46,34 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item *ngFor="let control of listOfRoles; let i = index">
+    <nz-form-label [nzSm]="8" [nzXs]="24" *ngIf="i == 0" [nzFor]="control.id">
+      Rules
+    </nz-form-label>
+    <nz-form-control [nzSm]="12" [nzXs]="24" [nzOffset]="i == 0 ? 0 : 4"
+      nzErrorTip="Please select the domain and the role or delete this field.">
+      <nz-select class="roles-input" [attr.id]="control.id" nzAllowClear nzPlaceHolder="domain"
+        [formControlName]="control.domainInstance" (nzOpenChange)="loadDomain($event)">
+        <nz-option *ngFor="let o of domainList" [nzValue]="o.identifier" [nzLabel]="o.name"></nz-option>
+        <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+          <i nz-icon nzType="loading" class="loading-icon"></i> Loading Domains...
+        </nz-option>
+      </nz-select>
+      <nz-select class="roles-input" [attr.id]="control.id" nzAllowClear nzPlaceHolder="role"
+        [formControlName]="control.roleInstance">
+        <nz-option nzValue="ADMIN" nzLabel="Admin"></nz-option>
+        <nz-option nzValue="domainAdmin" nzLabel="Domain Admin"></nz-option>
+        <nz-option nzValue="USER" nzLabel="User"></nz-option>
+      </nz-select>
+      <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="flex center">
+    <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+      <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+        <i nz-icon nzType="plus"></i>
+        Add field
+      </button>
+    </nz-form-control>
+  </nz-form-item>
 </form>
