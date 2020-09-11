@@ -10,7 +10,7 @@
                 </div>
                 <div class="flex start column ml-3">
                     <h4 class="m-0 font-weight-light" nz-typography>{{user.first_name}} {{user.last_name | uppercase}}</h4>
-                    <h5 class="m-0 font-weight-light text-primary" nz-typography>ADMIN</h5>
+                    <h5 *ngIf='user.admin' class="m-0 font-weight-light text-primary" nz-typography>ADMIN</h5>
                     <div class="text-muted mt-2">
                         <div><i nz-icon nzType="mail" nzTheme="twotone"></i> {{user.email}}</div>
                         <div><i nz-icon nzType="clock-circle" nzTheme="twotone"></i> {{user.created_on | date: 'medium'}}</div>

@@ -20,9 +20,9 @@
     </div>
   </div>
 
-  <div class="flex-box flex-scroll  bg-grey">
-    <nz-card class="fields-card ma-b h-100  bg-grey">
+  <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+    <!-- <nz-card class="fields-card ma-b"> -->
       <app-users-list [searchTerm]="searchUser" [reload$]="reload$" (updateUser)="editUser($event)"></app-users-list>
-    </nz-card>
+    <!-- </nz-card> -->
   </div>
 </div>
