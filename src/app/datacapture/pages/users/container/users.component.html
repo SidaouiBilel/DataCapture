@@ -1,6 +1,7 @@
 <div class="users-container p-1">
 
-  <nz-page-header class="site-page-header" nzTitle="Users" nzSubtitle="Manage Users"></nz-page-header>
+  <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Users"></nz-page-header>
+  <ng-template #userTitle><i class="mr-2" nz-icon nzType="team" nzTheme="outline"></i>Users</ng-template>
 
   <div nz-row class='ma-b'>
     <div nz-col [nzSpan]='18'>
@@ -20,9 +21,9 @@
     </div>
   </div>
 
-  <div class="flex-box flex-scroll  bg-grey">
-    <nz-card class="fields-card ma-b h-100  bg-grey">
+  <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+    <!-- <nz-card class="fields-card ma-b"> -->
       <app-users-list [searchTerm]="searchUser" [reload$]="reload$" (updateUser)="editUser($event)"></app-users-list>
-    </nz-card>
+    <!-- </nz-card> -->
   </div>
 </div>

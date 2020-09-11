@@ -77,3 +77,10 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<div> ADMIN {{user.admin}} </div>
+<ul >
+  ROLES
+  <li *ngFor="let r of user.roles">{{r | json}}  </li>
+</ul>
+

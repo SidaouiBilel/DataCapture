@@ -10,6 +10,7 @@
   <div class="flex start wrap">
     <h4>
           <nz-avatar *ngIf='!small' [nzSize]="42" nzIcon="folder" style="background-color:#f56a00;"></nz-avatar>
+          <i nz-icon *ngIf='small' style="color: #f56a00;" nzType='folder'></i>
             {{data?.name}}
           </h4>
   </div>

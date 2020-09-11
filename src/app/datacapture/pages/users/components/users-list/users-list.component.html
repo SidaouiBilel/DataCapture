@@ -3,14 +3,15 @@
     <nz-list-item [nzActions]="item.loading ? [] : [editAction, moreAction]" class="user-item">
       <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
         <ng-template #nzTitle>
-          <div nz-typography class="font-weight-light"> {{item.last_name }} {{item.first_name }}</div>
+          <div nz-typography class="font-weight-light">{{item.first_name }} {{item.last_name | uppercase }}</div>
         </ng-template>
         <ng-template #nzAvatar>
           <nz-avatar [nzText]="item?.last_name.charAt(0) + item?.first_name.charAt(0)"
-            style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+          style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
         </ng-template>
         <ng-template #nzDescription>
-          <i nz-icon nzType="mail" nzTheme="twotone"></i> <span nz-typography class="pl-2">{{item.email }}</span>
+          <div *ngIf='item.admin'><nz-tag [nzColor]="'#108ee9'">ADMIN</nz-tag></div>
+          <div><i nz-icon nzType="mail" nzTheme="twotone"></i> <span nz-typography class="pl-2">{{item.email }}</span></div>
           <div>
             <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
             <span class="pl-2" nz-typography>Created On</span>: {{item.created_on | date: 'medium'}}
