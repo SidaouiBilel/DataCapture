@@ -22,7 +22,7 @@ export class SuperDomainService {
   }
 
   get(){
-    return this.http.get( this.url + "domain/super")
+    return this.http.get( this.url + "domain/super/")
   }
 
   getHierarchy(){
