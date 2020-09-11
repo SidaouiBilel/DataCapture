@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NotificationService } from '@app/core';
 import { Users } from '../../models/users.model';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-add-user',
@@ -10,21 +11,41 @@ import { Users } from '../../models/users.model';
 })
 export class AddUserComponent implements OnInit {
   user: Users;
+  isLoading: boolean;
+  domainList: any;
   validateForm: FormGroup;
+  listOfRoles: Array<{ id: number; roleInstance: string, domainInstance: string }> = [];
 
-  constructor(private fb: FormBuilder, private notification: NotificationService) {}
+  constructor(private fb: FormBuilder,
+              private service: UsersService,
+              private notification: NotificationService) {}
 
   ngOnInit(): void {
     const password = this.user ? {} : {
       password: [null, [Validators.required, Validators.minLength(8)]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]]
     };
+    const roles = {};
+    if (this.user && this.user.roles.length > 0) {
+      this.user.roles.forEach((role, i) => {
+        roles['domain' + i] = [role.domain_id, [Validators.required]];
+        roles['role' + i] = [role.role, [Validators.required]];
+        const control = {
+          id: i,
+          roleInstance: `role${i}`,
+          domainInstance: `domain${i}`
+        };
+        this.listOfRoles.push(control);
+      });
+      this.loadDomain(true);
+    }
     this.validateForm = this.fb.group({
       firstName: [this.user ? this.user.first_name : null, [Validators.required]],
       lastName: [this.user ? this.user.last_name : null, [Validators.required]],
       email: [this.user ? this.user.email : null, [Validators.email, Validators.required]],
       id: [this.user ? this.user.id : null],
-      ...password
+      ...password,
+      ...roles
     });
   }
 
@@ -47,6 +68,47 @@ export class AddUserComponent implements OnInit {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
+    }
+  }
+
+  addField(e?: MouseEvent): void {
+    if (e) {
+      e.preventDefault();
+    }
+    const id = this.listOfRoles.length > 0 ? this.listOfRoles[this.listOfRoles.length - 1].id + 1 : 0;
+    const control = {
+      id,
+      roleInstance: `role${id}`,
+      domainInstance: `domain${id}`
+    };
+    const index = this.listOfRoles.push(control);
+    this.validateForm.addControl(
+      this.listOfRoles[index - 1].roleInstance,
+      new FormControl(null, Validators.required)
+    );
+    this.validateForm.addControl(
+      this.listOfRoles[index - 1].domainInstance,
+      new FormControl(null, Validators.required)
+    );
+  }
+
+  removeField(i: { id: number; roleInstance: string, domainInstance: string }, e: MouseEvent): void {
+    e.preventDefault();
+    if (this.listOfRoles.length >= 1) {
+      const index = this.listOfRoles.indexOf(i);
+      this.listOfRoles.splice(index, 1);
+      console.log(this.listOfRoles);
+      this.validateForm.removeControl(i.roleInstance);
+    }
+  }
+
+  loadDomain(event: any): void {
+    if (event) {
+      this.isLoading = true;
+      this.service.getDomains().subscribe((res) => {
+        this.domainList = res;
+        this.isLoading = false;
+      });
     }
   }
 

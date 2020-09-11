@@ -14,6 +14,10 @@ export class UsersService {
     return this.http.get(environment.auth + `user/`);
   }
 
+  getDomains() {
+    return this.http.get(environment.admin + 'domain/');
+  }
+
   addUser(user: any): Observable<any> {
     return this.http.post(environment.auth + `user/`, user);
   }
