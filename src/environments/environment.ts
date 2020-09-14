@@ -10,9 +10,9 @@ export const environment = {
   cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
 
-  admin: 'https://tst-dcm-admin.azurewebsites.net/',
-  upload: 'https://tst-dcm-upload.azurewebsites.net/upload/',
-  auth: 'https://tst-dcm-auth.azurewebsites.net/',
+  admin: 'https://dcm-admin.azurewebsites.net/',
+  upload: 'https://dcm-upload.azurewebsites.net/upload/',
+  auth: 'https://dcm-auth.azurewebsites.net/',
 
   env: 'DEV'
 };

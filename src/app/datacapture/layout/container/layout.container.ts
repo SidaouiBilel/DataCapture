@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 import { LoginService } from '@app/core/login/service/login.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-layout',
@@ -19,6 +20,7 @@ export class LayoutContainer {
   // Store Router State
   router$: Observable<any>;
   settings;
+  env
 
   constructor(private notification: NotificationService,
               private service: LoginService,
@@ -36,6 +38,7 @@ export class LayoutContainer {
     });
 
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
+    this.env = environment.env
   }
 
   // This is used to select the primary pqge in the sidebqr
