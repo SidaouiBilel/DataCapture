@@ -8,6 +8,7 @@ import { CleansingComponent } from './components/cleansing/cleansing.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { UploadGuard } from './guards/upload.guard';
 import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
+import { RolesGuard } from '@app/core/login/guards/roles.guard';
 
 const routes: Routes = [
   {
@@ -42,8 +43,8 @@ const routes: Routes = [
         {
           path: 'uploading',
           component: UploadComponent,
-          canActivate: [UploadGuard],
-          data: {route: 'UPLOAD'}
+          canActivate: [UploadGuard, RolesGuard],
+          data: {route: 'UPLOAD', role: 'domainAdmin'}
         },
         {
           path: '**',

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { TranformationService } from '../services/tranformation.service';
 
 @Component({
@@ -8,24 +7,33 @@ import { TranformationService } from '../services/tranformation.service';
   styleUrls: ['./transformation-side-bar.component.css']
 })
 export class TransformationSideBarComponent implements OnInit {
-
   pipeInfo = null;
-
-  constructor(private pipes: TranformationService) { 
-    this.pipes.edited$.subscribe((info)=>{
+  saved = true;
+  @Input() profile: any;
+  @Input() superDomain: any;
+  constructor(private pipes: TranformationService) {
+    this.pipes.edited$.subscribe((info) => {
       this.pipeInfo = {};
       if (info) {
         this.pipeInfo = {...info};
       }
-    })
-  }
-  
-  saved = true
-  ngOnInit() {
+    });
   }
 
-  onChanged(){
-    this.pipes.updateEdited(this.pipeInfo)
+  ngOnInit() {}
+
+  onChanged() {
+    this.pipes.updateEdited(this.pipeInfo);
+  }
+
+  enableAddbtn(roles: any[]): boolean {
+    const i = roles.map((e) => e.domain_id).indexOf(this.superDomain);
+    if (i >= 0) {
+      if (roles[i].role === 'domainAdmin') {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

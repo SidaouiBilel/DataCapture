@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomainService } from '../../services/domain.service';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { Column } from '../../models/column';
 import { FieldModalComponent } from '../../modals/field-modal/field-modal.component';
 import { Field } from '../../models/field';
@@ -10,6 +10,7 @@ import { TargetFieldsService } from '../../services/fields.service';
 import { NotificationService } from '@app/core';
 import { ChecksService } from '../../services/checks.service';
 import { deepCopy } from '@app/shared/utils/objects.utils';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-fields-page',
@@ -19,11 +20,14 @@ import { deepCopy } from '@app/shared/utils/objects.utils';
 export class FieldsPageComponent implements OnInit, OnDestroy {
   @Input() id: number;
   subid: any;
+  loading;
+  uploadURI;
+  searchTerm = '';
   private sub: any;
 
-  list$ = new BehaviorSubject<any>([])
-  checks$ = new BehaviorSubject<any>({})
-
+  list$ = new BehaviorSubject<any>([]);
+  checks$ = new BehaviorSubject<any>({});
+  profile$: Observable<any>;
   columns = [
     new Column('', 'action'),
     new Column('Label', 'label'),
@@ -35,36 +39,46 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     new Column('Rules', 'rules'),
   ];
 
-  loading
-  uploadURI
-  searchTerm = ''
-
-  
-  onBack(){
-    this.router.navigate(['/datacapture/admin/domains', this.subid, 'collection']);
-  }
-  
-  constructor(private notification: NotificationService, private route: ActivatedRoute, private cs:ChecksService, private ds: TargetFieldsService, private modal: NzModalService, private router: Router) {}
+  constructor(private notification: NotificationService,
+              private route: ActivatedRoute,
+              private cs: ChecksService,
+              private ds: TargetFieldsService,
+              private modal: NzModalService,
+              public s: StoreService,
+              private router: Router) {}
 
   ngOnInit() {
+    this.profile$ = this.s.getProfile();
     this.sub = this.route.parent.params.subscribe(params => {
-       this.id = params.id || this.id;
-       this.subid = params.subid;
-       this.load_data();
+      this.id = params.id || this.id;
+      this.subid = params.subid;
+      this.load_data();
     });
-
-    // this.openConfig(null)
   }
 
-  load_data(){
-    this.loading = true
-    this.uploadURI = this.ds.fileUploadUrl(this.id)
+  enableAddbtn(roles: any[]): boolean {
+    const i = roles.map((e) => e.domain_id).indexOf(this.subid);
+    if (i >= 0) {
+      if (roles[i].role === 'domainAdmin') {
+        return true;
+      }
+    }
+    return false;
+  }
 
-    forkJoin(this.ds.get(this.id),this.cs.getDomainChecksMap(this.id)).subscribe(([fields, checks])=>{
+  onBack() {
+    this.router.navigate(['/datacapture/admin/domains', this.subid, 'collection']);
+  }
+
+  load_data() {
+    this.loading = true;
+    this.uploadURI = this.ds.fileUploadUrl(this.id);
+
+    forkJoin(this.ds.get(this.id), this.cs.getDomainChecksMap(this.id)).subscribe(([fields, checks]) => {
       this.list$.next(fields);
       this.checks$.next(checks);
-      this.loading = false
-    }, err=> this.loading = false)
+      this.loading = false;
+    }, err => this.loading = false);
   }
 
   ngOnDestroy() {
@@ -73,7 +87,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
 
   openConfig(data) {
     const edit = data ? true : false;
-    let obj =  new Field()
+    let obj =  new Field();
     if (data) {
       obj = deepCopy(data);
     }
@@ -84,7 +98,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
       nzContent: FieldModalComponent,
       nzComponentParams: {
         data: obj,
-        edit: edit,
+        edit,
         domain_id: this.id
       },
     });
@@ -92,32 +106,32 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     const instance = modal.getContentComponent();
 
     modal.afterClose.subscribe(result => {
-      if (result){
+      if (result) {
         this.load_data();
       }
     });
   }
 
   showDeleteConfirm(data): void {
-    let confirmModal = this.modal.confirm({
+    const confirmModal = this.modal.confirm({
       nzTitle: 'Confirm Target Field Deletion',
       nzContent: 'This action is irreversible.',
       nzOnOk: () =>
-        this.ds.delete(this.id, data).subscribe(()=> this.load_data())
+        this.ds.delete(this.id, data).subscribe(() => this.load_data())
     });
   }
 
   handleChange(info: any): void {
     if (info.file.status !== 'uploading') {
       console.log(info.file, info.fileList);
-      this.loading = true
+      this.loading = true;
     }
     if (info.file.status === 'done') {
       this.notification.success(`Fields updated successfully from file ${info.file.name}.`);
-      this.load_data()
+      this.load_data();
     } else if (info.file.status === 'error') {
       this.notification.error(`Failed to update.`);
-      this.load_data()
+      this.load_data();
     }
   }
 

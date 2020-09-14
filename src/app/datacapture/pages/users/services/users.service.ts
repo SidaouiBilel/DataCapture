@@ -15,7 +15,7 @@ export class UsersService {
   }
 
   getDomains() {
-    return this.http.get(environment.admin + 'domain/');
+    return this.http.get(environment.admin + 'domain/super');
   }
 
   addUser(user: any): Observable<any> {

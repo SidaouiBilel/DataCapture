@@ -44,6 +44,7 @@ export class AddUserComponent implements OnInit {
       lastName: [this.user ? this.user.last_name : null, [Validators.required]],
       email: [this.user ? this.user.email : null, [Validators.email, Validators.required]],
       id: [this.user ? this.user.id : null],
+      admin: [this.user ? this.user.admin : null, [Validators.required]],
       ...password,
       ...roles
     });
@@ -99,6 +100,7 @@ export class AddUserComponent implements OnInit {
       this.listOfRoles.splice(index, 1);
       console.log(this.listOfRoles);
       this.validateForm.removeControl(i.roleInstance);
+      this.validateForm.removeControl(i.domainInstance);
     }
   }
 
@@ -112,4 +114,14 @@ export class AddUserComponent implements OnInit {
     }
   }
 
+  resetRules(event: boolean): void {
+    if (event) {
+      this.listOfRoles = [];
+      Object.keys(this.validateForm.controls).forEach((ctrl: string) => {
+        if (ctrl.includes('domain') || ctrl.includes('role')) {
+          this.validateForm.removeControl(ctrl);
+        }
+      });
+    }
+  }
 }

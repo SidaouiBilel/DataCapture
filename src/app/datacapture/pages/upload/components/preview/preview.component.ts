@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppState } from '@app/core';
+import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { Observable } from 'rxjs';
 import { selectPreviewMode, selectPipeExpanded } from '../transformation/store/transformation.selectors';
+import { selectSuperDomain } from '../../store/selectors/import.selectors';
 
 @Component({
   selector: 'app-preview',
@@ -15,10 +16,14 @@ export class PreviewComponent {
 
   previewMode$: Observable<'SOURCE' | 'TARGET'>;
   expanded$: Observable<boolean>;
+  profile$: Observable<any>;
+  superDomain$: Observable<any>;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.previewMode$ = this.store.select(selectPreviewMode);
     this.expanded$ = this.store.select(selectPipeExpanded);
+    this.profile$ = this.store.select(selectProfile);
+    this.superDomain$ = this.store.select(selectSuperDomain);
   }
 
   cancelUpload(): void {

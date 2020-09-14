@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LoginService } from '../service/login.service';
-import { AppState, ActionSaveToken, ActionAuthLogin } from '@app/core';
+import { AppState, ActionAuthLogin } from '@app/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 
@@ -19,8 +19,7 @@ export class LoginComponent {
     this.loading$.next(true);
     this.service.login(event.email, event.password).subscribe((res: any) => {
       // this.loading$.next(false)
-      this.store.dispatch(new ActionAuthLogin());
-      this.store.dispatch(new ActionSaveToken(res.Authorization));
+      this.store.dispatch(new ActionAuthLogin(res.Authorization));
     }, err => this.loading$.next(false));
   }
 }

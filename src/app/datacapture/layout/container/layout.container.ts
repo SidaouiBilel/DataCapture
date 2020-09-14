@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationService, AppState, selectRouterState, ActionAuthLogout } from '@app/core';
+import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
@@ -14,11 +14,12 @@ export class LayoutContainer {
   // used to control the sidebar
   isCollapsed: boolean;
   miniSidebarCollapsed = true;
+  settings;
   // variable used for breadcrumps
   pageList: string[];
   // Store Router State
   router$: Observable<any>;
-  settings;
+  profile$: Observable<any>;
 
   constructor(private notification: NotificationService,
               private service: LoginService,
@@ -26,6 +27,7 @@ export class LayoutContainer {
               settings: AppSettingsService) {
     this.settings = settings;
     this.router$ = this.store.select(selectRouterState);
+    this.profile$ = this.store.select(selectProfile);
     this.router$.subscribe((res) => {
       try {
         this.pageList = ['home'];

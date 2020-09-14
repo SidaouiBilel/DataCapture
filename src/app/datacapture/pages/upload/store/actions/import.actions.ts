@@ -14,7 +14,7 @@ export class ActionUploadFile implements Action {
 
 export class ActionSelectDomain implements Action {
   readonly type = ImportActionTypes.SELECT_DOMAIN;
-  constructor(readonly payload: any) {}
+  constructor(readonly payload: any, readonly superDomain: any) {}
 }
 
 export class ActionSaveFile implements Action {

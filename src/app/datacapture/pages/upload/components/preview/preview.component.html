@@ -22,7 +22,7 @@
 
     <div class="preview-content flex stretch flex-1 h-100">
       <div *ngIf='expanded$ | async' class="sidebar-pipe mr-3">
-        <app-transformation-side-bar></app-transformation-side-bar>
+        <app-transformation-side-bar [profile]="profile$ | async" [superDomain]="superDomain$ |async"></app-transformation-side-bar>
       </div>
 
       <div class="preview-grid flex column stretch flex-1 h-100">

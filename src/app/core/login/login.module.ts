@@ -19,7 +19,7 @@ const components = [
   ],
   providers : [
     LoginService,
-    LoginGuard
+    LoginGuard,
   ],
   entryComponents: [
   ]

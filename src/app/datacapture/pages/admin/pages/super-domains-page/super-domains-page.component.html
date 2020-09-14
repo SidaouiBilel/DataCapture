@@ -2,9 +2,9 @@
   <nz-page-header class="site-page-header" nzTitle="Domains" nzSubtitle="Manage Domains"></nz-page-header>
 
   <div class="flex wrap between mb-2">
-
     <div class="button-spacing">
-      <button nz-button class='ghost' (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Domain</button>
+      <button nz-button class='ghost' [disabled]="!(profile$ | async).admin" (click)='openConfig(null)'><i nz-icon
+          nzType="plus"></i>Add Domain</button>
       <button nz-button class="ghost" nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
     </div>
 

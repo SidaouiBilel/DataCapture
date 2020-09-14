@@ -7,23 +7,24 @@
           <a [routerLink]="['/datacapture/projects']">
             <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
               src="../../../../assets/images/logo.png" alt="logo">
-            <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-light">C&C <span style="opacity: 0.6;">Datafactory</span></h1>
+            <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-light">C&C <span
+                style="opacity: 0.6;">Datafactory</span></h1>
           </a>
         </div>
       </div>
       <div class="flex">
-        <button nz-dropdown [nzDropdownMenu]="zoom" class='ghost' nzShape='circle' nz-button nzType='primary'><i nz-icon nzType="layout"></i></button>
+        <button nz-dropdown [nzDropdownMenu]="zoom" class='ghost' nzShape='circle' nz-button nzType='primary'><i nz-icon
+            nzType="layout"></i></button>
         <nz-dropdown-menu #zoom="nzDropdownMenu">
           <ul nz-menu nzSelectable style="min-width: 200px;">
             <li (click)='settings.setDefaultSize()' nz-menu-item>Default Layout</li>
             <li (click)='settings.setCompactSize()' nz-menu-item>Compact Layout</li>
           </ul>
         </nz-dropdown-menu>
-      
+
         <app-user-bar class="ml-2"></app-user-bar>
       </div>
     </div>
-
   </nz-header>
 
   <nz-layout>
@@ -37,7 +38,7 @@
           </li>
           <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
             <ul>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/users']">
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/users']">
                 <span>Users</span>
               </li>
               <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/admin/domains']">

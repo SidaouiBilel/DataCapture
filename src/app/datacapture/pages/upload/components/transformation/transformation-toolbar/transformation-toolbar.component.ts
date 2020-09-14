@@ -15,6 +15,8 @@ export class TransformationToolbarComponent extends TransformationPipeComponent 
 
   @Input() showTransformation = false;
   @Input() showActions = false;
+  @Input() superDomain;
+  @Input() profile;
 
   shownTrans$     = new BehaviorSubject([]);
   collapsedTrans$ = new BehaviorSubject([]);
@@ -29,6 +31,16 @@ export class TransformationToolbarComponent extends TransformationPipeComponent 
     this.collapsedTrans$.next(this.tarnsformations.filter(n => n.collapse));
   }
   ngOnInit() {
+  }
+
+  enableAddbtn(roles: any[]): boolean {
+    const i = roles.map((e) => e.domain_id).indexOf(this.superDomain);
+    if (i >= 0) {
+      if (roles[i].role === 'domainAdmin') {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

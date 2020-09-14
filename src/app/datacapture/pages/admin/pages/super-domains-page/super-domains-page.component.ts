@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { DomainService } from '../../services/domain.service';
-import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
-import { DomainConfigModalComponent } from '../../modals/domain-config-modal/domain-config-modal.component';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
-import { Domain } from 'domain';
 import { SuperDomain } from '../../models/super-domain';
 import { SuperDomainConfigModalComponent } from '../../modals/super-domain-config-modal/super-domain-config-modal.component';
 import { SuperDomainService } from '../../services/super-domain.service';
@@ -18,81 +15,71 @@ import { NotificationService } from '@app/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuperDomainsPageComponent implements OnInit {
-
+  loadingList = [{}];
+  loading = false;
+  searchTerm;
+  domains$ = new BehaviorSubject<any>([]);
+  profile$: Observable<any>;
   constructor(
-    public ds: SuperDomainService, 
-    public modal: NzModalService, 
-    private router:Router, 
+    public ds: SuperDomainService,
+    public modal: NzModalService,
+    private router: Router,
     public s: StoreService,
-    private msg: NotificationService
-  ) { 
-  }
-  
-  loading_list = [{}]
-  loading = false
-  searchTerm
-  domains$ = new BehaviorSubject<any>([])
-
-
-
+    private msg: NotificationService) {}
 
   ngOnInit() {
-    this.load_data()
+    this.profile$ = this.s.getProfile();
+    this.load_data();
   }
 
-  load_data(){
+  load_data() {
     this.loading = true;
-    this.domains$.next(this.loading_list);
-    let msg = this.msg.loading('Loading Domains');
-    
-    this.ds.get().subscribe((dms)=> {
+    this.domains$.next(this.loadingList);
+    const msg = this.msg.loading('Loading Domains');
+    this.ds.get().subscribe((dms) => {
       this.loading = false;
       this.msg.close(msg);
-      this.domains$.next(dms)
-    }, err=>{
-      this.msg.close(msg)
+      this.domains$.next(dms);
+    }, err => {
+      this.msg.close(msg);
       this.domains$.next([]);
       this.loading = false;
-      this.msg.error('Failed to load Domains')
-    })
-
+      this.msg.error('Failed to load Domains');
+    });
   }
 
   openConfig(data) {
-    let edit = data? true:false
-    data = {...data} || new SuperDomain()
-
+    const edit = data ? true : false;
+    data = {...data} || new SuperDomain();
     const modal = this.modal.create({
       nzTitle: 'Domain Configuration',
-      nzFooter:[],
+      nzFooter: [],
       nzContent: SuperDomainConfigModalComponent,
       nzComponentParams: {
-        data: data,
-        edit: edit
+        data,
+        edit
       },
     });
 
     const instance = modal.getContentComponent();
-  
     modal.afterClose.subscribe(result => {
-      if (result){
-        this.load_data()
+      if (result) {
+        this.load_data();
       }
     });
   }
 
   showDeleteConfirm(data): void {
-    let confirmModal = this.modal.confirm({
+    const confirmModal = this.modal.confirm({
       nzTitle: 'Confirm Super Domain Deletion',
       nzContent: 'This action is irreversible. Once a domain is deleted everything related to this domain will also be discarded',
       nzOnOk: () =>
-        this.ds.delete(data).subscribe(()=> this.load_data())
+        this.ds.delete(data).subscribe(() => this.load_data())
     });
   }
 
-
-  navigate(r){
-    this.router.navigate(r)
+  navigate(r) {
+    this.router.navigate(r);
   }
 
 }

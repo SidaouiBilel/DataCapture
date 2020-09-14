@@ -2,7 +2,7 @@
 
   <div nz-col [nzSpan]='18'>
 
-    <button nz-button class='ghost' (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Target Field</button>
+    <button nz-button class='ghost' [disabled]="!enableAddbtn((profile$ | async)?.roles)" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Target Field</button>
 
     <button nz-button class='ghost' (click)="load_data()"><i nz-icon nzType="reload"></i></button>
 
@@ -60,7 +60,7 @@
 
             <td *ngSwitchCase="'rules'">
               <span *ngFor="let rule of data.rules; let i = index">
-                <span *ngIf='i!=0'>, </span>{{ (checks$ | async)[rule.type].name }}
+                <span *ngIf='i!=0'>, </span>{{ (checks$ | async)[rule.type]?.name }}
               </span>
             </td>
             <td *ngSwitchCase="'mandatory'">

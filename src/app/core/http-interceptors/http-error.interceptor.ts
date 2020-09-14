@@ -26,10 +26,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!request.headers.get('skip')) {
+    if (!request.headers.get('skip') && (this.token || request.headers.get('token'))) {
       request = request.clone({
         setHeaders: {
-          Authorization: this.token
+          Authorization: this.token || request.headers.get('token')
         }
       });
     }
