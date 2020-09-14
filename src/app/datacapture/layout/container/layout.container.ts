@@ -38,7 +38,6 @@ export class LayoutContainer {
     });
 
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
-    this.env = environment.env
   }
 
   // This is used to select the primary pqge in the sidebqr

@@ -3,17 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   test: false,
   import: 'https://dcm-import.azurewebsites.net/import/',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-
   admin: 'https://tst-dcm-admin.azurewebsites.net/',
   upload: 'https://tst-dcm-upload.azurewebsites.net/upload/',
   auth: 'https://tst-dcm-auth.azurewebsites.net/',
-
   env: 'TST'
 };
 
