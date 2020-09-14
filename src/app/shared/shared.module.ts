@@ -24,7 +24,7 @@ const SharedModules = [
   IconsProviderModule,
   NgZorroAntdModule,
   FormsModule,
-  HttpClientModule,
+  // HttpClientModule,
   ReactiveFormsModule,
   MonacoEditorModule,
   NzModalModule,
