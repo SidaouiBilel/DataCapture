@@ -16,6 +16,6 @@ export class LoginService {
   }
 
   info(token: string): any {
-    return this.http.get(environment.auth + `auth/info`);
+    return this.http.get(environment.auth + `auth/info`, {headers: {token}});
   }
 }

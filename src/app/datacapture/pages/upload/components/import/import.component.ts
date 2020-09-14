@@ -52,8 +52,8 @@ export class ImportComponent implements OnInit {
     });
   }
 
-  selectDomain(event: string, name: string): void {
-    this.store.dispatch(new ActionSelectDomain({id: event, name}));
+  selectDomain(event: string, name: string, superDomain: string): void {
+    this.store.dispatch(new ActionSelectDomain({id: event, name}, superDomain));
   }
 
   handleChange({ file, fileList }: UploadChangeParam): void {

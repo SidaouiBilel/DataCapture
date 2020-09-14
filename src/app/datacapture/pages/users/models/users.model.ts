@@ -1,6 +1,7 @@
 export interface Users {
   created_on: Date;
   email: string;
+  admin: boolean;
   first_name: string;
   id: string;
   password: string;

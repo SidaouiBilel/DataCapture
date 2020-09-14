@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { RolesGuard } from './core/login/guards/roles.guard';
 
 registerLocaleData(en);
 // This is used to configure the placement of the snackbars
@@ -40,6 +41,7 @@ const ngZorroConfig: NzConfig = {
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
+    RolesGuard
   ],
   bootstrap: [AppComponent]
 })

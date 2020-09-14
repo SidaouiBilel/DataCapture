@@ -58,6 +58,7 @@ export class UsersComponent {
     const user: Users = {
       first_name: form.controls.firstName.value,
       last_name: form.controls.lastName.value,
+      admin: form.controls.admin.value,
       email: form.controls.email.value,
       password: form.controls.password ? form.controls.password.value : null,
       created_on: null,

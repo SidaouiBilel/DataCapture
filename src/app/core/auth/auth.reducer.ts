@@ -3,19 +3,20 @@ import { AuthActions, AuthActionTypes } from './auth.actions';
 
 export const initialState: AuthState = {
   isAuthenticated: false,
-  token: null
+  token: null,
+  profile: {}
 };
 
 export function authReducer(state: AuthState = initialState, action: AuthActions): AuthState {
   switch (action.type) {
     case AuthActionTypes.SAVE:
-      return { ...state, token: action.payload };
+      return { ...state, profile: action.payload };
 
     case AuthActionTypes.LOGIN:
-      return { ...state, isAuthenticated: true };
+      return { ...state, isAuthenticated: true, token: action.payload };
 
     case AuthActionTypes.LOGOUT:
-      return { ...state, isAuthenticated: false, token: null };
+      return { ...state, isAuthenticated: false, token: null, profile: {} };
 
     default:
       return state;

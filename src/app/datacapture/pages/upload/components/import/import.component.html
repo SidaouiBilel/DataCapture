@@ -78,7 +78,7 @@
         {{item}}
       </ng-template>
       <ul>
-        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain.identifier, domain.name)">
+        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain.identifier, domain.name, domain.super_domain_id)">
           <i nz-icon nzType="block" nzTheme="outline"></i>
           {{domain.name}}
         </li>

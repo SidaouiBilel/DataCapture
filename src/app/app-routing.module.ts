@@ -6,7 +6,7 @@ import { LoginGuard } from './core/login/guards/login.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'datacapture/upload',
+    redirectTo: 'datacapture/dashboard',
     pathMatch: 'full'
   },
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'datacapture/upload'
+    redirectTo: 'datacapture/dashboard'
   }
 ];
 

@@ -8,24 +8,21 @@ import { map } from 'rxjs/operators';
 })
 export class ChecksService {
 
-  url = environment.admin
+  url = environment.admin;
 
   constructor(private http: HttpClient) { }
 
-  getDomainChecks(domain_id){
-    return this.http.get( this.url + `domain/${domain_id}/checks`)
+  getDomainChecks(domain_id) {
+    return this.http.get( this.url + `domain/${domain_id}/checks`);
   }
 
-  getDomainChecksMap(domain_id){
-    return this.getDomainChecks(domain_id).pipe(map((list:any[])=>{
-      let m = {}
-
+  getDomainChecksMap(domain_id) {
+    return this.getDomainChecks(domain_id).pipe(map((list: any[]) => {
+      const m = {};
       list.forEach(check => {
-        m[check.id]=check
+        m[check.id] = check;
       });
-      
-      console.log(m)
-      return m
-    }))
+      return m;
+    }));
   }
 }

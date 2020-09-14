@@ -25,8 +25,8 @@ export class AuthEffects {
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
     tap(() =>
       setTimeout(() => {
-        this.router.navigate(['/datacapture/upload']);
-      }, 500)
+        this.router.navigate(['/datacapture/dashboard']);
+      }, 0)
     )
   );
 

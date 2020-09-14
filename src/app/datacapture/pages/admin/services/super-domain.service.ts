@@ -9,7 +9,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class SuperDomainService {
 
-  url = environment.admin
+  url = environment.admin;
 
   hierarchy$ = new Subject();
 
@@ -17,29 +17,29 @@ export class SuperDomainService {
     // this.loadHierarchy()
    }
 
-  loadHierarchy(){
-    this.getHierarchy().subscribe((hier:any[]) => this.hierarchy$.next(hier))
+  loadHierarchy() {
+    this.getHierarchy().subscribe((hier: any[]) => this.hierarchy$.next(hier));
   }
 
   get(){
     return this.http.get( this.url + "domain/super/")
   }
 
-  getHierarchy(){
-    return this.http.get( this.url + "domain/super/hierarchy")
+  getHierarchy() {
+    return this.http.get( this.url + 'domain/super/hierarchy');
   }
 
-  save(domain){
-    return this.http.post( this.url + "domain/super/", domain).pipe(tap(()=> this.loadHierarchy()))
+  save(domain) {
+    return this.http.post( this.url + 'domain/super/', domain).pipe(tap(() => this.loadHierarchy()));
   }
 
-  delete(domain){
-    return this.http.request('DELETE', this.url + "domain/super/", {
+  delete(domain) {
+    return this.http.request('DELETE', this.url + 'domain/super/', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         }),
         body: domain
-    }).pipe(tap(()=> this.loadHierarchy()));
+    }).pipe(tap(() => this.loadHierarchy()));
   }
 
 }

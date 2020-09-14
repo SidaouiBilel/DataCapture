@@ -33,12 +33,12 @@ export class NotificationService {
     });
   }
 
-  success(message: string) {
+  success(message: string, title?: string) {
     this.show(message, 'SUCCESS', {
       nzDuration: 2000,
       nzAnimate: true,
       nzPlacement: 'topRight'
-    });
+    }, title);
   }
 
   warn(message: string, duration?: number) {
@@ -58,7 +58,7 @@ export class NotificationService {
     });
   }
 
-  private show(message: string, type: string, configuration: any) {
+  private show(message: string, type: string, configuration: any, title?: string) {
     // Need to open snackBar from Angular zone to prevent issues with its position per
     // https://stackoverflow.com/questions/50101912/snackbar-position-wrong-when-use-errorhandler-in-angular-5-and-material
     const finalConfig: any = {...configuration, nzPauseOnHover: true};
@@ -69,7 +69,7 @@ export class NotificationService {
           break;
         }
         case 'SUCCESS': {
-          this.snackBar.success('Success', message, finalConfig);
+          this.snackBar.success(title || 'Success', message, finalConfig);
           break;
         }
         case 'WARNING': {

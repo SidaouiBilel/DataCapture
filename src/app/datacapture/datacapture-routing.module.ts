@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutContainer } from './layout/container/layout.container';
+import { RolesGuard } from '@app/core/login/guards/roles.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,9 @@ const routes: Routes = [
         },
         {
           path: 'users',
-          loadChildren : 'app/datacapture/pages/users/users.module#UsersModule'
+          loadChildren : 'app/datacapture/pages/users/users.module#UsersModule',
+          canActivate: [RolesGuard],
+          data: {role: 'ADMIN'}
         },
         {
           path: 'upload',
@@ -25,7 +28,8 @@ const routes: Routes = [
         },
         {
           path: '**',
-          redirectTo: 'admin'
+          redirectTo: 'dashboard',
+          pathMatch: 'full'
         }
       ]
   }
