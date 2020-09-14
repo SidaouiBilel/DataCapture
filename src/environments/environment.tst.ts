@@ -14,7 +14,7 @@ export const environment = {
   upload: 'https://tst-dcm-upload.azurewebsites.net/upload/',
   auth: 'https://tst-dcm-auth.azurewebsites.net/',
 
-  env: 'DEV'
+  env: 'TST'
 };
 
 /*
