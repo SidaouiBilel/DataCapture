@@ -10,20 +10,31 @@ export class EnvTagComponent implements OnInit {
 
   constructor() { }
   env = null
+  version = null
   color = null
 
   ngOnInit() {
-    this.env = String(environment.env).toUpperCase()
-    this.color = this.getColor(this.env)
+    const env = String(environment.env).toUpperCase()
+    this.version = environment.version
+    this.env = this.getText(env)
+    this.color = this.getColor(env)
   }
-
 
   getColor(env){
     switch(env){
-      case 'TST': return 'red'
-      case 'PRD': return 'blue'
-      case 'DEV': return 'green'
+      case 'TST': return '#87d068'
+      case 'PRD': return '#108ee9'
+      case 'DEV': return '#2db7f5'
+      default: return '#f50'
     }
   }
 
+  getText(env){
+    switch(env){
+      case 'TST': return 'Test'
+      case 'PRD': return 'Production'
+      case 'DEV': return 'Develop'
+      default: env
+    }
+  }
 }

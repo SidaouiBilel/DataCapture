@@ -14,6 +14,6 @@ export const environment = {
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
-
+  version: '1.0.0',
   env: 'PRD'
 };

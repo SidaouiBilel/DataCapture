@@ -5,13 +5,14 @@
 export const environment = {
   production: true,
   test: false,
-  import: 'https://dcm-import.azurewebsites.net/import/',
+  import: 'https://tst-dcm-import.azurewebsites.net/import/',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
-  cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
-  transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
+  cleansing: 'https://tst-dcm-datacheck.azurewebsites.net/check',
+  transform: 'https://tst-dcm-transforming.azurewebsites.net/transfo/',
   admin: 'https://tst-dcm-admin.azurewebsites.net/',
   upload: 'https://tst-dcm-upload.azurewebsites.net/upload/',
   auth: 'https://tst-dcm-auth.azurewebsites.net/',
+  version: '1.0.0',
   env: 'TST'
 };
 

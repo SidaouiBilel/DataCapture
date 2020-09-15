@@ -13,7 +13,7 @@ export const environment = {
   admin: 'https://dcm-admin.azurewebsites.net/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
-
+  version: '1.0.0',
   env: 'DEV'
 };
 
