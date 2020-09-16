@@ -3,7 +3,7 @@ import { UploadState, selectupload } from './upload.state';
 
 export const selectImport = createSelector(
   selectupload,
-  (state: UploadState) => state.import
+  (state: UploadState) => {if (state) { return state.import; }}
 );
 
 export const selectPreview = createSelector(
