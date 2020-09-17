@@ -195,7 +195,9 @@ export class Filter extends Transformer {
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
     let i = 0;
-    for (const c of (params.conditions || [])) {
+    const conditions = (params.conditions || []) 
+    if ( conditions.length == 0 )  errors.push(new NodeError(null, `Number of conditions should be at least 1`));
+    for (const c of conditions) {
         if (isStrEmpty(c.column)) { errors.push(new NodeError('column', `Column ${i + 1} missing`)); }
         if  (isStrEmpty(c.condition)) { errors.push(new NodeError('condition', `Condition ${i + 1} Missing`)); }
         if  (isStrEmpty(c.op)) { errors.push(new NodeError('op', `Operator ${i + 1} missing`)); }
