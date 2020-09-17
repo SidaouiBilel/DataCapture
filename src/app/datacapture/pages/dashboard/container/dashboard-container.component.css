@@ -5,6 +5,11 @@
   flex-flow: column;
 }
 
+nz-table {
+  border: 1px solid #dee2e6;
+  border-top: none;
+}
+
 .flex-box {
   flex: 1 1 auto;
 }

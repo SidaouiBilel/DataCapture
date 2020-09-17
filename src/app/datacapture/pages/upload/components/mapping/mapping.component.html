@@ -7,19 +7,19 @@
         <i nz-icon nzType="hourglass"></i>
       </button>
       <nz-divider nzType='vertical'></nz-divider>
-      <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost" nz-button
-        (click)='updateMapping(mappingFields)'>
+      <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost"
+        nz-button (click)='updateMapping(mappingFields)'>
         <i nz-icon nzType="cloud-sync"></i>
       </button>
       <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
-      (click)='isVisible = true'>
-      <i nz-icon nzType="save"></i>
-    </button>
-    <nz-divider nzType='vertical'></nz-divider>
-    <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button
-      (click)="loadAutoMapping()">
-      <i nz-icon nzType="reload"></i>
-    </button>
+        (click)='isVisible = true'>
+        <i nz-icon nzType="save"></i>
+      </button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button
+        (click)="loadAutoMapping()">
+        <i nz-icon nzType="reload"></i>
+      </button>
       <!-- <span>Applied Mapping: </span>
       <span> {{(mappingId$ |async)}} </span> -->
     </div>
@@ -27,8 +27,9 @@
       <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
         nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToPreview()"><i nz-icon
           nzType="caret-left"></i> Previous</button>
-      <button nz-button nzType="primary" [disabled]="!(mappingValid$ | async)" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
-        nzTooltipPlacement="left" (click)="goToCleansing()">Next<i nz-icon nzType="caret-right"></i></button>
+      <button nz-button nzType="primary" [disabled]="!(mappingValid$ | async)" nzSize="middle" nzShape="round"
+        nz-tooltip nzTooltipTitle="Next Step" nzTooltipPlacement="left" (click)="goToCleansing()">Next<i nz-icon
+          nzType="caret-right"></i></button>
       <nz-divider nzType='vertical'></nz-divider>
       <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
         (click)="cancelUpload()">
@@ -46,7 +47,7 @@
           <div class="sources-items">
             <div class="source-title flex-between">
               <span>SOURCE FIELDS</span>
-              <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="search"/>
+              <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="search" />
             </div>
             <div class="scroll-box">
               <div class="source-list">
@@ -64,13 +65,19 @@
         <nz-card class="h-100 w-100">
           <div class="sources-items">
             <div class="target-title">
-              <span>TARGET FIELDS</span>
+              <span>
+                TARGET FIELDS
+                <i nz-icon nz-tooltip nzTooltipPlacement="right"
+                  nzTooltipTitle="This mapping is invalid with this worksheet. Update it or use another one."
+                  class="text-danger pl-1" nzType="info-circle" nzTheme="fill"></i>
+              </span>
               <div [ngSwitch]="(mandatories$ | async)">
                 <span *ngSwitchCase='0' class="text-success">
                   <i nz-icon nzType="check" nzTheme="outline"></i><b> ALL MANDATORIES HAVE BEEN MAPPED</b>
                 </span>
                 <span *ngSwitchDefault class="text-danger"><b>{{(mandatories$ | async)}}</b>
-                  MANDATORY MISSING</span>
+                  MANDATORY MISSING
+                </span>
               </div>
             </div>
             <div class="scroll-box">
@@ -81,7 +88,9 @@
                     [dndDragoverClass]="'dropOverClass'">
                     <div nz-row>
                       <div nz-col nzSpan="18">
-                        <div *ngIf="item.value" class="badge badge-primary" selected>
+                        <div *ngIf="item.value" class="badge" [class.badge-primary]="!item.inError"
+                          [class.badge-danger]="item.inError" selected nz-tooltip
+                          [nzTooltipTitle]="item.inError ? 'This column does not exist in the file you imported.' : null">
                           {{item.value}}
                           <i nz-icon nzType="close" nzTheme="outline" (click)="onRemoveClick(item,i)"></i>
                         </div>
