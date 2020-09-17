@@ -5,8 +5,10 @@ import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MappingService } from '../../services/mapping.service';
-import { selectMappingFields, selectMappedSources, selectMandatories, selectMappingId } from './../../store/selectors/mapping.selectors';
-import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName } from '../../store/actions/mapping.actions';
+import { selectMappingFields, selectMappedSources, selectMandatories,
+         selectMappingId, selectMappingValid } from './../../store/selectors/mapping.selectors';
+import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
+         SaveMappingValid } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
@@ -32,6 +34,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   worksheet: any;
   mappingId: any;
   domain: any;
+  mappingValid$: Observable<boolean>;
   // Store
   mappingFields$: Observable<any>;
   fileData$: Observable<any>;
@@ -51,6 +54,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
+    this.mappingValid$ = this.store.select(selectMappingValid);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mandatories$   = this.store.select(selectMandatories);
     this.mappingId$     = this.store.select(selectMappingId);
@@ -65,6 +69,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.validateForm = this.fb.group({name: [null, [Validators.required], [this.nameValidator.bind(this)]]});
     this.validate();
   }
+
   ngOnDestroy(): void {
     if (this.monitor$) { this.monitor$.unsubscribe(); }
   }
@@ -240,6 +245,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.mappingFields[index] = refObj;
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
     this.onUpdateSources(source, false);
+    this.checkMappingSanity();
   }
 
   onRemoveClick(source, index: number): void {
@@ -248,6 +254,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.mappingFields[index] = refObj;
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
     this.onUpdateSources(source, true);
+    this.checkMappingSanity();
   }
 
   onUpdateSources(source, remove: boolean): void {
@@ -283,15 +290,17 @@ export class MappingComponent implements OnInit, OnDestroy {
       const sources = Object.keys(mappedSources);
       for (const iterator of values) {
         if (sources.indexOf(iterator) < 0) {
+          this.store.dispatch(new SaveMappingValid(false));
           this.modalService.warning({
             nzTitle: 'Something is wrong with this mapping.',
             nzWrapClassName: 'vertical-center-modal',
             // tslint:disable-next-line: max-line-length
             nzContent: 'It seems like some of the mapped columns does not exist in the file you imported. Please update it or choose another mapping.'
           });
-          break;
+          return;
         }
       }
+      this.store.dispatch(new SaveMappingValid(true));
     });
   }
 
@@ -319,6 +328,10 @@ export class MappingComponent implements OnInit, OnDestroy {
       this.notification.warn('Please save your mapping or Apply one.');
       return;
     }
+    // if (! this.mappingValid ) {
+    //   this.notification.warn('Your mapping is not valid. Fix it or Apply a new one please.');
+    //   return;
+    // }
     if (this.mandatories === 0) {
       this.router.navigate(['/datacapture/upload/cleansing']);
     } else if (this.mandatories !== 0) {

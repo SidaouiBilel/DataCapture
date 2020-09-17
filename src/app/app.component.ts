@@ -37,6 +37,9 @@ export class AppComponent implements OnInit{
           }
         });
       }
+    }, (err) => {
+      this.not.error('Your session was expired. Please login again.');
+      this.store.dispatch(new ActionAuthLogout());
     });
     this.storageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {

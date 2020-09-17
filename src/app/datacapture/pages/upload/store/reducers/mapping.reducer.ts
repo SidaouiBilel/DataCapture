@@ -9,7 +9,8 @@ export const initialState: Mapping = {
   mandatories: {},
   mappingId: '',
   mappingName: null,
-  sheetsTypes: {}
+  sheetsTypes: {},
+  mappingValid: true
 };
 
 
@@ -28,6 +29,12 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
       return {
         ...state,
         sheetsTypes: action.payload
+      };
+
+    case MappingActionTypes.SaveMappingValid:
+      return {
+        ...state,
+        mappingValid: action.payload
       };
 
     case MappingActionTypes.SaveMappingId:
