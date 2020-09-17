@@ -65,13 +65,19 @@
         <nz-card class="h-100 w-100">
           <div class="sources-items">
             <div class="target-title">
-              <span>TARGET FIELDS</span>
+              <span>
+                TARGET FIELDS
+                <i nz-icon nz-tooltip nzTooltipPlacement="right"
+                  nzTooltipTitle="This mapping is invalid with this worksheet. Update it or use another one."
+                  class="text-danger pl-1" nzType="info-circle" nzTheme="fill"></i>
+              </span>
               <div [ngSwitch]="(mandatories$ | async)">
                 <span *ngSwitchCase='0' class="text-success">
                   <i nz-icon nzType="check" nzTheme="outline"></i><b> ALL MANDATORIES HAVE BEEN MAPPED</b>
                 </span>
                 <span *ngSwitchDefault class="text-danger"><b>{{(mandatories$ | async)}}</b>
-                  MANDATORY MISSING</span>
+                  MANDATORY MISSING
+                </span>
               </div>
             </div>
             <div class="scroll-box">
@@ -84,7 +90,7 @@
                       <div nz-col nzSpan="18">
                         <div *ngIf="item.value" class="badge" [class.badge-primary]="!item.inError"
                           [class.badge-danger]="item.inError" selected nz-tooltip
-                          [nzTooltipTitle]="item.inError ? 'This column does not exist in the file you imported' : null">
+                          [nzTooltipTitle]="item.inError ? 'This column does not exist in the file you imported.' : null">
                           {{item.value}}
                           <i nz-icon nzType="close" nzTheme="outline" (click)="onRemoveClick(item,i)"></i>
                         </div>
