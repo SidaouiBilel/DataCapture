@@ -313,12 +313,6 @@ export class MappingComponent implements OnInit, OnDestroy {
       if (!isValid) {
         this.store.dispatch(new SaveMappingValid(false));
         this.store.dispatch(new SaveMappingFields(mfRef));
-        // this.modalService.warning({
-        //   nzTitle: 'Something is wrong with this mapping.',
-        //   nzWrapClassName: 'vertical-center-modal',
-        //   // tslint:disable-next-line: max-line-length
-        //   nzContent: 'It seems like some of the mapped columns does not exist in the file you imported. Please update it or choose another mapping.'
-        // });
         return;
       }
       this.store.dispatch(new SaveMappingValid(true));

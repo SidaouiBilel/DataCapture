@@ -22,16 +22,19 @@
     <nz-divider class="horiz" nzOrientation="left"></nz-divider>
     <!-- Body -->
     <div class="table" *ngIf="selectedDomain">
-      <nz-table #basicTable [nzData]="data">
-        <thead>
+      <nz-table #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
+        [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzBordered]="true" [nzPageIndex]="(page$ | async)"
+        [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
+        (nzPageSizeChange)="onSizeChange($event)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
             <th>Collection</th>
-            <th>Inserted Records</th>
-            <th>Total Records</th>
-            <th>Upload Start Date</th>
-            <th>Upload End Date</th>
+            <th nzShowSort nzSortKey="inserted_records">Inserted Records</th>
+            <th nzShowSort nzSortKey="total_records">Total Records</th>
+            <th nzShowSort nzSortKey="upload_start_time">Upload Start Date</th>
+            <th nzShowSort nzSortKey="upload_end_time">Upload End Date</th>
             <th>Tags</th>
-            <th>Status</th>
+            <th nzShowSort nzSortKey="upload_status">Status</th>
           </tr>
         </thead>
         <tbody>
