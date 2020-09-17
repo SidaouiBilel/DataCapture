@@ -20,7 +20,7 @@ export class LayoutContainer implements OnInit {
   pageList: string[];
   // Store Router State
   router$: Observable<any>;
-  env
+  env;
   profile$: Observable<any>;
 
   constructor(private notification: NotificationService,
@@ -132,7 +132,7 @@ export class LayoutContainer implements OnInit {
         this.service.info(token).subscribe((res) => {
           if (res) {
             if (res.status !== 'success') {
-              this.logoutUser()
+              this.logoutUser();
             } else {
               this.store.dispatch(new ActionSaveProfile(res.data));
             }
@@ -142,7 +142,8 @@ export class LayoutContainer implements OnInit {
     });
   }
 
-  logoutUser(){
+  logoutUser() {
+    // this.notification.error('Token exp');
     this.store.dispatch(new ActionAuthLogout());
   }
 }

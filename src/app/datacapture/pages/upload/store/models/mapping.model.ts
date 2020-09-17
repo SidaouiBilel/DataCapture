@@ -19,4 +19,5 @@ export interface MappingField {
   rules: any;
   type: string;
   value: string;
+  inError: boolean;
 }

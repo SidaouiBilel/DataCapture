@@ -16,6 +16,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, Abst
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { PreviousMappingsComponent } from './previous-mappings/previous-mappings.component';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
+import { deepCopy } from '@app/shared/utils/objects.utils';
 
 @Component({
   selector: 'app-mapping',
@@ -81,6 +82,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     }
   }
 
+  // called on init to get the target fields
   getTargetFields(): void {
     this.service.getTargetFields(this.domain.id).subscribe((res: any) => {
       if (this.mappingId) {
@@ -115,6 +117,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     });
   }
 
+  // called to reinitialize the mapping fields in the store
   reInitMappingFields(): void {
     this.mappingFields.forEach((element, index) => {
       const refObj = {...element};
@@ -124,6 +127,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
   }
 
+  // function to update the mapping fields in the store
   updateMappingFields(res: any) {
     this.reInitMappingFields();
     const mappingFieldsNames = this.mappingFields.map((e) => e.name);
@@ -138,6 +142,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
   }
 
+  // called to save a new mapping
   saveNewMapping(): void {
     // this.validate();
     const x = this.notification.loading('Saving new mapping');
@@ -166,6 +171,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Called to load automatic mapping
   loadAutoMapping(): void {
     const x = this.notification.loading('Loading automatic mapping');
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
@@ -185,11 +191,13 @@ export class MappingComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Validate name form
   validate(): void {
     this.validateForm.controls.name.markAsDirty();
     this.validateForm.controls.name.updateValueAndValidity();
   }
 
+  // Called to get previous mapping
   previousMappings(): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
     .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
@@ -224,6 +232,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Called to sync data from the server with data in the store
   updateLocalMapping(res: any): void {
     // Reinit Sources
     Object.keys(this.mappedSources).forEach((e) => {this.mappedSources[e] = false; });
@@ -239,6 +248,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
+  // Called when dropping new source
   onItemDrop(source, index: number): void {
     const refObj = {...this.mappingFields[index]};
     refObj.value = source.data;
@@ -248,6 +258,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.checkMappingSanity();
   }
 
+  // Called when removing mapped value
   onRemoveClick(source, index: number): void {
     const refObj = {...this.mappingFields[index]};
     refObj.value = null;
@@ -257,6 +268,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.checkMappingSanity();
   }
 
+  // Called to update the sources whether they are mapped or nor
   onUpdateSources(source, remove: boolean): void {
     // to do check if the source data exist on other columns before setting to false
     if (remove) {
@@ -270,6 +282,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappedSources(this.mappedSources));
   }
 
+  // Update the current mapping by id
   updateMapping(mappingFields: any): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
@@ -281,29 +294,38 @@ export class MappingComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Check if the mapping is valid or not
   checkMappingSanity(): void {
     this.monitor$ = forkJoin(
       this.mappingFields$.pipe(take(1)),
       this.mappedSources$.pipe(take(1))
     ).subscribe(([mappingFields, mappedSources]) => {
+      const mfRef = deepCopy(mappingFields);
+      let isValid = true;
       const values = mappingFields.map((e) => e.value).filter((e) => {if (e) { return e; }});
       const sources = Object.keys(mappedSources);
-      for (const iterator of values) {
-        if (sources.indexOf(iterator) < 0) {
-          this.store.dispatch(new SaveMappingValid(false));
-          this.modalService.warning({
-            nzTitle: 'Something is wrong with this mapping.',
-            nzWrapClassName: 'vertical-center-modal',
-            // tslint:disable-next-line: max-line-length
-            nzContent: 'It seems like some of the mapped columns does not exist in the file you imported. Please update it or choose another mapping.'
-          });
-          return;
+      for (const [index, value] of values.entries()) {
+        if (sources.indexOf(value) < 0) {
+          mfRef[index].inError = true;
+          isValid = false;
         }
+      }
+      if (!isValid) {
+        this.store.dispatch(new SaveMappingValid(false));
+        this.store.dispatch(new SaveMappingFields(mfRef));
+        this.modalService.warning({
+          nzTitle: 'Something is wrong with this mapping.',
+          nzWrapClassName: 'vertical-center-modal',
+          // tslint:disable-next-line: max-line-length
+          nzContent: 'It seems like some of the mapped columns does not exist in the file you imported. Please update it or choose another mapping.'
+        });
+        return;
       }
       this.store.dispatch(new SaveMappingValid(true));
     });
   }
 
+  // mapping name validator
   nameValidator = (control: FormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
     this.service.checkName(this.domain.id, control.value).subscribe((res) => {
       if (res) {
@@ -315,6 +337,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     });
   })
 
+  // Navigation
   cancelUpload(): void {
     this.store.dispatch(new ActionImportReset());
   }
