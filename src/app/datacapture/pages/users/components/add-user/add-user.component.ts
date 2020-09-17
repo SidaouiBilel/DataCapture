@@ -13,6 +13,7 @@ export class AddUserComponent implements OnInit {
   user: Users;
   isLoading: boolean;
   domainList: any;
+  profile: any;
   validateForm: FormGroup;
   listOfRoles: Array<{ id: number; roleInstance: string, domainInstance: string }> = [];
 
@@ -39,12 +40,16 @@ export class AddUserComponent implements OnInit {
       });
       this.loadDomain(true);
     }
+    let admin: any = {admin: [this.user ? this.user.admin : null, [Validators.required]]};
+    if (this.user && this.profile && (this.user.id === this.profile.id)) {
+      admin = {};
+    }
     this.validateForm = this.fb.group({
       firstName: [this.user ? this.user.first_name : null, [Validators.required]],
       lastName: [this.user ? this.user.last_name : null, [Validators.required]],
       email: [this.user ? this.user.email : null, [Validators.email, Validators.required]],
       id: [this.user ? this.user.id : null],
-      admin: [this.user ? this.user.admin : null, [Validators.required]],
+      ...admin,
       ...password,
       ...roles
     });

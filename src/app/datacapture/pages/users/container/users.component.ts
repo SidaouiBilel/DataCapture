@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
-import { NotificationService } from '@app/core';
+import { AppState, NotificationService, selectProfile } from '@app/core';
 import { AddUserComponent } from '../components/add-user/add-user.component';
 import { Users } from './../models/users.model';
 import { FormGroup } from '@angular/forms';
 import { UsersService } from '../services/users.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -14,10 +16,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UsersComponent {
   searchUser = '';
+  profile: any;
+  profile$: Observable<any>;
   reload$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   constructor(private modalService: NzModalService,
+              private store: Store<AppState>,
               private service: UsersService,
-              private notification: NotificationService) {}
+              private notification: NotificationService) {
+    this.profile$ = this.store.select(selectProfile);
+    this.profile$.subscribe((res) => {this.profile = res; });
+  }
 
   addUser(msg: string, edit: boolean, user?: Users): void {
     const modal: NzModalRef = this.modalService.create({
@@ -28,7 +36,8 @@ export class UsersComponent {
       nzContent: AddUserComponent,
       nzOkText: edit ? 'Edit' : 'Add',
       nzComponentParams: {
-        user
+        user,
+        profile: this.profile
       },
       nzOnOk: componentInstance => {
         try {

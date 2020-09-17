@@ -1,5 +1,5 @@
 <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-  <nz-form-item>
+  <nz-form-item *ngIf="validateForm.controls.admin">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="admin">Admin</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please">
       <nz-switch formControlName="admin" id="admin" (ngModelChange)="resetRules($event)"></nz-switch>
@@ -52,7 +52,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <ng-container *ngIf="!validateForm.controls.admin.value">
+  <ng-container *ngIf="validateForm.controls.admin && !validateForm.controls.admin.value">
     <nz-form-item *ngFor="let control of listOfRoles; let i = index">
       <nz-form-label [nzSm]="6" [nzXs]="24" *ngIf="i == 0" [nzFor]="control.id">
         Rules
@@ -75,7 +75,7 @@
       </nz-form-control>
     </nz-form-item>
   </ng-container>
-  <nz-form-item class="flex center" *ngIf="!validateForm.controls.admin.value">
+  <nz-form-item class="flex center" *ngIf="validateForm.controls.admin && !validateForm.controls.admin.value">
     <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
       <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
         <i nz-icon nzType="plus"></i>
