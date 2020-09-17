@@ -11,6 +11,7 @@ const components = [
   LayoutContainer,
   SidebarComponent,
   HeaderComponent,
+  UserBarComponent
 ];
 
 @NgModule({
@@ -18,7 +19,7 @@ const components = [
     DataCaptureRoutingModule,
     SharedModule,
   ],
-  declarations: [...components, UserBarComponent ],
+  declarations: [...components ],
   exports: [
     LayoutContainer
   ],

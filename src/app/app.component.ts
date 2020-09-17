@@ -11,7 +11,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./app.component.css'],
   animations: [routeAnimations]
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   isCollapsed = false;
   constructor(private storageService: LocalStorageService,
               private store: Store<AppState>,
@@ -21,30 +21,6 @@ export class AppComponent implements OnInit{
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);
   }
-
-  ngOnInit(): void {
-    this.store.pipe(select(selectToken)).subscribe((token: string) => {
-      if (token) {
-        this.service.info(token).subscribe((res) => {
-          if (res) {
-            if (res.status !== 'success') {
-              this.not.error('Your session was expired. Please login again.');
-              this.store.dispatch(new ActionAuthLogout());
-            } else {
-              this.store.dispatch(new ActionSaveProfile(res.data));
-              this.not.success(`Welcome back ${res.data.last_name} ${res.data.first_name}`, 'Hello');
-            }
-          }
-        });
-      }
-    }, (err) => {
-      this.not.error('Your session was expired. Please login again.');
-      this.store.dispatch(new ActionAuthLogout());
-    });
-    this.storageService.testLocalStorage();
-    if (AppComponent.isIEorEdgeOrSafari()) {
-      // Here we add configuration if ever the application is not working with edge or IE or safari
-    }
-  }
-
 }
+
+

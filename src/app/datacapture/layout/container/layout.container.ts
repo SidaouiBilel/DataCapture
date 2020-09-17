@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile } from '@app/core';
-import { Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile, ActionSaveProfile, selectToken } from '@app/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 import { LoginService } from '@app/core/login/service/login.service';
@@ -11,7 +11,7 @@ import { environment } from '@env/environment';
   templateUrl: './layout.container.html',
   styleUrls: ['./layout.container.css'],
 })
-export class LayoutContainer {
+export class LayoutContainer implements OnInit {
   // used to control the sidebar
   isCollapsed: boolean;
   miniSidebarCollapsed = true;
@@ -40,6 +40,9 @@ export class LayoutContainer {
     });
 
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
+  }
+  ngOnInit(): void {
+    this.checkTokenValidity()
   }
 
   // This is used to select the primary pqge in the sidebqr
@@ -121,5 +124,25 @@ export class LayoutContainer {
     } catch (error) {
       this.notification.error(error.message);
     }
+  }
+
+  checkTokenValidity(): void {
+    this.store.pipe(select(selectToken)).subscribe((token: string) => {
+      if (token) {
+        this.service.info(token).subscribe((res) => {
+          if (res) {
+            if (res.status !== 'success') {
+              this.logoutUser()
+            } else {
+              this.store.dispatch(new ActionSaveProfile(res.data));
+            }
+          }
+        }, () => this.logoutUser());
+      }
+    });
+  }
+
+  logoutUser(){
+    this.store.dispatch(new ActionAuthLogout());
   }
 }
