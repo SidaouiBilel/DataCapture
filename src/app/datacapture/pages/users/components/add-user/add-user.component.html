@@ -1,7 +1,7 @@
 <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
   <nz-form-item *ngIf="validateForm.controls.admin">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="admin">Admin</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please">
+    <nz-form-control [nzSm]="18" [nzXs]="24">
       <nz-switch formControlName="admin" id="admin" (ngModelChange)="resetRules($event)"></nz-switch>
     </nz-form-control>
   </nz-form-item>

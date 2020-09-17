@@ -40,7 +40,7 @@ export class AddUserComponent implements OnInit {
       });
       this.loadDomain(true);
     }
-    let admin: any = {admin: [this.user ? this.user.admin : null, [Validators.required]]};
+    let admin: any = {admin: [this.user ? this.user.admin : false, [Validators.required]]};
     if (this.user && this.profile && (this.user.id === this.profile.id)) {
       admin = {};
     }
