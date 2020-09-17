@@ -28,12 +28,12 @@
       (click)='onDelete()'><i nz-icon nzType="delete"></i>
     </button>
     <button *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save as New" (click)='onSaveAsNew()'
-      [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' [disabled]='!(canSave$ | async) || !enableAddbtn(profile?.roles)'><i nz-icon
+      [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' [disabled]='!(canSave$ | async) || !enableAddbtn(profile)'><i nz-icon
         nzType="diff"></i>
     </button>
 
     <button [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' nzShape='circle' nz-button nz-tooltip
-      nzTooltipTitle="Save" (click)='onSave()' [disabled]='!(canSave$ | async) || !enableAddbtn(profile?.roles)'>
+      nzTooltipTitle="Save" (click)='onSave()' [disabled]='!(canSave$ | async) || !enableAddbtn(profile)'>
       <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
     </button>
 

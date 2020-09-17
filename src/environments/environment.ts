@@ -2,18 +2,20 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { meta } from './environment.meta';
+
 export const environment = {
+  ...meta,
   production: false,
   test: false,
   import: 'https://dcm-import.azurewebsites.net/import/',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-
   admin: 'https://dcm-admin.azurewebsites.net/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/',
-  auth: 'https://dcm-auth.azurewebsites.net/',
-  version: '1.0.0',
+  // auth: 'https://dcm-auth.azurewebsites.net/',
+  auth: 'http://localhost:5000/',
   env: 'DEV'
 };
 
