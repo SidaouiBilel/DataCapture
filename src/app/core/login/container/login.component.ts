@@ -22,4 +22,10 @@ export class LoginComponent {
       this.store.dispatch(new ActionAuthLogin(res.Authorization));
     }, err => this.loading$.next(false));
   }
+
+  resetPw(email: string) {
+    this.service.resetPw(email).subscribe((res) => {
+      console.log(res);
+    })
+  }
 }

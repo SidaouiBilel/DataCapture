@@ -1,6 +1,6 @@
 <div class="bg-primary flex column between" style="height: 100vh; background: linear-gradient(10deg, rgb(240 242 245) 0%, rgb(255 255 255/ 0%) 0%);">
   <i nz-icon nzType="experiment" class="cube-icon"></i>
-  
+
   <div></div>
   <div>
     <div class='flex column mb-4' >
@@ -11,13 +11,13 @@
       </div>
       <app-env-tag></app-env-tag>
     </div>
-  
+
     <nz-card class="p-4 shadow mb-2 rounded">
-  
+
       <h3 nz-typography class="mb-0">Log In</h3>
       <p nz-typography class="pb-2">to continue to the platform</p>
-  
-      <app-login-form [loading]='loading$ | async' (login)="login($event)"></app-login-form>
+
+      <app-login-form [loading]='loading$ | async' (resetPw)="resetPw($event)" (login)="login($event)"></app-login-form>
     </nz-card>
   </div>
   <!-- <button nz-button nzType='link'>Learn More</button> -->
@@ -31,5 +31,5 @@
       <div class="login-footer-icon" nz-tooltip nzTooltipTitle='Chrome'><i nz-icon nzType="chrome"></i></div>
     </div>
   </div>
-  
+
 </div>

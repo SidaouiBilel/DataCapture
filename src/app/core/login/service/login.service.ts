@@ -15,6 +15,10 @@ export class LoginService {
     return this.http.post(environment.auth + `auth/logout`, {});
   }
 
+  resetPw(email: string) {
+    return this.http.post(environment.auth + 'user/password', {email});
+  }
+
   info(token: string): any {
     return this.http.get(environment.auth + `auth/info`, {headers: {token}});
   }

@@ -9,8 +9,24 @@ import { EventEmitter } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
   validateForm: FormGroup;
+  resetPwForm: FormGroup;
+  visible = false;
   @Output() login: EventEmitter<any> = new EventEmitter<any>();
+  @Output() resetPw: EventEmitter<any> = new EventEmitter<any>();
   @Input() loading = false;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      email: [{value: null, disabled: this.loading}, [Validators.required, Validators.email]],
+      password: [{value: null, disabled: this.loading}, [Validators.required]],
+      remember: [true]
+    });
+    this.resetPwForm = this.fb.group({
+      email: [null, [Validators.required, Validators.pattern('[^ @]*@[^ @]*')]],
+    });
+  }
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -23,13 +39,16 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      email: [{value: null, disabled: this.loading}, [Validators.required]],
-      password: [{value: null, disabled: this.loading}, [Validators.required]],
-      remember: [true]
-    });
+  forgotPassword(): void {
+    // tslint:disable-next-line: forin
+    for (const i in this.resetPwForm.controls) {
+      this.resetPwForm.controls[i].markAsDirty();
+      this.resetPwForm.controls[i].updateValueAndValidity();
+    }
+
+    if (this.resetPwForm.valid) {
+      this.resetPw.emit(this.resetPwForm.controls.email.value);
+    }
   }
 }
