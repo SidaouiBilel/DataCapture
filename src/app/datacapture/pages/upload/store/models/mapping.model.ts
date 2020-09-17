@@ -5,6 +5,7 @@ export interface Mapping {
   mappingId: string;
   mappingName: string;
   sheetsTypes: any;
+  mappingValid: boolean;
 }
 
 export interface MappingField {

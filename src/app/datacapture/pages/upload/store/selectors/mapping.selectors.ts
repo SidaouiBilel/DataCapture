@@ -12,6 +12,11 @@ export const selectMappedSources = createSelector(
   (object: Mapping) => object.mappedSources
 );
 
+export const selectMappingValid = createSelector(
+  SelectMapping,
+  (object: Mapping) => object.mappingValid
+);
+
 export const selectMandatories = createSelector(
   SelectMapping,
   (object: Mapping) => object.mandatories
@@ -24,5 +29,5 @@ export const selectMappingId = createSelector(
 
 export const selectSheetsTypes = createSelector(
   SelectMapping,
-  (object:Mapping) => object.sheetsTypes
-)
+  (object: Mapping) => object.sheetsTypes
+);
