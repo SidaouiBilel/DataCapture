@@ -40,12 +40,19 @@ export class DomainsPageComponent implements OnInit {
    });
   }
 
-  enableAddbtn(roles: any[]): boolean {
-    const i = roles.map((e) => e.domain_id).indexOf(this.super_domain_id);
-    if (i >= 0) {
-      if (roles[i].role === 'domainAdmin') {
-        return true;
-      }
+  enableAddbtn(profile): boolean {
+    if(profile){
+      if( profile.admin ){
+        return true
+      }else{
+        const roles = profile.roles
+        const i = roles.map((e) => e.domain_id).indexOf(this.super_domain_id);
+        if (i >= 0) {
+          if (roles[i].role === 'domainAdmin') {
+            return true;
+          }
+        }
+      }  
     }
     return false;
   }

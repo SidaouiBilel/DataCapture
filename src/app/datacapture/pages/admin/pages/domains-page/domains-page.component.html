@@ -5,7 +5,7 @@
 
   <div class="flex wrap between mb-2">
     <div class="button-spacing">
-      <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async)?.roles)" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
+      <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async))" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
       <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
     </div>
 

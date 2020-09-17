@@ -22,7 +22,7 @@ export class UploadService {
   }
 
   getStatus(flowId) {
-    return this.http.get(`${environment.upload}flow/${flowId}/status`);
+    return this.http.get(`${environment.upload}flow/${flowId}/status/`);
   }
 
   getUploadStatus(flowId: any): Observable<any> {

@@ -1,6 +1,9 @@
+import { meta } from './environment.meta';
+
 const packageJson = require('../../package.json');
 
 export const environment = {
+  ...meta,
   production: true,
   test: false,
   admin: 'https://dcm-admin.azurewebsites.net/',
@@ -14,6 +17,5 @@ export const environment = {
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
-  version: '1.0.0',
   env: 'PRD'
 };

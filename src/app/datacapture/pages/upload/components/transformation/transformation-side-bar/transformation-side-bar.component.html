@@ -10,11 +10,11 @@
   </div>
 
   <div class="w-100 flex between mt-1">
-    <button *ngIf="enableAddbtn(profile?.roles)" class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Edit" nz-dropdown
+    <button *ngIf="enableAddbtn(profile)" class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Edit" nz-dropdown
       [nzDropdownMenu]="editMenu">
       <nz-badge [nzDot]='!pipeInfo.name'><i nz-icon nzType="edit"></i></nz-badge>
     </button>
-    <button *ngIf="!enableAddbtn(profile?.roles)" class='ghost' nzShape='circle' nz-button disabled>
+    <button *ngIf="!enableAddbtn(profile)" class='ghost' nzShape='circle' nz-button disabled>
       <nz-badge [nzDot]='!pipeInfo.name'><i nz-icon nzType="edit"></i></nz-badge>
     </button>
     <app-transformation-toolbar [showActions]='true' [profile]="profile" [superDomain]="superDomain"></app-transformation-toolbar>
