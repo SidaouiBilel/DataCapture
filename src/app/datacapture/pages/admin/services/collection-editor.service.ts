@@ -63,6 +63,7 @@ export class CollectionEditor {
         this.ds.deleteDomain(data).subscribe(()=> {
           this.load_data()
           done.next(true)
+          done.complete()
         })
       }
     });
@@ -70,16 +71,19 @@ export class CollectionEditor {
     return done;
   }
 
-  showCopyConfirm(data): void {
+  showCopyConfirm(data) {
+    let done = new Subject()
     const confirmModal = this.modal.confirm({
       nzTitle: 'Confirm Domain Duplication',
       nzContent: 'This action is irreversible. Target Fields will be duplicated for this collection.',
       nzOnOk: () => {
         this.loading = true
         this.ds.duplicateDomain(data).subscribe(()=> this.load_data())
+        done.next(true)
+        done.complete()
       }
     });
-
+    return done
   }
 
   load_data(){

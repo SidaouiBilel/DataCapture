@@ -34,7 +34,7 @@ export class UserBarComponent implements OnInit {
   logout(): void {
     this.user.logout().subscribe((res) => {
       this.store.dispatch(new ActionAuthLogout());
-    });
+    }, err=> this.store.dispatch(new ActionAuthLogout()));
   }
 
 }

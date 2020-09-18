@@ -39,40 +39,30 @@
 
   <ng-container *ngFor="let r of data.rules; let i = index">
     <ng-container *ngIf='RULES_MAP[r.type]; let check ; else noCheckFound'>
-      <nz-card class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name"
+      <nz-card class='ma-b' nzSize='small' [nzTitle]="check.name"
         [nzExtra]="extraTemplate">
-        <nz-card-meta [nzDescription]="RULES_MAP[r.type].description"></nz-card-meta>
+        <nz-card-meta [nzDescription]="check.description"></nz-card-meta>
         <div class="ma-t">
-          <ng-container *ngIf="RULES_MAP[r.type].parameters; let params">
+          <ng-container *ngIf="check.parameters; let params">
             <nz-form-item *ngFor="let p of params">
-
               <nz-form-label [nzSpan]="7">{{p.label}}</nz-form-label>
               <nz-form-control [nzSpan]="14">
-
                 <ng-container [ngSwitch]="p.type">
-
                   <textarea *ngSwitchCase="'textarea'" [(ngModel)]='r[p.name]' nz-input rows="2"></textarea>
-
                   <nz-select style="width: 100%;" [(ngModel)]='r[p.name]' *ngSwitchCase="'select'">
                     <nz-option *ngFor='let o of p.options' [nzValue]="o.key" [nzLabel]="o.value"></nz-option>
                   </nz-select>
-
                   <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
-
                   <app-field-input *ngSwitchCase="'property'" [(ngModel)]='r[p.name]'></app-field-input>
-
                   <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input />
-
                 </ng-container>
-
-
               </nz-form-control>
-
-
-
             </nz-form-item>
-
-
+            
+            <nz-form-item *ngIf='check.id=="FORMAT_CHECK" && r.custom==true'>
+              <nz-form-label [nzSpan]="7">Custom Regex</nz-form-label>
+              <nz-form-control [nzSpan]="14"><input [(ngModel)]='r.regex' nz-input /></nz-form-control>
+            </nz-form-item>
           </ng-container>
         </div>
 

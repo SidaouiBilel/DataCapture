@@ -16,6 +16,7 @@ export class CollectionCardComponent implements OnInit {
 
   @Output() edited = new EventEmitter<boolean>();
   @Output() deleted = new EventEmitter<boolean>();
+  @Output() copied = new EventEmitter<boolean>();
 
   constructor(private editor: CollectionEditor, public s : StoreService) { 
     s.displaySize$.subscribe((size)=> this.small = (size == 'small'))
@@ -31,7 +32,9 @@ export class CollectionCardComponent implements OnInit {
   }
   
   onCopy() {
-    this.editor.showCopyConfirm(this.data)
+    this.editor.showCopyConfirm(this.data).subscribe(()=>{
+      this.copied.emit(true)
+    })
   }
 
   onDelete() {

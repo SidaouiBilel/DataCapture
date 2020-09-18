@@ -31,7 +31,7 @@
         <!-- <nz-card class="inner-box super-domain-card"> -->
 
         <app-collection-card [class]='(s.displayList$ | async)?"":"h-100"' [data]='d' [loading]='loading'
-          (edited)='load_data()' (deleted)='load_data()'>
+          (edited)='load_data()' (deleted)='load_data()' (copied)='load_data()'>
           <div class="button-spacing">
             <button (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'fields'])"
               nz-button nzType="default"><i nz-icon nzType="unordered-list"></i>Target Fields</button>
