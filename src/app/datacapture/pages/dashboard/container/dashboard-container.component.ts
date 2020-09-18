@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState, NotificationService } from '@app/core';
+import { AuditComponent } from '@app/shared/audit/audit.component';
 import { Store } from '@ngrx/store';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DashboardService } from '../service/dashboard.service';
@@ -24,7 +26,10 @@ export class DashboardComponent implements OnInit {
   sort$: Observable<any>;
   fetchData$: Observable<boolean>;
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  constructor(private service: DashboardService, private store: Store<AppState>, private notification: NotificationService) {
+  constructor(private service: DashboardService,
+              private store: Store<AppState>,
+              private modalService: NzModalService,
+              private notification: NotificationService) {
     this.page$ = this.store.select(selectPage);
     this.size$ = this.store.select(selectSize);
     this.sort$ = this.store.select(selectSort);
@@ -73,5 +78,21 @@ export class DashboardComponent implements OnInit {
   onSizeChange(size: number) {
     this.store.dispatch(new ActionSaveSize(size));
     this.loadData(this.selectedDomain.id);
+  }
+
+  auditTrial(ws: string): void {
+    this.service.getAuditTrial(ws, this.selectedDomain.id).subscribe((res) => {
+      const modal: NzModalRef = this.modalService.create({
+        nzTitle: 'Audit Trail',
+        nzClosable: false,
+        nzWrapClassName: 'vertical-center-modal',
+        nzWidth: 'xXL',
+        nzContent: AuditComponent,
+        nzOkText: null,
+        nzComponentParams: {
+          audits: res
+        },
+      });
+    });
   }
 }

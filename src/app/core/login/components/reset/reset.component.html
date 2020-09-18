@@ -17,7 +17,7 @@
       <h3 nz-typography class="mb-0">Reset Password</h3>
       <p nz-typography class="pb-2">to continue to the platform</p>
 
-      <app-new-password (updatePw)="updatePw($event)"></app-new-password>
+      <app-new-password (updatePw)="updatePw($event)" (login)="login()"></app-new-password>
     </nz-card>
   </div>
   <!-- <button nz-button nzType='link'>Learn More</button> -->

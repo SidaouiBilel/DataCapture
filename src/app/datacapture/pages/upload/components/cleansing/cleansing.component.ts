@@ -13,7 +13,7 @@ import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.servi
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
-import { AuditComponent } from './audit/audit.component';
+import { AuditComponent } from '@app/shared/audit/audit.component';
 
 @Component({
   selector: 'app-cleansing',

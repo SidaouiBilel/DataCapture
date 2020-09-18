@@ -14,6 +14,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { CustomTooltipComponent } from './custom-tooltip/custom-tooltip.component';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { EnvTagComponent } from './env-tag/env-tag.component';
+import { AuditComponent } from './audit/audit.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -38,7 +39,8 @@ const Components = [
   AutoTableHeightDirective,
   DataGridComponent,
   CustomTooltipComponent,
-  EnvTagComponent
+  EnvTagComponent,
+  AuditComponent
 ];
 
 @NgModule({
@@ -57,7 +59,8 @@ const Components = [
     UtilsService
   ],
   entryComponents: [
-    CustomTooltipComponent
+    CustomTooltipComponent,
+    AuditComponent
   ]
 })
 export class SharedModule {}
