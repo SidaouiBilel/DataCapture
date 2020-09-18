@@ -58,7 +58,6 @@ import { OverviewComponent } from './components/upload/overview/overview.compone
 import { UploadTagsComponent } from './components/upload/upload-tags/upload-tags.component';
 import { UploadService } from './services/upload.service';
 import { UploadDataComponent } from './components/upload/upload-data/upload-data.component';
-import { AuditComponent } from './components/cleansing/audit/audit.component';
 import { FilterPipe } from './pipe/source-filter.pipe';
 
 const components = [
@@ -102,7 +101,6 @@ const components = [
   OverviewComponent,
   UploadTagsComponent,
   UploadDataComponent,
-  AuditComponent,
   FilterPipe
 ];
 
@@ -145,7 +143,6 @@ const components = [
     PipeChangesAlertComponent,
     DefaultValueComponent,
     SplitterComponent,
-    AuditComponent
   ]
 })
 export class UploadModule {}

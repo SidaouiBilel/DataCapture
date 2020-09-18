@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class NewPasswordComponent implements OnInit {
   validateForm: FormGroup;
   @Output() updatePw: EventEmitter<any> = new EventEmitter();
+  @Output() login: EventEmitter<any> = new EventEmitter();
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {

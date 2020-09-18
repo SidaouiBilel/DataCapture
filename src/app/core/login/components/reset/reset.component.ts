@@ -29,7 +29,11 @@ export class ResetComponent implements OnInit {
       }
     }, (err) => {
       this.not.error(err.message);
-    })
+    });
+  }
+
+  login(): void {
+    this.router.navigate(['/login']);
   }
 
 }
