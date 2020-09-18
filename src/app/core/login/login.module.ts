@@ -4,17 +4,20 @@ import { LoginComponent } from './container/login.component';
 import { LoginService } from './service/login.service';
 import { LoginGuard } from './guards/login.guard';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { NewPasswordComponent } from './components/new-password/new-password.component';
+import { ResetComponent } from './components/reset/reset.component';
 
 const components = [
   LoginComponent,
-  LoginFormComponent
+  LoginFormComponent,
+  NewPasswordComponent
 ];
 
 @NgModule({
   imports: [
     SharedModule,
   ],
-  declarations: [...components],
+  declarations: [...components, ResetComponent],
   exports: [
   ],
   providers : [
@@ -22,6 +25,7 @@ const components = [
     LoginGuard,
   ],
   entryComponents: [
+    NewPasswordComponent
   ]
 })
 export class LoginModule {}
