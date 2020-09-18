@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FieldTypesPipe implements PipeTransform {
 
   transform(fields: any[], types: string[]): any {
-    if (types)
+    console.log({fields, types})
+    if (types && fields)
       return fields.filter(f=> types.includes(f.type))
     else
       return fields;

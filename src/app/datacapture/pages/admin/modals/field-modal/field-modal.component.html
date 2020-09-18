@@ -53,7 +53,7 @@
                     <nz-option *ngFor='let o of p.options' [nzValue]="o.key" [nzLabel]="o.value"></nz-option>
                   </nz-select>
                   <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
-                  <app-field-input *ngSwitchCase="'property'" [(ngModel)]='r[p.name]'></app-field-input>
+                  <app-field-input *ngSwitchCase="'property'" [types]='p.property_types' [(ngModel)]='r[p.name]'></app-field-input>
                   <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input />
                 </ng-container>
               </nz-form-control>
