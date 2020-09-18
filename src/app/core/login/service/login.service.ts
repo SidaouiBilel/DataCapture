@@ -19,6 +19,10 @@ export class LoginService {
     return this.http.post(environment.auth + 'user/password', {email});
   }
 
+  updatePw(password: string, token: string) {
+    return this.http.put(environment.auth + 'user/password', {token, password});
+  }
+
   info(token: string): any {
     return this.http.get(environment.auth + `auth/info`, {headers: {token}});
   }

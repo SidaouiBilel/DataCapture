@@ -3,6 +3,9 @@ import { LoginService } from '../service/login.service';
 import { AppState, ActionAuthLogin } from '@app/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { NotificationService } from '@app/core/notifications/notification.service';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NewPasswordComponent } from '../components/new-password/new-password.component';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +13,13 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-  constructor(private service: LoginService, private store: Store<AppState>) {}
-
   loading$ = new BehaviorSubject(false);
+
+  constructor(private service: LoginService,
+              private store: Store<AppState>,
+              private modalService: NzModalService,
+              private not: NotificationService) {}
+
 
   login(event: any): void {
     this.loading$.next(true);
@@ -24,8 +30,42 @@ export class LoginComponent {
   }
 
   resetPw(email: string) {
-    this.service.resetPw(email).subscribe((res) => {
-      console.log(res);
-    })
+    this.service.resetPw(email).subscribe((res: any) => {
+      if (res) {
+        this.not.success(res.message);
+        // this.newPw();
+      }
+    }, (err) => { this.not.error('Server Error'); });
+  }
+
+  newPw(): void {
+    const modal: NzModalRef = this.modalService.create({
+      nzTitle: 'Enter New password',
+      nzClosable: false,
+      nzWrapClassName: 'vertical-center-modal',
+      nzWidth: 'xXL',
+      nzContent: NewPasswordComponent,
+      nzOkText: 'Ok',
+      nzOnOk: componentInstance => {
+        try {
+          modal.getInstance().nzOkLoading = true;
+          componentInstance.submitForm();
+          if (componentInstance.validateForm.valid) {
+            // this.service.updatePw(componentInstance.validateForm.controls.password.value).subscribe((res) => {
+            //   this.not.success(res);
+            //   modal.getInstance().nzOkLoading = false;
+            //   modal.close();
+            // });
+          } else {
+            this.not.error('Invalid Form');
+            setTimeout(() => { modal.getInstance().nzOkLoading = false; }, 1000);
+          }
+          return false;
+        } catch (error) {
+          this.not.error(error);
+          modal.close();
+        }
+      }
+    });
   }
 }
