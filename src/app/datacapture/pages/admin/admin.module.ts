@@ -24,6 +24,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AdminReducer, FEATURE_NAME } from './store/admin.state';
 import { DisplayChangerComponent } from './componenets/display-changer/display-changer.component';
 import { FieldInputComponent } from './componenets/field-input/field-input.component';
+import { FieldTypesComponent } from './componenets/field-types/field-types.component';
+import { FieldTypesPipe } from './componenets/field-types.pipe';
+import { ChecksTypesPipe } from './componenets/check-field-types';
 
 
 @NgModule({
@@ -45,6 +48,9 @@ import { FieldInputComponent } from './componenets/field-input/field-input.compo
     SimpleFilterPipe,
     DisplayChangerComponent,
     FieldInputComponent,
+    FieldTypesComponent,
+    FieldTypesPipe,
+    ChecksTypesPipe
   ],
   providers:[
     CollectionEditor

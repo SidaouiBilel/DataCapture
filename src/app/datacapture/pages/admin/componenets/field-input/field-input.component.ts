@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MakeProvider, AbstractValueAccessor } from '@app/datacapture/pages/upload/components/transformation/shared/abstarct.accessor';
 import { AdminNavigator } from '../../services/admin-navigator.service';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -13,6 +13,7 @@ import { withLatestFrom, tap, switchMap, catchError } from 'rxjs/operators';
 })
 export class FieldInputComponent extends AbstractValueAccessor implements OnInit {
 
+  @Input() types = null
   fields$ = new BehaviorSubject([])
   // COULD BE SET AS INPUT INSTEAD
   collectionID$

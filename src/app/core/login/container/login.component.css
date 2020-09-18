@@ -1,5 +1,8 @@
 .login-footer{
+    width: 100%;
     background: #f0f2f5;
+    /* border-radius: 20px 20px 0 0 ; */
+    font-size: 16px;
 }
 
 .login-footer-icon{

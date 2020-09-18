@@ -18,7 +18,7 @@
 
         <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
 
-        <nz-select style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
+        <nz-select (ngModelChange)='onChange(f)' style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
           <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
         </nz-select>
 
@@ -38,8 +38,8 @@
   <nz-divider nzText="Rules"></nz-divider>
 
   <ng-container *ngFor="let r of data.rules; let i = index">
-    <ng-container *ngIf='RULES_MAP[r.type]; else noCheckFound'>
-      <nz-card  class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name"
+    <ng-container *ngIf='RULES_MAP[r.type]; let check ; else noCheckFound'>
+      <nz-card class='ma-b' nzSize='small' [nzTitle]="RULES_MAP[r.type].name"
         [nzExtra]="extraTemplate">
         <nz-card-meta [nzDescription]="RULES_MAP[r.type].description"></nz-card-meta>
         <div class="ma-t">
@@ -59,7 +59,7 @@
 
                   <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
 
-                  <app-field-input *ngSwitchCase="'property'"  [(ngModel)]='r[p.name]'></app-field-input>
+                  <app-field-input *ngSwitchCase="'property'" [(ngModel)]='r[p.name]'></app-field-input>
 
                   <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input />
 
@@ -97,13 +97,13 @@
 
 
 
-  <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType="primary" nzBlock>
-    Add
-    <i nz-icon nzType="down"></i>
+  <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType='dashed' nzBlock>
+    <i nz-icon nzType="plus"></i>
+    Add Rule
   </button>
   <nz-dropdown-menu #rulesMenu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-tooltip [nzTooltipTitle]="rule.description" *ngFor="let rule of RULES_LIST" nz-menu-item
+      <li nz-tooltip [nzTooltipTitle]="rule.description" *ngFor="let rule of RULES_LIST | checksByType : data.type" nz-menu-item
         (click)="addRule($event, rule)">{{rule.name}}</li>
     </ul>
   </nz-dropdown-menu>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FieldModalComponent } from './field-modal.component';
+import { FieldTypesComponent } from './field-types.component';
 
-describe('FieldModalComponent', () => {
-  let component: FieldModalComponent;
-  let fixture: ComponentFixture<FieldModalComponent>;
+describe('FieldTypesComponent', () => {
+  let component: FieldTypesComponent;
+  let fixture: ComponentFixture<FieldTypesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FieldModalComponent ]
+      declarations: [ FieldTypesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FieldModalComponent);
+    fixture = TestBed.createComponent(FieldTypesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

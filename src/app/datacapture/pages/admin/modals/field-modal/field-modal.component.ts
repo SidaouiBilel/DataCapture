@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EntityModal } from '../entity-modal';
 import { DomainService } from '../../services/domain.service';
 import { NzModalRef } from 'ng-zorro-antd';
+import { DATA_TYPES } from '@app/shared/utils/types';
 
 
 @Component({
@@ -23,12 +24,10 @@ export class FieldModalComponent extends EntityModal implements OnInit {
       field: 'type',
       mandatory: true,
       type:'select',
-      options: [
-        {value:'string', label:'String'},
-        {value:'double', label:'Double'},
-        {value:'int', label:'Integer'},
-        {value:'date', label:'Date'},
-      ]
+      options: DATA_TYPES,
+      onchange:()=>{
+        this.data.rules = []
+      }
     },
     { name:'Editable',
       field: 'editable',
@@ -42,7 +41,7 @@ export class FieldModalComponent extends EntityModal implements OnInit {
       field: 'description',
       mandatory: false,
       type:'textarea'
-    },
+    }
   ]
 
   current=1
@@ -132,6 +131,12 @@ export class FieldModalComponent extends EntityModal implements OnInit {
   index = 0
   onIndexChange(ind){
     console.log(ind)
+  }
+
+  onChange(f){
+    if (f.onchange){
+      f.onchange()
+    }
   }
 
 }

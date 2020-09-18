@@ -1,7 +1,7 @@
 <nz-select nz-tooltip class="column-input w-100" [nzLoading]='loading$ | async' [(ngModel)]="value" (nzOpenChange)='onOpenChange($event)'
     [compareWith]='compareFn'
 >
-    <nz-option *ngFor='let o of (fields$ | async)' [nzValue]="o" [nzLabel]="o.label"></nz-option>
+    <nz-option *ngFor='let o of (fields$ | async | fieldTypes: types)' [nzValue]="o" [nzLabel]="o.label"></nz-option>
 
     <nz-option *ngIf='!open && value' [nzValue]="value" [nzLabel]="value.label"></nz-option>
 </nz-select>

@@ -11,6 +11,7 @@ import { NotificationService } from '@app/core';
 import { ChecksService } from '../../services/checks.service';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { StoreService } from '../../services/store.service';
+import { DATA_TYPES } from '@app/shared/utils/types';
 
 @Component({
   selector: 'app-fields-page',
@@ -39,6 +40,8 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     new Column('Rules', 'rules'),
   ];
 
+  data_types = {}
+
   constructor(private notification: NotificationService,
               private route: ActivatedRoute,
               private cs: ChecksService,
@@ -53,6 +56,11 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
       this.id = params.id || this.id;
       this.subid = params.subid;
       this.load_data();
+    });
+
+    this.data_types = {}
+    DATA_TYPES.forEach(type => {
+      this.data_types[type.value]= type.label
     });
   }
 

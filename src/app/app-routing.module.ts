@@ -20,7 +20,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'reset/:token',
+    path: 'login/reset/:token',
     component: ResetComponent,
   },
   {
