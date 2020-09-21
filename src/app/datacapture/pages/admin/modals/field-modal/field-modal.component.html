@@ -39,7 +39,7 @@
 
   <ng-container *ngFor="let r of data.rules; let i = index">
     <ng-container *ngIf='RULES_MAP[r.type]; let check ; else noCheckFound'>
-      <nz-card class='ma-b' nzSize='small' [nzTitle]="check.name"
+      <nz-card nzSise='small' class='ma-b' [nzTitle]="check.name"
         [nzExtra]="extraTemplate">
         <nz-card-meta [nzDescription]="check.description"></nz-card-meta>
         <div class="ma-t">
@@ -67,7 +67,7 @@
         </div>
 
         <ng-template #extraTemplate>
-          <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
+          <button class="ghost" nz-button nzShape='circle' (click)="removeRule(i)"><i nz-icon nzType="delete"></i></button>
         </ng-template>
       </nz-card>
 
