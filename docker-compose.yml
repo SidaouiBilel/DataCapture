@@ -1,0 +1,9 @@
+version: '2.0'
+services:
+  dcm-front:
+    build:
+        context: .
+        args:
+            ENV: "production"
+    ports:
+    - "80:80"
