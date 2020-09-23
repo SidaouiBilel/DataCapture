@@ -13,8 +13,8 @@ export class PipeChangesAlertComponent implements OnInit {
     title:'Unsaved Changes',
     content: 'You have made changes to the pipe. <br>Please save them before leaving or they will not be applied.',
     buttons:[
-      {label:'Continue witout saving', action:'continue'},
       {label:'Ok', action:'close', style:'primary'},
+      {label:'Continue witout saving', action:'continue'},
     ],
   }
 

@@ -17,7 +17,7 @@ export class DeactivateUploadGuard<T> implements CanDeactivate<T> {
     // console.log({component, currentRoute, currentState, nextState})
 
     switch (currentRoute.data.route) {
-        case 'PREVIEW': {
+        case 'TRANSFORM': {
           return new Observable<boolean>((obesever)=>{
 
             this.pipe.modified$.pipe(take(1)).subscribe(modified=>{
