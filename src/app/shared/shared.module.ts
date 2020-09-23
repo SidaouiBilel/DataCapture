@@ -17,6 +17,7 @@ import { EnvTagComponent } from './env-tag/env-tag.component';
 import { AuditComponent } from './audit/audit.component';
 import { RegexHelperTriggerComponent } from './regex-helper/regex-helper-trigger/regex-helper-trigger.component';
 import { RegexHelperDocumentationComponent } from './regex-helper/regex-helper-documentation/regex-helper-documentation.component';
+import { KeyFilterPipe } from './pipes/key-filter.pipe';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -44,6 +45,7 @@ const Components = [
   EnvTagComponent,
   AuditComponent,
   RegexHelperTriggerComponent,
+  KeyFilterPipe,
   RegexHelperDocumentationComponent
 ];
 

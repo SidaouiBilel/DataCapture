@@ -46,6 +46,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappingId$: Observable<string>;
   worksheet$: Observable<any>;
   monitor$: any;
+  searchTarget
   constructor(private store: Store<AppState>,
               private service: MappingService,
               private router: Router,
