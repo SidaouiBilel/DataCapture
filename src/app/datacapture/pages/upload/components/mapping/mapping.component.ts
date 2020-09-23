@@ -303,12 +303,16 @@ export class MappingComponent implements OnInit, OnDestroy {
     ).subscribe(([mappingFields, mappedSources]) => {
       const mfRef = deepCopy(mappingFields);
       let isValid = true;
-      const values = mappingFields.map((e) => e.value).filter((e) => {if (e) { return e; }});
+      const values = mappingFields.map((e) => e.value);
       const sources = Object.keys(mappedSources);
       for (const [index, value] of values.entries()) {
-        if (sources.indexOf(value) < 0) {
-          mfRef[index].inError = true;
-          isValid = false;
+        if (value) {
+          if (sources.indexOf(value) < 0) {
+            mfRef[index].inError = true;
+            isValid = false;
+          } else {
+            mfRef[index].inError = false;
+          }
         }
       }
       if (!isValid) {
@@ -317,6 +321,7 @@ export class MappingComponent implements OnInit, OnDestroy {
         return;
       }
       this.store.dispatch(new SaveMappingValid(true));
+      this.store.dispatch(new SaveMappingFields(mfRef));
     });
   }
 
