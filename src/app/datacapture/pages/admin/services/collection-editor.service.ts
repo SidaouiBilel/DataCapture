@@ -78,9 +78,11 @@ export class CollectionEditor {
       nzContent: 'This action is irreversible. Target Fields will be duplicated for this collection.',
       nzOnOk: () => {
         this.loading = true
-        this.ds.duplicateDomain(data).subscribe(()=> this.load_data())
-        done.next(true)
-        done.complete()
+        this.ds.duplicateDomain(data).subscribe(()=> {
+          this.load_data()
+          done.next(true)
+          done.complete()
+        })
       }
     });
     return done
