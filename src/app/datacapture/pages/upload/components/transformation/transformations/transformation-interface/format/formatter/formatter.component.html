@@ -8,7 +8,7 @@
     </nz-form-item>
 
     <nz-form-item *ngIf='showFrom'>
-      <nz-form-label [nzSm]="8">From</nz-form-label>
+      <nz-form-label [nzSm]="8">From <app-regex-helper-trigger></app-regex-helper-trigger> </nz-form-label>
       <nz-form-control [nzSm]="16">
         <input nz-input [nzSize]='size'  [(ngModel)]='data.from' (change)='onDataChanged()' name='from' />
       </nz-form-control>

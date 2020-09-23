@@ -27,7 +27,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8">Value</nz-form-label>
+        <nz-form-label [nzSm]="8">Value <app-regex-helper-trigger *ngIf='isUsingRegex(c.op)'></app-regex-helper-trigger></nz-form-label>
         <nz-form-control [nzSm]="16">
           <input nz-input [nzSize]='size'  [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.condition' (change)='onDataChanged()' />
         </nz-form-control>

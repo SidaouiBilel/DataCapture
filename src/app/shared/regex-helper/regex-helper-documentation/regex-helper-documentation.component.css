@@ -1,0 +1,11 @@
+code.docutils.literal.notranslate {
+    padding: 5px;
+    margin-right: 5px;
+    background: #efefef;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+dl {
+    display: inline-flex;
+}

@@ -10,24 +10,26 @@ export class FilterComponent extends TransformationInterfaceComponent implements
 
   @Input() showReverse = true
   
+  numberOperations=[
+    {value: '>', label: 'Greater'},
+    {value: '<', label: 'Lesser'},
+    {value: '>=', label: 'Greater or Equal'},
+    {value: '<=', label: 'Lesser or Equal'},
+    {value: '==', label: 'Equal'},
+    {value: '!=', label: 'Not Equal'}
+  ]
+  stringOperations=[
+    {value: 'match', label: 'REGEX'},
+    {value: 'contains', label: 'Contains'},
+    {value: 'startswith', label: 'Starts With'},
+    {value: 'endswith', label: 'Ends With'},
+  ]
   operations = [
     {
-      label: 'Numbers', operations: [
-        {value: '>', label: 'Greater'},
-        {value: '<', label: 'Lesser'},
-        {value: '>=', label: 'Greater or Equal'},
-        {value: '<=', label: 'Lesser or Equal'},
-        {value: '==', label: 'Equal'},
-        {value: '!=', label: 'Not Equal'}
-      ]
+      label: 'Numbers', operations: this.numberOperations
     },
     {
-      label: 'Strings', operations: [
-        {value: 'match', label: 'REGEX'},
-        {value: 'contains', label: 'Contains'},
-        {value: 'startswith', label: 'Starts With'},
-        {value: 'endswith', label: 'Ends With'},
-      ]
+      label: 'Strings', operations: this.stringOperations
     }
   ];
 
@@ -47,5 +49,9 @@ export class FilterComponent extends TransformationInterfaceComponent implements
   onRemoveCondition(i) {
     this.data.conditions.splice(i, 1);
     this.onDataChanged();
+  }
+
+  isUsingRegex(op){
+    return this.stringOperations.map(e=>e.value).includes(op)
   }
 }

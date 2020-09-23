@@ -25,7 +25,8 @@
 
   <ng-container *ngIf='showActions'>
     <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
-      (click)='onDelete()'><i nz-icon nzType="delete"></i>
+       nz-popconfirm nzPopconfirmTitle="Are you sure delete this Pipe?"
+      (nzOnConfirm)="onDelete()" [disabled]='!enableAddbtn(profile)'><i nz-icon nzType="delete"></i>
     </button>
     <button *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save as New" (click)='onSaveAsNew()'
       [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' [disabled]='!(canSave$ | async) || !enableAddbtn(profile)'><i nz-icon

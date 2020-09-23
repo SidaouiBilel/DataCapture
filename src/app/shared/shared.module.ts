@@ -15,6 +15,8 @@ import { CustomTooltipComponent } from './custom-tooltip/custom-tooltip.componen
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { EnvTagComponent } from './env-tag/env-tag.component';
 import { AuditComponent } from './audit/audit.component';
+import { RegexHelperTriggerComponent } from './regex-helper/regex-helper-trigger/regex-helper-trigger.component';
+import { RegexHelperDocumentationComponent } from './regex-helper/regex-helper-documentation/regex-helper-documentation.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -40,7 +42,9 @@ const Components = [
   DataGridComponent,
   CustomTooltipComponent,
   EnvTagComponent,
-  AuditComponent
+  AuditComponent,
+  RegexHelperTriggerComponent,
+  RegexHelperDocumentationComponent
 ];
 
 @NgModule({
@@ -50,6 +54,7 @@ const Components = [
   ],
   declarations: [
     ...Components,
+    
   ],
   exports: [
     ...SharedModules,
@@ -60,7 +65,8 @@ const Components = [
   ],
   entryComponents: [
     CustomTooltipComponent,
-    AuditComponent
+    AuditComponent,
+    RegexHelperDocumentationComponent,
   ]
 })
 export class SharedModule {}
