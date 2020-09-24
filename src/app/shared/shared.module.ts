@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IconsProviderModule } from '@app/icons-provider.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgZorroAntdModule, NzModalModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzIconService, NzModalModule } from 'ng-zorro-antd';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
@@ -18,6 +18,7 @@ import { AuditComponent } from './audit/audit.component';
 import { RegexHelperTriggerComponent } from './regex-helper/regex-helper-trigger/regex-helper-trigger.component';
 import { RegexHelperDocumentationComponent } from './regex-helper/regex-helper-documentation/regex-helper-documentation.component';
 import { KeyFilterPipe } from './pipes/key-filter.pipe';
+import { CustomIconsService } from './services/custom-icons.service';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -63,7 +64,9 @@ const Components = [
     ...Components
   ],
   providers: [
-    UtilsService
+    UtilsService,
+    // CustomIconsService,
+    {provide: NzIconService, useClass:CustomIconsService}
   ],
   entryComponents: [
     CustomTooltipComponent,

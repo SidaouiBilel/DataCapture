@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { NzIconService } from 'ng-zorro-antd';
 
-@Injectable()
+@Injectable({
+  providedIn:'root'
+})
 export class UtilsService {
   constructor() {}
 
