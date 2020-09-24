@@ -8,12 +8,13 @@ import { selectFileData, selectDomain } from '../../store/selectors/import.selec
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
-import { selectMappingId } from '../../store/selectors/mapping.selectors';
+import { selectMappingFields, selectMappingId } from '../../store/selectors/mapping.selectors';
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
+import { isEmpty } from '@app/shared/utils/objects.utils';
 
 @Component({
   selector: 'app-cleansing',
@@ -29,6 +30,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   fileData: any;
   numberOfRows = 25;
   selectedSheet: number;
+  targetFields: any;
   mappingId: string;
   jobId: string;
   modifications: any = {columns: []};
@@ -45,6 +47,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   domain$: Observable<any>;
   fileData$: Observable<any>;
   worksheet$: Observable<any>;
+  targetFields$: Observable<any>;
   mappingId$: Observable<any>;
   constructor(private router: Router,
               private store: Store<AppState>,
@@ -58,8 +61,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.fileData$.subscribe((res) => {this.fileData = res; });
+    this.targetFields$ = this.store.select(selectMappingFields);
     this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.domain$.subscribe((domain) => { if (domain) { this.domain = domain.id; } });
+    this.targetFields$.subscribe((targetFields) => { if (targetFields) { this.targetFields = targetFields; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
     const isTransformed = this.worksheet !== null;
@@ -93,7 +98,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     } else {
       ws = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
     }
-    this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
+    this.service.getAuditTrial(ws).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,
@@ -134,14 +139,16 @@ export class CleansingComponent implements OnInit, OnDestroy {
             const isTransformed = that.worksheet !== null;
             const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
             let adaptedFilter = '';
-            let adaptedSort = [];
+            const adaptedSort: any = {};
             Object.keys(params.request.filterModel).forEach((e) => {
               adaptedFilter = adaptedFilter + `{${e}} ${params.request.filterModel[e].type} '${params.request.filterModel[e].filter}' && `;
             });
             adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
-            adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
+            if (params.request.sortModel.length > 0) {
+              params.request.sortModel.forEach((e) => {adaptedSort.column = e.colId; adaptedSort.order = e.sort; });
+            }
             // tslint:disable-next-line: max-line-length
-            that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
+            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
             .subscribe((res: any) => {
               const newErrors = {};
               Object.keys(res.results).forEach((e: string) => {
@@ -150,15 +157,15 @@ export class CleansingComponent implements OnInit, OnDestroy {
               });
               that.results = {...that.results, ...newErrors};
               that.results$.next(that.results);
-              if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
-                const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
+              if (page <= 0 && adaptedFilter === '' && isEmpty(adaptedSort)) {
+                const headers = that.targetFields.map((e) => ({field: e.name, headerName: e.label}));
                 headers.unshift({
                   headerName: '#',
                   field: 'row_index',
                   valueGetter: 'node.rowIndex + 1'
                 });
                 that.headers$.next([...headers]);
-                grid.api.setColumnDefs(that.setHeadersLogic(headers, res.headers));
+                grid.api.setColumnDefs(that.setHeadersLogic(headers, that.targetFields));
               }
               if (res.data.length) {
                 const lastRow = () => {
