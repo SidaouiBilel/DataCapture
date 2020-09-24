@@ -68,8 +68,8 @@
               <span>
                 TARGET FIELDS
                 <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="searchTarget" />
-                
-                <i nz-icon nz-tooltip nzTooltipPlacement="right"
+
+                <i nz-icon nz-tooltip nzTooltipPlacement="right" *ngIf="!(mappingValid$ | async)"
                   nzTooltipTitle="This mapping is invalid with this worksheet. Update it or use another one."
                   class="text-danger pl-1" nzType="info-circle" nzTheme="fill"></i>
                 </span>
