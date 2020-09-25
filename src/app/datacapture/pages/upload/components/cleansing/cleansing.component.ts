@@ -33,7 +33,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   targetFields: any;
   mappingId: string;
   jobId: string;
-  modifications: any = {columns: []};
+  modifications: any = {};
   keys = Object.keys;
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -152,7 +152,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
               params.request.sortModel.forEach((e) => {adaptedSort.column = e.colId; adaptedSort.order = e.sort; });
             }
             // tslint:disable-next-line: max-line-length
-            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
+            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed)
             .subscribe((res: any) => {
               const newErrors = {};
               Object.keys(res.results).forEach((e: string) => {
@@ -266,16 +266,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   editCell(params: any): void {
-    // Check if the modification exists
-    const i = this.modifications.columns.map((e) => e.column).indexOf(params.colDef.field);
-    if (i >= 0) {
-      this.modifications.columns[i].modifications[params.data.row_index] = params.newValue;
-    } else {
-      this.modifications.columns.push({
-        column: params.colDef.field,
-        modifications: {[params.data.row_index]: params.newValue}
-      });
-    }
+    this.modifications[params.data.row_index] = {
+      ...this.modifications[params.data.row_index],
+      [params.colDef.field]: {previous: params.oldValue, new: params.newValue}
+    };
   }
 
   syncWithServer(): void {

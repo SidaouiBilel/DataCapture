@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
+import { AppState, selectProfile } from '@app/core';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CleansingService {
-
-  constructor(private http: HttpClient) {
+  profile: any;
+  profile$: Observable<any>;
+  constructor(private http: HttpClient, private store: Store<AppState>) {
+    this.profile$ = this.store.select(selectProfile);
+    this.profile$.subscribe((prof) => {this.profile = prof; });
   }
 
   startJob(filename: string,  worksheetId: string, domainId: string, isTransformed: boolean, mappingId: string): Observable<any> {
@@ -20,7 +25,7 @@ export class CleansingService {
       domain_id: domainId,
       is_transformed: isTransformed,
       modifications: {}
-    }
+    };
     return this.http.post(environment.cleansing, payload);
   }
 
@@ -33,7 +38,7 @@ export class CleansingService {
   }
 
   // tslint:disable-next-line: max-line-length
-  getJobData(filename: string, worksheet: string, page: number, nrows: number, filter: any[], sort: any, isTransformed: boolean, mappingId: string): Observable<any> {
+  getJobData(filename: string, worksheet: string, page: number, nrows: number, filter: any[], sort: any, isTransformed: boolean): Observable<any> {
     const payload = {
       file_id: filename,
       worksheet_id: worksheet,
@@ -53,8 +58,8 @@ export class CleansingService {
       mapping_id: mappingId,
       domain_id: domainId,
       is_transformed: isTransformed,
-      modifications
-    }
+      modifications: {...modifications, user_id: this.profile.id}
+    };
     return this.http.post(environment.cleansing, payload);
   }
 }
