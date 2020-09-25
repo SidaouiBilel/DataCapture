@@ -138,12 +138,16 @@ export class CleansingComponent implements OnInit, OnDestroy {
             const page = (params.request.endRow / that.numberOfRows) - 1;
             const isTransformed = that.worksheet !== null;
             const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
-            let adaptedFilter = '';
+            const adaptedFilter = [];
             const adaptedSort: any = {};
-            Object.keys(params.request.filterModel).forEach((e) => {
-              adaptedFilter = adaptedFilter + `{${e}} ${params.request.filterModel[e].type} '${params.request.filterModel[e].filter}' && `;
+            Object.keys(params.request.filterModel).forEach((column) => {
+              const filter = {
+                column,
+                operator: params.request.filterModel[column].type,
+                value: params.request.filterModel[column].filter,
+              };
+              adaptedFilter.push(filter);
             });
-            adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
             if (params.request.sortModel.length > 0) {
               params.request.sortModel.forEach((e) => {adaptedSort.column = e.colId; adaptedSort.order = e.sort; });
             }
@@ -157,7 +161,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
               });
               that.results = {...that.results, ...newErrors};
               that.results$.next(that.results);
-              if (page <= 0 && adaptedFilter === '' && isEmpty(adaptedSort)) {
+              if (page <= 0 && adaptedFilter.length === 0 && isEmpty(adaptedSort)) {
                 const headers = that.targetFields.map((e) => ({field: e.name, headerName: e.label}));
                 headers.unshift({
                   headerName: '#',
@@ -278,7 +282,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
     // tslint:disable-next-line: max-line-length
-    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId).subscribe((res: any) => {
+    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId, this.jobId).subscribe((res: any) => {
       this.fetchData(this.grid);
       if (this.jobId) {
         this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {

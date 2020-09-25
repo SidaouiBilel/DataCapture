@@ -33,7 +33,7 @@ export class CleansingService {
   }
 
   // tslint:disable-next-line: max-line-length
-  getJobData(filename: string, worksheet: string, page: number, nrows: number, filter: string, sort: any, isTransformed: boolean, mappingId: string): Observable<any> {
+  getJobData(filename: string, worksheet: string, page: number, nrows: number, filter: any[], sort: any, isTransformed: boolean, mappingId: string): Observable<any> {
     const payload = {
       file_id: filename,
       worksheet_id: worksheet,
@@ -45,8 +45,16 @@ export class CleansingService {
   }
 
   // tslint:disable-next-line: max-line-length
-  editCell(filename: string,  worksheetId: string, domainId: string, payload: any, isTransformed: boolean, mappingId: string): Observable<any> {
-    // tslint:disable-next-line: max-line-length
-    return this.http.post(environment.cleansing + `?mappingId=${mappingId}&filename=${filename}&worksheet=${worksheetId}&worksheet_id=${worksheetId}&domain_id=${domainId}&isTransformed=${isTransformed}`, payload);
+  editCell(filename: string,  worksheetId: string, domainId: string, modifications: any, isTransformed: boolean, mappingId: string, jobId: string): Observable<any> {
+    const payload = {
+      job_id: jobId,
+      file_id: filename,
+      worksheet_id: worksheetId,
+      mapping_id: mappingId,
+      domain_id: domainId,
+      is_transformed: isTransformed,
+      modifications
+    }
+    return this.http.post(environment.cleansing, payload);
   }
 }
