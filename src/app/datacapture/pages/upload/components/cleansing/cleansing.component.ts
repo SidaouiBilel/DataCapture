@@ -37,6 +37,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   keys = Object.keys;
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
+  total$: BehaviorSubject<any> = new BehaviorSubject(0);
   results$: BehaviorSubject<any> = new BehaviorSubject({});
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -154,6 +155,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             // tslint:disable-next-line: max-line-length
             that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed)
             .subscribe((res: any) => {
+              that.total$.next(res.total);
               const newErrors = {};
               Object.keys(res.results).forEach((e: string) => {
                 const ind = Number(e) + ( that.numberOfRows * page);
@@ -236,9 +238,11 @@ export class CleansingComponent implements OnInit, OnDestroy {
               h.filter = 'agTextColumnFilter';
               break;
             case 'int':
+              h.valueFormatter = this.currencyFormatter,
               h.filter = 'agNumberColumnFilter';
               break;
             case 'double':
+              h.valueFormatter = this.currencyFormatter,
               h.filter = 'agNumberColumnFilter';
               break;
             case 'date':
@@ -270,6 +274,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
       ...this.modifications[params.data.row_index],
       [params.colDef.field]: {previous: params.oldValue, new: params.newValue}
     };
+  }
+
+  currencyFormatter = (params) => {
+    const parts = params.value.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
   }
 
   syncWithServer(): void {

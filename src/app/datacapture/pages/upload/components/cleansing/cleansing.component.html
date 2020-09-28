@@ -44,7 +44,8 @@
     <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
       (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
-    <div class="w-100 flex end">
+    <div class="w-100 flex between">
+      <span class="total" nz-tooltip nzTooltipTitle="Total Rows" nzTooltipPlacement="top">{{total$ | async}}</span>
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
     </div>
   </div>
