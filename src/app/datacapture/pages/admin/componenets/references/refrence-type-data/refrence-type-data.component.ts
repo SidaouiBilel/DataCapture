@@ -63,10 +63,10 @@ export class RefrenceTypeDataComponent implements OnInit, OnDestroy {
     }
     if (info.file.status === 'done') {
       // this.notification.success(`Fields updated successfully from file ${info.file.name}.`);
-      // this.load_data();
+      this.laodData();
     } else if (info.file.status === 'error') {
       // this.notification.error(`Failed to update.`);
-      // this.load_data();
+      this.laodData();
     }
   }
 }
