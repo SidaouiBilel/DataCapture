@@ -27,6 +27,11 @@ import { FieldInputComponent } from './componenets/field-input/field-input.compo
 import { FieldTypesComponent } from './componenets/field-types/field-types.component';
 import { FieldTypesPipe } from './componenets/field-types.pipe';
 import { ChecksTypesPipe } from './componenets/check-field-types';
+import { RefrenceTypesComponent } from './componenets/references/refrence-types/refrence-types.component';
+import { RefrenceTypeDataComponent } from './componenets/references/refrence-type-data/refrence-type-data.component';
+import { RefrenceTypeEditorComponent } from './componenets/references/refrence-type-editor/refrence-type-editor.component';
+import { ReferenceUtilsService } from './componenets/references/reference-utils.service';
+import { ReferenceDataEditorComponent } from './componenets/references/reference-data-editor/reference-data-editor.component';
 
 
 @NgModule({
@@ -50,10 +55,15 @@ import { ChecksTypesPipe } from './componenets/check-field-types';
     FieldInputComponent,
     FieldTypesComponent,
     FieldTypesPipe,
-    ChecksTypesPipe
+    ChecksTypesPipe,
+    RefrenceTypesComponent,
+    RefrenceTypeDataComponent,
+    RefrenceTypeEditorComponent,
+    ReferenceDataEditorComponent
   ],
   providers:[
-    CollectionEditor
+    CollectionEditor,
+    ReferenceUtilsService
   ],
   imports: [
     CommonModule,
@@ -63,6 +73,6 @@ import { ChecksTypesPipe } from './componenets/check-field-types';
     StoreModule.forFeature(FEATURE_NAME, AdminReducer),
     EffectsModule.forFeature([]),
   ],
-  entryComponents:[DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent]
+  entryComponents:[DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent, RefrenceTypeEditorComponent, ReferenceDataEditorComponent]
 })
 export class AdminModule { }

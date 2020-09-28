@@ -7,6 +7,7 @@ export class EntityModal implements OnInit {
   @Input() edit
 
   @ViewChild('modalFooter',{static:true}) public modalFooter: TemplateRef<any>;
+  @ViewChild('modalTitle',{static:true}) public modalTitle: TemplateRef<any>;
 
   loading = false
 
@@ -15,7 +16,8 @@ export class EntityModal implements OnInit {
    }
 
   ngOnInit() {
-    this.modalrRef['nzFooter'] = this.modalFooter
+    this.modalrRef['nzFooter'] = this.modalFooter || null
+    this.modalrRef['nzTitle'] = this.modalTitle || null
     // this.modalrRef['nzWrapClassName'] ="vertical-center-modal"
   }
 

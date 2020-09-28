@@ -2,8 +2,8 @@
   style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
-    <div nz-menu style="min-width: 400px;" *ngIf='user$ | async; let user'>
-        <div class="m-2">
+    <div nz-menu style="min-width: 400px;" >
+        <div class="m-2" *ngIf='user$ | async; let user'>
             <div class="flex start">
                 <div class="p-2">
                     <nz-avatar  [nzSize]="64" nzIcon="user" style="color:#f56a00; background-color:#fde3cf; font-size: 28px;"></nz-avatar>
