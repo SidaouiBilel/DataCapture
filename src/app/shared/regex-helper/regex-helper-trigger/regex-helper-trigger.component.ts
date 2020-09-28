@@ -16,7 +16,9 @@ export class RegexHelperTriggerComponent implements OnInit {
   onClick(){
     this.drawer.create({
       nzContent: RegexHelperDocumentationComponent,
-      nzWidth:'100%'
+      nzWidth:'90%',
+      // nzHeight:'90%',
+      // nzPlacement: 'bottom'
     })
   }
 }

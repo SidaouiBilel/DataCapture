@@ -13,7 +13,8 @@ export const environment = {
   // cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
   cleansing: 'http://localhost:5000/check',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-  admin: 'https://dcm-admin.azurewebsites.net/',
+  admin: 'http://localhost:5000/',
+  // admin: 'https://dcm-admin.azurewebsites.net/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
   env: 'DEV'

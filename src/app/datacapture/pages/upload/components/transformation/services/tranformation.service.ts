@@ -61,6 +61,7 @@ export class TranformationService {
       tap(() => this.loadDomainPipes()),
       tap((active) => {
         this.setActive(active);
+
       }),
       );
     }
@@ -81,9 +82,8 @@ export class TranformationService {
 
       setActive(active) {
         this.store.dispatch(new LoadTransformation(active));
-        // if(active){
-        //   this.msg.default(`Pipe "${active.name}" set as active`)
-        // }
+        if(active) this.upadatePreviewMode('TARGET')
+        else this.upadatePreviewMode('SOURCE');
       }
 
       get(domainId) {
