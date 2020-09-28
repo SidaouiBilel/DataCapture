@@ -72,7 +72,7 @@
                 <i nz-icon nz-tooltip nzTooltipPlacement="right" *ngIf="!(mappingValid$ | async)"
                   nzTooltipTitle="This mapping is invalid with this worksheet. Update it or use another one."
                   class="text-danger pl-1" nzType="info-circle" nzTheme="fill"></i>
-                </span>
+              </span>
               <div [ngSwitch]="(mandatories$ | async)">
                 <span *ngSwitchCase='0' class="text-success">
                   <i nz-icon nzType="check" nzTheme="outline"></i><b> ALL MANDATORIES HAVE BEEN MAPPED</b>
@@ -84,7 +84,8 @@
             </div>
             <div class="scroll-box">
               <div class="source-list">
-                <div class="target-item-box" *ngFor="let item of (mappingFields$|async | keyFilter: 'label' :searchTarget) ; let i = index;"
+                <div class="target-item-box"
+                  *ngFor="let item of (mappingFields$|async | keyFilter: 'label' :searchTarget) ; let i = index;"
                   [class.mandatory-row]="item.mandatory">
                   <div class="mapped-item-list dropHintClass" dndDropzone (dndDrop)="onItemDrop($event,i)"
                     [dndDragoverClass]="'dropOverClass'">
@@ -98,7 +99,8 @@
                         </div>
                       </div>
                       <div nz-col nzSpan="6">
-                        <span [class.mandatory]="item.mandatory">
+                        <span [class.mandatory]="item.mandatory" nz-tooltip [nzTooltipTitle]="item?.description"
+                          nzTooltipPlacement="left">
                           {{item.label}}
                           <span *ngIf="item.mandatory">*</span>
                         </span>

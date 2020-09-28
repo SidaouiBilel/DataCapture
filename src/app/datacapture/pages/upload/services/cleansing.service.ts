@@ -58,7 +58,8 @@ export class CleansingService {
       mapping_id: mappingId,
       domain_id: domainId,
       is_transformed: isTransformed,
-      modifications: {...modifications, user_id: this.profile.id}
+      user_id: this.profile.id,
+      modifications
     };
     return this.http.post(environment.cleansing, payload);
   }

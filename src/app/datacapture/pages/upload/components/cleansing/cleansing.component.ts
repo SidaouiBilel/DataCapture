@@ -281,6 +281,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
       if (this.jobId) {
         this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
+          this.modifications = {};
           this.not.success('Success');
         }, (err) => {
           this.not.error(err.message);

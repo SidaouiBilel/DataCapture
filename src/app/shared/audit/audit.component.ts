@@ -13,4 +13,8 @@ export class AuditComponent implements OnInit {
   ngOnInit() {
   }
 
+  Number(val: any) {
+    return Number(val);
+  }
+
 }
