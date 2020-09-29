@@ -23,6 +23,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   paginator$: any;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   totalRecords$: BehaviorSubject<number> = new BehaviorSubject(0);
+  total$: BehaviorSubject<number> = new BehaviorSubject(1);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   error$ = new BehaviorSubject<string>(null);
   page$ = new BehaviorSubject<number>(1);
@@ -48,8 +49,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
           this.generateDataSource(grid, worksheet, size);
         }
       });
-
-    this.registerHotKey()
+    this.registerHotKey();
   }
 
   ngOnDestroy(){
@@ -59,32 +59,31 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
 
   generateDataSource(gridApi: any, worksheet: string, size: number) {
     const that = this;
-    this.gridApi = gridApi
-    console.log(this.gridApi)
+    this.gridApi = gridApi;
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
         that.loading$.next(true);
         that.service.getFileData(page, worksheet, size).subscribe((res: any) => {
+          that.total$.next(res.total);
           that.loading$.next(false);
           if (page <= 1) {
             that.totalRecords$.next(res.total);
             const headers = res.headers.map(h => ({
               field: h,
-              headerName:h,
-              editable:false,
+              headerName: h,
+              editable: false,
               resizable: true,
-            }))
-            headers.unshift(INDEX_HEADER)
+            }));
+            headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
-
           }
           const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
           const data = [];
-          for (let row of res.data){
+          for (const row of res.data) {
             const rowObject = {};
             let i = 0;
-            for (let h of res.headers){
+            for (const h of res.headers) {
               rowObject[h] = row[i];
               i++;
             }

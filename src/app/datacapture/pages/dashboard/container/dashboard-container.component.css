@@ -5,21 +5,12 @@
   flex-flow: column;
 }
 
-nz-table {
-  border: 1px solid #dee2e6;
-  border-top: none;
-}
-
 .flex-box {
   flex: 1 1 auto;
 }
 
 .dashHeader {
   padding: 18px;
-}
-
-.table {
-  padding: 0 18px 18px 18px;
 }
 
 .requiredInput {
@@ -38,9 +29,5 @@ nz-table {
 
 :host nz-divider.horiz {
   /* margin: 0 !important; */
-  margin: 0 0 24px 0 !important;
-}
-
-:host ::ng-deep .table thead th {
-  border-bottom: 0 !important;
+  margin: 0 !important;
 }
