@@ -15,8 +15,8 @@ export class DashboardService {
     return this.http.get( environment.admin + 'domain/all/super');
   }
 
-  getAuditTrial(worksheetId: string, domainId: string): Observable<any> {
-    return this.http.post(environment.cleansing + `/modifications`, {worksheetId, domainId});
+  getAuditTrial(worksheetId: string): Observable<any> {
+    return this.http.post(environment.cleansing + `/audit-trial`, {worksheet_id: worksheetId});
   }
 
   getDashboardData(domainId: string, page: number, size: number, sortkey?, sortAcn?): Observable<any> {

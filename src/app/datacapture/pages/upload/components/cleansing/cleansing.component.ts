@@ -8,12 +8,13 @@ import { selectFileData, selectDomain } from '../../store/selectors/import.selec
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
-import { selectMappingId } from '../../store/selectors/mapping.selectors';
+import { selectMappingFields, selectMappingId } from '../../store/selectors/mapping.selectors';
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
+import { isEmpty } from '@app/shared/utils/objects.utils';
 
 @Component({
   selector: 'app-cleansing',
@@ -29,12 +30,14 @@ export class CleansingComponent implements OnInit, OnDestroy {
   fileData: any;
   numberOfRows = 25;
   selectedSheet: number;
+  targetFields: any;
   mappingId: string;
   jobId: string;
-  modifications: any = {columns: []};
+  modifications: any = {};
   keys = Object.keys;
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
+  total$: BehaviorSubject<any> = new BehaviorSubject(0);
   results$: BehaviorSubject<any> = new BehaviorSubject({});
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -45,6 +48,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   domain$: Observable<any>;
   fileData$: Observable<any>;
   worksheet$: Observable<any>;
+  targetFields$: Observable<any>;
   mappingId$: Observable<any>;
   constructor(private router: Router,
               private store: Store<AppState>,
@@ -58,8 +62,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.fileData$.subscribe((res) => {this.fileData = res; });
+    this.targetFields$ = this.store.select(selectMappingFields);
     this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.domain$.subscribe((domain) => { if (domain) { this.domain = domain.id; } });
+    this.targetFields$.subscribe((targetFields) => { if (targetFields) { this.targetFields = targetFields; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
     const isTransformed = this.worksheet !== null;
@@ -93,7 +99,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     } else {
       ws = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
     }
-    this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
+    this.service.getAuditTrial(ws).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,
@@ -133,16 +139,23 @@ export class CleansingComponent implements OnInit, OnDestroy {
             const page = (params.request.endRow / that.numberOfRows) - 1;
             const isTransformed = that.worksheet !== null;
             const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
-            let adaptedFilter = '';
-            let adaptedSort = [];
-            Object.keys(params.request.filterModel).forEach((e) => {
-              adaptedFilter = adaptedFilter + `{${e}} ${params.request.filterModel[e].type} '${params.request.filterModel[e].filter}' && `;
+            const adaptedFilter = [];
+            const adaptedSort: any = {};
+            Object.keys(params.request.filterModel).forEach((column) => {
+              const filter = {
+                column,
+                operator: params.request.filterModel[column].type,
+                value: params.request.filterModel[column].filter,
+              };
+              adaptedFilter.push(filter);
             });
-            adaptedFilter = adaptedFilter.substr(0, adaptedFilter.length - 3);
-            adaptedSort = params.request.sortModel.map((e) => ({column_id: e.colId, direction: e.sort}));
+            if (params.request.sortModel.length > 0) {
+              params.request.sortModel.forEach((e) => {adaptedSort.column = e.colId; adaptedSort.order = e.sort; });
+            }
             // tslint:disable-next-line: max-line-length
-            that.service.getJobData(that.fileData.metaData.file_id, ws, that.domain, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, that.mappingId)
+            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed)
             .subscribe((res: any) => {
+              that.total$.next(res.total);
               const newErrors = {};
               Object.keys(res.results).forEach((e: string) => {
                 const ind = Number(e) + ( that.numberOfRows * page);
@@ -150,15 +163,15 @@ export class CleansingComponent implements OnInit, OnDestroy {
               });
               that.results = {...that.results, ...newErrors};
               that.results$.next(that.results);
-              if (page <= 0 && adaptedFilter === '' && adaptedSort.length === 0) {
-                const headers = res.headers.map((e) => ({field: e.field, headerName: e.headerName}));
+              if (page <= 0 && adaptedFilter.length === 0 && isEmpty(adaptedSort)) {
+                const headers = that.targetFields.map((e) => ({field: e.name, headerName: e.label}));
                 headers.unshift({
                   headerName: '#',
                   field: 'row_index',
                   valueGetter: 'node.rowIndex + 1'
                 });
                 that.headers$.next([...headers]);
-                grid.api.setColumnDefs(that.setHeadersLogic(headers, res.headers));
+                grid.api.setColumnDefs(that.setHeadersLogic(headers, that.targetFields));
               }
               if (res.data.length) {
                 const lastRow = () => {
@@ -225,9 +238,11 @@ export class CleansingComponent implements OnInit, OnDestroy {
               h.filter = 'agTextColumnFilter';
               break;
             case 'int':
+              h.valueFormatter = this.currencyFormatter,
               h.filter = 'agNumberColumnFilter';
               break;
             case 'double':
+              h.valueFormatter = this.currencyFormatter,
               h.filter = 'agNumberColumnFilter';
               break;
             case 'date':
@@ -255,27 +270,28 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   editCell(params: any): void {
-    // Check if the modification exists
-    const i = this.modifications.columns.map((e) => e.column).indexOf(params.colDef.field);
-    if (i >= 0) {
-      this.modifications.columns[i].modifications[params.data.row_index] = params.newValue;
-    } else {
-      this.modifications.columns.push({
-        column: params.colDef.field,
-        modifications: {[params.data.row_index]: params.newValue}
-      });
-    }
+    this.modifications[params.data.row_index] = {
+      ...this.modifications[params.data.row_index],
+      [params.colDef.field]: {previous: params.oldValue, new: params.newValue}
+    };
+  }
+
+  currencyFormatter = (params) => {
+    const parts = params.value.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
   }
 
   syncWithServer(): void {
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
     // tslint:disable-next-line: max-line-length
-    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId).subscribe((res: any) => {
+    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId, this.jobId).subscribe((res: any) => {
       this.fetchData(this.grid);
       if (this.jobId) {
         this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
+          this.modifications = {};
           this.not.success('Success');
         }, (err) => {
           this.not.error(err.message);

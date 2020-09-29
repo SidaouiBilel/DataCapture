@@ -93,7 +93,9 @@ export class MappingComponent implements OnInit, OnDestroy {
           res = res.map((e) => {
             const id = mfIds.indexOf(e.id);
             if ( id >= 0) {
-              return this.mappingFields[id];
+              const field = {...this.mappingFields[id]};
+              field.type = e.type;
+              return field;
             } else {
               return e;
             }

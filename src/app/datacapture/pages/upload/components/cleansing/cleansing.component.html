@@ -6,7 +6,7 @@
         <nz-badge class="mr-3" nz-tooltip nzTooltipTitle="Total errors" [nzOverflowCount]="99999999"
           [nzCount]="(metaData$ | async)?.totalErrors || 0" [nzShowZero]="true"></nz-badge>
         <nz-badge nz-tooltip nzTooltipTitle="Total Rows in Error" [nzOverflowCount]="99999999"
-          [nzCount]="(metaData$ | async)?.uniqueErrorLines || 0" [nzShowZero]="true"></nz-badge>
+          [nzCount]="(metaData$ | async)?.totalRowsInError || 0" [nzShowZero]="true"></nz-badge>
         <nz-divider class="error" nzType="vertical"></nz-divider>
         <button nz-tooltip nzTooltipTitle='Details' nz-popover [nzPopoverContent]="contentTemplate"
           nzPopoverPlacement="bottom" nzShape='round' class="ghost" nzPopoverTrigger="click" nz-button>
@@ -44,7 +44,8 @@
     <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
       (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
-    <div class="w-100 flex end">
+    <div class="w-100 flex between">
+      <span class="total" nz-tooltip nzTooltipTitle="Total Rows" nzTooltipPlacement="top">{{total$ | async}}</span>
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
     </div>
   </div>
@@ -52,7 +53,7 @@
 
 <ng-template #contentTemplate>
   <div *ngFor="let item of (metaData$ | async)?.jobResult">
-    <span class="pr-2"><small>{{ keys(item)[0]}}:</small></span>
-    <span class="text-danger">{{ item[keys(item)[0]] }}</span>
+    <span class="pr-2"><small>{{ item?.label}}:</small></span>
+    <span class="text-danger">{{ item?.errors }}</span>
   </div>
 </ng-template>
