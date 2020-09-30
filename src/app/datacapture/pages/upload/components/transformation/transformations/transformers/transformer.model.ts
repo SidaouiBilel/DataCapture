@@ -278,3 +278,32 @@ export class Splitter extends Transformer {
   }
 }
 
+export class Calculator extends Transformer {
+  type =  'calculator';
+  label = 'Calculator';
+  icon = 'calculator';
+  shortcut = 'control.alt.c';
+
+  getErrors = (params, previousNodes, headers) => {
+    const errors = [];
+    if (isStrEmpty(params.destination)) { errors.push(new NodeError('destination', 'Destination Missing')); }
+    if (isStrEmpty(params.column)) { errors.push(new NodeError('column', 'Column Missing')); }
+    if (isStrEmpty(params.operator)) { errors.push(new NodeError('operator', 'Operator Missing')); }
+
+    if (isStrEmpty(params.property) && isStrEmpty(params.value)) { 
+      errors.push(new NodeError('property', 'Property Missing')); 
+      errors.push(new NodeError('value', 'Value Missing')); 
+    }
+    return errors;
+  }
+
+  // getRuleFromGrid(params) {
+  //   const columns = GAPIColumnsInRange(params.api);
+  //   return {
+  //     ...this.getRule(),
+  //     column: columns[0],
+  //     separator: '-'
+  //   };
+  // }
+}
+

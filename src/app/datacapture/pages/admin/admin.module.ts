@@ -32,6 +32,7 @@ import { RefrenceTypeDataComponent } from './componenets/references/refrence-typ
 import { RefrenceTypeEditorComponent } from './componenets/references/refrence-type-editor/refrence-type-editor.component';
 import { ReferenceUtilsService } from './componenets/references/reference-utils.service';
 import { ReferenceDataEditorComponent } from './componenets/references/reference-data-editor/reference-data-editor.component';
+import { ReferenceTypeInputComponent } from './componenets/reference-type-input/reference-type-input.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { ReferenceDataEditorComponent } from './componenets/references/reference
     RefrenceTypesComponent,
     RefrenceTypeDataComponent,
     RefrenceTypeEditorComponent,
-    ReferenceDataEditorComponent
+    ReferenceDataEditorComponent,
+    ReferenceTypeInputComponent
   ],
   providers:[
     CollectionEditor,

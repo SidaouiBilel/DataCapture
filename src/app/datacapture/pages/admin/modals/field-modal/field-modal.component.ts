@@ -25,7 +25,7 @@ export class FieldModalComponent extends EntityModal implements OnInit {
       mandatory: true,
       type:'select',
       options: DATA_TYPES,
-      onchange:()=>{
+      onchange:(newValue)=>{
         this.data.rules = []
       }
     },
@@ -36,6 +36,14 @@ export class FieldModalComponent extends EntityModal implements OnInit {
     { name:'Mandatory',
       field: 'mandatory',
       type:'checkbox',
+      onchange:(newValue)=>{
+        if(newValue){
+          const rules = this.data.rules || []
+          const emptyCheck = {id: 'EMPTY_CHECK', parameters:{}}
+          const hasEmptyCheck = rules.find(c=>c.type=='EMPTY_CHECK') 
+          if(!hasEmptyCheck) this.addRule(null,emptyCheck)
+        }
+      }
     },
     { name:'Description',
       field: 'description',
@@ -114,13 +122,23 @@ export class FieldModalComponent extends EntityModal implements OnInit {
 
     this.data.rules = this.data.rules || []
 
-    let newRule = {
+    let newRule: any = {
       type:rule.id,
     }
 
-    for (let paramKey of this.keys(rule.parameters)){
-      let param = rule.parameters[paramKey]
-      newRule[param.name] = null
+    if (rule.id == "REFERENCE_CHECK"){
+      newRule = {
+        ...newRule,
+        field_name: 'code',
+        conditions: {
+          ref_type_id:null
+        },
+      }
+    }else{
+      for (let paramKey of this.keys(rule.parameters)){
+        let param = rule.parameters[paramKey]
+        newRule[param.name] = null
+      }
     }
 
     this.data.rules.push(newRule)
@@ -133,9 +151,9 @@ export class FieldModalComponent extends EntityModal implements OnInit {
     console.log(ind)
   }
 
-  onChange(f){
+  onChange(f, newValue){
     if (f.onchange){
-      f.onchange()
+      f.onchange(newValue)
     }
   }
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -44,4 +45,11 @@ export class ReferenceService {
   deleteReferenceType(refType){
     return this.http.delete(`${environment.admin}domain/${null}/reference_type/${refType.id}`)
   }
+
+  getSimple(collection_id){
+    return this.getReferenceTypesByCollection(collection_id).pipe(
+      map((list:any[])=>list.map(e=>({value:e.id, label:e.label})))
+    )
+  }
+
 }

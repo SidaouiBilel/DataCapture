@@ -18,11 +18,11 @@
 
         <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
 
-        <nz-select (ngModelChange)='onChange(f)' style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
+        <nz-select (ngModelChange)='onChange(f, $event)' style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
           <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
         </nz-select>
 
-        <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
+        <label (ngModelChange)='onChange(f, $event)' nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
 
         <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
 
@@ -42,7 +42,7 @@
       <nz-card nzSise='small' class='ma-b' [nzTitle]="check.name"
         [nzExtra]="extraTemplate">
         <nz-card-meta [nzDescription]="check.description"></nz-card-meta>
-        <div class="ma-t">
+        <div class="ma-t" *ngIf='check.id != "REFERENCE_CHECK" ; else referenceCheck'>
           <ng-container *ngIf="check.parameters; let params">
             <nz-form-item *ngFor="let p of params">
               <nz-form-label [nzSpan]="7">{{p.label}}</nz-form-label>
@@ -65,6 +65,17 @@
             </nz-form-item>
           </ng-container>
         </div>
+
+        <ng-template #referenceCheck>
+          <div class="ma-t">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7">Reference</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <app-reference-type-input [(ngModel)]='r.conditions.ref_type'></app-reference-type-input>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-template>
 
         <ng-template #extraTemplate>
           <button class="ghost" nz-button nzShape='circle' (click)="removeRule(i)"><i nz-icon nzType="delete"></i></button>
