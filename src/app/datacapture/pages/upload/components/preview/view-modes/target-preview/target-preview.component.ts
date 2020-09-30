@@ -22,6 +22,7 @@ import { PreviewGridComponent } from '../preview-grid.component';
 })
 export class TargetPreviewComponent extends PreviewGridComponent implements OnInit, OnDestroy {
 
+  gridApi = null;
   // DECLARATIONS
   fileData$;
   activePipe$;
@@ -31,18 +32,18 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
   paginator$;
 
   // TABLE DATA
-  headers$ = new BehaviorSubject<any>(null)
-  totalRecords$ = new Subject<any>()
+  headers$ = new BehaviorSubject<any>(null);
+  totalRecords$ = new Subject<any>();
 
   // METADATA
-  error$ = new BehaviorSubject<string>(null)
-  loading$ = new BehaviorSubject<boolean>(false)
-  page$ = new BehaviorSubject<number>(1)
-  size$ = new BehaviorSubject<number>(25)
+  error$ = new BehaviorSubject<string>(null);
+  loading$ = new BehaviorSubject<boolean>(false);
+  page$ = new BehaviorSubject<number>(1);
+  total$ = new BehaviorSubject<number>(1);
+  size$ = new BehaviorSubject<number>(25);
   generatedFileId$;
   gridReady$ = new Subject<string>();
 
-  gridApi = null
 
   constructor(
     private store: Store<AppState>,
@@ -50,75 +51,75 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
     _transformService: TranformationService,
     _hotkeys: TransformationHotKeysService
     ) {
-      super(_transformService, _hotkeys)
-
-      this.selectedSheet$ = this.store.select(selectSelectedSheet)
-      this.fileData$ = this.store.select(selectFileMetaData)
-      this.generatedFileId$ = this.store.select(selectTransformedFilePath)
-      this.activePipe$ = this.store.select(selectActivePipe)
+      super(_transformService, _hotkeys);
+      this.selectedSheet$ = this.store.select(selectSelectedSheet);
+      this.fileData$ = this.store.select(selectFileMetaData);
+      this.generatedFileId$ = this.store.select(selectTransformedFilePath);
+      this.activePipe$ = this.store.select(selectActivePipe);
   }
+
   ngOnDestroy(): void {
-    this.paginator$.unsubscribe()
-    this.unregisterHotKey()
+    this.paginator$.unsubscribe();
+    this.unregisterHotKey();
   }
 
   ngOnInit() {
-
     // LISTEN FOR PAGINATION OR FILE CHANGES
     this.paginator$ = combineLatest(this.generatedFileId$, this.page$, this.gridReady$, this.size$).subscribe(
-      ([fileid, page, gridApi, size]:any)=>{
-        this.onReset()
-        if ( fileid && page ){
+      ([fileid, page, gridApi, size]: any) => {
+        this.onReset();
+        if ( fileid && page ) {
           // REFRESH GRID IN HERE
-          this.generateDataSource(fileid, page, size, gridApi)
+          this.generateDataSource(fileid, page, size, gridApi);
         } else {
-          this.onError('MISSING PARAMETER')
+          this.onError('MISSING PARAMETER');
         }
       }
     )
-
-    this.registerHotKey()
+    this.registerHotKey();
   }
 
-  onError = (err)=>{
-    this.headers$.next(null)
-    this.loading$.next(false)
-    this.error$.next(err)
+  onError = (err) => {
+    this.headers$.next(null);
+    this.loading$.next(false);
+    this.error$.next(err);
   }
 
-  onReset = () =>{
-    this.error$.next(null)
-    this.headers$.next(null)
-    this.loading$.next(false)
+  onReset = () => {
+    this.error$.next(null);
+    this.headers$.next(null);
+    this.loading$.next(false);
   }
-  generateDataSource(fileid, page, size,gridApi) {
+
+  generateDataSource(fileid, pages, size, gridApi) {
     const that = this;
-    that.gridApi = gridApi
+    that.gridApi = gridApi;
     gridApi.api.setServerSideDatasource({
       getRows(params) {
-        let page = params.request.endRow / size;
-        that.loading$.next(true)
-        that.service.getResult(fileid, page, size).subscribe((res:any) => {
-          that.loading$.next(false)
-          if(page <= 1){
-            that.totalRecords$.next(res.total)
-            const headers = res.headers.map(h=>(
-              {field:h, 
-               headerName:h, 
-               editable:false, 
+        const page = params.request.endRow / size;
+        that.loading$.next(true);
+        that.service.getResult(fileid, page, size).subscribe((res: any) => {
+          that.total$.next(res.total);
+          that.loading$.next(false);
+          if (page <= 1) {
+            that.totalRecords$.next(res.total);
+            const headers = res.headers.map(h => (
+              {field: h,
+               headerName: h,
+               editable: false,
                resizable: true,
               }
-            ))
-            headers.unshift(INDEX_HEADER)
-            that.headers$.next(headers)
+            ));
+            headers.unshift(INDEX_HEADER);
+            that.headers$.next(headers);
           }
-          const lastRow = () =>  (page <= res.last_page - 2)? -1: res.total
-          params.successCallback(res.data, lastRow()); 
+          const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
+          params.successCallback(res.data, lastRow());
         }, (error) => {
           params.failCallback();
-          that.onError(error)
+          that.onError(error);
         });
         }
-    })
+    });
   }
 }

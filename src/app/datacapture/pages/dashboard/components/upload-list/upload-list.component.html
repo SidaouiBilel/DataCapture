@@ -1,0 +1,45 @@
+<div class="table">
+  <nz-table #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
+    [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzBordered]="true" [nzPageIndex]="(page$ | async)"
+    [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
+    (nzPageSizeChange)="onSizeChange($event)">
+    <thead (nzSortChange)="sort($event)" nzSingleSort>
+      <tr>
+        <th>Collection</th>
+        <th nzShowSort nzSortKey="inserted_records">Inserted Records</th>
+        <th nzShowSort nzSortKey="total_records">Total Records</th>
+        <th nzShowSort nzSortKey="upload_start_time">Upload Start Date</th>
+        <th nzShowSort nzSortKey="upload_end_time">Upload End Date</th>
+        <th>Tags</th>
+        <th nzShowSort nzSortKey="upload_status">Status</th>
+        <th>Audit Trial</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of basicTable.data">
+        <td>{{ _selectedDomain.name }}</td>
+        <td>{{ e.inserted_records }}</td>
+        <td>{{ e.total_records }}</td>
+        <td>{{ e.upload_start_time | date:'medium' }}</td>
+        <td>{{ e.upload_end_time | date:'medium' }}</td>
+        <td>
+          <nz-tag *ngFor='let tag of e.upload_tags'>{{tag}}</nz-tag>
+        </td>
+        <td class="center">
+          <nz-badge *ngIf="e.upload_status === 'DONE'" nz-tooltip nzTooltipTitle="Done" nzStatus="success">
+          </nz-badge>
+          <nz-badge *ngIf="e.upload_status === 'ERROR'" nz-tooltip nzTooltipTitle="Error" nzStatus="error">
+          </nz-badge>
+          <nz-badge *ngIf="e.upload_status === 'RUNNING'" nz-tooltip nzTooltipTitle="Running" nzStatus="processing">
+          </nz-badge>
+        </td>
+        <td class="center">
+          <button nz-tooltip nzTooltipTitle='Audit Trial' nzShape='circle' class="ghost" nz-button
+            (click)="auditTrial(e.sheet_id)">
+            <i nz-icon nzType="audit" ></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -7,6 +7,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { FEATURE_NAME } from './store/dashboard.state';
 import { DashboardReducer } from './store/reducer/dashboard.reducer';
+import { UploadListComponent } from './components/upload-list/upload-list.component';
+import { UploadDataComponent } from './components/upload-data/upload-data.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { DashboardReducer } from './store/reducer/dashboard.reducer';
     EffectsModule.forFeature([]),
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    UploadListComponent,
+    UploadDataComponent
   ],
   exports: [
   ],
