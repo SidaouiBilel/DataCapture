@@ -46,7 +46,7 @@ export class CleansingService {
       filter,
       sort};
     // tslint:disable-next-line: max-line-length
-    return this.http.post(environment.cleansing + `/data?page=${page}&nrows=${nrows}`, payload);
+    return this.http.post(environment.cleansing + `/data?page=${page+1}&nrows=${nrows}`, payload);
   }
 
   // tslint:disable-next-line: max-line-length

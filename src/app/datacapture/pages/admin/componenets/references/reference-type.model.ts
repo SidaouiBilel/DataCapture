@@ -1,14 +1,14 @@
 export class RefernceType{
     id
     label
-    collection_ids = []
+    domain_ids = []
     created_on
     modified_on
 
     properties :RefernceTypeProperty[] = []
 
     constructor(domain_id){
-        this.collection_ids = []
+        this.domain_ids = [domain_id]
     }
 }
 

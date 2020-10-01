@@ -72,7 +72,7 @@ export class UploadListComponent {
   }
 
   auditTrial(ws: string): void {
-    this.service.getAuditTrial(ws, this._selectedDomain.id).subscribe((res) => {
+    this.service.getAuditTrial(ws).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,
