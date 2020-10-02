@@ -22,6 +22,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   loading$ = new BehaviorSubject(false)
 
   subscription
+  total$ = new Subject();
 
   @Input() set selectedDomain(value) {
     this.domain$.next(value)
@@ -56,7 +57,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
           // that.total$.next(res.total);
           that.loading$.next(false);
           if (page <= 1) {
-            // that.totalRecords$.next(res.total);
+            that.total$.next(res.total);
             const headers = res.headers.map(h => (
               {
                 ...h,

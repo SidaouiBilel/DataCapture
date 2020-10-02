@@ -11,6 +11,7 @@ export const getPreviousHeader = (headers, previousNodes) => {
           break;
         case 'merge':
         case 'default-value':
+        case 'calculator':
           if (t.destination){
             all.add(t.destination);
           }

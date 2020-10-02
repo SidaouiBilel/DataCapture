@@ -1,4 +1,4 @@
-<div class="flex flex-1 column start ml-3 mr-3 mb-3" style="height: 500px !important">
+<div class="flex flex-1 column start ml-3 mr-3 mb-3" style="height: 70vh !important">
 
     <div class="flex-1 flex w-100" *ngIf='(error$ | async)'>
       <div class="flex column">
@@ -19,6 +19,10 @@
       [columnDefs]="headers$ | async"
       (gridReady)="this.gridReady$.next($event)"></app-data-grid>
     </ng-container>
+
+    <div class="mt-1">
+      <nz-tag>Total Records <b>{{total$|async}}</b></nz-tag>
+    </div>
   
   </div>
   
