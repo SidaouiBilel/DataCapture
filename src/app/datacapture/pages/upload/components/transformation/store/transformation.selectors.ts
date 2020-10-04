@@ -74,6 +74,11 @@ export const selectTransformedFilePath = createSelector(
   (object: Transformation) => object.transformedFilePath
 );
 
+export const selectLoadingTransformation = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.loadingTransformation
+);
+
 export const selectTransformationHeaders = createSelector(
   selectTranformation,
   (object: Transformation) => object.tarnsformationHeaders

@@ -1,18 +1,20 @@
 import { Action } from '@ngrx/store';
 
+
 export enum TransformationActionTypes {
-  ADD_NODE = '[TRANS] ADD NODE',
-  UPDATE_NODE_STATUS = '[TRANS] UPDATE_NODE_STATUS',
-  UPDATE_NODE_ORDER = '[TRANS] UPDATE_NODE_ORDER',
-  DELETE_NODE = '[TRANS] DELETE NODE',
-  UPDATE_NODE = '[TRANS] UPDATE NODE',
-  UPDATE_EDITED = '[TRANS] UPDATE_EDITED',
-  RESET = '[TRANS] RESET',
-  LOAD = '[TRANS] LOAD',
-  FLIP = '[TRANS] EXPAND/COLLAPSE',
-  SET_PREVIEW_MODE = '[TRANS] SET_PREVIEW_MODE',
-  UPDATE_FILE_PATH = '[TRANS] UPDATE_FILE_PATH',
-  UPDATE_TRANSFORMATION_HEADERS = '[TRANS] UPDATE_TRANSFORMATION_HEADERS',
+    ADD_NODE = '[TRANS] ADD NODE',
+    UPDATE_NODE_STATUS = '[TRANS] UPDATE_NODE_STATUS',
+    UPDATE_NODE_ORDER = '[TRANS] UPDATE_NODE_ORDER',
+    DELETE_NODE = '[TRANS] DELETE NODE',
+    UPDATE_NODE = '[TRANS] UPDATE NODE',
+    UPDATE_EDITED = '[TRANS] UPDATE_EDITED',
+    RESET = '[TRANS] RESET',
+    LOAD = '[TRANS] LOAD',
+    FLIP = '[TRANS] EXPAND/COLLAPSE',
+    SET_PREVIEW_MODE = '[TRANS] SET_PREVIEW_MODE',
+    UPDATE_FILE_PATH = '[TRANS] UPDATE_FILE_PATH',
+    UPDATE_TRANSFORMATION_HEADERS = '[TRANS] UPDATE_TRANSFORMATION_HEADERS',
+    LOADING_TRANSFORMATION = "[TRANS] LOADING_TRANSFORMATION"
 }
 
 export class AddTransNode implements Action {
@@ -75,6 +77,11 @@ export class UpdateTransformationHeaders implements Action {
   constructor(readonly headers: string[]) {}
 }
 
+export class UpdateLoadingTransformation implements Action {
+  readonly type = TransformationActionTypes.LOADING_TRANSFORMATION;
+  constructor(readonly loading:boolean) {}
+}
+
 export type TransformationAction =  UpdateNodeStatus 
                                     | UpdateEditedPipeInfo 
                                     | UpdateTransformedFilePath 
@@ -87,4 +94,5 @@ export type TransformationAction =  UpdateNodeStatus
                                     | UpdateNodeOrder
                                     | ResetTransformation
                                     | UpdateTransformationHeaders
+                                    | UpdateLoadingTransformation
                                     ;

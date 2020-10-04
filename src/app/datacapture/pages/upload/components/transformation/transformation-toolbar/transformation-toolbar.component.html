@@ -8,7 +8,7 @@
             [nzRotate]='t.icon_rotation || 0'></i></button>
       </div>
 
-      <div class="ml-3">
+      <div class="ml-3" *ngIf='(collapsedTrans$ | async) && (collapsedTrans$ | async).length > 0'>
         <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon
             nzType="ellipsis" [nzRotate]='90'></i></button>
         <nz-dropdown-menu #collapsedTrans="nzDropdownMenu">

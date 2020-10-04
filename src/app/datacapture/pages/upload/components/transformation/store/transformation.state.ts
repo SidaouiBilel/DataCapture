@@ -9,9 +9,9 @@ export const initialState: Transformation = {
     expanded: true,
     activePipe: null,
     previwMode:'SOURCE',
-
     transformedFilePath:null,
-    tarnsformationHeaders: null
+    tarnsformationHeaders: null,
+    loadingTransformation: false
 }
 
 const ACTIONS = TransformationActionTypes
@@ -106,6 +106,10 @@ export function TransformationReducer(state: Transformation = initialState, acti
     case ACTIONS.RESET:{
         return {...initialState}
     }
+
+    case ACTIONS.LOADING_TRANSFORMATION:{
+        return {...state, loadingTransformation: action.loading}
+    } 
     
     default:
       return state;

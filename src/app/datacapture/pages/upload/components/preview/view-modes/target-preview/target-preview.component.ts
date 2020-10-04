@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectActivePipe, selectActivePipeId, selectTransformedFilePath } from '../../../transformation/store/transformation.selectors';
+import { selectActivePipe, selectActivePipeId, selectLoadingTransformation, selectTransformedFilePath } from '../../../transformation/store/transformation.selectors';
 import { selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { AppState } from '@app/core';
 import { merge, combineLatest, BehaviorSubject, Subject } from 'rxjs';
@@ -37,7 +37,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
 
   // METADATA
   error$ = new BehaviorSubject<string>(null);
-  loading$ = new BehaviorSubject<boolean>(false);
+  loading$
   page$ = new BehaviorSubject<number>(1);
   total$ = new BehaviorSubject<number>(1);
   size$ = new BehaviorSubject<number>(25);
@@ -56,6 +56,8 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
       this.fileData$ = this.store.select(selectFileMetaData);
       this.generatedFileId$ = this.store.select(selectTransformedFilePath);
       this.activePipe$ = this.store.select(selectActivePipe);
+      this.loading$ = this.store.select(selectLoadingTransformation);
+      
   }
 
   ngOnDestroy(): void {
@@ -81,14 +83,14 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
 
   onError = (err) => {
     this.headers$.next(null);
-    this.loading$.next(false);
+    // this.loading$.next(false);
     this.error$.next(err);
   }
 
   onReset = () => {
     this.error$.next(null);
     this.headers$.next(null);
-    this.loading$.next(false);
+    // this.loading$.next(false);
   }
 
   generateDataSource(fileid, pages, size, gridApi) {
@@ -97,10 +99,10 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
-        that.loading$.next(true);
+        // that.loading$.next(true);
         that.service.getResult(fileid, page, size).subscribe((res: any) => {
           that.total$.next(res.total);
-          that.loading$.next(false);
+          // that.loading$.next(false);
           if (page <= 1) {
             that.totalRecords$.next(res.total);
             const headers = res.headers.map(h => (

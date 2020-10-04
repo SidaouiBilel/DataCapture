@@ -14,7 +14,7 @@ export const TRANSFORMATIONS = [
   new FilterAndReplace().setComponent(FindAndReplaceComponent),
   new Merge().setComponent(MergerComponent),
   new Replace().setComponent(FormatterComponent),
-  new DeleteColumns().setComponent(DeleteColumnComponent),
+  // new DeleteColumns().setComponent(DeleteColumnComponent),
   new DeleteRow().setComponent(DeleteRowsComponent),
   new DefaultValue().setComponent(DefaultValueComponent),
   new Splitter().setComponent(SplitterComponent),

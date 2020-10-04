@@ -2,7 +2,7 @@
 
 <nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="index = $event">
   <nz-step nzTitle="General"></nz-step>
-  <nz-step nzTitle="Rules"></nz-step>
+  <nz-step nzTitle="Checks"></nz-step>
 </nz-steps>
 
 
@@ -35,7 +35,7 @@
 
 
 <div *ngIf='index == 1'>
-  <nz-divider nzText="Rules"></nz-divider>
+  <nz-divider nzText="Checks"></nz-divider>
 
   <ng-container *ngFor="let r of data.rules; let i = index">
     <ng-container *ngIf='RULES_MAP[r.type]; let check ; else noCheckFound'>

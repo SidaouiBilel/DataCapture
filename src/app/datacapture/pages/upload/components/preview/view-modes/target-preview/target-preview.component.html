@@ -1,6 +1,16 @@
 <div class="flex flex-1 column start">
 
-  <div class="flex-1 flex w-100" *ngIf='(error$ | async)'>
+  <div class="flex-1 flex w-100" *ngIf='(loading$ | async)'>
+    <div class="flex column">
+      <ng-template #indicatorTemplate><i style="font-size: 32px;" nz-icon nzType="loading"></i></ng-template>
+      <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+      <div class="mt-3">
+        <span nz-text class="text-muted"><small>Transforming... </small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 flex w-100" *ngIf='(error$ | async) && !(loading$ | async)'>
     <div class="flex column">
       <span nz-text nzType='danger' nz-tooltip [nzTooltipTitle]='error$ | async | json'>
         <i nz-icon nzType="api" style="font-size: 64px"></i>
@@ -12,7 +22,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf='!(error$ | async)'>
+  <ng-container *ngIf='!(error$ | async) && !(loading$ | async)'>
     <app-data-grid
     class="flex-1"
     [paginationPageSize]='size$ | async'

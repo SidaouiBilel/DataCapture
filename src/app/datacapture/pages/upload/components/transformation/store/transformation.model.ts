@@ -7,7 +7,7 @@ export interface Transformation{
     activePipe: any;
     previwMode: 'SOURCE' | 'TARGET';
     transformedFilePath: string;
-
+    loadingTransformation: boolean;
     tarnsformationHeaders: string[]
     // ADD SIMILAR FIELDS FOR POST MAPPING TRANSFORMERS
 }

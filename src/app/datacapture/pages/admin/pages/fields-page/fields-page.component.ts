@@ -37,7 +37,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     new Column('Description', 'description'),
     new Column('Mandatory', 'mandatory'),
     new Column('Editable', 'editable'),
-    new Column('Rules', 'rules'),
+    new Column('Checks', 'rules'),
   ];
 
   data_types = {}

@@ -5,7 +5,7 @@ import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { TranformationService } from '../services/tranformation.service';
 // tslint:disable-next-line: max-line-length
-import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders } from './transformation.actions';
+import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders, UpdateLoadingTransformation } from './transformation.actions';
 import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
 import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
@@ -34,12 +34,15 @@ export class TransformationEffects {
       if (file.metaData && sheetIndex !== null) {
         const sheetId = String(Object.values(file.metaData.worksheets_map)[sheetIndex]);
         const pipeId = (pipe) ? pipe.id : null;
+        this.store$.dispatch(new UpdateLoadingTransformation(false));
         if ( file && file.metaData && pipeId && sheetId !== null) {
           const fileId = file.metaData.file_id;
+          this.store$.dispatch(new UpdateLoadingTransformation(true));
           this.job.startJob(fileId, sheetId, pipeId).subscribe(res => {
             const id = res.transformed_file_id;
             this.store$.dispatch(new UpdateTransformedFilePath(id));
             this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
+              this.store$.dispatch(new UpdateLoadingTransformation(false));
               this.store$.dispatch(new UpdateTransformationHeaders(jobRes.headers));
             });
           });

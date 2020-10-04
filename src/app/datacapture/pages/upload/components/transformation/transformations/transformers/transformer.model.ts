@@ -46,7 +46,7 @@ export class DeleteRow extends Transformer {
   label = 'Delete Rows';
   icon = 'scissor';
   shortcut = 'control.d';
-  collapse = true;
+  collapse = false;
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
     if (params.from == null || params.from === '' ) { errors.push(new NodeError('from', 'Starting line missing')); }
@@ -78,7 +78,7 @@ export class DeleteColumns extends Transformer {
   icon = 'scissor';
   icon_rotation = 90;
   shortcut = 'control.alt.d';
-  collapse = true;
+  collapse = false;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -244,7 +244,7 @@ export class DefaultValue extends Transformer {
   label = 'Default';
   icon = 'file-add';
   shortcut = 'control.shift.d';
-  collapse = true;
+  collapse = false;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -258,7 +258,7 @@ export class Splitter extends Transformer {
   label = 'Split';
   icon = 'disconnect';
   shortcut = 'control.alt.s';
-  collapse = true;
+  collapse = false;
   icon_rotation = 45;
 
   getErrors = (params, previousNodes, headers) => {
@@ -286,14 +286,21 @@ export class Calculator extends Transformer {
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
+
+    const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
+
     if (isStrEmpty(params.destination)) { errors.push(new NodeError('destination', 'Destination Missing')); }
     if (isStrEmpty(params.column)) { errors.push(new NodeError('column', 'Column Missing')); }
+    else if ( previousHeaders.indexOf(params.column) < 0 ) {errors.push(new NodeError('column', `${params.column} does not exist`));}
     if (isStrEmpty(params.operator)) { errors.push(new NodeError('operator', 'Operator Missing')); }
 
     if (isStrEmpty(params.property) && isStrEmpty(params.value)) { 
       errors.push(new NodeError('property', 'Property Missing')); 
       errors.push(new NodeError('value', 'Value Missing')); 
     }
+
+    if(!isStrEmpty(params.property) && previousHeaders.indexOf(params.property) < 0){errors.push(new NodeError('property', `${params.property} does not exist`));}
+
     return errors;
   }
 
