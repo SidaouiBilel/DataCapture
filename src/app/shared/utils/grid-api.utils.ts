@@ -1,3 +1,5 @@
+import { formatDate, isInDateFormat, isInDoubleFormat, isInIntegerFormat } from './strings.utils'
+
 export const INDEX_NAME = '$_NODE_INDEX'
     export const INDEX_HEADER = {
         headerName: "",
@@ -71,3 +73,18 @@ for(let range of cellRanges){
     for(let rangeParams of params)
     event.api.addCellRange(rangeParams);
 }
+
+export function GAPIformatCell(params){
+    const value = params.value.toString()
+
+    if(isInDoubleFormat(value)){
+      return parseFloat(value).toFixed(2);
+    }
+    else if(isInDateFormat(value)){
+      return formatDate(value)
+    }else if(isInIntegerFormat(value)){
+      return value
+    }else{
+      return value
+    }
+  }

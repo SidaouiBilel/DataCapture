@@ -10,9 +10,9 @@ import { TRANSFORMATIONS } from '../../../transformation/transformations/transfo
 import { TranformationService } from '../../../transformation/services/tranformation.service';
 import { Hotkeys } from '@app/shared/services/hot-keys.service';
 import { take } from 'rxjs/operators';
-import { capitalize, shortcutString } from '@app/shared/utils/strings.utils';
+import { capitalize, formatDate, isInDateFormat, isInDoubleFormat, isInIntegerFormat, shortcutString } from '@app/shared/utils/strings.utils';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
-import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 
 @Component({
@@ -110,6 +110,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
                headerName: h,
                editable: false,
                resizable: true,
+               valueFormatter : GAPIformatCell,
               }
             ));
             headers.unshift(INDEX_HEADER);

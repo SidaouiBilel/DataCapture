@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { selectFileData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
-import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
@@ -74,6 +74,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
               headerName: h,
               editable: false,
               resizable: true,
+              valueFormatter : GAPIformatCell,
             }));
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
