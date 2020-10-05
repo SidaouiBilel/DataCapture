@@ -22,6 +22,11 @@ export const selectMandatories = createSelector(
   (object: Mapping) => object.mandatories
 );
 
+export const selectIsModified = createSelector(
+  SelectMapping,
+  (object: Mapping) => object.isModified
+);
+
 export const selectMappingId = createSelector(
   SelectMapping,
   (object: Mapping) => object.mappingId

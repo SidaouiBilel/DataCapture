@@ -6,9 +6,9 @@ import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MappingService } from '../../services/mapping.service';
 import { selectMappingFields, selectMappedSources, selectMandatories,
-         selectMappingId, selectMappingValid } from './../../store/selectors/mapping.selectors';
+         selectMappingId, selectMappingValid, selectIsModified } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
-         SaveMappingValid } from '../../store/actions/mapping.actions';
+         SaveMappingValid, SaveIsModified } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
@@ -31,6 +31,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   keys = Object.keys;
   isVisible: boolean;
   isOkLoading: boolean;
+  isModified = false;
   validateForm: FormGroup;
   worksheet: any;
   mappingId: any;
@@ -38,6 +39,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappingValid$: Observable<boolean>;
   // Store
   mappingFields$: Observable<any>;
+  isModified$: Observable<any>;
   fileData$: Observable<any>;
   mappedSources$: Observable<any>; // sources that are mapped
   mandatories$: Observable<any>; // Mandatories
@@ -46,7 +48,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappingId$: Observable<string>;
   worksheet$: Observable<any>;
   monitor$: any;
-  searchTarget
+  searchTarget: string;
   constructor(private store: Store<AppState>,
               private service: MappingService,
               private router: Router,
@@ -54,15 +56,17 @@ export class MappingComponent implements OnInit, OnDestroy {
               private modalService: NzModalService,
               private notification: NotificationService) {
     this.worksheet$     = this.store.select(selectTransformedFilePath);
+    this.isModified$    = this.store.select(selectIsModified);
     this.mappingFields$ = this.store.select(selectMappingFields);
     this.mappedSources$ = this.store.select(selectMappedSources);
-    this.mappingValid$ = this.store.select(selectMappingValid);
+    this.mappingValid$  = this.store.select(selectMappingValid);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mandatories$   = this.store.select(selectMandatories);
     this.mappingId$     = this.store.select(selectMappingId);
     this.fileData$      = this.store.select(selectFileData);
     this.domain$        = this.store.select(selectDomain);
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
+    this.isModified$.subscribe((res) => { this.isModified = res; });
     this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.domain$.subscribe((res) => { this.domain = res; });
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
@@ -161,6 +165,7 @@ export class MappingComponent implements OnInit, OnDestroy {
             this.notification.close(x);
             this.isVisible = false;
             this.isOkLoading = false;
+            this.store.dispatch(new SaveIsModified(false));
           }, (err) => {
             this.notification.error(err.message);
             this.notification.close(x);
@@ -259,6 +264,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
     this.onUpdateSources(source, false);
     this.checkMappingSanity();
+    this.checkIfModified();
   }
 
   // Called when removing mapped value
@@ -269,6 +275,13 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new SaveMappingFields(this.mappingFields));
     this.onUpdateSources(source, true);
     this.checkMappingSanity();
+    this.checkIfModified();
+  }
+
+  checkIfModified() {
+    if (this.mappingId) {
+      this.store.dispatch(new SaveIsModified(true));
+    }
   }
 
   // Called to update the sources whether they are mapped or nor
@@ -293,6 +306,7 @@ export class MappingComponent implements OnInit, OnDestroy {
         this.service.updateMapping(mappingFields, mappingId, fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain.id)
           .subscribe((res) => {
             this.notification.success('The mapping is successfully updated');
+            this.store.dispatch(new SaveIsModified(false));
           });
       });
   }
@@ -349,14 +363,25 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   goToCleansing(): void {
+    if (this.isModified) {
+      this.modalService.warning({
+        nzTitle: 'Mapping modified',
+        nzContent: 'You have made changes to the mapping. <br>Please save them before leaving or they will not be applied.',
+        nzOkText: 'Ok',
+        nzCancelText: 'Continue Without Saving',
+        nzOnOk: () => {
+          this.updateMapping(this.mappingFields);
+        },
+        nzOnCancel: () => {
+          this.store.dispatch(new SaveIsModified(false));
+        }
+      });
+      return;
+    }
     if (! this.mappingId ) {
       this.notification.warn('Please save your mapping or Apply one.');
       return;
     }
-    // if (! this.mappingValid ) {
-    //   this.notification.warn('Your mapping is not valid. Fix it or Apply a new one please.');
-    //   return;
-    // }
     if (this.mandatories === 0) {
       this.router.navigate(['/datacapture/upload/cleansing']);
     } else if (this.mandatories !== 0) {
