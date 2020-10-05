@@ -9,7 +9,10 @@
       <nz-divider nzType='vertical'></nz-divider>
       <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost"
         nz-button (click)='updateMapping(mappingFields)'>
-        <i nz-icon nzType="cloud-sync"></i>
+        <nz-badge nzDot *ngIf="isModified">
+          <i nz-icon nzType="cloud-sync"></i>
+        </nz-badge>
+        <i nz-icon *ngIf="!isModified" nzType="cloud-sync"></i>
       </button>
       <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
         (click)='isVisible = true'>
