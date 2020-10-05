@@ -238,14 +238,16 @@ export class CleansingComponent implements OnInit, OnDestroy {
               h.filter = 'agTextColumnFilter';
               break;
             case 'int':
-              h.valueFormatter = this.currencyFormatter,
-              h.filter = 'agNumberColumnFilter';
-              break;
+              case 'double':
+                // h.valueFormatter = this.currencyFormatter,
+                h.filter = 'agNumberColumnFilter';
+                break;
             case 'double':
               h.valueFormatter = this.currencyFormatter,
               h.filter = 'agNumberColumnFilter';
               break;
             case 'date':
+              h.valueFormatter = this.dateFormatter,
               h.filter = 'agDateColumnFilter';
               break;
             default:
@@ -279,7 +281,21 @@ export class CleansingComponent implements OnInit, OnDestroy {
   currencyFormatter = (params) => {
     const parts = params.value.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (parts[1]) parts[1] = parts[1].substring(0,2)
     return parts.join('.');
+  }
+
+  dateFormatter = (params) => {
+    const parts: string[] = params.value.toString().split('-');
+    const yyyy = parts[0]
+    const mm = parts[1]
+    const dd = parts[2]
+    let validDate = true
+    
+    if(parts.length!=3) validDate = false;
+
+    if(validDate) return [mm, dd, yyyy].join('/')
+    else return params.value.toString()
   }
 
   syncWithServer(): void {

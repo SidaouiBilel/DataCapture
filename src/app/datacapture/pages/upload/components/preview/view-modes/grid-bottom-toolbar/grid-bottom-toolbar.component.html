@@ -1,7 +1,6 @@
 <div class="flex between w-100">
     <app-sheet-selector></app-sheet-selector>
     <div class="flex end">
-      <span class="pr-2" nz-typography>Total: <span class="text-success">{{total}}</span></span>
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async) | hotkeysFilter: (controlPressed | async) : (shiftPressed | async) : (altPressed | async)'></app-shortcuts-list>
       <nz-divider nzType='vertical'></nz-divider>
       <div><small nz-typography nzType='secondary'><span class="mr-2">Help</span>

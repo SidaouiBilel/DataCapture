@@ -1,5 +1,6 @@
 ::ng-deep .error-cell {
-  background-color: #ffa1a1;
+  background-color: #ffe9e9;
+  border-color: #ffbfbf !important;
 }
 
 ::ng-deep .warning-cell {

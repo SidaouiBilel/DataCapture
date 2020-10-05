@@ -39,7 +39,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
   error$ = new BehaviorSubject<string>(null);
   loading$
   page$ = new BehaviorSubject<number>(1);
-  total$ = new BehaviorSubject<number>(1);
+  total$ = new BehaviorSubject<number>(0);
   size$ = new BehaviorSubject<number>(25);
   generatedFileId$;
   gridReady$ = new Subject<string>();
@@ -115,7 +115,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
           }
-          const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
+          const lastRow = () =>  res.total;
           params.successCallback(res.data, lastRow());
         }, (error) => {
           params.failCallback();

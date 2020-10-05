@@ -23,7 +23,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   paginator$: any;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   totalRecords$: BehaviorSubject<number> = new BehaviorSubject(0);
-  total$: BehaviorSubject<number> = new BehaviorSubject(1);
+  total$: BehaviorSubject<number> = new BehaviorSubject(0);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   error$ = new BehaviorSubject<string>(null);
   page$ = new BehaviorSubject<number>(1);
@@ -78,7 +78,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
           }
-          const lastRow = () =>  (page <= res.last_page - 2) ? -1 : res.total;
+          const lastRow = () => res.total;
           const data = [];
           for (const row of res.data) {
             const rowObject = {};

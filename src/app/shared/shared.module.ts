@@ -19,6 +19,7 @@ import { RegexHelperTriggerComponent } from './regex-helper/regex-helper-trigger
 import { RegexHelperDocumentationComponent } from './regex-helper/regex-helper-documentation/regex-helper-documentation.component';
 import { KeyFilterPipe } from './pipes/key-filter.pipe';
 import { CustomIconsService } from './services/custom-icons.service';
+import { GridFooterComponent } from './grid-footer/grid-footer.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -47,7 +48,8 @@ const Components = [
   AuditComponent,
   RegexHelperTriggerComponent,
   KeyFilterPipe,
-  RegexHelperDocumentationComponent
+  RegexHelperDocumentationComponent,
+  GridFooterComponent
 ];
 
 @NgModule({
@@ -57,7 +59,6 @@ const Components = [
   ],
   declarations: [
     ...Components,
-    
   ],
   exports: [
     ...SharedModules,

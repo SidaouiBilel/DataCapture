@@ -4,5 +4,6 @@
     [mainContextMenu]="getMainContextMenuItems"
     [rangeSelection]='true'
     [columnDefs]="headers$ | async" (gridReady)="gridReady$.next($event)"></app-data-grid>
-  <app-grid-bottom-toolbar [total]="total$ | async"></app-grid-bottom-toolbar>
+    <app-grid-footer [t]='total$ | async'></app-grid-footer>
+  <app-grid-bottom-toolbar></app-grid-bottom-toolbar>
 </div>
