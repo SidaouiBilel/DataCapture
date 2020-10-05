@@ -278,7 +278,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   currencyFormatter = (params) => {
-    const parts = params.value.toString().split('.');
+    let parts;
+    if (params.value.toString().indexOf('E') >= 0) {
+      parts = Number(params.value).toString().split('.');
+    } else {
+      parts = params.value.toString().split('.');
+    }
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     if (parts[1]) { parts[1] = parts[1].substring(0, 2); }
     return parts.join('.');
