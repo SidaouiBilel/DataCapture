@@ -11,12 +11,12 @@ export class FilterComponent extends TransformationInterfaceComponent implements
   @Input() showReverse = true
   
   numberOperations=[
-    {value: '>', label: 'Greater'},
-    {value: '<', label: 'Lesser'},
-    {value: '>=', label: 'Greater or Equal'},
-    {value: '<=', label: 'Lesser or Equal'},
-    {value: '==', label: 'Equal'},
-    {value: '!=', label: 'Not Equal'}
+    {value: '>', label: '>'},
+    {value: '>=', label: '>='},
+    {value: '<', label: '>'},
+    {value: '<=', label: '<=>'},
+    {value: '==', label: '='},
+    {value: '!=', label: '!='}
   ]
   stringOperations=[
     {value: 'match', label: 'REGEX'},
