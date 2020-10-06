@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset } from '../../store/actions/import.actions';
-import { Observable, forkJoin, BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, forkJoin, BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
@@ -15,6 +15,8 @@ import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { isEmpty } from '@app/shared/utils/objects.utils';
+import { take } from 'rxjs/operators';
+import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 
 @Component({
   selector: 'app-cleansing',
@@ -28,7 +30,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   results: any;
   worksheet: any;
   fileData: any;
-  numberOfRows = 25;
+  numberOfRows = 100;
   selectedSheet: number;
   targetFields: any;
   mappingId: string;
@@ -50,6 +52,22 @@ export class CleansingComponent implements OnInit, OnDestroy {
   worksheet$: Observable<any>;
   targetFields$: Observable<any>;
   mappingId$: Observable<any>;
+
+  errorLevels= [
+    {level:'all', label:'All', type:'primary'}
+    ,{level:'errors', label:'Errors Only', type:'danger'}
+    // ,{level:'warnings', label:'Warnings', type:'warning'}
+  ]
+  selectedErrorLevel$ = new BehaviorSubject('all');
+  changeErrorLevel(level){
+      this.selectedErrorLevel$.next(level)
+  }
+
+  loadCleansingData$
+  datasource$
+  
+  gridReady$ = new Subject()
+
   constructor(private router: Router,
               private store: Store<AppState>,
               private service: CleansingService,
@@ -80,6 +98,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
         });
       }
     });
+
+    this.datasource$ = combineLatest(this.gridReady$, this.lock$, this.selectedErrorLevel$).subscribe(
+      ([gridApi, Locked, errorLevel])=> {
+        this.fetchCleansingData(gridApi)
+      }
+    )
   }
 
   ngOnInit() {
@@ -90,6 +114,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.hotkeys.unregister();
+    if(this.datasource$) this.datasource$.unsubscribe()
   }
 
   auditTrial(): void {
@@ -134,7 +159,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     const that = this;
     return {
       getRows(params) {
-        that.lock$.subscribe((isLocked: boolean) => {
+        combineLatest(that.lock$, that.selectedErrorLevel$.pipe(take(1))).subscribe(([isLocked, errorLevel]) => {
           if (isLocked) {
             const page = (params.request.endRow / that.numberOfRows) - 1;
             const isTransformed = that.worksheet !== null;
@@ -153,7 +178,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
               params.request.sortModel.forEach((e) => {adaptedSort.column = e.colId; adaptedSort.order = e.sort; });
             }
             // tslint:disable-next-line: max-line-length
-            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed)
+            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel)
             .subscribe((res: any) => {
               that.total$.next(res.total);
               const newErrors = {};
@@ -165,18 +190,15 @@ export class CleansingComponent implements OnInit, OnDestroy {
               that.results$.next(that.results);
               if (page <= 0 && adaptedFilter.length === 0 && isEmpty(adaptedSort)) {
                 const headers = that.targetFields.map((e) => ({field: e.name, headerName: e.label}));
-                headers.unshift({
-                  headerName: '#',
-                  field: 'row_index',
-                  valueGetter: 'node.rowIndex + 1'
-                });
+                headers.unshift(INDEX_HEADER)
                 that.headers$.next([...headers]);
                 grid.api.setColumnDefs(that.setHeadersLogic(headers, that.targetFields));
               }
               if (res.data.length) {
                 const lastRow = () => {
-                  if ( res.data.length < that.numberOfRows  ) { return (page * that.numberOfRows) + res.data.length; } else { return -1; }
+                  return res.total
                 };
+                grid.columnApi.autoSizeAllColumns()
                 params.successCallback(res.data, lastRow());
               } else {
                 params.successCallback([], 0);
@@ -192,6 +214,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   fetchData(params: any): void {
+    this.gridReady$.next(params)
+  }
+
+  fetchCleansingData(params: any): void {
     this.results = {};
     this.results$.next({});
     const datasource = this.serverSideDatasource(params);
@@ -202,7 +228,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   setHeadersLogic(headers: any, types: any): any {
     if (headers) {
       headers.map((h, ind) => {
-        if (h.headerName !== '#') {
+        if (h.colId !== INDEX_HEADER.colId) {
           const cellClass = (params) => {
             const f = params.colDef.field;
             const i = params.rowIndex;
@@ -222,7 +248,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
           h.cellStyle = {'font-family': 'Roboto,Helvetica,Arial,sans-serif', color: '#363636', 'border-right': '1px solid #ccc'};
           h.resizable = true;
           // h.suppressSizeToFit = false;
-          // Tooltip
           h.tooltipComponent = 'customTooltip';
           // h.tooltipField = h.field;
           h.tooltipComponentParams = {error: this.results$};
@@ -254,27 +279,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
           }
           return h;
         } else {
-          h.width = 40;
-          h.minWidth = 40;
-          h.maxWidth = 60;
-          // h.suppressSizeToFit = false;
-          h.suppressMenu = true;
-          h.resizable = true;
-          h.editable = false;
-          h.cellStyle = {'font-family': 'Roboto,Helvetica,Arial,sans-serif', color: '#363636', 'border-right': '1px solid #ccc'};
-          h.cellClass = (params) => 'index-cell';
-          return h;
+          return INDEX_HEADER;
         }
       });
     }
+    
     return headers;
-  }
-
-  editCell(params: any): void {
-    this.modifications[params.data.row_index] = {
-      ...this.modifications[params.data.row_index],
-      [params.colDef.field]: {previous: params.oldValue, new: params.newValue}
-    };
   }
 
   currencyFormatter = (params) => {
@@ -330,5 +340,67 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   goToUpload(): void {
     this.router.navigate(['/datacapture/upload/uploading']);
+  }
+
+  editCell(params: any): void {
+    this.modifications[params.data.row_index] = {
+      ...this.modifications[params.data.row_index],
+      [params.colDef.field]: {previous: params.oldValue, new: params.newValue}
+    };
+  }
+
+
+  autosave = true
+  onCellEdit(params){
+    // CHECK IF VALUE HAS CHANGED
+    if( params.oldValue == params.newValue) return false
+    this.editCell(params)
+
+    if( !this.autosave ) return false
+
+    this.rerunModificationOnRow(params)
+    
+  }
+
+  rerunModificationOnRow(params){
+    const api = this.grid.api
+    const line = params.data.row_index
+    const rowNode = params.node
+
+    const isTransformed = this.worksheet !== null;
+    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+
+    rowNode.stub = true
+    api.redrawRows({ rowNodes: [rowNode] })
+    this.runWithEditedCell().subscribe(()=>{
+      this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data:any)=>{
+        this.results[rowNode.rowIndex] = data.results[0]
+        this.results$.next(this.results)
+        rowNode.stub = false
+        api.redrawRows({ rowNodes: [rowNode] })
+      })
+      this.loadMetadata()
+      this.modifications = {};
+    })
+  }
+
+  runWithEditedCell(){
+    return new Observable<any>((observer)=>{
+      const isTransformed = this.worksheet !== null;
+      const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+      this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId, this.jobId).subscribe((res: any) => {
+        observer.next(); observer.complete()
+       }, (err) => {
+         this.not.error(err.message);
+      });
+    })
+  }
+
+  loadMetadata(){
+    this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
+      this.metaData$.next(metaData);
+    }, (err) => {
+      this.not.error(err.message);
+    });
   }
 }

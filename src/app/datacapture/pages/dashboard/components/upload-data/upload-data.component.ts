@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { DashboardService } from '../../service/dashboard.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   loading$ = new BehaviorSubject(false)
 
   subscription
-  total$ = new Subject();
+  total$ = new Observable<any>();
 
   @Input() set selectedDomain(value) {
     this.domain$.next(value)
@@ -31,14 +32,17 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   constructor(private service: DashboardService) { }
   
   ngOnInit() {
-    console.log('ngonInit')
     this.subscription = combineLatest(this.domain$, this.gridReady$, this.size$, this.page$)
     .subscribe(([domain, gridApi, size, page])=>{
       if(!domain) return this.error$.next('Please select a collection')
 
       this.error$.next(null)
+      // this.getTotal(domain.id)
       this.generateDataSource(domain.id, page, size, gridApi);
     })
+  }
+  getTotal(id: any) {
+    this.total$ =  this.service.getUploadDataTotal(id).pipe(take(1))
   }
   
   ngOnDestroy(): void {
@@ -57,7 +61,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
           // that.total$.next(res.total);
           that.loading$.next(false);
           if (page <= 1) {
-            that.total$.next(res.total);
+            // that.total$.next(res.total);
             const headers = res.headers.map(h => (
               {
                 ...h,

@@ -13,8 +13,8 @@ export class FilterComponent extends TransformationInterfaceComponent implements
   numberOperations=[
     {value: '>', label: '>'},
     {value: '>=', label: '>='},
-    {value: '<', label: '>'},
-    {value: '<=', label: '<=>'},
+    {value: '<', label: '<'},
+    {value: '<=', label: '<='},
     {value: '==', label: '='},
     {value: '!=', label: '!='}
   ]
