@@ -17,8 +17,8 @@
           <i nz-icon nzType="save"></i>
         </button>
 
-        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Autosave On' nzShape='circle' nzType='primary' nz-button (click)="autosave=false"><i nz-icon nzType="auto-save" nzTheme="outline"></i></button>
-        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Autosave Off' nzShape='circle' class='ghost' nz-button (click)="autosave=true"><i nz-icon nzType="auto-save" nzTheme="outline"></i></button>
+        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Inline Check On' nzShape='circle' nzType='primary' nz-button (click)="autosave=false"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
+        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Inline Check Off' nzShape='circle' class='ghost' nz-button (click)="autosave=true"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
 
         <nz-divider nzType="vertical"></nz-divider>
         <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='round' class="ghost" nz-button (click)="auditTrial()">
@@ -65,7 +65,7 @@
       (cellValueChanged)="onCellEdit($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
     <app-grid-footer [t]='total$ | async'></app-grid-footer>
-    <div class="w-100 flex end">
+    <div class="w-100 flex end mt-1">
       <!-- <span class="total" nz-tooltip nzTooltipTitle="Total Rows" nzTooltipPlacement="top">{{total$ | async}}</span> -->
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
     </div>

@@ -16,8 +16,13 @@ export class AppErrorHandler extends ErrorHandler {
   handleError = (error: Error | HttpErrorResponse) => {
     try {
       let displayMessage = 'An error occurred. ';
+
       if (!environment.production) {
         displayMessage += error.message;
+      }
+
+      if(error['error'] && error['error'].message){
+        displayMessage = error['error'].message
       }
       /*
       This will create NzNotificationService Property

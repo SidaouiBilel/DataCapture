@@ -108,7 +108,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.hotkeys.register([
-      ...this.saveModifications()
+      ...this.cleansingHotkeys()
     ]);
   }
 
@@ -139,7 +139,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     });
   }
 
-  saveModifications = () => {
+  cleansingHotkeys = () => {
     const that = this;
     const HKSave = 'control.s';
     return [
@@ -150,6 +150,33 @@ export class CleansingComponent implements OnInit, OnDestroy {
         shortcut: shortcutString(HKSave),
         key: HKSave,
         icon: 'save',
+        alwaysShow: true
+      },
+      {
+        name: 'Inline Check Toggle',
+        tooltip: 'Toggle between manula and auto save',
+        action: () => that.autosave = !that.autosave,
+        shortcut: shortcutString('alt.i'),
+        key: 'alt.i',
+        icon: 'rocket',
+        alwaysShow: true
+      },
+      {
+        name: 'View All',
+        tooltip: 'View All Data',
+        action: () => that.selectedErrorLevel$.next('all'),
+        shortcut: shortcutString('alt.a'),
+        key: 'alt.a',
+        icon: 'table',
+        alwaysShow: true
+      },
+      {
+        name: 'View Data in Error',
+        tooltip: 'View All Data',
+        action: () => that.selectedErrorLevel$.next('errors'),
+        shortcut: shortcutString('alt.e'),
+        key: 'alt.e',
+        icon: 'warning',
         alwaysShow: true
       }
     ];
