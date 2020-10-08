@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { UploadService } from './../../../services/upload.service';
 import { UploadingPayload } from './../../../models/uploading.model';
-import { AppState } from '@app/core';
+import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionSaveUploadId } from '../../../store/actions/uploading.actions';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { selectUploadingId } from '../../../store/selectors/upload.selectors';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-data',
@@ -40,20 +41,23 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   }
 
   onUpload(): void {
-    const payload: UploadingPayload = {
-      id: null,
-      tags: this.selectedTags,
-      domain_id: this.metaData.domainId,
-      sheet_id: this.metaData.sheetId,
-      file_id: this.metaData.fileId,
-      cleansing_job_id: this.metaData.cleansingId,
-      transformation_id: this.metaData.transformationId
-    };
-    this.uploadStatus$.next('STARTED');
-    this.progress = 0;
-    this.service.upload(payload).subscribe((res: any) => {
+    this.store.select(selectProfile).pipe(take(1)).subscribe((profile=>{
+      const payload: UploadingPayload = {
+        id: null,
+        tags: this.selectedTags,
+        domain_id: this.metaData.domainId,
+        sheet_id: this.metaData.sheetId,
+        file_id: this.metaData.fileId,
+        cleansing_job_id: this.metaData.cleansingId,
+        transformation_id: this.metaData.transformationId,
+        user_id: profile.id
+      };
+      this.uploadStatus$.next('STARTED');
+      this.progress = 0;
+      this.service.upload(payload).subscribe((res: any) => {
       this.store.dispatch(new ActionSaveUploadId(res));
-    });
+      });
+    }))
   }
 
   checkUploadStatus(id: string): void {
