@@ -26,7 +26,7 @@ export class StepperComponent implements OnInit {
         this.pageList = ['home'];
         this.pageList = this.pageList.concat(res.state.url.substring(1).split('/').slice(1).filter((e) => {if ( e !== '' ) { return e; }}));
       } catch (error) {
-        this.notification.error(error.message);
+        // this.notification.error(error.message);
       }
     });
 
@@ -115,7 +115,7 @@ export class StepperComponent implements OnInit {
           break;
       }
     } catch (error) {
-      this.notification.error(error.message);
+      // this.notification.error(error.message);
     }
   }
 
@@ -139,7 +139,7 @@ export class StepperComponent implements OnInit {
         }
       }
     } catch (error) {
-      this.notification.error(error.message);
+      // this.notification.error(error.message);
     }
   }
 }

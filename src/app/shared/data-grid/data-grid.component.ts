@@ -47,7 +47,7 @@ export class DataGridComponent implements OnInit {
     try {
       (params.api as any).context.beanWrappers.tooltipManager.beanInstance.MOUSEOVER_SHOW_TOOLTIP_TIMEOUT = 500;
     } catch (e) {
-      console.error(e);
+      // console.error(e);
     }
     this.gridReady.emit(params);
   }

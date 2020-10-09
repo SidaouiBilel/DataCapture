@@ -27,8 +27,6 @@ export class ResetComponent implements OnInit {
         this.not.success('Your password has been successfully reset.');
         this.router.navigate(['/login']);
       }
-    }, (err) => {
-      this.not.error(err.message);
     });
   }
 

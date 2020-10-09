@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppState, NotificationService } from '@app/core';
-import { AuditComponent } from '@app/shared/audit/audit.component';
+import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { DashboardService } from '../service/dashboard.service';
-import { ActionSavePage, ActionSaveSize, ActionSaveSort } from '../store/actions/dashboard.actions';
-import { selectFetchData, selectPage, selectSize, selectSort } from '../store/selectors/dashboard.selectors';
+import { ActionSavePage} from '../store/actions/dashboard.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,6 +25,7 @@ export class DashboardComponent implements OnInit {
   }
 
   selectDomain(event: any): void {
+    this.store.dispatch(new ActionSavePage(1));
     this.selectedDomain = {id: event.identifier, name: event.name};
   }
 

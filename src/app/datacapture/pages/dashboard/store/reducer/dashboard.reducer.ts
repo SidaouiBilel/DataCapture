@@ -3,7 +3,7 @@ import { DashboardActionTypes } from '../actions/dashboard.actions';
 
 export const initialState: Dashboard = {
   page : 1,
-  size : 15,
+  size : 8,
   fetchData: false,
   sort: {sortKey: null, sortAcn: null}
 };

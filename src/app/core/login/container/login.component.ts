@@ -35,7 +35,7 @@ export class LoginComponent {
         this.not.success(res.message);
         // this.newPw();
       }
-    }, (err) => { this.not.error('Server Error'); });
+    });
   }
 
   newPw(): void {
@@ -62,7 +62,7 @@ export class LoginComponent {
           }
           return false;
         } catch (error) {
-          this.not.error(error);
+          // this.not.error(error);
           modal.close();
         }
       }

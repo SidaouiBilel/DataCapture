@@ -35,7 +35,7 @@ export class LayoutContainer implements OnInit {
         this.pageList = ['home'];
         this.pageList = this.pageList.concat(res.state.url.substring(1).split('/').slice(1).filter((e) => {if ( e !== '' ) { return e; }}));
       } catch (error) {
-        this.notification.error(error.message);
+        // this.notification.error(error.message);
       }
     });
 
@@ -52,7 +52,7 @@ export class LayoutContainer implements OnInit {
         return this.pageList.includes(page);
       }
     } catch (error) {
-      this.notification.error(error.message);
+      // this.notification.error(error.message);
     }
   }
 
@@ -97,7 +97,7 @@ export class LayoutContainer implements OnInit {
           return 'appstore';
       }
     } catch (error) {
-      this.notification.error(error.message);
+      // this.notification.error(error.message);
     }
   }
 
@@ -107,7 +107,7 @@ export class LayoutContainer implements OnInit {
       this.pageList.slice(1, id + 1).map((e) => path += '/' + e);
       return (path.includes('datacapture') ? path : '/datacapture' + path);
     } catch (error) {
-      this.notification.error(error.message);
+      // this.notification.error(error.message);
     }
   }
 
@@ -122,7 +122,7 @@ export class LayoutContainer implements OnInit {
     try {
       return this.pageList.includes('projects') && this.pageList.includes('project');
     } catch (error) {
-      this.notification.error(error.message);
+      // this.notification.error(error.message);
     }
   }
 

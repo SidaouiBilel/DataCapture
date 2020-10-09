@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { selectFileData, selectDomain } from '../store/selectors/import.selectors';
 import { Injectable } from '@angular/core';
 import { selectSelectedSheet } from './../store/selectors/preview.selectors';
-import { selectMandatories, selectMappingId } from './../store/selectors/mapping.selectors';
+import { selectMandatories, selectMappingId, selectMappingValid } from './../store/selectors/mapping.selectors';
 
 @Injectable()
 export class UploadGuard implements CanActivate {
@@ -14,23 +14,27 @@ export class UploadGuard implements CanActivate {
   mappingId: string;
   selectedSheet: number;
   mandatories: number;
+  mappingValid: boolean;
   // Store
   fileData$: Observable<any>;
   mappingId$: Observable<any>;
   selectedDomain$: Observable<any>;
   selectedSheet$: Observable<number>;
   mandatories$: Observable<number>;
+  mappingValid$: Observable<boolean>;
   constructor(private store: Store<AppState>) {
     this.fileData$ = this.store.select(selectFileData);
+    this.mappingValid$  = this.store.select(selectMappingValid);
     this.mappingId$ = this.store.select(selectMappingId);
     this.selectedDomain$ = this.store.select(selectDomain);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
     this.fileData$.subscribe((res) => {this.fileData = res; });
-    this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id; } });
-    this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
     this.mappingId$.subscribe((mappingId) => { this.mappingId = mappingId; });
+    this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
+    this.mappingValid$.subscribe((mappingValid) => { this.mappingValid = mappingValid; });
+    this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
+    this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id; } });
   }
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -50,7 +54,7 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'CLEANSING': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.mappingId) {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.mappingId && this.mappingValid) {
             return true;
         } else {
             return false;

@@ -37,6 +37,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   jobId: string;
   modifications: any = {};
   keys = Object.keys;
+  autosave = true;
   // BS
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
   total$: BehaviorSubject<any> = new BehaviorSubject(0);
@@ -53,21 +54,16 @@ export class CleansingComponent implements OnInit, OnDestroy {
   targetFields$: Observable<any>;
   mappingId$: Observable<any>;
 
-  errorLevels= [
-    {level:'all', label:'All', type:'primary'}
-    ,{level:'errors', label:'Errors', type:'danger'}
-    ,{level:'warnings', label:'Warnings', type:'warning'}
+  errorLevels = [
+    {level: 'all', label: 'All', type: 'primary'}
+    , {level: 'errors', label: 'Errors', type: 'danger'}
+    , {level: 'warnings', label: 'Warnings', type: 'warning'}
     // ,{level:'warnings', label:'Warnings', type:'warning'}
-  ]
+  ];
   selectedErrorLevel$ = new BehaviorSubject('all');
-  changeErrorLevel(level){
-      this.selectedErrorLevel$.next(level)
-  }
-
-  loadCleansingData$
-  datasource$
-  
-  gridReady$ = new Subject()
+  loadCleansingData$;
+  datasource$;
+  gridReady$ = new Subject();
 
   constructor(private router: Router,
               private store: Store<AppState>,
@@ -101,10 +97,14 @@ export class CleansingComponent implements OnInit, OnDestroy {
     });
 
     this.datasource$ = combineLatest(this.gridReady$, this.lock$, this.selectedErrorLevel$).subscribe(
-      ([gridApi, Locked, errorLevel])=> {
-        this.fetchCleansingData(gridApi)
+      ([gridApi, Locked, errorLevel]) => {
+        this.fetchCleansingData(gridApi);
       }
-    )
+    );
+  }
+
+  changeErrorLevel(level) {
+    this.selectedErrorLevel$.next(level);
   }
 
   ngOnInit() {
@@ -115,7 +115,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.hotkeys.unregister();
-    if(this.datasource$) this.datasource$.unsubscribe()
+    if (this.datasource$) { this.datasource$.unsubscribe(); }
   }
 
   auditTrial(): void {
@@ -196,7 +196,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             const adaptedSort: any = {};
             Object.keys(params.request.filterModel).forEach((column) => {
               const filter = {
-                column,
+                column: that.cleanFilter(column),
                 operator: params.request.filterModel[column].type,
                 value: params.request.filterModel[column].filter,
               };
@@ -224,21 +224,30 @@ export class CleansingComponent implements OnInit, OnDestroy {
               }
               if (res.data.length) {
                 const lastRow = () => {
-                  return res.total
+                  return res.total;
                 };
-                grid.columnApi.autoSizeAllColumns()
+                grid.columnApi.autoSizeAllColumns();
                 params.successCallback(res.data, lastRow());
               } else {
                 params.successCallback([], 0);
               }
             }, (error) => {
               params.failCallback();
-              that.not.error(error.message);
+              // that.not.error(error.message);
             });
           }
         });
       }
     };
+  }
+
+  cleanFilter(header: string): string {
+    const i = header.lastIndexOf('_');
+    if (i >= 0) {
+      return header.substring(0, i);
+    } else {
+      return header;
+    }
   }
 
   fetchData(params: any): void {
@@ -311,7 +320,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
         }
       });
     }
-    
+
     return headers;
   }
 
@@ -349,13 +358,9 @@ export class CleansingComponent implements OnInit, OnDestroy {
           this.metaData$.next(metaData);
           this.modifications = {};
           this.not.success('Success');
-        }, (err) => {
-          this.not.error(err.message);
         });
       }
-     }, (err) => {
-       this.not.error(err.message);
-    });
+     });
   }
 
   cancelUpload(): void {
@@ -377,58 +382,49 @@ export class CleansingComponent implements OnInit, OnDestroy {
     };
   }
 
-
-  autosave = true
-  onCellEdit(params){
+  onCellEdit(params) {
     // CHECK IF VALUE HAS CHANGED
-    if( params.oldValue == params.newValue) return false
-    this.editCell(params)
+    if ( params.oldValue === params.newValue) { return false; }
+    this.editCell(params);
+    if ( !this.autosave ) { return false; }
+    this.rerunModificationOnRow(params);
 
-    if( !this.autosave ) return false
-
-    this.rerunModificationOnRow(params)
-    
   }
 
-  rerunModificationOnRow(params){
-    const api = this.grid.api
-    const line = params.data.row_index
-    const rowNode = params.node
-
+  rerunModificationOnRow(params) {
+    const api = this.grid.api;
+    const line = params.data.row_index;
+    const rowNode = params.node;
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
-
-    rowNode.stub = true
-    api.redrawRows({ rowNodes: [rowNode] })
-    this.runWithEditedCell().subscribe(()=>{
-      this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data:any)=>{
-        this.results[rowNode.rowIndex] = data.results[0]
-        this.results$.next(this.results)
-        rowNode.stub = false
-        api.redrawRows({ rowNodes: [rowNode] })
-      })
-      this.loadMetadata()
+    rowNode.stub = true;
+    api.redrawRows({ rowNodes: [rowNode] });
+    this.runWithEditedCell().subscribe(() => {
+      this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
+        this.results[rowNode.rowIndex] = data.results[0];
+        this.results$.next(this.results);
+        rowNode.stub = false;
+        api.redrawRows({ rowNodes: [rowNode] });
+      });
+      this.loadMetadata();
       this.modifications = {};
-    })
+    });
   }
 
-  runWithEditedCell(){
-    return new Observable<any>((observer)=>{
+  runWithEditedCell() {
+    return new Observable<any>((observer) => {
       const isTransformed = this.worksheet !== null;
       const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+      // tslint:disable-next-line: max-line-length
       this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingId, this.jobId).subscribe((res: any) => {
-        observer.next(); observer.complete()
-       }, (err) => {
-         this.not.error(err.message);
-      });
-    })
+        observer.next(); observer.complete();
+       });
+    });
   }
 
   loadMetadata(){
     this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
       this.metaData$.next(metaData);
-    }, (err) => {
-      this.not.error(err.message);
     });
   }
 }

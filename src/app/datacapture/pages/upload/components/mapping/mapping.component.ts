@@ -167,7 +167,6 @@ export class MappingComponent implements OnInit, OnDestroy {
             this.isOkLoading = false;
             this.store.dispatch(new SaveIsModified(false));
           }, (err) => {
-            this.notification.error(err.message);
             this.notification.close(x);
             this.isVisible = false;
             this.isOkLoading = false;
@@ -191,7 +190,6 @@ export class MappingComponent implements OnInit, OnDestroy {
           this.notification.success(`The mapping was loaded successfully.`);
           this.notification.close(x);
         }, (err) => {
-          this.notification.error(err.message);
           this.notification.close(x);
           this.isVisible = false;
           this.isOkLoading = false;
@@ -231,8 +229,6 @@ export class MappingComponent implements OnInit, OnDestroy {
               this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
               this.checkMappingSanity();
-            }, (err) => {
-              this.notification.error(err.message);
             });
           }
         });

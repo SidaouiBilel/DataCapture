@@ -52,7 +52,6 @@ export class UploadListComponent {
       });
     } catch (error) {
       this.loading$.next(false);
-      this.notification.error(error.message);
     }
   }
 
@@ -71,8 +70,9 @@ export class UploadListComponent {
     this.loadData(this._selectedDomain.id);
   }
 
-  auditTrial(ws: string): void {
-    this.service.getAuditTrial(ws).subscribe((res) => {
+  auditTrial(ws: any): void {
+    const worksheet = ws.transformation_id ? ws.transformation_id.split('/').pop() : ws.sheet_id;
+    this.service.getAuditTrial(worksheet).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,

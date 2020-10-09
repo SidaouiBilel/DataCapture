@@ -56,7 +56,7 @@ export class UsersComponent {
           }
           return false;
         } catch (error) {
-          this.notification.error(error);
+          // this.notification.error(error);
           modal.close();
         }
       }
