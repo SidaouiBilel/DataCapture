@@ -66,7 +66,6 @@
     </app-data-grid>
     <app-grid-footer [t]='total$ | async'></app-grid-footer>
     <div class="w-100 flex end mt-1">
-      <!-- <span class="total" nz-tooltip nzTooltipTitle="Total Rows" nzTooltipPlacement="top">{{total$ | async}}</span> -->
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
     </div>
   </div>

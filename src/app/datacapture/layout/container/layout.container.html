@@ -2,15 +2,16 @@
   <!-- Header -->
   <nz-header>
     <div class="flex between top">
-      <div>
+      <div class="flex start">
         <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
           <a [routerLink]="['/datacapture/projects']">
             <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
-              src="../../../../assets/images/logo.png" alt="logo">
+            src="../../../../assets/images/logo.png" alt="logo">
             <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-light">C&C <span
-                style="opacity: 0.6;">Datafactory</span></h1>
-          </a>
-        </div>
+              style="opacity: 0.6;">Datafactory</span></h1>
+            </a>
+          </div>
+          <div class="ml-2"><app-env-tag></app-env-tag></div>
       </div>
       <div class="flex">
         <button nz-dropdown [nzDropdownMenu]="zoom" class='ghost' nzShape='circle' nz-button nzType='primary'><i nz-icon
@@ -22,7 +23,6 @@
           </ul>
         </nz-dropdown-menu>
       
-        <div class="ml-2"><app-env-tag></app-env-tag></div>
 
         <app-user-bar class="ml-2"></app-user-bar>
 
