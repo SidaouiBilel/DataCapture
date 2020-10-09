@@ -40,7 +40,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
   loading$
   page$ = new BehaviorSubject<number>(1);
   total$ = new BehaviorSubject<number>(0);
-  size$ = new BehaviorSubject<number>(25);
+  size$ = new BehaviorSubject<number>(200);
   generatedFileId$;
   gridReady$ = new Subject<string>();
 
@@ -117,6 +117,8 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
             that.headers$.next(headers);
           }
           const lastRow = () =>  res.total;
+          gridApi.columnApi.autoSizeAllColumns()
+          // gridApi.columnApi.sizeColumnsToFit([INDEX_HEADER.colId]);
           params.successCallback(res.data, lastRow());
         }, (error) => {
           params.failCallback();

@@ -11,7 +11,8 @@
   [defaultColDef]="defaultColDef"
   [cacheBlockSize]="paginationPageSize"
   [enterMovesDown]="true"
-  [maxBlocksInCache]="10"
+  [maxBlocksInCache]="10000"
+  [blockLoadDebounceMillis]='100'
   [suppressMenuHide]="true"
   [enableCellChangeFlash]="true"
   [enterMovesDownAfterEdit]="true"

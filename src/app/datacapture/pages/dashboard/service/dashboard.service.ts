@@ -34,4 +34,9 @@ export class DashboardService {
     );
   }
 
+  getUploadDataTotal(domainId: string): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get(`${environment.upload}data/${domainId}/total` );
+  }
+
 }

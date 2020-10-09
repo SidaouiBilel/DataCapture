@@ -27,7 +27,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   error$ = new BehaviorSubject<string>(null);
   page$ = new BehaviorSubject<number>(1);
-  size$ = new BehaviorSubject<number>(25);
+  size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
 
   constructor(
@@ -90,6 +90,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
             }
             data.push(rowObject);
           }
+          gridApi.columnApi.autoSizeAllColumns()
           params.successCallback(data, lastRow());
         }, (error) => {
             params.failCallback();

@@ -5,15 +5,14 @@ export const INDEX_NAME = '$_NODE_INDEX'
         headerName: "",
         colId: INDEX_NAME,
         valueGetter: "node.rowIndex + 1",
-        width : 40,
-        minWidth : 40,
-        // maxWidth : 60,
+        width : 50,
+        minWidth : 0,
+        maxWidth : 100,
         suppressSizeToFit : false,
     suppressMenu : true,
     resizable : false,
     editable : false,
     pinned: 'left',
-    cellStyle : {'font-family': 'Roboto,Helvetica,Arial,sans-serif', color: '#363636', 'border-right': '1px solid #ccc'},
     cellClass : (params) => 'index-cell',
     onCellClicked: (params)=> {
         params.api.clearRangeSelection()

@@ -16,11 +16,31 @@
           (click)="syncWithServer()">
           <i nz-icon nzType="save"></i>
         </button>
+
+        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Inline Check On' nzShape='circle' nzType='primary' nz-button (click)="autosave=false"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
+        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Inline Check Off' nzShape='circle' class='ghost' nz-button (click)="autosave=true"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
+
         <nz-divider nzType="vertical"></nz-divider>
         <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='round' class="ghost" nz-button (click)="auditTrial()">
           <i nz-icon nzType="audit"></i>
         </button>
+
+        <nz-divider nzType="vertical"></nz-divider>
+        <div class="button-spacing">
+          <button 
+          *ngFor='let b of errorLevels' 
+          nz-button
+          [ngClass]='{"ghost": (b.level!=(selectedErrorLevel$ | async))}'
+          [nzType]='(b.level==(selectedErrorLevel$ | async))?b.type:"default"'
+          (click)='changeErrorLevel(b.level)' 
+          nzShape='round'>{{b.label}}</button>
+        </div>
+
       </div>
+
+    
+
+
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <div class="flex end">
@@ -42,11 +62,10 @@
   <!-- Grid -->
   <div class="flex flex-1 column start mt-4">
     <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
-      (cellValueChanged)="editCell($event)" (gridReady)="fetchData($event)">
+      (cellValueChanged)="onCellEdit($event)" (gridReady)="fetchData($event)">
     </app-data-grid>
     <app-grid-footer [t]='total$ | async'></app-grid-footer>
-    <div class="w-100 flex end">
-      <!-- <span class="total" nz-tooltip nzTooltipTitle="Total Rows" nzTooltipPlacement="top">{{total$ | async}}</span> -->
+    <div class="w-100 flex end mt-1">
       <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
     </div>
   </div>
@@ -54,7 +73,9 @@
 
 <ng-template #contentTemplate>
   <div *ngFor="let item of (metaData$ | async)?.jobResult">
-    <span class="pr-2"><small>{{ item?.label}}:</small></span>
-    <span class="text-danger">{{ item?.errors }}</span>
+    <div class="flex between">
+      <span class="pr-2"><small>{{ item?.label}}:</small></span>
+      <nz-badge [nzOverflowCount]="99999999" [nzCount]="item?.errors"></nz-badge>
+    </div>
   </div>
 </ng-template>

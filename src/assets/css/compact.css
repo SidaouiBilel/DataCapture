@@ -1,14 +1,14 @@
-.compact .trans-arrow {
+.trans-arrow {
     display: none;
 }
-.compact .transformation-card.ant-card{
+.transformation-card.ant-card{
     border-radius: 0px !important;
 
     border-top: none;
     border-right: none;
     border-left: none;
 }
-.compact .pipe-bg{
+.pipe-bg{
     padding: 0px !important;
     border: 1px solid #e8e8e8;
 }

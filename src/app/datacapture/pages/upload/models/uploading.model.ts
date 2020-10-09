@@ -6,4 +6,5 @@ export interface UploadingPayload {
   file_id: string;
   cleansing_job_id: string;
   transformation_id: string;
+  user_id:string
 }

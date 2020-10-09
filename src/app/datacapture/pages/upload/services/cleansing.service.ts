@@ -4,6 +4,7 @@ import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
+import { error } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -38,13 +39,17 @@ export class CleansingService {
   }
 
   // tslint:disable-next-line: max-line-length
-  getJobData(filename: string, worksheet: string, page: number, nrows: number, filter: any[], sort: any, isTransformed: boolean): Observable<any> {
+  getJobData(filename: string, worksheet: string, page: number, nrows: number, filter: any[], sort: any, isTransformed: boolean, errorLevel: string ='all'): Observable<any> {
+    const errors_filter:any = {}
+    if(errorLevel!='all') errors_filter.level=errorLevel
     const payload = {
       file_id: filename,
       worksheet_id: worksheet,
       is_transformed: isTransformed,
       filter,
-      sort};
+      errors_filter,
+      sort
+    };
     // tslint:disable-next-line: max-line-length
     return this.http.post(environment.cleansing + `/data?page=${page+1}&nrows=${nrows}`, payload);
   }
