@@ -11,53 +11,48 @@ import { DashboardService } from '../../service/dashboard.service';
 })
 export class UploadDataComponent implements OnInit, OnDestroy {
 
-  domain$ = new BehaviorSubject(null)
-  error$ = new BehaviorSubject<any>(false)
-
-  size$ = new BehaviorSubject(15)
-  page$ = new BehaviorSubject(1)
-  headers$ = new Subject()
-
-  gridReady$ = new Subject()
-
-  loading$ = new BehaviorSubject(false)
-
-  subscription
+  domain$ = new BehaviorSubject(null);
+  error$ = new BehaviorSubject<any>(false);
+  size$ = new BehaviorSubject(15);
+  page$ = new BehaviorSubject(1);
+  headers$ = new Subject();
+  gridReady$ = new Subject();
+  loading$ = new BehaviorSubject(false);
+  subscription;
   total$ = new Observable<any>();
 
   @Input() set selectedDomain(value) {
-    this.domain$.next(value)
+    this.domain$.next(value);
   }
-  
+
   constructor(private service: DashboardService) { }
-  
+
   ngOnInit() {
     this.subscription = combineLatest(this.domain$, this.gridReady$, this.size$, this.page$)
-    .subscribe(([domain, gridApi, size, page])=>{
-      if(!domain) return this.error$.next('Please select a collection')
-
-      this.error$.next(null)
+    .subscribe(([domain, gridApi, size, page]) => {
+      if (!domain) { return this.error$.next('Please select a collection'); }
+      this.error$.next(null);
       // this.getTotal(domain.id)
       this.generateDataSource(domain.id, page, size, gridApi);
-    })
+    });
   }
+
   getTotal(id: any) {
-    this.total$ =  this.service.getUploadDataTotal(id).pipe(take(1))
+    this.total$ =  this.service.getUploadDataTotal(id).pipe(take(1));
   }
-  
+
   ngOnDestroy(): void {
-    if(this.subscription) this.subscription.unsubscribe()
+    if (this.subscription) { this.subscription.unsubscribe(); }
   }
-  
-  generateDataSource(domain_id, page, size, gridApi) {
+
+  generateDataSource(domainId, pages, size, gridApi) {
     const that = this;
     // that.gridApi = gridApi;
-    console.log('Reading Data')
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
         that.loading$.next(true);
-        that.service.getUploadData(domain_id, page, size).subscribe((res: any) => {
+        that.service.getUploadData(domainId, page, size).subscribe((res: any) => {
           // that.total$.next(res.total);
           that.loading$.next(false);
           if (page <= 1) {
@@ -77,10 +72,18 @@ export class UploadDataComponent implements OnInit, OnDestroy {
           params.successCallback(res.content, lastRow());
         }, (error) => {
           params.failCallback();
-          this.error$.next(error)
+          this.error$.next(error);
           // that.onError(error);
         });
         }
+    });
+  }
+
+  download(type: string) {
+    this.domain$.pipe(take(1)).subscribe((domain) => {
+      this.service.download(domain.id, type).subscribe((res) => {
+        console.log(res);
+      });
     });
   }
 }

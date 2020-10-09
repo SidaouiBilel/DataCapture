@@ -26,17 +26,16 @@ export class DashboardService {
 
   getUploadData(domainId: string, page: number, size: number, sortkey?, sortAcn?): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.post(`${environment.upload}data/${domainId}`
-      ,{
-        page:page,
-        size:size
-      }
-    );
+    return this.http.post(`${environment.upload}data/${domainId}`, {page, size});
   }
 
   getUploadDataTotal(domainId: string): Observable<any> {
     // tslint:disable-next-line: max-line-length
     return this.http.get(`${environment.upload}data/${domainId}/total` );
+  }
+
+  download(domainId: string, type: string): Observable<any> {
+    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, {});
   }
 
 }
