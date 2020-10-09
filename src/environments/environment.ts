@@ -14,9 +14,9 @@ export const environment = {
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
   transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-  // admin: 'http://localhost:5000/',
   admin: 'https://dcm-admin.azurewebsites.net/',
-  upload: 'https://dcm-upload.azurewebsites.net/upload/',
+  upload: 'http://localhost:5000/upload/',
+  // upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
   env: 'DEV'
 };
