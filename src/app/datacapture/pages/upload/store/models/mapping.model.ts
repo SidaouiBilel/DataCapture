@@ -1,6 +1,7 @@
 export interface Mapping {
   mappingFields: MappingField[];
   mappedSources: any;
+  sourcesPreview: any;
   mandatories: any;
   mappingId: string;
   mappingName: string;

@@ -6,12 +6,13 @@ import { ImportActionTypes } from '../actions/import.actions';
 export const initialState: Mapping = {
   mappingFields : [],
   mappedSources : {},
+  sourcesPreview: {},
   mandatories: {},
   mappingId: '',
   mappingName: null,
   sheetsTypes: {},
   mappingValid: true,
-  isModified: false
+  isModified: false,
 };
 
 
@@ -36,6 +37,12 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
       return {
         ...state,
         isModified: action.payload
+      };
+
+    case MappingActionTypes.SaveSourcesPreview:
+      return {
+        ...state,
+        sourcesPreview: action.payload
       };
 
     case MappingActionTypes.SaveMappingValid:

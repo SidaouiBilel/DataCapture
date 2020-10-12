@@ -12,6 +12,11 @@ export const selectMappedSources = createSelector(
   (object: Mapping) => object.mappedSources
 );
 
+export const selectSourcesPreview = createSelector(
+  SelectMapping,
+  (object: Mapping) => object.sourcesPreview
+);
+
 export const selectMappingValid = createSelector(
   SelectMapping,
   (object: Mapping) => object.mappingValid

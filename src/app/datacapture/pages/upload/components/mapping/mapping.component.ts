@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MappingService } from '../../services/mapping.service';
 import { selectMappingFields, selectMappedSources, selectMandatories,
-         selectMappingId, selectMappingValid, selectIsModified } from './../../store/selectors/mapping.selectors';
+         selectMappingId, selectMappingValid, selectIsModified, selectSourcesPreview } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
          SaveMappingValid, SaveIsModified } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
@@ -36,9 +36,12 @@ export class MappingComponent implements OnInit, OnDestroy {
   worksheet: any;
   mappingId: any;
   domain: any;
-  mappingValid$: Observable<boolean>;
+  searchTarget: string;
+  selectedSource: string;
   // Store
+  mappingValid$: Observable<boolean>;
   mappingFields$: Observable<any>;
+  sourcesPreview$: Observable<any>;
   isModified$: Observable<any>;
   fileData$: Observable<any>;
   mappedSources$: Observable<any>; // sources that are mapped
@@ -48,7 +51,6 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappingId$: Observable<string>;
   worksheet$: Observable<any>;
   monitor$: any;
-  searchTarget: string;
   constructor(private store: Store<AppState>,
               private service: MappingService,
               private router: Router,
@@ -58,6 +60,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.worksheet$     = this.store.select(selectTransformedFilePath);
     this.isModified$    = this.store.select(selectIsModified);
     this.mappingFields$ = this.store.select(selectMappingFields);
+    this.sourcesPreview$ = this.store.select(selectSourcesPreview);
     this.mappedSources$ = this.store.select(selectMappedSources);
     this.mappingValid$  = this.store.select(selectMappingValid);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);

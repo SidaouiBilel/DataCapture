@@ -46,6 +46,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   data$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   lock$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  expanded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   // Store
   selectedSheet$: Observable<any>;
   domain$: Observable<any>;
@@ -326,14 +327,17 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   currencyFormatter = (params) => {
     let parts;
-    if (params.value.toString().indexOf('E') >= 0) {
-      parts = Number(params.value).toString().split('.');
-    } else {
-      parts = params.value.toString().split('.');
+    if (params.value) {
+      if (params.value.toString().indexOf('E') >= 0) {
+        parts = Number(params.value).toString().split('.');
+      } else {
+        parts = params.value.toString().split('.');
+      }
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if (parts[1]) { parts[1] = parts[1].substring(0, 2); }
+      return parts.join('.');
     }
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    if (parts[1]) { parts[1] = parts[1].substring(0, 2); }
-    return parts.join('.');
+    return params.value;
   }
 
   dateFormatter = (params) => {

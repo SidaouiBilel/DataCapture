@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable} from 'rxjs';
-
+import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,8 +34,14 @@ export class DashboardService {
     return this.http.get(`${environment.upload}data/${domainId}/total` );
   }
 
-  download(domainId: string, type: string): Observable<any> {
-    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, {});
+  download(domainId: string, type: string) {
+    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, {})
+      .subscribe((res: any) => {this.saveFile(res, domainId)});
+  }
+
+  saveFile = (blobContent: Blob, fileName: string) => {
+    const blob = new Blob([blobContent], { type: 'application/octet-stream' });
+    saveAs(blob, fileName);
   }
 
 }
