@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 export enum MappingActionTypes {
   SaveMappingFields = '[Mapping] Save Mapping Fields',
   SaveMappedSources = '[Mapping] Save Mapped Sources',
+  SaveSourcesPreview = '[Mapping] Save sources Preview',
   SaveMandatories = '[Mapping] Save Mandatories',
   SaveMappingSheet = '[Mapping] Save Mapping Sheet',
   SaveMappingId = '[Mapping] Save Mapping Id',
@@ -14,6 +15,11 @@ export enum MappingActionTypes {
 
 export class SaveMappingFields implements Action {
   readonly type = MappingActionTypes.SaveMappingFields;
+  constructor(public payload: any) {}
+}
+
+export class SaveSourcesPreview implements Action {
+  readonly type = MappingActionTypes.SaveSourcesPreview;
   constructor(public payload: any) {}
 }
 
@@ -56,5 +62,5 @@ export class SaveMandatories implements Action {
   readonly type = MappingActionTypes.SaveMandatories;
   constructor(public payload: any) {}
 }
-export type MappingActions = SaveMappingFields | SaveMappedSources | SaveMandatories | SaveMappingValid |
-                             SaveMappingSheet | SaveSheetsTypes | SaveMappingId | SaveMappingName | SaveIsModified;
+export type MappingActions = SaveMappingFields | SaveMappedSources | SaveMandatories | SaveMappingValid | SaveSourcesPreview |
+  SaveMappingSheet | SaveSheetsTypes | SaveMappingId | SaveMappingName | SaveIsModified;

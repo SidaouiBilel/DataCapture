@@ -81,9 +81,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
 
   download(type: string) {
     this.domain$.pipe(take(1)).subscribe((domain) => {
-      this.service.download(domain.id, type).subscribe((res) => {
-        console.log(res);
-      });
+      this.service.download(domain.id, type);
     });
   }
 }

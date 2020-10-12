@@ -54,9 +54,13 @@
             </div>
             <div class="scroll-box">
               <div class="source-list">
-                <div class="source-item-box" [class.mapped]="mappedSources[item]" [dndDraggable]="item"
+                <div class="source-item-box flex between" [class.mapped]="mappedSources[item]" [dndDraggable]="item"
                   *ngFor="let item of keys(mappedSources) | filter: search">
-                  {{item}}
+                  <span>{{item}} </span>
+                  <button nz-tooltip nzTooltipTitle='Preview' (click)="selectedSource = item" nz-popover [nzPopoverContent]="contentTemplate"
+                    nzPopoverPlacement="bottom" nzShape='round' class="ghost" nzPopoverTrigger="click" nz-button>
+                    <i nz-icon nzType="eye"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -140,3 +144,11 @@
     </nz-form-item>
   </form>
 </nz-modal>
+
+<ng-template #contentTemplate>
+  <div *ngFor="let item of (sourcesPreview$ | async)[selectedSource]">
+    <div class="flex center">
+      <span class="pr-2"><small>{{ item}}</small></span>
+    </div>
+  </div>
+</ng-template>

@@ -9,6 +9,7 @@ import { GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
+import { SaveSourcesPreview } from '@app/datacapture/pages/upload/store/actions/mapping.actions';
 
 @Component({
   selector: 'app-source-preview',
@@ -68,6 +69,11 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
           that.total$.next(res.total);
           that.loading$.next(false);
           if (page <= 1) {
+            const previewData = {};
+            res.headers.forEach((e, i) => {
+              previewData[e] = res.data.slice(1, 10).map((e) => e[i]);
+            });
+            that.store.dispatch(new SaveSourcesPreview(previewData));
             that.totalRecords$.next(res.total);
             const headers = res.headers.map(h => ({
               field: h,

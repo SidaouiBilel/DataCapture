@@ -3,22 +3,29 @@
   <div class="importHeader" nz-row>
     <div nz-col nzSpan="18">
       <div class="flex start">
+        <button *ngIf='!(expanded$ | async)' (click)='expanded$.next(true)' nz-tooltip nzTooltipTitle='Error Details'
+          nzShape='round' nz-button class="ghost">
+          <i nz-icon nzType="menu-unfold"></i>
+        </button>
+        <button *ngIf='(expanded$ | async)' (click)='expanded$.next(false)' nz-tooltip nzTooltipTitle='Error Details'
+          nzShape='round' nz-button class="ghost">
+          <i nz-icon nzType="menu-fold" ></i>
+        </button>
+        <nz-divider class="fold" nzType="vertical"></nz-divider>
         <nz-badge class="mr-3" nz-tooltip nzTooltipTitle="Total errors" [nzOverflowCount]="99999999"
           [nzCount]="(metaData$ | async)?.totalErrors || 0" [nzShowZero]="true"></nz-badge>
         <nz-badge nz-tooltip nzTooltipTitle="Total Rows in Error" [nzOverflowCount]="99999999"
           [nzCount]="(metaData$ | async)?.totalRowsInError || 0" [nzShowZero]="true"></nz-badge>
         <nz-divider class="error" nzType="vertical"></nz-divider>
-        <button nz-tooltip nzTooltipTitle='Details' nz-popover [nzPopoverContent]="contentTemplate"
-          nzPopoverPlacement="bottom" nzShape='round' class="ghost" nzPopoverTrigger="click" nz-button>
-          <i nz-icon nzType="exception"></i>
-        </button>
         <button nz-tooltip nzTooltipTitle='Save modifications' nzShape='round' class="ghost" nz-button
           (click)="syncWithServer()">
           <i nz-icon nzType="save"></i>
         </button>
 
-        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Inline Check On' nzShape='circle' nzType='primary' nz-button (click)="autosave=false"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
-        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Inline Check Off' nzShape='circle' class='ghost' nz-button (click)="autosave=true"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
+        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Inline Check On' nzShape='circle' nzType='primary' nz-button
+          (click)="autosave=false"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
+        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Inline Check Off' nzShape='circle' class='ghost' nz-button
+          (click)="autosave=true"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
 
         <nz-divider nzType="vertical"></nz-divider>
         <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='round' class="ghost" nz-button (click)="auditTrial()">
@@ -27,18 +34,15 @@
 
         <nz-divider nzType="vertical"></nz-divider>
         <div class="button-spacing">
-          <button 
-          *ngFor='let b of errorLevels' 
-          nz-button
-          [ngClass]='{"ghost": (b.level!=(selectedErrorLevel$ | async))}'
-          [nzType]='(b.level==(selectedErrorLevel$ | async))?b.type:"default"'
-          (click)='changeErrorLevel(b.level)' 
-          nzShape='round'>{{b.label}}</button>
+          <button *ngFor='let b of errorLevels' nz-button
+            [ngClass]='{"ghost": (b.level!=(selectedErrorLevel$ | async))}'
+            [nzType]='(b.level==(selectedErrorLevel$ | async))?b.type:"default"' (click)='changeErrorLevel(b.level)'
+            nzShape='round'>{{b.label}}</button>
         </div>
 
       </div>
 
-    
+
 
 
     </div>
@@ -59,23 +63,32 @@
   </div>
 
   <!-- jobResult -->
-  <!-- Grid -->
-  <div class="flex flex-1 column start mt-4">
-    <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
-      (cellValueChanged)="onCellEdit($event)" (gridReady)="fetchData($event)">
-    </app-data-grid>
-    <app-grid-footer [t]='total$ | async'></app-grid-footer>
-    <div class="w-100 flex end mt-1">
-      <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
+
+  <div class="preview-content flex stretch flex-1 h-100">
+    <div *ngIf='expanded$ | async' class="sidebar-pipe mr-3">
+      <div class="flex flex-1 column start h-100">
+        <div class="mt-4" style="overflow-y: auto;">
+          <div *ngFor="let item of (metaData$ | async)?.jobResult">
+            <div class="flex between">
+              <span class="pr-2"><small>{{ item?.label}}:</small></span>
+              <nz-badge [nzOverflowCount]="99999999" [nzCount]="item?.errors"></nz-badge>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-grid flex column stretch flex-1 h-100">
+      <!-- Grid -->
+      <div class="flex flex-1 column start mt-4">
+        <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
+          (cellValueChanged)="onCellEdit($event)" (gridReady)="fetchData($event)">
+        </app-data-grid>
+        <app-grid-footer [t]='total$ | async'></app-grid-footer>
+        <div class="w-100 flex end mt-1">
+          <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<ng-template #contentTemplate>
-  <div *ngFor="let item of (metaData$ | async)?.jobResult">
-    <div class="flex between">
-      <span class="pr-2"><small>{{ item?.label}}:</small></span>
-      <nz-badge [nzOverflowCount]="99999999" [nzCount]="item?.errors"></nz-badge>
-    </div>
-  </div>
-</ng-template>
