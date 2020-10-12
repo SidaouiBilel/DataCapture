@@ -35,13 +35,14 @@ export class DashboardService {
   }
 
   download(domainId: string, type: string) {
-    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, {})
-      .subscribe((res: any) => {this.saveFile(res, domainId)});
+    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, {}, { responseType: 'blob' })
+      .subscribe((res: any) => {this.saveFile(res, domainId, type); });
   }
 
-  saveFile = (blobContent: Blob, fileName: string) => {
-    const blob = new Blob([blobContent], { type: 'application/octet-stream' });
-    saveAs(blob, fileName);
+  saveFile = (blobContent: Blob, fileName: string, type: string) => {
+    const blob = new Blob([blobContent], { type: 'application/vnd.ms-excel' });
+    const file = new File([blob], fileName + '.' + type, { type: 'application/vnd.ms-excel' });
+    saveAs(file);
   }
 
 }
