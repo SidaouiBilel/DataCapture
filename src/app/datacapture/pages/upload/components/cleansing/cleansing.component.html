@@ -9,7 +9,7 @@
         </button>
         <button *ngIf='(expanded$ | async)' (click)='expanded$.next(false)' nz-tooltip nzTooltipTitle='Error Details'
           nzShape='round' nz-button class="ghost">
-          <i nz-icon nzType="menu-fold" ></i>
+          <i nz-icon nzType="menu-fold"></i>
         </button>
         <nz-divider class="fold" nzType="vertical"></nz-divider>
         <nz-badge class="mr-3" nz-tooltip nzTooltipTitle="Total errors" [nzOverflowCount]="99999999"
@@ -39,20 +39,16 @@
             [nzType]='(b.level==(selectedErrorLevel$ | async))?b.type:"default"' (click)='changeErrorLevel(b.level)'
             nzShape='round'>{{b.label}}</button>
         </div>
-
       </div>
-
-
-
-
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <div class="flex end">
         <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
           nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToMapping()"><i nz-icon
             nzType="caret-left"></i> Previous</button>
-        <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
-          nzTooltipPlacement="left" (click)="goToUpload()">Next<i nz-icon nzType="caret-right"></i></button>
+        <button nz-button nzType="primary" nzSize="middle" [disabled]="(metaData$ | async)?.totalErrors != 0" nzShape="round"
+          nz-tooltip nzTooltipTitle="Next Step" nzTooltipPlacement="left" (click)="goToUpload()">Next
+          <i nz-icon nzType="caret-right"></i></button>
         <nz-divider nzType='vertical'></nz-divider>
         <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
           (click)="cancelUpload()">

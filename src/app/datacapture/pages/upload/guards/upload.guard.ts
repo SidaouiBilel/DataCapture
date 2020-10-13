@@ -6,6 +6,7 @@ import { selectFileData, selectDomain } from '../store/selectors/import.selector
 import { Injectable } from '@angular/core';
 import { selectSelectedSheet } from './../store/selectors/preview.selectors';
 import { selectMandatories, selectMappingId, selectMappingValid } from './../store/selectors/mapping.selectors';
+import { selectCleansingErrors } from '../store/selectors/cleansing.selectors';
 
 @Injectable()
 export class UploadGuard implements CanActivate {
@@ -14,9 +15,11 @@ export class UploadGuard implements CanActivate {
   mappingId: string;
   selectedSheet: number;
   mandatories: number;
+  errors: number;
   mappingValid: boolean;
   // Store
   fileData$: Observable<any>;
+  errors$: Observable<any>;
   mappingId$: Observable<any>;
   selectedDomain$: Observable<any>;
   selectedSheet$: Observable<number>;
@@ -24,11 +27,13 @@ export class UploadGuard implements CanActivate {
   mappingValid$: Observable<boolean>;
   constructor(private store: Store<AppState>) {
     this.fileData$ = this.store.select(selectFileData);
+    this.errors$ = this.store.select(selectCleansingErrors);
     this.mappingValid$  = this.store.select(selectMappingValid);
     this.mappingId$ = this.store.select(selectMappingId);
     this.selectedDomain$ = this.store.select(selectDomain);
     this.selectedSheet$ = this.store.select(selectSelectedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
+    this.errors$.subscribe((errors) => {this.errors = errors; });
     this.fileData$.subscribe((res) => {this.fileData = res; });
     this.mappingId$.subscribe((mappingId) => { this.mappingId = mappingId; });
     this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
@@ -61,7 +66,7 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'UPLOAD': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0) {
+        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
             return true;
         } else {
             return false;
