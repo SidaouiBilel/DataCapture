@@ -6,3 +6,8 @@ export const selectJobId = createSelector(
   SelectCleansing,
   (object: Cleansing) => object.jobId
 );
+
+export const selectCleansingErrors = createSelector(
+  SelectCleansing,
+  (object: Cleansing) => object.errors
+);

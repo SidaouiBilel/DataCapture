@@ -72,7 +72,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
           params.successCallback(res.content, lastRow());
         }, (error) => {
           params.failCallback();
-          this.error$.next(error);
+          that.error$.next(error);
           // that.onError(error);
         });
         }

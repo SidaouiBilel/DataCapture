@@ -11,7 +11,7 @@ import { selectTransformedFilePath } from '../transformation/store/transformatio
 import { selectMappingFields, selectMappingId } from '../../store/selectors/mapping.selectors';
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
-import { ActionSaveJobId } from '../../store/actions/cleansing.actions';
+import { ActionSaveCleansingErrors, ActionSaveJobId } from '../../store/actions/cleansing.actions';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { isEmpty } from '@app/shared/utils/objects.utils';
@@ -92,6 +92,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ActionSaveJobId(job.job_id));
         this.service.getJobMetaData(job.job_id).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
+          this.store.dispatch(new ActionSaveCleansingErrors(metaData.totalErrors));
           this.lock$.next(true);
         });
       }
@@ -360,6 +361,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
       if (this.jobId) {
         this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
           this.metaData$.next(metaData);
+          this.store.dispatch(new ActionSaveCleansingErrors(metaData.totalErrors));
           this.modifications = {};
           this.not.success('Success');
         });
@@ -426,9 +428,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadMetadata(){
+  loadMetadata() {
     this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
       this.metaData$.next(metaData);
+      this.store.dispatch(new ActionSaveCleansingErrors(metaData.totalErrors));
     });
   }
 }

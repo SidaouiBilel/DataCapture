@@ -108,6 +108,7 @@ export class MappingComponent implements OnInit, OnDestroy {
             }
           });
           if (res.length !== this.mappingFields.length) {
+            this.checkIfModified();
             this.modalService.info({
               nzTitle: 'Changes Occured',
               nzOkText: 'Update',

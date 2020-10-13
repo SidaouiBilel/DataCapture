@@ -8,3 +8,7 @@
   width: 30vw;
   overflow: auto;
 }
+
+:host ::ng-deep .ant-avatar-string {
+  position: initial;
+}
