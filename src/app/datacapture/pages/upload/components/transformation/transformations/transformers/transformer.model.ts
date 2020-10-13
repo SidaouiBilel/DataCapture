@@ -290,27 +290,9 @@ export class Calculator extends Transformer {
     const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
 
     if (isStrEmpty(params.destination)) { errors.push(new NodeError('destination', 'Destination Missing')); }
-    if (isStrEmpty(params.column)) { errors.push(new NodeError('column', 'Column Missing')); }
-    else if ( previousHeaders.indexOf(params.column) < 0 ) {errors.push(new NodeError('column', `${params.column} does not exist`));}
-    if (isStrEmpty(params.operator)) { errors.push(new NodeError('operator', 'Operator Missing')); }
-
-    if (isStrEmpty(params.property) && isStrEmpty(params.value)) { 
-      errors.push(new NodeError('property', 'Property Missing')); 
-      errors.push(new NodeError('value', 'Value Missing')); 
-    }
-
-    if(!isStrEmpty(params.property) && previousHeaders.indexOf(params.property) < 0){errors.push(new NodeError('property', `${params.property} does not exist`));}
-
+  
     return errors;
   }
 
-  // getRuleFromGrid(params) {
-  //   const columns = GAPIColumnsInRange(params.api);
-  //   return {
-  //     ...this.getRule(),
-  //     column: columns[0],
-  //     separator: '-'
-  //   };
-  // }
 }
 

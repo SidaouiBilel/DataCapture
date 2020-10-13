@@ -6,37 +6,5 @@
           <!-- <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.destination' name='destination' (change)='onDataChanged()'></app-columns-input> -->
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-        <nz-form-label [nzSm]="8">Columns 1</nz-form-label>
-        <nz-form-control [nzSm]="16">
-            <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.column' name='column' (change)='onDataChanged()'></app-columns-input>
-        </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-        <nz-form-label [nzSm]="8">Operator</nz-form-label>
-        <nz-form-control [nzSm]="16">
-            <nz-select [nzSize]='size' [(ngModel)]='data.operator' [ngModelOptions]=" {standalone: true}" (ngModelChange)='onDataChanged()'>
-                <!-- <nz-option-group  *ngFor='let og of operations' [nzLabel]='og.label'> -->
-                  <nz-option *ngFor='let o of operations' [nzValue]='o' [nzLabel]='o'></nz-option>
-                <!-- </nz-option-group> -->
-              </nz-select>
-        </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-        <nz-form-label [nzSm]="8">Column 2</nz-form-label>
-        <nz-form-control [nzSm]="16">
-            <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.property' name='property' (change)='onDataChanged()'></app-columns-input>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="8">Value</nz-form-label>
-        <nz-form-control [nzSm]="16">
-          <input nz-input [nzSize]='size'  [(ngModel)]='data.value' (change)='onDataChanged()' name='value'/>
-            <!-- <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.destination' name='destination' (change)='onDataChanged()'></app-columns-input> -->
-        </nz-form-control>
-      </nz-form-item>
-  
+    <button nz-button nzBlock (click)='openFormula()'><i nz-icon nzType='calculator'></i> Open Editor</button>
 </form>

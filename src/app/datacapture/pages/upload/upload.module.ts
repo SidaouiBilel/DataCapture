@@ -60,6 +60,7 @@ import { UploadService } from './services/upload.service';
 import { UploadDataComponent } from './components/upload/upload-data/upload-data.component';
 import { FilterPipe } from './pipe/source-filter.pipe';
 import { CalculatorComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator.component';
+import { CalculatorModalComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator-modal/calculator-modal.component';
 
 const components = [
   UploadComponentComponent,
@@ -103,7 +104,8 @@ const components = [
   UploadTagsComponent,
   UploadDataComponent,
   FilterPipe,
-  CalculatorComponent
+  CalculatorComponent,
+  CalculatorModalComponent
 ];
 
 @NgModule({
@@ -145,7 +147,8 @@ const components = [
     PipeChangesAlertComponent,
     DefaultValueComponent,
     SplitterComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    CalculatorModalComponent
   ]
 })
 export class UploadModule {}

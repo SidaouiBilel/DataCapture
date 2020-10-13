@@ -20,17 +20,17 @@ export function camelize(str) {
 
 export function isInDateFormat(str) {
   const NUMERIC_REGEXP = /[\d]{4}-[\d]{2}-[\d]{2}/;
-  return str.match(NUMERIC_REGEXP)
+  return String(str).match(NUMERIC_REGEXP)
 }
 
 export function isInDoubleFormat(str:string) {
   const NUMERIC_REGEXP = /[-]{0,1}[\d]*[.]{1}[\d]+(E[-]{0,1}[\d]+)?/;
-  return str.match(NUMERIC_REGEXP)
+  return String(str).match(NUMERIC_REGEXP)
 }
 
 
 export function isInIntegerFormat(str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
+  return String(str).replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
     return index === 0 ? word.toLowerCase() : word.toUpperCase();
   }).replace(/\s+/g, '');
 }
