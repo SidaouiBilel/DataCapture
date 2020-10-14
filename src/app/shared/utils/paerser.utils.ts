@@ -38,7 +38,7 @@ export class Parser {
 				outStack.push(current)
 			} else if (currentType == 'column') {
 				const next = tokens[0]
-					if (next && next.type != 'operator'){
+					if (next && !['operator', 'lp', 'rp'].includes(next.type)){
 						throw 'Missing operator'
 				}
 

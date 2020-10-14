@@ -24,9 +24,9 @@ export class DashboardService {
     return this.http.get(`${environment.upload}flow?domain_id=${domainId}&page=${page}&size=${size}${sortkey ? '&sort_key=' + sortkey : ''}${sortAcn ?  '&sort_acn=' + sortAcn : ''}`);
   }
 
-  getUploadData(domainId: string, page: number, size: number, sortkey?, sortAcn?): Observable<any> {
+  getUploadData(domainId: string, page: number, size: number, filters: any[],sortkey?, sortAcn?): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.post(`${environment.upload}data/${domainId}`, {page, size});
+    return this.http.post(`${environment.upload}data/${domainId}`, {page, size, filters});
   }
 
   getUploadDataTotal(domainId: string): Observable<any> {
@@ -34,8 +34,11 @@ export class DashboardService {
     return this.http.get(`${environment.upload}data/${domainId}/total` );
   }
 
-  download(domainId: string, type: string) {
-    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, {}, { responseType: 'blob' })
+  download(domainId: string, type: string, filters) {
+    const payload = {
+      filters
+    }
+    return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, payload, { responseType: 'blob' })
       .subscribe((res: any) => {this.saveFile(res, domainId, type); });
   }
 
@@ -45,4 +48,7 @@ export class DashboardService {
     saveAs(file);
   }
 
+  getTags(domainId: string): Observable<any> {
+    return this.http.get(`${environment.upload}tags/${domainId}`);
+  }
 }

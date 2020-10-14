@@ -6,5 +6,15 @@
           <!-- <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.destination' name='destination' (change)='onDataChanged()'></app-columns-input> -->
       </nz-form-control>
     </nz-form-item>
-    <button nz-button nzBlock (click)='openFormula()'><i nz-icon nzType='calculator'></i> Open Editor</button>
-</form>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Formula 
+        
+      </nz-form-label>
+      <nz-form-control [nzSm]="16">
+          <input type="text" disabled [nzSize]='size' nz-input placeholder="=" [value]="getFormulaText()"/>
+        </nz-form-control>
+    </nz-form-item>
+    
+  </form>
+  <button nz-button nzBlock (click)='openFormula()' nz-tooltip nzTooltipTitle='Open Editor'><i nz-icon nzType='calculator'></i></button>

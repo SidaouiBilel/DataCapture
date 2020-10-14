@@ -22,9 +22,11 @@
   [getMainMenuItems]="mainContextMenu"
   [enableRangeSelection]="rangeSelection"
   [gridOptions]='gridOptions'
+  [floatingFilter]='floatingFilter'
   (cellValueChanged)="cellValueChanged.emit($event)"
   (gridReady)="onGridReady($event)">
 </ag-grid-angular>
+<!-- [sideBar]="['filters']" -->
 <!-- [blockLoadDebounceMillis]="100" -->
   <!-- [fillOperation]="fillOperation" -->
   <!-- [enableRangeSelection]="true"

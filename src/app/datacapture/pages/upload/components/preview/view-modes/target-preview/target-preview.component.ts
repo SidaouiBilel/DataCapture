@@ -12,7 +12,7 @@ import { Hotkeys } from '@app/shared/services/hot-keys.service';
 import { take } from 'rxjs/operators';
 import { capitalize, formatDate, isInDateFormat, isInDoubleFormat, isInIntegerFormat, shortcutString } from '@app/shared/utils/strings.utils';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
-import { GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 import { SaveSourcesPreview } from '@app/datacapture/pages/upload/store/actions/mapping.actions';
 
@@ -101,7 +101,8 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
       getRows(params) {
         const page = params.request.endRow / size;
         // that.loading$.next(true);
-        that.service.getResult(fileid, page, size).subscribe((res: any) => {
+        const filters = GAPIFilters(params.request.filterModel) 
+        that.service.getResult(fileid, page, size, filters).subscribe((res: any) => {
           that.total$.next(res.total);
           // that.loading$.next(false);
           if (page <= 1) {
@@ -112,11 +113,14 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
             that.store.dispatch(new SaveSourcesPreview(previewData));
             that.totalRecords$.next(res.total);
             const headers = res.headers.map(h => (
-              {field: h,
-               headerName: h,
-               editable: false,
-               resizable: true,
-               valueFormatter : GAPIformatCell,
+              {
+                field: h,
+                colId: h,
+                headerName: h,
+                editable: false,
+                resizable: true,
+                valueFormatter : GAPIformatCell,
+                filter: GAPIFilterComponenet('string'),
               }
             ));
             headers.unshift(INDEX_HEADER);

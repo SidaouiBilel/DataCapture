@@ -17,13 +17,13 @@ export class PreMappingTransformationService {
     return this.http.get( `${this.url}${fileid}/${sheetid}/${pipeid}`);
   }
 
-  getResult(fileid: any, page: any, nrows=10) {
+  getResult(fileid: any, page: any, nrows=10, filter:any[]=[], sort:any=null) {
     // return this.http.get( `${this.url}preview/removeit?page=${page}&nrows=${nrows}&filename=${fileid.replace(/\//g,'\\\\')}`);
     const body = {
-      page:page,
-      nrows:nrows,
+      filter,
+      sort,
       filename:fileid
     }
-    return this.http.post( `${this.url}preview`, body);
+    return this.http.post( `${this.url}preview?page=${page}&nrows=${nrows}`, body);
   }
 }

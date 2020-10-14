@@ -20,6 +20,7 @@ import { RegexHelperDocumentationComponent } from './regex-helper/regex-helper-d
 import { KeyFilterPipe } from './pipes/key-filter.pipe';
 import { CustomIconsService } from './services/custom-icons.service';
 import { GridFooterComponent } from './grid-footer/grid-footer.component';
+import { TagsCellRendererComponent } from './tags-cell-renderer/tags-cell-renderer.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -49,7 +50,8 @@ const Components = [
   RegexHelperTriggerComponent,
   KeyFilterPipe,
   RegexHelperDocumentationComponent,
-  GridFooterComponent
+  GridFooterComponent,
+  TagsCellRendererComponent
 ];
 
 @NgModule({
@@ -73,6 +75,7 @@ const Components = [
     CustomTooltipComponent,
     AuditComponent,
     RegexHelperDocumentationComponent,
+    TagsCellRendererComponent
   ]
 })
 export class SharedModule {}

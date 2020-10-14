@@ -16,7 +16,6 @@ import { selectInputCloumnsByIndex } from '../../../../../store/transformation.s
 export class CalculatorModalComponent implements OnInit {
 
   constructor(private modal: NzModalRef, private store: Store<AppState>) {
-    this.columns$ = this.store.select(selectInputCloumnsByIndex(this.node_index));
   }
 
   error = null
@@ -26,6 +25,7 @@ export class CalculatorModalComponent implements OnInit {
 
   ngOnInit() {
     this.modal['nzFooter']=null
+    this.columns$ = this.store.select(selectInputCloumnsByIndex(this.node_index));
   }
 
   addToken(value, type){

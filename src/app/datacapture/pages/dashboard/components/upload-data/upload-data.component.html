@@ -1,20 +1,5 @@
 <div class="flex flex-1 column start ml-3 mr-3 mb-3" style="height: 70vh !important">
-  <div class="importHeader mb-2" nz-row>
-    <div nz-col nzSpan="12" class="button-spacing">
-      <nz-tag [nzColor]="'green'">
-        <a (click)="download('xlsx')">
-          <i nz-icon nzType="file-excel"></i> Download as XLSX
-        </a>
-      </nz-tag>
-    </div>
-    <div nz-col nzSpan="12" class="text-right button-spacing">
-      <nz-tag [nzColor]="'green'">
-        <a (click)="download('csv')">
-          <i nz-icon nzType="file-excel"></i> Download as CSV
-        </a>
-      </nz-tag>
-    </div>
-  </div>
+
   <div class="flex-1 flex w-100" *ngIf='(error$ | async)'>
     <div class="flex column">
       <span nz-text nzType='danger' nz-tooltip [nzTooltipTitle]='error$ | async | json'>
@@ -27,10 +12,35 @@
   </div>
 
   <ng-container *ngIf='!(error$ | async)'>
+    <div class="flex between mb-2 w-100">
+      <div class="button-spacing">
+        <button (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>Clear Filters</button>
+
+        <button nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export w/ Filters</button>
+        <nz-dropdown-menu #expAll="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="download('csv', true)">CSV File</li>
+            <li nz-menu-item (click)="download('xlsx', true)">Excel File</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+
+      <div>
+        <button nzType='success' nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export All</button>
+        <nz-dropdown-menu #expAll="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="download('csv')">CSV File</li>
+            <li nz-menu-item (click)="download('xlsx')">Excel File</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+
+    
     <app-data-grid class="flex-1" [paginationPageSize]='size$ | async' [rangeSelection]='false'
       [columnDefs]="headers$ | async" (gridReady)="this.gridReady$.next($event)"></app-data-grid>
+      <app-grid-footer [t]='total$|async'></app-grid-footer>
   </ng-container>
 
-  <!-- <app-grid-footer [t]='total$|async'></app-grid-footer> -->
 
 </div>

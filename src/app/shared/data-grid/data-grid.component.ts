@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from '../custom-tooltip/custom-tooltip.component';
 import { INDEX_NAME, GAPIGridSelectionOverride } from '../utils/grid-api.utils';
+import { TagsCellRendererComponent } from '../tags-cell-renderer/tags-cell-renderer.component';
 
 @Component({
   selector: 'app-data-grid',
@@ -17,6 +18,7 @@ export class DataGridComponent implements OnInit {
   @Input() contextMenu = null;
   @Input() mainContextMenu = null;
   @Input() rangeSelection = false;
+  @Input() floatingFilter = true;
 
   @Input() gridOptions = {
     onRangeSelectionChanged: GAPIGridSelectionOverride,
@@ -28,7 +30,7 @@ export class DataGridComponent implements OnInit {
 
   public loadingCellRendererParams = { loadingMessage: 'One moment please...'};
   public modules: any[] = AllEnterpriseModules;
-  public frameworkComponents = { customTooltip: CustomTooltipComponent};
+  public frameworkComponents = { customTooltip: CustomTooltipComponent,  tagsRenderer: TagsCellRendererComponent};
 
   ngOnInit() {
   }

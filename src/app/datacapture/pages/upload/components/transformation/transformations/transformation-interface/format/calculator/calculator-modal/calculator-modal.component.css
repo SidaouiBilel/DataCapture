@@ -4,10 +4,10 @@
 }
 
 .calculator-button{
-    /* padding: 20px; */
-    /* line-height: 0; */
     min-width: 50px;
     min-height: 50px;
+    /* background: #f9f9f9; */
+    /* border: 0; */
 
 }
 
@@ -28,4 +28,9 @@
 }
 .calculator-display-paren{
     color: #3dd06a;
+}
+
+.calculator-display-op{
+    font-weight: bold;
+    opacity: 0.8; 
 }

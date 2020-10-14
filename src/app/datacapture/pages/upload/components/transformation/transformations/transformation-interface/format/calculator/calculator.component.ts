@@ -25,7 +25,7 @@ export class CalculatorComponent  extends TransformationInterfaceComponent imple
       nzContent: CalculatorModalComponent,
       nzComponentParams:{
         node_index: this.index,
-        formula: deepCopy(this.data.formula)
+        formula: deepCopy(this.data.formula || [])
       }
     })
 
@@ -37,6 +37,10 @@ export class CalculatorComponent  extends TransformationInterfaceComponent imple
         }
       }
     )
+  }
+
+  getFormulaText(){
+    return (this.data.formula || []).map(e=>e.value).join(' ')
   }
 }
 

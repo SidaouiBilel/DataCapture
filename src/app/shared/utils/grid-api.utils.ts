@@ -6,13 +6,15 @@ export const INDEX_NAME = '$_NODE_INDEX'
         colId: INDEX_NAME,
         valueGetter: "node.rowIndex + 1",
         width : 50,
-        minWidth : 0,
+        minWidth : 50,
         maxWidth : 100,
         suppressSizeToFit : false,
     suppressMenu : true,
     resizable : false,
     editable : false,
     pinned: 'left',
+    floatingFilter: false,
+    filter: false,
     cellClass : (params) => 'index-cell',
     onCellClicked: (params)=> {
         params.api.clearRangeSelection()
@@ -87,3 +89,42 @@ export function GAPIformatCell(params){
       return value
     }
   }
+
+export function GAPIFilters(filterModel){
+    const adaptedFilter = [];
+           
+    Object.keys(filterModel).forEach((column) => {
+        const filter = filterModel[column]
+        console.log(filter)
+        const payload:any = {
+            column: column,
+            operator: filter.type,
+            value :filter.filter
+        };
+        
+        if(filter.filterType == 'set'){
+            payload.value = filter.values
+            payload.operator = filter.filterType
+        }
+        adaptedFilter.push(payload);
+    });
+
+    return adaptedFilter
+}
+
+export function GAPIFilterComponenet(type){
+    switch(type){
+        case 'string': 
+            return 'agTextColumnFilter'
+        case 'double': 
+        case 'int': 
+            return 'agNumberColumnFilter'
+        case 'date': 
+            return 'agDateColumnFilter'
+        case 'flow_tags': 
+            return 'agSetColumnFilter'
+        default: 
+            return null;
+    }
+}
+
