@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TagsCellRendererComponent } from '@app/shared/tags-cell-renderer/tags-cell-renderer.component';
-import { GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIFilterComponenet, GAPIFilters, GAPIFormatterComponenet, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { DashboardService } from '../../service/dashboard.service';
@@ -22,7 +22,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   subscription;
   total$ = new BehaviorSubject<any>(null);
   gridApi: any;
-
+  filterSub: any;
   @Input() set selectedDomain(value) {
     this.domain$.next(value);
   }
@@ -46,6 +46,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) { this.subscription.unsubscribe(); }
+    if (this.filterSub) { this.filterSub.unsubscribe(); }
   }
 
   generateDataSource(domainId, pages, size, gridApi) {
@@ -53,42 +54,42 @@ export class UploadDataComponent implements OnInit, OnDestroy {
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
-        const firstPage = page <= 1
-        if (firstPage)  that.total$.next(0);
+        const firstPage = page <= 1;
+        if (firstPage) {  that.total$.next(0); }
         that.loading$.next(true);
-        const filters = GAPIFilters(params.request.filterModel) 
+        const filters = GAPIFilters(params.request.filterModel);
         that.service.getUploadData(domainId, page, size, filters).subscribe((res: any) => {
           that.loading$.next(false);
           if (firstPage) {
             that.total$.next(res.total);
             const headers = res.headers.map(h => {
               const colDef: any = {
-                field:h.field,
-                headerName:h.headerName,
+                field: h.field,
+                headerName: h.headerName,
                 colId: h.field,
                 editable: false,
                 resizable: true,
                 filter: GAPIFilterComponenet(h.type),
                 floatingFilter: GAPIFilterComponenet(h.type),
-              }
+                valueFormatter: GAPIFormatterComponenet(h.type)
+              };
 
-              if (h.field == "flow_tags"){
-                colDef.cellRenderer = 'tagsRenderer'
-                colDef.pinned= 'left'
+              if (h.field === 'flow_tags') {
+                colDef.cellRenderer = 'tagsRenderer';
+                colDef.pinned = 'left';
                 colDef.filterParams = {
-                  excelMode: 'windows',
-                  values: (params)=>{
-                    that.domain$.pipe(take(1)).subscribe(domain=>{
-                      that.service.getTags(domain.id).subscribe(tags=>{
-                        params.success(tags)
-                      })
-                    })
+                  values: (param) => {
+                    that.filterSub = that.domain$.subscribe(domain => {
+                      that.service.getTags(domain.id).subscribe(tags => {
+                        param.success(tags);
+                      });
+                    });
                   },
                   refreshValuesOnOpen: true,
-                }
+                };
               }
 
-              return colDef
+              return colDef;
             });
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
@@ -112,12 +113,27 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       let filters = []
       if (withFilters){
         filters = GAPIFilters(this.gridApi.getFilterModel())
-      } 
+      }
       this.service.download(domain.id, type, filters);
     });
   }
 
   clearFilter(){
     this.gridApi.setFilterModel(null);
+  }
+
+  currencyFormatter = (params) => {
+    let parts;
+    if (params.value) {
+      if (params.value.toString().indexOf('E') >= 0) {
+        parts = Number(params.value).toString().split('.');
+      } else {
+        parts = params.value.toString().split('.');
+      }
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if (parts[1]) { parts[1] = parts[1].substring(0, 2); }
+      return parts.join('.');
+    }
+    return params.value;
   }
 }

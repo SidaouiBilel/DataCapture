@@ -23,137 +23,132 @@ export class FieldModalComponent extends EntityModal implements OnInit {
     { name: 'Type',
       field: 'type',
       mandatory: true,
-      type:'select',
+      type: 'select',
       options: DATA_TYPES,
-      onchange:(newValue)=>{
-        this.data.rules = []
+      onchange: (newValue) => {
+        this.data.rules = [];
       }
     },
-    { name:'Editable',
+    { name: 'Editable',
       field: 'editable',
-      type:'checkbox',
+      type: 'checkbox',
     },
-    { name:'Mandatory',
+    { name: 'Mandatory',
       field: 'mandatory',
-      type:'checkbox',
-      onchange:(newValue)=>{
-        if(newValue){
+      type: 'checkbox',
+      onchange: (newValue) => {
+        if (newValue) {
           const rules = this.data.rules || []
-          const emptyCheck = {id: 'EMPTY_CHECK', parameters:{}}
-          const hasEmptyCheck = rules.find(c=>c.type=='EMPTY_CHECK') 
-          if(!hasEmptyCheck) this.addRule(null,emptyCheck)
+          const emptyCheck = {id: 'EMPTY_CHECK', parameters: {}};
+          const hasEmptyCheck = rules.find(c => c.type === 'EMPTY_CHECK');
+          if (!hasEmptyCheck) { this.addRule(null, emptyCheck); }
+        }
+        if (newValue === false) {
+          this.data.rules = this.data.rules.filter((e) => {if (e.type !== 'EMPTY_CHECK') {return e; }});
         }
       }
     },
-    { name:'Description',
+    { name: 'Description',
       field: 'description',
       mandatory: false,
-      type:'textarea'
+      type: 'textarea'
     }
-  ]
+  ];
 
-  current=1
-  domain_id
+  current = 1;
+  domain_id;
+  keys = Object.keys;
+  index = 0;
 
-  constructor(private mr: NzModalRef, private ds:DomainService) {
-    super(mr)
+  constructor(private mr: NzModalRef, private ds: DomainService) {
+    super(mr);
    }
 
   ngOnInit() {
     // this.modalrRef['nzTitle'] = (this.edit)? 'Edit Target Field': 'Create New Target Field'
-    this.modalrRef['nzTitle'] = null
-    super.ngOnInit()
-
-    this.loadRules()
+    this.modalrRef['nzTitle'] = null;
+    super.ngOnInit();
+    this.loadRules();
   }
 
   reset(){
-    this.RULES_LIST = []
-    this.RULES_MAP = {}
-    this.loading = false
+    this.RULES_LIST = [];
+    this.RULES_MAP = {};
+    this.loading = false;
   }
 
-  loadRules(){
-    this.loading = true
-    this.ds.getDomainChecks(this.domain_id).subscribe((checks:any[])=>{
-      this.RULES_LIST = checks
-      this.RULES_MAP = this.RULES_LIST.reduce((m,e)=>{m[e.id]=e; return m},{})
-
-      this.loading = false
-    },err=> this.reset())
+  loadRules() {
+    this.loading = true;
+    this.ds.getDomainChecks(this.domain_id).subscribe((checks: any[]) => {
+      this.RULES_LIST = checks;
+      this.RULES_MAP = this.RULES_LIST.reduce((m, e) => { m[e.id] = e; return m; }, {});
+      this.loading = false;
+    }, err => this.reset());
   }
 
-  canSave(){
-    let allowed = true
-
-    for (let f of this.form){
-      if (f.mandatory){
-        if (!this.data[f.field]){
-          allowed = false
+  canSave() {
+    let allowed = true;
+    for (const f of this.form) {
+      if (f.mandatory) {
+        if (!this.data[f.field]) {
+          allowed = false;
         }
       }
     }
-
-    return allowed
+    return allowed;
   }
 
-  canClose(){
-    return !this.loading
+  canClose() {
+    return !this.loading;
   }
 
-  close(){
-    this.modalrRef.close(false)
+  close() {
+    this.modalrRef.close(false);
   }
 
-  save(){
-    if (this.canSave()){
-      this.loading = false
-      this.ds.saveTargetField(this.domain_id, this.data).subscribe(res=>{
-        this.modalrRef.close(true)
-      })
+  save() {
+    if (this.canSave()) {
+      this.loading = false;
+      this.ds.saveTargetField(this.domain_id, this.data).subscribe(res => {
+        this.modalrRef.close(true);
+      });
     }
   }
 
-  removeRule(ind){
-    this.data.rules.splice(ind,1)
+  removeRule(ind) {
+    this.data.rules.splice(ind, 1);
   }
 
-  addRule(e, rule){
-
-    this.data.rules = this.data.rules || []
-
+  addRule(e, rule) {
+    this.data.rules = this.data.rules || [];
     let newRule: any = {
-      type:rule.id,
-    }
+      type: rule.id,
+    };
 
-    if (rule.id == "REFERENCE_CHECK"){
+    if (rule.id === 'REFERENCE_CHECK') {
       newRule = {
         ...newRule,
         field_name: 'code',
         conditions: {
-          ref_type_id:null
+          ref_type_id: null
         },
-      }
-    }else{
-      for (let paramKey of this.keys(rule.parameters)){
-        let param = rule.parameters[paramKey]
-        newRule[param.name] = null
+      };
+    } else {
+      for (const paramKey of this.keys(rule.parameters)) {
+        const param = rule.parameters[paramKey];
+        newRule[param.name] = null;
       }
     }
-
-    this.data.rules.push(newRule)
+    this.data.rules.push(newRule);
   }
 
-  keys = Object.keys
-
-  index = 0
-  onIndexChange(ind){
-    console.log(ind)
+  onIndexChange(ind) {
+    console.log(ind);
   }
 
-  onChange(f, newValue){
-    if (f.onchange){
-      f.onchange(newValue)
+  onChange(f, newValue) {
+    if (f.onchange) {
+      f.onchange(newValue);
     }
   }
 

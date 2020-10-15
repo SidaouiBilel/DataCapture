@@ -27,12 +27,11 @@ export class UploadService {
 
   getUploadStatus(flowId: any): Observable<any> {
     const stop = new Subject();
-    
     return timer(0,2000).pipe(
       takeUntil(stop),
       switchMap(() => this.getStatus(flowId)),
       tap((status: any) => {
-        if (['ERROR', 'DONE'].includes(status.upload_status)) { 
+        if (['ERROR', 'DONE'].includes(status.upload_status)) {
           stop.next();
         }}),
       catchError((err) => {stop.next(); return err; } )

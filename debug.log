@@ -13,3 +13,4 @@
 [0911/145937.311:ERROR:file_io.cc(90)] ReadExactly: expected 40, observed 0
 [0911/145937.386:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0911/145937.389:ERROR:file_io.cc(90)] ReadExactly: expected 40, observed 0
+[1015/115316.515:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

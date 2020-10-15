@@ -28,15 +28,18 @@
           Uploads
         </ng-template>
 
-        <app-upload-list [selectedDomain]="selectedDomain"></app-upload-list>
+        <ng-template nz-tab>
+          <app-upload-list [selectedDomain]="selectedDomain"></app-upload-list>
+        </ng-template>
       </nz-tab>
       <nz-tab [nzTitle]="titleTemplate2">
         <ng-template #titleTemplate2>
           <i nz-icon [nzType]="'database'"></i>
           Data
         </ng-template>
-
-        <app-upload-data [selectedDomain]="selectedDomain"></app-upload-data>
+        <ng-template nz-tab>
+          <app-upload-data [selectedDomain]="selectedDomain"></app-upload-data>
+        </ng-template>
       </nz-tab>
     </nz-tabset>
   </div>

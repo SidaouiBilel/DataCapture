@@ -41,7 +41,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   }
 
   onUpload(): void {
-    this.store.select(selectProfile).pipe(take(1)).subscribe(((profile:any)=>{
+    this.store.select(selectProfile).pipe(take(1)).subscribe(((profile: any) => {
       const payload: UploadingPayload = {
         id: null,
         tags: this.selectedTags,
@@ -57,7 +57,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       this.service.upload(payload).subscribe((res: any) => {
         this.store.dispatch(new ActionSaveUploadId(res));
       });
-    }))
+    }));
   }
 
   checkUploadStatus(id: string): void {

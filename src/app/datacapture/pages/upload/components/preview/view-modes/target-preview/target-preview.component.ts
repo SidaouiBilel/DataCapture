@@ -101,14 +101,14 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
       getRows(params) {
         const page = params.request.endRow / size;
         // that.loading$.next(true);
-        const filters = GAPIFilters(params.request.filterModel) 
+        const filters = GAPIFilters(params.request.filterModel)
         that.service.getResult(fileid, page, size, filters).subscribe((res: any) => {
           that.total$.next(res.total);
           // that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
             res.headers.forEach((e, i) => {
-              previewData[e] = res.data.slice(1, 10).map((e) => e[i]);
+              previewData[e] = res.data.slice(1, 10).map((data) => data[e]);
             });
             that.store.dispatch(new SaveSourcesPreview(previewData));
             that.totalRecords$.next(res.total);

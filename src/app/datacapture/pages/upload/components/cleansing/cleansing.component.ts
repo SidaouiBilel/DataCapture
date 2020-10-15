@@ -16,7 +16,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { isEmpty } from '@app/shared/utils/objects.utils';
 import { take } from 'rxjs/operators';
-import { INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { currencyFormatter, dateFormatter, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 
 @Component({
   selector: 'app-cleansing',
@@ -306,11 +306,11 @@ export class CleansingComponent implements OnInit, OnDestroy {
                 h.filter = 'agNumberColumnFilter';
                 break;
             case 'double':
-              h.valueFormatter = this.currencyFormatter,
+              h.valueFormatter = currencyFormatter,
               h.filter = 'agNumberColumnFilter';
               break;
             case 'date':
-              h.valueFormatter = this.dateFormatter,
+              h.valueFormatter = dateFormatter,
               h.filter = 'agDateColumnFilter';
               break;
             default:
@@ -324,32 +324,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
     }
 
     return headers;
-  }
-
-  currencyFormatter = (params) => {
-    let parts;
-    if (params.value) {
-      if (params.value.toString().indexOf('E') >= 0) {
-        parts = Number(params.value).toString().split('.');
-      } else {
-        parts = params.value.toString().split('.');
-      }
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (parts[1]) { parts[1] = parts[1].substring(0, 2); }
-      return parts.join('.');
-    }
-    return params.value;
-  }
-
-  dateFormatter = (params) => {
-    const parts: string[] = params.value.toString().split('-');
-    const yyyy = parts[0];
-    const mm = parts[1];
-    const dd = parts[2];
-    let validDate = true;
-    if (parts.length !== 3 ) { validDate = false; }
-    if (validDate) { return [mm, dd, yyyy].join('/');
-    } else { return params.value.toString(); }
   }
 
   syncWithServer(): void {
