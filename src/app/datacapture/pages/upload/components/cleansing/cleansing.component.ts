@@ -200,12 +200,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
               const filter = {
                 column: that.cleanFilter(column),
                 operator: params.request.filterModel[column].type,
-                value: params.request.filterModel[column].filter,
+                value: params.request.filterModel[column].filterType === 'date' ? params.request.filterModel[column].dateFrom : params.request.filterModel[column].filter,
               };
               adaptedFilter.push(filter);
             });
             if (params.request.sortModel.length > 0) {
-              params.request.sortModel.forEach((e) => {adaptedSort.column = e.colId; adaptedSort.order = e.sort; });
+              params.request.sortModel.forEach((e) => {adaptedSort.column = that.cleanFilter(e.colId); adaptedSort.order = e.sort; });
             }
             // tslint:disable-next-line: max-line-length
             that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel)
