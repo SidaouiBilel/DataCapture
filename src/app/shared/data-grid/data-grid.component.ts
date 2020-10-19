@@ -22,6 +22,12 @@ export class DataGridComponent implements OnInit {
 
   @Input() gridOptions = {
     onRangeSelectionChanged: GAPIGridSelectionOverride,
+    defaultColDef:{
+      flex: 1,
+      minWidth: 150,
+      editable: true,
+      suppressAndOrCondition:true
+    }
   };
   // @Input() fillOperation: (args: any) => void;
 
@@ -37,11 +43,6 @@ export class DataGridComponent implements OnInit {
 
   constructor() {
     this.rowData = [];
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 150,
-      editable: true,
-    };
   }
 
   onGridReady(params){

@@ -24,12 +24,12 @@ export class FileImportService {
     return this.http.get( environment.admin + `domain/${domainId}/fields`);
   }
 
-  public getFileData(page: number, worksheet: string, nrows: number): Observable<any> {
+  public getFileData(page: number, worksheet: string, nrows: number, filters=[]): Observable<any> {
     const params = new HttpParams()
     .set('page', page + '')
     .set('lob', 0 + '')
     .set('nrows', nrows + '');
-    return this.http.get(environment.import + 'data/' + worksheet, { params });
+    return this.http.put(environment.import + 'data/' + worksheet, {filters} ,{ params });
   }
 
   public updateRow(filename: string, worksheet: string, worksheetId: string, nrows: number, page: number, num: number[], lines: string[]) {

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { selectFileData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
-import { GAPIFilterComponenet, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
@@ -64,8 +64,9 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
+        const filters = GAPIFilters(params.request.filterModel)
         that.loading$.next(true);
-        that.service.getFileData(page, worksheet, size).subscribe((res: any) => {
+        that.service.getFileData(page, worksheet, size, filters).subscribe((res: any) => {
           that.total$.next(res.total);
           that.loading$.next(false);
           if (page <= 1) {
@@ -83,6 +84,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
                 resizable: true,
                 valueFormatter : GAPIformatCell,
                 filter: GAPIFilterComponenet('string'),
+                suppressAndOrCondition: true,
             }));
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
