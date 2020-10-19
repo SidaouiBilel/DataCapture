@@ -12,6 +12,7 @@ import { ChecksService } from '../../services/checks.service';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { StoreService } from '../../services/store.service';
 import { DATA_TYPES } from '@app/shared/utils/types';
+import { DataCheckFactory } from '../../models/datachecks.model';
 
 @Component({
   selector: 'app-fields-page',
@@ -62,6 +63,8 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     DATA_TYPES.forEach(type => {
       this.data_types[type.value]= type.label
     });
+
+    // this.openConfig(null)
   }
 
   enableAddbtn(profile): boolean {
@@ -102,10 +105,12 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
 
   openConfig(data) {
     const edit = data ? true : false;
-    let obj =  new Field();
+    let obj:any =  new Field();
     if (data) {
       obj = deepCopy(data);
     }
+
+    obj.rules = DataCheckFactory.toUIChecksModel(obj)
 
     const modal = this.modal.create({
       nzTitle: null,

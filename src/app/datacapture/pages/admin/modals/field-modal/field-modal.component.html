@@ -36,78 +36,7 @@
 
 <div *ngIf='index == 1'>
   <nz-divider nzText="Checks"></nz-divider>
-
-  <ng-container *ngFor="let r of data.rules; let i = index">
-    <ng-container *ngIf='RULES_MAP[r.type]; let check ; else noCheckFound'>
-      <nz-card nzSise='small' class='ma-b' [nzTitle]="check.name"
-        [nzExtra]="extraTemplate">
-        <nz-card-meta [nzDescription]="check.description"></nz-card-meta>
-        <div class="ma-t" *ngIf='check.id != "REFERENCE_CHECK" ; else referenceCheck'>
-          <ng-container *ngIf="check.parameters; let params">
-            <nz-form-item *ngFor="let p of params">
-              <nz-form-label [nzSpan]="7">{{p.label}}</nz-form-label>
-              <nz-form-control [nzSpan]="14">
-                <ng-container [ngSwitch]="p.type">
-                  <textarea *ngSwitchCase="'textarea'" [(ngModel)]='r[p.name]' nz-input rows="2"></textarea>
-                  <nz-select style="width: 100%;" [(ngModel)]='r[p.name]' *ngSwitchCase="'select'">
-                    <nz-option *ngFor='let o of p.options' [nzValue]="o.key" [nzLabel]="o.value"></nz-option>
-                  </nz-select>
-                  <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]='r[p.name]'></label>
-                  <app-field-input *ngSwitchCase="'property'" [types]='p.property_types' [(ngModel)]='r[p.name]'></app-field-input>
-                  <input *ngSwitchDefault [(ngModel)]='r[p.name]' nz-input />
-                </ng-container>
-              </nz-form-control>
-            </nz-form-item>
-            
-            <nz-form-item *ngIf='check.id=="FORMAT_CHECK" && r.custom==true'>
-              <nz-form-label [nzSpan]="7">Expression <app-regex-helper-trigger></app-regex-helper-trigger></nz-form-label>
-              <nz-form-control [nzSpan]="14"><input [(ngModel)]='r.regex' nz-input /></nz-form-control>
-            </nz-form-item>
-          </ng-container>
-        </div>
-
-        <ng-template #referenceCheck>
-          <div class="ma-t">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="7">Reference</nz-form-label>
-              <nz-form-control [nzSpan]="14">
-                <app-reference-type-input [(ngModel)]='r.conditions.ref_type'></app-reference-type-input>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </ng-template>
-
-        <ng-template #extraTemplate>
-          <button class="ghost" nz-button nzShape='circle' (click)="removeRule(i)"><i nz-icon nzType="delete"></i></button>
-        </ng-template>
-      </nz-card>
-
-    </ng-container>
-
-    <ng-template #noCheckFound>
-      <div class="ma-b">
-        <button nzBlock nz-button nzType='danger' (click)="removeRule(i)"><b>{{r.type}}</b> NOT FOUND</button>
-      </div>
-    </ng-template>
-
-    <ng-template #extraTemplate>
-      <i nz-icon nzType="delete" (click)="removeRule(i)"></i>
-    </ng-template>
-
-  </ng-container>
-
-
-
-  <button nz-button nz-dropdown [nzLoading]="loading" [nzDropdownMenu]="rulesMenu" nzType='dashed' nzBlock>
-    <i nz-icon nzType="plus"></i>
-    Add Rule
-  </button>
-  <nz-dropdown-menu #rulesMenu="nzDropdownMenu">
-    <ul nz-menu>
-      <li nz-tooltip [nzTooltipTitle]="rule.description" *ngFor="let rule of RULES_LIST | checksByType : data.type" nz-menu-item
-        (click)="addRule($event, rule)">{{rule.name}}</li>
-    </ul>
-  </nz-dropdown-menu>
+  <app-default-checks [model]='data.rules' [type]='data.type'></app-default-checks>
 </div>
 
 <ng-template #modalFooter>

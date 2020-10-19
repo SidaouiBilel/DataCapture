@@ -290,6 +290,15 @@ export class Calculator extends Transformer {
     const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
 
     if (isStrEmpty(params.destination)) { errors.push(new NodeError('destination', 'Destination Missing')); }
+
+    const formula : any[] = params.formula || []
+    for (let token of formula){
+      if(token.type == 'column'){
+        if(!previousHeaders.includes(token.value)){
+          errors.push(new NodeError('formula', `${token.value} does not exist.`))
+        }
+      }
+    }
   
     return errors;
   }

@@ -127,7 +127,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     } else {
       ws = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
     }
-    this.service.getAuditTrial(ws).subscribe((res) => {
+    this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,

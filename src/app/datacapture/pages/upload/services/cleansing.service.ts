@@ -34,8 +34,8 @@ export class CleansingService {
     return this.http.get(environment.cleansing + `/metadata/${jobId}`);
   }
 
-  getAuditTrial(worksheetId: string): Observable<any> {
-    return this.http.post(environment.cleansing + `/audit-trial`, {worksheet_id: worksheetId});
+  getAuditTrial(worksheetId: string, domain_id: string): Observable<any> {
+    return this.http.post(environment.cleansing + `/audit-trial`, {worksheet_id: worksheetId, domain_id: domain_id});
   }
 
   // tslint:disable-next-line: max-line-length

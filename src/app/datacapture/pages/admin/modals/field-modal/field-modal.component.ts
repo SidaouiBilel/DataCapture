@@ -3,6 +3,7 @@ import { EntityModal } from '../entity-modal';
 import { DomainService } from '../../services/domain.service';
 import { NzModalRef } from 'ng-zorro-antd';
 import { DATA_TYPES } from '@app/shared/utils/types';
+import { DataCheckFactory, EMPTY_CHECK } from '../../models/datachecks.model';
 
 
 @Component({
@@ -25,8 +26,9 @@ export class FieldModalComponent extends EntityModal implements OnInit {
       mandatory: true,
       type: 'select',
       options: DATA_TYPES,
-      onchange: (newValue) => {
-        this.data.rules = [];
+      onchange: (type) => {
+        this.data.rules = DataCheckFactory.initUIModel(type)
+        this.data.rules[EMPTY_CHECK.id]=this.data.mandatory
       }
     },
     { name: 'Editable',
@@ -37,15 +39,7 @@ export class FieldModalComponent extends EntityModal implements OnInit {
       field: 'mandatory',
       type: 'checkbox',
       onchange: (newValue) => {
-        if (newValue) {
-          const rules = this.data.rules || []
-          const emptyCheck = {id: 'EMPTY_CHECK', parameters: {}};
-          const hasEmptyCheck = rules.find(c => c.type === 'EMPTY_CHECK');
-          if (!hasEmptyCheck) { this.addRule(null, emptyCheck); }
-        }
-        if (newValue === false) {
-          this.data.rules = this.data.rules.filter((e) => {if (e.type !== 'EMPTY_CHECK') {return e; }});
-        }
+        this.data.rules[EMPTY_CHECK.id]=newValue
       }
     },
     { name: 'Description',
@@ -109,7 +103,14 @@ export class FieldModalComponent extends EntityModal implements OnInit {
   save() {
     if (this.canSave()) {
       this.loading = false;
-      this.ds.saveTargetField(this.domain_id, this.data).subscribe(res => {
+
+      const rules = DataCheckFactory.toAPIChecksModel(this.data.rules)
+      const payload = {
+        ...this.data,
+        rules
+      }
+      console.log(rules)
+      this.ds.saveTargetField(this.domain_id, payload).subscribe(res => {
         this.modalrRef.close(true);
       });
     }

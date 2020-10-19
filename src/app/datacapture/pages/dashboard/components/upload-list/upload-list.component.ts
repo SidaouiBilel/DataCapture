@@ -72,7 +72,7 @@ export class UploadListComponent {
 
   auditTrial(ws: any): void {
     const worksheet = ws.transformation_id ? ws.transformation_id.split('/').pop() : ws.sheet_id;
-    this.service.getAuditTrial(worksheet).subscribe((res) => {
+    this.service.getAuditTrial(worksheet, this._selectedDomain.id).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,
