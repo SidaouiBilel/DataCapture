@@ -11,6 +11,7 @@
         <th nzShowSort nzSortKey="upload_start_time">Upload Start Date</th>
         <th nzShowSort nzSortKey="upload_end_time">Upload End Date</th>
         <th>Tags</th>
+        <th>User</th>
         <th nzShowSort nzSortKey="upload_status">Status</th>
         <th>Audit Trial</th>
       </tr>
@@ -25,6 +26,7 @@
         <td>
           <nz-tag *ngFor='let tag of e.upload_tags'>{{tag}}</nz-tag>
         </td>
+        <td> {{e.user?.last_name + ' ' + e.user?.first_name}} </td>
         <td class="center">
           <nz-badge *ngIf="e.upload_status === 'DONE'" nz-tooltip nzTooltipTitle="Done" nzStatus="success">
           </nz-badge>
