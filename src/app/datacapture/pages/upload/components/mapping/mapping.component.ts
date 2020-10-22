@@ -122,7 +122,6 @@ export class MappingComponent implements OnInit, OnDestroy {
             });
           }
         }
-
       }
       this.store.dispatch(new SaveMappingFields(res));
     });
@@ -257,25 +256,31 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   // Called when dropping new source
-  onItemDrop(source, index: number): void {
-    const refObj = {...this.mappingFields[index]};
-    refObj.value = source.data;
-    this.mappingFields[index] = refObj;
-    this.store.dispatch(new SaveMappingFields(this.mappingFields));
-    this.onUpdateSources(source, false);
-    this.checkMappingSanity();
-    this.checkIfModified();
+  onItemDrop(source, item: any): void {
+    const realIndex = this.mappingFields.indexOf(item);
+    if (realIndex >= 0) {
+      const refObj = {...this.mappingFields[realIndex]};
+      refObj.value = source.data;
+      this.mappingFields[realIndex] = refObj;
+      this.store.dispatch(new SaveMappingFields(this.mappingFields));
+      this.onUpdateSources(source, false);
+      this.checkMappingSanity();
+      this.checkIfModified();
+    }
   }
 
   // Called when removing mapped value
-  onRemoveClick(source, index: number): void {
-    const refObj = {...this.mappingFields[index]};
-    refObj.value = null;
-    this.mappingFields[index] = refObj;
-    this.store.dispatch(new SaveMappingFields(this.mappingFields));
-    this.onUpdateSources(source, true);
-    this.checkMappingSanity();
-    this.checkIfModified();
+  onRemoveClick(source): void {
+    const realIndex = this.mappingFields.indexOf(source);
+    if (realIndex >= 0) {
+      const refObj = {...this.mappingFields[realIndex]};
+      refObj.value = null;
+      this.mappingFields[realIndex] = refObj;
+      this.store.dispatch(new SaveMappingFields(this.mappingFields));
+      this.onUpdateSources(source, true);
+      this.checkMappingSanity();
+      this.checkIfModified();
+    }
   }
 
   checkIfModified() {
