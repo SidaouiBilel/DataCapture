@@ -1,0 +1,79 @@
+
+<div class="DBconnectors-container p-1">
+  
+    <nz-page-header class="site-page-header" nzTitle="Data Extraction List" nzSubtitle=""></nz-page-header>
+  
+    <div nz-row class='ma-b'>
+        <div nz-col [nzSpan]='18'>
+          <button nz-button class='ghost' (click)="extract_data()">
+            <i nz-icon nzType="plus"></i>Extract Data
+          </button>
+          <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
+        </div>
+  
+        <div nz-col [nzSpan]='6'>
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input  placeholder="Filter Data Extractors"  [(ngModel)]='searchDE'/>
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </div>
+    </div>
+  
+    <div class="mb-4 flext bg-grey rounded-0 m-0 p-0">
+        <nz-list class="list_impo" [nzDataSource]="Jobs$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+            <ng-template #item let-item>
+                <nz-list-item class="BD-item" [nzActions]="loading ? [] : [editAction, moreAction]">
+                    <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+                        <ng-template #nzTitle>
+                            <div nz-typography class="font-weight-bold">Extraction id : <span nz-typography  class="font-weight-light">{{item.job_id | uppercase }}</span></div>
+                            <!-- <div nz-typography class="font-weight-light">{{item.status | uppercase }}</div> -->
+                        </ng-template>
+                        <ng-template #nzDescription>
+                            <div class="mb-2">
+                                <span [ngSwitch]="item.status">
+
+                                    <span class="succes" *ngSwitchCase="'OK'">
+                                        <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+                                        Data extracted successfully
+                                    </span>
+
+                                    <span class="warning" *ngSwitchCase="''">
+                                        <i nz-icon nzType="loading" nzTheme="outline"></i>
+                                        extraction in progress
+                                    </span>
+
+                                    <span class="error" *ngSwitchDefault>
+                                        <i nz-icon nzType="warning" nzTheme="outline"></i>
+                                        Error : {{item.status}}
+                                    </span>
+
+                                </span>
+                            </div>
+                            <div>
+                            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+                            <span class="pl-2" nz-typography>Created On</span>: 
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+                            <span class="pl-2" nz-typography>Modified On</span>: 
+                            </div>
+                        </ng-template>
+                        <!-- <ng-template #editAction>
+                            <button nz-button class="ghost" (click)="updateDBC.emit(item)">
+                              <i nz-icon nzType="edit" class="btns"></i>
+                            </button>
+                        </ng-template> -->
+                        <ng-template #moreAction>
+                            <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Connector?" nzPopconfirmPlacement="left"
+                              >
+                              <i nz-icon nzType="delete" class="btns"></i>
+                          </button>
+                        </ng-template>
+                    </nz-list-item-meta>
+                </nz-list-item>
+            </ng-template>
+        </nz-list>
+    </div> 
+  
+  </div>

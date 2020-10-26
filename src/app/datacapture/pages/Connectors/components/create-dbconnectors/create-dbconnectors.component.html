@@ -1,0 +1,28 @@
+
+<div class="DBconnectors-container p-1">
+  
+  <nz-page-header class="site-page-header" nzTitle="Database Connectors" nzSubtitle="Manage Database Connectors"></nz-page-header>
+
+  <div nz-row class='ma-b'>
+      <div nz-col [nzSpan]='18'>
+        <button nz-button class='ghost' (click)="addDBconnector()">
+          <i nz-icon nzType="plus"></i>Database Connector
+        </button>
+        <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
+      </div>
+
+      <div nz-col [nzSpan]='6'>
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input  placeholder="Filter Connectors"  [(ngModel)]='searchDBC'/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+  </div>
+
+  <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+    <app-listdbconnectors [searchTerm]="searchDBC" (updateDBC)="updateDBC($event)" [reload]="reload$" ></app-listdbconnectors>
+  </div> 
+
+</div>

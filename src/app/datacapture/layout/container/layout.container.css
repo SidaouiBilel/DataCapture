@@ -4,12 +4,27 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.nav{
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+.sticky {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .inner-layout {
+  padding-top: 64px;
+}
 
 ::ng-deep .anticon {
   vertical-align: 2px !important;
 }
 
-:host ::ng-deep .ant-layout-header {
+.topbar {
   padding: 0 16px !important;
 }
 
@@ -59,8 +74,9 @@
 }
 
 .sider-menu {
-  height: 100%;
+  width: 100%;
   border-right: 0;
+  padding-left: 16px;
 }
 
 .inner-layout {

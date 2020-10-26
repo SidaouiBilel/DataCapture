@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile, ActionSaveProfile, selectToken } from '@app/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 import { LoginService } from '@app/core/login/service/login.service';
 import { environment } from '@env/environment';
+import { NzHeaderComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.container.html',
   styleUrls: ['./layout.container.css'],
 })
-export class LayoutContainer implements OnInit {
+export class LayoutContainer implements OnInit , AfterViewInit {
   // used to control the sidebar
-  isCollapsed: boolean;
+  isCollapsed: boolean = false;
   miniSidebarCollapsed = true;
   settings;
   // variable used for breadcrumps
@@ -42,7 +43,7 @@ export class LayoutContainer implements OnInit {
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
   }
   ngOnInit(): void {
-    this.checkTokenValidity()
+    this.checkTokenValidity();
   }
 
   // This is used to select the primary pqge in the sidebqr
@@ -92,6 +93,12 @@ export class LayoutContainer implements OnInit {
 
         case 'uploading':
           return 'upload';
+          
+        case 'connectors':
+          return 'database';
+
+        case 'extractors':
+          return 'export';
 
         default:
           return 'appstore';
@@ -145,5 +152,20 @@ export class LayoutContainer implements OnInit {
   logoutUser() {
     // this.notification.error('Token exp');
     this.store.dispatch(new ActionAuthLogout());
+  }
+
+  
+
+  @ViewChild('navbar',{static:false})  navbar :NzHeaderComponent;
+  sticky=64;
+  ngAfterViewInit(){
+    window.onscroll = ()=>this.onscroll();
+  }
+  onscroll() {
+    if (window.pageYOffset > this.sticky) {
+      this.navbar.elementRef.nativeElement.classList.add("sticky");
+    } else {
+      this.navbar.elementRef.nativeElement.classList.remove("sticky");
+    }
   }
 }

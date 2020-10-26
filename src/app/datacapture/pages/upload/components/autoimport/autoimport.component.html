@@ -1,0 +1,56 @@
+
+<div class="DBconnectors-container p-1">
+  
+    <nz-page-header class="site-page-header" nzTitle="Auto file import " nzSubtitle="choose a file"></nz-page-header>
+  
+    <div nz-row class='ma-b'>
+        <div nz-col [nzSpan]='18'>
+          <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i> Relaod</button>
+        </div>
+  
+        <div nz-col [nzSpan]='6'>
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input  placeholder="Filter Files"  [(ngModel)]='searchFile'/>
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </div>
+    </div>
+  
+    <div class="flex-box flex-scroll  rounded-0 m-0 p-0">
+      <!-- <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+      </nz-select> -->
+        <nz-list class="list_impo" [nzDataSource]="UserFiles$ | async " [nzRenderItem]="item"  [nzLoading]="loading || autoimportloading" [nzItemLayout]="'vertical'">
+            <ng-template #item let-item>
+                <nz-list-item class="BD-item" [nzActions]="loading ? [] : [editAction, moreAction]">
+
+                        <div  class="font-weight-bold file_item" [attr.ngclass]="{'disabled': selecteddomain}">
+                          <a (click)="auto_import_file(item)" nz-button nzType="link" [attr.disabled]="selecteddomain ?true : null">
+                            <i nz-icon nzType="file-excel" nzTheme="outline"> </i> {{ " "+item | uppercase }}
+                          </a>
+                        </div>
+                        
+                        <!-- <ng-template #moreAction>
+                            <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Connector?" nzPopconfirmPlacement="left"
+                              >
+                              <i nz-icon nzType="delete" class="btns"></i>
+                          </button>
+                        </ng-template> -->
+                </nz-list-item>
+            </ng-template>
+        </nz-list>
+    </div> 
+  
+  </div>
+
+
+
+
+
+
+
+

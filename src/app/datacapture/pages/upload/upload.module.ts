@@ -60,6 +60,7 @@ import { UploadService } from './services/upload.service';
 import { UploadDataComponent } from './components/upload/upload-data/upload-data.component';
 import { FilterPipe } from './pipe/source-filter.pipe';
 import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
+import { AutoimportComponent } from './components/autoimport/autoimport.component';
 
 const components = [
   UploadComponentComponent,
@@ -116,7 +117,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, AutoimportComponent],
   exports: [
   ],
   providers : [

@@ -2,6 +2,18 @@
   padding: 18px;
   height: 100%;
 }
+.flex-row{
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+}
+.manual_import{
+  flex: 1;
+}
+.auto_import{
+  flex: 1;
+  display: flex;
+}
 
 .flex-box {
   height: 100%;
@@ -11,6 +23,7 @@
 
 .flex-child {
   flex: 1 1 auto;
+  height: 100%;
 }
 
 .importHeader {

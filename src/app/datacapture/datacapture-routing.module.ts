@@ -19,6 +19,14 @@ const routes: Routes = [
           data: {role: 'ADMIN'}
         },
         {
+          path: 'connectors',
+          loadChildren : 'app/datacapture/pages/Connectors/connectors.module#ConnectorsModule'
+        },
+        {
+          path: 'extractors',
+          loadChildren : 'app/datacapture/pages/Extractors/extractors.module#ExtractorsModule'
+        },
+        {
           path: 'upload',
           loadChildren : 'app/datacapture/pages/upload/upload.module#UploadModule'
         },

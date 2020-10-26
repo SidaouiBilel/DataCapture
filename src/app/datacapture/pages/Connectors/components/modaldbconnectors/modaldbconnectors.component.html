@@ -1,0 +1,60 @@
+<form nz-form  
+    [nzLayout]="layout" 
+    [formGroup]="validateDataBaseConnector" 
+    (ngSubmit)="submitForm()"
+    autocomplete="off" >
+
+    
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Connector Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Connector Name is required!">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type">Type</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Database Type is required">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a DataBase type" formControlName="type">
+               
+                <nz-option *ngFor="let bd_type of bd_types" [nzLabel]='bd_type' [nzValue]='bd_type'></nz-option>
+                
+              </nz-select>
+          <!-- <input nz-input formControlName="db_host" id="db_host" placeholder="Ex : https://hostname.com"/> -->
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="db_host">Host</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid url!">
+          <input nz-input formControlName="db_host" id="db_host" placeholder="Ex : https://hostname.com"/>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="db_name">Name</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Database Name is required!">
+          <input nz-input formControlName="db_name" id="db_name" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="db_uid">User id</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Database User id is required!!">
+          <input nz-input formControlName="db_uid" id="db_uid" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="db_pwd">Password</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Database Password is required!">
+          <input nz-input formControlName="db_pwd" id="db_pwd" type="password" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">Create</button>
+        </nz-form-control>
+      </nz-form-item> -->
+</form>

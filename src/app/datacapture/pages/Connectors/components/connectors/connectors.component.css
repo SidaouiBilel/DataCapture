@@ -1,0 +1,11 @@
+.connector_container {
+    /* background-color: white; */
+    min-height: 100%;
+    display: flex;
+    flex-flow: column;
+  }
+  
+  .flex-box {
+    flex: 1 1 auto;
+  }
+  

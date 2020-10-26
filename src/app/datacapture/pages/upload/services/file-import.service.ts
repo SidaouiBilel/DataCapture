@@ -12,6 +12,15 @@ export class FileImportService {
   constructor(private http: HttpClient) {
   }
 
+
+  get_extracted_files(uid){
+    return this.http.get<any[]>( environment.import + 'files/'+uid);
+  }
+
+  select_file(domainid,uid,filename){
+    return this.http.get<any[]>( environment.import + 'files/select/'+domainid+"/"+uid+"/"+filename);
+  }
+
   getAll() {
     return this.http.get( environment.admin + 'domain/');
   }
@@ -43,6 +52,8 @@ export class FileImportService {
       lines
     });
   }
+
+
 
 }
 

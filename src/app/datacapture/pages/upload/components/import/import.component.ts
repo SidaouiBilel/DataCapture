@@ -27,6 +27,8 @@ export class ImportComponent implements OnInit {
   importState$: Observable<Import>;
   selectedDomain$: Observable<any>;
   fileData$: Observable<any>;
+  SuccessMessage="Your file is ready to use";
+  autoimportloading=false;
   constructor(private notification: NotificationService,
               private store: Store<AppState>,
               private router: Router,
@@ -62,6 +64,7 @@ export class ImportComponent implements OnInit {
       this.store.dispatch(new ActionUploadFile({file: null, importing: true, imported: false, error: false, progress: file.percent}));
     }
     if (status === 'done') {
+      this.SuccessMessage="Your file has been uploaded successfully.";
       const uploadedFile: any = {
         token: file.name,
         sheets: [],
@@ -82,8 +85,30 @@ export class ImportComponent implements OnInit {
     }
   }
 
+  auto_import(fileresponse){
+    this.SuccessMessage="Your file has been selected successfully.";
+    const uploadedFile: any = {
+      token: fileresponse.filename,
+      sheets: [],
+      numberOfRows: [],
+      extension: fileresponse.filetype,
+      data: [],
+      headers: [],
+      file: [{response:fileresponse}]
+    };
+      this.store.dispatch(new ActionUploadFile({file: uploadedFile, importing: false, imported: true, error: false, progress: 100}));
+      // tslint:disable-next-line: max-line-length
+      this.store.dispatch(new ActionSaveFile({metaData: fileresponse, sheets: Object.keys(fileresponse.worksheets_map), data: [], headers: []}));
+      this.store.dispatch(new ActionSelectSheet(0));
+      this.notification.success(`${fileresponse.filename} file uploaded successfully.`);
+  }
+  _autoimportloading(){
+    this.autoimportloading = true;
+  }
   cancelUpload(): void {
+    this.autoimportloading=false;
     this.store.dispatch(new ActionImportReset());
+    
   }
 
   goToPreview(): void {

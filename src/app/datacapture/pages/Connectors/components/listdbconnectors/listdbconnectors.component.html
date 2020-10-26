@@ -1,0 +1,32 @@
+<nz-list [nzDataSource]="DBC$ | async | dBCfilter : 'connector_name' : searchTerm" [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+    <ng-template #item let-item>
+        <nz-list-item class="BD-item" [nzActions]="loading ? [] : [editAction, moreAction]">
+            <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+                <ng-template #nzTitle>
+                    <div nz-typography class="font-weight-light">{{item.connector_name | uppercase }}</div>
+                </ng-template>
+                <ng-template #nzDescription>
+                    <!-- <div class="mb-2"><nz-tag [nzColor]="'#108ee9'">{{item.db_type}}</nz-tag></div> -->
+                    <div>
+                    <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+                    <span class="pl-2" nz-typography>Created On</span>: 
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+                    <span class="pl-2" nz-typography>Modified On</span>: 
+                    </div>
+                </ng-template>
+                <!-- <ng-template #editAction>
+                    <button nz-button class="ghost" (click)="updateDBC.emit(item)">
+                      <i nz-icon nzType="edit" class="btns"></i>
+                    </button>
+                </ng-template> -->
+                <ng-template #moreAction>
+                    <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Connector?" nzPopconfirmPlacement="left"
+                      >
+                      <i nz-icon nzType="delete" class="btns"></i>
+                  </button>
+                </ng-template>
+            </nz-list-item-meta>
+        </nz-list-item>
+    </ng-template>
+</nz-list>
