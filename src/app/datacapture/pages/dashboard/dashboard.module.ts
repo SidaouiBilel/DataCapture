@@ -9,6 +9,7 @@ import { FEATURE_NAME } from './store/dashboard.state';
 import { DashboardReducer } from './store/reducer/dashboard.reducer';
 import { UploadListComponent } from './components/upload-list/upload-list.component';
 import { UploadDataComponent } from './components/upload-data/upload-data.component';
+import { UserDashboardComponent } from './container/user-dashboard/user-dashboard.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { UploadDataComponent } from './components/upload-data/upload-data.compon
   declarations: [
     DashboardComponent,
     UploadListComponent,
-    UploadDataComponent
+    UploadDataComponent,
+    UserDashboardComponent
   ],
   exports: [
   ],

@@ -43,14 +43,17 @@
 
   <!-- Body -->
   <div class="flex-box" *ngIf="keys(mappedSources).length">
+
     <div class="mapping-container">
       <!-- Sources -->
       <div class="sources">
-        <nz-card class="h-100 w-100">
+        <nz-card class="h-100 w-100 flex stretch">
           <div class="sources-items">
-            <div class="source-title flex-between">
-              <span>SOURCE FIELDS</span>
-              <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="search" />
+            <div class="source-title flex between">
+              <div>SOURCE FIELDS</div>
+              <div>
+                <input nz-input placeholder="Search" nzSize="default" [(ngModel)]="search" />
+              </div>
             </div>
             <div class="scroll-box">
               <div class="source-list">
@@ -69,17 +72,23 @@
       </div>
       <!-- Targets -->
       <div class="targets">
-        <nz-card class="h-100 w-100">
+        <nz-card class="h-100 w-100 flex stretch">
           <div class="sources-items">
-            <div class="target-title">
-              <span>
+            <div class="target-title flex between">
+              <div>
+                TARGET FIELDS
+              </div>
+              <div>
+                <input nz-input placeholder="Search" nzSize="default" [(ngModel)]="searchTarget" />
+              </div>
+              <!-- <div>
                 TARGET FIELDS
                 <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="searchTarget" />
 
                 <i nz-icon nz-tooltip nzTooltipPlacement="right" *ngIf="!(mappingValid$ | async)"
                   nzTooltipTitle="This mapping is invalid with this worksheet. Update it or use another one."
                   class="text-danger pl-1" nzType="info-circle" nzTheme="fill"></i>
-              </span>
+              </div>
               <div [ngSwitch]="(mandatories$ | async)">
                 <span *ngSwitchCase='0' class="text-success">
                   <i nz-icon nzType="check" nzTheme="outline"></i><b> ALL MANDATORIES HAVE BEEN MAPPED</b>
@@ -87,7 +96,7 @@
                 <span *ngSwitchDefault class="text-danger"><b>{{(mandatories$ | async)}}</b>
                   MANDATORY MISSING
                 </span>
-              </div>
+              </div> -->
             </div>
             <div class="scroll-box">
               <div class="source-list">
@@ -116,11 +125,18 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>            
           </div>
         </nz-card>
       </div>
     </div>
+
+    <div class="mapping-information mt-1 border">
+      <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error" nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon></nz-alert>
+      <nz-alert *ngIf="(mandatories$ | async)" nzType="error" [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
+      <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="info" nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
+    </div>
+  
   </div>
 </div>
 

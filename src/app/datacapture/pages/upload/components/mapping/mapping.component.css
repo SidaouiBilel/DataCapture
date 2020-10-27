@@ -71,21 +71,24 @@
 }
 
 .target-title {
-  display: flex;
-  flex-direction: row;
-  place-content: space-between;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* place-content: space-between; */
 }
 
 .source-title,
 .target-title {
   padding: 1em 1.5em;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   height: 50px;
+  /* background: #f7f7f7; */
+    /* color: rgb(143, 143, 143); */
+    font-weight: 500;
 }
 
 .scroll-box {
   overflow: auto;
-  max-height: 64vh;
+  /* max-height: 0; */
 }
 
 .sources-items {
@@ -97,6 +100,7 @@
   align-items: stretch;
   max-width: 100%;
   width: 100%;
+  justify-content: flex-start;
 }
 
 .source-list {
@@ -204,4 +208,10 @@
 
 ::ng-deep .vertical-center-modal .ant-modal {
   top: 0;
+}
+
+::ng-deep .mapping-information .ant-alert{
+  border: 0;
+  font-weight: 100;
+  /* background: transparent; */
 }
