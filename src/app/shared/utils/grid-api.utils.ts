@@ -164,3 +164,21 @@ export function dateFormatter(params) {
   }
   return params.value;
 }
+
+export function mapGridFilter(filter: string, isDate: boolean): string {
+  if (isDate) {
+    switch (filter) {
+      case 'greaterThan':
+        return 'after';
+
+      case 'lessThan':
+        return 'before';
+
+      default:
+        return filter;
+    }
+  } else {
+    return filter;
+  }
+}
+

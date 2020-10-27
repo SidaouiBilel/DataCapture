@@ -103,7 +103,7 @@
                 <div class="target-item-box"
                   *ngFor="let item of (mappingFields$|async | keyFilter: 'label' :searchTarget) ; let i = index;"
                   [class.mandatory-row]="item.mandatory">
-                  <div class="mapped-item-list dropHintClass" dndDropzone (dndDrop)="onItemDrop($event,i)"
+                  <div class="mapped-item-list dropHintClass" dndDropzone (dndDrop)="onItemDrop($event,item)"
                     [dndDragoverClass]="'dropOverClass'">
                     <div nz-row>
                       <div nz-col nzSpan="18">
@@ -111,7 +111,7 @@
                           [class.badge-danger]="item.inError" selected nz-tooltip
                           [nzTooltipTitle]="item.inError ? 'This column does not exist in the file you imported.' : null">
                           {{item.value}}
-                          <i nz-icon nzType="close" nzTheme="outline" (click)="onRemoveClick(item,i)"></i>
+                          <i nz-icon nzType="close" nzTheme="outline" (click)="onRemoveClick(item)"></i>
                         </div>
                       </div>
                       <div nz-col nzSpan="6">

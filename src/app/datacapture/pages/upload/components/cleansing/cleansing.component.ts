@@ -16,7 +16,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { isEmpty } from '@app/shared/utils/objects.utils';
 import { take } from 'rxjs/operators';
-import { currencyFormatter, dateFormatter, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { currencyFormatter, dateFormatter, INDEX_HEADER, mapGridFilter } from '@app/shared/utils/grid-api.utils';
 
 @Component({
   selector: 'app-cleansing',
@@ -199,7 +199,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             Object.keys(params.request.filterModel).forEach((column) => {
               const filter = {
                 column: that.cleanFilter(column),
-                operator: params.request.filterModel[column].type,
+                operator: mapGridFilter(params.request.filterModel[column].type, params.request.filterModel[column].filterType === 'date'),
                 value: params.request.filterModel[column].filterType === 'date' ? params.request.filterModel[column].dateFrom : params.request.filterModel[column].filter,
               };
               adaptedFilter.push(filter);
