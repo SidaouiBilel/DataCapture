@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NgModule, Injector } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NZ_I18N, en_US, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
@@ -12,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RolesGuard } from './core/login/guards/roles.guard';
+import {createCustomElement } from '@angular/elements';
 
 registerLocaleData(en);
 // This is used to configure the placement of the snackbars
@@ -29,7 +31,7 @@ const ngZorroConfig: NzConfig = {
     BrowserAnimationsModule,
     AppRoutingModule,
     OverlayModule,
-
+    RouterModule,
     // Core & Shared
     CoreModule,
     SharedModule,
@@ -43,6 +45,14 @@ const ngZorroConfig: NzConfig = {
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
     RolesGuard
   ],
-  bootstrap: [AppComponent]
+  entryComponents:[AppComponent],
+  bootstrap: []
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector:Injector){}
+
+  ngDoBootstrap() {
+    const myCustomElement = createCustomElement(AppComponent, { injector: this.injector });
+    customElements.define('data-app', myCustomElement);
+  }
+ }

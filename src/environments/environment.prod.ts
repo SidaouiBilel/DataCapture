@@ -24,5 +24,6 @@ export const environment = {
   upload:'http://a639a20b446ca46f2a463cb206e7ca06-1781217483.eu-west-3.elb.amazonaws.com/upload/',
   //auth: 'http://localhost:5001/',
   auth:'http://a2e9394e012b340deb401c155c14fd62-121625260.eu-west-3.elb.amazonaws.com/',
+  connector:'http://ae4ac4a0e7fe54b59b2fe6577ad5aeb7-966793033.eu-west-3.elb.amazonaws.com/',
   env: 'PRD'
 };

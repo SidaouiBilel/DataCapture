@@ -1,7 +1,7 @@
 <nz-list [nzDataSource]="DBC$ | async | dBCfilter : 'connector_name' : searchTerm" [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
     <ng-template #item let-item>
-        <nz-list-item class="BD-item" [nzActions]="loading ? [] : [editAction, moreAction]">
-            <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+        <nz-list-item class="BD-item" [nzActions]="loading ? [] : [moreAction]">
+            <nz-list-item-meta [nzTitle]="nzTitle"  [nzDescription]="nzDescription">
                 <ng-template #nzTitle>
                     <div nz-typography class="font-weight-light">{{item.connector_name | uppercase }}</div>
                 </ng-template>

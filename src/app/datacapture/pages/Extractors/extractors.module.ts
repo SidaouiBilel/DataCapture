@@ -21,7 +21,7 @@ import { FomDbComponent } from './components/fom-db/fom-db.component';
     SharedModule
   ],
   entryComponents:[
-    FomDbComponent
+    ContainerComponent, ExtractDBComponent, FomDbComponent
   ],
 })
 export class ExtractorsModule { }

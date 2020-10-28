@@ -26,7 +26,7 @@
       </nz-select> -->
         <nz-list class="list_impo" [nzDataSource]="UserFiles$ | async " [nzRenderItem]="item"  [nzLoading]="loading || autoimportloading" [nzItemLayout]="'vertical'">
             <ng-template #item let-item>
-                <nz-list-item class="BD-item" [nzActions]="loading ? [] : [editAction, moreAction]">
+                <nz-list-item class="BD-item">
 
                         <div  class="font-weight-bold file_item" [attr.ngclass]="{'disabled': selecteddomain}">
                           <a (click)="auto_import_file(item)" nz-button nzType="link" [attr.disabled]="selecteddomain ?true : null">
