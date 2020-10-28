@@ -220,11 +220,12 @@ export class MappingComponent implements OnInit, OnDestroy {
           nzOkText: null,
           nzComponentParams: {
             mappings,
-            mappingId
+            mappingId,
+            domain: domain.id
           },
         });
         modal.afterClose.subscribe((map) => {
-          if (map.id) {
+          if (map && map.id) {
             // Apply the mapping
             const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
             this.service.getMappingById(domain.id, ws, map.id).subscribe((res: any) => {
