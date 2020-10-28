@@ -12,7 +12,7 @@ import { ChecksService } from '../../services/checks.service';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { StoreService } from '../../services/store.service';
 import { DATA_TYPES } from '@app/shared/utils/types';
-import { DataCheckFactory } from '../../models/datachecks.model';
+import { ALL_CHECKS, DataCheckFactory } from '../../models/datachecks.model';
 
 @Component({
   selector: 'app-fields-page',
@@ -94,7 +94,9 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
 
     forkJoin(this.ds.get(this.id), this.cs.getDomainChecksMap(this.id)).subscribe(([fields, checks]) => {
       this.list$.next(fields);
-      this.checks$.next(checks);
+      const checks_map = {}
+      ALL_CHECKS.forEach(c=>checks_map[c.id]=c)
+      this.checks$.next(checks_map);
       this.loading = false;
     }, err => this.loading = false);
   }

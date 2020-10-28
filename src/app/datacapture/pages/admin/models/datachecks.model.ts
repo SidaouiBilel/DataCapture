@@ -183,6 +183,34 @@ export class ReferenceCheck extends DataCheck {
     }
 }
 
+export class UnicityCheck extends DataCheck { 
+    id='UNICITY_CHECK'
+    label= 'Unicity Check'
+
+    initModel(model:any){
+        model[this.id]={
+            active: false,
+            lookup: 'all'
+        }
+    }
+
+    updateUIModel(params, model){
+        model[this.id] = {
+            active: true,
+            lookup: params.lookup
+        }
+    }
+
+    toAPIModel(UIModel){
+        const model = UIModel[this.id]
+        if(model.active){
+            return  [{type:this.id,lookup: model.lookup}]
+        } else return []
+    }
+}
+
+
+export const UNICITY_CHECK = new UnicityCheck()
 export const TYPE_CHECK = new TypeCheck()
 export const EMPTY_CHECK = new EmptyCheck()
 export const NUMERIC_BOUNDRY_CHECK = new NumericCheck()
@@ -196,10 +224,10 @@ export const DEFAULT_CHECKS = [EMPTY_CHECK]
 
 export const INT_DEAFULT_CHECKS = [NUMERIC_BOUNDRY_CHECK, PROPERTY_BOUNDRY_CHECK]
 export const DOUBLE_DEAFULT_CHECKS = [NUMERIC_BOUNDRY_CHECK, PROPERTY_BOUNDRY_CHECK]
-export const STRING_DEAFULT_CHECKS = [FORMAT_CHECK, REFERENCE_CHECK]
+export const STRING_DEAFULT_CHECKS = [UNICITY_CHECK, FORMAT_CHECK, REFERENCE_CHECK]
 export const DATE_DEAFULT_CHECKS = [DATE_BOUNDRY_CHECK]
 
-export const ALL_CHECKS = [TYPE_CHECK, EMPTY_CHECK, NUMERIC_BOUNDRY_CHECK, DATE_BOUNDRY_CHECK, PROPERTY_BOUNDRY_CHECK, FORMAT_CHECK, REFERENCE_CHECK]
+export const ALL_CHECKS = [UNICITY_CHECK, TYPE_CHECK, EMPTY_CHECK, NUMERIC_BOUNDRY_CHECK, DATE_BOUNDRY_CHECK, PROPERTY_BOUNDRY_CHECK, FORMAT_CHECK, REFERENCE_CHECK]
 
 export class DataCheckFactory{
 
@@ -257,182 +285,3 @@ export class DataCheckFactory{
         return DEFAULT_CHECKS.concat(type_checks)
     }
 }
-
-
-const API_CHECK = [
-    {
-        "id": "DATE_BOUNDRY_CHECK",
-        "name": "Date Boundry Value Check",
-        "description": null,
-        "category": null,
-        "parameters": [
-            {
-                "name": "operator",
-                "type": "select",
-                "options": [
-                    {
-                        "key": "<",
-                        "value": "<"
-                    },
-                    {
-                        "key": ">",
-                        "value": ">"
-                    }
-                ],
-                "property_types": null,
-                "label": "Operator"
-            },
-            {
-                "name": "operand",
-                "type": "date",
-                "options": null,
-                "property_types": null,
-                "label": "Date"
-            }
-        ],
-        "property_types": [
-            "date"
-        ]
-    },
-    {
-        "id": "NUMERIC_BOUNDRY_CHECK",
-        "name": "Numeric Boundry Value Check",
-        "description": null,
-        "category": null,
-        "parameters": [
-            {
-                "name": "operator",
-                "type": "select",
-                "options": [
-                    {
-                        "key": "<",
-                        "value": "<"
-                    },
-                    {
-                        "key": "<=",
-                        "value": "<="
-                    },
-                    {
-                        "key": ">",
-                        "value": ">"
-                    },
-                    {
-                        "key": ">=",
-                        "value": ">="
-                    }
-                ],
-                "property_types": null,
-                "label": "Operator"
-            },
-            {
-                "name": "operand",
-                "type": "number",
-                "options": null,
-                "property_types": null,
-                "label": "Value"
-            }
-        ],
-        "property_types": [
-            "double",
-            "int"
-        ]
-    },
-    {
-        "id": "PROPERTY_BOUNDRY_CHECK",
-        "name": "Property Boundry Value Check",
-        "description": null,
-        "category": null,
-        "parameters": [
-            {
-                "name": "operator",
-                "type": "select",
-                "options": [
-                    {
-                        "key": "<",
-                        "value": "<"
-                    },
-                    {
-                        "key": "<=",
-                        "value": "<="
-                    },
-                    {
-                        "key": ">",
-                        "value": ">"
-                    },
-                    {
-                        "key": ">=",
-                        "value": ">="
-                    }
-                ],
-                "property_types": null,
-                "label": "Operator"
-            },
-            {
-                "name": "property",
-                "type": "property",
-                "options": null,
-                "property_types": [
-                    "double",
-                    "int"
-                ],
-                "label": "Target Field"
-            }
-        ],
-        "property_types": [
-            "double",
-            "int"
-        ]
-    },
-    {
-        "id": "EMPTY_CHECK",
-        "name": "Empty Cell Check",
-        "description": null,
-        "category": null,
-        "parameters": [],
-        "property_types": null
-    },
-    {
-        "id": "FORMAT_CHECK",
-        "name": "Format Check",
-        "description": "Check cell respects selected format",
-        "category": null,
-        "parameters": [
-            {
-                "name": "regex",
-                "type": "select",
-                "options": [
-                    {
-                        "key": "exp1",
-                        "value": "n,nnn.nn"
-                    },
-                    {
-                        "key": "exp2",
-                        "value": "mm-dd-yyyy"
-                    },
-                    {
-                        "key": "exp3",
-                        "value": "(String)-(String)"
-                    }
-                ],
-                "property_types": null,
-                "label": "Format"
-            },
-            {
-                "name": "custom",
-                "type": "checkbox",
-                "options": null,
-                "property_types": null,
-                "label": "Custom Regex"
-            }
-        ],
-        "property_types": null
-    },
-    {
-        "id": "REFERENCE_CHECK",
-        "name": "Reference Value Check",
-        "description": null,
-        "category": null,
-        "parameters": [],
-        "property_types": null
-    }
-]

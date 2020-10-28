@@ -12,7 +12,7 @@ import { Hotkeys } from '@app/shared/services/hot-keys.service';
 import { take } from 'rxjs/operators';
 import { capitalize, formatDate, isInDateFormat, isInDoubleFormat, isInIntegerFormat, shortcutString } from '@app/shared/utils/strings.utils';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
-import { GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIAllFilterOptions, GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 import { SaveSourcesPreview } from '@app/datacapture/pages/upload/store/actions/mapping.actions';
 
@@ -121,6 +121,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
                 resizable: true,
                 valueFormatter : GAPIformatCell,
                 filter: GAPIFilterComponenet('string'),
+                filterParams: GAPIAllFilterParams(params)
               }
             ));
             headers.unshift(INDEX_HEADER);

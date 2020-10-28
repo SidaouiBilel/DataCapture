@@ -62,6 +62,14 @@
             <app-reference-type-input [(ngModel)]='model[check.id].ref_type'></app-reference-type-input>
         </div>
 
+        <div *ngSwitchCase="'UNICITY_CHECK'">
+            <label nz-checkbox [(ngModel)]='model[check.id].active'> Is Unique In </label>
+            <nz-select style="min-width: 200px;" [(ngModel)]="model[check.id].lookup">
+                <nz-option nzValue="source" nzLabel='Datasource'></nz-option>
+                <nz-option nzValue="all" nzLabel='Datasource & Collection'></nz-option>
+            </nz-select>
+        </div>
+
 
     </ng-container>
 </div>

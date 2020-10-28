@@ -86,6 +86,28 @@ export function GAPIformatCell(params) {
   }
 }
 
+export function GAPIAllFilterOptions(params) {
+  return [
+    'contains',
+    'notContains',
+    'equals',
+    'notEqual',
+    'lessThan',
+    'lessThanOrEqual',
+    'greaterThan',
+    'greaterThanOrEqual',
+    'startsWith',
+    'endsWith',
+  ]
+}
+
+export function GAPIAllFilterParams(params) {
+  return {
+    filterOptions: GAPIAllFilterOptions(params),
+    suppressAndOrCondition: true
+  }
+}
+
 export function GAPIFilters(filterModel) {
   const adaptedFilter = [];
   Object.keys(filterModel).forEach((column) => {
