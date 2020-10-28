@@ -11,21 +11,21 @@
           <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
         </div>
   
-        <div nz-col [nzSpan]='6'>
+        <!-- <div nz-col [nzSpan]='6'>
           <nz-input-group [nzSuffix]="suffixIconSearch">
             <input type="text" nz-input  placeholder="Filter Data Extractors"  [(ngModel)]='searchDE'/>
           </nz-input-group>
           <ng-template #suffixIconSearch>
             <i nz-icon nzType="search"></i>
           </ng-template>
-        </div>
+        </div> -->
     </div>
   
     <div class="mb-4 flext bg-grey rounded-0 m-0 p-0">
         <nz-list class="list_impo" [nzDataSource]="Jobs$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
             <ng-template #item let-item>
-                <nz-list-item class="BD-item" [nzActions]="loading ? [] : [editAction, moreAction]">
-                    <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+                <nz-list-item class="BD-item">
+                    <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
                         <ng-template #nzTitle>
                             <div nz-typography class="font-weight-bold">Extraction id : <span nz-typography  class="font-weight-light">{{item.job_id | uppercase }}</span></div>
                             <!-- <div nz-typography class="font-weight-light">{{item.status | uppercase }}</div> -->
@@ -51,13 +51,13 @@
 
                                 </span>
                             </div>
-                            <div>
+                            <!-- <div>
                             <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
                             <span class="pl-2" nz-typography>Created On</span>: 
                             <nz-divider nzType="vertical"></nz-divider>
                             <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
                             <span class="pl-2" nz-typography>Modified On</span>: 
-                            </div>
+                            </div> -->
                         </ng-template>
                         <!-- <ng-template #editAction>
                             <button nz-button class="ghost" (click)="updateDBC.emit(item)">

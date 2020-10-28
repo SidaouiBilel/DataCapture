@@ -63,6 +63,8 @@
             </ul>
           </li>
 
+
+
           <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="false">
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
@@ -89,6 +91,10 @@
               </li>
             </ul>
           </li>
+
+          <li nz-submenu nzIcon="database" nzTitle="Database console" [nzOpen]="false" (click)="openmydata()">
+          </li>
+
         </ul>
       </nz-header>
     </ng-container>
