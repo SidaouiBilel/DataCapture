@@ -42,6 +42,7 @@ export class LayoutContainer implements OnInit , AfterViewInit {
     });
 
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
+    
     this.profile$.subscribe(
       res=>{
         this.service.get_user_data_link(res.id).subscribe(
