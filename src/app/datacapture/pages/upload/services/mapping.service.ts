@@ -27,6 +27,10 @@ export class MappingService {
     return this.http.get(environment.mapping + `/apply?file=${SheetId}&domainId=${domainId}&mappingId=${mappingId}`);
   }
 
+  deleteMappingById(mappingId: string) {
+    return this.http.delete(environment.mapping + `/apply?mapping_id=${mappingId}`);
+  }
+
   loadAutoMappingById(domainId: string, SheetId: string, transformed?: string) {
      // tslint:disable-next-line: max-line-length
      return this.http.get(environment.mapping + `/load_auto?file=${SheetId}&domainId=${domainId}${transformed ? '&transformed=' + transformed : ''}`);
