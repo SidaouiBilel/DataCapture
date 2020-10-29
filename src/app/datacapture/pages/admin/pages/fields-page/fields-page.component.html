@@ -29,16 +29,11 @@
     <thead>
       <tr>
         <ng-container *ngFor="let column of columns">
-          <th *ngIf="column.field == 'action'">
-            <!-- <button nz-button nzType="primary"  (click)='openConfig(null)'><i nz-icon nzType="plus"></i></button> -->
-          </th>
           <th *ngIf="column.field != 'action'">
             {{ column.label }}
           </th>
-
+          <th *ngIf="column.field == 'action'"></th>
         </ng-container>
-
-
       </tr>
     </thead>
     <tbody>
@@ -75,7 +70,13 @@
               <app-bool-icon [b]='data[column.field]'></app-bool-icon>
             </td>
 
+            <td *ngSwitchCase="'ref_type'">
+              <i>{{data.ref_type?.label}}</i>
+            </td>
 
+            <td *ngSwitchCase="'label'">
+              <nz-tag style="text-align: center;">{{data.label}}</nz-tag>  
+            </td>
 
 
             <td *ngSwitchDefault>

@@ -59,7 +59,8 @@
             </div>
         </div>
         <div *ngSwitchCase="'REFERENCE_CHECK'">
-            <app-reference-type-input [(ngModel)]='model[check.id].ref_type'></app-reference-type-input>
+            <!-- <app-reference-type-input [(ngModel)]='model[check.id].ref_type'></app-reference-type-input> -->
+            <label nz-checkbox [(ngModel)]='model[check.id].active'> Exists</label>
         </div>
 
         <div *ngSwitchCase="'UNICITY_CHECK'">

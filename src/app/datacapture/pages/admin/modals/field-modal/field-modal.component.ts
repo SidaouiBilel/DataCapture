@@ -3,7 +3,7 @@ import { EntityModal } from '../entity-modal';
 import { DomainService } from '../../services/domain.service';
 import { NzModalRef } from 'ng-zorro-antd';
 import { DATA_TYPES } from '@app/shared/utils/types';
-import { DataCheckFactory, EMPTY_CHECK } from '../../models/datachecks.model';
+import { DataCheckFactory, EMPTY_CHECK, REFERENCE_CHECK } from '../../models/datachecks.model';
 
 
 @Component({
@@ -31,10 +31,10 @@ export class FieldModalComponent extends EntityModal implements OnInit {
         this.data.rules[EMPTY_CHECK.id]=this.data.mandatory
       }
     },
-    { name: 'Editable',
-      field: 'editable',
-      type: 'checkbox',
-    },
+    // { name: 'Editable',
+    //   field: 'editable',
+    //   type: 'checkbox',
+    // },
     { name: 'Mandatory',
       field: 'mandatory',
       type: 'checkbox',
@@ -42,11 +42,22 @@ export class FieldModalComponent extends EntityModal implements OnInit {
         this.data.rules[EMPTY_CHECK.id]=newValue
       }
     },
+    { name: 'Reference of',
+      field: 'ref_type',
+      mandatory: false,
+      type: 'ref_type',
+      onchange: (newValue) => {
+        this.data.rules[REFERENCE_CHECK.id]={active:(newValue)?true:false}
+      },
+      display:()=>{
+        return this.data.type == 'string'
+      }
+    },
     { name: 'Description',
       field: 'description',
       mandatory: false,
       type: 'textarea'
-    }
+    },
   ];
 
   current = 1;
@@ -150,6 +161,14 @@ export class FieldModalComponent extends EntityModal implements OnInit {
   onChange(f, newValue) {
     if (f.onchange) {
       f.onchange(newValue);
+    }
+  }
+
+  display(f) {
+    if (f.display) {
+      return f.display();
+    } else {
+      return true
     }
   }
 

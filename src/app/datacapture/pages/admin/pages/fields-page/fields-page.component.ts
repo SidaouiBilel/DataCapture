@@ -31,14 +31,14 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   checks$ = new BehaviorSubject<any>({});
   profile$: Observable<any>;
   columns = [
-    new Column('', 'action'),
     new Column('Label', 'label'),
     new Column('Type', 'type'),
-    // new Column('Name', 'name'),
+    new Column('Reference', 'ref_type'),
     new Column('Description', 'description'),
     new Column('Mandatory', 'mandatory'),
-    new Column('Editable', 'editable'),
+    // new Column('Editable', 'editable'),
     new Column('Checks', 'rules'),
+    new Column('', 'action'),
   ];
 
   data_types = {}
@@ -63,8 +63,6 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
     DATA_TYPES.forEach(type => {
       this.data_types[type.value]= type.label
     });
-
-    // this.openConfig(null)
   }
 
   enableAddbtn(profile): boolean {

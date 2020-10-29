@@ -164,21 +164,20 @@ export class ReferenceCheck extends DataCheck {
 
     initModel(model:any){
         model[this.id]={
-            ref_type: null
+            active: false
         }
     }
 
     updateUIModel(params, model){
-        const conditions = params.conditions || {}
         model[this.id] = {
-            ref_type: conditions.ref_type
+            active: true
         }
     }
 
     toAPIModel(UIModel){
         const model = UIModel[this.id]
-        if(model.ref_type){
-            return  [{type:this.id,field_name: 'code',conditions:{...model}}]
+        if(model.active){
+            return  [{type:this.id,field_name: 'code'}]
         } else return []
     }
 }
