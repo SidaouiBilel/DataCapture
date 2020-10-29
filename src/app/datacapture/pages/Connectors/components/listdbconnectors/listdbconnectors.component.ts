@@ -12,7 +12,7 @@ export class ListdbconnectorsComponent implements OnInit {
 
   loading :Boolean = false;
   @Output() updateDBC : EventEmitter <any> = new EventEmitter();
-  @Input() searchTerm:String;
+  @Input() searchTerm:string;
   @Input() reload :BehaviorSubject<any>;
   DBC$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   constructor(private DBC_S:DBconnectorsService) { }
