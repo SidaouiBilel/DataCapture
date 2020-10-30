@@ -4,6 +4,7 @@ export interface Mapping {
   sourcesPreview: any;
   mandatories: any;
   mappingId: string;
+  mappingVersion: string;
   mappingName: string;
   sheetsTypes: any;
   mappingValid: boolean;

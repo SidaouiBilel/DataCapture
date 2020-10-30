@@ -7,6 +7,7 @@ export enum MappingActionTypes {
   SaveMandatories = '[Mapping] Save Mandatories',
   SaveMappingSheet = '[Mapping] Save Mapping Sheet',
   SaveMappingId = '[Mapping] Save Mapping Id',
+  SaveMappingVersion = '[Mapping] Save Mapping Version',
   SaveMappingName = '[Mapping] Save Mapping Name',
   SaveSheetsTypes = '[Mapping] Save Sheets Types',
   SaveMappingValid = '[Mapping] Save Mapping Valid',
@@ -43,6 +44,11 @@ export class SaveMappingId implements Action {
   constructor(public payload: string) {}
 }
 
+export class SaveMappingVersion implements Action {
+  readonly type = MappingActionTypes.SaveMappingVersion;
+  constructor(public payload: string) {}
+}
+
 export class SaveMappingName implements Action {
   readonly type = MappingActionTypes.SaveMappingName;
   constructor(public payload: string) {}
@@ -63,4 +69,4 @@ export class SaveMandatories implements Action {
   constructor(public payload: any) {}
 }
 export type MappingActions = SaveMappingFields | SaveMappedSources | SaveMandatories | SaveMappingValid | SaveSourcesPreview |
-  SaveMappingSheet | SaveSheetsTypes | SaveMappingId | SaveMappingName | SaveIsModified;
+  SaveMappingSheet | SaveSheetsTypes | SaveMappingId | SaveMappingVersion | SaveMappingName | SaveIsModified;

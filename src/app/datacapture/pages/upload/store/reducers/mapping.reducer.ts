@@ -9,6 +9,7 @@ export const initialState: Mapping = {
   sourcesPreview: {},
   mandatories: {},
   mappingId: '',
+  mappingVersion: '',
   mappingName: null,
   sheetsTypes: {},
   mappingValid: true,
@@ -55,6 +56,12 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
       return {
         ...state,
         mappingId: action.payload
+      };
+
+    case MappingActionTypes.SaveMappingVersion:
+      return {
+        ...state,
+        mappingVersion: action.payload
       };
 
       case MappingActionTypes.SaveMappingName:
