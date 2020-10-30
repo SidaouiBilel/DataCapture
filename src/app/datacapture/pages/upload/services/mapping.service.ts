@@ -40,13 +40,15 @@ export class MappingService {
     return this.http.post(environment.mapping + '/', this.getMappingBody(targets, mappingId, sheetId, domainId));
   }
 
-  postAutomaticMapping(domainId: string, SheetId: string, name: string, mapping: any, transformed?: string): Observable<any> {
+  // tslint:disable-next-line: max-line-length
+  postAutomaticMapping(domainId: string, SheetId: string, name: string, mapping: any, parentId: any, transformed?: string): Observable<any> {
     const payload = {
       file: SheetId,
       domainId,
       name,
+      parentMappingId: parentId,
       transformed,
-      mapping: mapping.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if(e) { return e; }})
+      mapping: mapping.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if (e) { return e; }})
     };
     // tslint:disable-next-line: max-line-length
     return this.http.post(environment.mapping + `/save`, payload);
@@ -57,7 +59,7 @@ export class MappingService {
       file: sheetId,
       mapping_id: mappingId,
       domainId,
-      mapping: targets.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if(e) { return e; }})
+      mapping: targets.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if (e) { return e; }})
     };
   }
 }

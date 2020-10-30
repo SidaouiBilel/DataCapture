@@ -8,19 +8,24 @@ import { MappingService } from '../../../services/mapping.service';
   templateUrl: './previous-mappings.component.html',
   styleUrls: ['./previous-mappings.component.css']
 })
-export class PreviousMappingsComponent {
+export class PreviousMappingsComponent implements OnInit {
   @Input() mappings: any[];
   @Input() domain: string;
   @Input() mappingId: string;
-  constructor(private modal: NzModalRef, private service: MappingService, private notification: NotificationService) { }
+  @Input() selectedVersion: string;
+  constructor(private modal: NzModalRef, private service: MappingService, private notification: NotificationService) {}
 
-  apply(id: any): void {
-    this.modal.close(id);
+  ngOnInit(): void {}
+
+  apply(item: any): void {
+    item.version = this.selectedVersion;
+    this.modal.close(item);
   }
 
   deleteMapping(id: any): void {
     this.service.deleteMappingById(id).subscribe((res) => {
       this.refresh();
+      this.selectedVersion = null;
       this.notification.success('The mapping was deleted successfully');
     });
   }

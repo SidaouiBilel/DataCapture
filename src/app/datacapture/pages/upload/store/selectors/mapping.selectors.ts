@@ -17,6 +17,11 @@ export const selectSourcesPreview = createSelector(
   (object: Mapping) => object.sourcesPreview
 );
 
+export const selectMappingVersion = createSelector(
+  SelectMapping,
+  (object: Mapping) => object.mappingVersion
+);
+
 export const selectMappingValid = createSelector(
   SelectMapping,
   (object: Mapping) => object.mappingValid

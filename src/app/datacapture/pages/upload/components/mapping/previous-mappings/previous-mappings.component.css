@@ -2,3 +2,11 @@
   max-height: 60vh;
   overflow: auto;
 }
+
+.cursor {
+  cursor: pointer;
+}
+
+.disable-click {
+  pointer-events: none;
+}

@@ -18,6 +18,10 @@
         (click)='isVisible = true'>
         <i nz-icon nzType="save"></i>
       </button>
+      <button nz-tooltip nzTooltipTitle='Save new version' nzShape='circle' class="ghost" nz-button
+        (click)="saveNewVersion()">
+        <i nz-icon nzType="hourglass"></i>
+      </button>
       <nz-divider nzType='vertical'></nz-divider>
       <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button
         (click)="loadAutoMapping()">
@@ -125,7 +129,7 @@
 </div>
 
 <nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzOkLoading]="isOkLoading"
-  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping" (nzOnOk)="saveNewMapping()"
+  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping" (nzOnOk)="saveNewMapping(mappingId)"
   (nzOnCancel)="isVisible = false">
   <form nz-form [formGroup]="validateForm">
     <nz-form-item>
