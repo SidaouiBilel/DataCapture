@@ -61,6 +61,7 @@ import { UploadDataComponent } from './components/upload/upload-data/upload-data
 import { FilterPipe } from './pipe/source-filter.pipe';
 import { CalculatorComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator.component';
 import { CalculatorModalComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator-modal/calculator-modal.component';
+import { ImportedFileInfoComponent } from './components/import/imported-file-info/imported-file-info.component';
 
 const components = [
   UploadComponentComponent,
@@ -118,7 +119,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, ImportedFileInfoComponent],
   exports: [
   ],
   providers : [

@@ -22,6 +22,8 @@ export class SheetSelectorComponent implements OnInit {
   sheets$: any;
   selectedSheet$: any;
 
+  @Input() type="grid"
+
   constructor(
     private host: ElementRef,
     private store: Store<AppState>,

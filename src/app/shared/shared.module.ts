@@ -36,7 +36,7 @@ const SharedModules = [
   ReactiveFormsModule,
   MonacoEditorModule,
   NzModalModule,
-  AngularResizedEventModule
+  AngularResizedEventModule,
 ];
 
 const Components = [

@@ -1,18 +1,14 @@
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
-
-// These are shared variables that can be extracted to their own file
-@primary-color: #00adb5;
-@border-radius-base: 4px;
 // The prefix to use on all css classes from ant.
 @ant-prefix: ant;
 
 // An override for the html selector for theme prefixes
-@html-selector: .alt;
+@html-selector: html;
 
 // -------- Colors -----------
-@primary-color: #3f8ad1;
-@info-color: #557fa7;
-@success-color: #79a03c;
+@primary-color: @blue-6;
+@info-color: @blue-6;
+@success-color: @green-6;
 @processing-color: @blue-6;
 @error-color: @red-6;
 @highlight-color: @red-6;
@@ -250,7 +246,7 @@
 
 // Layout
 @layout-body-background: #f0f2f5;
-@layout-header-background: #2e394b;
+@layout-header-background: #167fe0;
 @layout-footer-background: @layout-body-background;
 @layout-header-height: 64px;
 @layout-header-padding: 0 50px;
@@ -708,8 +704,4 @@
   background: white;
   border-color: #49cc90;
   color: #49cc90;
-}
-
-.bg-primary{
-  background-color: @primary-color;
 }

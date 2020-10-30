@@ -31,9 +31,9 @@ export class EnvTagComponent implements OnInit {
 
   getText(env){
     switch(env){
-      case 'TST': return 'Test'
-      case 'PRD': return 'Production'
-      case 'DEV': return 'Develop'
+      case 'TST': return 'TST'
+      case 'PRD': return 'PRD'
+      case 'DEV': return 'DEV'
       default: env
     }
   }

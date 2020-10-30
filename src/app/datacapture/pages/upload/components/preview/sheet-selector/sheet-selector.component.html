@@ -1,4 +1,4 @@
-<div class="flex start"  (resized)='onResize($event)'>
+<div class="flex start"  (resized)='onResize($event)' *ngIf='type=="grid"'>
   <i nz-icon nzType="copy" nzTheme="twotone" class="m-2"></i>
 
     <div class="sheet-selector">
@@ -23,3 +23,17 @@
       </nz-dropdown-menu>
     </div>
 </div>
+
+
+<div class="flex stretch wrap button-spacing" *ngIf='type=="list"'>
+        <button nz-button 
+        (click)='onSheetSelected(e.index)'
+        *ngFor="let e of (sheets$|async); let i=index" [ngClass]='{"active": (selectedSheet$ | async) == e.index}' class="flex-1" style="min-height: 100px;">
+            <div class="flex column">
+                <i style="font-size: 34px;" nz-icon nzType='copy' nzTheme='twotone'></i>
+                <!-- <b nz-typography>Number {{i+1}}</b> -->
+                <i>{{e.sheet}}</i>
+            </div>
+        </button>
+</div>
+
