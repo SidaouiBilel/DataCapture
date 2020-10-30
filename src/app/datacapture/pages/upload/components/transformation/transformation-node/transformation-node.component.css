@@ -1,5 +1,5 @@
 ::ng-deep .transformation-card.ant-card{
-    border-radius: 10px !important;
+    border-radius: 0px !important;
     min-width: 250px;
     width: 100%;
 }
