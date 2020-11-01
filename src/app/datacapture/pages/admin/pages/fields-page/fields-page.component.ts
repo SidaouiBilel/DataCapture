@@ -82,7 +82,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
   }
 
   onBack() {
-    this.router.navigate(['/datacapture/admin/domains', this.subid, 'collection']);
+    this.router.navigate(['/data/datacapture/admin/domains', this.subid, 'collection']);
   }
 
   load_data() {

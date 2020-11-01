@@ -9,20 +9,25 @@ import * as APP from './app.setting';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'datacapture/dashboard',
+    redirectTo: 'data/datacapture/dashboard',
     pathMatch: 'full'
   },
   {
-    path: 'datacapture',
+    path: 'data',
+    redirectTo: 'data/datacapture/dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: 'data/datacapture',
     loadChildren: './datacapture/datacapture.module#DataCaptureModule',
     canActivate: [LoginGuard]
   },
   {
-    path: 'login',
+    path: 'data/login',
     component: LoginComponent,
   },
   {
-    path: 'login/reset/:token',
+    path: 'data/login/reset/:token',
     component: ResetComponent,
   },
   {

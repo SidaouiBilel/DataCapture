@@ -291,10 +291,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   goToMapping(): void {
-    this.router.navigate(['/datacapture/upload/mapping']);
+    this.router.navigate(['/data/datacapture/upload/mapping']);
   }
 
   goToUpload(): void {
-    this.router.navigate(['/datacapture/upload/uploading']);
+    this.router.navigate(['/data/datacapture/upload/uploading']);
   }
 }

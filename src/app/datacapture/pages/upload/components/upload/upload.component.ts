@@ -26,6 +26,6 @@ export class UploadComponent implements OnInit {
   }
 
   goToCleansing(): void {
-    this.router.navigate(['/datacapture/upload/cleansing']);
+    this.router.navigate(['/data/datacapture/upload/cleansing']);
   }
 }

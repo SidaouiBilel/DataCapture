@@ -7,8 +7,8 @@
     "start": "ng serve",
     "build": "ng build",
     "post-build": "node scripts/post-build.js",
-    "build:microapp": "rimraf gen && ng build -c=production --output-hashing none --deploy-url http://localhost:5001/ && npm run post-build",
-    "serve:microapp":"http-server ./gen  -p 5001  ",
+    "build:microapp": "ng build --prod --output-hashing none --deploy-url http://localhost:5001/ --single-bundle true  --bundle-styles false --keepStyles false",
+    "serve:microapp": "http-server ./dist/datacapture  -p 5001  ",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -45,6 +45,7 @@
     "concat": "^1.0.3",
     "cpx": "^1.5.0",
     "document-register-element": "^1.7.2",
+    "fs-extra": "^9.0.1",
     "jquery": "^3.5.1",
     "ng-drag-drop": "^5.0.0",
     "ng-zorro-antd": "^8.5.2",

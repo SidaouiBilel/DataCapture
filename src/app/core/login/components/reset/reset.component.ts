@@ -25,7 +25,7 @@ export class ResetComponent implements OnInit {
     this.service.updatePw(pw, this.token).subscribe((res: any) => {
       if (res.status === 'success') {
         this.not.success('Your password has been successfully reset.');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/data/login']);
       }
     }, (err) => {
       this.not.error(err.message);

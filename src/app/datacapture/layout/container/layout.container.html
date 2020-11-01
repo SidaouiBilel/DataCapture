@@ -4,7 +4,7 @@
     <div class="flex between top">
       <div>
         <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
-          <a [routerLink]="['/datacapture/projects']">
+          <a [routerLink]="['/data/datacapture/projects']">
             <!-- <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
               src="../../../../assets/images/logo.png" alt="logo"> -->
             <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-bold">
@@ -37,19 +37,19 @@
     <ng-container *ngIf="true">
       <nz-header class="nav" #navbar>
         <ul nz-menu nzMode="horizontal" class="sider-menu" [nzInlineCollapsed]="isCollapsed" >
-          <li nz-menu-item [nzSelected]="isPrimaryPage('dashboard')" [routerLink]="['/datacapture/dashboard']">
+          <li nz-menu-item [nzSelected]="isPrimaryPage('dashboard')" [routerLink]="['/data/datacapture/dashboard']">
             <i nz-icon nzType="dashboard"></i>
             <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>
           </li>
           <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="false">
             <ul>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/users']">
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/data/datacapture/users']">
                 <span>Users</span>
               </li>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/admin/domains']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/data/datacapture/admin/domains']">
                 <span>Domains</span>
               </li>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('connectors')" [routerLink]="['/datacapture/connectors/manageDB']">
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('connectors')" [routerLink]="['/data/datacapture/connectors/manageDB']">
                 <span>Connectors</span>
               </li>
             </ul>
@@ -57,7 +57,7 @@
           
           <li nz-submenu nzIcon="export" nzTitle="Extractors" [nzOpen]="false">
             <ul>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('database')" [routerLink]="['/datacapture/extractors/database']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('database')" [routerLink]="['/data/datacapture/extractors/database']">
                 <span>Database</span>
               </li>
             </ul>
@@ -65,25 +65,25 @@
 
           <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="false">
             <ul>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/data/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>
                 <span>Import</span>
               </li>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/datacapture/upload/transform']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('preview')" [routerLink]="['/data/datacapture/upload/transform']">
                 <i nz-icon nzType="sliders"></i>
                 <span>Transform</span>
               </li>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('mapping')" [routerLink]="['/datacapture/upload/mapping']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('mapping')" [routerLink]="['/data/datacapture/upload/mapping']">
                 <i nz-icon nzType="arrows-alt"></i>
                 <span>Mapping</span>
               </li>
               <li nz-menu-item [nzSelected]="isPrimaryPage('cleansing')"
-                [routerLink]="['/datacapture/upload/cleansing']">
+                [routerLink]="['/data/datacapture/upload/cleansing']">
                 <i nz-icon nzType="monitor"></i>
                 <span>Cleansing</span>
               </li>
               <li nz-menu-item [nzSelected]="isPrimaryPage('uploading')"
-                [routerLink]="['/datacapture/upload/uploading']">
+                [routerLink]="['/data/datacapture/upload/uploading']">
                 <i nz-icon nzType="upload"></i>
                 <span>Upload</span>
               </li>

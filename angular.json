@@ -11,11 +11,8 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
-            "customWebpackConfig": {
-              "path": "./scripts/webpack.config.js"
-            },
             "outputPath": "dist/datacapture",
             "index": "src/index.html",
             "main": "src/main.ts",

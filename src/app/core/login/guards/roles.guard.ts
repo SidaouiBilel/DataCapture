@@ -32,10 +32,10 @@ export class RolesGuard implements CanActivate {
               }
             }
           }
-          this.router.navigate(['/datacapture/upload/cleansing']);
+          this.router.navigate(['/data/datacapture/upload/cleansing']);
           return false;
         case 'ADMIN': {
-          this.router.navigate(['/datacapture/dashboard']);
+          this.router.navigate(['/data/datacapture/dashboard']);
           return false;
         }
         default:

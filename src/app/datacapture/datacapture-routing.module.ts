@@ -10,29 +10,29 @@ const routes: Routes = [
       children: [
         {
           path: 'admin',
-          loadChildren : 'app/datacapture/pages/admin/admin.module#AdminModule'
+          loadChildren : './pages/admin/admin.module#AdminModule'
         },
         {
           path: 'users',
-          loadChildren : 'app/datacapture/pages/users/users.module#UsersModule',
+          loadChildren : './pages/users/users.module#UsersModule',
           canActivate: [RolesGuard],
           data: {role: 'ADMIN'}
         },
         {
           path: 'connectors',
-          loadChildren : 'app/datacapture/pages/Connectors/connectors.module#ConnectorsModule'
+          loadChildren : './pages/Connectors/connectors.module#ConnectorsModule'
         },
         {
           path: 'extractors',
-          loadChildren : 'app/datacapture/pages/Extractors/extractors.module#ExtractorsModule'
+          loadChildren : './pages/Extractors/extractors.module#ExtractorsModule'
         },
         {
           path: 'upload',
-          loadChildren : 'app/datacapture/pages/upload/upload.module#UploadModule'
+          loadChildren : './pages/upload/upload.module#UploadModule'
         },
         {
           path: 'dashboard',
-          loadChildren : 'app/datacapture/pages/dashboard/dashboard.module#DashboardModule'
+          loadChildren : './pages/dashboard/dashboard.module#DashboardModule'
         },
         {
           path: '**',

@@ -28,7 +28,7 @@
 
         <app-domain-card [class]='(s.displayList$ | async)?"":"h-100"' [loading]='loading' [data]='d'
           (delete)='showDeleteConfirm(d)' (edit)='openConfig(d)'
-          (collections)="navigate(['/datacapture/admin/domains', d.id, 'collection'])"></app-domain-card>
+          (collections)="navigate(['/data/datacapture/admin/domains', d.id, 'collection'])"></app-domain-card>
 
         <!-- </nz-card> -->
       </div>
