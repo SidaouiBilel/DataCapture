@@ -19,7 +19,7 @@ export class CustomTooltipComponent implements ITooltipAngularComp  {
     this.params.error.pipe(take(1)).subscribe((errors) => {
       console.log(params)
       const index = params.value.index
-      const field = params.index.field
+      const field = params.colDef.field
       if (errors[index] && errors[index][field]) {
         this.errors = errors[index][field].errors;
       }
