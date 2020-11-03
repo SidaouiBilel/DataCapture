@@ -219,7 +219,8 @@ export class CleansingComponent implements OnInit, OnDestroy {
               that.total$.next(res.total);
               const newErrors = {};
               Object.keys(res.results).forEach((e: string) => {
-                const ind = Number(e) + ( that.numberOfRows * page);
+                // const ind = Number(e) + ( that.numberOfRows * page);
+                const ind = Number(e);
                 newErrors[ind] =  res.results[e];
               });
               that.results = {...that.results, ...newErrors};
@@ -387,7 +388,8 @@ export class CleansingComponent implements OnInit, OnDestroy {
     api.redrawRows({ rowNodes: [rowNode] });
     this.runWithEditedCell().subscribe(() => {
       this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
-        this.results[rowNode.rowIndex] = data.results[0];
+        const absolute_index = rowNode.rowIndex
+        this.results[absolute_index] = data.results[absolute_index];
         this.results$.next(this.results);
         rowNode.stub = false;
         api.redrawRows({ rowNodes: [rowNode] });

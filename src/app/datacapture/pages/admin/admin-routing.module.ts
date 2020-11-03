@@ -22,6 +22,10 @@ const routes: Routes = [
         component: SuperDomainsPageComponent,
       },
       {
+        path: 'references',
+        component: RefernceDataPageComponent
+      },
+      {
         path: 'domains/:subid/collection/:id',
         component: CollectionDetailsComponent,
         children: [

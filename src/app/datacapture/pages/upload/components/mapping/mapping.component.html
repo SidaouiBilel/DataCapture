@@ -97,7 +97,7 @@
                 <div class="target-item-box"
                   *ngFor="let item of (mappingFields$|async | keyFilter: 'label' :searchTarget) ; let i = index;"
                   [class.mandatory-row]="item.mandatory">
-                  <div class="mapped-item-list" [ngClass]='{"dropHintClass":!item.value}'  dndDropzone (dndDrop)="onItemDrop($event,item)"
+                  <div class="mapped-item-list" [ngClass]='{"dropHintClass":!item.value&&item.mandatory}'  dndDropzone (dndDrop)="onItemDrop($event,item)"
                     [dndDragoverClass]="'dropOverClass'">
                     <div nz-row>
                       <div nz-col nzSpan="18">
