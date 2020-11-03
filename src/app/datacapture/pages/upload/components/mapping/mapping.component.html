@@ -48,6 +48,12 @@
   <!-- Body -->
   <div class="flex-box" *ngIf="keys(mappedSources).length">
 
+    <div class="mapping-information mb-1 border">
+      <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error" nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon></nz-alert>
+      <nz-alert *ngIf="(mandatories$ | async)" nzType="error" [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
+      <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="info" nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
+    </div>
+
     <div class="mapping-container">
       <!-- Sources -->
       <div class="sources">
@@ -111,12 +117,18 @@
                     [dndDragoverClass]="'dropOverClass'">
                     <div nz-row>
                       <div nz-col nzSpan="18">
-                        <div *ngIf="item.value" class="badge" [class.badge-primary]="!item.inError"
+                        <nz-tag 
+                        *ngIf="item.value" 
+                        nzMode="closeable"
+                        [nzColor]='item.inError?"red":""'
+                        (nzOnClose)="onRemoveClick(item)"
+                        >{{item.value}}</nz-tag>
+                        <!-- <div *ngIf="item.value" class="badge" [class.badge-primary]="!item.inError"
                           [class.badge-danger]="item.inError" selected nz-tooltip
                           [nzTooltipTitle]="item.inError ? 'This column does not exist in the file you imported.' : null">
                           {{item.value}}
                           <i nz-icon nzType="close" nzTheme="outline" (click)="onRemoveClick(item)"></i>
-                        </div>
+                        </div> -->
                       </div>
                       <div nz-col nzSpan="6">
                         <span [class.mandatory]="item.mandatory" nz-tooltip [nzTooltipTitle]="item?.description"
@@ -133,12 +145,6 @@
           </div>
         </nz-card>
       </div>
-    </div>
-
-    <div class="mapping-information mt-1 border">
-      <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error" nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon></nz-alert>
-      <nz-alert *ngIf="(mandatories$ | async)" nzType="error" [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
-      <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="info" nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
     </div>
   
   </div>

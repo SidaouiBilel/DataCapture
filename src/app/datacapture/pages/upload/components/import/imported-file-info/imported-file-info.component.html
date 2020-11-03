@@ -2,7 +2,8 @@
     
 <div class="flex stretch column w-100 flex-scroll">
     <div class="mb-3">
-        <nz-statistic [nzValue]="(metadata$ | async)?.filename " [nzTitle]="'File Name'"></nz-statistic>
+        <nz-statistic nzValue="" [nzTitle]="'File Name'"></nz-statistic>
+        <h4 nz-typography>{{(metadata$ | async)?.filename}}</h4>
     </div>
     <div class="mb-3">
         <nz-statistic nzValue='' [nzTitle]="'Sheets'"></nz-statistic>
@@ -18,7 +19,7 @@
             <button nz-button>
                 Header from line 
                 <nz-tag class="m-0">1</nz-tag>
-                <i nz-icon nzType="down"></i> 
+                <!-- <i nz-icon nzType="down"></i>  -->
             </button>
         </div>
         
