@@ -91,29 +91,13 @@
               <div>
                 <input nz-input placeholder="Search" nzSize="default" [(ngModel)]="searchTarget" />
               </div>
-              <!-- <div>
-                TARGET FIELDS
-                <input nz-input class="w-50" placeholder="Search" nzSize="default" [(ngModel)]="searchTarget" />
-
-                <i nz-icon nz-tooltip nzTooltipPlacement="right" *ngIf="!(mappingValid$ | async)"
-                  nzTooltipTitle="This mapping is invalid with this worksheet. Update it or use another one."
-                  class="text-danger pl-1" nzType="info-circle" nzTheme="fill"></i>
-              </div>
-              <div [ngSwitch]="(mandatories$ | async)">
-                <span *ngSwitchCase='0' class="text-success">
-                  <i nz-icon nzType="check" nzTheme="outline"></i><b> ALL MANDATORIES HAVE BEEN MAPPED</b>
-                </span>
-                <span *ngSwitchDefault class="text-danger"><b>{{(mandatories$ | async)}}</b>
-                  MANDATORY MISSING
-                </span>
-              </div> -->
             </div>
             <div class="scroll-box">
               <div class="source-list">
                 <div class="target-item-box"
                   *ngFor="let item of (mappingFields$|async | keyFilter: 'label' :searchTarget) ; let i = index;"
                   [class.mandatory-row]="item.mandatory">
-                  <div class="mapped-item-list dropHintClass" dndDropzone (dndDrop)="onItemDrop($event,item)"
+                  <div class="mapped-item-list" [ngClass]='{"dropHintClass":!item.value}'  dndDropzone (dndDrop)="onItemDrop($event,item)"
                     [dndDragoverClass]="'dropOverClass'">
                     <div nz-row>
                       <div nz-col nzSpan="18">
