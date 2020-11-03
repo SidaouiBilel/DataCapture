@@ -219,7 +219,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
               that.total$.next(res.total);
               const newErrors = {};
               Object.keys(res.results).forEach((e: string) => {
-                // const ind = Number(e) + ( that.numberOfRows * page);
                 const ind = Number(e);
                 newErrors[ind] =  res.results[e];
               });
@@ -277,7 +276,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
         if (h.colId !== INDEX_HEADER.colId) {
           const cellClass = (params) => {
             const f = params.colDef.field;
-            const i = params.rowIndex;
+            const i = params.data.row_index;
             try {
               if (this.results[i][f].errors.length > 0) {
                 return 'error-cell';
