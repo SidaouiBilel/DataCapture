@@ -17,7 +17,7 @@ export class CustomTooltipComponent implements ITooltipAngularComp  {
     // this.data = params.api.getDisplayedRowAtIndex(params.rowIndex).data;
     this.field = params.colDef.headerName;
     this.params.error.pipe(take(1)).subscribe((errors) => {
-      console.log(params)
+      // console.log(params)
       const index = params.value.index
       const field = params.colDef.field
       if (errors[index] && errors[index][field]) {
