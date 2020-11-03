@@ -1,0 +1,68 @@
+<div class="ref-data-container">
+    <div class="flex column fill stretch">
+
+      <ng-container *ngIf='(activeRefType$ | async); let r'>
+      <div class="site-page-header-ghost-wrapper mb-2">
+          <nz-page-header nzBackIcon (nzBack)="onBack()" [nzGhost]="false">
+            <nz-page-header-title>{{r.label}}</nz-page-header-title>
+            <nz-page-header-subtitle *ngIf='r.shared'><nz-tag [nzColor]="'#108ee9'">Shared Reference</nz-tag></nz-page-header-subtitle>
+            <nz-page-header-extra>
+              <button nzShape='circle' nz-button>A</button>
+              <button nzShape='circle' nz-button>B</button>
+              <button nzShape='circle' nz-button nzType="primary">C</button>
+            </nz-page-header-extra>
+            <nz-page-header-content>
+              <nz-descriptions nzSize="small" [nzColumn]="3">
+                <nz-descriptions-item nzTitle="Created On" [nzSpan]="1">{{r.created_on | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Modified On" [nzSpan]="1">{{r.modified_on | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Collections" [nzSpan]="1">{{r.domain_ids.length}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Description" [nzSpan]="2">
+                  {{r.description}}
+                </nz-descriptions-item>
+              </nz-descriptions>
+            </nz-page-header-content>
+          </nz-page-header>
+        </div>
+      </ng-container>
+
+      <div class="button-spacing mb-2">
+        <button nz-button class="ghost" (click)='addRefrenceType()'><i nz-icon nzType='plus'></i> Add Reference Data</button>
+        <button nz-button class="ghost" (click)='laodData()'><i nz-icon nzType='reload'></i></button>
+      </div>
+      <div class="flex-scroll">
+        <nz-table nzSize='small' [nzData]='(referenceData$ | async)' [nzLoading]='loading'>
+          <thead>
+            <tr>
+              <!-- <th>Name</th> -->
+              <th>Code</th>
+              <th>Aliases</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of (referenceData$ | async)">
+              <!-- <td>{{data.label}}</td> -->
+              <td>{{data.code}}</td>
+              <td>
+                <nz-tag *ngFor='let a of data.alias'>{{a}}</nz-tag>
+              </td>
+              <td>
+                <button nzShape='circle' nz-button (click)="editRefrenceType(data)"><i nz-icon nzType='edit'></i></button>
+                <nz-divider nzType="vertical"></nz-divider>
+                <button nzShape='circle' nz-button (click)="deleteRefrenceType(data)"><i nz-icon nzType='delete'></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+
+  </div>
+
+    
+  </div>
+
+  
+
+
+
+

@@ -18,7 +18,6 @@ export class EntityModal implements OnInit {
   ngOnInit() {
     this.modalrRef['nzFooter'] = this.modalFooter || null
     this.modalrRef['nzTitle'] = this.modalTitle || null
-    // this.modalrRef['nzWrapClassName'] ="vertical-center-modal"
   }
 
   canSave(){
