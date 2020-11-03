@@ -47,6 +47,9 @@
               <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/admin/domains']">
                 <span>Domains</span>
               </li>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/datacapture/references']">
+                <span>Global References</span>
+              </li>
             </ul>
           </li>
           <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="true">

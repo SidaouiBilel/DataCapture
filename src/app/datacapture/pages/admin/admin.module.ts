@@ -35,6 +35,7 @@ import { ReferenceDataEditorComponent } from './componenets/references/reference
 import { ReferenceTypeInputComponent } from './componenets/reference-type-input/reference-type-input.component';
 import { DefaultChecksComponent } from './modals/field-modal/default-checks/default-checks.component';
 import { ReferenceInputComponent } from './componenets/reference-input/reference-input.component';
+import { GlobalReferencesComponent } from './pages/global-references/global-references.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { ReferenceInputComponent } from './componenets/reference-input/reference
     ReferenceDataEditorComponent,
     ReferenceTypeInputComponent,
     DefaultChecksComponent,
-    ReferenceInputComponent
+    ReferenceInputComponent,
+    GlobalReferencesComponent
   ],
   providers:[
     CollectionEditor,

@@ -1,0 +1,20 @@
+<div class="users-container p-1">
+
+    <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Application Level Reference Data"></nz-page-header>
+    <ng-template #userTitle><i class="mr-2" nz-icon nzType="team" nzTheme="outline"></i>Global References</ng-template>
+
+  
+    <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+      <!-- <nz-card class="fields-card ma-b"> -->
+        <app-refrence-types class=""></app-refrence-types>
+        <nz-divider nzType='vertical' style="height: 100%;"></nz-divider>
+        <app-refrence-type-data class="flex-1"></app-refrence-type-data>
+      <!-- </nz-card> -->
+    </div>
+  </div>
+
+  
+
+
+
+

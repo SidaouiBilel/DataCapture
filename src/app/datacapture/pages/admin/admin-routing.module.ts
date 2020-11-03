@@ -6,27 +6,24 @@ import { RefernceDataPageComponent } from './pages/refernce-data-page/refernce-d
 import { SuperDomainsPageComponent } from './pages/super-domains-page/super-domains-page.component';
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
 import { CollectionDetailsComponent } from './pages/collection-details/collection-details.component';
+import { GlobalReferencesComponent } from './pages/global-references/global-references.component';
 
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'domains',
     component: AdminLayoutComponent,
     children: [
       {
-        path: 'domains/:id/collection',
+        path: ':id/collection',
         component: DomainsPageComponent
       },
       {
-        path: 'domains',
+        path: '',
         component: SuperDomainsPageComponent,
       },
       {
-        path: 'references',
-        component: RefernceDataPageComponent
-      },
-      {
-        path: 'domains/:subid/collection/:id',
+        path: ':subid/collection/:id',
         component: CollectionDetailsComponent,
         children: [
           {
@@ -39,11 +36,15 @@ const routes: Routes = [
           },
         ]
       },
-      {
-        path: '**',
-        redirectTo: 'domains'
-      }
     ]
+  },
+  {
+    path: 'references',
+    component: GlobalReferencesComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'references'
   }
 ];
 
