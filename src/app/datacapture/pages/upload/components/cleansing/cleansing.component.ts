@@ -297,7 +297,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
           // h.tooltipField = h.field;
           h.tooltipComponentParams = {error: this.results$};
           h.tooltipValueGetter = (params) => {
-            return { value: params.value };
+            return { value: params.value, index : params.data.row_index };
           };
           // Sort
           h.sortable = true;
