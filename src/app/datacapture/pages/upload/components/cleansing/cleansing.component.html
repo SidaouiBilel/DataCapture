@@ -22,10 +22,10 @@
           <i nz-icon nzType="save"></i>
         </button>
 
-        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Inline Check On' nzShape='circle' nzType='primary' nz-button
-          (click)="autosave=false"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
-        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Inline Check Off' nzShape='circle' class='ghost' nz-button
-          (click)="autosave=true"><i nz-icon nzType="rocket" nzTheme="outline"></i></button>
+        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Auto-Sync On' nzShape='circle' nzType='primary' nz-button
+          (click)="autosave=false"><i nz-icon nzType="sync" nzTheme="outline"></i></button>
+        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Auto-Sync Off' nzShape='circle' class='ghost' nz-button
+          (click)="autosave=true"><i nz-icon nzType="sync" nzTheme="outline"></i></button>
 
         <nz-divider nzType="vertical"></nz-divider>
         <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='round' class="ghost" nz-button (click)="auditTrial()">
@@ -65,10 +65,16 @@
       <div class="flex flex-1 column start h-100">
         <div class="mt-4" style="overflow-y: auto;">
           <div *ngFor="let item of (metaData$ | async)?.jobResult">
-            <div class="flex between">
-              <span class="pr-2"><small>{{ item?.label}}:</small></span>
-              <nz-badge [nzOverflowCount]="99999999" [nzCount]="item?.errors"></nz-badge>
-            </div>
+            <!-- <div class="w-100"> -->
+              <nz-tag class="w-100 mb-1 mr-0" nzColor='red'>
+                <div class="flex between">
+                  <span class="mr-2">{{ item?.label}}</span>
+                  <b>{{item?.errors}}</b>
+                </div>
+              </nz-tag>
+              <!-- <span class="pr-2"><small>{{ item?.label}}:</small></span> -->
+              <!-- <nz-badge [nzOverflowCount]="99999999" [nzCount]="item?.errors"></nz-badge> -->
+            <!-- </div> -->
           </div>
         </div>
       </div>

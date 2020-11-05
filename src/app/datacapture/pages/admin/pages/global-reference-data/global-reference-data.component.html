@@ -39,12 +39,14 @@
       <div class="fill" style="position: relative;">
         <nz-table #basicTable 
         nzShowSizeChanger
-        nsAutoHeightTable [nzData]='(referenceData$ | async)' [nzLoading]='loading'>
+        nsAutoHeightTable 
+        [nzData]='(referenceData$ | async)' [nzLoading]='loading'>
           <thead>
             <tr >
-              <th>Code</th>
+              <th nzWidth='200px'>Code</th>
               <th>Aliases</th>
-              <th nzRight></th>
+              <th *ngFor='let p of (activeRefType$ | async)?.properties' >{{p.label}}</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +56,7 @@
               <td>
                 <nz-tag *ngFor='let a of data.alias'>{{a}}</nz-tag>
               </td>
+              <td *ngFor='let p of (activeRefType$ | async)?.properties' >{{(data.properties || {})[p.code]}}</td>
               <td nzRight class="text-right">
                 <button nzShape='circle' class="ghost" nz-button (click)="editRefrenceType(data)"><i nz-icon nzType='edit'></i></button>
                 <nz-divider nzType="vertical"></nz-divider>
