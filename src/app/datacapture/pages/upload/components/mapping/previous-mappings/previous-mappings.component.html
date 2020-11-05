@@ -5,7 +5,7 @@
       </nz-list-item-meta>
       <!-- {{ item.name }} -->
       <ng-template #editAction>
-        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary">
+        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary" *ngIf="item.id == selectedVersion">
           more
           <!-- <i nz-icon nzType="more"></i> -->
         </a>
