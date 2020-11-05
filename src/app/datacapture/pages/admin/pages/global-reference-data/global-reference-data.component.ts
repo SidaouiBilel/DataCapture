@@ -44,6 +44,8 @@ export class GlobalReferenceDataComponent implements OnInit {
         console.log({data, refrence})
         this.referenceData$.next(data)
         this.activeRefType$.next(refrence)
+
+        this.uploadURI = this.service.ReferenceDataImport(refrence);
         this.loading = false
      })    
   }

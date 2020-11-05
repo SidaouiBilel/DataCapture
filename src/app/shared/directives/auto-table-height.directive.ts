@@ -7,6 +7,7 @@ import {
   HostListener,
   ChangeDetectorRef,
 } from "@angular/core";
+import ResizeSensor from 'css-element-queries/src/ResizeSensor';
 import { NzTableComponent } from "ng-zorro-antd";
 
 /**
@@ -16,12 +17,13 @@ import { NzTableComponent } from "ng-zorro-antd";
  * 需要自定义偏移量时，可使用：<st ncSimpleTableAutoScroll="100"></st>
  */
 @Directive({
-  selector: "[appAutoTableHeight]",
+  selector: "[nsAutoHeightTable]",
   host: {},
 })
-export class AutoTableHeightDirective {
-  @Input("appAutoTableHeight")
+export class NsAutoHeightTableDirective {
+  @Input("nsAutoHeightTable")
   offset: number;
+  timeout = null
 
   constructor(
     private element: ElementRef,
@@ -38,6 +40,10 @@ export class AutoTableHeightDirective {
           tableBody.scrollTop = 0;
         }
       });
+
+      this.table.nzCurrentPageDataChange.subscribe(()=>this.doAutoSize())
+
+      new ResizeSensor(this.element.nativeElement, () => this.doAutoSize());
     }
   }
 
@@ -57,7 +63,11 @@ export class AutoTableHeightDirective {
   }
 
   private doAutoSize() {
-    setTimeout(() => {
+    if(this.timeout){
+      clearTimeout(this.timeout)
+    }
+
+    this.timeout = setTimeout(() => {
       let offset = this.offset || 70;
       if (
         this.element &&
@@ -70,12 +80,7 @@ export class AutoTableHeightDirective {
             ? { ...this.table.nzScroll }
             : null;
           this.table.nzScroll = {
-            y:
-              (
-                this.element.nativeElement.parentElement.offsetHeight -
-                this.element.nativeElement.offsetTop -
-                offset
-              ).toString() + "px",
+            y: this.calculateYaxis(),
             x: this.table.nzScroll.x,
           };
           this.table.ngOnChanges({
@@ -90,15 +95,9 @@ export class AutoTableHeightDirective {
           let originNzScroll = this.table.nzScroll
             ? { ...this.table.nzScroll }
             : null;
+            
           this.table.nzScroll = {
-            ...{
-              y:
-                (
-                  this.element.nativeElement.parentElement.offsetHeight -
-                  this.element.nativeElement.offsetTop -
-                  offset
-                ).toString() + "px",
-            },
+            y: this.calculateYaxis()
           };
 
           this.table.ngOnChanges({
@@ -112,5 +111,39 @@ export class AutoTableHeightDirective {
         }
       }
     }, 10);
+  }
+
+  calculateYaxis(){
+    let offset = this.offset || 70;
+    let parentHeight = this.element.nativeElement.parentElement.offsetHeight
+    let relativeParentTopOffset = this.element.nativeElement.offsetTop
+    let paginationOffset = 0
+    let headerOffset = 0
+
+    const paginator = this.element.nativeElement.querySelector('.ant-table-pagination')
+    if(paginator)
+    paginationOffset = paginator.offsetHeight
+
+    const header = this.element.nativeElement.querySelector('.ant-table-header')
+    if(header)
+      headerOffset = header.offsetHeight
+
+    
+      console.log({
+parentHeight,
+relativeParentTopOffset,
+paginationOffset,
+headerOffset,
+})
+    const y =  (
+      parentHeight
+      - relativeParentTopOffset
+      - paginationOffset 
+      - headerOffset
+      // offset
+    ).toString() + "px"
+
+
+    return y
   }
 }
