@@ -22,6 +22,10 @@ export class PreviousMappingsComponent implements OnInit {
     this.modal.close(item);
   }
 
+  checkVersion(item: any): boolean {
+    return item.versions.map((e) => e.id).includes(this.selectedVersion);
+  }
+
   deleteMapping(id: any): void {
     this.service.deleteMappingById(id).subscribe((res) => {
       this.refresh();

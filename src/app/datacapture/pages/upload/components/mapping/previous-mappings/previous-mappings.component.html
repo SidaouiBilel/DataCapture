@@ -1,20 +1,26 @@
 <nz-list [nzDataSource]="mappings" nzBordered [nzRenderItem]="defaultItem">
-  <ng-template #defaultItem let-item>
+  <ng-template #defaultItem let-item let-index>
     <nz-list-item [nzActions]="[editAction]">
       <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
       </nz-list-item-meta>
       <!-- {{ item.name }} -->
       <ng-template #editAction>
-        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary" *ngIf="item.id == selectedVersion">
+        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary" *ngIf="item.id == selectedVersion || checkVersion(index)">
           more
           <!-- <i nz-icon nzType="more"></i> -->
         </a>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item (click)="apply(item)">Apply</li>
+            <li nz-menu-item [nzDisabled]="!selectedVersion" (click)="apply(item)">Apply</li>
             <li nz-menu-divider></li>
             <li nz-menu-item nzDisabled>Rename</li>
-            <li nz-menu-item [nzDisabled]="item.id == mappingId" (click)="deleteMapping(item.id)">Delete</li>
+            <li nz-menu-item [nzDisabled]="item.id == mappingId || !selectedVersion">
+              <span [class.disable-click]="item.id == mappingId || !selectedVersion" nz-popconfirm
+                nzPopconfirmTitle="If you delete the first version, the original mapping will be deleted and hence, the rest of its versions."
+                nzPopconfirmPlacement="left" (nzOnConfirm)="deleteMapping(selectedVersion)">
+                Delete
+              </span>
+            </li>
           </ul>
         </nz-dropdown-menu>
       </ng-template>
@@ -24,9 +30,19 @@
         <span [class.text-success]="item.id == mappingId">{{item.name || 'Undefined'}}</span>
       </ng-template>
       <ng-template #nzDescription>
-        <span [style.visibility]="'hidden'"
-          [class.text-success]="item.id == mappingId">{{item.id || 'Undefined'}}</span>
+        <nz-tag class="cursor" [nzColor]="(item.id == selectedVersion) ? 'green' : ''"
+          (click)="selectedVersion = item.id">Version 1
+        </nz-tag>
+        <nz-tag class="cursor" *ngFor="let t of item.versions; let i = index"
+          [nzColor]="(selectedVersion === t.id) ? 'green' : ''" (click)="selectedVersion = t.id">Version {{t.version}}
+        </nz-tag>
       </ng-template>
     </nz-list-item>
   </ng-template>
 </nz-list>
+
+<ng-template #moreAction>
+  <button nz-button class="ghost">
+    <i nz-icon nzType="delete" class="btns"></i>
+  </button>
+</ng-template>
