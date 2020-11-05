@@ -46,7 +46,7 @@
 }
 
 .flex-1{
-    flex: 1;
+    flex: 1 1 0%;
 }
 
 .height-1{
@@ -60,6 +60,14 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+.fill{
+    flex: 1 1 0%;
+    height: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 
 .flex-hidden{
     flex: 1 1 0%;

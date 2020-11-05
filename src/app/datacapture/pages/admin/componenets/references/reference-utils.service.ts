@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ShareWithCollectionsComponent } from '../../modals/share-with-collections/share-with-collections.component';
 import { ReferenceDataEditorComponent } from './reference-data-editor/reference-data-editor.component';
 import { RefernceType } from './reference-type.model';
 import { RefernceData } from './reference.model';
@@ -29,6 +30,19 @@ export class ReferenceUtilsService {
   openRefTypeEditor(refType:RefernceType){
     return new Observable(observer=>{
       this.modal.create({ nzContent: RefrenceTypeEditorComponent,
+        nzComponentParams: {data: deepCopy(refType)},
+      }).afterClose.subscribe(success => {
+        if(success){
+          observer.next(success)
+          observer.complete()
+        }
+      });
+    })
+  }
+
+  openShareRefType(refType:RefernceType){
+    return new Observable(observer=>{
+      this.modal.create({ nzContent:   ShareWithCollectionsComponent,
         nzComponentParams: {data: deepCopy(refType)},
       }).afterClose.subscribe(success => {
         if(success){

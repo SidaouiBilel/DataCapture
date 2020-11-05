@@ -36,6 +36,9 @@ import { ReferenceTypeInputComponent } from './componenets/reference-type-input/
 import { DefaultChecksComponent } from './modals/field-modal/default-checks/default-checks.component';
 import { ReferenceInputComponent } from './componenets/reference-input/reference-input.component';
 import { GlobalReferencesComponent } from './pages/global-references/global-references.component';
+import { GlobalReferenceTypesComponent } from './componenets/global-reference-types/global-reference-types.component';
+import { ShareWithCollectionsComponent } from './modals/share-with-collections/share-with-collections.component';
+import { GlobalReferenceDataComponent } from './pages/global-reference-data/global-reference-data.component';
 
 
 @NgModule({
@@ -67,7 +70,10 @@ import { GlobalReferencesComponent } from './pages/global-references/global-refe
     ReferenceTypeInputComponent,
     DefaultChecksComponent,
     ReferenceInputComponent,
-    GlobalReferencesComponent
+    GlobalReferencesComponent,
+    GlobalReferenceTypesComponent,
+    ShareWithCollectionsComponent,
+    GlobalReferenceDataComponent
   ],
   providers:[
     CollectionEditor,
@@ -81,6 +87,6 @@ import { GlobalReferencesComponent } from './pages/global-references/global-refe
     StoreModule.forFeature(FEATURE_NAME, AdminReducer),
     EffectsModule.forFeature([]),
   ],
-  entryComponents:[DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent, RefrenceTypeEditorComponent, ReferenceDataEditorComponent]
+  entryComponents:[ShareWithCollectionsComponent, DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent, RefrenceTypeEditorComponent, ReferenceDataEditorComponent]
 })
 export class AdminModule { }

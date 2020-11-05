@@ -7,6 +7,7 @@ import { SuperDomainsPageComponent } from './pages/super-domains-page/super-doma
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
 import { CollectionDetailsComponent } from './pages/collection-details/collection-details.component';
 import { GlobalReferencesComponent } from './pages/global-references/global-references.component';
+import { GlobalReferenceDataComponent } from './pages/global-reference-data/global-reference-data.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,20 @@ const routes: Routes = [
   },
   {
     path: 'references',
-    component: GlobalReferencesComponent
+    children:[
+      {
+        path: '',
+        component: GlobalReferencesComponent,
+      },
+      {
+        path: ':id',
+        component: GlobalReferenceDataComponent,
+      },
+      {
+        path: '**',
+        redirectTo: ''
+      }
+    ]
   },
   {
     path: '**',

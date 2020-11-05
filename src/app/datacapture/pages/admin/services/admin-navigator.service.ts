@@ -42,4 +42,12 @@ export class AdminNavigator {
   goToDomainRefrences(id){
     this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection'])
   }
+
+  gotToRefData(ref_type_id: any) {
+    this.router.navigate(['datacapture', 'admin', 'references', ref_type_id])
+  }
+
+  gotToRefTypes() {
+    this.router.navigate(['datacapture', 'admin', 'references'])
+  }
 }

@@ -8,7 +8,7 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
 import { BoolIconComponent } from './bool-icon/bool-icon.component';
-import { AutoTableHeightDirective } from './directives/auto-table-height.directive';
+import { NsAutoHeightTableDirective } from './directives/auto-table-height.directive';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { CustomTooltipComponent } from './custom-tooltip/custom-tooltip.component';
@@ -42,7 +42,7 @@ const SharedModules = [
 const Components = [
   PageHeaderComponent,
   BoolIconComponent,
-  AutoTableHeightDirective,
+  NsAutoHeightTableDirective,
   DataGridComponent,
   CustomTooltipComponent,
   EnvTagComponent,

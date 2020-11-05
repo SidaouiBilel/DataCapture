@@ -18,7 +18,15 @@ export class RefrenceTypesComponent implements OnInit, OnDestroy {
     this.sub = this.nav.activeSubDomina$.pipe(tap((id)=> {
       const diff = id != this.collection_id 
       this.collection_id = id
-      if (  this.collection_id && diff  ) this.laodData()
+      if (  this.collection_id  ){
+        if (diff){
+          this.laodData()
+        }
+      } else {
+        this.laodData()
+      }
+        
+      
     })).subscribe()
   }
   ngOnDestroy(): void {
@@ -47,6 +55,10 @@ export class RefrenceTypesComponent implements OnInit, OnDestroy {
 
   deleteRefrenceType(refType){
     this.utils.onDeleteRefType(refType).subscribe(res=> this.laodData())
+  }
+
+  shareRefrenceType(refType){
+    this.utils.openShareRefType(refType).subscribe(res=> this.laodData())
   }
 
   openReferenceData(item){
