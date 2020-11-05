@@ -1,11 +1,11 @@
 <nz-list [nzDataSource]="mappings" nzBordered [nzRenderItem]="defaultItem">
-  <ng-template #defaultItem let-item>
+  <ng-template #defaultItem let-item let-index>
     <nz-list-item [nzActions]="[editAction]">
       <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
       </nz-list-item-meta>
       <!-- {{ item.name }} -->
       <ng-template #editAction>
-        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary">
+        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary" *ngIf="item.id == selectedVersion || checkVersion(index)">
           more
           <!-- <i nz-icon nzType="more"></i> -->
         </a>
