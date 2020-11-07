@@ -23,6 +23,7 @@ export class LayoutContainer implements OnInit , AfterViewInit {
   router$: Observable<any>;
   env;
   profile$: Observable<any>;
+  url_data ="";
 
   constructor(private notification: NotificationService,
               private service: LoginService,
@@ -41,6 +42,17 @@ export class LayoutContainer implements OnInit , AfterViewInit {
     });
 
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
+    
+    this.profile$.subscribe(
+      res=>{
+        this.service.get_user_data_link(res.id).subscribe(
+          data=>{
+            this.url_data=data["url"];
+          }
+        )
+        
+      }
+    )
   }
   ngOnInit(): void {
     this.checkTokenValidity();
@@ -167,5 +179,13 @@ export class LayoutContainer implements OnInit , AfterViewInit {
     } else {
       this.navbar.elementRef.nativeElement.classList.remove("sticky");
     }
+  }
+
+  openmydata(){
+    if(this.url_data.trim() !== ""){
+      var win = window.open(this.url_data, '_blank');
+      win.focus();      
+    }
+
   }
 }

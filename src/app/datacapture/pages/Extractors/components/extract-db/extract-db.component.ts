@@ -69,14 +69,7 @@ extract_data(){
       this.loading=true;
       this.Extract_S.GET_ALL_USER_JOB(uid).subscribe(data=>{
       console.log(data)
-      this.Jobs$.next([...data,{
-      "job_id": "2b9b6cefc6214d5a9ca2a257e022d8bd",
-      "status": "OK"
-      },
-      {
-      "job_id": "2b9b6cefc6214d5a9ca2a257e022d8bd",
-      "status": ""
-      }]);
+      this.Jobs$.next([...data]);
       this.loading=false;
       });
   }

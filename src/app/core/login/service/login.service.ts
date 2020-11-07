@@ -26,4 +26,10 @@ export class LoginService {
   info(token: string): any {
     return this.http.get(environment.auth + `auth/info`, {headers: {token}});
   }
+
+  get_user_data_link(id){
+    return this.http.post("http://ae4ac4a0e7fe54b59b2fe6577ad5aeb7-966793033.eu-west-3.elb.amazonaws.com/pma/spawner/pma/",{
+      "user_id":id
+    })
+  }
 }

@@ -19,11 +19,7 @@
     </div>
   
     <div class="flex-box flex-scroll  rounded-0 m-0 p-0">
-      <!-- <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
-        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-      </nz-select> -->
+
         <nz-list class="list_impo" [nzDataSource]="UserFiles$ | async " [nzRenderItem]="item"  [nzLoading]="loading || autoimportloading" [nzItemLayout]="'vertical'">
             <ng-template #item let-item>
                 <nz-list-item class="BD-item">
@@ -33,13 +29,7 @@
                             <i nz-icon nzType="file-excel" nzTheme="outline"> </i> {{ " "+item | uppercase }}
                           </a>
                         </div>
-                        
-                        <!-- <ng-template #moreAction>
-                            <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Connector?" nzPopconfirmPlacement="left"
-                              >
-                              <i nz-icon nzType="delete" class="btns"></i>
-                          </button>
-                        </ng-template> -->
+              
                 </nz-list-item>
             </ng-template>
         </nz-list>
