@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MetaComponent implements OnInit {
 
-  @Input() data
+  @Input() data;
   constructor() { }
 
   ngOnInit() {
