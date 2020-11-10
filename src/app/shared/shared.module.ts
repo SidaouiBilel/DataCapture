@@ -21,6 +21,7 @@ import { KeyFilterPipe } from './pipes/key-filter.pipe';
 import { CustomIconsService } from './services/custom-icons.service';
 import { GridFooterComponent } from './grid-footer/grid-footer.component';
 import { TagsCellRendererComponent } from './tags-cell-renderer/tags-cell-renderer.component';
+import { GridCellAutoTypeComponent } from './grid-cell-auto-type/grid-cell-auto-type.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -51,7 +52,8 @@ const Components = [
   KeyFilterPipe,
   RegexHelperDocumentationComponent,
   GridFooterComponent,
-  TagsCellRendererComponent
+  TagsCellRendererComponent,
+  GridCellAutoTypeComponent
 ];
 
 @NgModule({
@@ -75,7 +77,8 @@ const Components = [
     CustomTooltipComponent,
     AuditComponent,
     RegexHelperDocumentationComponent,
-    TagsCellRendererComponent
+    TagsCellRendererComponent,
+    GridCellAutoTypeComponent
   ]
 })
 export class SharedModule {}

@@ -305,3 +305,19 @@ export class Calculator extends Transformer {
 
 }
 
+export class FormatDate extends Transformer {
+  type =  'format-date';
+  label = 'Date Formatter';
+  icon = 'calendar';
+  shortcut = 'control.alt.d';
+
+  getErrors = (params, previousNodes, headers) => {
+    const errors = [];
+
+    if (isStrEmpty(params.column)) { errors.push(new NodeError('column', 'column Missing')); }
+    if (isStrEmpty(params.format)) { errors.push(new NodeError('format', 'Format Missing')); }
+
+    return errors;
+  }
+
+}

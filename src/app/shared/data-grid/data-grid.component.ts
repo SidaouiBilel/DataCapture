@@ -3,6 +3,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from '../custom-tooltip/custom-tooltip.component';
 import { INDEX_NAME, GAPIGridSelectionOverride } from '../utils/grid-api.utils';
 import { TagsCellRendererComponent } from '../tags-cell-renderer/tags-cell-renderer.component';
+import { GridCellAutoTypeComponent } from '../grid-cell-auto-type/grid-cell-auto-type.component';
 
 @Component({
   selector: 'app-data-grid',
@@ -36,7 +37,11 @@ export class DataGridComponent implements OnInit {
 
   public loadingCellRendererParams = { loadingMessage: 'One moment please...'};
   public modules: any[] = AllEnterpriseModules;
-  public frameworkComponents = { customTooltip: CustomTooltipComponent,  tagsRenderer: TagsCellRendererComponent};
+  public frameworkComponents = { 
+    customTooltip: CustomTooltipComponent,  
+    tagsRenderer: TagsCellRendererComponent,
+    autoTypeRenderer: GridCellAutoTypeComponent
+  };
 
   ngOnInit() {
   }

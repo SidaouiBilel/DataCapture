@@ -82,7 +82,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
                 headerName: h,
                 editable: false,
                 resizable: true,
-                valueFormatter : GAPIformatCell,
+                cellRenderer:'autoTypeRenderer',
                 filter: GAPIFilterComponenet('string'),
                 filterParams: GAPIAllFilterParams(params)
             }));
