@@ -8,34 +8,38 @@ import { EntityModal } from '../entity-modal';
   templateUrl: './domain-config-modal.component.html'
 })
 export class DomainConfigModalComponent extends EntityModal implements OnInit {
+  classifications = [
+    {label: 'Private', value: 'private'},
+    {label: 'Public',  value: 'public'},
+    {label: 'Confidential', value: 'confidential'},
+  ];
 
-
-  constructor(private mr: NzModalRef, private ds:DomainService) {
-    super(mr)
-   }
+  constructor(private mr: NzModalRef, private ds: DomainService) {
+    super(mr);
+  }
 
   ngOnInit() {
-    super.ngOnInit()
+    super.ngOnInit();
   }
 
-  canSave(){
-    return this.data.name
+  canSave() {
+    return this.data.name && this.data.classification && (this.data.enableDF !== null);
   }
 
-  canClose(){
-    return !this.loading
+  canClose() {
+    return !this.loading;
   }
 
-  close(){
-    this.modalrRef.close(false)
+  close() {
+    this.modalrRef.close(false);
   }
 
-  save(){
-    if (this.canSave()){
-      this.loading = false
-      this.ds.saveDomain(this.data).subscribe(res=>{
-        this.modalrRef.close(true)
-      })
+  save() {
+    if (this.canSave()) {
+      this.loading = false;
+      this.ds.saveDomain(this.data).subscribe(res => {
+        this.modalrRef.close(true);
+      });
     }
   }
 
