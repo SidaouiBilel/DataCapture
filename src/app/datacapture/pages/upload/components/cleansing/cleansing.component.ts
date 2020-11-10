@@ -387,7 +387,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     api.redrawRows({ rowNodes: [rowNode] });
     this.runWithEditedCell().subscribe(() => {
       this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
-        const absolute_index = rowNode.rowIndex
+        const absolute_index = line
         this.results[absolute_index] = data.results[absolute_index];
         this.results$.next(this.results);
         rowNode.stub = false;

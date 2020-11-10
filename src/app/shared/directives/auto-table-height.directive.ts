@@ -21,8 +21,9 @@ import { NzTableComponent } from "ng-zorro-antd";
   host: {},
 })
 export class NsAutoHeightTableDirective {
-  @Input("nsAutoHeightTable")
-  offset: number;
+
+  @Input("nsAutoHeightTable") offset: number;
+  
   timeout = null
 
   constructor(
@@ -52,7 +53,7 @@ export class NsAutoHeightTableDirective {
    * @param event
    */
   @HostListener("window:resize", ["$event"])
-  onResize() {
+  onResize(event) {
     this.doAutoSize();
   }
 

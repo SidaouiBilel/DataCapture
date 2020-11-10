@@ -48,12 +48,6 @@
   <!-- Body -->
   <div class="flex-box" *ngIf="keys(mappedSources).length">
 
-    <div class="mapping-information mb-1 border">
-      <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error" nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon></nz-alert>
-      <nz-alert *ngIf="(mandatories$ | async)" nzType="error" [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
-      <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="info" nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
-    </div>
-
     <div class="mapping-container">
       <!-- Sources -->
       <div class="sources">
@@ -125,6 +119,12 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="mapping-information border">
+              <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error" nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon></nz-alert>
+              <nz-alert *ngIf="(mandatories$ | async)" nzType="error" [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
+              <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="success" nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
             </div>
           </div>
         </nz-card>

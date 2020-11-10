@@ -41,7 +41,7 @@ export function formatDate(str:string) {
     const mm = parts[1]
     const dd = parts[2]
 
-    return [mm, dd, yyyy].join('/')
+    return `${[mm, dd, yyyy].join('/')}`
 }
 
 export function stringToColour(str: string) {
@@ -56,4 +56,27 @@ export function stringToColour(str: string) {
   }
   return colour;
 }
+
+export function inferType(value:string){
+  if (isInDoubleFormat(value)) {
+    return 'double'
+  } else if (isInDateFormat(value)) {
+    return 'date' 
+  } else if (isInIntegerFormat(value)) {
+    return 'int';
+  } else {
+    return 'string';
+  }
+}
+
+export function formatByType(value:string, type:string){
+  if (type == 'double') {
+    return parseFloat(value).toFixed(2);
+  } else if (type == 'date') {
+    return formatDate(value)
+  } else {
+    return value
+  }
+}
+
 
