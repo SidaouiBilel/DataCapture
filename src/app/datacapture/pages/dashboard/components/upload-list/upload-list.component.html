@@ -1,5 +1,5 @@
 <div class="table">
-  <nz-table #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
+  <nz-table nsAutoHeightTable #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
     [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzBordered]="true" [nzPageIndex]="(page$ | async)"
     [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
     (nzPageSizeChange)="onSizeChange($event)">
