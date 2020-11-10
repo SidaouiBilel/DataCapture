@@ -1,15 +1,18 @@
-
 <p nz-paragraph class="dom-description">
-    {{data?.description}}
-    </p>
+  {{data?.description}}
+</p>
 
 <div nz-paragraph class="mb-2">
-    <i nz-icon nzType="clock-circle" nzTheme="outline"></i> <i> Created On</i>
-    {{data?.created_on | date: 'dd/MM/yyyy HH:mm'}}
-    <nz-divider nzType="vertical"></nz-divider>
-    <i nz-icon nzType="edit" nzTheme="outline"></i> <i> Modified On</i>
-    {{data?.modified_on | date: 'dd/MM/yyyy HH:mm'}}
-    <!-- <nz-divider nzType="vertical"></nz-divider>
-    <i>Status </i>
-    <nz-tag [nzColor]="'green'">ACTIVE</nz-tag> -->
+  <i nz-icon nzType="clock-circle" nzTheme="outline" class="text-primary"></i> <i class="text-primary"> Created On</i>
+  {{data?.created_on | date: 'dd/MM/yyyy HH:mm'}}
+  <nz-divider nzType="vertical"></nz-divider>
+  <i nz-icon nzType="edit" nzTheme="outline" class="text-primary"></i> <i class="text-primary"> Modified On</i>
+  {{data?.modified_on | date: 'dd/MM/yyyy HH:mm'}}
+  <nz-divider nzType="vertical"></nz-divider>
+  <i nz-icon nzType="lock" nzTheme="outline" class="text-primary"></i> <i class="text-primary"> Classification</i>
+  {{(data?.classification | titlecase) || 'Null'}}
+  <nz-divider nzType="vertical"></nz-divider>
+  <i nz-icon nzType="block" nzTheme="outline" class="text-primary"></i> <i class="text-primary">
+    Enable/Disable Data Factory</i>
+  {{data?.enableDF || 'Null'}}
 </div>
