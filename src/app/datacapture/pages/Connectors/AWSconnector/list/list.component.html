@@ -1,0 +1,27 @@
+<nz-list [nzDataSource]="S3C$ | async | dBCfilter : 'connector_name' : searchTerm" [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+    <ng-template #item let-item>
+        <nz-list-item class="BD-item" [nzActions]="loading ? [] : [moreAction]">
+            <nz-list-item-meta [nzTitle]="nzTitle"  [nzDescription]="nzDescription">
+                <ng-template #nzTitle>
+                    <div nz-typography class="font-weight-bold">{{item.connector_name }}</div>
+                </ng-template>
+                <ng-template #nzDescription>
+                    <nz-tag [nzColor]="'#108ee9'"><i nz-icon nzType="amazon"></i> AWS</nz-tag>
+                    <div>
+                    <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+                    <span class="pl-2" nz-typography>Created On</span>: 
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+                    <span class="pl-2" nz-typography>Modified On</span>: 
+                    </div>
+                </ng-template>
+                <ng-template #moreAction>
+                    <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Connector?" nzPopconfirmPlacement="left"
+                      >
+                      <i nz-icon nzType="delete" class="btns"></i>
+                  </button>
+                </ng-template>
+            </nz-list-item-meta>
+        </nz-list-item>
+    </ng-template>
+</nz-list>

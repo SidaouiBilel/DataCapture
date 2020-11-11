@@ -1,27 +1,26 @@
 import { SharedModule } from './../../../shared/shared.module';
-import { NzPageHeaderModule, NzFormModule, NzDividerModule, NzSelectModule } from 'ng-zorro-antd';
 import { ExtractorRoutingModule } from './extracors.routing';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContainerComponent } from './components/container/container.component';
 import { ExtractDBComponent } from './components/extract-db/extract-db.component';
 import { FomDbComponent } from './components/fom-db/fom-db.component';
+import { DatalakeContainerComponent } from './datalake/datalake-container/datalake-container.component';
+import { DatalakeModalComponent } from './datalake/datalake-modal/datalake-modal.component';
 
 
 
 @NgModule({
-  declarations: [ContainerComponent, ExtractDBComponent, FomDbComponent],
+  declarations: [ContainerComponent, ExtractDBComponent, FomDbComponent, DatalakeContainerComponent, DatalakeModalComponent],
   imports: [
     ExtractorRoutingModule,
     CommonModule,
-    NzPageHeaderModule , 
-    NzFormModule ,
-    NzDividerModule,
-    NzSelectModule ,
     SharedModule
   ],
   entryComponents:[
-    ContainerComponent, ExtractDBComponent, FomDbComponent
-  ],
+    ContainerComponent, ExtractDBComponent, FomDbComponent , DatalakeModalComponent
+  ],exports:[
+    ExtractDBComponent, FomDbComponent, DatalakeContainerComponent, DatalakeModalComponent
+  ]
 })
 export class ExtractorsModule { }

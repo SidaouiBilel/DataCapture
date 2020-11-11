@@ -1,0 +1,14 @@
+<div class="autoupload_stepper">
+    <nz-steps [nzCurrent]="index" nzSize="small">
+        <nz-step nzTitle="Data import source" ></nz-step>
+        <nz-step nzTitle="Technical mapping"  ></nz-step>
+        <nz-step nzTitle="Output" ></nz-step>
+    </nz-steps>    
+    <div class="flex-box">
+        <div [ngSwitch]="index">
+            <app-import-data  [dataupload]="autouploaddata"  (addfile)="addfilename($event)"   (next)="next()"  *ngSwitchCase="0" ></app-import-data>
+            <app-tech-mapping [dataupload]="autouploaddata" (addoutputs)="addoutputs($event)"  (next)="next()"  (previous)="previous()" [profile]="Profile" *ngSwitchCase="1" ></app-tech-mapping>
+            <app-output       *ngSwitchCase="2" (reset)="reset()"></app-output>
+        </div>
+    </div>
+</div>

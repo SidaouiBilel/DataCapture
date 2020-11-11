@@ -1,3 +1,4 @@
+import { AutouploadModule } from './datacapture/pages/autoupload/autoupload.module';
 import { ConnectorsModule } from './datacapture/pages/Connectors/connectors.module';
 import { ExtractorsModule } from './datacapture/pages/Extractors/extractors.module';
 import { UsersModule } from './datacapture/pages/users/users.module';
@@ -49,8 +50,9 @@ const ngZorroConfig: NzConfig = {
     AdminModule,
     UploadModule,
     UsersModule,
-    ExtractorsModule,
-    ConnectorsModule
+    // ExtractorsModule,
+    ConnectorsModule,
+    AutouploadModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

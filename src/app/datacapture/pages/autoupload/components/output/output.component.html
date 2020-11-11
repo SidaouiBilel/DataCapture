@@ -1,0 +1,35 @@
+<div nzrow class="row d-flex flex-column  import-data-container w-100 m-2">
+    
+        <div  nz-row>
+            <div nz-col nzSpan="24" class="text-right button-spacing">
+              <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
+              (click)="Reset()">
+              <i nz-icon nzType="close"></i>
+              </button>
+            </div>
+        </div>
+        <nz-divider class="font-weight-bold primary-color mb-4" [nzText]="'Output list'" nzOrientation="left"></nz-divider>
+  
+        <nz-table #sortTable [nzData]="OutputList | async" nzTableLayout="fixed" class="mt-4" [nzLoading]="loading">
+            <thead>
+              <tr>
+                <th *ngFor="let column of listOfColumn">{{ column.title }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of (OutputList | async)">
+                <td>{{ data.Key }}</td>
+                <td>{{ data.LastModified }}</td>
+                <td>{{ data.Size }}</td>
+                <td>{{ data.StorageClass }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+
+          <!-- <div class="row w-100 d-flex flex-column align-items-center mt-4 mb-2">
+            <h3 class="text-success mb-4">Output successfully generated</h3>
+            <a href="https://ng.ant.design/" target="_blank">
+              <button nz-button nzType="link"> <i nz-icon nzType="link" nzTheme="outline"></i> Open Output list  </button>
+            </a>
+          </div> -->
+  </div>

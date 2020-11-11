@@ -49,23 +49,32 @@
               <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/data/datacapture/admin/domains']">
                 <span>Domains</span>
               </li>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('connectors')" [routerLink]="['/data/datacapture/connectors/manageDB']">
-                <span>Connectors</span>
+              <li *ngIf="(profile$ | async)?.admin"  nz-submenu nzTitle="Connectors"> 
+                <ul>
+                  <li nz-menu-item [nzSelected]="isPrimaryPage('connectorDB')" [routerLink]="['/data/datacapture/connectors/manageDB']">DataBase</li>
+                  <li nz-menu-item [nzSelected]="isPrimaryPage('connectorDL')" [routerLink]="['/data/datacapture/connectors/manageDL']">Datalake</li>
+                  
+                </ul>
               </li>
             </ul>
           </li>
           
-          <li nz-submenu nzIcon="export" nzTitle="Extractors" [nzOpen]="false">
-            <ul>
+          <li nz-menu-item nzIcon="export"  [nzSelected]="isPrimaryPage('autoupload')" [routerLink]="['/data/datacapture/autoupload']">
+            <span><i nz-icon nzType="export"></i> Auto upload</span>
+            <!-- <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('database')" [routerLink]="['/data/datacapture/extractors/database']">
                 <span>Database</span>
               </li>
-            </ul>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('datalake')" [routerLink]="['/data/datacapture/extractors/datalake']">
+                <span>Datalake</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('autoupload')"  [routerLink]="['/data/datacapture/autoupload/import-data']">Autoupload</li>
+            </ul> -->
           </li>
 
 
 
-          <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="false">
+          <li nz-submenu nzIcon="upload" nzTitle="Manual Upload" [nzOpen]="false">
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/data/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>

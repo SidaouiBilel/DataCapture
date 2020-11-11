@@ -1,0 +1,38 @@
+<form nz-form  
+    [nzLayout]="'vertical'" 
+    [formGroup]="validateDataLakeForm" 
+    (ngSubmit)="submitForm()"
+    autocomplete="off" >
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type">DataLake Connector</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="DataLake Connector is required">
+              <nz-select nzShowSearch nzAllowClear [nzLoading]="DLCloading" nzPlaceHolder="Select a DataLake Connector" formControlName="connector_id">
+                
+                  <nz-option *ngFor="let DLC of DLC$ | async" 
+                              [nzLabel]='DLC.connector_name' 
+                              [nzValue]='DLC.connector_id'></nz-option>
+                  
+                </nz-select>
+            <!-- <input nz-input formControlName="db_host" id="db_host" placeholder="Ex : https://hostname.com"/> -->
+        </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="filename">File Name</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="File Name id required!">
+          <input nz-input formControlName="filename" id="filename" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="bucket">Bucket</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Bucket id required!">
+          <input nz-input formControlName="bucket" id="bucket" />
+        </nz-form-control>
+    </nz-form-item>
+
+    
+</form>
+

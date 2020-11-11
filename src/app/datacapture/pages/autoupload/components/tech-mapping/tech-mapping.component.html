@@ -1,0 +1,57 @@
+<div nzrow class="row d-flex flex-column  import-data-container w-100 m-2">
+  <nz-spin nzTip="generating output..." [nzSpinning]="submitloading">
+      <div  nz-row>
+          <div nz-col nzSpan="24" class="text-right button-spacing">
+
+            <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
+            nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToimport()"><i nz-icon
+            nzType="caret-left"></i> Previous</button>
+            
+
+            <nz-divider nzType='vertical'></nz-divider>
+
+            <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+              nzTooltipPlacement="left" (click)="Next()">Next<i nz-icon nzType="caret-right"></i>
+            </button>
+            
+          </div>
+      </div>
+      <nz-divider class="font-weight-bold primary-color" [nzText]="'Output Datasource'" nzOrientation="left"></nz-divider>
+
+      <div class="row w-100 d-flex flex-column align-items-center mb-2">
+        <div class="selecttype d-flex flex-column align-items-start">
+          <span nz-text class="mb-1">Select Output Source :</span>
+          <nz-select nzMode="multiple" 
+                  class=" selecttype"
+                  nzPlaceHolder="Output Source" 
+                  (ngModelChange)="changesource($event)"
+                  [(ngModel)]="listOfSelectedSources"> 
+                  <nz-option *ngFor="let source of listOfSources; let i = index" [nzValue]="source.value" [nzLabel]="source.value" [nzCustomContent]="nzCustomContent">
+                    
+                      <i nz-icon [nzType]="source.icon"></i> {{source.value}}
+                    
+                  </nz-option>
+          </nz-select>          
+        </div>
+
+    </div><br/>
+
+    <div class="row w-100 d-flex flex-column align-items-center mb-2">
+      <div class="selecttype d-flex flex-column align-items-start">   
+         <span nz-text class="mb-1">Select Output type :</span>
+          <nz-select nzMode="multiple" 
+                  class=" selecttype"
+                  nzPlaceHolder="Output type" 
+                  [nzDisabled]="outputype$ | async"
+                  [(ngModel)]="listOfSelectedValue"> 
+                  <nz-option *ngFor="let type of listOftypes; let i = index" [nzValue]="type.value" [nzLabel]="type.text"></nz-option>
+          </nz-select>
+      </div>
+    </div>    
+    <div class="row w-100 d-flex flex-column align-items-center mt-2">
+      <button nz-button nzType="primary" nzSize="middle"
+      nzTooltipPlacement="left" (click)="Next()">Validate
+    </button>
+    </div>
+  </nz-spin>
+</div>

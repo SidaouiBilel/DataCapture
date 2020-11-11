@@ -1,0 +1,43 @@
+:host ::ng-deep .ant-page-header {
+    padding-left: 16px !important;
+}
+
+.flex-box {
+    flex: 1 1 auto;
+}
+.DBconnectors-container{
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+:host{
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
+.BD-item{
+    background: white;
+    margin: 1px;
+}
+
+:host ::ng-deep .ant-list-vertical .ant-list-item-meta-title {
+    margin-bottom: 0;
+}
+  
+:host ::ng-deep div.ant-typography {
+    margin-bottom: 6px !important;
+}
+:host ::ng-deep .ant-list-item-meta-content  {
+    margin-left: 16px;
+}
+
+.error{
+    color: #ff4d4f;
+}
+.warning{
+    color: #faad14;
+}
+.succes{
+    color:#52c41a;
+}

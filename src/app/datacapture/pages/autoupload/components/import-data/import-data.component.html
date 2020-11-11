@@ -1,0 +1,91 @@
+<div class="row d-flex flex-column import-data-container w-100 m-2">
+            <!-- Header -->
+            <div  nz-row class="d-flex align-items-center">
+                <div nz-col nzSpan="12">
+                  <span nz-text class="font-weight-light mr-1">Import File from :</span>
+                    <nz-select class="mt-2"
+                               [(ngModel)]="selectedtype"
+                               class="selecttype" 
+                               nzPlaceHolder="Import data from :"
+                               [nzDisabled]="dataupload.filename!=''"
+                               (ngModelChange)="selectimporttype($event)">
+                      <nz-option *ngFor="let importType of importTypes; let i = index" [nzValue]="importType" [nzLabel]="importType"></nz-option>
+                    </nz-select>
+                  </div>
+                <div nz-col nzSpan="12" class="text-right button-spacing">
+                  <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+                    nzTooltipPlacement="left" (click)="Next()">Next<i nz-icon nzType="caret-right"></i></button>
+                                    
+                </div>
+            </div>
+            
+
+            
+            <div class="flex-box mt-1"  nz-row *ngIf="dataupload.filename=='' ;else fileselectedsucces">
+              <nz-divider class="font-weight-bold primary-color" [nzText]="selectedtype" nzOrientation="left"></nz-divider>
+                <div [ngSwitch]="Importtype$ | async">
+                    <app-extract-db               *ngSwitchCase="'Database'"></app-extract-db>
+                    <app-datalake-container       *ngSwitchCase="'Datalake'"></app-datalake-container>
+                    <div class="h-100 w-100 mt-3" *ngSwitchCase="'Filesystem'">
+                        <nz-spin class="flex-box" [nzSpinning]="fileloading">
+                          <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false"
+                            [nzAccept]="'.csv'"
+                            (nzChange)="handleChange($event)">
+                            <p class="ant-upload-drag-icon">
+                              <i nz-icon nzType="inbox"></i>
+                            </p>
+                            <p class="ant-upload-text">Click or drag file to this area to import</p>
+                            <p class="ant-upload-hint">
+                              Once selected the file will be automatically uploaded into our server.
+                            </p>
+                          </nz-upload>
+                        </nz-spin>
+                    </div>
+                    <div class="row d-flex flex-column w-100 h-100 align-items-center " *ngSwitchDefault>
+                        <nz-page-header class="site-page-header w-50 text-left" nzTitle="Auto file import " nzSubtitle="choose a file"></nz-page-header>
+                        <div nz-row class='w-50'>
+                          <div nz-col [nzSpan]='18'>
+                            <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i> Relaod</button>
+                          </div>
+                    
+                          <div nz-col [nzSpan]='6'>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                              <input type="text" nz-input  placeholder="Filter Files" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                              <i nz-icon nzType="search"></i>
+                            </ng-template>
+                          </div>
+                         </div>
+                    
+                      <div nz-row class='w-50'>
+                          <nz-list class="list_impo" [nzDataSource]="UserFiles$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+                              <ng-template #item let-item>
+                                  <nz-list-item class="BD-item">
+                  
+                                          <div  class="font-weight-bold file_item">
+                                            <a (click)="auto_import_file(item)" nz-button nzType="link">
+                                              <i nz-icon nzType="file-excel" nzTheme="outline"> </i> {{ " "+item | uppercase }}
+                                            </a>
+                                          </div>
+                                
+                                  </nz-list-item>
+                              </ng-template>
+                          </nz-list>
+                      </div> 
+                    </div>
+                   
+                </div>
+            </div>
+</div>
+<ng-template class="flex-box mt-1" #fileselectedsucces>
+  <div class="flex-child centerBox">
+    <nz-result nzStatus="success" [nzTitle]="SuccessMessage"
+      nzSubTitle="You may proceed to the next step.">
+      <div nz-result-extra>
+        <button nz-button nzType="primary" (click)="Next()">Next</button>
+        <button nz-button nzType="danger"  (click)="auto_import_file('')">Cancel</button>
+      </div>
+    </nz-result>
+  </div>
+</ng-template>

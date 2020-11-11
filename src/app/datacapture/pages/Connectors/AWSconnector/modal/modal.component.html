@@ -1,0 +1,48 @@
+<form nz-form
+    [formGroup]="validateS3connector" 
+    (ngSubmit)="submitForm()"
+    autocomplete="off" >
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="type">Type</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Datalake Type is required">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Datalake type" [nzCustomTemplate]="defaultTemplate">
+               
+                <nz-option *ngFor="let datalake_type of datalake_types" [nzLabel]='datalake_type.name' [nzValue]='datalake_type.name'></nz-option>
+                
+              </nz-select>
+              <ng-template #defaultTemplate let-selected> <i nz-icon [nzType]="selecticone(selected.nzValue)"></i> {{ selected.nzLabel }} </ng-template>
+          <!-- <input nz-input formControlName="db_host" id="db_host" placeholder="Ex : https://hostname.com"/> -->
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Connector Name is required!">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="key">Key</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="key is required!">
+          <input nz-input formControlName="key" id="key" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="secret">Secret key</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Secret key is required!">
+          <input nz-input formControlName="secret" id="secret" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="region">Region</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Region is required!!">
+          <input nz-input formControlName="region" id="region" />
+        </nz-form-control>
+    </nz-form-item>
+
+</form>

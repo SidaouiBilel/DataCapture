@@ -8,6 +8,9 @@ import { CreateDBconnectorsComponent } from './components/create-dbconnectors/cr
 import { ListdbconnectorsComponent } from './components/listdbconnectors/listdbconnectors.component';
 import { ModaldbconnectorsComponent } from './components/modaldbconnectors/modaldbconnectors.component';
 import { DBCfilterPipe } from './pipes/dbcfilter.pipe';
+import { ContainerComponent } from './AWSconnector/container/container.component';
+import { ListComponent } from './AWSconnector/list/list.component';
+import { ModalComponent } from './AWSconnector/modal/modal.component';
 
 
 @NgModule({
@@ -16,7 +19,10 @@ import { DBCfilterPipe } from './pipes/dbcfilter.pipe';
     CreateDBconnectorsComponent, 
     ListdbconnectorsComponent,
     ModaldbconnectorsComponent,
-    DBCfilterPipe
+    DBCfilterPipe,
+    ContainerComponent,
+    ListComponent,
+    ModalComponent
   ],
   imports: [
     ConnectorsRoutingModule,
@@ -28,7 +34,8 @@ import { DBCfilterPipe } from './pipes/dbcfilter.pipe';
     SharedModule
   ],
   entryComponents:[
-    ModaldbconnectorsComponent
+    ModaldbconnectorsComponent,
+    ModalComponent
   ]
 })
 export class ConnectorsModule { }

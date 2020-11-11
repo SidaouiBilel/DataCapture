@@ -30,11 +30,7 @@ export class CreateDBconnectorsComponent implements OnInit {
   }
 
   
-  ngOnInit() {
-
-
-
-  }
+  ngOnInit() {}
 
   addDBconnector(edit=false , data?:DBconnector){
     const modal :NzModalRef = this.ModalS.create({

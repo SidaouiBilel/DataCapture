@@ -22,4 +22,13 @@ export class ExtractorService {
   GET_ALL_USER_JOB(uid){
     return this.Http.get<any[]>(environment.connector+"connector/job/user/"+uid);
   }
+
+  LUNCH_extraction_datalake(data , userid ){
+    return this.Http.post(environment.connector+"connector/s3/connect",{...data,uid:userid});
+  }
+
+  GET_ALL_DataLake_connector(uid){
+    return this.Http.get<any[]>(environment.connector+"connector/s3/jobs/user/"+uid);
+  }
+
 }

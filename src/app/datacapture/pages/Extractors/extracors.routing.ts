@@ -1,3 +1,4 @@
+import { DatalakeContainerComponent } from './datalake/datalake-container/datalake-container.component';
 import { ExtractDBComponent } from './components/extract-db/extract-db.component';
 import { ContainerComponent } from './components/container/container.component';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,10 @@ const routes: Routes = [
           {
               path:'database',
               component:ExtractDBComponent
+          },
+          {
+            path:'datalake',
+            component:DatalakeContainerComponent
           },
           {
             path: '**',

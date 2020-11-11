@@ -1,3 +1,4 @@
+import { ContainerComponent } from './AWSconnector/container/container.component';
 import { RolesGuard } from './../../../core/login/guards/roles.guard';
 import { CreateDBconnectorsComponent } from './components/create-dbconnectors/create-dbconnectors.component';
 import { ConnectorsComponent } from './components/connectors/connectors.component';
@@ -12,6 +13,12 @@ const routes: Routes = [
           {
             path:'manageDB',
             component:CreateDBconnectorsComponent,
+            canActivate: [RolesGuard],
+            data: {role: 'ADMIN'}
+          },
+          {
+            path:'manageDL',
+            component:ContainerComponent,
             canActivate: [RolesGuard],
             data: {role: 'ADMIN'}
           },

@@ -2,9 +2,9 @@
 <div class="DBconnectors-container p-1">
   
     <nz-page-header class="site-page-header" nzTitle="Data Extraction List" [nzSubtitle]="tooltip">
-            <ng-template #tooltip>
-                <button nzShape="circle" nzTooltipTitle="After extracting data from the database you need to select Extracted files and reload" nzTooltipPlacement="top" nz-button nz-tooltip><i nz-icon nzType="question"></i></button>
-            </ng-template>
+        <ng-template #tooltip>
+            <button nzShape="circle" nzTooltipTitle="After extracting data from the datalake you need to select Extracted files and reload" nzTooltipPlacement="top" nz-button nz-tooltip><i nz-icon nzType="question"></i></button>
+        </ng-template>
     </nz-page-header>
   
     <div nz-row class='ma-b'>
@@ -32,7 +32,6 @@
                     <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
                         <ng-template #nzTitle>
                             <div nz-typography class="font-weight-bold">Extraction id : <span nz-typography  class="font-weight-light">{{item.job_id | uppercase }}</span></div>
-                            <!-- <div nz-typography class="font-weight-light">{{item.status | uppercase }}</div> -->
                         </ng-template>
                         <ng-template #nzDescription>
                             <div class="mb-2">
@@ -55,19 +54,7 @@
 
                                 </span>
                             </div>
-                            <!-- <div>
-                            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
-                            <span class="pl-2" nz-typography>Created On</span>: 
-                            <nz-divider nzType="vertical"></nz-divider>
-                            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
-                            <span class="pl-2" nz-typography>Modified On</span>: 
-                            </div> -->
                         </ng-template>
-                        <!-- <ng-template #editAction>
-                            <button nz-button class="ghost" (click)="updateDBC.emit(item)">
-                              <i nz-icon nzType="edit" class="btns"></i>
-                            </button>
-                        </ng-template> -->
                         <ng-template #moreAction>
                             <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Connector?" nzPopconfirmPlacement="left"
                               >

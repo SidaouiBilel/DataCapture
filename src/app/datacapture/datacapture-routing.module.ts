@@ -31,6 +31,10 @@ const routes: Routes = [
           loadChildren : './pages/upload/upload.module#UploadModule'
         },
         {
+          path: 'autoupload',
+          loadChildren : './pages/autoupload/autoupload.module#AutouploadModule'
+        },
+        {
           path: 'dashboard',
           loadChildren : './pages/dashboard/dashboard.module#DashboardModule'
         },

@@ -1,18 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile, ActionSaveProfile, selectToken } from '@app/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 import { LoginService } from '@app/core/login/service/login.service';
-import { environment } from '@env/environment';
-import { NzHeaderComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.container.html',
   styleUrls: ['./layout.container.css'],
 })
-export class LayoutContainer implements OnInit , AfterViewInit {
+export class LayoutContainer implements OnInit {
   // used to control the sidebar
   isCollapsed: boolean = false;
   miniSidebarCollapsed = true;
@@ -168,18 +166,18 @@ export class LayoutContainer implements OnInit , AfterViewInit {
 
   
 
-  @ViewChild('navbar',{static:false})  navbar :NzHeaderComponent;
-  sticky=64;
-  ngAfterViewInit(){
-    window.onscroll = ()=>this.onscroll();
-  }
-  onscroll() {
-    if (window.pageYOffset > this.sticky) {
-      this.navbar.elementRef.nativeElement.classList.add("sticky");
-    } else {
-      this.navbar.elementRef.nativeElement.classList.remove("sticky");
-    }
-  }
+  // @ViewChild('navbar',{static:false})  navbar :NzHeaderComponent;
+  // sticky=64;
+  // ngAfterViewInit(){
+  //   window.onscroll = ()=>this.onscroll();
+  // }
+  // onscroll() {
+  //   if (window.pageYOffset > this.sticky) {
+  //     this.navbar.elementRef.nativeElement.classList.add("sticky");
+  //   } else {
+  //     this.navbar.elementRef.nativeElement.classList.remove("sticky");
+  //   }
+  // }
 
   openmydata(){
     if(this.url_data.trim() !== ""){
