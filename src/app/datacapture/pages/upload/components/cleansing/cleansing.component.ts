@@ -60,7 +60,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
   errorLevels = [
     {level: 'all', label: 'All', type: 'primary'}
     , {level: 'errors', label: 'Errors', type: 'danger'}
-    , {level: 'warnings', label: 'Warnings', type: 'warning'}
     // ,{level:'warnings', label:'Warnings', type:'warning'}
   ];
   selectedErrorLevel$ = new BehaviorSubject('all');
