@@ -48,8 +48,8 @@ export class NumericCheck extends DataCheck {
     updateUIModel(params, model){
         const firstIter:any = model[this.id].iterations[0]
         let iter = {operator:params.operator ,operand: params.operand}
-        console.log(firstIter)
-        if (firstIter.operator || firstIter.operand){
+        console.log(iter)
+        if (firstIter.operator && (firstIter.operand !== null && firstIter.operand !== "")){
             model[this.id].iterations.push(iter)
         }else{
             model[this.id].iterations[0] = iter
@@ -60,11 +60,16 @@ export class NumericCheck extends DataCheck {
         const model = UIModel[this.id]
 
         return  model.iterations
-        .filter(e=> e.operator && e.operand)
+        .filter(e=> e.operator && (e.operand !== null && e.operand !== "")) 
         .map(e=>({
             type:this.id,
             ...e
         }))
+    }
+
+    validIter(e){
+        return 
+        e.operator && e.operand 
     }
 }
 export class DateCheck extends DataCheck { 
