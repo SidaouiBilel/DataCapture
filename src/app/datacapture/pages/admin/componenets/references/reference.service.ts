@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class ReferenceService {
   ReferenceDataImport(activeRefType: any): any {
-    return `${environment.admin}domain/reference_data/${activeRefType.id}/import`
+    return `${environment.admin}reference/type/${activeRefType.id}/import`
   }
 
   constructor(private http: HttpClient) { }
