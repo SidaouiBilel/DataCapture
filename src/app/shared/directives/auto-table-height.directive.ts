@@ -52,7 +52,7 @@ export class NsAutoHeightTableDirective {
    * @param event
    */
   @HostListener("window:resize", ["$event"])
-  onResize() {
+  onResize(event) {
     this.doAutoSize();
   }
 
