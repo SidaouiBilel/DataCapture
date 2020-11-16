@@ -4,7 +4,7 @@ import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectFileData, selectDomain } from '../store/selectors/import.selectors';
 import { Injectable } from '@angular/core';
-import { selectSelectedSheet } from './../store/selectors/preview.selectors';
+import { selectUpdatedSheet } from './../store/selectors/preview.selectors';
 import { selectMandatories, selectMappingId, selectMappingValid } from './../store/selectors/mapping.selectors';
 import { selectCleansingErrors } from '../store/selectors/cleansing.selectors';
 
@@ -13,7 +13,7 @@ export class UploadGuard implements CanActivate {
   fileData: any;
   selectedDomain: string;
   mappingId: string;
-  selectedSheet: number;
+  selectedSheet: string;
   mandatories: number;
   errors: number;
   mappingValid: boolean;
@@ -22,7 +22,7 @@ export class UploadGuard implements CanActivate {
   errors$: Observable<any>;
   mappingId$: Observable<any>;
   selectedDomain$: Observable<any>;
-  selectedSheet$: Observable<number>;
+  selectedSheet$: Observable<string>;
   mandatories$: Observable<number>;
   mappingValid$: Observable<boolean>;
   constructor(private store: Store<AppState>) {
@@ -31,7 +31,7 @@ export class UploadGuard implements CanActivate {
     this.mappingValid$  = this.store.select(selectMappingValid);
     this.mappingId$ = this.store.select(selectMappingId);
     this.selectedDomain$ = this.store.select(selectDomain);
-    this.selectedSheet$ = this.store.select(selectSelectedSheet);
+    this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
     this.errors$.subscribe((errors) => {this.errors = errors; });
     this.fileData$.subscribe((res) => {this.fileData = res; });

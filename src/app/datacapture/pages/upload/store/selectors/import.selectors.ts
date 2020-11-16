@@ -32,6 +32,15 @@ export const selectFileData = createSelector(
   (object: Import) => object.fileData
 );
 
+export const selectColRange = createSelector(
+  selectImport,
+  (object: Import) => object.colRange
+);
+export const selectRowRange = createSelector(
+  selectImport,
+  (object: Import) => object.rowRange
+);
+
 export const selectFileHeaders = createSelector(
   selectFileData,
   (object: Sheet) => object.headers
