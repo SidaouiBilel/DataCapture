@@ -1,4 +1,4 @@
-
+<!-- 
     
 <div class="flex stretch column w-100 flex-scroll">
     <div class="mb-3">
@@ -19,7 +19,6 @@
             <button nz-button>
                 Header from line 
                 <nz-tag class="m-0">1</nz-tag>
-                <!-- <i nz-icon nzType="down"></i>  -->
             </button>
         </div>
         
@@ -29,4 +28,22 @@
         
     </div> 
     
+</div> -->
+<!-- <h3>FileData</h3>
+<p>{{fileData$ | async | json}}</p> -->
+<h3>Metadata</h3>
+<p>{{metadata$ | async | json}}</p>
+<hr>
+<h3>WorkSheets</h3>
+<div>
+    <button (click)='getSheetId(ws)' *ngFor='let ws of (metadata$|async)?.worksheets'>{{ws.sheetName}} ({{ws.sheetId}})</button>
+
+    <div>columnStart <input type="text" [(ngModel)]="columnStart"></div>
+    <div>columnEnd <input type="text" [(ngModel)]="columnEnd"></div>
+    <div>rowStart <input type="text" [(ngModel)]="rowStart"></div>
+    <div>rowEnd <input type="text" [(ngModel)]="rowEnd"></div>
 </div>
+<h4>Totla Lines</h4>
+<p>{{total}}</p>
+<h4>Columns</h4>
+<p>{{columns$| async|json}}</p>
