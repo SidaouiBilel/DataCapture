@@ -12,11 +12,16 @@ export enum MappingActionTypes {
   SaveSheetsTypes = '[Mapping] Save Sheets Types',
   SaveMappingValid = '[Mapping] Save Mapping Valid',
   SaveIsModified = '[Mapping] Save IsModified',
+  ClearSelectedMapping = '[Mapping] Clear Selected Mapping',
 }
 
 export class SaveMappingFields implements Action {
   readonly type = MappingActionTypes.SaveMappingFields;
   constructor(public payload: any) {}
+}
+
+export class ClearSelectedMapping implements Action {
+  readonly type = MappingActionTypes.ClearSelectedMapping;
 }
 
 export class SaveSourcesPreview implements Action {
@@ -69,4 +74,4 @@ export class SaveMandatories implements Action {
   constructor(public payload: any) {}
 }
 export type MappingActions = SaveMappingFields | SaveMappedSources | SaveMandatories | SaveMappingValid | SaveSourcesPreview |
-  SaveMappingSheet | SaveSheetsTypes | SaveMappingId | SaveMappingVersion | SaveMappingName | SaveIsModified;
+  SaveMappingSheet | SaveSheetsTypes | SaveMappingId | SaveMappingVersion | SaveMappingName | SaveIsModified | ClearSelectedMapping;

@@ -28,6 +28,14 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
         mandatories
       };
     }
+
+    case MappingActionTypes.ClearSelectedMapping:
+      return {
+        ...state,
+        mappingId: '',
+        mappingVersion: '',
+      };
+
     case MappingActionTypes.SaveSheetsTypes:
       return {
         ...state,

@@ -8,7 +8,7 @@ import { MappingService } from '../../services/mapping.service';
 import { selectMappingFields, selectMappedSources, selectMandatories,
          selectMappingId, selectMappingValid, selectIsModified, selectSourcesPreview, selectMappingVersion } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
-         SaveMappingValid, SaveIsModified, SaveMappingVersion } from '../../store/actions/mapping.actions';
+         SaveMappingValid, SaveIsModified, SaveMappingVersion, ClearSelectedMapping } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
@@ -374,6 +374,11 @@ export class MappingComponent implements OnInit, OnDestroy {
       this.store.dispatch(new SaveMappingValid(true));
       this.store.dispatch(new SaveMappingFields(mfRef));
     });
+  }
+
+  // Clear selected mapping
+  clear(): void {
+    this.store.dispatch(new ClearSelectedMapping());
   }
 
   // mapping name validator
