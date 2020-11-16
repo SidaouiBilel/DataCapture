@@ -22,7 +22,7 @@ export class SheetSelectorComponent implements OnInit {
   sheets$: any;
   selectedSheet$: any;
 
-  @Input() type="grid"
+  @Input() type = 'grid';
 
   constructor(
     private host: ElementRef,
@@ -31,7 +31,7 @@ export class SheetSelectorComponent implements OnInit {
     private pipe: TranformationService) {
     this.selectedSheet$   = this.store.select(selectSelectedSheet);
     // tslint:disable-next-line: max-line-length
-    this.sheets$    = this.store.select(selectFileData).pipe(map((file: any) => file ? file.sheets.map((sheet, index) => ({sheet, index})) : []));
+    this.sheets$    = this.store.select(selectFileData).pipe(map((file: any) => (file && file.metaData) ? file.metaData.worksheets : []));
     combineLatest(this.sheets$, this.max$).subscribe(
       ([sheets, max]: any) => {
         this.showDropdown$.next(sheets.length > max);

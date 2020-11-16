@@ -4,7 +4,9 @@ import { PreviewActionTypes } from '../actions/preview.actions';
 
 export const initialState: Preview = {
   filters : {},
-  selectedSheet: null
+  selectedSheet: null,
+  generatedSheetId: null,
+  total: 0
 };
 
 export function PreviewReducer(state: Preview = initialState, action: any): Preview {
@@ -13,6 +15,17 @@ export function PreviewReducer(state: Preview = initialState, action: any): Prev
       return {
         ...state,
         selectedSheet: action.payload
+      };
+
+    case PreviewActionTypes.UpdateSheet:
+      return {
+        ...state,
+        generatedSheetId: action.payload
+      };
+    case PreviewActionTypes.SaveTotal:
+      return {
+        ...state,
+        total: action.payload
       };
 
     default:

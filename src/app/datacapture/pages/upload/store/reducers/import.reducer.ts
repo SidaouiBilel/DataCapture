@@ -10,7 +10,9 @@ export const initialState: Import = {
   fileData : {metaData: null, sheets: [], data: [], headers: []},
   progress : null,
   selectedDomain: null,
-  superDomain: null
+  superDomain: null,
+  colRange: [0, 0],
+  rowRange: [0, 0]
 };
 
 export function ImportReducer(state: Import = initialState, action: any): Import {
@@ -36,6 +38,17 @@ export function ImportReducer(state: Import = initialState, action: any): Import
       return {
         ...state,
         fileData: action.payload
+      };
+
+    case ImportActionTypes.SELECT_COL_RANGE:
+      return {
+        ...state,
+        colRange: action.payload
+      };
+    case ImportActionTypes.SELECT_ROW_RANGE:
+      return {
+        ...state,
+        rowRange: action.payload
       };
 
     case ImportActionTypes.RESET:

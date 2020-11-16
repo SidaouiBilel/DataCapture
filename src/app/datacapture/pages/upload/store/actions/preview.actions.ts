@@ -1,7 +1,9 @@
 import { Action } from '@ngrx/store';
 
 export enum PreviewActionTypes {
-  SelectSheet = '[Preview] upload file',
+  SelectSheet = '[Preview] select sheet',
+  UpdateSheet = '[Preview] update sheet',
+  SaveTotal = '[Preview] save total',
 }
 
 export class ActionSelectSheet implements Action {
@@ -9,4 +11,14 @@ export class ActionSelectSheet implements Action {
   constructor(readonly payload: number) {}
 }
 
-export type PreviewActions = ActionSelectSheet;
+export class UpdateSheet implements Action {
+  readonly type = PreviewActionTypes.UpdateSheet;
+  constructor(readonly payload: string) {}
+}
+
+export class SaveTotal implements Action {
+  readonly type = PreviewActionTypes.SaveTotal;
+  constructor(readonly payload: number) {}
+}
+
+export type PreviewActions = ActionSelectSheet | UpdateSheet | SaveTotal;

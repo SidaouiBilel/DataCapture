@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, forkJoin, Observer, combineLatest } from 'rxjs';
+import { Observable, forkJoin, Observer } from 'rxjs';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MappingService } from '../../services/mapping.service';
 import { selectMappingFields, selectMappedSources, selectMandatories,
-         selectMappingId, selectMappingValid, selectIsModified, selectSourcesPreview, selectMappingVersion } from './../../store/selectors/mapping.selectors';
+         selectMappingId, selectMappingValid, selectIsModified,
+         selectSourcesPreview, selectMappingVersion } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
          SaveMappingValid, SaveIsModified, SaveMappingVersion } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
-import { selectSelectedSheet } from './../../store/selectors/preview.selectors';
+import { selectUpdatedSheet } from './../../store/selectors/preview.selectors';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { PreviousMappingsComponent } from './previous-mappings/previous-mappings.component';
@@ -65,7 +66,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.sourcesPreview$ = this.store.select(selectSourcesPreview);
     this.mappedSources$ = this.store.select(selectMappedSources);
     this.mappingValid$  = this.store.select(selectMappingValid);
-    this.selectedSheet$ = this.store.select(selectSelectedSheet);
+    this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mandatories$   = this.store.select(selectMandatories);
     this.mappingId$     = this.store.select(selectMappingId);
     this.mappingVersion$     = this.store.select(selectMappingVersion);
@@ -176,9 +177,8 @@ export class MappingComponent implements OnInit, OnDestroy {
   save(parentId: string, x: any): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet]) => {
-      const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
       // tslint:disable-next-line: max-line-length
-      this.service.postAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.mappingFields, parentId, this.worksheet)
+      this.service.postAutomaticMapping(domain.id, selectedSheet, this.validateForm.controls.name.value, this.mappingFields, parentId, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, parentId || res.mapping_id, res.mapping_id);
           this.notification.success(`Success.`);
@@ -200,8 +200,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     const x = this.notification.loading('Loading automatic mapping');
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet]) => {
-      const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
-      this.service.loadAutoMappingById(domain.id, ws, this.worksheet)
+      this.service.loadAutoMappingById(domain.id, selectedSheet, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, null, null);
           this.notification.success(`The mapping was loaded successfully.`);
@@ -242,8 +241,7 @@ export class MappingComponent implements OnInit, OnDestroy {
         modal.afterClose.subscribe((map) => {
           if (map && map.version) {
             // Apply the mapping
-            const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
-            this.service.getMappingById(domain.id, ws, map.version).subscribe((res: any) => {
+            this.service.getMappingById(domain.id, selectedSheet, map.version).subscribe((res: any) => {
               this.updateLocalMapping(res, map.id, map.version);
               this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
@@ -325,7 +323,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
         // tslint:disable-next-line: max-line-length
-        this.service.updateMapping(mappingFields, (this.mappingVersion || mappingId), fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]], domain.id)
+        this.service.updateMapping(mappingFields, (this.mappingVersion || mappingId), selectedSheet, domain.id)
           .subscribe((res) => {
             this.notification.success('The mapping is successfully updated');
             this.store.dispatch(new SaveIsModified(false));

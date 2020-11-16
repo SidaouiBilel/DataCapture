@@ -1,49 +1,66 @@
-<!-- 
-    
 <div class="flex stretch column w-100 flex-scroll">
-    <div class="mb-3">
-        <nz-statistic nzValue="" [nzTitle]="'File Name'"></nz-statistic>
-        <h4 nz-typography>{{(metadata$ | async)?.filename}}</h4>
+  <div class="mb-3">
+    <nz-statistic nzValue="" [nzTitle]="'File Name'"></nz-statistic>
+    <h4 nz-typography>{{(metadata$ | async)?.filename}}</h4>
+  </div>
+  <div class="mb-3">
+    <nz-statistic nzValue='' [nzTitle]="'Dataset Selection'"></nz-statistic>
+    <div nz-row>
+      <div nz-col nzSpan="4">
+        <span nzTypography>Columns</span>
+      </div>
+      <div nz-col nzSpan="20">
+        <nz-slider nzRange [nzStep]="1" (nzOnAfterChange)="colRangeChanged()" [nzMax]="500" [(ngModel)]="colValue"></nz-slider>
+      </div>
     </div>
+    <div nz-row>
+      <div nz-col nzSpan="4">
+        <span nzTypography>Rows</span>
+      </div>
+      <div nz-col nzSpan="20">
+        <nz-slider nzRange [nzStep]="100" (nzOnAfterChange)="rowRangeChanged()" [nzMax]="1000000" [(ngModel)]="rowValue"></nz-slider>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <nz-statistic nzValue='' [nzTitle]="'Sheets'"></nz-statistic>
+    <app-sheet-selector type='list'></app-sheet-selector>
+  </div>
+  <div class="mb-3">
+    <nz-statistic nzValue='' [nzTitle]="'Total Lines'"></nz-statistic>
+    {{total$ | async}}
+  </div>
+
+
+  <div class="flex-1 mb-3 flex column stretch flex-scroll">
+    <nz-statistic nzValue="" [nzTitle]="'Headers'"></nz-statistic>
+
     <div class="mb-3">
-        <nz-statistic nzValue='' [nzTitle]="'Sheets'"></nz-statistic>
-        <app-sheet-selector type='list'></app-sheet-selector>
+      <i nz-icon nzType="ordered-list" class="mr-3"></i>
+      <button nz-button>
+        Header from
+        <nz-tag class="m-0">{{colValue[0]}}</nz-tag>
+        to
+        <nz-tag class="m-0">{{(headers$ | async)?.length}}</nz-tag>
+      </button>
+      <button nz-button class="ml-2">
+        Row from
+        <nz-tag class="m-0">{{rowValue[0]}}</nz-tag>
+        to
+        <nz-tag class="m-0">{{total$ | async}}</nz-tag>
+      </button>
     </div>
 
+    <nz-list class="flex-scroll" nzBordered nzSize="small">
+      <nz-list-item *ngFor='let h of (headers$ | async)'>{{h}}</nz-list-item>
+    </nz-list>
 
-    <div class="flex-1 mb-3 flex column stretch flex-scroll">
-        <nz-statistic nzValue="" [nzTitle]="'Headers'"></nz-statistic>
-        
-        <div class="mb-3">
-            <i nz-icon nzType="ordered-list" class="mr-3"></i> 
-            <button nz-button>
-                Header from line 
-                <nz-tag class="m-0">1</nz-tag>
-            </button>
-        </div>
-        
-        <nz-list class="flex-scroll" nzBordered nzSize="small">
-            <nz-list-item *ngFor='let h of (headers$ | async)'>{{h}}</nz-list-item>
-        </nz-list>
-        
-    </div> 
-    
-</div> -->
-<!-- <h3>FileData</h3>
-<p>{{fileData$ | async | json}}</p> -->
-<h3>Metadata</h3>
-<p>{{metadata$ | async | json}}</p>
-<hr>
-<h3>WorkSheets</h3>
-<div>
-    <button (click)='getSheetId(ws)' *ngFor='let ws of (metadata$|async)?.worksheets'>{{ws.sheetName}} ({{ws.sheetId}})</button>
+  </div>
 
-    <div>columnStart <input type="text" [(ngModel)]="columnStart"></div>
-    <div>columnEnd <input type="text" [(ngModel)]="columnEnd"></div>
-    <div>rowStart <input type="text" [(ngModel)]="rowStart"></div>
-    <div>rowEnd <input type="text" [(ngModel)]="rowEnd"></div>
 </div>
-<h4>Totla Lines</h4>
-<p>{{total}}</p>
-<h4>Columns</h4>
-<p>{{columns$| async|json}}</p>
+<!-- <div>
+  <div>columnStart <input type="text" [(ngModel)]="colValue[0]"></div>
+  <div>columnEnd <input type="text" [(ngModel)]="colValue[1]"></div>
+  <div>rowStart <input type="text" [(ngModel)]="rowValue[0]"></div>
+  <div>rowEnd <input type="text" [(ngModel)]="rowValue[1]"></div>
+</div> -->

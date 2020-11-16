@@ -6,3 +6,12 @@ export const selectSelectedSheet = createSelector(
   selectPreview,
   (object: Preview) => object.selectedSheet
 );
+
+export const selectUpdatedSheet = createSelector(
+  selectPreview,
+  (object: Preview) => object.generatedSheetId
+);
+export const selectTotal = createSelector(
+  selectPreview,
+  (object: Preview) => object.total
+);

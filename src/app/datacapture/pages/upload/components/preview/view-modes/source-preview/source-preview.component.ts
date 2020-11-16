@@ -3,7 +3,7 @@ import { BehaviorSubject, Subject, combineLatest, Observable } from 'rxjs';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
+import { selectSelectedSheet, selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { selectFileData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
@@ -37,7 +37,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
     _transformService: TranformationService,
     _hotkeys: TransformationHotKeysService) {
       super(_transformService, _hotkeys);
-      this.selectedSheet$ = this.store.select(selectSelectedSheet);
+      this.selectedSheet$ = this.store.select(selectUpdatedSheet);
       this.fileData$ = this.store.select(selectFileData);
   }
 
@@ -46,8 +46,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
       .subscribe(([size, file, selectedSheet, grid]) => {
         this.onReset();
         if (file.metaData) {
-          const worksheet = file.metaData.worksheets_map[file.sheets[selectedSheet]];
-          this.generateDataSource(grid, worksheet, size);
+          this.generateDataSource(grid, selectedSheet, size);
         }
       });
     this.registerHotKey();
