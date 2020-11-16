@@ -18,7 +18,7 @@ export class ImportDataComponent implements OnInit {
     "Database",
     "Datalake"
   ];
-  Importtype$ :BehaviorSubject<String>  = new BehaviorSubject("");
+  Importtype$ :BehaviorSubject<String>  = new BehaviorSubject("Extracted files");
   UserFiles$  :BehaviorSubject<any[]>   = new BehaviorSubject([]);
   selectedtype="Extracted files";
   Profile:any;
@@ -64,18 +64,24 @@ export class ImportDataComponent implements OnInit {
   }
 
   fileloading=false;
-  handleChange({file,fileList}:UploadChangeParam): void{
+  handleChange({file}:UploadChangeParam): void{
     const status=file.status;
+    
     if(status === 'uploading'){
-      console.log(file.name);
       this.fileloading=true;
     }
     if (status === 'done') {
-      console.log("done");
-      this.notif.success("Your file has been uploaded successfully.");
-      this.fileloading=false;
-      this.addfile.emit(file.name);
-      this.SuccessMessage=file.name+" imported successfully";
+      console.log(file.response)
+      if(file.response.uploaded){
+        this.notif.success("Your file has been uploaded successfully.");
+        this.fileloading=false;
+        this.addfile.emit(file.name);
+        this.SuccessMessage=file.name+" imported successfully";        
+      }else{
+        this.notif.error("ERROR");
+        this.fileloading=false;
+      }
+
     }else if (status === 'error') {
       this.notif.error("ERROR.");
       this.fileloading=false;

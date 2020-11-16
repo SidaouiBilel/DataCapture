@@ -15,10 +15,6 @@
 /* @import "ag-grid-community/dist/styles/ag-theme-fresh.css"; */
 
 
-[nz-form] {
-    width: 100vw;
-    max-width: 700px;
-}
 .driver{
     margin: 5px 0 5px 0 !important; 
 }

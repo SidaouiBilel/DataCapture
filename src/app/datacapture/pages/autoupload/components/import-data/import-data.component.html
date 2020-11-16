@@ -2,7 +2,16 @@
             <!-- Header -->
             <div  nz-row class="d-flex align-items-center">
                 <div nz-col nzSpan="12">
-                  <span nz-text class="font-weight-light mr-1">Import File from :</span>
+                  <span nz-text class="mr-1">Import File from :</span>
+                  <!-- <button class="mt-2"  nz-button nz-dropdown
+                    [nzDisabled]="dataupload.filename!=''"
+                    [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+                    <div style="min-width:200px" class="flex between">
+                      <div class="flex-1 text-left">{{ (Importtype$ | async) }}</div>
+                      <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"></i>
+                    </div>
+                  </button> -->
+                  
                     <nz-select class="mt-2"
                                [(ngModel)]="selectedtype"
                                class="selecttype" 
@@ -89,3 +98,10 @@
     </nz-result>
   </div>
 </ng-template>
+<!-- <nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of importTypes" nz-menu-item (click)="selectimporttype(item)" >
+     <span [class]="item == (Importtype$ | async) ? 'font-weight-bold' : ''">{{item}}</span> 
+    </li>
+  </ul>
+</nz-dropdown-menu> -->

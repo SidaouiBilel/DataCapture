@@ -10,10 +10,15 @@
         </div>
         <nz-divider class="font-weight-bold primary-color mb-4" [nzText]="'Output list'" nzOrientation="left"></nz-divider>
   
-        <nz-table #sortTable [nzData]="OutputList | async" nzTableLayout="fixed" class="mt-4" [nzLoading]="loading">
-            <thead>
+        <nz-table #sortTable 
+                 [nzData]="OutputList | async" 
+                 nzTableLayout="fixed" 
+                 class="mt-4" 
+                 [nzFrontPagination]="pagination"
+                 [nzLoading]="loading">
+            <thead (nzSortChange)="sort($event)">
               <tr>
-                <th *ngFor="let column of listOfColumn">{{ column.title }}</th>
+                <th *ngFor="let column of listOfColumn" nzShowSort [nzSortKey]="column.item">{{ column.title }}</th>
               </tr>
             </thead>
             <tbody>
