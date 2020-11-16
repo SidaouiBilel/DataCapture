@@ -18,8 +18,8 @@
         (click)='isVisible = true'>
         <i nz-icon nzType="save"></i>
       </button>
-      <button nz-tooltip nzTooltipTitle='Save new version' nzShape='circle' class="ghost" nz-button
-        (click)="saveNewVersion()">
+      <button nzShape='circle' class="ghost" nz-button nz-popover nzPopoverPlacement="bottomRight"
+        nzPopoverTrigger="click" [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="content" [(nzVisible)]="visible">
         <i nz-icon nzType="copy"></i>
       </button>
       <nz-divider nzType='vertical'></nz-divider>
@@ -64,8 +64,9 @@
                 <div class="source-item-box flex between" [class.mapped]="mappedSources[item]" [dndDraggable]="item"
                   *ngFor="let item of keys(mappedSources) | filter: search">
                   <span>{{item}} </span>
-                  <button nz-tooltip nzTooltipTitle='Preview' (click)="selectedSource = item" nz-popover [nzPopoverContent]="contentTemplate"
-                    nzPopoverPlacement="bottom" nzShape='round' class="ghost" nzPopoverTrigger="click" nz-button>
+                  <button nz-tooltip nzTooltipTitle='Preview' (click)="selectedSource = item" nz-popover
+                    [nzPopoverContent]="contentTemplate" nzPopoverPlacement="bottom" nzShape='round' class="ghost"
+                    nzPopoverTrigger="click" nz-button>
                     <i nz-icon nzType="eye"></i>
                   </button>
                 </div>
@@ -91,16 +92,12 @@
                 <div class="target-item-box"
                   *ngFor="let item of (mappingFields$|async | keyFilter: 'label' :searchTarget) ; let i = index;"
                   [class.mandatory-row]="item.mandatory">
-                  <div class="mapped-item-list" [ngClass]='{"dropHintClass":!item.value&&item.mandatory}'  dndDropzone (dndDrop)="onItemDrop($event,item)"
-                    [dndDragoverClass]="'dropOverClass'">
+                  <div class="mapped-item-list" [ngClass]='{"dropHintClass":!item.value&&item.mandatory}' dndDropzone
+                    (dndDrop)="onItemDrop($event,item)" [dndDragoverClass]="'dropOverClass'">
                     <div nz-row>
                       <div nz-col nzSpan="18">
-                        <nz-tag
-                        *ngIf="item.value"
-                        nzMode="closeable"
-                        [nzColor]='item.inError?"red":""'
-                        (nzOnClose)="onRemoveClick(item)"
-                        >{{item.value}}</nz-tag>
+                        <nz-tag *ngIf="item.value" nzMode="closeable" [nzColor]='item.inError?"red":""'
+                          (nzOnClose)="onRemoveClick(item)">{{item.value}}</nz-tag>
                         <!-- <div *ngIf="item.value" class="badge" [class.badge-primary]="!item.inError"
                           [class.badge-danger]="item.inError" selected nz-tooltip
                           [nzTooltipTitle]="item.inError ? 'This column does not exist in the file you imported.' : null">
@@ -122,9 +119,13 @@
             </div>
 
             <div class="mapping-information border">
-              <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error" nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon></nz-alert>
-              <nz-alert *ngIf="(mandatories$ | async)" nzType="error" [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
-              <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="success" nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
+              <nz-alert *ngIf="!(mappingValid$ | async)" nzType="error"
+                nzMessage="This mapping is invalid with this worksheet. Update it or use another one." nzShowIcon>
+              </nz-alert>
+              <nz-alert *ngIf="(mandatories$ | async)" nzType="error"
+                [nzMessage]="(mandatories$ | async) + ' mandatory fields left.'" nzShowIcon></nz-alert>
+              <nz-alert *ngIf="!(mandatories$ | async) && (mappingValid$ | async)" nzType="success"
+                nzMessage="All mandatory fields are mapped" nzShowIcon></nz-alert>
             </div>
           </div>
         </nz-card>
@@ -135,8 +136,8 @@
 </div>
 
 <nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzOkLoading]="isOkLoading"
-  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping" (nzOnOk)="saveNewMapping(mappingId)"
-  (nzOnCancel)="isVisible = false">
+  [nzOkDisabled]="!validateForm?.valid" [nzClosable]="false" nzTitle="Name this mapping"
+  (nzOnOk)="saveNewMapping(mappingId)" (nzOnCancel)="isVisible = false">
   <form nz-form [formGroup]="validateForm">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Mapping Name</nz-form-label>
@@ -161,4 +162,23 @@
       <span class="pr-2"><small>{{ item}}</small></span>
     </div>
   </div>
+</ng-template>
+
+<ng-template #titleTemplate>Please enter this version's description</ng-template>
+<ng-template #content>
+  <form nz-form [formGroup]="descriptionForm" class="reset-form" (ngSubmit)="saveNewVersion()">
+    <nz-form-item style="margin-bottom: 6px;">
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="description" placeholder="Description" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="margin-bottom: 6px;">
+      <div class="flex between">
+        <button nz-button nzSize="small" nzType="default" (click)="visible = false">Cancel</button>
+        <button nz-button nzSize="small" nzType="primary" (ngSubmit)="saveNewVersion()">Ok</button>
+      </div>
+    </nz-form-item>
+  </form>
 </ng-template>

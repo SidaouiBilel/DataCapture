@@ -33,7 +33,7 @@
         <nz-tag class="cursor" [nzColor]="(item.id == selectedVersion) ? 'green' : ''"
           (click)="selectedVersion = item.id">Version 1
         </nz-tag>
-        <nz-tag class="cursor" *ngFor="let t of item.versions; let i = index"
+        <nz-tag class="cursor" *ngFor="let t of item.versions; let i = index" nz-tooltip [nzTooltipTitle]="t?.description"
           [nzColor]="(selectedVersion === t.id) ? 'green' : ''" (click)="selectedVersion = t.id">Version {{t.version}}
         </nz-tag>
       </ng-template>

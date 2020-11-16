@@ -28,11 +28,13 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappedSources: any;
   search: string;
   mandatories: number;
+  visible: boolean;
   keys = Object.keys;
   isVisible: boolean;
   isOkLoading: boolean;
   isModified = false;
   validateForm: FormGroup;
+  descriptionForm: FormGroup;
   worksheet: any;
   mappingId: any;
   mappingVersion: any;
@@ -80,6 +82,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
     this.validateForm = this.fb.group({name: [null, [Validators.required], [this.nameValidator.bind(this)]]});
+    this.descriptionForm = this.fb.group({description: [null]});
     this.validate();
   }
 
@@ -169,16 +172,26 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   saveNewVersion(): void {
-    const x = this.notification.loading('Saving new version');
-    this.save(this.mappingId, x);
+    // tslint:disable-next-line: forin
+    for (const i in this.descriptionForm.controls) {
+      this.descriptionForm.controls[i].markAsDirty();
+      this.descriptionForm.controls[i].updateValueAndValidity();
+    }
+
+    if (this.descriptionForm.valid) {
+      const x = this.notification.loading('Saving new version');
+      this.save(this.mappingId, x, this.descriptionForm.controls.description.value);
+      this.descriptionForm.reset();
+      this.visible = false;
+    }
   }
 
-  save(parentId: string, x: any): void {
+  save(parentId: string, x: any, description?: string): void {
     forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, fileData, selectedSheet]) => {
       const ws = fileData.metaData.worksheets_map[fileData.sheets[selectedSheet]];
       // tslint:disable-next-line: max-line-length
-      this.service.postAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.mappingFields, parentId, this.worksheet)
+      this.service.postAutomaticMapping(domain.id, ws, this.validateForm.controls.name.value, this.mappingFields, parentId, description, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, parentId || res.mapping_id, res.mapping_id);
           this.notification.success(`Success.`);
