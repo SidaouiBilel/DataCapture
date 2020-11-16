@@ -2,7 +2,7 @@
   <i nz-icon nzType="copy" nzTheme="twotone" class="m-2"></i>
 
   <div class="sheet-selector">
-    <button nz-tooltip [nzTooltipTitle]='e.sheet' nz-button [ngClass]='{"active": (selectedSheet$ | async) == e.index}'
+    <!-- <button nz-tooltip [nzTooltipTitle]='e.sheet' nz-button [ngClass]='{"active": (selectedSheet$ | async) == e.index}'
       *ngFor="let e of (sheets$|async) | sheetsFilter: (max$ | async)" (click)='onSheetSelected(e.index)'>
       {{e.sheet}}
     </button>
@@ -13,7 +13,7 @@
         <li nz-tooltip *ngFor="let e of (sheets$|async) | sheetsFilter: (max$ | async) : true" nz-menu-item
           (click)='onSheetSelected(e.index)'>{{e.sheet}}</li>
       </ul>
-    </nz-dropdown-menu>
+    </nz-dropdown-menu> -->
   </div>
 </div>
 

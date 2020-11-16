@@ -44,7 +44,7 @@ export class SheetSelectorComponent implements OnInit {
     combineLatest(this.pipe.active$, this.selectedSheet$).pipe(take(1)).subscribe(
       ([activePipe, selectedSheet]) => {
         // IF SAME SHEET RETURN
-        if (selectedSheet === index) { return; }
+        // if (selectedSheet === index) { return; }
         // CHECK IF PIPE IS ACTIVE
         if (activePipe) {
           this.openConfirmationModal(index);

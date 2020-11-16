@@ -18,7 +18,7 @@
         <span nzTypography>Rows</span>
       </div>
       <div nz-col nzSpan="20">
-        <nz-slider nzRange [nzStep]="100" (nzOnAfterChange)="rowRangeChanged()" [nzMax]="1000000" [(ngModel)]="rowValue"></nz-slider>
+        <nz-slider nzRange [nzStep]="1" (nzOnAfterChange)="rowRangeChanged()" [nzMax]="100000" [(ngModel)]="rowValue"></nz-slider>
       </div>
     </div>
   </div>

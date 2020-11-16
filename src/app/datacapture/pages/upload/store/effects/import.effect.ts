@@ -52,7 +52,7 @@ export class ImportEffects {
         this.store$.dispatch(new SaveTotal(res.total));
         this.store$.dispatch(new ActionSelectRowRange(rowRef));
         this.notif.close(x);
-        this.notif.success('The dataset is ready.');
+        // this.notif.success('The dataset is ready.');
         const y = this.notif.loading('Processing the dataset...');
         this.service.getFileData(1, res.sheet_id, 0).subscribe((data) => {
           const mappingSources = {};
@@ -62,7 +62,8 @@ export class ImportEffects {
           this.store$.dispatch(new ActionSaveFile({...file, data: [], headers: data.headers}));
           this.store$.dispatch(new ActionSelectColRange(colRef));
           this.notif.close(y);
-          this.notif.success('Success.');
+          console.log()
+          this.notif.success(`Dataset <i>${res.sheetName}</i> is ready.`);
         }, (err) => {
           this.notif.close(y);
         });
