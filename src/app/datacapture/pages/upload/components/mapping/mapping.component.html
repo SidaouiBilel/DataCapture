@@ -7,13 +7,14 @@
         <i nz-icon nzType="hourglass"></i>
       </button>
       <nz-divider nzType='vertical'></nz-divider>
-      <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async)" nzShape='circle' class="ghost"
+      <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async) || mappingUsed" nzShape='circle' class="ghost"
         nz-button (click)='updateMapping(mappingFields)'>
         <nz-badge nzDot *ngIf="isModified">
           <i nz-icon nzType="cloud-sync"></i>
         </nz-badge>
         <i nz-icon *ngIf="!isModified" nzType="cloud-sync"></i>
       </button>
+      <nz-tag *ngIf="mappingUsed" class="ml-2" [nzColor]="'#ff0000'">This mapping is used for an upload. Update is prohibited.</nz-tag>
       <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
         (click)='isVisible = true'>
         <i nz-icon nzType="save"></i>

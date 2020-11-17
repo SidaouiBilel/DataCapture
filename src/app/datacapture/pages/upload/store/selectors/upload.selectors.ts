@@ -13,12 +13,13 @@ export const selectUploadOverview = createSelector(
       domain: object.import.selectedDomain ? object.import.selectedDomain.name : null,
       pipe: object.transformation.activePipe ? object.transformation.activePipe.name : null,
       mappingName: object.mapping.mappingName,
+      mappingId: object.mapping.mappingVersion || object.mapping.mappingId,
       domainId: object.import.selectedDomain ? object.import.selectedDomain.id : null,
       fileId: object.import.fileData.metaData ? object.import.fileData.metaData.file_id : null,
       transformationId: object.transformation.transformedFilePath,
       cleansingId: object.cleansing.jobId,
       // tslint:disable-next-line: max-line-length
-      sheetId: object.import.fileData.metaData ? object.import.fileData.metaData.worksheets_map[object.import.fileData.sheets[object.preview.selectedSheet]] : null
+      sheetId: object.preview.generatedSheetId
     };
   }
 );

@@ -45,22 +45,16 @@ export class ImportEffects {
       const x = this.notif.loading('Preparing the dataset...');
       this.service.generateSheet(file.metaData.file_id, sheetId, colRange[0], colRange[1], rowRange[0], rowRange[1])
       .subscribe((res: any) => {
-        const rowRef = [...rowRange];
-        const colRef = [...colRange];
-        rowRef[1] = res.total;
         this.store$.dispatch(new UpdateSheet(res.sheet_id));
         this.store$.dispatch(new SaveTotal(res.total));
-        this.store$.dispatch(new ActionSelectRowRange(rowRef));
         this.notif.close(x);
         this.notif.success('The dataset is ready.');
         const y = this.notif.loading('Processing the dataset...');
         this.service.getFileData(1, res.sheet_id, 0).subscribe((data) => {
           const mappingSources = {};
-          colRef[1] = data.headers.length;
           data.headers.forEach((e) => { mappingSources[e] = false; });
           this.store$.dispatch(new SaveMappedSources(mappingSources));
           this.store$.dispatch(new ActionSaveFile({...file, data: [], headers: data.headers}));
-          this.store$.dispatch(new ActionSelectColRange(colRef));
           this.notif.close(y);
           this.notif.success('Success.');
         }, (err) => {

@@ -27,7 +27,7 @@ export class UploadService {
 
   getUploadStatus(flowId: any): Observable<any> {
     const stop = new Subject();
-    return timer(0,2000).pipe(
+    return timer(0, 2000).pipe(
       takeUntil(stop),
       switchMap(() => this.getStatus(flowId)),
       tap((status: any) => {

@@ -30,6 +30,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   search: string;
   mandatories: number;
   visible: boolean;
+  mappingUsed: boolean;
   keys = Object.keys;
   isVisible: boolean;
   isOkLoading: boolean;
@@ -94,7 +95,19 @@ export class MappingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getTargetFields();
     if (this.mappingId) {
+      this.checkUsability();
       this.checkMappingSanity();
+    }
+  }
+
+  checkUsability() {
+    const id = this.mappingVersion || this.mappingId;
+    if (id) {
+      this.service.checkUsability(id).subscribe((res) => {
+        if (res) {
+          this.mappingUsed = res.check;
+        }
+      });
     }
   }
 
@@ -259,6 +272,7 @@ export class MappingComponent implements OnInit, OnDestroy {
               this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
               this.checkMappingSanity();
+              this.checkUsability();
             });
           }
         });

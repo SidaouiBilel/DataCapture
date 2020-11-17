@@ -50,7 +50,8 @@ export class UploadDataComponent implements OnInit, OnDestroy {
         file_id: this.metaData.fileId,
         cleansing_job_id: this.metaData.cleansingId,
         transformation_id: this.metaData.transformationId,
-        user_id: profile.id
+        user_id: profile.id,
+        mapping_id: this.metaData.mappingId
       };
       this.uploadStatus$.next('STARTED');
       this.progress = 0;
