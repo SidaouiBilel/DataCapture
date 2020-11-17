@@ -1,48 +1,41 @@
-<nz-list [nzDataSource]="mappings" nzBordered [nzRenderItem]="defaultItem">
-  <ng-template #defaultItem let-item let-index>
-    <nz-list-item [nzActions]="[editAction]">
-      <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
-      </nz-list-item-meta>
-      <!-- {{ item.name }} -->
-      <ng-template #editAction>
-        <a nz-dropdown [nzDropdownMenu]="menu" class="text-primary" *ngIf="item.id == selectedVersion || checkVersion(index)">
-          more
-          <!-- <i nz-icon nzType="more"></i> -->
-        </a>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item [nzDisabled]="!selectedVersion" (click)="apply(item)">Apply</li>
-            <li nz-menu-divider></li>
-            <li nz-menu-item nzDisabled>Rename</li>
-            <li nz-menu-item [nzDisabled]="item.id == mappingId || !selectedVersion">
-              <span [class.disable-click]="item.id == mappingId || !selectedVersion" nz-popconfirm
+<nz-collapse nzAccordion>
+  <nz-collapse-panel *ngFor="let mapping of mappings" [nzHeader]="nzTitle" [nzActive]="mappingId === mapping.id">
+    <ng-template #nzTitle>
+      <i *ngIf="mapping.id == mappingId" class="text-success mr-2" nz-icon nzType="check-circle" nzTheme="outline"></i>
+      <span [class.text-success]="mapping.id == mappingId">{{mapping.name || 'Undefined'}}</span>
+    </ng-template>
+
+    <!-- Versions -->
+    <nz-list [nzDataSource]="mapping.versions" nzBordered [nzRenderItem]="defaultItem">
+      <ng-template #defaultItem let-item let-index>
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="nzVersion">
+          </nz-list-item-meta>
+        </nz-list-item>
+        <ng-template #nzVersion>
+          <div class="flex between">
+            <span nz-typography>
+              <span [class.text-success]="item.id == selectedVersion">Version {{item.version}}</span>
+              <span class="description pl-3">{{item.description}}</span>
+            </span>
+            <div>
+              <button nz-tooltip nzTooltipTitle='Apply' nzShape='circle' class="ghost" nz-button
+                (click)='selectedVersion = item.id;apply(mapping)'>
+                <i nz-icon nzType="play-square"></i>
+              </button>
+              <button nz-tooltip nzTooltipTitle='Rename' nzShape='circle' class="ghost" nz-button  disabled>
+                <i nz-icon nzType="edit"></i>
+              </button>
+              <button nzShape='circle' class="ghost" nz-button [disabled]="item.id == selectedVersion"
+                nz-popconfirm
                 nzPopconfirmTitle="If you delete the first version, the original mapping will be deleted and hence, the rest of its versions."
-                nzPopconfirmPlacement="left" (nzOnConfirm)="deleteMapping(selectedVersion)">
-                Delete
-              </span>
-            </li>
-          </ul>
-        </nz-dropdown-menu>
+                nzPopconfirmPlacement="left" (nzOnConfirm)="deleteMapping(item.id)">
+                <i nz-icon nzType="delete"></i>
+              </button>
+            </div>
+          </div>
+        </ng-template>
       </ng-template>
-
-      <ng-template #nzTitle>
-        <i *ngIf="item.id == mappingId" class="text-success mr-2" nz-icon nzType="check-circle" nzTheme="outline"></i>
-        <span [class.text-success]="item.id == mappingId">{{item.name || 'Undefined'}}</span>
-      </ng-template>
-      <ng-template #nzDescription>
-        <nz-tag class="cursor" [nzColor]="(item.id == selectedVersion) ? 'green' : ''"
-          (click)="selectedVersion = item.id">Version 1
-        </nz-tag>
-        <nz-tag class="cursor" *ngFor="let t of item.versions; let i = index"
-          [nzColor]="(selectedVersion === t.id) ? 'green' : ''" (click)="selectedVersion = t.id">Version {{t.version}}
-        </nz-tag>
-      </ng-template>
-    </nz-list-item>
-  </ng-template>
-</nz-list>
-
-<ng-template #moreAction>
-  <button nz-button class="ghost">
-    <i nz-icon nzType="delete" class="btns"></i>
-  </button>
-</ng-template>
+    </nz-list>
+  </nz-collapse-panel>
+</nz-collapse>

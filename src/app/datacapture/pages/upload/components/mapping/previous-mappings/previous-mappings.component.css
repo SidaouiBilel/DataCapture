@@ -1,5 +1,6 @@
-:host nz-list {
+:host nz-collapse {
   max-height: 60vh;
+  min-width: 60vw;
   overflow: auto;
 }
 
@@ -9,4 +10,13 @@
 
 .disable-click {
   pointer-events: none;
+}
+
+.description {
+  font-size: 12px;
+  color: darkgrey;
+  width: 40vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

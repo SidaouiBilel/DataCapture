@@ -9,7 +9,7 @@ import { selectMappingFields, selectMappedSources, selectMandatories,
          selectMappingId, selectMappingValid, selectIsModified,
          selectSourcesPreview, selectMappingVersion } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
-         SaveMappingValid, SaveIsModified, SaveMappingVersion } from '../../store/actions/mapping.actions';
+         SaveMappingValid, SaveIsModified, SaveMappingVersion, ClearSelectedMapping } from '../../store/actions/mapping.actions';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectUpdatedSheet } from './../../store/selectors/preview.selectors';
@@ -29,11 +29,14 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappedSources: any;
   search: string;
   mandatories: number;
+  visible: boolean;
+  mappingUsed: boolean;
   keys = Object.keys;
   isVisible: boolean;
   isOkLoading: boolean;
   isModified = false;
   validateForm: FormGroup;
+  descriptionForm: FormGroup;
   worksheet: any;
   mappingId: any;
   mappingVersion: any;
@@ -81,6 +84,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
     this.validateForm = this.fb.group({name: [null, [Validators.required], [this.nameValidator.bind(this)]]});
+    this.descriptionForm = this.fb.group({description: [null]});
     this.validate();
   }
 
@@ -91,7 +95,19 @@ export class MappingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getTargetFields();
     if (this.mappingId) {
+      this.checkUsability();
       this.checkMappingSanity();
+    }
+  }
+
+  checkUsability() {
+    const id = this.mappingVersion || this.mappingId;
+    if (id) {
+      this.service.checkUsability(id).subscribe((res) => {
+        if (res) {
+          this.mappingUsed = res.check;
+        }
+      });
     }
   }
 
@@ -170,15 +186,25 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   saveNewVersion(): void {
-    const x = this.notification.loading('Saving new version');
-    this.save(this.mappingId, x);
+    // tslint:disable-next-line: forin
+    for (const i in this.descriptionForm.controls) {
+      this.descriptionForm.controls[i].markAsDirty();
+      this.descriptionForm.controls[i].updateValueAndValidity();
+    }
+
+    if (this.descriptionForm.valid) {
+      const x = this.notification.loading('Saving new version');
+      this.save(this.mappingId, x, this.descriptionForm.controls.description.value);
+      this.descriptionForm.reset();
+      this.visible = false;
+    }
   }
 
-  save(parentId: string, x: any): void {
-    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
-      .subscribe(([domain, fileData, selectedSheet]) => {
+  save(parentId: string, x: any, description?: string): void {
+    forkJoin(this.domain$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
+      .subscribe(([domain, selectedSheet]) => {
       // tslint:disable-next-line: max-line-length
-      this.service.postAutomaticMapping(domain.id, selectedSheet, this.validateForm.controls.name.value, this.mappingFields, parentId, this.worksheet)
+      this.service.postAutomaticMapping(domain.id, selectedSheet, this.validateForm.controls.name.value, this.mappingFields, parentId, description, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, parentId || res.mapping_id, res.mapping_id);
           this.notification.success(`Success.`);
@@ -246,6 +272,7 @@ export class MappingComponent implements OnInit, OnDestroy {
               this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
               this.checkMappingSanity();
+              this.checkUsability();
             });
           }
         });
@@ -359,6 +386,11 @@ export class MappingComponent implements OnInit, OnDestroy {
       this.store.dispatch(new SaveMappingValid(true));
       this.store.dispatch(new SaveMappingFields(mfRef));
     });
+  }
+
+  // Clear selected mapping
+  clear(): void {
+    this.store.dispatch(new ClearSelectedMapping());
   }
 
   // mapping name validator

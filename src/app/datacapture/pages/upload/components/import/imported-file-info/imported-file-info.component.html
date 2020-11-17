@@ -5,12 +5,18 @@
   </div>
   <div class="mb-3">
     <nz-statistic nzValue='' [nzTitle]="'Dataset Selection'"></nz-statistic>
-    <div nz-row>
+    <div nz-row class="mb-2">
       <div nz-col nzSpan="4">
         <span nzTypography>Columns</span>
       </div>
       <div nz-col nzSpan="20">
-        <nz-slider nzRange [nzStep]="1" (nzOnAfterChange)="colRangeChanged()" [nzMax]="500" [(ngModel)]="colValue"></nz-slider>
+        <!-- <nz-slider nzRange [nzStep]="1" (nzOnAfterChange)="colRangeChanged()" [nzMax]="500" [(ngModel)]="colValue"></nz-slider> -->
+        <nz-input-group nzAddOnBefore="Start" class="w-50 pr-2">
+          <input type="text" nz-input [(ngModel)]="colValue[0]" (keyup)="colRangeChanged()"/>
+        </nz-input-group>
+        <nz-input-group nzAddOnBefore="End" class="w-50 pl-2">
+          <input type="text" nz-input [(ngModel)]="colValue[1]" (keyup)="colRangeChanged()"/>
+        </nz-input-group>
       </div>
     </div>
     <div nz-row>
@@ -18,7 +24,13 @@
         <span nzTypography>Rows</span>
       </div>
       <div nz-col nzSpan="20">
-        <nz-slider nzRange [nzStep]="1" (nzOnAfterChange)="rowRangeChanged()" [nzMax]="100000" [(ngModel)]="rowValue"></nz-slider>
+        <!-- <nz-slider nzRange [nzStep]="100" (nzOnAfterChange)="rowRangeChanged()" [nzMax]="1000000" [(ngModel)]="rowValue"></nz-slider> -->
+        <nz-input-group nzAddOnBefore="Start" class="w-50 pr-2">
+          <input type="text" nz-input [(ngModel)]="rowValue[0]" (keyup)="rowRangeChanged()"/>
+        </nz-input-group>
+        <nz-input-group nzAddOnBefore="End" class="w-50 pl-2">
+          <input type="text" nz-input [(ngModel)]="rowValue[1]" (keyup)="rowRangeChanged()"/>
+        </nz-input-group>
       </div>
     </div>
   </div>
@@ -41,13 +53,13 @@
         Header from
         <nz-tag class="m-0">{{colValue[0]}}</nz-tag>
         to
-        <nz-tag class="m-0">{{(headers$ | async)?.length}}</nz-tag>
+        <nz-tag class="m-0">{{colValue[1]}}</nz-tag>
       </button>
       <button nz-button class="ml-2">
         Row from
         <nz-tag class="m-0">{{rowValue[0]}}</nz-tag>
         to
-        <nz-tag class="m-0">{{total$ | async}}</nz-tag>
+        <nz-tag class="m-0">{{rowValue[1]}}</nz-tag>
       </button>
     </div>
 
