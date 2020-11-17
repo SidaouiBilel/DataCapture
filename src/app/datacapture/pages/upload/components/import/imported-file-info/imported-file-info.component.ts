@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
+import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { FileImportService } from '../../../services/file-import.service';
 import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
-import { selectFileData, selectRowRange } from '../../../store/selectors/import.selectors';
-import { selectTotal } from '../../../store/selectors/preview.selectors';
-import { selectColRange } from './../../../store/selectors/import.selectors';
+import { ActionSelectSheet } from '../../../store/actions/preview.actions';
+import { selectColRange, selectFileData, selectRowRange } from '../../../store/selectors/import.selectors';
+import { selectSelectedSheet, selectTotal } from '../../../store/selectors/preview.selectors';
+import { DatasetComponent } from '../dataset/dataset.component';
 
 @Component({
   selector: 'app-imported-file-info',
@@ -26,18 +28,20 @@ export class ImportedFileInfoComponent implements OnInit {
   // Store
   fileData$: Observable<any>;
   metadata$: Observable<any>;
+  sheet$: Observable<any>;
   headers$: Observable<any>;
   total$: Observable<any>;
   rowRange$: Observable<any>;
   colRange$: Observable<any>;
 
-  constructor(private store: Store<AppState>, private service: FileImportService) { }
+  constructor(private store: Store<AppState>, private service: FileImportService, private modalService: NzModalService) { }
 
   ngOnInit() {
+    this.total$ = this.store.select(selectTotal);
+    this.sheet$ = this.store.select(selectSelectedSheet);
     this.fileData$ = this.store.select(selectFileData);
     this.rowRange$ = this.store.select(selectRowRange);
     this.colRange$ = this.store.select(selectColRange);
-    this.total$ = this.store.select(selectTotal);
     this.metadata$ = this.fileData$.pipe(map((data: any) => data.metaData));
     this.headers$ = this.fileData$.pipe(map((data: any) => data.headers));
     this.rowRange$.subscribe((rR) => {this.rowValue = [...rR]; });
@@ -52,4 +56,20 @@ export class ImportedFileInfoComponent implements OnInit {
     this.store.dispatch(new ActionSelectColRange(this.colValue));
   }
 
+  openConfig(): void {
+    const modal = this.modalService.create({
+      nzTitle: 'Dataset Configuration',
+      nzContent: DatasetComponent,
+      nzClosable: false,
+      nzWrapClassName: 'vertical-center-modal',
+      nzWidth: 'xXL',
+      nzOnOk: componentInstance => {
+        this.store.dispatch(new ActionSelectRowRange(componentInstance.rowValue));
+        this.store.dispatch(new ActionSelectColRange(componentInstance.colValue));
+        this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
+          this.store.dispatch(new ActionSelectSheet(sheet));
+        })
+      }
+    });
+  }
 }
