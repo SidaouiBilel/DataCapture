@@ -41,13 +41,14 @@ export class MappingService {
   }
 
   // tslint:disable-next-line: max-line-length
-  postAutomaticMapping(domainId: string, SheetId: string, name: string, mapping: any, parentId: any, transformed?: string): Observable<any> {
+  postAutomaticMapping(domainId: string, SheetId: string, name: string, mapping: any, parentId: any, description, transformed?: string): Observable<any> {
     const payload = {
       file: SheetId,
       domainId,
       name,
       parentMappingId: parentId,
       transformed,
+      description,
       mapping: mapping.map(t => {if (t.value) { return {source: [t.value], target: t.name}; }}).filter((e) => {if (e) { return e; }})
     };
     // tslint:disable-next-line: max-line-length
