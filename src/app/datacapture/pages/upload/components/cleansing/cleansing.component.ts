@@ -60,7 +60,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   errorLevels = [
     {level: 'all', label: 'All', type: 'primary'}
     , {level: 'errors', label: 'Errors', type: 'danger'}
-    , {level: 'warnings', label: 'Warnings', type: 'warning'}
+    // , {level: 'warnings', label: 'Warnings', type: 'warning'}
     // ,{level:'warnings', label:'Warnings', type:'warning'}
   ];
   selectedErrorLevel$ = new BehaviorSubject('all');
@@ -276,7 +276,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
         if (h.colId !== INDEX_HEADER.colId) {
           const cellClass = (params) => {
             const f = params.colDef.field;
-            const i = params.data.row_index;
+            const i = (params.data)?params.data.row_index: -1;
             try {
               if (this.results[i][f].errors.length > 0) {
                 return 'error-cell';
@@ -297,7 +297,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
           // h.tooltipField = h.field;
           h.tooltipComponentParams = {error: this.results$};
           h.tooltipValueGetter = (params) => {
-            return { value: params.value, index : params.data.row_index };
+            return { value: params.value, index : (params.data)?params.data.row_index: '' };
           };
           // Sort
           h.sortable = true;
