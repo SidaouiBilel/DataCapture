@@ -63,6 +63,7 @@ import { CalculatorComponent } from './components/transformation/transformations
 import { CalculatorModalComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator-modal/calculator-modal.component';
 import { ImportedFileInfoComponent } from './components/import/imported-file-info/imported-file-info.component';
 import { DateFormatterComponent } from './components/transformation/transformations/transformation-interface/format/date-formatter/date-formatter.component';
+import { DatasetComponent } from './components/import/dataset/dataset.component';
 
 const components = [
   UploadComponentComponent,
@@ -108,8 +109,7 @@ const components = [
   FilterPipe,
   CalculatorComponent,
   CalculatorModalComponent,
-
-  ImportedFileInfoComponent, 
+  ImportedFileInfoComponent,
   DateFormatterComponent
 ];
 
@@ -123,7 +123,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, DatasetComponent],
   exports: [
   ],
   providers : [
@@ -154,7 +154,8 @@ const components = [
     SplitterComponent,
     CalculatorComponent,
     CalculatorModalComponent,
-    DateFormatterComponent
+    DateFormatterComponent,
+    DatasetComponent
   ]
 })
 export class UploadModule {}
