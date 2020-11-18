@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, AppState } from '@app/core';
+import { NotificationService, AppState  , selectProfile} from '@app/core';
 import { UploadChangeParam } from 'ng-zorro-antd/upload';
 import { Store } from '@ngrx/store';
 import { ActionUploadFile, ActionImportReset, ActionSaveFile, ActionSelectDomain } from '../../store/actions/import.actions';
@@ -26,6 +26,7 @@ export class ImportComponent implements OnInit {
   // Store
   importState$: Observable<Import>;
   selectedDomain$: Observable<any>;
+  selectedProfile$: Observable<any>;
   fileData$: Observable<any>;
   SuccessMessage="Your file is ready to use";
   autoimportloading=false;
@@ -36,13 +37,18 @@ export class ImportComponent implements OnInit {
     this.importState$ = this.store.select(selectImport);
     this.selectedDomain$ = this.store.select(selectDomain);
     this.fileData$ = this.store.select(selectFileData);
+    this.selectedProfile$=this.store.select(selectProfile);
     this.fileData$.subscribe((fileData) => {
       this.fileData = fileData;
     })
     this.selectedDomain$.subscribe((domain: any) => {
       this.selectedDomain = domain;
       if (domain) {
-        this.url = urls.environment.import + '?domainId=' + domain.id;
+        this.selectedProfile$.subscribe((user :any)=>{
+          if (user) {
+              this.url = urls.environment.import + '?domainId=' + domain.id+"&userId="+user.id;
+          }
+        });
       }
     });
     this.domains = [];
