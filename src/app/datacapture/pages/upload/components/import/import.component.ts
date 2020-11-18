@@ -64,7 +64,7 @@ export class ImportComponent implements OnInit {
     this.store.dispatch(new ActionSelectDomain({id: event, name}, superDomain));
   }
 
-  handleChange({ file, fileList }: UploadChangeParam): void {
+  handleChange({file, fileList}: UploadChangeParam): void {
     const status = file.status;
     if (status === 'uploading') {
       this.store.dispatch(new ActionUploadFile({file: null, importing: true, imported: false, error: false, progress: file.percent}));
