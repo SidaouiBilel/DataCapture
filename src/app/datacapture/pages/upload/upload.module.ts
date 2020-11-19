@@ -61,6 +61,7 @@ import { UploadDataComponent } from './components/upload/upload-data/upload-data
 import { FilterPipe } from './pipe/source-filter.pipe';
 import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
 import { AutoimportComponent } from './components/autoimport/autoimport.component';
+import { JoinComponent } from './components/transformation/transformations/transformation-interface/format/join/join.component';
 
 const components = [
   UploadComponentComponent,
@@ -104,7 +105,8 @@ const components = [
   UploadTagsComponent,
   UploadDataComponent,
   FilterPipe,
-  HashComponent
+  HashComponent,
+  JoinComponent
 ];
 
 @NgModule({
@@ -146,7 +148,8 @@ const components = [
     PipeChangesAlertComponent,
     DefaultValueComponent,
     SplitterComponent,
-    HashComponent
+    HashComponent,
+    JoinComponent
   ]
 })
 export class UploadModule {}

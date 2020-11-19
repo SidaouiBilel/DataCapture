@@ -1,11 +1,13 @@
+import { selectProfile } from './../../../../../../core/auth/auth.selectors';
+import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { TranformationService } from '../services/tranformation.service';
 // tslint:disable-next-line: max-line-length
-import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders } from './transformation.actions';
+import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders , Adduserdatasets , Loaduserdatasets } from './transformation.actions';
 import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
 import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
@@ -13,6 +15,7 @@ import { selectSelectedSheet } from '../../../store/selectors/preview.selectors'
 import { ImportActionTypes } from '../../../store/actions/import.actions';
 import { TransformerFactory } from '../transformations/transformers';
 import { PreviewActionTypes } from '../../../store/actions/preview.actions';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TransformationEffects {
@@ -22,6 +25,7 @@ export class TransformationEffects {
     private store$: Store<AppState>,
     private service: TranformationService,
     private job: PreMappingTransformationService,
+    private file_S:FileImportService
   ) {}
 
   @Effect({ dispatch: false })
@@ -83,5 +87,21 @@ export class TransformationEffects {
       }
     })
   );
+
+  @Effect()
+  UsersDatasets$:Observable<Action>=this.actions$.pipe(
+    ofType(
+      TransformationActionTypes.LOAD_USER_DATASETS
+    ), 
+    map((action:Loaduserdatasets)=>action.payload),
+    mergeMap((id)=>(
+            this.file_S.loaduserdatasets(id).pipe(
+              map(
+                (rep)=>{console.log(rep);return new Adduserdatasets(rep)}
+              )
+        )
+      )
+    )
+  )
 
 }

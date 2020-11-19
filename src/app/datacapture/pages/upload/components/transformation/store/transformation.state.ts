@@ -2,6 +2,7 @@ import { Transformation } from './transformation.model';
 import { TransformationActionTypes } from './transformation.actions';
 import { swapArrayElements } from '@app/shared/utils/arrays.utils';
 
+
 export const initialState: Transformation = {
     nodes:[],
     editedPipeInfo: null,
@@ -11,13 +12,21 @@ export const initialState: Transformation = {
     previwMode:'SOURCE',
 
     transformedFilePath:null,
-    tarnsformationHeaders: null
+    tarnsformationHeaders: null,
+    userfiles:{
+    data:[],
+    loaded:false
+    }
 }
 
 const ACTIONS = TransformationActionTypes
 
 export function TransformationReducer(state: Transformation = initialState, action: any): Transformation {
   switch (action.type) {
+
+    case ACTIONS.ADD_USER_DATASETS:{
+        return {...state, userfiles:{data:action.payload,loaded:true}}
+    } 
 
     case ACTIONS.ADD_NODE:{
         const nodes = [...state.nodes]

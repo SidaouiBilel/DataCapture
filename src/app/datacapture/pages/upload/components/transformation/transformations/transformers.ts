@@ -3,12 +3,12 @@ import { MergerComponent } from './transformation-interface/format/merger/merger
 import { DeleteRowsComponent } from './transformation-interface/format/delete-rows/delete-rows.component';
 import { DeleteColumnComponent } from './transformation-interface/format/delete-column/delete-column.component';
 import { FilterComponent } from './transformation-interface/format/filter/filter.component';
-import { DeleteRow, DeleteColumns, Replace, Merge, Filter, FilterAndReplace, DefaultValue, Splitter, Hasher } from './transformers/transformer.model';
+import { DeleteRow, DeleteColumns, Replace, Merge, Filter, FilterAndReplace, DefaultValue, Splitter, Hasher , Joiner } from './transformers/transformer.model';
 import { FindAndReplaceComponent } from './transformation-interface/format/find-and-replace/find-and-replace.component';
 import { DefaultValueComponent } from './transformation-interface/format/default-value/default-value.component';
 import { SplitterComponent } from './transformation-interface/format/splitter/splitter.component';
 import { HashComponent } from './transformation-interface/format/hash/hash.component';
-
+import { JoinComponent } from './transformation-interface/format/join/join.component';
 export const TRANSFORMATIONS = [
   new Filter().setComponent(FilterComponent),
   new FilterAndReplace().setComponent(FindAndReplaceComponent),
@@ -18,7 +18,8 @@ export const TRANSFORMATIONS = [
   new DeleteRow().setComponent(DeleteRowsComponent),
   new DefaultValue().setComponent(DefaultValueComponent),
   new Splitter().setComponent(SplitterComponent),
-  new Hasher().setComponent(HashComponent)
+  new Hasher().setComponent(HashComponent),
+  new Joiner().setComponent(JoinComponent) 
 ];
 
 export const TransformerFactory = (type) => {

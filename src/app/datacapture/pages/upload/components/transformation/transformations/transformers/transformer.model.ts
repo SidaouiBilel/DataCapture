@@ -279,7 +279,7 @@ export class Splitter extends Transformer {
 }
 
 
-export class Hasher extends Transformer {
+export class Hasher extends Transformer { 
   type = 'hash';
   label = 'Hash';
   icon = 'barcode';
@@ -310,3 +310,39 @@ export class Hasher extends Transformer {
     };
   }
 }
+
+export class Joiner extends Transformer { 
+  type = 'join';
+  label = 'Join';
+  icon = 'vertical-align-middle';
+  shortcut = 'control.alt.h';
+  collapse = false;
+
+  getErrors = (params, previousNodes, headers) => {
+    const errors = [];
+    if (!params.columns || (params.columns && params.columns.length === 0 ) ) {
+        errors.push(new NodeError('columns', 'Missing Column'));
+    } else {
+        const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
+        for ( const column of params.columns ) {
+            if ( previousHeaders.indexOf(column) < 0 ) {
+                errors.push(new NodeError('columns', `${column} does not exist`));
+            }
+
+        }
+    }
+    return errors;
+  }
+
+  getRuleFromGrid(params) {
+    const columns = GAPIColumnsInRange(params.api);
+    return {
+        ...this.getRule(),
+        "join_type":"",
+        "file_id":"",
+        "worksheet_id":"",
+        columns
+    };
+  }
+}
+

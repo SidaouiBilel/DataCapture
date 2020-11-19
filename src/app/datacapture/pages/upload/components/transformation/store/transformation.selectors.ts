@@ -9,7 +9,12 @@ import { selectMappedSources } from '../../../store/selectors/mapping.selectors'
 
 export const selectTranformation = createSelector(
   selectupload,
-  (object: UploadState) => object.transformation
+  (object: UploadState) => object.transformation 
+);
+
+export const selectuserDatasets = createSelector(
+  selectTranformation,
+  (object: Transformation) => object.userfiles 
 );
 
 export const selectTranformationNodes = createSelector(

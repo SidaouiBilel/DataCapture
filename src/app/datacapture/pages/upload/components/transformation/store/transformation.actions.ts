@@ -13,8 +13,18 @@ export enum TransformationActionTypes {
   SET_PREVIEW_MODE = '[TRANS] SET_PREVIEW_MODE',
   UPDATE_FILE_PATH = '[TRANS] UPDATE_FILE_PATH',
   UPDATE_TRANSFORMATION_HEADERS = '[TRANS] UPDATE_TRANSFORMATION_HEADERS',
+  LOAD_USER_DATASETS = '[TRANS] LOAD USER DATASETS',
+  ADD_USER_DATASETS = '[TRANS] ADD USER DATASETS',
 }
 
+export class Adduserdatasets implements Action {
+  readonly type = TransformationActionTypes.ADD_USER_DATASETS;
+  constructor(readonly payload: any[]) {}
+}
+export class Loaduserdatasets implements Action {
+  readonly type = TransformationActionTypes.LOAD_USER_DATASETS;
+  constructor(readonly payload: any) {}
+}
 export class AddTransNode implements Action {
   readonly type = TransformationActionTypes.ADD_NODE;
   constructor(readonly payload: any) {}

@@ -8,6 +8,11 @@ export interface Transformation{
     previwMode: 'SOURCE' | 'TARGET';
     transformedFilePath: string;
 
-    tarnsformationHeaders: string[]
+    tarnsformationHeaders: string[],
+    userfiles?:userfiles
     // ADD SIMILAR FIELDS FOR POST MAPPING TRANSFORMERS
+}
+interface userfiles{
+    data:[],
+    loaded:boolean
 }
