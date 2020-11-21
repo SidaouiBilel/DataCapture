@@ -21,7 +21,7 @@ export class JoinComponent extends TransformationInterfaceComponent implements O
   join_types = ["left", "right", "outer", "inner"];
   selectedfile;
   ngOnInit() {
-    console.log(this.data);
+    console.log(this.data.join_type);
     this.store.select(selectuserDatasets).subscribe(
       res=>{
         if(res.loaded){

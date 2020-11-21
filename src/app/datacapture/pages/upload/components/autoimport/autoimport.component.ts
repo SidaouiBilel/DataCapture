@@ -20,7 +20,7 @@ export class AutoimportComponent implements OnInit {
   selectedDomain$:Observable<any>;
   selectedDomain:any;
   loading = true;
-  searchFile="Your file is ready to use";
+  searchFile="";
   @Input() selecteddomain;
   @Input() autoimportloading;
   @Output() _autoimportloading :EventEmitter<any> = new EventEmitter();

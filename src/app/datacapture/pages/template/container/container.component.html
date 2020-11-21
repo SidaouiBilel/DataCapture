@@ -1,0 +1,39 @@
+
+<div class="DBconnectors-container p-1">
+  
+    <nz-page-header class="site-page-header" nzTitle="Template List" [nzSubtitle]="tooltip">
+            <ng-template #tooltip>
+                <button nzShape="circle" nzTooltipTitle="" nzTooltipPlacement="top" nz-button nz-tooltip><i nz-icon nzType="question"></i></button>
+            </ng-template>
+    </nz-page-header>
+  
+    <div nz-row class='ma-b'>
+        <div nz-col [nzSpan]='18'>
+          <button nz-button class='ghost' (click)="extract_data()">
+            <i nz-icon nzType="plus"></i>Create Template
+          </button>
+          <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
+        </div>
+    </div>
+  
+    <div class="mb-4 flext bg-white rounded-0 m-0 p-0">
+        <nz-list class="list_impo" [nzDataSource]="templates$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+            <ng-template #item let-item>
+                <nz-list-item class="BD-item">
+                    <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
+                        <ng-template #nzTitle>
+                            <div nz-typography class="font-weight-bold">Name : <span nz-typography  class="font-weight-light">{{item.name | uppercase }}</span></div>
+                        </ng-template>
+                        <ng-template #moreAction>
+                            <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Template?" nzPopconfirmPlacement="left"
+                              >
+                              <i nz-icon nzType="delete" class="btns"></i>
+                          </button>
+                        </ng-template>
+                    </nz-list-item-meta>
+                </nz-list-item>
+            </ng-template>
+        </nz-list>
+    </div> 
+  
+  </div>

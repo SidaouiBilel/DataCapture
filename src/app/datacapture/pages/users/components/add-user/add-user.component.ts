@@ -71,6 +71,7 @@ export class AddUserComponent implements OnInit {
 
   submitForm(): void {
     // tslint:disable-next-line: forin
+    console.log(this.validateForm.value)
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();

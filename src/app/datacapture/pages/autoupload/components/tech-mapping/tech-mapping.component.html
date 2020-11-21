@@ -17,8 +17,25 @@
           </div>
       </div>
       <nz-divider class="font-weight-bold primary-color" [nzText]="'Output Datasource'" nzOrientation="left"></nz-divider>
+      
+      <div class="row w-100 d-flex flex-column align-items-center" *ngIf="!iscsv()">
+        <div class="selecttype d-flex flex-column align-items-start">
+          <span nz-text class="mb-1">Select template :</span>
+          <nz-select 
+                  class=" selecttype"
+                  nzPlaceHolder="Output Template" 
+                  (ngModelChange)="changesource($event)"
+                  [(ngModel)]="sectedtemplate"> 
+                  <nz-option *ngFor="let source of (listOftemplates$ | async); let i = index" [nzValue]="source._id" [nzLabel]="source.name">
+                  </nz-option>
+          </nz-select>
+        </div>
 
-      <div class="row w-100 d-flex flex-column align-items-center mb-2">
+    </div>
+    
+    <br/>
+
+      <div class="row w-100 d-flex flex-column align-items-center">
         <div class="selecttype d-flex flex-column align-items-start">
           <span nz-text class="mb-1">Select Output Source :</span>
           <nz-select nzMode="multiple" 
@@ -34,9 +51,11 @@
           </nz-select>
         </div>
 
-    </div><br/>
+    </div>
+    
+    <br/>
 
-    <div class="row w-100 d-flex flex-column align-items-center mb-2">
+    <div class="row w-100 d-flex flex-column align-items-center mb-3">
       <div class="selecttype d-flex flex-column align-items-start">   
          <span nz-text class="mb-1">Select Output type :</span>
           <nz-select nzMode="multiple" 

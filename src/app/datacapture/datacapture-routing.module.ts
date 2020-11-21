@@ -1,3 +1,4 @@
+import { ContainerComponent } from './pages/template/container/container.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutContainer } from './layout/container/layout.container';
@@ -37,6 +38,10 @@ const routes: Routes = [
         {
           path: 'dashboard',
           loadChildren : './pages/dashboard/dashboard.module#DashboardModule'
+        },
+        {
+          path: 'template',
+          component : ContainerComponent
         },
         {
           path: '**',

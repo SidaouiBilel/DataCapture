@@ -1,3 +1,4 @@
+import { TemplateService } from './../../../template/service/template.service';
 import { BehaviorSubject } from 'rxjs';
 import { AutouploadService } from './../../service/autoupload.service';
 import { NotificationService } from './../../../../../core/notifications/notification.service';
@@ -21,26 +22,38 @@ export class TechMappingComponent implements OnInit {
   listOfSelectedValue :any[]=[];
   listOfSelectedSources :any[]=[];
   outputype$:BehaviorSubject<boolean>=new BehaviorSubject(true);
-  constructor(private notif:NotificationService , private autoS:AutouploadService) { }
+  sectedtemplate="";
+  listOftemplates$:BehaviorSubject<any[]>=new BehaviorSubject([]);
+  constructor(private notif:NotificationService , private autoS:AutouploadService , private templateS :TemplateService) { }
 
   ngOnInit() {
     if(this.dataupload.outputs.length>0){
         this.listOfSelectedValue=this.dataupload.outputs;
     }
+    this.templateS.getTemplates().subscribe(res=>{
+      this.listOftemplates$.next(res);
+    });
   }
   goToOutput(){
     console.log(this.listOfSelectedValue);
   }
 
+  iscsv(){
+    return this.dataupload.filename.includes(".csv");
+  }
+
   submitloading=false;
   Next(){
-   if(this.listOfSelectedValue.length===0){
+    console.log(this.sectedtemplate.length)
+   if(this.listOfSelectedValue.length===0 || !this.iscsv() && this.sectedtemplate.length==0){
      this.notif.warn("You need to Select Output type !!")
    }else{
+
      this.addoutputs.emit(this.listOfSelectedValue);
      this.submitloading=true;
+     let template = this.iscsv() ? {template:false} : {template:true,template_id:this.sectedtemplate};
      this.autoS.auto_upload({
-       ...{...this.dataupload , outputs:this.listOfSelectedValue},
+       ...{...this.dataupload , outputs:this.listOfSelectedValue , ...template},
        uid:this.profile.id
      }).subscribe(
        data=>{

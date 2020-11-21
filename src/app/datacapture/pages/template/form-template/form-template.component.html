@@ -1,0 +1,44 @@
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter Template name!">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+    
+      <nz-form-item *ngFor="let control of listoftemplates; let i = index">
+        <nz-form-label [nzSm]="6" [nzXs]="24" *ngIf="i == 0" [nzFor]="i">
+          Template
+        </nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzOffset]="i == 0 ? 0 : 6"
+          nzErrorTip="Please enter Template info.">
+
+          <input nz-input [formControlName]="control.title" placeholder="Title"  [attr.id]="i" />
+
+          <input class="roles-input" nz-input [formControlName]="control.sheet" placeholder="Sheet" [attr.id]="i" />
+
+          <nz-select class="roles-input"  nzMode="tags" [formControlName]="control.range" nzPlaceHolder="Range" [attr.id]="i">
+            <nz-option *ngFor="let option of []" [nzLabel]="option" [nzValue]="option"></nz-option>
+          </nz-select>
+
+          <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+        </nz-form-control>
+      </nz-form-item>
+
+    <nz-form-item class="flex center">
+      <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+        <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+          <i nz-icon nzType="plus"></i>
+          Add field
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  
+  <!-- <div> ADMIN {{user.admin}} </div>
+  <ul >
+    ROLES
+    <li *ngFor="let r of user.roles">{{r | json}}  </li>
+  </ul> -->
+  
