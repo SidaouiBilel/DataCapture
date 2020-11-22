@@ -59,6 +59,10 @@
             </ul>
           </li>
           
+          <li nz-menu-item nzIcon="project"  [nzSelected]="isPrimaryPage('template')" [routerLink]="['/data/datacapture/template']">
+            <span><i nz-icon nzType="project"></i> Template</span>
+          </li>
+
           <li nz-menu-item nzIcon="export"  [nzSelected]="isPrimaryPage('autoupload')" [routerLink]="['/data/datacapture/autoupload']">
             <span><i nz-icon nzType="export"></i> Auto upload</span>
             <!-- <ul>
@@ -71,9 +75,7 @@
               <li nz-menu-item [nzSelected]="isPrimaryPage('autoupload')"  [routerLink]="['/data/datacapture/autoupload/import-data']">Autoupload</li>
             </ul> -->
           </li>
-          <li nz-menu-item nzIcon="export"  [nzSelected]="isPrimaryPage('template')" [routerLink]="['/data/datacapture/template']">
-            <span><i nz-icon nzType="export"></i> Template</span>
-          </li>
+
 
 
 

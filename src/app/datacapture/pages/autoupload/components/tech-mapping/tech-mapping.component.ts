@@ -22,7 +22,7 @@ export class TechMappingComponent implements OnInit {
   listOfSelectedValue :any[]=[];
   listOfSelectedSources :any[]=[];
   outputype$:BehaviorSubject<boolean>=new BehaviorSubject(true);
-  sectedtemplate="";
+  sectedtemplate;
   listOftemplates$:BehaviorSubject<any[]>=new BehaviorSubject([]);
   constructor(private notif:NotificationService , private autoS:AutouploadService , private templateS :TemplateService) { }
 
@@ -44,8 +44,8 @@ export class TechMappingComponent implements OnInit {
 
   submitloading=false;
   Next(){
-    console.log(this.sectedtemplate.length)
-   if(this.listOfSelectedValue.length===0 || !this.iscsv() && this.sectedtemplate.length==0){
+    console.log(this.sectedtemplate)
+   if(this.listOfSelectedValue.length===0 || !this.iscsv() && !this.sectedtemplate){
      this.notif.warn("You need to Select Output type !!")
    }else{
 

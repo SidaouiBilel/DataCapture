@@ -20,9 +20,11 @@
       
       <div class="row w-100 d-flex flex-column align-items-center" *ngIf="!iscsv()">
         <div class="selecttype d-flex flex-column align-items-start">
-          <span nz-text class="mb-1">Select template :</span>
+          <span nz-text class="mb-1">Select Output template :</span>
           <nz-select 
-                  class=" selecttype"
+                  nzMode="default"
+                  nzShowSearch 
+                  class="selecttype"
                   nzPlaceHolder="Output Template" 
                   (ngModelChange)="changesource($event)"
                   [(ngModel)]="sectedtemplate"> 
