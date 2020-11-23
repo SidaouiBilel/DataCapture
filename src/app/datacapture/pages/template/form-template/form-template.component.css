@@ -1,6 +1,8 @@
 [nz-form] {
     width: 500px;
     max-width: 600px;
+    max-height: calc(100vh - 200px);
+    overflow: auto;
   }
   
   .roles-input {
@@ -10,5 +12,14 @@
   
   .add-button {
     width: 60%;
+  }
+  .plus{
+    width: calc(97% - 16px);
+  }
+  .colone{
+    margin-bottom: 10px !important;
+  }
+  .SHS{
+    margin-bottom: 5px !important;
   }
   

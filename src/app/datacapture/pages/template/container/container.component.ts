@@ -41,21 +41,30 @@ export class ContainerComponent implements OnInit {
     nzStyle:{ top: '50px',marginBottom:'10px' },
     nzOnOk:componentInstance=>{
     try {
-    modal.getInstance().nzOkLoading = true;
+    // modal.getInstance().nzOkLoading = true;
     componentInstance.submitForm();
     if (componentInstance.validateForm.valid) {
       let req=componentInstance.validateForm.value;
+      let listoftemplates = componentInstance.listoftemplates;
+
+      
       let finale_req={
         "user":this.Profile.id,
         "name":componentInstance.validateForm.value.name,
         "template":{}
       }
-      let templates= Object.keys(componentInstance.validateForm.controls).filter((e) => {if (e.includes('title')) {return e; } });;
-      templates.forEach((template , index)=>{
-        finale_req.template[req["title:"+index]]={
-          "sheet":req["sheet:"+index],
-          "range":req["range:"+index].reduce((accumulator, currentValue) => accumulator+ ":" + currentValue)
-        }
+      // let templates= Object.keys(componentInstance.validateForm.controls).filter((e) => {if (e.includes('title')) {return e; } });
+      listoftemplates.map((template , index)=>{
+        
+       let req_Sr = template.count.map((el,i)=>{
+          return{
+            "sheet":req[template.SHS[i].sheet],
+            "range":req[template.SHS[i].range].reduce((accumulator, currentValue) => accumulator+ ":" + currentValue)
+          }
+        });
+
+        finale_req.template[req[template.title]]= template.count.length==1?  req_Sr[0]:req_Sr;
+        
       })
 
       console.log(finale_req);
