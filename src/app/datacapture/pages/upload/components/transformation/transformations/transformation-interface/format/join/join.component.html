@@ -10,7 +10,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8">File</nz-form-label>
         <nz-form-control [nzSm]="16">
-          <nz-select nz-tooltip [nzTooltipTitle]='"File name"' [nzMaxTagCount]='0' [nzSize]='"small"' class="column-input" name="join_type" [(ngModel)]='data.file_id' (ngModelChange)='Fileschange($event)'>
+          <nz-select nz-tooltip [nzTooltipTitle]='"File name"' [nzMaxTagCount]='0' [nzSize]='"small"' class="column-input" name="file_id" [(ngModel)]='data.file_id' (ngModelChange)='Fileschange($event)'>
               <nz-option *ngFor='let file of (Userfiles$ | async)' [nzValue]="file.fileId" [nzLabel]="file.file_name"></nz-option>
           </nz-select>
         </nz-form-control>
@@ -19,9 +19,10 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8">Type</nz-form-label>
         <nz-form-control [nzSm]="16">
-            <nz-select nz-tooltip [nzTooltipTitle]='"Jointure type"' [nzMaxTagCount]='0' [nzSize]='"small"' class="column-input" [(ngModel)]="data.join_type" name="join_type" (ngModelChange)='onDataChanged()'>
+            <!-- <nz-select nz-tooltip [nzTooltipTitle]='"Jointure type"' [nzMaxTagCount]='0' [nzSize]='"small"' class="column-input" [(ngModel)]="data.join_type" name="join_type" (ngModelChange)='onDataChanged()'>
                 <nz-option *ngFor='let jt of join_types' [nzValue]="jt" [nzLabel]="jt"></nz-option>
-            </nz-select>
+            </nz-select> -->
+            <app-select-imput [data]="join_types" [(ngModel)]="data.join_type" name='join_type' (change)='onDataChanged()'></app-select-imput>
         </nz-form-control>
       </nz-form-item>
   

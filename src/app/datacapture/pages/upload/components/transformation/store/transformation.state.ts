@@ -40,7 +40,7 @@ export function TransformationReducer(state: Transformation = initialState, acti
         const i = action.index
         const nodes = [...state.nodes]
         const validation_states = [...state.validation_states]
-        console.log(action)
+        // console.log(action)
         nodes[i] = action.payload
         validation_states[i] = []
 

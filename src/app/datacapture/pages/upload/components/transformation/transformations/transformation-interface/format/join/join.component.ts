@@ -21,32 +21,19 @@ export class JoinComponent extends TransformationInterfaceComponent implements O
   join_types = ["left", "right", "outer", "inner"];
   selectedfile;
   ngOnInit() {
-    console.log(this.index);
     this.store.select(selectuserDatasets).subscribe(
       res=>{
         if(res.loaded){
           this.Userfiles$.next(res.data);
-        }else{
-          this.store.select(selectProfile).subscribe(
-            res=>{
-              this.Profile = res.id;
-              this.store.dispatch(new Loaduserdatasets(res.id));
-            }
-          )
         }
-      }
-    )
+      })
   }
   Fileschange(e){
-    this.Userfiles$.subscribe(
-      data=>{
-        let index = data.map(a=>(a.fileId)).indexOf(e);
-        if(index>=0){
+    let data = this.Userfiles$.value;
+    let index = data.map(a=>(a.fileId)).indexOf(e);
+    if(index>=0){
          this.data.worksheet_id=data[index].worksheetId;
-        }
-        this.onDataChanged();
-      }
-    )
+         this.onDataChanged();
+    }
   }
-
-}
+ }

@@ -1,3 +1,4 @@
+import { Loaduserdatasets } from './../transformation/store/transformation.actions';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, selectProfile } from '@app/core';
@@ -24,7 +25,13 @@ export class PreviewComponent {
     this.expanded$ = this.store.select(selectPipeExpanded);
     this.profile$ = this.store.select(selectProfile);
     this.superDomain$ = this.store.select(selectSuperDomain);
+    this.store.select(selectProfile).subscribe(
+      res=>{
+        this.store.dispatch(new Loaduserdatasets(res.id));
+      }
+    )
   }
+  
 
   cancelUpload(): void {
     this.store.dispatch(new ActionImportReset());

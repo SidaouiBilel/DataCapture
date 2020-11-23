@@ -57,7 +57,7 @@ export class FormTemplateComponent implements OnInit {
     if (this.listoftemplates.length >= 1) {
       const index = this.listoftemplates.indexOf(i);
       this.listoftemplates.splice(index, 1);
-      console.log(this.listoftemplates);
+      // console.log(this.listoftemplates);
       this.validateForm.removeControl(i.sheet);
       this.validateForm.removeControl(i.range);
     }

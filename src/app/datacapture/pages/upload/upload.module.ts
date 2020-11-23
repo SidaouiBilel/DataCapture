@@ -62,6 +62,7 @@ import { FilterPipe } from './pipe/source-filter.pipe';
 import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
 import { AutoimportComponent } from './components/autoimport/autoimport.component';
 import { JoinComponent } from './components/transformation/transformations/transformation-interface/format/join/join.component';
+import { SelectImputComponent } from './components/transformation/shared/select-imput/select-imput.component';
 
 const components = [
   UploadComponentComponent,
@@ -119,7 +120,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, AutoimportComponent],
+  declarations: [...components, AutoimportComponent, SelectImputComponent],
   exports: [
   ],
   providers : [

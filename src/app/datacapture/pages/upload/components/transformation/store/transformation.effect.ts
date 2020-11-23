@@ -97,7 +97,7 @@ export class TransformationEffects {
     mergeMap((id)=>(
             this.file_S.loaduserdatasets(id).pipe(
               map(
-                (rep)=>{console.log(rep);return new Adduserdatasets(rep)}
+                (rep)=>{return new Adduserdatasets(rep)}
               )
         )
       )

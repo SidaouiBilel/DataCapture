@@ -45,6 +45,7 @@ export class TransformationNodeComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   updateTransformation(){
