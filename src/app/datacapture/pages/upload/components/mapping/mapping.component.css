@@ -43,18 +43,6 @@
   border: 1px solid #fff;
 }
 
-.sources:hover {
-  /* border: 1px solid #40a9ff; */
-  /* cursor: pointer; */
-  /* box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important; */
-}
-
-.targets:hover {
-  /* border: 1px solid #40a9ff; */
-  /* cursor: pointer; */
-  /* box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important; */
-}
-
 .targets {
   place-content: center;
   align-items: center;
@@ -70,11 +58,6 @@
   border: 1px solid #fff;
 }
 
-.target-title {
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* place-content: space-between; */
-}
 
 .source-title,
 .target-title {
@@ -88,6 +71,7 @@
 
 .scroll-box {
   overflow: auto;
+  flex: 1 1 auto;
   /* max-height: 0; */
 }
 

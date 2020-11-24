@@ -2,38 +2,39 @@
   <!-- Header -->
   <div class="importHeader mb-2" nz-row>
     <div nz-col nzSpan="18" class="button-spacing">
-      <button nz-tooltip nzTooltipTitle='Previous Mappings' nzShape='circle' class="ghost" nz-button
-        (click)='previousMappings()'>
-        <i nz-icon nzType="hourglass"></i>
-      </button>
-      <nz-divider nzType='vertical'></nz-divider>
-      <button nz-tooltip nzTooltipTitle='Update mapping' [disabled]="!(mappingId$|async) || mappingUsed" nzShape='circle' class="ghost"
+      <button *ngIf='(mappingId$|async) && !mappingUsed' nz-tooltip nzTooltipTitle='Update mapping' nzShape='circle' class="ghost"
         nz-button (click)='updateMapping(mappingFields)'>
         <nz-badge nzDot *ngIf="isModified">
-          <i nz-icon nzType="cloud-sync"></i>
+          <i nz-icon nzType="save"></i>
         </nz-badge>
-        <i nz-icon *ngIf="!isModified" nzType="cloud-sync"></i>
+        <i nz-icon *ngIf="!isModified" nzType="save"></i>
       </button>
-      <nz-tag *ngIf="mappingUsed" class="ml-2" [nzColor]="'#ff0000'">This mapping is used for an upload. Update is prohibited.</nz-tag>
+      <nz-tag *ngIf="mappingUsed" nzColor='orange'><i nz-icon class="mr-2" nzType="lock"></i>Save Locked</nz-tag>
       <button nz-tooltip nzTooltipTitle='Save new mapping' nzShape='circle' class="ghost" nz-button
         (click)='isVisible = true'>
-        <i nz-icon nzType="save"></i>
-      </button>
-      <button nzShape='circle' class="ghost" [disabled]='!mappingId' nz-button nz-popover nzPopoverPlacement="bottomRight"
-        nzPopoverTrigger="click" [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="content" [(nzVisible)]="visible">
-        <i nz-icon nzType="copy"></i>
+        <i nz-icon nzType="saveAs-o"></i>
       </button>
       <nz-divider nzType='vertical'></nz-divider>
-      <button nz-tooltip nzTooltipTitle='Load Automatic mapping' nzShape='circle' class="ghost" nz-button
-        (click)="loadAutoMapping()">
-        <i nz-icon nzType="reload"></i>
+      <button nzShape='round' [disabled]='!mappingId' nz-button nz-popover nzPopoverPlacement="bottomRight"
+        nzPopoverTrigger="click" class="ghost" [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="content" [(nzVisible)]="visible">
+        <i nz-icon nzType="plus"></i>
+        Version
       </button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nz-tooltip nzTooltipTitle='Load Automatic mapping' class="ghost" nz-button
+      (click)="loadAutoMapping()">
+      <i nz-icon nzType="robot" nzTheme="outline"></i> Auto Mapping
+      </button>
+      <nz-divider nzType='vertical'></nz-divider>
       <button nz-tooltip nzTooltipTitle='Remove mapping' nzShape='circle' class="ghost" [disabled]='!mappingId'
         nz-button (click)='clear()'>
         <i nz-icon nzType="stop"></i>
       </button>
-      <!-- <span>Applied Mapping: </span>
-      <span> {{(mappingId$ |async)}} </span> -->
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nz-tooltip nzTooltipTitle='Previous Mappings' nz-button class="ghost"
+        (click)='previousMappings()'>
+        <i nz-icon nzType="history"></i> Prevoius Mappings
+      </button>
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">
       <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip

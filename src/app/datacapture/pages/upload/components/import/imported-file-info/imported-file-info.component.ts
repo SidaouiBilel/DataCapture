@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
+import { withValue } from '@app/shared/utils/rxjs.utils';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -8,7 +9,7 @@ import { FileImportService } from '../../../services/file-import.service';
 import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
 import { ActionSelectSheet } from '../../../store/actions/preview.actions';
 import { selectColRange, selectFileData, selectRowRange } from '../../../store/selectors/import.selectors';
-import { selectSelectedSheet, selectTotal } from '../../../store/selectors/preview.selectors';
+import { selectSelectedSheet, selectTotal, selectUpdatedSheet } from '../../../store/selectors/preview.selectors';
 import { DatasetComponent } from '../dataset/dataset.component';
 
 @Component({
@@ -58,7 +59,7 @@ export class ImportedFileInfoComponent implements OnInit {
 
   openConfig(): void {
     const modal = this.modalService.create({
-      nzTitle: 'Dataset Configuration',
+      nzTitle: 'Dataset Ranges',
       nzContent: DatasetComponent,
       nzClosable: false,
       nzWrapClassName: 'vertical-center-modal',
@@ -71,5 +72,21 @@ export class ImportedFileInfoComponent implements OnInit {
         })
       }
     });
+  }
+
+  descriptions = {}
+  onColumnChange(column, isActive){
+    if(isActive){
+      this.descriptions[column] = null
+      withValue(this.store.select(selectUpdatedSheet), (sheet_id)=>{
+        console.log(sheet_id, column)
+        this.service.describeColumn(sheet_id, column).subscribe(description=>{
+          this.descriptions[column] = []
+          for (let key in description){
+            this.descriptions[column].push({label:key, value:description[key]})
+          }
+        })
+      })
+    }
   }
 }

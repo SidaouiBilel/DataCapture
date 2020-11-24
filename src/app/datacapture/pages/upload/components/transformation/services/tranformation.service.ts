@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
-import { selectDomain } from '../../../store/selectors/import.selectors';
+import { selectColRange, selectDomain, selectRowRange } from '../../../store/selectors/import.selectors';
 import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode, UpdateNodeOrder } from '../store/transformation.actions';
 import { selectActivePipe,
         selectPreviewMode,
@@ -17,6 +17,10 @@ import { selectActivePipe,
 import { Observable, ReplaySubject, forkJoin, combineLatest } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
 import { TransformerFactory } from '../transformations/transformers';
+import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
+import { ActionSelectSheet } from '../../../store/actions/preview.actions';
+import { selectSelectedSheet } from '../../../store/selectors/preview.selectors';
+import { withValue } from '@app/shared/utils/rxjs.utils';
 
 @Injectable()
 export class TranformationService {
@@ -31,6 +35,7 @@ export class TranformationService {
   nodes$: Observable<any>;
   domain$: Observable<any>;
   canSave$: Observable<any>;
+  sheet$: Observable<any>;
   modified$: Observable<any>;
 
   constructor(
@@ -54,6 +59,8 @@ export class TranformationService {
       this.nodes$ = this.store.select(selectTranformationNodes);
       this.canSave$ = this.store.select(selectTranformationValid);
       this.modified$ = this.store.select(selectActivePipeModified);
+
+      this.sheet$ = this.store.select(selectSelectedSheet);
   }
 
   save(pipe) {
@@ -106,6 +113,10 @@ export class TranformationService {
     this.store.dispatch(new TransformationFlipExpand());
   }
 
+  expandTransformMenu(){
+    withValue(this.expanded$, (expanded)=>{if(!expanded) this.flipCollapse()})
+  }
+
   updateEdited(pipeInfo: any) {
     this.store.dispatch(new UpdateEditedPipeInfo(pipeInfo));
   }
@@ -146,10 +157,47 @@ export class TranformationService {
   addTransformaion(rule) {
     this.store.dispatch(new AddTransNode(rule));
     this.msg.default(`<b>${TransformerFactory(rule.type).label}</b> Added`);
+    this.expandTransformMenu()
   }
 
   swapTransformaion(o, n) {
     this.store.dispatch(new UpdateNodeOrder(o, n));
     this.msg.default('Transformation Nodes Swapped');
   }
+
+  selectHeader(api){
+    const ranges = api.getCellRanges()
+    if(ranges.length > 1){
+      this.msg.warn('More than one range selected')
+      return
+    }
+    const range = ranges[0]
+    if(range.startRow.rowIndex != range.endRow.rowIndex){
+      this.msg.warn('More than one line selected')
+      return
+    }
+
+    const relativeRowStart = range.startRow.rowIndex + 2
+    forkJoin(this.store.select(selectRowRange).pipe(take(1)), this.store.select(selectColRange).pipe(take(1)))
+    .subscribe(([previouRowRange, previouColRange])=>{
+      const previousRowStart = previouRowRange[0]
+      const rowStartOffset = (previousRowStart == 0)? 0 : previousRowStart - 1
+      const absoluteRowStart = relativeRowStart + rowStartOffset
+      const previousRowEnd = previouRowRange[1]
+      this.selectRanges(absoluteRowStart, previousRowEnd, previouColRange[0], previouColRange[1])
+    })
+  }
+
+  clearRangeSelection(){
+    this.selectRanges()
+  }
+
+  selectRanges(rs=0, re=0, cs=0, ce=0){
+    this.store.dispatch(new ActionSelectRowRange([rs, re]));
+    this.store.dispatch(new ActionSelectColRange([cs,ce]));
+    this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
+      this.store.dispatch(new ActionSelectSheet(sheet));
+    })
+  }
+
 }

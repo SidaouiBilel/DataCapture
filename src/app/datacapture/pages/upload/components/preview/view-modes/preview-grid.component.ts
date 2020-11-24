@@ -115,12 +115,35 @@ getMainContextMenuItems = (params) => {
     },
     ...this.getExtraMenuItems().map(e => ({...e, icon: null})),
     'separator',
+    {
+      name: 'Dataset Configuration',
+      subMenu: this.headerSelectionMenu(),
+    },
+    'separator',
     'copy',
     'copyWithHeaders',
     'autoSizeAll',
-    'export'
+    // 'export'
   ];
   return result;
+  }
+
+  headerSelectionMenu(){
+    const that = this
+    return [
+    {
+      name: 'Selected Row As Header',
+      action: (params) => {
+        that.transformService.selectHeader(that.gridApi.api)
+      },
+    },
+    {
+      name: 'Clear Range Limits',
+      action: (params) => {
+        that.transformService.clearRangeSelection()
+      },
+    }
+  ]
   }
 
   getViewModes() {

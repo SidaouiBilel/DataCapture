@@ -11,50 +11,49 @@
   <div class="flex-1 mb-3 flex column stretch flex-scroll">
     <nz-statistic nzValue="" [nzTitle]="'Dataset Range'"></nz-statistic>
 
-    <div class="mb-3 flex start">
-
-      <button nz-button (click)="openConfig()" nzType='info'>
-        <i nz-icon nzType="ordered-list"></i>
-        Select Range
-      </button>
-      <nz-divider nzType='vertical'></nz-divider>
-
-      <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Vertical Ranges'> 
-        <i class="mr-2" nz-icon nzType="column-width" nzTheme="outline"></i>
+    <div class="mb-2 flex between">
+    
+      <div class="flex">
+        <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Vertical Ranges'> 
+          <i class="text-primary" nz-icon nzType="column-width" nzTheme="outline"></i>
+        Columns from
         <nz-tag class="m-0">{{(colValue[0] == 0 ? 'Start' : colValue[0])}}</nz-tag>
         to
         <nz-tag class="m-0">{{(colValue[1] == 0 ? 'End' : colValue[1])}}</nz-tag>
-      </p>
-      <nz-divider nzType='vertical'></nz-divider>
-      <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Horizontal Ranges'> 
-        <i class="mr-2" nz-icon nzType="column-height" nzTheme="outline"></i>
-        <nz-tag class="m-0">{{(rowValue[0] == 0 ? 'Start' : rowValue[0])}}</nz-tag>
-        to
-        <nz-tag class="m-0">{{(rowValue[1] == 0 ? 'End' : rowValue[1])}}</nz-tag>
-      </p>
-      <nz-divider nzType='vertical'></nz-divider>
-      <p nz-typography class='m-0' nz-tooltip nzTooltipTitle='Columns x Rows'>
-        <i class="mr-2" nz-icon nzType="appstore" nzTheme="outline"></i>
-        <nz-tag class="m-0">{{(headers$ | async)?.length}} x {{total$ | async}}</nz-tag>
-      </p>
+        </p>
+        <nz-divider nzType='vertical'></nz-divider>
+        <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Horizontal Ranges'> 
+          <i class="text-primary" nz-icon nzType="column-height" nzTheme="outline"></i>
+          Rows from
+          <nz-tag class="m-0">{{(rowValue[0] == 0 ? 'Start' : rowValue[0])}}</nz-tag>
+          to
+          <nz-tag class="m-0">{{(rowValue[1] == 0 ? 'End' : rowValue[1])}}</nz-tag>
+        </p>
+        <nz-divider nzType='vertical'></nz-divider>
+        <p nz-typography class='m-0' nz-tooltip nzTooltipTitle='Columns x Rows'>
+          <i class="text-primary" nz-icon nzType="appstore" nzTheme="outline"></i>
+          Block Range
+          <nz-tag class="m-0">{{(headers$ | async)?.length}} x {{total$ | async}}</nz-tag>
+        </p>
+    </div>
+
+    <button nz-button (click)="openConfig()" nzShape='round'>
+      <i nz-icon nzType="setting"></i>
+      Select Range
+    </button>
+      
     </div>
 
     <nz-statistic nzValue="" [nzTitle]="'Header Preview'"></nz-statistic>
-    <nz-list class="flex-scroll" nzBordered nzSize="small">
-      <nz-list-item *ngFor='let h of (headers$ | async)'>{{h}}</nz-list-item>
-    </nz-list>
+
+    <nz-collapse  class="flex-scroll" nzBordered nzSize="small">
+      <nz-collapse-panel *ngFor='let h of (headers$ | async)' [nzHeader]="h" [nzActive]="false" [nzDisabled]="false" (nzActiveChange)='onColumnChange(h, $event)'>
+        <nz-spin nzSimple *ngIf='!descriptions[h]' nzSize="small"></nz-spin>
+        <nz-descriptions *ngIf='descriptions[h]; let description'>
+          <nz-descriptions-item *ngFor='let d of description' [nzTitle]="d.label">{{d.value}}</nz-descriptions-item>
+        </nz-descriptions>
+      </nz-collapse-panel>
+    </nz-collapse>
 
   </div>
-
-  <!-- <div class="mb-3">
-    <nz-statistic nzValue='' [nzTitle]="'Total Lines'"></nz-statistic>
-    {{total$ | async}}
-  </div> -->
-
 </div>
-<!-- <div>
-  <div>columnStart <input type="text" [(ngModel)]="colValue[0]"></div>
-  <div>columnEnd <input type="text" [(ngModel)]="colValue[1]"></div>
-  <div>rowStart <input type="text" [(ngModel)]="rowValue[0]"></div>
-  <div>rowEnd <input type="text" [(ngModel)]="rowValue[1]"></div>
-</div> -->
