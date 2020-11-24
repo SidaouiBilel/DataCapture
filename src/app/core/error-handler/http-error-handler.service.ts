@@ -16,19 +16,28 @@ export class HttpErrorHandler implements HttpInterceptor {
   }
  
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
- 
     return next.handle(req).pipe(
       catchError((error) => {
+        let title = 'Server Error'
+        let func = 'error'
         let displayMessage = 'An error occurred. ';
+        console.log(error)
         try {
           if(error['error'] && error['error'].message) {
             displayMessage = error['error'].message;
+            func = 'warning'
+            if (error.status == 401){
+              title = 'Conflict'
+            } 
+            if (error.status == 407){
+              title = 'Unauthorized'
+            }
           }
         } catch (error) {
           displayMessage = 'Error Handeling Error'
         }
 
-        this.injector.get(NzNotificationService).error('Server Error', displayMessage, {nzDuration: 3000, nzAnimate: true});
+        this.injector.get(NzNotificationService)[func](title, displayMessage, {nzDuration: 3000, nzAnimate: true});
         // return throwError("HTTPError");
         return new BehaviorSubject(null);
       })
