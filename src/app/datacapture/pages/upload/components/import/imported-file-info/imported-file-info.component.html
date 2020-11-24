@@ -1,32 +1,60 @@
-
-    
 <div class="flex stretch column w-100 flex-scroll">
-    <div class="mb-3">
-        <nz-statistic nzValue="" [nzTitle]="'File Name'"></nz-statistic>
-        <h4 nz-typography>{{(metadata$ | async)?.filename}}</h4>
-    </div>
-    <div class="mb-3">
-        <nz-statistic nzValue='' [nzTitle]="'Sheets'"></nz-statistic>
-        <app-sheet-selector type='list'></app-sheet-selector>
+  <div class="mb-3">
+    <nz-statistic nzValue="" [nzTitle]="'File Name'"></nz-statistic>
+    <h4 nz-typography>{{(metadata$ | async)?.filename}}</h4>
+  </div>
+  <div class="mb-3">
+    <nz-statistic nzValue='' [nzTitle]="'Sheets'"></nz-statistic>
+    <app-sheet-selector type='list'></app-sheet-selector>
+  </div>
+
+  <div class="flex-1 mb-3 flex column stretch flex-scroll">
+    <nz-statistic nzValue="" [nzTitle]="'Dataset Range'"></nz-statistic>
+
+    <div class="mb-3 flex start">
+
+      <button nz-button (click)="openConfig()" nzType='info'>
+        <i nz-icon nzType="ordered-list"></i>
+        Select Range
+      </button>
+      <nz-divider nzType='vertical'></nz-divider>
+
+      <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Vertical Ranges'> 
+        <i class="mr-2" nz-icon nzType="column-width" nzTheme="outline"></i>
+        <nz-tag class="m-0">{{(colValue[0] == 0 ? 'Start' : colValue[0])}}</nz-tag>
+        to
+        <nz-tag class="m-0">{{(colValue[1] == 0 ? 'End' : colValue[1])}}</nz-tag>
+      </p>
+      <nz-divider nzType='vertical'></nz-divider>
+      <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Horizontal Ranges'> 
+        <i class="mr-2" nz-icon nzType="column-height" nzTheme="outline"></i>
+        <nz-tag class="m-0">{{(rowValue[0] == 0 ? 'Start' : rowValue[0])}}</nz-tag>
+        to
+        <nz-tag class="m-0">{{(rowValue[1] == 0 ? 'End' : rowValue[1])}}</nz-tag>
+      </p>
+      <nz-divider nzType='vertical'></nz-divider>
+      <p nz-typography class='m-0' nz-tooltip nzTooltipTitle='Columns x Rows'>
+        <i class="mr-2" nz-icon nzType="appstore" nzTheme="outline"></i>
+        <nz-tag class="m-0">{{(headers$ | async)?.length}} x {{total$ | async}}</nz-tag>
+      </p>
     </div>
 
+    <nz-statistic nzValue="" [nzTitle]="'Header Preview'"></nz-statistic>
+    <nz-list class="flex-scroll" nzBordered nzSize="small">
+      <nz-list-item *ngFor='let h of (headers$ | async)'>{{h}}</nz-list-item>
+    </nz-list>
 
-    <div class="flex-1 mb-3 flex column stretch flex-scroll">
-        <nz-statistic nzValue="" [nzTitle]="'Headers'"></nz-statistic>
-        
-        <div class="mb-3">
-            <i nz-icon nzType="ordered-list" class="mr-3"></i> 
-            <button nz-button>
-                Header from line 
-                <nz-tag class="m-0">1</nz-tag>
-                <!-- <i nz-icon nzType="down"></i>  -->
-            </button>
-        </div>
-        
-        <nz-list class="flex-scroll" nzBordered nzSize="small">
-            <nz-list-item *ngFor='let h of (headers$ | async)'>{{h}}</nz-list-item>
-        </nz-list>
-        
-    </div> 
-    
+  </div>
+
+  <!-- <div class="mb-3">
+    <nz-statistic nzValue='' [nzTitle]="'Total Lines'"></nz-statistic>
+    {{total$ | async}}
+  </div> -->
+
 </div>
+<!-- <div>
+  <div>columnStart <input type="text" [(ngModel)]="colValue[0]"></div>
+  <div>columnEnd <input type="text" [(ngModel)]="colValue[1]"></div>
+  <div>rowStart <input type="text" [(ngModel)]="rowValue[0]"></div>
+  <div>rowEnd <input type="text" [(ngModel)]="rowValue[1]"></div>
+</div> -->

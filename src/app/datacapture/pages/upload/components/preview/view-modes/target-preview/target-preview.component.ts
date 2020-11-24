@@ -1,18 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectActivePipe, selectActivePipeId, selectLoadingTransformation, selectTransformedFilePath } from '../../../transformation/store/transformation.selectors';
+import { selectActivePipe, selectLoadingTransformation, selectTransformedFilePath } from '../../../transformation/store/transformation.selectors';
 import { selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { AppState } from '@app/core';
-import { merge, combineLatest, BehaviorSubject, Subject } from 'rxjs';
-import { selectSelectedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
+import { combineLatest, BehaviorSubject, Subject } from 'rxjs';
+import { selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { PreMappingTransformationService } from '@app/datacapture/pages/upload/services/pre-mapping-transformation.service';
-import { TRANSFORMATIONS } from '../../../transformation/transformations/transformers';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
-import { Hotkeys } from '@app/shared/services/hot-keys.service';
-import { take } from 'rxjs/operators';
-import { capitalize, formatDate, isInDateFormat, isInDoubleFormat, isInIntegerFormat, shortcutString } from '@app/shared/utils/strings.utils';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
-import { GAPIAllFilterOptions, GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
 import { SaveSourcesPreview } from '@app/datacapture/pages/upload/store/actions/mapping.actions';
 
@@ -53,7 +49,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
     _hotkeys: TransformationHotKeysService
     ) {
       super(_transformService, _hotkeys);
-      this.selectedSheet$ = this.store.select(selectSelectedSheet);
+      this.selectedSheet$ = this.store.select(selectUpdatedSheet);
       this.fileData$ = this.store.select(selectFileMetaData);
       this.generatedFileId$ = this.store.select(selectTransformedFilePath);
       this.activePipe$ = this.store.select(selectActivePipe);

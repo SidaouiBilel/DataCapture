@@ -9,7 +9,7 @@ import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus,
 import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
 import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
-import { selectSelectedSheet } from '../../../store/selectors/preview.selectors';
+import { selectUpdatedSheet } from '../../../store/selectors/preview.selectors';
 import { ImportActionTypes } from '../../../store/actions/import.actions';
 import { TransformerFactory } from '../transformations/transformers';
 import { PreviewActionTypes } from '../../../store/actions/preview.actions';
@@ -28,11 +28,10 @@ export class TransformationEffects {
   onReset = this.actions$.pipe(
     ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE, PreviewActionTypes.SelectSheet) ,
     withLatestFrom(this.store$.select( selectActivePipe )),
-    withLatestFrom(this.store$.select( selectSelectedSheet )),
+    withLatestFrom(this.store$.select( selectUpdatedSheet )),
     withLatestFrom(this.store$.select( selectFileData )),
-    map(([[[action, pipe], sheetIndex], file]) => {
-      if (file.metaData && sheetIndex !== null) {
-        const sheetId = String(Object.values(file.metaData.worksheets_map)[sheetIndex]);
+    map(([[[action, pipe], sheetId], file]) => {
+      if (file.metaData && sheetId !== null) {
         const pipeId = (pipe) ? pipe.id : null;
         this.store$.dispatch(new UpdateLoadingTransformation(false));
         if ( file && file.metaData && pipeId && sheetId !== null) {

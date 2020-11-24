@@ -7,6 +7,8 @@ export interface Import {
   progress: number;
   selectedDomain: any;
   superDomain: string;
+  colRange: number[];
+  rowRange: number[];
 }
 
 export interface SheetData {

@@ -1,11 +1,11 @@
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionImportReset } from '../../store/actions/import.actions';
 import { Observable, forkJoin, BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
-import { selectSelectedSheet } from '../../store/selectors/preview.selectors';
+import { selectUpdatedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { selectMappingFields, selectMappingId, selectMappingVersion } from '../../store/selectors/mapping.selectors';
@@ -60,7 +60,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   errorLevels = [
     {level: 'all', label: 'All', type: 'primary'}
     , {level: 'errors', label: 'Errors', type: 'danger'}
-    , {level: 'warnings', label: 'Warnings', type: 'warning'}
+    // , {level: 'warnings', label: 'Warnings', type: 'warning'}
     // ,{level:'warnings', label:'Warnings', type:'warning'}
   ];
   selectedErrorLevel$ = new BehaviorSubject('all');
@@ -74,7 +74,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
               private modalService: NzModalService,
               public hotkeys: CleansingHotKeysService,
               private not: NotificationService) {
-    this.selectedSheet$ = this.store.select(selectSelectedSheet);
+    this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mappingId$     = this.store.select(selectMappingId);
     this.mappingVersion$     = this.store.select(selectMappingVersion);
     this.fileData$      = this.store.select(selectFileData);
@@ -89,7 +89,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
     const isTransformed = this.worksheet !== null;
-    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    const ws = this.worksheet ? this.worksheet : this.selectedSheet;
     // tslint:disable-next-line: max-line-length
     this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed, this.mappingVersion || this.mappingId).subscribe((job) => {
       if (job) {
@@ -130,7 +130,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     if (this.worksheet) {
       ws = this.worksheet.split('/').pop();
     } else {
-      ws = this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+      ws = this.selectedSheet;
     }
     this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
       const modal: NzModalRef = this.modalService.create({
@@ -198,7 +198,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
           if (isLocked) {
             const page = (params.request.endRow / that.numberOfRows) - 1;
             const isTransformed = that.worksheet !== null;
-            const ws = that.worksheet ? that.worksheet : that.fileData.metaData.worksheets_map[that.fileData.sheets[that.selectedSheet]];
+            const ws = that.worksheet ? that.worksheet : that.selectedSheet;
             const adaptedFilter = [];
             const adaptedSort: any = {};
             Object.keys(params.request.filterModel).forEach((column) => {
@@ -276,7 +276,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
         if (h.colId !== INDEX_HEADER.colId) {
           const cellClass = (params) => {
             const f = params.colDef.field;
-            const i = params.data.row_index;
+            const i = (params.data)?params.data.row_index: -1;
             try {
               if (this.results[i][f].errors.length > 0) {
                 return 'error-cell';
@@ -297,7 +297,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
           // h.tooltipField = h.field;
           h.tooltipComponentParams = {error: this.results$};
           h.tooltipValueGetter = (params) => {
-            return { value: params.value, index : params.data.row_index };
+            return { value: params.value, index : (params.data)?params.data.row_index: '' };
           };
           // Sort
           h.sortable = true;
@@ -334,7 +334,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
 
   syncWithServer(): void {
     const isTransformed = this.worksheet !== null;
-    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    const ws = this.worksheet ? this.worksheet : this.selectedSheet;
     // tslint:disable-next-line: max-line-length
     this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingVersion || this.mappingId, this.jobId).subscribe((res: any) => {
       this.fetchData(this.grid);
@@ -382,12 +382,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
     const line = params.data.row_index;
     const rowNode = params.node;
     const isTransformed = this.worksheet !== null;
-    const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+    const ws = this.worksheet ? this.worksheet : this.selectedSheet;
     rowNode.stub = true;
     api.redrawRows({ rowNodes: [rowNode] });
     this.runWithEditedCell().subscribe(() => {
       this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
-        const absolute_index = line
+        const absolute_index = line;
         this.results[absolute_index] = data.results[absolute_index];
         this.results$.next(this.results);
         rowNode.stub = false;
@@ -401,7 +401,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   runWithEditedCell() {
     return new Observable<any>((observer) => {
       const isTransformed = this.worksheet !== null;
-      const ws = this.worksheet ? this.worksheet : this.fileData.metaData.worksheets_map[this.fileData.sheets[this.selectedSheet]];
+      const ws = this.worksheet ? this.worksheet : this.selectedSheet;
       // tslint:disable-next-line: max-line-length
       this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingVersion || this.mappingId, this.jobId).subscribe((res: any) => {
         observer.next(); observer.complete();

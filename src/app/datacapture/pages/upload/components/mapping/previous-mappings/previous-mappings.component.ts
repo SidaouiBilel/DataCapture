@@ -29,7 +29,6 @@ export class PreviousMappingsComponent implements OnInit {
   deleteMapping(id: any): void {
     this.service.deleteMappingById(id).subscribe((res) => {
       this.refresh();
-      this.selectedVersion = null;
       this.notification.success('The mapping was deleted successfully');
     });
   }

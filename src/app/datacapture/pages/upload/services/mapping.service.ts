@@ -55,6 +55,10 @@ export class MappingService {
     return this.http.post(environment.mapping + `/save`, payload);
   }
 
+  checkUsability(mappingId: string): Observable<any> {
+    return this.http.get(environment.mapping + `/check-usability/${mappingId}`);
+  }
+
   private getMappingBody(targets: any[], mappingId: string, sheetId: string, domainId: string): any {
     return {
       file: sheetId,

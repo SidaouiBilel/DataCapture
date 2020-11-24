@@ -44,5 +44,10 @@ export class FileImportService {
     });
   }
 
+  public generateSheet(file_id, sheetId, cs, ce, rs, re){
+    return this.http.post(environment.import + 'sheet', {
+      file_id, sheetId, cs, ce, rs, re
+    });
+  }
 }
 
