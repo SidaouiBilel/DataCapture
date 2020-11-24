@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { LoginService } from '../service/login.service';
 
 @Injectable({providedIn: 'root'})
-export class LoginGuard implements CanActivate {
+export class DatafactureGuard implements CanActivate {
   isAuthenticated: boolean;
   isAuthenticated$: Observable<boolean>;
   constructor(private store: Store<AppState>, private router: Router, private service: LoginService) {
@@ -19,9 +19,16 @@ export class LoginGuard implements CanActivate {
       if (this.isAuthenticated) {
         observer.next(true);
       } else {
-        this.router.navigate(['/login']);
+        this.service.attemptLogin().subscribe(succeeded=>{
+          if(succeeded){
+            observer.next(true)
+            // this.router.navigate(['/datacapture']);
+          } else {
+            observer.next(false) 
+            this.router.navigate(['/login']);
+          }
+        })
       }
-      observer.complete();
     })
   }
 }

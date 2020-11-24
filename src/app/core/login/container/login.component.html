@@ -13,12 +13,11 @@
     </div>
 
     <nz-card class="p-4 shadow mb-2 rounded">
-
       <h3 nz-typography class="mb-0">Log In</h3>
       <p nz-typography class="pb-2">to continue to the platform</p>
-
       <app-login-form [loading]='loading$ | async' (resetPw)="resetPw($event)" (login)="login($event)"></app-login-form>
     </nz-card>
+
   </div>
   <!-- <button nz-button nzType='link'>Learn More</button> -->
 

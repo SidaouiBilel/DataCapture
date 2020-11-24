@@ -15,7 +15,7 @@ import { NewPasswordComponent } from '../components/new-password/new-password.co
 export class LoginComponent {
   loading$ = new BehaviorSubject(false);
 
-  constructor(private service: LoginService,
+  constructor(public auth: LoginService,
               private store: Store<AppState>,
               private modalService: NzModalService,
               private not: NotificationService) {}
@@ -23,15 +23,15 @@ export class LoginComponent {
 
   login(event: any): void {
     this.loading$.next(true);
-    this.service.login(event.email, event.password).subscribe((res: any) => {
+    this.auth.login(event.email, event.password).subscribe((res: any) => {
       if(event.remember){
-        this.service.saveCredentialsPassword(event.email, event.password)
+        this.auth.saveCredentialsPassword(event.email, event.password)
       }
     }, err => this.loading$.next(false));
   }
 
   resetPw(email: string) {
-    this.service.resetPw(email).subscribe((res: any) => {
+    this.auth.resetPw(email).subscribe((res: any) => {
       if (res) {
         this.not.success(res.message);
         // this.newPw();

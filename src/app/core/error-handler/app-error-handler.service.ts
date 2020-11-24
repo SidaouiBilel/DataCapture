@@ -14,10 +14,12 @@ export class AppErrorHandler extends ErrorHandler {
   }
 
   handleError(error: Error){
-    if(error instanceof InterceptedHttpError)
-      return
-      
+    
     try {
+
+      if(error instanceof InterceptedHttpError)
+        return
+
       let displayMessage = 'An error occurred. ';
 
       if (!environment.production) {

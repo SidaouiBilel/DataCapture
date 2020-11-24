@@ -3,10 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Session } from 'protractor';
 import { Observable } from 'rxjs';
-import { ActionAuthLogin } from '@app/core';
+import { ActionAuthLogin, selectIsAuthenticated } from '@app/core';
 import { Store } from '@ngrx/store';
 import { catchError, tap } from 'rxjs/operators';
 import { ActionAuthLogout } from '@app/core/auth/auth.actions';
+import { Router } from '@angular/router';
+import { selectProfile } from '@app/core/auth/auth.selectors';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
@@ -14,11 +16,24 @@ export class LoginService {
   KEY_USER_EMAIL = 'DCM_USER'
   KEY_USER_PASS = 'DCM_PASS'
 
-  constructor(private http: HttpClient, private store: Store<any>) {}
+  isAuthenticated = false;
+  profile = null;
+
+  constructor(private http: HttpClient, private store: Store<any>, private router: Router) {
+    this.store.select(selectIsAuthenticated).subscribe((res: boolean) => {this.isAuthenticated = res; });
+    this.store.select(selectProfile).subscribe((res: boolean) => {this.profile = res; });
+  }
+
+  requestLogin(email, password){
+    return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}})
+  }
 
   login(email: string, password: string) {
-    return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}}).pipe(
-      tap((res:any)=>this.store.dispatch(new ActionAuthLogin(res.Authorization))),
+    return this.requestLogin(email, password).pipe(
+      tap((res:any)=>{
+        this.store.dispatch(new ActionAuthLogin(res.Authorization));
+        this.router.navigate(['/datacapture'])
+      }),
       catchError(this.logout)
     );
   }
@@ -26,6 +41,7 @@ export class LoginService {
   logout() {
     const onLogout = ()=>{
       this.store.dispatch(new ActionAuthLogout())
+      this.router.navigate(['/login'])
       this.clearCredentialsPassword()
       return null;
     } 
@@ -66,7 +82,8 @@ export class LoginService {
       const email = localStorage.getItem(this.KEY_USER_EMAIL)
       const password = localStorage.getItem(this.KEY_USER_PASS)
       if(email && password){
-        this.login(email, password).subscribe((res:any)=>{
+        this.requestLogin(email, password).subscribe((res:any)=>{
+          this.store.dispatch(new ActionAuthLogin(res.Authorization));
           observer.next(true)
         }, ()=> {
           observer.next(false)
