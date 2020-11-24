@@ -17,7 +17,13 @@ export const INDEX_HEADER = {
   filter: false,
   cellClass : (params) => 'index-cell',
   onCellClicked: (params) => {
-        params.api.clearRangeSelection();
+      params.api.clearRangeSelection()
+      params.api.deselectAll()
+      params.api.addCellRange({
+        rowStartIndex: params.rowIndex,
+        rowEndIndex: params.rowIndex,
+        columns: Object.keys(params.data)
+      })
   }
 };
 

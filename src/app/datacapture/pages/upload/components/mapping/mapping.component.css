@@ -88,6 +88,7 @@
 
 .scroll-box {
   overflow: auto;
+  flex: 1 1 auto;
   /* max-height: 0; */
 }
 

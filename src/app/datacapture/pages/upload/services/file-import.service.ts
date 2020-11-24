@@ -49,5 +49,11 @@ export class FileImportService {
       file_id, sheetId, cs, ce, rs, re
     });
   }
+
+  public describeColumn(sheet_id, column){
+    return this.http.post(environment.import + 'describe', {
+      sheet_id, column
+    });
+  }
 }
 
