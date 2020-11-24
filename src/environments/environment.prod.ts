@@ -7,7 +7,7 @@ export const environment = {
   production: true,
   test: false,
   admin: 'https://dcm-admin.azurewebsites.net/',
-  import: 'https://dcm-import.azurewebsites.net/import/',
+  import: 'https://dcm-import.azurewebsites.net/import/v2/',
   // upload: 'http://localhost:5000/import/',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   // mapping: 'http://localhost:5001/mapping',
