@@ -21,8 +21,8 @@ export class AppErrorHandler extends ErrorHandler {
         displayMessage += error.message;
       }
 
-      if(error['error'] && error['error'].message){
-        displayMessage = error['error'].message
+      if(error['error'] && error['error'].message) {
+        displayMessage = error['error'].message;
       }
       /*
       This will create NzNotificationService Property
