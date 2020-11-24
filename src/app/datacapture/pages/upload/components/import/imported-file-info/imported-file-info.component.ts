@@ -65,13 +65,21 @@ export class ImportedFileInfoComponent implements OnInit {
       nzWrapClassName: 'vertical-center-modal',
       nzWidth: 'xXL',
       nzOnOk: componentInstance => {
-        this.store.dispatch(new ActionSelectRowRange(componentInstance.rowValue));
-        this.store.dispatch(new ActionSelectColRange(componentInstance.colValue));
-        this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
-          this.store.dispatch(new ActionSelectSheet(sheet));
-        })
+        this.selectRange(componentInstance.rowValue, componentInstance.colValue)
       }
     });
+  }
+
+  resetRange(){
+    this.selectRange([0,0], [0,0])
+  }
+
+  selectRange(rows, cols){
+    this.store.dispatch(new ActionSelectRowRange(rows));
+    this.store.dispatch(new ActionSelectColRange(cols));
+    this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
+      this.store.dispatch(new ActionSelectSheet(sheet));
+    })
   }
 
   descriptions = {}

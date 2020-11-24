@@ -37,10 +37,16 @@
         </p>
     </div>
 
-    <button nz-button (click)="openConfig()" nzShape='round'>
-      <i nz-icon nzType="setting"></i>
-      Select Range
-    </button>
+    <div class="button-spacing">
+      <button nz-button (click)="openConfig()">
+        <i nz-icon nzType="setting"></i>
+        Select Range
+      </button>
+      <button nz-button (click)="resetRange()">
+        <i nz-icon nzType="redo"></i>
+        Reset Range
+      </button>
+    </div>
       
     </div>
 

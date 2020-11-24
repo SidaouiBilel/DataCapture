@@ -26,7 +26,7 @@ export class HttpErrorHandler implements HttpInterceptor {
           if(error['error'] && error['error'].message) {
             displayMessage = error['error'].message;
             func = 'warning'
-            if (error.status == 401){
+            if (error.status == 409){
               title = 'Conflict'
             } 
             if (error.status == 407){

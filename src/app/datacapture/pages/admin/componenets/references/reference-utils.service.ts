@@ -75,10 +75,30 @@ export class ReferenceUtilsService {
   }
 
   onDeleteRefData(data){
-    return this.service.deleteReferenceData(data)
+    return new Observable(observer=>{
+      this.modal.confirm({
+        nzTitle: 'Are you sure delete this Reference?',
+        nzContent: 'This action cannot be reverted.',
+        nzOkText: 'Yes',
+        nzOkType: 'danger',
+        nzOnOk: () => {this.service.deleteReferenceData(data).subscribe(res=> observer.next(res))},
+        nzCancelText: 'No',
+        nzOnCancel: () => console.log('Cancel')
+      })
+    })
   }
 
   onDeleteRefType(data){
-    return this.service.deleteReferenceType(data)
+    return new Observable(observer=>{
+      this.modal.confirm({
+        nzTitle: 'Are you sure delete this Reference?',
+        nzContent: 'This action cannot be reverted.',
+        nzOkText: 'Yes',
+        nzOkType: 'danger',
+        nzOnOk: () => {this.service.deleteReferenceType(data).subscribe(res=> observer.next(res))},
+        nzCancelText: 'No',
+        nzOnCancel: () => console.log('Cancel')
+      })
+    })
   }
 }
