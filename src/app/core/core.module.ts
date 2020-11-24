@@ -1,5 +1,5 @@
 import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -18,6 +18,7 @@ import { NotificationService } from './notifications/notification.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NzNotificationService} from 'ng-zorro-antd';
 import { LoginModule } from './login/login.module';
+import { HttpErrorHandler } from './error-handler/http-error-handler.service';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { LoginModule } from './login/login.module';
     TitleService,
     NzNotificationService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandler, multi: true  },
     { provide: RouterStateSerializer, useClass: CustomSerializer }
   ],
   exports: [

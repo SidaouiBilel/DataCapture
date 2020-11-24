@@ -13,21 +13,17 @@ export class AppErrorHandler extends ErrorHandler {
     super();
   }
 
-  handleError = (error: Error | HttpErrorResponse) => {
+  handleError(error: Error){
     try {
       let displayMessage = 'An error occurred. ';
 
       if (!environment.production) {
         displayMessage += error.message;
       }
-
-      if(error['error'] && error['error'].message) {
-        displayMessage = error['error'].message;
-      }
       /*
       This will create NzNotificationService Property
        */
-      this.injector.get(NzNotificationService).error('Error', displayMessage, {nzDuration: 3000, nzAnimate: true});
+      this.injector.get(NzNotificationService).error('JavaScript Error', displayMessage, {nzDuration: 3000, nzAnimate: true});
       super.handleError(error);
     } catch (error) {
       console.log('Error', error.message);

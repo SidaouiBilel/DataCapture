@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NZ_I18N, en_US, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataCaptureModule} from '@app/datacapture/datacapture.module';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RolesGuard } from './core/login/guards/roles.guard';
+import { AppErrorHandler } from './core/error-handler/app-error-handler.service';
 
 registerLocaleData(en);
 // This is used to configure the placement of the snackbars
