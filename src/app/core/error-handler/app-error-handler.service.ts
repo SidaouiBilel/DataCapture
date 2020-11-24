@@ -14,6 +14,9 @@ export class AppErrorHandler extends ErrorHandler {
   }
 
   handleError(error: Error){
+    if(error instanceof InterceptedHttpError)
+      return
+      
     try {
       let displayMessage = 'An error occurred. ';
 

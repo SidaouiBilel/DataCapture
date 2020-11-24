@@ -24,6 +24,7 @@ export class LoginPageGuard implements CanActivate {
           if(succeeded){
             observer.next(false)
           } else {
+            console.log('not Success')
             observer.next(true)
           }
         })

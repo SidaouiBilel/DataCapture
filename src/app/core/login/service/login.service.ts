@@ -18,7 +18,8 @@ export class LoginService {
 
   login(email: string, password: string) {
     return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}}).pipe(
-      tap((res:any)=>this.store.dispatch(new ActionAuthLogin(res.Authorization)))
+      tap((res:any)=>this.store.dispatch(new ActionAuthLogin(res.Authorization))),
+      catchError(this.logout)
     );
   }
 
@@ -67,6 +68,8 @@ export class LoginService {
       if(email && password){
         this.login(email, password).subscribe((res:any)=>{
           observer.next(true)
+        }, ()=> {
+          observer.next(false)
       })
       } else {
         observer.next(false)

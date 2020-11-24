@@ -38,8 +38,7 @@ export class HttpErrorHandler implements HttpInterceptor {
         }
 
         this.injector.get(NzNotificationService)[func](title, displayMessage, {nzDuration: 3000, nzAnimate: true});
-        // return throwError("HTTPError");
-        return new BehaviorSubject(null);
+        return throwError(new InterceptedHttpError());
       })
     )
   }
