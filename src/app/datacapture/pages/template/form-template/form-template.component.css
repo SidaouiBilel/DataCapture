@@ -4,6 +4,11 @@
     max-height: calc(100vh - 200px);
     overflow: auto;
   }
+  @media screen and (max-width:700px){
+    [nz-form]{
+      width: auto !important;
+    }
+  }
   
   .roles-input {
     width: 45%;

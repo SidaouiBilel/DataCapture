@@ -78,6 +78,8 @@
   border-right: 0;
   padding-left: 16px;
   display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .inner-layout {

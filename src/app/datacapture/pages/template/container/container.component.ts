@@ -1,3 +1,4 @@
+import { TableTemplateComponent } from './../table-template/table-template.component';
 import { TemplateService } from './../service/template.service';
 import { FormTemplateComponent } from './../form-template/form-template.component';
 import { BehaviorSubject } from 'rxjs';
@@ -38,7 +39,6 @@ export class ContainerComponent implements OnInit {
     nzContent: FormTemplateComponent,
     nzOkText:"Create",
     nzComponentParams:{},
-    nzStyle:{ top: '50px',marginBottom:'10px' },
     nzOnOk:componentInstance=>{
     try {
     // modal.getInstance().nzOkLoading = true;
@@ -87,6 +87,21 @@ export class ContainerComponent implements OnInit {
     }
     }
     })
+    }
+
+    viewtemplate(title , templatedata){
+      const modal :NzModalRef = this.ModalS.create({
+        nzTitle:title,
+        nzClosable:false,
+        nzWrapClassName: 'vertical-center-modal',
+        nzWidth: 'xXL',
+        nzContent: TableTemplateComponent,
+        nzCancelText:"close",
+        nzOkDisabled:true,
+        nzComponentParams:{
+          templatedata,
+        },
+        })
     }
 
 

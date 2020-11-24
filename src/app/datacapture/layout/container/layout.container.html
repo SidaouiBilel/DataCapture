@@ -36,7 +36,7 @@
     <!-- Sidebar -->
     <ng-container *ngIf="true">
       <nz-header class="nav" #navbar>
-        <ul nz-menu nzMode="horizontal" class="sider-menu" [nzInlineCollapsed]="isCollapsed" >
+        <ul nz-menu nzMode="horizontal" class="sider-menu customscrollX" [nzInlineCollapsed]="isCollapsed" >
           <li nz-menu-item [nzSelected]="isPrimaryPage('dashboard')" [routerLink]="['/data/datacapture/dashboard']">
             <i nz-icon nzType="dashboard"></i>
             <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>

@@ -20,16 +20,14 @@
         <nz-list class="list_impo" [nzDataSource]="templates$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
             <ng-template #item let-item>
                 <nz-list-item class="BD-item">
-                    <nz-list-item-meta [nzTitle]="nzTitle">
+                    <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
                         <ng-template #nzTitle>
-                            <div nz-typography class="font-weight-bold">Name : <span nz-typography  class="font-weight-light">{{item.name | uppercase }}</span></div>
+                            <div nz-typography class="font-weight-bold">Name : <span nz-typography>{{item.name | uppercase }}</span></div>
                         </ng-template>
-                        <ng-template #moreAction>
-                            <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this Template?" nzPopconfirmPlacement="left"
-                              >
-                              <i nz-icon nzType="delete" class="btns"></i>
-                          </button>
+                        <ng-template #nzDescription>
+                            <nz-tag [nzColor]="'#108ee9'"  (click)="viewtemplate(item.name , item.template)">Detail</nz-tag>
                         </ng-template>
+
                     </nz-list-item-meta>
                 </nz-list-item>
             </ng-template>
@@ -37,3 +35,8 @@
     </div> 
   
   </div>
+  <ng-template #moreAction>
+    <button nz-button class="ghost"  (click)="viewtemplate(item.name , item.template)">
+      <i nz-icon nzType="delete" class="btns"></i>
+  </button>
+</ng-template>

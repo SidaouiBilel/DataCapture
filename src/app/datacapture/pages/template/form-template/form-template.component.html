@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="validateForm" class="login-form customscrollY" (ngSubmit)="submitForm()">
 
     <nz-form-item>
       <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
@@ -7,13 +7,13 @@
       </nz-form-control>
     </nz-form-item>
       <nz-form-item class="colone" class="mb-3" *ngFor="let control of listoftemplates; let i = index">
-        <nz-form-label [nzSm]="4" [nzXs]="24" *ngIf="i == 0" [nzFor]="i">
-          Column 
+        <nz-form-label [nzSm]="4" [nzXs]="24"  [nzFor]="i" nzRequired>
+          <span>Column {{i+1}}</span> 
         </nz-form-label>
         <!-- <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="i">
           <i nz-icon nzType="delete" nzTheme="outline" class="text-danger"></i> 
         </nz-form-label> -->
-        <nz-form-control [nzSm]="20" [nzXs]="24" [nzOffset]="i == 0 ? 0 : 4"
+        <nz-form-control [nzSm]="20" [nzXs]="20"
           nzErrorTip="Please enter Column info.">
 
           <input nz-input [formControlName]="control.title" placeholder="Title"  [attr.id]="i" />
