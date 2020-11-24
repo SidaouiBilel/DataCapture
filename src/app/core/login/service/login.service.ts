@@ -5,7 +5,8 @@ import { Session } from 'protractor';
 import { Observable } from 'rxjs';
 import { ActionAuthLogin } from '@app/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+import { ActionAuthLogout } from '@app/core/auth/auth.actions';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
@@ -16,11 +17,22 @@ export class LoginService {
   constructor(private http: HttpClient, private store: Store<any>) {}
 
   login(email: string, password: string) {
-    return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}});
+    return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}}).pipe(
+      tap((res:any)=>this.store.dispatch(new ActionAuthLogin(res.Authorization)))
+    );
   }
 
   logout() {
-    return this.http.post(environment.auth + `auth/logout`, {}).pipe(tap(()=>this.clearCredentialsPassword()));
+    const onLogout = ()=>{
+      this.store.dispatch(new ActionAuthLogout())
+      this.clearCredentialsPassword()
+      return null;
+    } 
+    return this.http.post(environment.auth + `auth/logout`, {}).pipe(
+      tap(onLogout),
+      catchError(onLogout)
+    );
+
   }
 
   resetPw(email: string) {
@@ -47,13 +59,13 @@ export class LoginService {
     localStorage.removeItem(this.KEY_USER_PASS)
   }
 
-  tryLoginRememberedUser(){
+  // Login In Remembered User
+  attemptLogin(){
     return new Observable(observer=>{
       const email = localStorage.getItem(this.KEY_USER_EMAIL)
       const password = localStorage.getItem(this.KEY_USER_PASS)
       if(email && password){
         this.login(email, password).subscribe((res:any)=>{
-          this.store.dispatch(new ActionAuthLogin(res.Authorization)); 
           observer.next(true)
       })
       } else {

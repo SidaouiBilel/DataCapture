@@ -20,8 +20,8 @@ export class LoginPageGuard implements CanActivate {
         this.router.navigate(['/datacapture']);
         observer.next(false);
       } else {
-        this.service.tryLoginRememberedUser().subscribe(logged=>{
-          if(logged){
+        this.service.attemptLogin().subscribe(succeeded=>{
+          if(succeeded){
             observer.next(false)
           } else {
             observer.next(true)
