@@ -25,6 +25,9 @@ export class LoginComponent {
     this.loading$.next(true);
     this.service.login(event.email, event.password).subscribe((res: any) => {
       // this.loading$.next(false)
+      if(event.remember){
+        this.service.saveCredentialsPassword(event.email, event.password)
+      }
       this.store.dispatch(new ActionAuthLogin(res.Authorization));
     }, err => this.loading$.next(false));
   }

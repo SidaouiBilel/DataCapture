@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { LoginService } from '../service/login.service';
 
 @Injectable({providedIn: 'root'})
-export class LoginGuard implements CanActivate {
+export class LoginPageGuard implements CanActivate {
   isAuthenticated: boolean;
   isAuthenticated$: Observable<boolean>;
   constructor(private store: Store<AppState>, private router: Router, private service: LoginService) {
@@ -17,11 +17,17 @@ export class LoginGuard implements CanActivate {
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     return new Observable((observer)=>{
       if (this.isAuthenticated) {
-        observer.next(true);
+        this.router.navigate(['/datacapture']);
+        observer.next(false);
       } else {
-        this.router.navigate(['/login']);
+        this.service.tryLoginRememberedUser().subscribe(logged=>{
+          if(logged){
+            observer.next(false)
+          } else {
+            observer.next(true)
+          }
+        })
       }
-      observer.complete();
-    })
+  })
   }
 }

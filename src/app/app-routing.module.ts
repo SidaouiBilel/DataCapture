@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ResetComponent } from './core/login/components/reset/reset.component';
 import { LoginComponent } from './core/login/container/login.component';
+import { LoginPageGuard } from './core/login/guards/login-page.guard';
 import { LoginGuard } from './core/login/guards/login.guard';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [LoginPageGuard]
   },
   {
     path: 'login/reset/:token',

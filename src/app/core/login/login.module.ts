@@ -6,6 +6,7 @@ import { LoginGuard } from './guards/login.guard';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { NewPasswordComponent } from './components/new-password/new-password.component';
 import { ResetComponent } from './components/reset/reset.component';
+import { LoginPageGuard } from './guards/login-page.guard';
 
 const components = [
   LoginComponent,
@@ -23,6 +24,7 @@ const components = [
   providers : [
     LoginService,
     LoginGuard,
+    LoginPageGuard
   ],
   entryComponents: [
     NewPasswordComponent

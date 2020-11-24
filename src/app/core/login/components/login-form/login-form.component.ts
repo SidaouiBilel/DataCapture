@@ -35,7 +35,7 @@ export class LoginFormComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
     if (this.validateForm.valid) {
-      this.login.emit({email: this.validateForm.controls.email.value, password: this.validateForm.controls.password.value});
+      this.login.emit({email: this.validateForm.controls.email.value, password: this.validateForm.controls.password.value, remember: this.validateForm.controls.remember.value});
     }
   }
 
