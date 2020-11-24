@@ -8,51 +8,49 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ReferenceService {
-  ReferenceDataImport(activeRefType: any): any {
-    return `${environment.admin}reference/type/${activeRefType.id}/import`
-  }
-
+  references = [];
+  referenceType = [];
   constructor(private http: HttpClient) { }
 
-  referenceType=[]
-  references = []
-
-  getReferenceTypesByCollection(collection_id){
-    return this.http.get(`${environment.admin}reference/type${collection_id?`?domain_id=${collection_id}`:''}`)
+  ReferenceDataImport(activeRefType: any): any {
+    return `${environment.admin}reference/type/${activeRefType.id}/import`;
   }
 
-  getReferenceTypesById(ref_type_id){
-    return this.http.get(`${environment.admin}reference/type/${ref_type_id}`)
+  getReferenceTypesByCollection(collectionId) {
+    return this.http.get(`${environment.admin}reference/type${collectionId ? `?domain_id=${collectionId}` : ''}`);
   }
 
-  saveReferenceType(refType){
-    return this.http.post(`${environment.admin}reference/type`, refType)
+  getReferenceTypesById(refTypeId) {
+    return this.http.get(`${environment.admin}reference/type/${refTypeId}`);
   }
 
-  getReferenceDataByType(referenceTypeId){
-    return this.http.get(`${environment.admin}reference/type/${referenceTypeId}/data`)
+  saveReferenceType(refType) {
+    return this.http.post(`${environment.admin}reference/type`, refType);
   }
 
-  saveReferenceData(refData){
-    return this.http.post(`${environment.admin}reference/type/${refData.ref_type_id}/data`, refData)
+  getReferenceDataByType(referenceTypeId) {
+    return this.http.get(`${environment.admin}reference/type/${referenceTypeId}/data`);
   }
 
-  deleteReferenceData(refData){
-    return this.http.delete(`${environment.admin}reference/data/${refData.id}`)
+  saveReferenceData(refData) {
+    return this.http.post(`${environment.admin}reference/type/${refData.ref_type_id}/data`, refData);
   }
 
-  deleteReferenceType(refType){
-    return this.http.delete(`${environment.admin}reference/type/${refType.id}`)
+  deleteReferenceData(refData) {
+    return this.http.delete(`${environment.admin}reference/data/${refData.id}`);
   }
 
-  getSimple(collection_id){
-    return this.getReferenceTypesByCollection(collection_id).pipe(
-      map((list:any[])=>list.map(e=>({value:e.id, label:e.label})))
-    )
+  deleteReferenceType(refType) {
+    return this.http.delete(`${environment.admin}reference/type/${refType.id}`);
   }
 
-  shareReferenceType(ref_type_id: any, defaultCheckedKeys: any[]) {
-    return this.http.post(`${environment.admin}reference/type/${ref_type_id}/share`, {domain_ids: defaultCheckedKeys})
+  getSimple(collectionId) {
+    return this.getReferenceTypesByCollection(collectionId).pipe(
+      map((list: any[]) => list.map(e => ({value: e.id, label: e.label})))
+    );
   }
-  
+
+  shareReferenceType(refTypeId: any, defaultCheckedKeys: any[]) {
+    return this.http.post(`${environment.admin}reference/type/${refTypeId}/share`, {domain_ids: defaultCheckedKeys});
+  }
 }
