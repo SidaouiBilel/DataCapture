@@ -44,7 +44,7 @@ export class UsersComponent {
           modal.getInstance().nzOkLoading = true;
           componentInstance.submitForm();
           if (componentInstance.validateForm.valid) {
-            this.onAddUser(componentInstance.validateForm, edit, user.admin).subscribe((res) => {
+            this.onAddUser(componentInstance.validateForm, edit, (user ? user.admin : false)).subscribe((res) => {
               this.notification.success(msg);
               modal.getInstance().nzOkLoading = false;
               this.reload$.next(true);
@@ -82,7 +82,7 @@ export class UsersComponent {
     });
     console.log(user);
     if (edit) {
-      user.admin = user.admin ? user.admin : isAdmin;
+      user.admin = (typeof(user.admin) === 'boolean' ) ? user.admin : isAdmin;
       return this.service.editUser(user);
     } else {
       return this.service.addUser(user);
