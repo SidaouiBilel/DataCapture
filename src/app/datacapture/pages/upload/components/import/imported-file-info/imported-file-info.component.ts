@@ -46,7 +46,7 @@ export class ImportedFileInfoComponent implements OnInit {
     this.metadata$ = this.fileData$.pipe(map((data: any) => data.metaData));
     this.headers$ = this.fileData$.pipe(map((data: any) => data.headers));
     this.rowRange$.subscribe((rR) => {this.rowValue = [...rR]; });
-    this.colRange$.subscribe((cR) => {this.colValue = [...cR]; });
+    this.colRange$.subscribe((cR) => {this.colValue = [...cR]; }); 
   }
 
   rowRangeChanged(): void {

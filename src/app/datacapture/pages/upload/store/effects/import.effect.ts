@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { FileImportService } from '../../services/file-import.service';
 import { SaveMappedSources } from '../actions/mapping.actions';
 import { ResetTransformation } from '../../components/transformation/store/transformation.actions';
-import { PreviewActionTypes, ActionSelectSheet, SaveTotal } from '../actions/preview.actions';
+import { PreviewActionTypes, ActionSelectSheet, SaveTotal, ResetPreview } from '../actions/preview.actions';
 import { selectColRange, selectFileData, selectRowRange } from '../selectors/import.selectors';
 import { UpdateSheet } from './../actions/preview.actions';
 
@@ -29,6 +29,7 @@ export class ImportEffects {
     // withLatestFrom(this.store$.select( selectSelectedFile )),
     map((action) => {
       this.store$.dispatch(new ResetTransformation());
+      this.store$.dispatch(new ResetPreview());
       this.router.navigate(['/datacapture/upload/import']);
     })
 

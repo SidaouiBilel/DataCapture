@@ -2,6 +2,7 @@ import {Injectable, ErrorHandler, Injector} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { InterceptedHttpError } from './intercepted-error.model';
 
 /** Application-wide error handler that adds a UI notification to the error handling
  * provided by the default Angular ErrorHandler.

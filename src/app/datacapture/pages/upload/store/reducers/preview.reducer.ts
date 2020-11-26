@@ -4,7 +4,7 @@ import { PreviewActionTypes } from '../actions/preview.actions';
 
 export const initialState: Preview = {
   filters : {},
-  selectedSheet: null,
+  selectedSheet: -1,
   generatedSheetId: null,
   total: 0
 };
@@ -27,6 +27,9 @@ export function PreviewReducer(state: Preview = initialState, action: any): Prev
         ...state,
         total: action.payload
       };
+
+    case PreviewActionTypes.Reset:
+      return {...initialState};
 
     default:
       return state;

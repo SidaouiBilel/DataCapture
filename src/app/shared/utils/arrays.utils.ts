@@ -53,6 +53,9 @@ export const arrangement = (array) => {
   return result;
 }
 
+export function ArrayLast(array) {
+  return array[array.length - 1];
+}
 
   
   

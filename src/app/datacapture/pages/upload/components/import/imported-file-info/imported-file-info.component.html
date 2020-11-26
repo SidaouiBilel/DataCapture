@@ -8,6 +8,7 @@
     <app-sheet-selector type='list'></app-sheet-selector>
   </div>
 
+  <ng-container *ngIf='(sheet$|async) >= 0'>
   <div class="flex-1 mb-3 flex column stretch flex-scroll">
     <nz-statistic nzValue="" [nzTitle]="'Dataset Range'"></nz-statistic>
 
@@ -49,17 +50,27 @@
     </div>
       
     </div>
-
     <nz-statistic nzValue="" [nzTitle]="'Header Preview'"></nz-statistic>
 
-    <nz-collapse  class="flex-scroll" nzBordered nzSize="small">
-      <nz-collapse-panel *ngFor='let h of (headers$ | async)' [nzHeader]="h" [nzActive]="false" [nzDisabled]="false" (nzActiveChange)='onColumnChange(h, $event)'>
-        <nz-spin nzSimple *ngIf='!descriptions[h]' nzSize="small"></nz-spin>
-        <nz-descriptions *ngIf='descriptions[h]; let description'>
-          <nz-descriptions-item *ngFor='let d of description' [nzTitle]="d.label">{{d.value}}</nz-descriptions-item>
-        </nz-descriptions>
-      </nz-collapse-panel>
-    </nz-collapse>
+    <div class="flex-scroll border rounded" >
+      <nz-collapse [nzBordered]='false' nzSize="small">
+        <nz-collapse-panel *ngFor='let h of (headers$ | async)' [nzHeader]="title" [nzActive]="false" [nzDisabled]="false" (nzActiveChange)='onColumnChange(h, $event)'>
+          <ng-template #title><nz-tag>{{h}}</nz-tag></ng-template>
+          <nz-spin nzSimple *ngIf='!descriptions[h]' nzSize="small"></nz-spin>
+          <nz-descriptions *ngIf='descriptions[h]; let description'>
+            <nz-descriptions-item *ngFor='let d of description' [nzTitle]="d.label">{{d.value}}</nz-descriptions-item>
+          </nz-descriptions>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
 
   </div>
+</ng-container>
+
+<ng-container *ngIf='(sheet$|async) < 0'>
+  <div class="flex flex-1 column">
+    <span nz-text nzType='danger'><i nz-icon nzType="copy" style="font-size: 64px"></i> </span>
+    <span class="mt-3" nz-text>Please select a sheet. </span>
+  </div>
+</ng-container>
 </div>

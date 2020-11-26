@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NotificationService } from '@app/core';
+import { ArrayLast } from '@app/shared/utils/arrays.utils';
 import { NzModalRef } from 'ng-zorro-antd';
 import { MappingService } from '../../../services/mapping.service';
 
@@ -37,5 +38,10 @@ export class PreviousMappingsComponent implements OnInit {
     this.service.getPreviouslyMappings(this.domain).subscribe((res: any[]) => {
       this.mappings = res;
     });
+  }
+
+  applyLatest(mapping){
+    this.selectedVersion = ArrayLast(mapping.versions).id
+    this.apply(mapping)
   }
 }

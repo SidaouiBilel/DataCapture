@@ -98,6 +98,8 @@ export class MappingComponent implements OnInit, OnDestroy {
       this.checkUsability();
       this.checkMappingSanity();
     }
+
+    // this.previousMappings()
   }
 
   checkUsability() {

@@ -4,6 +4,7 @@ export enum PreviewActionTypes {
   SelectSheet = '[Preview] select sheet',
   UpdateSheet = '[Preview] update sheet',
   SaveTotal = '[Preview] save total',
+  Reset = '[Preview] Reset',
 }
 
 export class ActionSelectSheet implements Action {
@@ -21,4 +22,9 @@ export class SaveTotal implements Action {
   constructor(readonly payload: number) {}
 }
 
-export type PreviewActions = ActionSelectSheet | UpdateSheet | SaveTotal;
+export class ResetPreview implements Action {
+  readonly type = PreviewActionTypes.Reset;
+  constructor() {}
+}
+
+export type PreviewActions = ActionSelectSheet | UpdateSheet | SaveTotal | ResetPreview;
