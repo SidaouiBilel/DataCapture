@@ -25,7 +25,7 @@
                             <div nz-typography class="font-weight-bold">Name : <span nz-typography>{{item.name | uppercase }}</span></div>
                         </ng-template>
                         <ng-template #nzDescription>
-                            <nz-tag [nzColor]="'#108ee9'"  (click)="viewtemplate(item.name , item.template)">Detail</nz-tag>
+                            <nz-tag [nzColor]="'#108ee9'"  (click)="viewtemplate(item.name , item.template)" role="button">Detail</nz-tag>
                         </ng-template>
 
                     </nz-list-item-meta>

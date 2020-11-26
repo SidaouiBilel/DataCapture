@@ -26,10 +26,10 @@ export class ModalComponent implements OnInit {
       name:"IBM"
     },
     {
-      name:"ORANGE"
+      name:"ORANGE Cloud"
     },
     {
-      name:"GOOGLE",
+      name:"GOOGLE Cloud",
       icon:"google"
     }
   ];

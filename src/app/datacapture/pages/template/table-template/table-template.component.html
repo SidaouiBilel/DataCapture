@@ -1,4 +1,4 @@
-<nz-table #basicTable [nzData]="listOfcolumns" class="customscrollY" [nzScroll]="{ y: '357px' }">
+<nz-table #basicTable [nzData]="listOfcolumns" class="table_template" [nzScroll]="{ y: '357px' }">
     <thead>
       <tr>
         <th>Column Name</th>
@@ -11,7 +11,7 @@
         
         <ng-container *ngIf="data.dataArray; else  obj">
             <tr  *ngFor="let dt of data.dataArray; let i = index">
-                <td [attr.rowspan]="data.dataArray.length" *ngIf="i==0">{{ data.title }}</td>
+                <td [attr.rowspan]="data.dataArray.length" *ngIf="i==0" style="width: 226px;">{{ data.title }}</td>
                 
                     <td>{{ dt.sheet }}</td>
                     <td>{{ dt.range }}</td>   
@@ -20,7 +20,7 @@
         </ng-container>
         <ng-template #obj>
             <tr>
-                <td>{{ data.title }}</td>
+                <td style="width: 226px;">{{ data.title }}</td>
                 <td>{{ data.dataobj.sheet }}</td>
                 <td>{{ data.dataobj.range }}</td>                
             </tr>
