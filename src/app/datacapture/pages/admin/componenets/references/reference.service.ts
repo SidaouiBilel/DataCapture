@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,21 @@ export class ReferenceService {
 
   ReferenceDataImport(activeRefType: any): any {
     return `${environment.admin}reference/type/${activeRefType.id}/import`;
+  }
+
+  ReferenceDataUpdate(activeRefType: any): any {
+    return `${environment.admin}reference/type/${activeRefType.id}/update`;
+  }
+
+  downloadReferenceData(activeRefType: any): any {
+    return this.http.post(`${environment.admin}reference/type/${activeRefType.id}/download`, { responseType: 'blob' })
+      .subscribe((res: any) => {this.saveFile(res, 'Reference', 'xls'); });
+  }
+
+  saveFile = (blobContent: Blob, fileName: string, type: string) => {
+    const blob = new Blob([blobContent], { type: 'application/vnd.ms-excel' });
+    const file = new File([blob], fileName + '.' + type, { type: 'application/vnd.ms-excel' });
+    saveAs(file);
   }
 
   getReferenceTypesByCollection(collectionId) {
