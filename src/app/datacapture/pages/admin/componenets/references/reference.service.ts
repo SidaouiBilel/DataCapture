@@ -22,8 +22,8 @@ export class ReferenceService {
   }
 
   downloadReferenceData(activeRefType: any): any {
-    return this.http.post(`${environment.admin}reference/type/${activeRefType.id}/download`, { responseType: 'blob' })
-      .subscribe((res: any) => {this.saveFile(res, `export_${activeRefType.label}`, 'xlsx'); });
+    return this.http.post(`${environment.admin}reference/type/${activeRefType.id}/download`, {}, { responseType: 'blob' })
+      .subscribe((res: any) => {this.saveFile(res, activeRefType.label, 'xlsx'); });
   }
 
   saveFile = (blobContent: Blob, fileName: string, type: string) => {
