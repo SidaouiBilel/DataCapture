@@ -9,6 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { ActionAuthLogout } from '@app/core/auth/auth.actions';
 import { Router } from '@angular/router';
 import { selectProfile } from '@app/core/auth/auth.selectors';
+import { NotificationService } from '@app/core/notifications/notification.service';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
@@ -19,7 +20,7 @@ export class LoginService {
   isAuthenticated = false;
   profile = null;
 
-  constructor(private http: HttpClient, private store: Store<any>, private router: Router) {
+  constructor(private http: HttpClient, private store: Store<any>, private router: Router, private msg: NotificationService) {
     this.store.select(selectIsAuthenticated).subscribe((res: boolean) => {this.isAuthenticated = res; });
     this.store.select(selectProfile).subscribe((res: boolean) => {this.profile = res; });
   }
@@ -82,12 +83,13 @@ export class LoginService {
       const email = localStorage.getItem(this.KEY_USER_EMAIL)
       const password = localStorage.getItem(this.KEY_USER_PASS)
       if(email && password){
+        const message = this.msg.loading(`Loging in as ${email}`)
         this.requestLogin(email, password).subscribe((res:any)=>{
           this.store.dispatch(new ActionAuthLogin(res.Authorization));
           observer.next(true)
         }, ()=> {
           observer.next(false)
-      })
+      },()=> this.msg.close(message))
       } else {
         observer.next(false)
       }
