@@ -89,6 +89,7 @@ export class LoginService {
           observer.next(true)
         }, ()=> {
           observer.next(false)
+          this.msg.close(message)
       },()=> this.msg.close(message))
       } else {
         observer.next(false)
