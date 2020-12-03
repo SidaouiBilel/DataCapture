@@ -124,7 +124,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
             that.headers$.next(headers);
           }
           const lastRow = () =>  res.total;
-          gridApi.columnApi.autoSizeAllColumns()
+        gridApi.columnApi.autoSizeAllColumns()
           // gridApi.columnApi.sizeColumnsToFit([INDEX_HEADER.colId]);
           params.successCallback(res.data, lastRow());
         }, (error) => {
