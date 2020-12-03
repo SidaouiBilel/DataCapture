@@ -1,7 +1,7 @@
 <div class="dashboard-container">
-  <div class="flex-box">
+  <!-- <div class="flex column h-100 stretch start fill"> -->
     <!-- Header -->
-    <div class="dashHeader" nz-row>
+    <div class="dashHeader w-100" nz-row>
       <div nz-col nzSpan="18">
         <div>
           <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(selectedDomain?.name)"></i>
@@ -21,7 +21,18 @@
 
     <nz-divider class="horiz" nzOrientation="left"></nz-divider>
     <!-- Body -->
-    <nz-tabset *ngIf="selectedDomain">
+    <nz-tabset class='flex fill w-100' *ngIf="selectedDomain">
+
+      <nz-tab [nzTitle]="titleTemplate2">
+        <ng-template #titleTemplate2>
+          <i nz-icon [nzType]="'database'"></i>
+          Data
+        </ng-template>
+        <ng-template nz-tab>
+          <app-upload-data [selectedDomain]="selectedDomain"></app-upload-data>
+        </ng-template>
+      </nz-tab>
+      
       <nz-tab [nzTitle]="titleTemplate">
         <ng-template #titleTemplate>
           <i nz-icon [nzType]="'unordered-list'"></i>
@@ -32,17 +43,9 @@
           <app-upload-list [selectedDomain]="selectedDomain"></app-upload-list>
         </ng-template>
       </nz-tab>
-      <nz-tab [nzTitle]="titleTemplate2">
-        <ng-template #titleTemplate2>
-          <i nz-icon [nzType]="'database'"></i>
-          Data
-        </ng-template>
-        <ng-template nz-tab>
-          <app-upload-data [selectedDomain]="selectedDomain"></app-upload-data>
-        </ng-template>
-      </nz-tab>
+      
     </nz-tabset>
-  </div>
+  <!-- </div> -->
 </div>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">

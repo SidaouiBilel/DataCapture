@@ -14,7 +14,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
 
   domain$ = new BehaviorSubject(null);
   error$ = new BehaviorSubject<any>(false);
-  size$ = new BehaviorSubject(15);
+  size$ = new BehaviorSubject(200);
   page$ = new BehaviorSubject(1);
   headers$ = new Subject();
   gridReady$ = new Subject();
@@ -76,7 +76,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
 
               if (h.field === 'flow_tags') {
                 colDef.cellRenderer = 'tagsRenderer';
-                colDef.pinned = 'left';
+                colDef.pinned = 'right';
                 colDef.filterParams = {
                   values: (param) => {
                     that.filterSub = that.domain$.subscribe(domain => {

@@ -151,13 +151,13 @@ export function GAPIFilterComponenet(type) {
 
 export function GAPIFormatterComponenet(type) {
     switch (type) {
-        case 'string':
         case 'double':
           return currencyFormatter;
-        case 'int':
         case 'date':
           return dateFormatter;
         case 'flow_tags':
+        case 'string':
+        case 'int':
         default:
             return null;
     }

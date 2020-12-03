@@ -1,0 +1,16 @@
+nz-tabset.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: start;
+}
+
+nz-tabset .ant-tabs-content.ant-tabs-top-content{
+  flex: 1 1 auto;
+  /* overflow-y: auto; */
+  /* overflow-x: auto; */
+}
+
+nz-tabset .ant-tabs-bar.ant-tabs-top-bar {
+  margin-bottom: 0;
+}

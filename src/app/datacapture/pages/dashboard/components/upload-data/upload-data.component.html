@@ -1,4 +1,4 @@
-<div class="flex flex-1 column start ml-3 mr-3 mb-3" style="height: 70vh !important">
+<div class="flex flex-1 column start h-100 p-3 w-100">
 
   <div class="flex-1 flex w-100" *ngIf='(error$ | async)'>
     <div class="flex column">
@@ -14,8 +14,15 @@
   <ng-container *ngIf='!(error$ | async)'>
     <div class="flex between mb-2 w-100">
       <div class="button-spacing">
-        <button (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>Clear Filters</button>
 
+        <button nzType='info' nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export All</button>
+        <nz-dropdown-menu #expAll="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="download('csv')">CSV File</li>
+            <li nz-menu-item (click)="download('xlsx')">Excel File</li>
+          </ul>
+        </nz-dropdown-menu>
+        
         <button nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export w/ Filters</button>
         <nz-dropdown-menu #expAll="nzDropdownMenu">
           <ul nz-menu>
@@ -24,15 +31,9 @@
           </ul>
         </nz-dropdown-menu>
       </div>
-
+      
       <div>
-        <button nzType='success' nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export All</button>
-        <nz-dropdown-menu #expAll="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item (click)="download('csv')">CSV File</li>
-            <li nz-menu-item (click)="download('xlsx')">Excel File</li>
-          </ul>
-        </nz-dropdown-menu>
+        <button (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>Clear Filters</button>
       </div>
     </div>
 
