@@ -26,6 +26,7 @@ export class ImportedFileInfoComponent implements OnInit {
   colValue = [0, 0];
   rowValue = [0, 0];
   total = 0;
+  descriptions = {};
   // Store
   fileData$: Observable<any>;
   metadata$: Observable<any>;
@@ -46,7 +47,7 @@ export class ImportedFileInfoComponent implements OnInit {
     this.metadata$ = this.fileData$.pipe(map((data: any) => data.metaData));
     this.headers$ = this.fileData$.pipe(map((data: any) => data.headers));
     this.rowRange$.subscribe((rR) => {this.rowValue = [...rR]; });
-    this.colRange$.subscribe((cR) => {this.colValue = [...cR]; }); 
+    this.colRange$.subscribe((cR) => {this.colValue = [...cR]; });
   }
 
   rowRangeChanged(): void {
@@ -65,36 +66,36 @@ export class ImportedFileInfoComponent implements OnInit {
       nzWrapClassName: 'vertical-center-modal',
       nzWidth: 'xXL',
       nzOnOk: componentInstance => {
-        this.selectRange(componentInstance.rowValue, componentInstance.colValue)
+        this.selectRange(componentInstance.rowValue, componentInstance.colValue);
       }
     });
   }
 
-  resetRange(){
-    this.selectRange([0,0], [0,0])
+  resetRange() {
+    this.selectRange([0, 0], [0, 0]);
   }
 
-  selectRange(rows, cols){
+  selectRange(rows, cols) {
     this.store.dispatch(new ActionSelectRowRange(rows));
     this.store.dispatch(new ActionSelectColRange(cols));
     this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
       this.store.dispatch(new ActionSelectSheet(sheet));
-    })
+    });
   }
 
-  descriptions = {}
-  onColumnChange(column, isActive){
-    if(isActive){
-      this.descriptions[column] = null
-      withValue(this.store.select(selectUpdatedSheet), (sheet_id)=>{
-        console.log(sheet_id, column)
-        this.service.describeColumn(sheet_id, column).subscribe(description=>{
-          this.descriptions[column] = []
-          for (let key in description){
-            this.descriptions[column].push({label:key, value:description[key]})
+  onColumnChange(column, isActive) {
+    if (isActive) {
+      this.descriptions[column] = null;
+      withValue(this.store.select(selectUpdatedSheet), (sheetId) => {
+        console.log(sheetId, column);
+        this.service.describeColumn(sheetId, column).subscribe(description => {
+          this.descriptions[column] = [];
+          // tslint:disable-next-line: forin
+          for (const key in description) {
+            this.descriptions[column].push({label: key, value: description[key]});
           }
-        })
-      })
+        });
+      });
     }
   }
 }

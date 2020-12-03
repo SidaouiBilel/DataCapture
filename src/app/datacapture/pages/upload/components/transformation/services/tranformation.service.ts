@@ -4,7 +4,8 @@ import { environment } from '@env/environment';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectColRange, selectDomain, selectRowRange } from '../../../store/selectors/import.selectors';
-import { LoadTransformation, SetPreviewMode, TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode, UpdateNodeOrder } from '../store/transformation.actions';
+import {  LoadTransformation, SetPreviewMode,
+          TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode, UpdateNodeOrder } from '../store/transformation.actions';
 import { selectActivePipe,
         selectPreviewMode,
         selectPipeExpanded,
@@ -19,8 +20,10 @@ import { tap, take } from 'rxjs/operators';
 import { TransformerFactory } from '../transformations/transformers';
 import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
 import { ActionSelectSheet } from '../../../store/actions/preview.actions';
-import { selectSelectedSheet } from '../../../store/selectors/preview.selectors';
+import { selectSelectedSheet, selectUpdatedSheet } from '../../../store/selectors/preview.selectors';
 import { withValue } from '@app/shared/utils/rxjs.utils';
+import { NzModalService } from 'ng-zorro-antd';
+import { HeaderDescriptionComponent } from '../modals/transformation-preview-help/header-description/header-description.component';
 
 @Injectable()
 export class TranformationService {
@@ -41,7 +44,8 @@ export class TranformationService {
   constructor(
     private http: HttpClient,
     private store: Store<AppState>,
-    private msg: NotificationService
+    private msg: NotificationService,
+    private modalService: NzModalService,
     ) {
       this.store.select(selectDomain).subscribe((domainId) => {
         if (domainId) {
@@ -70,32 +74,33 @@ export class TranformationService {
         this.setActive(active);
 
       }),
-      );
-    }
+    );
+  }
 
-    delete(pipeInfo) {
-      return this.http.request('DELETE', `${this.url}`, {
-        headers: new HttpHeaders({
+  delete(pipeInfo) {
+    return this.http.request('DELETE', `${this.url}`, {
+      headers: new HttpHeaders({
           'Content-Type': 'application/json',
         }),
         body: {...pipeInfo, modified_on: new Date()}
-      }).pipe(
+        }).pipe(
         tap(() => this.loadDomainPipes()),
         tap((active) => {
           this.setActive(null);
-        }),
-        );
-      }
+      }),
+    );
+  }
 
-      setActive(active) {
-        this.store.dispatch(new LoadTransformation(active));
-        if(active) this.upadatePreviewMode('TARGET')
-        else this.upadatePreviewMode('SOURCE');
-      }
+  setActive(active) {
+    this.store.dispatch(new LoadTransformation(active));
+    if (active) {
+      this.upadatePreviewMode('TARGET');
+    } else { this.upadatePreviewMode('SOURCE'); }
+  }
 
-      get(domainId) {
-        return this.http.get(`${this.url}${domainId}`);
-      }
+  get(domainId) {
+    return this.http.get(`${this.url}${domainId}`);
+  }
 
   getInContext() {
     return this.get(this.domainId);
@@ -113,8 +118,31 @@ export class TranformationService {
     this.store.dispatch(new TransformationFlipExpand());
   }
 
-  expandTransformMenu(){
-    withValue(this.expanded$, (expanded)=>{if(!expanded) this.flipCollapse()})
+  viewDescription(params: any) {
+    console.log(params);
+    const id = params.column.getId();
+    // call on me
+    withValue(this.store.select(selectUpdatedSheet), (sheetId) => {
+      this.http.post(environment.import + 'describe', {sheet_id: sheetId, column: id}).subscribe((res) => {
+        console.log(res);
+        const modal = this.modalService.create({
+          nzTitle: 'Header Description',
+          nzClosable: false,
+          nzWrapClassName: 'vertical-center-modal',
+          nzWidth: 'xXL',
+          nzContent: HeaderDescriptionComponent,
+          nzOkText: null,
+          nzCancelText: 'Close',
+          nzComponentParams: {
+            description: res
+          }
+        });
+      });
+    });
+  }
+
+  expandTransformMenu() {
+    withValue(this.expanded$, (expanded) => {if (!expanded) { this.flipCollapse(); }});
   }
 
   updateEdited(pipeInfo: any) {
@@ -157,7 +185,7 @@ export class TranformationService {
   addTransformaion(rule) {
     this.store.dispatch(new AddTransNode(rule));
     this.msg.default(`<b>${TransformerFactory(rule.type).label}</b> Added`);
-    this.expandTransformMenu()
+    this.expandTransformMenu();
   }
 
   swapTransformaion(o, n) {
@@ -165,39 +193,39 @@ export class TranformationService {
     this.msg.default('Transformation Nodes Swapped');
   }
 
-  selectHeader(api){
-    const ranges = api.getCellRanges()
-    if(ranges.length > 1){
-      this.msg.warn('More than one range selected')
-      return
+  selectHeader(api) {
+    const ranges = api.getCellRanges();
+    if (ranges.length > 1) {
+      this.msg.warn('More than one range selected');
+      return;
     }
-    const range = ranges[0]
-    if(range.startRow.rowIndex != range.endRow.rowIndex){
-      this.msg.warn('More than one line selected')
-      return
+    const range = ranges[0];
+    if (range.startRow.rowIndex !== range.endRow.rowIndex) {
+      this.msg.warn('More than one line selected');
+      return;
     }
 
-    const relativeRowStart = range.startRow.rowIndex + 2
+    const relativeRowStart = range.startRow.rowIndex + 2;
     forkJoin(this.store.select(selectRowRange).pipe(take(1)), this.store.select(selectColRange).pipe(take(1)))
-    .subscribe(([previouRowRange, previouColRange])=>{
-      const previousRowStart = previouRowRange[0]
-      const rowStartOffset = (previousRowStart == 0)? 0 : previousRowStart - 1
-      const absoluteRowStart = relativeRowStart + rowStartOffset
-      const previousRowEnd = previouRowRange[1]
-      this.selectRanges(absoluteRowStart, previousRowEnd, previouColRange[0], previouColRange[1])
-    })
+    .subscribe(([previouRowRange, previouColRange]) => {
+      const previousRowStart = previouRowRange[0];
+      const rowStartOffset = (previousRowStart === 0) ? 0 : previousRowStart - 1;
+      const absoluteRowStart = relativeRowStart + rowStartOffset;
+      const previousRowEnd = previouRowRange[1];
+      this.selectRanges(absoluteRowStart, previousRowEnd, previouColRange[0], previouColRange[1]);
+    });
   }
 
-  clearRangeSelection(){
-    this.selectRanges()
+  clearRangeSelection() {
+    this.selectRanges();
   }
 
-  selectRanges(rs=0, re=0, cs=0, ce=0){
+  selectRanges(rs= 0, re= 0, cs= 0, ce= 0) {
     this.store.dispatch(new ActionSelectRowRange([rs, re]));
-    this.store.dispatch(new ActionSelectColRange([cs,ce]));
+    this.store.dispatch(new ActionSelectColRange([cs, ce]));
     this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
       this.store.dispatch(new ActionSelectSheet(sheet));
-    })
+    });
   }
 
 }

@@ -52,22 +52,24 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
   getGridPredifinedItems() {
     const HKcopy = 'control.c';
     return [
-      {name: 'Copy',
-      tooltip: 'Copy Selected Range',
-      action: null,
-      shortcut: shortcutString(HKcopy),
-      key: HKcopy,
-      icon: 'copy',
-      alwaysShow: true
+      {
+        name: 'Copy',
+        tooltip: 'Copy Selected Range',
+        action: null,
+        shortcut: shortcutString(HKcopy),
+        key: HKcopy,
+        icon: 'copy',
+        alwaysShow: true
       }
     ];
   }
 
-  getExtraMenuItems = () => {
+  getExtraMenuItems = (params?) => {
     const that = this;
     const HKSave = 'control.s';
     const HKSaveNew = 'control.shift.s';
     const HLFlip = 'alt.e';
+    const HDesc = 'alt.d';
     return [
       {
         name: 'Save',
@@ -81,10 +83,10 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
       {
         name: 'Save As New',
         tooltip: 'Save and Apply a new pipe modification',
-        action: ()=> that.transformService.saveEdited(true),
+        action: () => that.transformService.saveEdited(true),
         shortcut: shortcutString(HKSaveNew),
         key: HKSaveNew,
-        icon: "saveAs",
+        icon: 'saveAs',
         alwaysShow: true
       },
       {
@@ -95,8 +97,17 @@ export class PreviewGridComponent implements OnInit, OnDestroy {
         key: HLFlip,
         icon: 'menu-fold',
         alwaysShow: true
+      },
+      {
+        name: 'View Description',
+        tooltip: 'View the header\'s description',
+        action: () => that.transformService.viewDescription(params),
+        shortcut: shortcutString(HDesc),
+        key: HDesc,
+        icon: 'solution',
+        alwaysShow: true
       }
-    ]
+    ];
   }
 
   getContextMenuItems = (params) => {
@@ -113,7 +124,7 @@ getMainContextMenuItems = (params) => {
       name: 'View Mode',
       subMenu: this.getViewModes().map(e => ({...e, icon: null}))
     },
-    ...this.getExtraMenuItems().map(e => ({...e, icon: null})),
+    ...this.getExtraMenuItems(params).map(e => ({...e, icon: null})),
     'separator',
     {
       name: 'Dataset Configuration',
@@ -128,22 +139,21 @@ getMainContextMenuItems = (params) => {
   return result;
   }
 
-  headerSelectionMenu(){
-    const that = this
+  headerSelectionMenu() {
+    const that = this;
     return [
     {
       name: 'Selected Row As Header',
       action: (params) => {
-        that.transformService.selectHeader(that.gridApi.api)
+        that.transformService.selectHeader(that.gridApi.api);
       },
     },
     {
       name: 'Clear Range Limits',
       action: (params) => {
-        that.transformService.clearRangeSelection()
+        that.transformService.clearRangeSelection();
       },
-    }
-  ]
+    }];
   }
 
   getViewModes() {
