@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { ActionImportReset } from '../../store/actions/import.actions';
-import { selectUploadOverview } from '../../store/selectors/upload.selectors';
+import { selectUploadingStatus, selectUploadOverview } from '../../store/selectors/upload.selectors';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,9 +13,11 @@ import { Observable } from 'rxjs';
 })
 export class UploadComponent implements OnInit {
   metaData$: Observable<any>;
+  uploadStatus$: Observable<string>;
   selectedTags: string[] = [];
   constructor(private router: Router, private store: Store<AppState>) {
     this.metaData$ = this.store.select(selectUploadOverview);
+    this.uploadStatus$ = store.select(selectUploadingStatus);
   }
 
   ngOnInit() {

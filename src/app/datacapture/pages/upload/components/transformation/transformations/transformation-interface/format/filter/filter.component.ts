@@ -8,22 +8,22 @@ import { TransformationInterfaceComponent } from '../../transformation-interface
 })
 export class FilterComponent extends TransformationInterfaceComponent implements OnInit  {
 
-  @Input() showReverse = true
-  
-  numberOperations=[
+  @Input() showReverse = true;
+
+  numberOperations = [
     {value: '>', label: '>'},
     {value: '>=', label: '>='},
     {value: '<', label: '<'},
     {value: '<=', label: '<='},
     {value: '==', label: '='},
     {value: '!=', label: '!='}
-  ]
-  stringOperations=[
+  ];
+  stringOperations = [
     {value: 'match', label: 'REGEX'},
     {value: 'contains', label: 'Contains'},
     {value: 'startswith', label: 'Starts With'},
     {value: 'endswith', label: 'Ends With'},
-  ]
+  ];
   operations = [
     {
       label: 'Numbers', operations: this.numberOperations
@@ -51,7 +51,7 @@ export class FilterComponent extends TransformationInterfaceComponent implements
     this.onDataChanged();
   }
 
-  isUsingRegex(op){
-    return this.stringOperations.map(e=>e.value).includes(op)
+  isUsingRegex(op) {
+    return this.stringOperations.map(e => e.value).includes(op);
   }
 }

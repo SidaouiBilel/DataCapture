@@ -2,11 +2,10 @@ import { Injectable, Inject } from '@angular/core';
 import { Hotkeys } from '@app/shared/services/hot-keys.service';
 import { EventManager } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { NotificationService } from '@app/core';
 import { NzModalService } from 'ng-zorro-antd';
 import { TransformationPreviewHelpComponent } from '../modals/transformation-preview-help/transformation-preview-help.component';
-import { delay, take, withLatestFrom } from 'rxjs/operators';
-import { interval, BehaviorSubject } from 'rxjs';
+import { take, withLatestFrom } from 'rxjs/operators';
+import { interval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

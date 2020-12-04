@@ -3,9 +3,9 @@ import { UploadService } from './../../../services/upload.service';
 import { UploadingPayload } from './../../../models/uploading.model';
 import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
-import { ActionSaveUploadId } from '../../../store/actions/uploading.actions';
+import { ActionSaveUploadId, ActionSaveUploadingStatus } from '../../../store/actions/uploading.actions';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { selectUploadingId } from '../../../store/selectors/upload.selectors';
+import { selectUploadingId, selectUploadingStatus } from '../../../store/selectors/upload.selectors';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -22,10 +22,11 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   colors = ['cyan', 'red', 'magenta', 'volcano', 'orange', 'gold', 'lime', 'green', 'blue', 'geekblue', 'purple'];
   status$: any;
   result$: BehaviorSubject<any> = new BehaviorSubject(null);
-  uploadStatus$: BehaviorSubject<any> = new BehaviorSubject('READY');
+  uploadStatus$: Observable<string>;
   uploadingId$: Observable<string>;
   constructor(private service: UploadService, private store: Store<AppState>) {
     this.uploadingId$ = store.select(selectUploadingId);
+    this.uploadStatus$ = store.select(selectUploadingStatus);
   }
 
   ngOnDestroy(): void {
@@ -53,7 +54,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
         user_id: profile.id,
         mapping_id: this.metaData.mappingId
       };
-      this.uploadStatus$.next('STARTED');
+      this.store.dispatch(new ActionSaveUploadingStatus('STARTED'));
       this.progress = 0;
       this.service.upload(payload).subscribe((res: any) => {
         this.store.dispatch(new ActionSaveUploadId(res));
@@ -63,11 +64,11 @@ export class UploadDataComponent implements OnInit, OnDestroy {
 
   checkUploadStatus(id: string): void {
     this.progress = 0;
-    this.uploadStatus$.next('STARTED');
+    this.store.dispatch(new ActionSaveUploadingStatus('STARTED'));
     this.status$ = this.service.getUploadStatus(id).subscribe((res) => {
       res.upload_tags = res.upload_tags.map((e) => ({color: this.getRandom(), value: e }));
       this.result$.next(res);
-      this.uploadStatus$.next(res.upload_status);
+      this.store.dispatch(new ActionSaveUploadingStatus(res.upload_status));
       if (['ERROR', 'DONE'].includes(res.upload_status)) {
         if (this.status$) { this.status$.unsubscribe(); }
       }

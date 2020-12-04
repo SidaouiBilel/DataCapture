@@ -23,11 +23,11 @@ export class DataGridComponent implements OnInit {
 
   @Input() gridOptions = {
     onRangeSelectionChanged: GAPIGridSelectionOverride,
-    defaultColDef:{
+    defaultColDef: {
       flex: 1,
       minWidth: 150,
       editable: true,
-      suppressAndOrCondition:true
+      suppressAndOrCondition: true
     }
   };
   // @Input() fillOperation: (args: any) => void;
@@ -37,8 +37,8 @@ export class DataGridComponent implements OnInit {
 
   public loadingCellRendererParams = { loadingMessage: 'One moment please...'};
   public modules: any[] = AllEnterpriseModules;
-  public frameworkComponents = { 
-    customTooltip: CustomTooltipComponent,  
+  public frameworkComponents = {
+    customTooltip: CustomTooltipComponent,
     tagsRenderer: TagsCellRendererComponent,
     autoTypeRenderer: GridCellAutoTypeComponent
   };
@@ -50,7 +50,7 @@ export class DataGridComponent implements OnInit {
     this.rowData = [];
   }
 
-  onGridReady(params){
+  onGridReady(params) {
     // REMOVE TOOLTIP DELAY
     try {
       (params.api as any).context.beanWrappers.tooltipManager.beanInstance.MOUSEOVER_SHOW_TOOLTIP_TIMEOUT = 500;

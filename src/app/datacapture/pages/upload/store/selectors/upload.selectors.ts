@@ -32,4 +32,9 @@ export const selectUploadingId = createSelector(
 export const selectUploadingResults = createSelector(
   SelectUploading,
   (object: Uploading) => object.result
-)
+);
+
+export const selectUploadingStatus = createSelector(
+  SelectUploading,
+  (object: Uploading) => object.status
+);

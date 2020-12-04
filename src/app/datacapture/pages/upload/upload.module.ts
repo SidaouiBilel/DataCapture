@@ -64,6 +64,7 @@ import { CalculatorModalComponent } from './components/transformation/transforma
 import { ImportedFileInfoComponent } from './components/import/imported-file-info/imported-file-info.component';
 import { DateFormatterComponent } from './components/transformation/transformations/transformation-interface/format/date-formatter/date-formatter.component';
 import { DatasetComponent } from './components/import/dataset/dataset.component';
+import { HeaderDescriptionComponent } from './components/transformation/modals/transformation-preview-help/header-description/header-description.component';
 
 const components = [
   UploadComponentComponent,
@@ -123,7 +124,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components, DatasetComponent],
+  declarations: [...components, DatasetComponent, HeaderDescriptionComponent],
   exports: [
   ],
   providers : [
@@ -139,6 +140,7 @@ const components = [
   ],
   entryComponents: [
     TransformationPipeComponent,
+    HeaderDescriptionComponent,
     TransformationInterfaceComponent,
     FormatterComponent,
     MergerComponent,

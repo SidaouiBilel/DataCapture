@@ -27,18 +27,22 @@ export class TransformationSideBarComponent implements OnInit {
   }
 
   enableAddbtn(profile): boolean {
-    if(profile){
-      if( profile.admin ){
-        return true
-      }else{
-        const roles = profile.roles
-        const i = roles.map((e) => e.domain_id).indexOf(this.superDomain);
+    if (profile) {
+      if ( profile.admin ) {
+        return true;
+      } else {
+        const roles = profile.roles;
+
+        let i;
+        if (roles) {
+          i = roles.map((e) => e.domain_id).indexOf(this.superDomain);
+        }
         if (i >= 0) {
           if (roles[i].role === 'domainAdmin') {
             return true;
           }
         }
-      }  
+      }
     }
     return false;
   }

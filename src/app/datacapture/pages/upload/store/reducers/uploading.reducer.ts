@@ -6,7 +6,7 @@ import { ImportActionTypes } from '../actions/import.actions';
 export const initialState: Uploading = {
   uploadingId: null,
   result: null,
-  status: 'success'
+  status: 'READY'
 };
 
 
@@ -16,6 +16,12 @@ export function UploadingReducer(state: Uploading = initialState, action: any): 
       return {
         ...state,
         uploadingId: action.payload
+      };
+
+    case UploadingAtionTypes.SaveUploadingStatus:
+      return {
+        ...state,
+        status: action.payload
       };
 
     case UploadingAtionTypes.SaveUploadResults:
