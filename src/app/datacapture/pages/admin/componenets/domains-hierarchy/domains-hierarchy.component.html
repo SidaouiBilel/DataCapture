@@ -1,15 +1,4 @@
-<!-- <nz-card class="hierarchy-card" nzTitle='Domains Hierarchy' nzSize='small'> -->
-  
-  <!-- (nzExpandChange)="nzEvent($event)" -->
-  <!-- (nzSearchValueChange)="nzEvent($event)" -->
-<!-- </nz-card> -->
-
 <div class="hierarchy-card m-2">
-<!-- 
-  <div>
-    <button nz-button class="ghost" nzBlock (click)="onSeeAllClick()">See All</button>
-  </div> -->
-
         <nz-input-group [nzSuffix]="suffixIcon">
           <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
       </nz-input-group>
@@ -23,7 +12,5 @@
       [nzExpandAll]='searchValue?.length > 0'
       >
     </nz-tree>  
-  
   </div>
-
 </div>

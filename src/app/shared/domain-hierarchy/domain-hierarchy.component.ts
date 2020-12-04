@@ -1,24 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { SuperDomainService } from '../../services/super-domain.service';
-import { take, map, tap } from 'rxjs/operators';
-import { NzContextMenuService } from 'ng-zorro-antd';
-import { AdminNavigator } from '../../services/admin-navigator.service';
-import { combineLatest } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SuperDomainService } from '@app/datacapture/pages/admin/services/super-domain.service';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-domains-hierarchy',
-  templateUrl: './domains-hierarchy.component.html',
-  styleUrls: ['./domains-hierarchy.component.css']
+  selector: 'app-domain-hierarchy',
+  templateUrl: './domain-hierarchy.component.html',
+  styleUrls: ['./domain-hierarchy.component.css']
 })
-export class DomainsHierarchyComponent implements OnInit {
+export class DomainHierarchyComponent implements OnInit {
+
   nodes$: any;
   searchValue: '';
   expandedKey = null;
   activetedKey = null;
 
+  activeDomain$ = new BehaviorSubject(null)
+  activeSubDomina$ = new BehaviorSubject(null)
+  
+  @Input('collection') set collection(value){
+    this.activeSubDomina$.next(value)
+  }
+
+  @Output()
+  domainClicked = new EventEmitter<string>()
+  @Output()
+  collectionClicked = new EventEmitter<string>()
+
   constructor(
-    private service: SuperDomainService,
-    private nav: AdminNavigator
+    private service: SuperDomainService
     ) { }
 
   ngOnInit() {
@@ -38,10 +48,9 @@ export class DomainsHierarchyComponent implements OnInit {
                                                           }))
                                                         }
       )))
-    ).pipe(tap(() => combineLatest(this.nav.activeDomain$, this.nav.activeSubDomina$).subscribe(
+    ).pipe(tap(() => combineLatest(this.activeDomain$, this.activeSubDomina$).subscribe(
       ([domain, subDomain]) => {
-        this.activetedKey = [subDomain || domain];
-        
+        this.activetedKey = [subDomain || domain]; 
         this.expandedKey = [domain] 
       }
     )));
@@ -59,15 +68,11 @@ export class DomainsHierarchyComponent implements OnInit {
   }
 
   onDomainClick(node) {
-    const domain = node.origin.info;
-    this.nav.goToDomainFields(domain.super_domain_id, domain.id);
+    const data = node.origin.info;
+    this.collectionClicked.emit(data.id)
   }
   onSuperDomainClick(node) {
-    const superDomain = node.origin.info;
-    this.nav.goToSuperDomainCollections(superDomain.id);
+    const data = node.origin.info;
+    this.domainClicked.emit(data.id)
   }
-  onSeeAllClick(){
-    this.nav.goToDomains()
-  }
-
 }

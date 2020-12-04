@@ -27,6 +27,10 @@ const routes: Routes = [
           loadChildren : 'app/datacapture/pages/dashboard/dashboard.module#DashboardModule'
         },
         {
+          path: 'explorer',
+          loadChildren : 'app/datacapture/data-explorer/data-explorer.module#DataExplorerModule'
+        },
+        {
           path: '**',
           redirectTo: 'dashboard',
           pathMatch: 'full'

@@ -63,9 +63,13 @@
 
 .fill{
     flex: 1 1 0%;
-    height: 0;
+    /* height: 0; */
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+.flex.column .fill{
+    height: 0;
 }
 
 

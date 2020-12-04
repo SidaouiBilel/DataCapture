@@ -20,9 +20,9 @@ import { UserDashboardComponent } from './container/user-dashboard/user-dashboar
     EffectsModule.forFeature([]),
   ],
   declarations: [
-    DashboardComponent,
-    UploadListComponent,
-    UploadDataComponent,
+    // DashboardComponent,
+    // UploadListComponent,
+    // UploadDataComponent,
     UserDashboardComponent
   ],
   exports: [

@@ -1,13 +1,13 @@
 <div class="flex column start h-100">
   <!-- <div class="flex-scroll"> -->
-    <div class="fill w-100" >
-      <nz-table #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
+    <div class="fill w-100" style="position: relative;">
+      <nz-table [nsAutoHeightTable]='5' #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
         [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzBordered]="true" [nzPageIndex]="(page$ | async)"
         [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
         (nzPageSizeChange)="onSizeChange($event)">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
-            <th>Collection</th>
+            <!-- <th>Collection</th> -->
             <!-- <th nzShowSort nzSortKey="inserted_records">Inserted Records</th> -->
             <th nzShowSort nzSortKey="total_records">Total Records</th>
             <th nzShowSort nzSortKey="upload_start_time">Upload Start Date</th>
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let e of basicTable.data">
-            <td>{{ _selectedDomain.name }}</td>
+            <!-- <td>{{ _selectedDomain.name }}</td> -->
             <!-- <td>{{ e.inserted_records }}</td> -->
             <td>{{ e.total_records }}</td>
             <td>{{ e.upload_start_time | date:'medium' }}</td>

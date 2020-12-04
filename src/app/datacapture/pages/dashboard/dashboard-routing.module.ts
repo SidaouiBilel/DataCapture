@@ -6,7 +6,8 @@ import { UserDashboardComponent } from './container/user-dashboard/user-dashboar
 const routes: Routes = [
   {
       path: '',
-      component: DashboardComponent,
+      // component: DashboardComponent,
+      component: UserDashboardComponent,
   },
   {
     path: 'stats',

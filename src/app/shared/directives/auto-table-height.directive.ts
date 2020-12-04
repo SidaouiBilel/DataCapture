@@ -115,7 +115,7 @@ export class NsAutoHeightTableDirective {
   }
 
   calculateYaxis(){
-    let offset = this.offset || 70;
+    let offset = this.offset || 0;
     let parentHeight = this.element.nativeElement.parentElement.offsetHeight
     let relativeParentTopOffset = this.element.nativeElement.offsetTop
     let paginationOffset = 0
@@ -129,18 +129,13 @@ export class NsAutoHeightTableDirective {
     if(header)
       headerOffset = header.offsetHeight
 
-    
-      console.log({
-parentHeight,
-relativeParentTopOffset,
-paginationOffset,
-headerOffset,
-})
     const y =  (
       parentHeight
       - relativeParentTopOffset
       - paginationOffset 
       - headerOffset
+
+      - offset
       // offset
     ).toString() + "px"
 

@@ -22,6 +22,7 @@ import { CustomIconsService } from './services/custom-icons.service';
 import { GridFooterComponent } from './grid-footer/grid-footer.component';
 import { TagsCellRendererComponent } from './tags-cell-renderer/tags-cell-renderer.component';
 import { GridCellAutoTypeComponent } from './grid-cell-auto-type/grid-cell-auto-type.component';
+import { DomainHierarchyComponent } from './domain-hierarchy/domain-hierarchy.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -53,7 +54,8 @@ const Components = [
   RegexHelperDocumentationComponent,
   GridFooterComponent,
   TagsCellRendererComponent,
-  GridCellAutoTypeComponent
+  GridCellAutoTypeComponent,
+  DomainHierarchyComponent
 ];
 
 @NgModule({

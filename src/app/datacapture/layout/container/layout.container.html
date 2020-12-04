@@ -52,6 +52,21 @@
               </li>
             </ul>
           </li>
+
+          <li nz-submenu nzIcon="database" nzTitle="Data Explorer" [nzOpen]="true">
+            <ul>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/explorer/uploads']">
+                <span>Uploads</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/explorer/data']">
+                <span>Collection Data</span>
+              </li>
+              <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/datacapture/explorer/tags']">
+                <span>References</span>
+              </li> -->
+            </ul>
+          </li>
+
           <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="true">
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
