@@ -16,11 +16,11 @@ import { UserDashboardComponent } from './container/user-dashboard/user-dashboar
   imports: [
     DashboardRoutingModule,
     SharedModule,
-    StoreModule.forFeature(FEATURE_NAME, DashboardReducer),
-    EffectsModule.forFeature([]),
+    // StoreModule.forFeature(FEATURE_NAME, DashboardReducer),
+    // EffectsModule.forFeature([]),
   ],
   declarations: [
-    // DashboardComponent,
+    DashboardComponent,
     // UploadListComponent,
     // UploadDataComponent,
     UserDashboardComponent

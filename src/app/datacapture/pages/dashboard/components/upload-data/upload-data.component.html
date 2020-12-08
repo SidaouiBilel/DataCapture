@@ -14,7 +14,6 @@
   <ng-container *ngIf='!(error$ | async)'>
     <div class="flex between mb-2 w-100">
       <div class="button-spacing">
-
         <button class="ghost" nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export All</button>
         <nz-dropdown-menu #expAll="nzDropdownMenu">
           <ul nz-menu>
@@ -33,7 +32,9 @@
       </div>
       
       <div>
-        <button class="ghost" (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>Clear Filters</button>
+        <button *ngIf='(filters$ | async).length' class="ghost" (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>
+          Clear <b>{{(filters$ | async).length}}</b> Filter(s)
+        </button>
       </div>
     </div>
 

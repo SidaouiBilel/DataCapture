@@ -19,6 +19,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   headers$ = new Subject();
   gridReady$ = new Subject();
   loading$ = new BehaviorSubject(false);
+  filters$ = new BehaviorSubject([]);
   subscription;
   total$ = new BehaviorSubject<any>(null);
   gridApi: any;
@@ -35,6 +36,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       this.gridApi = gridApi.api
       if (!domain) { return this.error$.next('Please select a collection'); }
       this.error$.next(null);
+      this.clearFilter()
       // this.getTotal(domain.id)
       this.generateDataSource(domain.id, page, size, gridApi);
     });
@@ -47,7 +49,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) { this.subscription.unsubscribe(); }
     if (this.filterSub) { this.filterSub.unsubscribe(); }
-  }
+  } 
 
   generateDataSource(domainId, pages, size, gridApi) {
     const that = this;
@@ -55,9 +57,10 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       getRows(params) {
         const page = params.request.endRow / size;
         const firstPage = page <= 1;
+        const filters = GAPIFilters(params.request.filterModel);
+        that.filters$.next(filters);
         if (firstPage) {  that.total$.next(0); }
         that.loading$.next(true);
-        const filters = GAPIFilters(params.request.filterModel);
         that.service.getUploadData(domainId, page, size, filters).subscribe((res: any) => {
           that.loading$.next(false);
           if (firstPage) {

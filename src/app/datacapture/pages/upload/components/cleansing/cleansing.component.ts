@@ -108,6 +108,10 @@ export class CleansingComponent implements OnInit, OnDestroy {
         this.fetchCleansingData(gridApi);
       }
     );
+
+    this.hotkeys.register([
+      ...this.cleansingHotkeys()
+    ]);
   }
 
   changeErrorLevel(level) {
@@ -115,9 +119,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.hotkeys.register([
-      ...this.cleansingHotkeys()
-    ]);
   }
 
   ngOnDestroy() {

@@ -20,7 +20,7 @@
 
         <nz-card *ngIf='!(service.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
             <div class="flex column h-100">
-                <span nz-text nzType='danger' nz-tooltip [nzTooltipTitle]='error$ | async | json'>
+                <span nz-text nzType='danger'>
                     <i nz-icon nzType="block" style="font-size: 64px"></i>
                 </span>
                 <div class="mt-3">

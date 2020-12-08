@@ -124,7 +124,18 @@ export function GAPIFilters(filterModel) {
         operator: filter.type,
         value : filter.filter
     };
-    if (filter.filterType === 'set') {
+    if (filter.filterType === 'date') {
+      payload.operator = 'date.'+ filter.type
+      payload.value = (filter.type === 'inRange' )? {
+        min:filter.dateFrom,
+        max:filter.dateTo
+      } : filter.dateFrom
+    } else if (filter.filterType === 'number') {
+      payload.value = (filter.type === 'inRange' )? {
+        min:filter.filter,
+        max:filter.filterTo
+      } : filter.dateFrom
+    } else if (filter.filterType === 'set') {
         payload.value = filter.values;
         payload.operator = filter.filterType;
     }
