@@ -4,7 +4,7 @@
       <nz-table [nsAutoHeightTable]='20' #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
         [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzPageIndex]="(page$ | async)"
         [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
-        (nzPageSizeChange)="onSizeChange($event)">
+        (nzPageSizeChange)="onSizeChange($event)" nzSize='small' nzBordered>
         <thead (nzSortChange)="sort($event)" nzSingleSort>
           <tr>
             <!-- <th>Collection</th> -->

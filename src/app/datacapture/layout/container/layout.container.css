@@ -117,7 +117,7 @@ nz-content {
   background: #002140;
 } */
 
-::ng-deep .compact nz-breadcrumb{
+::ng-deep .compact .compatable{
   display: none;
 }
 

@@ -38,7 +38,7 @@ export class TransformationToolbarComponent extends TransformationPipeComponent 
       if( profile.admin ){
         return true
       }else{
-        const roles = profile.roles
+        const roles = profile.roles || []
         const i = roles.map((e) => e.domain_id).indexOf(this.superDomain);
         if (i >= 0) {
           if (roles[i].role === 'domainAdmin') {

@@ -23,6 +23,7 @@ import { GridFooterComponent } from './grid-footer/grid-footer.component';
 import { TagsCellRendererComponent } from './tags-cell-renderer/tags-cell-renderer.component';
 import { GridCellAutoTypeComponent } from './grid-cell-auto-type/grid-cell-auto-type.component';
 import { DomainHierarchyComponent } from './domain-hierarchy/domain-hierarchy.component';
+import { DomainBreadcrumbComponent } from './domain-breadcrumb/domain-breadcrumb.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -55,7 +56,8 @@ const Components = [
   GridFooterComponent,
   TagsCellRendererComponent,
   GridCellAutoTypeComponent,
-  DomainHierarchyComponent
+  DomainHierarchyComponent,
+  DomainBreadcrumbComponent
 ];
 
 @NgModule({

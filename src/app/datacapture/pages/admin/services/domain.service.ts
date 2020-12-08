@@ -40,6 +40,10 @@ export class DomainService {
     return this.http.get( this.url +  `domain/${domain_id}`)
   }
 
+  getInfoById(domain_id){
+    return this.http.get( this.url +  `domain/${domain_id}/info`)
+  }
+
   getTargetFields(domain_id){
     return this.http.get( this.url + `domain/${domain_id}/fields`)
   }

@@ -99,7 +99,7 @@
 
     <!-- Content -->
     <nz-layout class="inner-layout">
-      <nz-breadcrumb>
+      <nz-breadcrumb class="compatable">
         <nz-breadcrumb-item *ngFor="let item of pageList; let i = index">
           <a [routerLink]="[getLinkByIndex(i)]">
             <i nz-icon [nzType]="matchNameWithIcons(item)"></i>

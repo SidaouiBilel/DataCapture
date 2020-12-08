@@ -11,6 +11,7 @@ import { UploadListComponent } from '../pages/dashboard/components/upload-list/u
 import { StoreModule } from '@ngrx/store';
 import { DashboardReducer } from '../pages/dashboard/store/reducer/dashboard.reducer';
 import { FEATURE_NAME } from '../pages/dashboard/store/dashboard.state';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
