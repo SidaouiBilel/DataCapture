@@ -1,6 +1,7 @@
-import { forwardRef, Output, EventEmitter } from '@angular/core';
+import { forwardRef, Output, EventEmitter, Directive } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+@Directive()
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
 
     @Output() change = new EventEmitter<any>();

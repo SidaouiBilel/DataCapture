@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AppState, NotificationService } from '@app/core';
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { Store } from '@ngrx/store';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DashboardService } from '../../service/dashboard.service';

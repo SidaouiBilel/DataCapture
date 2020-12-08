@@ -12,11 +12,11 @@ import { selectMappingFields, selectMappingId, selectMappingVersion } from '../.
 import { CleansingHotKeysService } from '../../services/cleansing-hot-keys.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { ActionSaveCleansingErrors, ActionSaveJobId } from '../../store/actions/cleansing.actions';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { isEmpty } from '@app/shared/utils/objects.utils';
 import { take } from 'rxjs/operators';
 import { currencyFormatter, dateFormatter, INDEX_HEADER, mapGridFilter } from '@app/shared/utils/grid-api.utils';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-cleansing',
@@ -134,7 +134,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
       ws = this.selectedSheet;
     }
     this.service.getAuditTrial(ws, this.domain).subscribe((res) => {
-      const modal: NzModalRef = this.modalService.create({
+      const modal = this.modalService.create({
         nzTitle: 'Audit Trail',
         nzClosable: false,
         nzWrapClassName: 'vertical-center-modal',

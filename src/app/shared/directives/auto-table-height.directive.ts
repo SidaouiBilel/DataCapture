@@ -8,7 +8,7 @@ import {
   ChangeDetectorRef,
 } from "@angular/core";
 import ResizeSensor from 'css-element-queries/src/ResizeSensor';
-import { NzTableComponent } from "ng-zorro-antd";
+import { NzTableComponent } from "ng-zorro-antd/table";
 
 /**
  * 根据SimpleTable内部Top位置，自动计算Scroll.height，达到自动出内部滚动条的效果。

@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'datacapture',
-    loadChildren: './datacapture/datacapture.module#DataCaptureModule',
+    loadChildren: () => import('./datacapture/datacapture.module').then(m => m.DataCaptureModule),
     canActivate: [DatafactureGuard]
   },
   {

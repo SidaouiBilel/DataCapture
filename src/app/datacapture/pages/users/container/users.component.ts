@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AppState, NotificationService, selectProfile } from '@app/core';
 import { AddUserComponent } from '../components/add-user/add-user.component';
 import { Users } from './../models/users.model';
@@ -41,18 +41,18 @@ export class UsersComponent {
       },
       nzOnOk: componentInstance => {
         try {
-          modal.getInstance().nzOkLoading = true;
+          modal.componentInstance.nzOkLoading = true;
           componentInstance.submitForm();
           if (componentInstance.validateForm.valid) {
             this.onAddUser(componentInstance.validateForm, edit, (user ? user.admin : false)).subscribe((res) => {
               this.notification.success(msg);
-              modal.getInstance().nzOkLoading = false;
+              modal.componentInstance.nzOkLoading = false;
               this.reload$.next(true);
               modal.close();
             });
           } else {
             this.notification.error('Invalid Form');
-            setTimeout(() => { modal.getInstance().nzOkLoading = false; }, 1000);
+            setTimeout(() => { modal.componentInstance.nzOkLoading = false; }, 1000);
           }
           return false;
         } catch (error) {

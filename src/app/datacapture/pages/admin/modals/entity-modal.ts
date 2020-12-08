@@ -1,6 +1,7 @@
-import { OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
+import { OnInit, Input, ViewChild, TemplateRef, Directive } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
 
+@Directive()
 export class EntityModal implements OnInit {
 
   @Input() data

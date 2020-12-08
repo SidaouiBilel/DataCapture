@@ -1,10 +1,11 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, Directive } from '@angular/core';
 import { TransformationHotKeysService } from '../../transformation/services/transformation-hot-keys.service';
 import { TranformationService } from '../../transformation/services/tranformation.service';
 import { shortcutString } from '@app/shared/utils/strings.utils';
 import { TRANSFORMATIONS } from '../../transformation/transformations/transformers';
 
 
+@Directive()
 export class PreviewGridComponent implements OnInit, OnDestroy {
   gridApi: any;
 

@@ -2,7 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { HttpBackend } from '@angular/common/http';
 import { Inject, Injectable, RendererFactory2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NzConfigService, NzIconService } from 'ng-zorro-antd';
+import { NzIconService } from 'ng-zorro-antd/icon';
+import { NzConfigService } from 'ng-zorro-antd/core/config';
 
 const SaveAsOutline = {
   name: 'saveAs-o',
@@ -21,6 +22,6 @@ export class CustomIconsService extends NzIconService{
 
   constructor(rendererFactory: RendererFactory2, sanitizer: DomSanitizer, nzConfigService: NzConfigService, handler: HttpBackend, @Inject(DOCUMENT) _document: Document) { 
     const icons = [SaveAsOutline, AutoSaveOutline]
-    super(rendererFactory,sanitizer,nzConfigService,handler,_document , icons, null)
+    super(rendererFactory,sanitizer,nzConfigService,handler,_document , icons)
   }
 }

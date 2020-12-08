@@ -1,12 +1,19 @@
 <div class="flex start stretch h-100">
     <!-- Hierarchy -->
     <nz-card style="min-width: 300px;"  nzSize='small' nzTitle='Collections'>
-        <app-domain-hierarchy [collection]='collection$ | async' (collectionClicked)='onCollectionClicked($event)'></app-domain-hierarchy>
+        <app-domain-hierarchy [collection]='explorer.collectionId$ | async' (collectionClicked)='onCollectionClicked($event)'></app-domain-hierarchy>
     </nz-card> 
     
     <!-- Actual Data Exploration -->
     <div class="fill flex column stretch">
         <nz-card class="explorer" nzSize='small' nzTitle='Data Explorer'>
+            <div class="border-bottom">
+                <div *ngIf='explorer.collection$ | async' >
+                    <h4 class="m-2">
+                        <i nz-icon nzType='block'></i> {{(explorer.collection$ | async)?.name}}
+                    </h4>
+                </div>
+            </div>
             <nz-tabset nzLinkRouter>
                 <nz-tab *ngFor="let tab of tabs">
                     <a nz-tab-link [routerLink]="tab.route">{{tab.label}}</a>
@@ -14,11 +21,11 @@
             </nz-tabset>
         </nz-card> 
         
-        <nz-card  *ngIf='(service.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
+        <nz-card  *ngIf='(explorer.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
             <router-outlet></router-outlet>
         </nz-card>
 
-        <nz-card *ngIf='!(service.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
+        <nz-card *ngIf='!(explorer.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
             <div class="flex column h-100">
                 <span nz-text nzType='danger'>
                     <i nz-icon nzType="block" style="font-size: 64px"></i>

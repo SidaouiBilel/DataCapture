@@ -10,25 +10,25 @@ const routes: Routes = [
       children: [
         {
           path: 'admin',
-          loadChildren : 'app/datacapture/pages/admin/admin.module#AdminModule'
+          loadChildren : () => import('app/datacapture/pages/admin/admin.module').then(m => m.AdminModule)
         },
         {
           path: 'users',
-          loadChildren : 'app/datacapture/pages/users/users.module#UsersModule',
+          loadChildren : () => import('app/datacapture/pages/users/users.module').then(m => m.UsersModule),
           canActivate: [RolesGuard],
           data: {role: 'ADMIN'}
         },
         {
           path: 'upload',
-          loadChildren : 'app/datacapture/pages/upload/upload.module#UploadModule'
+          loadChildren : () => import('app/datacapture/pages/upload/upload.module').then(m => m.UploadModule)
         },
         {
           path: 'dashboard',
-          loadChildren : 'app/datacapture/pages/dashboard/dashboard.module#DashboardModule'
+          loadChildren : () => import('app/datacapture/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
         },
         {
           path: 'explorer',
-          loadChildren : 'app/datacapture/data-explorer/data-explorer.module#DataExplorerModule'
+          loadChildren : () => import('app/datacapture/data-explorer/data-explorer.module').then(m => m.DataExplorerModule)
         },
         {
           path: '**',

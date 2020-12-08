@@ -1,10 +1,8 @@
-import {Injectable, ErrorHandler, Injector} from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { environment } from '@env/environment';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import {Injectable, Injector} from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { error } from 'util';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { InterceptedHttpError } from './intercepted-error.model';
 
 /** Application-wide error handler that adds a UI notification to the error handling

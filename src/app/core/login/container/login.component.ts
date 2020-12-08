@@ -4,7 +4,7 @@ import { AppState, ActionAuthLogin } from '@app/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from '@app/core/notifications/notification.service';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NewPasswordComponent } from '../components/new-password/new-password.component';
 
 @Component({
@@ -49,21 +49,15 @@ export class LoginComponent {
       nzOkText: 'Ok',
       nzOnOk: componentInstance => {
         try {
-          modal.getInstance().nzOkLoading = true;
+          modal.componentInstance.nzOkLoading = true;
           componentInstance.submitForm();
           if (componentInstance.validateForm.valid) {
-            // this.service.updatePw(componentInstance.validateForm.controls.password.value).subscribe((res) => {
-            //   this.not.success(res);
-            //   modal.getInstance().nzOkLoading = false;
-            //   modal.close();
-            // });
           } else {
             this.not.error('Invalid Form');
-            setTimeout(() => { modal.getInstance().nzOkLoading = false; }, 1000);
+            setTimeout(() => { modal.componentInstance.nzOkLoading = false; }, 1000);
           }
           return false;
         } catch (error) {
-          // this.not.error(error);
           modal.close();
         }
       }

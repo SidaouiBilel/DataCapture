@@ -25,6 +25,10 @@ export class SuperDomainService {
     return this.http.get( this.url + "domain/super/")
   }
 
+  getById(id){
+    return this.http.get( this.url + "domain/super/"+id)
+  }
+
   getHierarchy() {
     return this.http.get( this.url + 'domain/super/hierarchy');
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SuperDomainService } from '../../services/super-domain.service';
-import { take, map, tap } from 'rxjs/operators';
-import { NzContextMenuService } from 'ng-zorro-antd';
+import { map, tap } from 'rxjs/operators';
 import { AdminNavigator } from '../../services/admin-navigator.service';
 import { combineLatest } from 'rxjs';
 

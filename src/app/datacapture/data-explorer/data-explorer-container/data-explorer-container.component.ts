@@ -9,22 +9,19 @@ import { ExplorerService } from '../services/explorer.service';
 })
 export class DataExplorerContainerComponent implements OnInit {
 
-  constructor(public service: ExplorerService) {
-    this.collection$ = this.service.collectionId$
+  constructor(public explorer: ExplorerService) {
   }
-
-  collection$
 
   tabs = [
     {label:'Uplaods', route:['uploads']},
     {label:'Collection Data', route:['data']},
-    // {label:'Tags', route:['tags']},
+    {label:'Tags', route:['tags']},
   ]
 
   ngOnInit() {
   }
 
   onCollectionClicked(id){
-    this.service.setCollection(id)
+    this.explorer.setCollection(id)
   }
 }

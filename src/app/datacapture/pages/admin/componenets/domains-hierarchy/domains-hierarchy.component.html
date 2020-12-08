@@ -6,7 +6,7 @@
         <i nz-icon nzType="search"></i>
       </ng-template>
     <div>
-      <nz-tree nzShowIcon [nzData]="nodes$ | async | treeFilter: searchValue" (nzClick)="onElementClick($event)"
+      <nz-tree class="ghost" nzShowIcon [nzData]="nodes$ | async | treeFilter: searchValue" (nzClick)="onElementClick($event)"
       [nzSelectedKeys]='activetedKey'
       [nzExpandedKeys] = 'expandedKey'
       [nzExpandAll]='searchValue?.length > 0'

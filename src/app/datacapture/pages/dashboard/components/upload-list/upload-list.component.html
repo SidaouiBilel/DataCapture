@@ -1,8 +1,8 @@
 <div class="flex column start h-100">
   <!-- <div class="flex-scroll"> -->
     <div class="fill w-100" style="position: relative;">
-      <nz-table [nsAutoHeightTable]='5' #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
-        [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzBordered]="true" [nzPageIndex]="(page$ | async)"
+      <nz-table [nsAutoHeightTable]='20' #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
+        [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzPageIndex]="(page$ | async)"
         [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
         (nzPageSizeChange)="onSizeChange($event)">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
