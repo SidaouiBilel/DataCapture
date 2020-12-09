@@ -42,12 +42,15 @@
           <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
             <ul>
               <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/users']">
+                <i nz-icon nzType="user"></i>
                 <span>Users</span>
               </li>
               <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/admin/domains']">
+                <i nz-icon nzType="folder"></i>
                 <span>Domains</span>
               </li>
               <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/datacapture/admin/references']">
+                <i nz-icon nzType="font-size"></i>
                 <span>References</span>
               </li>
             </ul>
@@ -55,11 +58,17 @@
 
           <li nz-submenu nzIcon="database" nzTitle="Data Explorer" [nzOpen]="true">
             <ul>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/explorer/uploads']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('uploads')" [routerLink]="['/datacapture/explorer/uploads']">
+                <i nz-icon nzType="upload"></i>
                 <span>Uploads</span>
               </li>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('domains')" [routerLink]="['/datacapture/explorer/data']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('data')" [routerLink]="['/datacapture/explorer/data']">
+                <i nz-icon nzType="table"></i>
                 <span>Collection Data</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('tags')" [routerLink]="['/datacapture/explorer/tags']">
+                <i nz-icon nzType="tags"></i>
+                <span>Tags</span>
               </li>
               <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/datacapture/explorer/tags']">
                 <span>References</span>
