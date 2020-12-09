@@ -15,7 +15,7 @@ import { selectActivePipe,
         selectActivePipeModified,
         selectTranformationInfoValid,
         selectTranformationNodesValid} from '../store/transformation.selectors';
-import { Observable, ReplaySubject, forkJoin, combineLatest } from 'rxjs';
+import { Observable, ReplaySubject, forkJoin, combineLatest, BehaviorSubject } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
 import { TransformerFactory } from '../transformations/transformers';
 import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
@@ -40,7 +40,9 @@ export class TranformationService {
   canSave$: Observable<any>;
   sheet$: Observable<any>;
   modified$: Observable<any>;
-
+  sourceGrid: BehaviorSubject<any> = new BehaviorSubject({});
+  targetGrid: BehaviorSubject<any> = new BehaviorSubject({});
+  filters: BehaviorSubject<any[]> = new BehaviorSubject([]);
   constructor(
     private http: HttpClient,
     private store: Store<AppState>,
@@ -134,7 +136,8 @@ export class TranformationService {
           nzOkText: null,
           nzCancelText: 'Close',
           nzComponentParams: {
-            description: res
+            description: res,
+            name: id
           }
         });
       });
@@ -150,13 +153,13 @@ export class TranformationService {
   }
 
   saveEdited(asNew= false) {
-    combineLatest(
+    combineLatest([
       this.canSave$,
       this.store.select(selectTranformationInfoValid),
       this.store.select(selectTranformationNodesValid),
-    ).pipe(take(1)).subscribe(([canSave, validInfo, validNodes]) => {
+    ]).pipe(take(1)).subscribe(([canSave, validInfo, validNodes]) => {
       if (canSave) {
-        forkJoin(this.nodes$.pipe(take(1)), this.edited$.pipe(take(1))).subscribe(
+        forkJoin([this.nodes$.pipe(take(1)), this.edited$.pipe(take(1))]).subscribe(
           ([nodes, edited]: any) => {
             const pipe: any = {
               name: edited.name,
@@ -206,7 +209,7 @@ export class TranformationService {
     }
 
     const relativeRowStart = range.startRow.rowIndex + 2;
-    forkJoin(this.store.select(selectRowRange).pipe(take(1)), this.store.select(selectColRange).pipe(take(1)))
+    forkJoin([this.store.select(selectRowRange).pipe(take(1)), this.store.select(selectColRange).pipe(take(1))])
     .subscribe(([previouRowRange, previouColRange]) => {
       const previousRowStart = previouRowRange[0];
       const rowStartOffset = (previousRowStart === 0) ? 0 : previousRowStart - 1;

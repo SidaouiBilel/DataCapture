@@ -18,13 +18,13 @@ export const INDEX_HEADER = {
   filter: false,
   cellClass : (params) => 'index-cell',
   onCellClicked: (params) => {
-      params.api.clearRangeSelection()
-      params.api.deselectAll()
+      params.api.clearRangeSelection();
+      params.api.deselectAll();
       params.api.addCellRange({
         rowStartIndex: params.rowIndex,
         rowEndIndex: params.rowIndex,
         columns: Object.keys(params.data)
-      })
+      });
   }
 };
 
@@ -85,7 +85,7 @@ export function GAPIformatCell(params) {
   if (isInDoubleFormat(value)) {
     return parseFloat(value).toFixed(2);
   } else if (isInDateFormat(value)) {
-    return formatDate(value)
+    return formatDate(value);
   } else if (isInIntegerFormat(value)) {
     return value;
   } else {
@@ -105,14 +105,14 @@ export function GAPIAllFilterOptions(params) {
     'greaterThanOrEqual',
     'startsWith',
     'endsWith',
-  ]
+  ];
 }
 
 export function GAPIAllFilterParams(params) {
   return {
     filterOptions: GAPIAllFilterOptions(params),
     suppressAndOrCondition: true
-  }
+  };
 }
 
 export function GAPIFilters(filterModel) {
@@ -125,16 +125,16 @@ export function GAPIFilters(filterModel) {
         value : filter.filter
     };
     if (filter.filterType === 'date') {
-      payload.operator = 'date.'+ filter.type
-      payload.value = (filter.type === 'inRange' )? {
-        min:filter.dateFrom,
-        max:filter.dateTo
-      } : filter.dateFrom
+      payload.operator = 'date.' + filter.type;
+      payload.value = (filter.type === 'inRange' ) ? {
+        min: filter.dateFrom,
+        max: filter.dateTo
+      } : filter.dateFrom;
     } else if (filter.filterType === 'number') {
-      payload.value = (filter.type === 'inRange' )? {
-        min:filter.filter,
-        max:filter.filterTo
-      } : filter.dateFrom
+      payload.value = (filter.type === 'inRange' ) ? {
+        min: filter.filter,
+        max: filter.filterTo
+      } : filter.dateFrom;
     } else if (filter.filterType === 'set') {
         payload.value = filter.values;
         payload.operator = filter.filterType;
@@ -146,12 +146,12 @@ export function GAPIFilters(filterModel) {
 
 
 export function GAPISortToApi(sortModel) {
-    const adaptedSort:any = {}
-    if(!isArrayEmpty(sortModel)){
-      adaptedSort.column = sortModel[0].colId
-      adaptedSort.order = sortModel[0].sort
+    const adaptedSort: any = {};
+    if (!isArrayEmpty(sortModel)){
+      adaptedSort.column = sortModel[0].colId;
+      adaptedSort.order = sortModel[0].sort;
     }
-    return adaptedSort
+    return adaptedSort;
 }
 
 export function GAPIFilterComponenet(type) {

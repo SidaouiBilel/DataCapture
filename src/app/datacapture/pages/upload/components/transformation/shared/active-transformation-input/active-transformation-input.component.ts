@@ -12,9 +12,13 @@ import { Arraylength } from '@app/shared/utils/arrays.utils';
 export class ActiveTransformationInputComponent implements OnInit {
   pm$: any;
   expanded$: any;
-  nodesCount$
-  nodesModified$
-  canSave$
+  nodesCount$;
+  nodesModified$;
+  canSave$;
+  sourceGrid$: any;
+  targetGrid$: any;
+  filters$: any;
+  previewMode$: any;
 
   modes = [
     {mode: 'SOURCE', icon: 'file-text', tooltip: 'View Source', label: 'Source'},
@@ -26,9 +30,13 @@ export class ActiveTransformationInputComponent implements OnInit {
     private drawer: TranformationDrawerService
     )
   {
-    this.nodesCount$ = this.service.nodes$.pipe(map(Arraylength))
-    this.nodesModified$ = this.service.modified$
-    this.canSave$ = this.service.canSave$
+    this.nodesCount$ = this.service.nodes$.pipe(map(Arraylength));
+    this.previewMode$ = this.service.previewMode$;
+    this.nodesModified$ = this.service.modified$;
+    this.canSave$ = this.service.canSave$;
+    this.filters$ = this.service.filters;
+    this.sourceGrid$ = this.service.sourceGrid;
+    this.targetGrid$ = this.service.targetGrid;
   }
 
 

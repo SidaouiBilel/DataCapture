@@ -4,7 +4,6 @@
 
     <div class="toolbar mb-3 flex between">
       <app-active-transformation-input></app-active-transformation-input>
-
       <div class="button-spacing">
         <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
           nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToImport()"><i nz-icon
@@ -13,9 +12,9 @@
           nzTooltipPlacement="left" (click)="onNext()">Next<i nz-icon nzType="caret-right"></i></button>
         <nz-divider nzType='vertical'></nz-divider>
         <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset"
-          nzTooltipPlacement="left" (click)="cancelUpload()">
-          <i nz-icon nzType="close"></i>
-        </button>
+        nzTooltipPlacement="left" (click)="cancelUpload()">
+        <i nz-icon nzType="close"></i>
+      </button>
       </div>
 
     </div>

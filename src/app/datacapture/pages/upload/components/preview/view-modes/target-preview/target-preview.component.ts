@@ -34,7 +34,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
 
   // METADATA
   error$ = new BehaviorSubject<string>(null);
-  loading$
+  loading$;
   page$ = new BehaviorSubject<number>(1);
   total$ = new BehaviorSubject<number>(0);
   size$ = new BehaviorSubject<number>(200);
@@ -64,7 +64,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
 
   ngOnInit() {
     // LISTEN FOR PAGINATION OR FILE CHANGES
-    this.paginator$ = combineLatest(this.generatedFileId$, this.page$, this.gridReady$, this.size$).subscribe(
+    this.paginator$ = combineLatest([this.generatedFileId$, this.page$, this.gridReady$, this.size$]).subscribe(
       ([fileid, page, gridApi, size]: any) => {
         this.onReset();
         if ( fileid && page ) {
@@ -74,7 +74,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
           this.onError('MISSING PARAMETER');
         }
       }
-    )
+    );
     this.registerHotKey();
   }
 
@@ -93,11 +93,13 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
   generateDataSource(fileid, pages, size, gridApi) {
     const that = this;
     that.gridApi = gridApi;
+    that.transformService.targetGrid.next(gridApi);
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
         // that.loading$.next(true);
-        const filters = GAPIFilters(params.request.filterModel)
+        const filters = GAPIFilters(params.request.filterModel);
+        that.transformService.filters.next(filters);
         that.service.getResult(fileid, page, size, filters).subscribe((res: any) => {
           that.total$.next(res.total);
           // that.loading$.next(false);
@@ -115,7 +117,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
                 headerName: h,
                 editable: false,
                 resizable: true,
-                cellRenderer:'autoTypeRenderer',
+                cellRenderer: 'autoTypeRenderer',
                 filter: GAPIFilterComponenet('string'),
                 filterParams: GAPIAllFilterParams(params)
               }
@@ -124,7 +126,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
             that.headers$.next(headers);
           }
           const lastRow = () =>  res.total;
-        gridApi.columnApi.autoSizeAllColumns()
+          gridApi.columnApi.autoSizeAllColumns();
           // gridApi.columnApi.sizeColumnsToFit([INDEX_HEADER.colId]);
           params.successCallback(res.data, lastRow());
         }, (error) => {
