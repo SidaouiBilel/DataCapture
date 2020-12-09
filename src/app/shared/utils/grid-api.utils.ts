@@ -117,6 +117,7 @@ export function GAPIAllFilterParams(params) {
 
 export function GAPIFilters(filterModel) {
   const adaptedFilter = [];
+  console.log(filterModel);
   Object.keys(filterModel).forEach((column) => {
     const filter = filterModel[column];
     const payload: any = {
@@ -134,7 +135,7 @@ export function GAPIFilters(filterModel) {
       payload.value = (filter.type === 'inRange' ) ? {
         min: filter.filter,
         max: filter.filterTo
-      } : filter.dateFrom;
+      } : filter.filter;
     } else if (filter.filterType === 'set') {
         payload.value = filter.values;
         payload.operator = filter.filterType;

@@ -7,9 +7,6 @@ export class EntityModal implements OnInit {
   @Input() data
   @Input() edit
 
-  @ViewChild('modalFooter',{static:true}) public modalFooter: TemplateRef<any>;
-  @ViewChild('modalTitle',{static:true}) public modalTitle: TemplateRef<any>;
-
   loading = false
 
   constructor(protected modalrRef: NzModalRef) {
@@ -17,8 +14,6 @@ export class EntityModal implements OnInit {
    }
 
   ngOnInit() {
-    this.modalrRef['nzFooter'] = this.modalFooter || null
-    this.modalrRef['nzTitle'] = this.modalTitle || null
   }
 
   canSave(){
