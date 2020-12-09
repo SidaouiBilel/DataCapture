@@ -14,19 +14,21 @@
   <ng-container *ngIf='!(error$ | async)'>
     <div class="flex between mb-2 w-100">
       <div class="button-spacing">
-        <button class="ghost" nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export All</button>
+        <button nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export <i nz-icon nzType='down'></i></button>
         <nz-dropdown-menu #expAll="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item (click)="download('csv')">CSV File</li>
-            <li nz-menu-item (click)="download('xlsx')">Excel File</li>
-          </ul>
-        </nz-dropdown-menu>
-        <nz-divider nzType='vertical'></nz-divider>
-        <button class="ghost" nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export w/ Filters</button>
-        <nz-dropdown-menu #expAll="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item (click)="download('csv', true)">CSV File</li>
-            <li nz-menu-item (click)="download('xlsx', true)">Excel File</li>
+            <li nz-submenu nzTitle="All">
+              <ul>
+                <li nz-menu-item (click)="download('csv')">CSV File</li>
+                <li nz-menu-item (click)="download('xlsx')">Excel File</li>
+              </ul>
+            </li>
+            <li nz-submenu nzTitle="With Filters">
+              <ul>
+                <li nz-menu-item (click)="download('csv', true)">CSV File</li>
+                <li nz-menu-item (click)="download('xlsx', true)">Excel File</li>
+              </ul>
+            </li>
           </ul>
         </nz-dropdown-menu>
       </div>
