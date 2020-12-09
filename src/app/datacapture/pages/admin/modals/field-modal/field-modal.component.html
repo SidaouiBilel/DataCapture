@@ -1,4 +1,4 @@
-<h4 nz-typography><i nz-icon nzType="form" nzTheme="outline"></i> Target Field</h4>
+<div *nzModalTitle><i nz-icon nzType="form" nzTheme="outline"></i> Target Field</div>
 
 <nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="index = $event">
   <nz-step nzTitle="General"></nz-step>
@@ -44,7 +44,7 @@
   <app-default-checks [model]='data.rules' [type]='data.type'></app-default-checks>
 </div>
 
-<ng-template #modalFooter>
+<div *nzModalFooter>
   <button nz-button nzType="link" [disabled]="!canClose()" (click)="close()">Cancel</button>
   <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">Save</button>
-</ng-template>
+</div>

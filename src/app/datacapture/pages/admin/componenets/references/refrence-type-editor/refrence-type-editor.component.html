@@ -1,4 +1,4 @@
-<ng-template #modalTitle>Reference Type</ng-template>
+<div *nzModalTitle>Reference Type</div>
 
 <h6 nz-typography>General</h6>
 <nz-form-item>
@@ -40,9 +40,9 @@
   Property</button>
 
 
-<ng-template #modalFooter>
+<div *nzModalFooter>
   <div class="button-spacing flex end">
     <button nz-button (click)='close()'>Cancel</button>
     <button nz-button nzType='primary' [nzLoading]='loading' (click)='onSave()'>Save</button>
   </div>
-</ng-template>
+</div>
