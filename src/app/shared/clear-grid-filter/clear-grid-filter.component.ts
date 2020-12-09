@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-clear-grid-filter',
@@ -8,13 +8,14 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ClearGridFilterComponent implements OnInit {
   @Input() gridApi: any = null;
   @Input() filters: any = [];
+  @Output() reinit: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  clearFilter(){
-    this.gridApi.setFilterModel(null);
+  clearFilter() {
+    this.reinit.emit(true);
   }
 
 }

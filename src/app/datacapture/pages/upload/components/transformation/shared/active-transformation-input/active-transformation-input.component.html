@@ -41,6 +41,6 @@
 </button>
 <nz-divider nzType='vertical'></nz-divider>
 <ng-container [ngSwitch]='previewMode$ | async'>
-  <app-clear-grid-filter *ngSwitchCase='"SOURCE"' [gridApi]="sourceGrid$ | async" [filters]="filters$ | async"></app-clear-grid-filter>
-  <app-clear-grid-filter *ngSwitchCase='"TARGET"' [gridApi]="targetGrid$ | async" [filters]="filters$ | async"></app-clear-grid-filter>
+  <app-clear-grid-filter *ngSwitchCase='"SOURCE"' [filters]="filters$ | async" (reinit)="resetFilter()"></app-clear-grid-filter>
+  <app-clear-grid-filter *ngSwitchCase='"TARGET"' [filters]="filters$ | async" (reinit)="resetFilter()"></app-clear-grid-filter>
 </ng-container>

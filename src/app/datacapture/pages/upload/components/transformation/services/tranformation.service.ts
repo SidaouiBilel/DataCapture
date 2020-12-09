@@ -40,9 +40,8 @@ export class TranformationService {
   canSave$: Observable<any>;
   sheet$: Observable<any>;
   modified$: Observable<any>;
-  sourceGrid: BehaviorSubject<any> = new BehaviorSubject({});
-  targetGrid: BehaviorSubject<any> = new BehaviorSubject({});
   filters: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  reset$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
     private http: HttpClient,
     private store: Store<AppState>,

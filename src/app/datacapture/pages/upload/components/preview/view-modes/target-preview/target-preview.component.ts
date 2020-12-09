@@ -54,7 +54,9 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
       this.generatedFileId$ = this.store.select(selectTransformedFilePath);
       this.activePipe$ = this.store.select(selectActivePipe);
       this.loading$ = this.store.select(selectLoadingTransformation);
-
+      this.transformService.reset$.subscribe((res) => {
+        if (res && this.gridApi) {this.gridApi.api.setFilterModel(null); }
+      });
   }
 
   ngOnDestroy(): void {
@@ -93,7 +95,6 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
   generateDataSource(fileid, pages, size, gridApi) {
     const that = this;
     that.gridApi = gridApi;
-    that.transformService.targetGrid.next(gridApi);
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;

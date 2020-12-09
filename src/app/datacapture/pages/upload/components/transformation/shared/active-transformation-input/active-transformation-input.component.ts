@@ -15,8 +15,6 @@ export class ActiveTransformationInputComponent implements OnInit {
   nodesCount$;
   nodesModified$;
   canSave$;
-  sourceGrid$: any;
-  targetGrid$: any;
   filters$: any;
   previewMode$: any;
 
@@ -35,8 +33,6 @@ export class ActiveTransformationInputComponent implements OnInit {
     this.nodesModified$ = this.service.modified$;
     this.canSave$ = this.service.canSave$;
     this.filters$ = this.service.filters;
-    this.sourceGrid$ = this.service.sourceGrid;
-    this.targetGrid$ = this.service.targetGrid;
   }
 
 
@@ -49,6 +45,10 @@ export class ActiveTransformationInputComponent implements OnInit {
     this.domainPipes$ = this.service.domainPipes$;
     this.pm$ = this.service.previewMode$;
     this.expanded$ = this.service.expanded$;
+  }
+
+  resetFilter() {
+    this.service.reset$.next(true);
   }
 
   onFlipCollapse() {

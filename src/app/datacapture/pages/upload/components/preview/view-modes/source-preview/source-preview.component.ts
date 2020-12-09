@@ -30,7 +30,6 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   page$ = new BehaviorSubject<number>(1);
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
-
   constructor(
     private service: FileImportService,
     private store: Store<AppState>,
@@ -39,6 +38,9 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
       super(_transformService, _hotkeys);
       this.selectedSheet$ = this.store.select(selectUpdatedSheet);
       this.fileData$ = this.store.select(selectFileData);
+      this.transformService.reset$.subscribe((res) => {
+        if (res && this.gridApi) {this.gridApi.api.setFilterModel(null); }
+      });
   }
 
   ngOnInit(): void {
@@ -60,7 +62,6 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   generateDataSource(gridApi: any, worksheet: string, size: number) {
     const that = this;
     this.gridApi = gridApi;
-    that.transformService.sourceGrid.next(gridApi);
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
