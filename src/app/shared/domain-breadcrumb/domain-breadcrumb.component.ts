@@ -13,6 +13,7 @@ export class DomainBreadcrumbComponent implements OnInit {
   set collectionId(id){
     if(id){
       this.loading$.next(true)
+      this.collection$.next(null)
       this.domains.getInfoById(id).subscribe(info=>{
         this.collection$.next(info)
         this.loading$.next(false)

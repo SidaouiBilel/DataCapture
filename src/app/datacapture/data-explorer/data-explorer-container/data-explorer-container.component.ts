@@ -13,9 +13,9 @@ export class DataExplorerContainerComponent implements OnInit {
   }
 
   tabs = [
-    {label:'Uplaods', route:['uploads']},
-    {label:'Collection Data', route:['data']},
-    {label:'Tags', route:['tags']},
+    {label:'Uplaods', icon:'upload', route:['uploads']},
+    {label:'Collection Data', icon:'table', route:['data']},
+    {label:'Tags', icon:'tags', route:['tags']},
   ]
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TagsCellRendererComponent } from '@app/shared/tags-cell-renderer/tags-cell-renderer.component';
-import { GAPIFilterComponenet, GAPIFilters, GAPIFormatterComponenet, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { GAPIFilterComponenet, GAPIFilters, GAPIFormatterComponenet, GAPISortToApi, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { DashboardService } from '../../service/dashboard.service';
@@ -58,10 +58,11 @@ export class UploadDataComponent implements OnInit, OnDestroy {
         const page = params.request.endRow / size;
         const firstPage = page <= 1;
         const filters = GAPIFilters(params.request.filterModel);
+        const sort = GAPISortToApi(params.request.sortModel);
         that.filters$.next(filters);
         if (firstPage) {  that.total$.next(0); }
         that.loading$.next(true);
-        that.service.getUploadData(domainId, page, size, filters).subscribe((res: any) => {
+        that.service.getUploadData(domainId, page, size, filters, sort).subscribe((res: any) => {
           that.loading$.next(false);
           if (firstPage) {
             that.total$.next(res.total);
@@ -72,6 +73,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
                 colId: h.field,
                 editable: false,
                 resizable: true,
+                sortable: true,
                 filter: GAPIFilterComponenet(h.type),
                 floatingFilter: GAPIFilterComponenet(h.type),
                 valueFormatter: GAPIFormatterComponenet(h.type)

@@ -24,9 +24,9 @@ export class DashboardService {
     return this.http.get(`${environment.upload}flow?domain_id=${domainId}&page=${page}&size=${size}${sortkey ? '&sort_key=' + sortkey : ''}${sortAcn ?  '&sort_acn=' + sortAcn : ''}`);
   }
 
-  getUploadData(domainId: string, page: number, size: number, filters: any[],sortkey?, sortAcn?): Observable<any> {
+  getUploadData(domainId: string, page: number, size: number, filters: any[],sort?): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.post(`${environment.upload}data/${domainId}`, {page, size, filters});
+    return this.http.post(`${environment.upload}data/${domainId}`, {page, size, filters, sort});
   }
 
   getUploadDataTotal(domainId: string): Observable<any> {

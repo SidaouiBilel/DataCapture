@@ -1,10 +1,8 @@
-<div class="m-2">
-
-    <ng-container *ngIf=' (loading$ | async)'><nz-spin nzSimple [nzSize]="'small'"></nz-spin></ng-container>
-    <ng-container *ngIf='!(loading$ | async)'>
-        <!-- <ng-container *ngIf='!(collection$ | async)'><i>No Collection Selected</i></ng-container> -->
+<div>
+    <ng-container>
         <nz-breadcrumb>
-            <nz-breadcrumb-item><i nz-icon nzType="database"></i></nz-breadcrumb-item>
+            <nz-breadcrumb-item><i nz-icon nzType="database"></i> Data Explorer</nz-breadcrumb-item>
+            <ng-container *ngIf=' (loading$ | async)'><nz-breadcrumb-item><i nz-icon [nzType]="'loading'"></i></nz-breadcrumb-item></ng-container>
             <ng-container *ngIf=' (collection$ | async) ; let info'>
                 <nz-breadcrumb-item>
                   <a><i nz-icon nzType="folder"></i><span>{{info.domain.name}}</span></a>

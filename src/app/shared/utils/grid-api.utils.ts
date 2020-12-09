@@ -1,3 +1,4 @@
+import { isArrayEmpty } from './arrays.utils';
 import { formatDate, isInDateFormat, isInDoubleFormat, isInIntegerFormat } from './strings.utils';
 
 export const INDEX_NAME = '$_NODE_INDEX';
@@ -118,7 +119,6 @@ export function GAPIFilters(filterModel) {
   const adaptedFilter = [];
   Object.keys(filterModel).forEach((column) => {
     const filter = filterModel[column];
-    console.log(filter);
     const payload: any = {
         column,
         operator: filter.type,
@@ -142,6 +142,16 @@ export function GAPIFilters(filterModel) {
     adaptedFilter.push(payload);
   });
   return adaptedFilter;
+}
+
+
+export function GAPISortToApi(sortModel) {
+    const adaptedSort:any = {}
+    if(!isArrayEmpty(sortModel)){
+      adaptedSort.column = sortModel[0].colId
+      adaptedSort.order = sortModel[0].sort
+    }
+    return adaptedSort
 }
 
 export function GAPIFilterComponenet(type) {

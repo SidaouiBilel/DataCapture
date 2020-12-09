@@ -4,15 +4,17 @@
         <app-domain-hierarchy [collection]='explorer.collectionId$ | async' (collectionClicked)='onCollectionClicked($event)'></app-domain-hierarchy>
     </nz-card> 
     
+
+    <ng-template #explorerTitle>
+        <app-domain-breadcrumb [collectionId]='explorer.collectionId$ | async'></app-domain-breadcrumb>
+    </ng-template>
     <!-- Data Exploration -->
     <div class="fill flex column stretch">
-        <nz-card class="explorer" nzSize='small' nzTitle='Data Explorer'>
-            <div class="border-bottom">
-                <app-domain-breadcrumb [collectionId]='explorer.collectionId$ | async'></app-domain-breadcrumb>
-            </div>
+        <nz-card class="explorer" nzSize='small' [nzTitle]='explorerTitle'>
+           
             <nz-tabset nzLinkRouter>
                 <nz-tab *ngFor="let tab of tabs">
-                    <a nz-tab-link [routerLink]="tab.route">{{tab.label}}</a>
+                    <a nz-tab-link [routerLink]="tab.route"> <i nz-icon [nzType]='tab.icon'></i> {{tab.label}}</a>
                 </nz-tab>
             </nz-tabset>
         </nz-card> 
