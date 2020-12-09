@@ -76,7 +76,10 @@ export class UploadDataComponent implements OnInit, OnDestroy {
                 sortable: true,
                 filter: GAPIFilterComponenet(h.type),
                 floatingFilter: GAPIFilterComponenet(h.type),
-                valueFormatter: GAPIFormatterComponenet(h.type)
+                valueFormatter: GAPIFormatterComponenet(h.type),
+                filterParams: {
+                  suppressAndOrCondition: true
+                }
               };
 
               if (h.field === 'flow_tags') {
