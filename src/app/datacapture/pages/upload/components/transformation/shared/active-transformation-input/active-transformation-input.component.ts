@@ -12,9 +12,11 @@ import { Arraylength } from '@app/shared/utils/arrays.utils';
 export class ActiveTransformationInputComponent implements OnInit {
   pm$: any;
   expanded$: any;
-  nodesCount$
-  nodesModified$
-  canSave$
+  nodesCount$;
+  nodesModified$;
+  canSave$;
+  filters$: any;
+  previewMode$: any;
 
   modes = [
     {mode: 'SOURCE', icon: 'file-text', tooltip: 'View Source', label: 'Source'},
@@ -26,9 +28,11 @@ export class ActiveTransformationInputComponent implements OnInit {
     private drawer: TranformationDrawerService
     )
   {
-    this.nodesCount$ = this.service.nodes$.pipe(map(Arraylength))
-    this.nodesModified$ = this.service.modified$
-    this.canSave$ = this.service.canSave$
+    this.nodesCount$ = this.service.nodes$.pipe(map(Arraylength));
+    this.previewMode$ = this.service.previewMode$;
+    this.nodesModified$ = this.service.modified$;
+    this.canSave$ = this.service.canSave$;
+    this.filters$ = this.service.filters;
   }
 
 
@@ -41,6 +45,10 @@ export class ActiveTransformationInputComponent implements OnInit {
     this.domainPipes$ = this.service.domainPipes$;
     this.pm$ = this.service.previewMode$;
     this.expanded$ = this.service.expanded$;
+  }
+
+  resetFilter() {
+    this.service.reset$.next(true);
   }
 
   onFlipCollapse() {

@@ -24,6 +24,7 @@ import { TagsCellRendererComponent } from './tags-cell-renderer/tags-cell-render
 import { GridCellAutoTypeComponent } from './grid-cell-auto-type/grid-cell-auto-type.component';
 import { DomainHierarchyComponent } from './domain-hierarchy/domain-hierarchy.component';
 import { DomainBreadcrumbComponent } from './domain-breadcrumb/domain-breadcrumb.component';
+import { ClearGridFilterComponent } from './clear-grid-filter/clear-grid-filter.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -57,7 +58,8 @@ const Components = [
   TagsCellRendererComponent,
   GridCellAutoTypeComponent,
   DomainHierarchyComponent,
-  DomainBreadcrumbComponent
+  DomainBreadcrumbComponent,
+  ClearGridFilterComponent
 ];
 
 @NgModule({

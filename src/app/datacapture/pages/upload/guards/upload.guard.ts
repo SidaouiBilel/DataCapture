@@ -50,10 +50,10 @@ export class UploadGuard implements CanActivate {
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     switch (next.data.route) {
       case 'IMPORT': {
-        return ['ERROR', 'DONE', 'READY'].includes(this.uploadStatus);
+        return ['READY'].includes(this.uploadStatus);
       }
       case 'TRANSFORM': {
-        if (this.fileData.metaData && this.selectedDomain && ['ERROR', 'DONE', 'READY'].includes(this.uploadStatus)) {
+        if (this.fileData.metaData && this.selectedDomain && ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
             return false;
@@ -61,7 +61,7 @@ export class UploadGuard implements CanActivate {
       }
       case 'MAPPING': {
         if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null &&
-            ['ERROR', 'DONE', 'READY'].includes(this.uploadStatus)) {
+            ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
             return false;
@@ -69,7 +69,7 @@ export class UploadGuard implements CanActivate {
       }
       case 'CLEANSING': {
         if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 &&
-            this.mappingId && this.mappingValid && ['ERROR', 'DONE', 'READY'].includes(this.uploadStatus)) {
+            this.mappingId && this.mappingValid && ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
             return false;

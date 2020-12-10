@@ -39,6 +39,9 @@
             [nzType]='(b.level==(selectedErrorLevel$ | async))?b.type:"default"' (click)='changeErrorLevel(b.level)'
             nzShape='round'>{{b.label}}</button>
         </div>
+
+        <nz-divider nzType="vertical"></nz-divider>
+        <app-clear-grid-filter [gridApi]="grid" [filters]="filters$ | async"></app-clear-grid-filter>
       </div>
     </div>
     <div nz-col nzSpan="6" class="text-right button-spacing">

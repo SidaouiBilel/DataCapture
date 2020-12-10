@@ -30,7 +30,6 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
   page$ = new BehaviorSubject<number>(1);
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
-
   constructor(
     private service: FileImportService,
     private store: Store<AppState>,
@@ -39,10 +38,13 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
       super(_transformService, _hotkeys);
       this.selectedSheet$ = this.store.select(selectUpdatedSheet);
       this.fileData$ = this.store.select(selectFileData);
+      this.transformService.reset$.subscribe((res) => {
+        if (res && this.gridApi) {this.gridApi.api.setFilterModel(null); }
+      });
   }
 
   ngOnInit(): void {
-    this.paginator$ = combineLatest(this.size$, this.fileData$, this.selectedSheet$, this.gridReady$)
+    this.paginator$ = combineLatest([this.size$, this.fileData$, this.selectedSheet$, this.gridReady$])
       .subscribe(([size, file, selectedSheet, grid]) => {
         this.onReset();
         if (file.metaData) {
@@ -63,7 +65,8 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
-        const filters = GAPIFilters(params.request.filterModel)
+        const filters = GAPIFilters(params.request.filterModel);
+        that.transformService.filters.next(filters);
         that.loading$.next(true);
         that.service.getFileData(page, worksheet, size, filters).subscribe((res: any) => {
           that.total$.next(res.total);
@@ -71,7 +74,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
           if (page <= 1) {
             const previewData = {};
             res.headers.forEach((e, i) => {
-              previewData[e] = res.data.slice(1, 10).map((e) => e[i]);
+              previewData[e] = res.data.slice(1, 10).map((f: any) => f[i]);
             });
             that.store.dispatch(new SaveSourcesPreview(previewData));
             that.totalRecords$.next(res.total);
@@ -81,7 +84,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
                 headerName: h,
                 editable: false,
                 resizable: true,
-                cellRenderer:'autoTypeRenderer',
+                cellRenderer: 'autoTypeRenderer',
                 filter: GAPIFilterComponenet('string'),
                 filterParams: GAPIAllFilterParams(params)
             }));
@@ -99,7 +102,7 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
             }
             data.push(rowObject);
           }
-          gridApi.columnApi.autoSizeAllColumns()
+          gridApi.columnApi.autoSizeAllColumns();
           params.successCallback(data, lastRow());
         }, (error) => {
             params.failCallback();

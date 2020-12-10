@@ -15,7 +15,7 @@ import { ActionSaveCleansingErrors, ActionSaveJobId } from '../../store/actions/
 import { AuditComponent } from '@app/shared/audit/audit.component';
 import { isEmpty } from '@app/shared/utils/objects.utils';
 import { take } from 'rxjs/operators';
-import { currencyFormatter, dateFormatter, INDEX_HEADER, mapGridFilter } from '@app/shared/utils/grid-api.utils';
+import { currencyFormatter, dateFormatter, GAPIFilters, INDEX_HEADER, mapGridFilter } from '@app/shared/utils/grid-api.utils';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
@@ -40,6 +40,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   keys = Object.keys;
   autosave = true;
   // BS
+  filters$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
   total$: BehaviorSubject<any> = new BehaviorSubject(0);
   results$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -103,7 +104,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.datasource$ = combineLatest(this.gridReady$, this.lock$, this.selectedErrorLevel$).subscribe(
+    this.datasource$ = combineLatest([this.gridReady$, this.lock$, this.selectedErrorLevel$]).subscribe(
       ([gridApi, Locked, errorLevel]) => {
         this.fetchCleansingData(gridApi);
       }
@@ -195,7 +196,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     const that = this;
     return {
       getRows(params) {
-        combineLatest(that.lock$, that.selectedErrorLevel$.pipe(take(1))).subscribe(([isLocked, errorLevel]) => {
+        combineLatest([that.lock$, that.selectedErrorLevel$.pipe(take(1))]).subscribe(([isLocked, errorLevel]) => {
           if (isLocked) {
             const page = (params.request.endRow / that.numberOfRows) - 1;
             const isTransformed = that.worksheet !== null;
@@ -214,6 +215,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             if (params.request.sortModel.length > 0) {
               params.request.sortModel.forEach((e) => {adaptedSort.column = that.cleanFilter(e.colId); adaptedSort.order = e.sort; });
             }
+            that.filters$.next(GAPIFilters(params.request.filterModel));
             // tslint:disable-next-line: max-line-length
             that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel)
             .subscribe((res: any) => {
@@ -277,7 +279,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
         if (h.colId !== INDEX_HEADER.colId) {
           const cellClass = (params) => {
             const f = params.colDef.field;
-            const i = (params.data)?params.data.row_index: -1;
+            const i = (params.data) ? params.data.row_index : -1;
             try {
               if (this.results[i][f].errors.length > 0) {
                 return 'error-cell';
@@ -298,7 +300,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
           // h.tooltipField = h.field;
           h.tooltipComponentParams = {error: this.results$};
           h.tooltipValueGetter = (params) => {
-            return { value: params.value, index : (params.data)?params.data.row_index: '' };
+            return { value: params.value, index : (params.data) ? params.data.row_index : '' };
           };
           // Sort
           h.sortable = true;
@@ -388,6 +390,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     api.redrawRows({ rowNodes: [rowNode] });
     this.runWithEditedCell().subscribe(() => {
       this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
+        // tslint:disable-next-line: variable-name
         const absolute_index = line;
         this.results[absolute_index] = data.results[absolute_index];
         this.results$.next(this.results);

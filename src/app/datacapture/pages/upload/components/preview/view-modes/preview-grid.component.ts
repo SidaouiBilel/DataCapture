@@ -9,7 +9,7 @@ import { TRANSFORMATIONS } from '../../transformation/transformations/transforme
 export class PreviewGridComponent implements OnInit, OnDestroy {
   gridApi: any;
 
-  constructor(private transformService: TranformationService, private hotkeys: TransformationHotKeysService) {}
+  constructor(protected transformService: TranformationService, private hotkeys: TransformationHotKeysService) {}
   ngOnInit(): void {
     this.registerHotKey();
   }

@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderDescriptionComponent implements OnInit {
   description: any;
+  name: string;
   keys = Object.keys;
   constructor() { }
 

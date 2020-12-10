@@ -39,3 +39,8 @@
   nzShape='round'><i nz-icon [nzType]="m.icon"></i>
   {{m.label}}
 </button>
+<nz-divider nzType='vertical'></nz-divider>
+<ng-container [ngSwitch]='previewMode$ | async'>
+  <app-clear-grid-filter *ngSwitchCase='"SOURCE"' [filters]="filters$ | async" (reinit)="resetFilter()"></app-clear-grid-filter>
+  <app-clear-grid-filter *ngSwitchCase='"TARGET"' [filters]="filters$ | async" (reinit)="resetFilter()"></app-clear-grid-filter>
+</ng-container>

@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { TagsCellRendererComponent } from '@app/shared/tags-cell-renderer/tags-cell-renderer.component';
+import { NotificationService } from '@app/core';
 import { GAPIFilterComponenet, GAPIFilters, GAPIFormatterComponenet, GAPISortToApi, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
@@ -28,15 +28,15 @@ export class UploadDataComponent implements OnInit, OnDestroy {
     this.domain$.next(value);
   }
 
-  constructor(private service: DashboardService) { }
+  constructor(private service: DashboardService, private not: NotificationService) { }
 
   ngOnInit() {
-    this.subscription = combineLatest(this.domain$, this.gridReady$, this.size$, this.page$)
-    .subscribe(([domain, gridApi, size, page]:any) => {
-      this.gridApi = gridApi.api
+    this.subscription = combineLatest([this.domain$, this.gridReady$, this.size$, this.page$])
+    .subscribe(([domain, gridApi, size, page]: any) => {
+      this.gridApi = gridApi.api;
       if (!domain) { return this.error$.next('Please select a collection'); }
       this.error$.next(null);
-      this.clearFilter()
+      this.clearFilter();
       // this.getTotal(domain.id)
       this.generateDataSource(domain.id, page, size, gridApi);
     });
@@ -49,7 +49,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) { this.subscription.unsubscribe(); }
     if (this.filterSub) { this.filterSub.unsubscribe(); }
-  } 
+  }
 
   generateDataSource(domainId, pages, size, gridApi) {
     const that = this;
@@ -103,10 +103,10 @@ export class UploadDataComponent implements OnInit, OnDestroy {
             that.headers$.next(headers);
           }
           // const lastRow = () =>  -1;
-          that.total$.pipe(take(1)).subscribe((total)=>{
+          that.total$.pipe(take(1)).subscribe((total) => {
             const lastRow = () =>  total;
             params.successCallback(res.content, lastRow());
-          })
+          });
         }, (error) => {
           params.failCallback();
           that.error$.next(error);
@@ -116,11 +116,11 @@ export class UploadDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  download(type: string, withFilters=false) {
+  download(type: string, withFilters= false) {
     this.domain$.pipe(take(1)).subscribe((domain) => {
-      let filters = []
+      let filters = [];
       if (withFilters){
-        filters = GAPIFilters(this.gridApi.getFilterModel())
+        filters = GAPIFilters(this.gridApi.getFilterModel());
       }
       this.service.download(domain.id, type, filters);
     });
