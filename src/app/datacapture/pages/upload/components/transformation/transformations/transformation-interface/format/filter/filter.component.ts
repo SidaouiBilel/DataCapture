@@ -23,6 +23,8 @@ export class FilterComponent extends TransformationInterfaceComponent implements
     {value: 'contains', label: 'Contains'},
     {value: 'startswith', label: 'Starts With'},
     {value: 'endswith', label: 'Ends With'},
+    {value: 'equals', label: 'Equal'},
+    // {value: 'notEqual', label: 'notEqual'},
   ];
   operations = [
     {

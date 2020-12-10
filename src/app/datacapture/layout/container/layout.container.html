@@ -39,7 +39,7 @@
             <i nz-icon nzType="dashboard"></i>
             <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>
           </li>
-          <li nz-submenu nzIcon="tool" nzTitle="Admin" [nzOpen]="true">
+          <li nz-submenu nzIcon="tool" nzTitle="Admin" >
             <ul>
               <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('users')" [routerLink]="['/datacapture/users']">
                 <i nz-icon nzType="user"></i>
@@ -56,7 +56,7 @@
             </ul>
           </li>
 
-          <li nz-submenu nzIcon="database" nzTitle="Data Explorer" [nzOpen]="true">
+          <li nz-submenu nzIcon="database" nzTitle="Data Explorer" >
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('uploads')" [routerLink]="['/datacapture/explorer/uploads']">
                 <i nz-icon nzType="upload"></i>
@@ -76,7 +76,7 @@
             </ul>
           </li>
 
-          <li nz-submenu nzIcon="upload" nzTitle="Upload" [nzOpen]="true">
+          <li nz-submenu nzIcon="upload" nzTitle="Upload" >
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>
