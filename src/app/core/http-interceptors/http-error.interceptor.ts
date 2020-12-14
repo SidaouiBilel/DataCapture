@@ -35,10 +35,18 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       tap(null, (err: any) => {
-        if (err instanceof HttpErrorResponse) {
-          const appErrorHandler = this.injector.get(ErrorHandler);
-          appErrorHandler.handleError(err);
+        console.log(err);
+        if(err.status === 401){
+          console.log(window["logout"]);
+          if(window["logout"]){
+            window["logout"]();
+            window["logoutfromdata"]=true;
+          }
         }
+        // if (err instanceof HttpErrorResponse) {
+        //   const appErrorHandler = this.injector.get(ErrorHandler);
+        //   appErrorHandler.handleError(err);
+        // }
       })
     );
   }

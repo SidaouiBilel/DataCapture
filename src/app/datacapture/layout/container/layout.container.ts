@@ -43,11 +43,14 @@ export class LayoutContainer implements OnInit {
     
     this.profile$.subscribe(
       res=>{
-        this.service.get_user_data_link(res.id).subscribe(
-          data=>{
-            this.url_data=data["url"];
-          }
-        )
+        if(res && res.id){
+          this.service.get_user_data_link(res.id).subscribe(
+            data=>{
+              this.url_data=data["url"];
+            }
+          )          
+        }
+
         
       }
     )
