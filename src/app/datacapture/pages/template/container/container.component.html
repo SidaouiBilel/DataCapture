@@ -1,16 +1,16 @@
 
 <div class="DBconnectors-container p-1">
   
-    <nz-page-header class="site-page-header" nzTitle="Template List" [nzSubtitle]="tooltip">
-            <ng-template #tooltip>
+    <nz-page-header class="site-page-header" nzTitle="Template List">
+            <!-- <ng-template #tooltip>
                 <button nzShape="circle" nzTooltipTitle="" nzTooltipPlacement="top" nz-button nz-tooltip><i nz-icon nzType="question"></i></button>
-            </ng-template>
+            </ng-template> -->
     </nz-page-header>
   
     <div nz-row class='ma-b'>
         <div nz-col [nzSpan]='18'>
           <button nz-button class='ghost' (click)="extract_data()">
-            <i nz-icon nzType="plus"></i>Create Template
+            <i nz-icon nzType="plus"></i>New Template
           </button>
           <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
         </div>
@@ -22,7 +22,7 @@
                 <nz-list-item class="BD-item">
                     <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
                         <ng-template #nzTitle>
-                            <div nz-typography class="font-weight-bold">Name : <span nz-typography>{{item.name | uppercase }}</span></div>
+                            <div nz-typography class="font-weight-bold">Name : <span nz-typography style="font-weight: 600;">{{item.name | uppercase }}</span></div>
                         </ng-template>
                         <ng-template #nzDescription>
                             <nz-tag [nzColor]="'#108ee9'"  (click)="viewtemplate(item.name , item.template)" role="button">Detail</nz-tag>
