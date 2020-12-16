@@ -15,10 +15,17 @@
       </div>
     </ng-container>
 
-    <button *ngIf="(uploadStatus$ | async) === 'DONE'" nz-button nzType="default" (click)="cancel.emit(true)">
-      <i nz-icon nzType="check" nzTheme="outline"></i>
-      Upload Another file
-    </button>
+    <div class="button-spacing" *ngIf="(uploadStatus$ | async) === 'DONE'" >
+      <button nz-button nzType="default" (click)="cancel.emit(true)">
+        Complete
+        <i nz-icon nzType="check" nzTheme="outline"></i>
+      </button>
+
+      <button nz-button nzType="primary" (click)="showData()">
+        Show Data
+        <i nz-icon nzType="database"></i>
+      </button>
+    </div>
   </div>
 </nz-result>
 

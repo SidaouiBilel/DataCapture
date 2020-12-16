@@ -321,3 +321,40 @@ export class FormatDate extends Transformer {
   }
 
 }
+
+export class GroupBy extends Transformer {
+  type =  'groupby';
+  label = 'Group By';
+  icon = 'group';
+  shortcut = 'control.alt.g';
+
+  getErrors = (params, previousNodes, headers) => {
+    const errors = [];
+
+    const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
+    if (isArrayEmpty(params.columns)) {
+      errors.push(new NodeError('columns', 'Missing Column'))
+    } else {
+        for ( const column of params.columns ) {
+          if ( previousHeaders.indexOf(column) < 0 ) {
+              errors.push(new NodeError('column ', `${column} does not exist`));
+          }
+        }
+    }
+
+    if (isArrayEmpty(params.groupKeys)) {
+      errors.push(new NodeError('groupKeys', 'Missing Column'))
+    } else {
+        for ( const column of params.groupKeys ) {
+          if ( previousHeaders.indexOf(column) < 0 ) {
+              errors.push(new NodeError('column ', `${column} does not exist`));
+          }
+        }
+    }
+
+    if (isStrEmpty(params.agg)) { errors.push(new NodeError('agg', 'Aggregation FUnction Missing')); }
+
+    return errors;
+  }
+
+}

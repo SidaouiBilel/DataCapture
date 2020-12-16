@@ -7,6 +7,7 @@ import { ActionSaveUploadId, ActionSaveUploadingStatus } from '../../../store/ac
 import { Observable, BehaviorSubject } from 'rxjs';
 import { selectUploadingId, selectUploadingStatus } from '../../../store/selectors/upload.selectors';
 import { take } from 'rxjs/operators';
+import { ExplorerService } from '@app/datacapture/data-explorer/services/explorer.service';
 
 @Component({
   selector: 'app-upload-data',
@@ -24,7 +25,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   result$: BehaviorSubject<any> = new BehaviorSubject(null);
   uploadStatus$: Observable<string>;
   uploadingId$: Observable<string>;
-  constructor(private service: UploadService, private store: Store<AppState>) {
+  constructor(private service: UploadService, private store: Store<AppState>, private explorer: ExplorerService) {
     this.uploadingId$ = store.select(selectUploadingId);
     this.uploadStatus$ = store.select(selectUploadingStatus);
   }
@@ -78,4 +79,8 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   format = () => {if (this.progress === 101) { return 'Upload'; } else {return 'Uploading...'; }};
 
   getRandom() { return this.colors[Math.floor(Math.random() * 11)]; }
+
+  showData(){
+    this.explorer.goToCollectionData(this.metaData.domainId)
+  }
 }

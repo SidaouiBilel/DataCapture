@@ -32,7 +32,6 @@ export class DashboardService {
   }
 
   getUploadDataTotal(domainId: string): Observable<any> {
-    // tslint:disable-next-line: max-line-length
     return this.http.get(`${environment.upload}data/${domainId}/total` );
   }
 
@@ -58,4 +57,19 @@ export class DashboardService {
   getTags(domainId: string): Observable<any> {
     return this.http.get(`${environment.upload}tags/${domainId}`);
   }
+
+  deleteTag(domainId: string, tag:string): Observable<any> {
+    return this.http.post(`${environment.upload}tags/${domainId}`, {
+      delete: true,
+      tag
+    });
+  }
+
+  editTag(domainId: string, tag:string, newTag:string): Observable<any> {
+    return this.http.post(`${environment.upload}tags/${domainId}`, {
+      edit: true,tag,newTag
+    });
+  }
+
+
 }

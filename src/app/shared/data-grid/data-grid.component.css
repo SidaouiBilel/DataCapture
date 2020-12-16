@@ -3,6 +3,11 @@
   /* border-color: #ffbfbf !important; */
 }
 
+::ng-deep .edited-cell {
+  border-style: dashed;
+  /* border-color: #ffbfbf !important; */
+}
+
 ::ng-deep .warning-cell {
   background-color: #f0a878;
 }

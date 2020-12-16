@@ -281,6 +281,11 @@ export class CleansingComponent implements OnInit, OnDestroy {
             const f = params.colDef.field;
             const i = (params.data) ? params.data.row_index : -1;
             try {
+              if (this.modifications[i][f]) {
+                return 'edited-cell';
+              }
+            } catch (error) {}
+            try {
               if (this.results[i][f].errors.length > 0) {
                 return 'error-cell';
               }

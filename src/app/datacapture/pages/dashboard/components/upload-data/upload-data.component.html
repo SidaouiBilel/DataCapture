@@ -34,7 +34,7 @@
       </div>
 
       <div>
-        <app-clear-grid-filter [filters]="filters$ | async" [gridApi]="gridApi"></app-clear-grid-filter>
+        <app-clear-grid-filter [filters]="filters$ | async" [gridApi]="gridApi"  (reinit)='clearFilter()'></app-clear-grid-filter>
         <!-- <button [disabled]='!(filters$ | async).length' class="ghost" (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>
           Clear Filters ({{(filters$ | async).length}})
         </button> -->
