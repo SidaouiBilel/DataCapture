@@ -76,7 +76,7 @@
             </ul>
           </li>
 
-          <li nz-submenu nzIcon="upload" nzTitle="Upload" >
+          <li nz-submenu nzIcon="upload" nzTitle="Manual Upload" >
             <ul>
               <li nz-menu-item [nzSelected]="isPrimaryPage('import')" [routerLink]="['/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>
@@ -102,6 +102,12 @@
               </li>
             </ul>
           </li>
+
+          <li nz-menu-item [nzSelected]="isPrimaryPage('pipeline')" [routerLink]="['/datacapture/pipeline']">
+            <i nz-icon nzType="apartment" nzRotate='-90'></i>
+            <span *ngIf='(settings.appSize$ | async)!="compact"'>Pipeline</span>
+          </li>
+
         </ul>
       </nz-sider>
     </ng-container>
