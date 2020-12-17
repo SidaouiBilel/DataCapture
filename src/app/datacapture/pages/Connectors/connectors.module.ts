@@ -2,15 +2,15 @@ import { SharedModule } from './../../../shared/shared.module';
 import { ConnectorsRoutingModule } from './connectors-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConnectorsComponent } from './components/connectors/connectors.component';
+import { ConnectorsComponent } from './Database/connectors/connectors.component';
 import { NzPageHeaderModule , NzFormModule   , NzDividerModule , NzSelectModule } from 'ng-zorro-antd';
-import { CreateDBconnectorsComponent } from './components/create-dbconnectors/create-dbconnectors.component';
-import { ListdbconnectorsComponent } from './components/listdbconnectors/listdbconnectors.component';
-import { ModaldbconnectorsComponent } from './components/modaldbconnectors/modaldbconnectors.component';
+import { CreateDBconnectorsComponent } from './Database/create-dbconnectors/create-dbconnectors.component';
+import { ListdbconnectorsComponent } from './Database/listdbconnectors/listdbconnectors.component';
+import { ModaldbconnectorsComponent } from './Database/modaldbconnectors/modaldbconnectors.component';
 import { DBCfilterPipe } from './pipes/dbcfilter.pipe';
-import { ContainerComponent } from './AWSconnector/container/container.component';
-import { ListComponent } from './AWSconnector/list/list.component';
-import { ModalComponent } from './AWSconnector/modal/modal.component';
+import { ContainerComponent } from './Datalake/container/container.component';
+import { ListComponent } from './Datalake/list/list.component';
+import { ModalComponent } from './Datalake/modal/modal.component';
 
 
 @NgModule({

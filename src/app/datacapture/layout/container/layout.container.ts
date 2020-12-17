@@ -1,3 +1,4 @@
+import { ActionAuthLogin } from './../../../core/auth/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile, ActionSaveProfile, selectToken } from '@app/core';
 import { select, Store } from '@ngrx/store';
@@ -41,25 +42,13 @@ export class LayoutContainer implements OnInit {
 
     settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
     
-    this.profile$.subscribe(
-      res=>{
-        if(res && res.id){
-          this.service.get_user_data_link(res.id).subscribe(
-            data=>{
-              this.url_data=data["url"];
-            }
-          )          
-        }
 
-        
-      }
-    )
   }
   ngOnInit(): void {
     this.checkTokenValidity();
   }
 
-  // This is used to select the primary pqge in the sidebqr
+  // This is used to select the primary page in the topbare
   isPrimaryPage(page: string): boolean {
     try {
       if (this.pageList.length > 0 ) {
@@ -146,18 +135,43 @@ export class LayoutContainer implements OnInit {
     }
   }
 
+  geturl_data(){
+    this.profile$.subscribe(
+      res=>{
+        if(res && res.id){
+          this.service.get_user_data_link(res.id).subscribe(
+            data=>{
+              this.url_data=data["url"];
+            }
+          )          
+        }
+      })
+  }
+  tokencheck = false; 
+  getuser(token){
+    this.service.info(token).subscribe((res) => {
+      if (res) {
+        if (res.status !== 'success') {
+          this.logoutUser();
+        } else {
+          this.store.dispatch(new ActionSaveProfile(res.data));
+          this.tokencheck = true;
+          this.geturl_data();
+        }
+      }
+    }, () => this.logoutUser());
+  }
+
   checkTokenValidity(): void {
     this.store.pipe(select(selectToken)).subscribe((token: string) => {
       if (token) {
-        this.service.info(token).subscribe((res) => {
-          if (res) {
-            if (res.status !== 'success') {
-              this.logoutUser();
-            } else {
-              this.store.dispatch(new ActionSaveProfile(res.data));
-            }
+        let ProfileLocalstorage = JSON.parse(localStorage.getItem("data-auth"));
+          if(window['logout'] && ProfileLocalstorage["token"] && ProfileLocalstorage["token"] != token ){
+            this.store.dispatch(new ActionAuthLogin(ProfileLocalstorage["token"]));
+            this.getuser(ProfileLocalstorage["token"]);
+          }else{
+            this.getuser(token); 
           }
-        }, () => this.logoutUser());
       }
     });
   }

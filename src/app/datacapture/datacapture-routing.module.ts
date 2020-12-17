@@ -21,7 +21,9 @@ const routes: Routes = [
         },
         {
           path: 'connectors',
-          loadChildren : './pages/Connectors/connectors.module#ConnectorsModule'
+          loadChildren : './pages/Connectors/connectors.module#ConnectorsModule',
+          canActivate: [RolesGuard],
+          data: {role: 'ADMIN'}
         },
         {
           path: 'extractors',

@@ -34,7 +34,12 @@ export class AuthEffects {
   logout = this.actions$.pipe(
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
-      this.router.navigate(['/data/login']);
+      if(window["logout"]){
+        window["logout"]();
+      }else{
+        this.router.navigate(['/data/login']);
+      }
+      
     })
   );
 }
