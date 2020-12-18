@@ -66,3 +66,8 @@ nz-card.flex .ant-card-body{
     flex: 1 1 auto;
     height: 0;
 }
+
+nz-card.paddless .ant-card-body{
+    padding: 0!important;
+}
+

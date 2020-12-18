@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PipelineEditorComponent } from './containers/pipeline-editor/pipeline-editor.component';
+import { PipelineEditorComponent } from './componenets/pipeline-editor/pipeline-editor.component';
+import { AuthorPipelineComponent } from './containers/author-pipeline/author-pipeline.component';
 
 const routes: Routes = [
   {
     path:'',
-    component:PipelineEditorComponent
+    component:AuthorPipelineComponent
   }
 ];
 

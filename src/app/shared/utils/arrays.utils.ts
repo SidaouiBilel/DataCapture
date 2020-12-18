@@ -57,6 +57,14 @@ export function ArrayLast(array) {
   return array[array.length - 1];
 }
 
+export function DefaultArray(obj, key) {
+  obj[key] = obj[key] || []
+  return obj[key] 
+}
+
+
+
+
   
   
   
