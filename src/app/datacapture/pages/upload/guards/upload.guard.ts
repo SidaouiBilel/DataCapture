@@ -1,4 +1,4 @@
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -28,7 +28,7 @@ export class UploadGuard implements CanActivate {
   mandatories$: Observable<number>;
   mappingValid$: Observable<boolean>;
   uploadStatus$: Observable<string>;
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.fileData$ = this.store.select(selectFileData);
     this.errors$ = this.store.select(selectCleansingErrors);
     this.mappingValid$  = this.store.select(selectMappingValid);
@@ -50,6 +50,9 @@ export class UploadGuard implements CanActivate {
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     switch (next.data.route) {
       case 'IMPORT': {
+        if (['READY'].includes(this.uploadStatus) === false) {
+          this.router.navigate(['/datacapture/upload/uploading']);
+        }
         return ['READY'].includes(this.uploadStatus);
       }
       case 'TRANSFORM': {

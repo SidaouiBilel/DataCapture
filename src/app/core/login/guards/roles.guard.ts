@@ -24,7 +24,7 @@ export class RolesGuard implements CanActivate {
     } else {
       switch (next.data.role) {
         case 'domainAdmin':
-          if (this.profile && this.selectedDomain && this.profile.roles.length > 0) {
+          if (this.profile && this.selectedDomain && this.profile.roles &&  this.profile.roles.length > 0) {
             const i = this.profile.roles.map((e) => (e.domain_id)).indexOf(this.selectedDomain);
             if (i >= 0) {
               if (this.profile.roles[i].role === 'domainAdmin') {
