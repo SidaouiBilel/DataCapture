@@ -22,6 +22,7 @@ export class PipelineEditorComponent {
   @Output() diagramLinkDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
 
   public onDoubleClicked = new EventEmitter<void>()
+
   // initialize diagram / templates
   public initDiagram = (): go.Diagram => {
 

@@ -4,7 +4,7 @@ import { PipelineNode } from "../node.model";
 export class NodeTransformations extends PipelineNode{
     static type = 'TRANSFORMATION'
     static category = 'TRANSFORMATION'
-    static color = 'white'
+    static color = 'grey'
     static label = 'Generic Transformation'
     static ports = [
         {id:"INPUT",spot:go.Spot.Left},
