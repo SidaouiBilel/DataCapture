@@ -3,9 +3,9 @@
     [formGroup]="validateDataBaseForm" 
     (ngSubmit)="submitForm()"
     autocomplete="off" >
-    <nz-divider nzPlain nzText="Choose Database Connector" nzOrientation="left" class="driver"></nz-divider>
+    <nz-divider nzPlain nzText="Choose Database Connector" nzOrientation="left" class="mb-3"></nz-divider>
 
-      <nz-form-item>
+      <nz-form-item class="mb-2">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type">Database Connector</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Database Type is required">
               <nz-select nzShowSearch nzAllowClear [nzLoading]="DBCloading" nzPlaceHolder="Select a DataBase type" formControlName="connector_id">
@@ -19,48 +19,48 @@
           </nz-form-control>
       </nz-form-item>
 
-    <nz-divider nzPlain nzText="Source Configuration" nzOrientation="left" class="driver"></nz-divider>
+    <nz-divider nzPlain nzText="Source Configuration" nzOrientation="left" class="mb-3"></nz-divider>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="source_schema">Source Shema</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Source Shema id required!">
+    <nz-form-item class="mb-2">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="source_schema">Source Schema</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Source Schema id required!">
           <input nz-input formControlName="source_schema" id="source_schema" />
         </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item>
+    <nz-form-item class="mb-2">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="source_table">Source Table</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Source Table id required!">
           <input nz-input formControlName="source_table" id="source_table" />
         </nz-form-control>
     </nz-form-item>
 
-    <nz-divider nzPlain nzText="Destiation Configuration" nzOrientation="left" class="driver"></nz-divider>
+    <nz-divider nzPlain nzText="Destiation Configuration" nzOrientation="left" class="mb-3"></nz-divider>
 
-    <nz-form-item>
+    <nz-form-item class="mb-2">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="destination_schema">Destiation Shema</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Destiation Shema is required!!">
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Destination Schema is required!!">
           <input nz-input formControlName="destination_schema" id="destination_schema" />
         </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item>
+    <nz-form-item class="mb-2">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="destination_table">Destination Table</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Destiation Table is required!!">
           <input nz-input formControlName="destination_table" id="destination_table" />
         </nz-form-control>
     </nz-form-item>
     
-    <nz-divider nzPlain nzText="Sql Query" nzOrientation="left" class="driver" ></nz-divider>
+    <nz-divider nzPlain nzText="Sql Query" nzOrientation="left" class="mb-3" ></nz-divider>
 
-    <nz-form-item>
+    <nz-form-item class="mb-2">
         <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="query">Query</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" >
           <input nz-input formControlName="query" id="query" placeholder="Default : SELECT  * FROM [db_name].[source_schema].[source_table]" />
         </nz-form-control>
     </nz-form-item>
 
-    <!-- <nz-form-item nz-row class="register-area">
+    <!-- <nz-form-item class="mb-2" nz-row class="register-area">
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
           <button nz-button nzType="primary" [nzLoading]='Submiting'>Create</button>
         </nz-form-control>

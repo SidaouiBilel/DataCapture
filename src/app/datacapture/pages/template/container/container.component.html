@@ -19,8 +19,8 @@
     <div class="mb-4 flext bg-white rounded-0 m-0 p-0">
         <nz-list class="list_impo" [nzDataSource]="templates$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
             <ng-template #item let-item>
-                <nz-list-item class="BD-item">
-                    <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
+                <nz-list-item class="BD-item" [nzActions]="[editAction]">
+                    <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription" >
                         <ng-template #nzTitle>
                             <div nz-typography class="font-weight-bold">Name : <span nz-typography style="font-weight: 600;">{{item.name | uppercase }}</span></div>
                         </ng-template>
@@ -30,11 +30,17 @@
 
                     </nz-list-item-meta>
                 </nz-list-item>
+                <ng-template #editAction>
+                    <button nz-button class="ghost" (click)="edittemplate(item.name ,item.template)" >
+                      <i nz-icon nzType="edit" class="btns"></i>
+                    </button>
+                </ng-template>
             </ng-template>
         </nz-list>
     </div> 
   
   </div>
+
   <!-- <ng-template #moreAction>
     <button nz-button class="ghost"  (click)="viewtemplate(item.name , item.template)">
       <i nz-icon nzType="delete" class="btns"></i>

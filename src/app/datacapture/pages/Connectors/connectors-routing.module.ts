@@ -1,7 +1,7 @@
 import { ContainerComponent } from './Datalake/container/container.component';
 import { RolesGuard } from './../../../core/login/guards/roles.guard';
 import { CreateDBconnectorsComponent } from './Database/create-dbconnectors/create-dbconnectors.component';
-import { ConnectorsComponent } from './Database/connectors/connectors.component';
+import { ConnectorsComponent } from './connectors/connectors.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

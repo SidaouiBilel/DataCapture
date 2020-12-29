@@ -1,3 +1,5 @@
+import { TableTemplateComponent } from './../../../template/table-template/table-template.component';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TemplateService } from './../../../template/service/template.service';
 import { BehaviorSubject } from 'rxjs';
 import { AutouploadService } from './../../service/autoupload.service';
@@ -17,20 +19,23 @@ export class TechMappingComponent implements OnInit {
   @Output() addoutputs :EventEmitter<any>= new EventEmitter();
   @Output() next :EventEmitter<any>= new EventEmitter();
   @Output() previous :EventEmitter<any>= new EventEmitter();
-  listOftypes=[{value:"sql",text:"Database"},{value:"parquet",text:"Parquet"},{value:"csv",text:"CSV"},{value:"json",text:"JSON"}];
-  listOfSources=[{value:"Database",icon:"database"},{value:"FileSystem",icon:"folder-open"},{value:"Datalake",icon:"container"}];
+  listOftypes=[{value:"sql",text:"Database",icon:"database"},{value:"parquet",text:"Parquet"},{value:"csv",text:"CSV",icon:"file-excel"},{value:"json",text:"JSON",icon:"file-text"}];
+  listOfSources=[{value:"Database",icon:"database"},{value:"FileSystem",icon:"folder-open"},{value:"Datalake",icon:"cloud"}];
   listOfSelectedValue :any[]=[];
   listOfSelectedSources :any[]=[];
   outputype$:BehaviorSubject<boolean>=new BehaviorSubject(true);
   sectedtemplate;
   listOftemplates$:BehaviorSubject<any[]>=new BehaviorSubject([]);
-  constructor(private notif:NotificationService , private autoS:AutouploadService , private templateS :TemplateService) { }
+  templateloaded = false;
+  templateskelton = [1,2,3];
+  constructor( private ModalS:NzModalService , private notif:NotificationService , private autoS:AutouploadService , private templateS :TemplateService) { }
 
   ngOnInit() {
     if(this.dataupload.outputs.length>0){
         this.listOfSelectedValue=this.dataupload.outputs;
     }
     this.templateS.getTemplates().subscribe(res=>{
+      this.templateloaded = true;
       this.listOftemplates$.next(res);
     });
   }
@@ -73,16 +78,50 @@ export class TechMappingComponent implements OnInit {
   goToimport(){
     this.previous.emit();
   }
-  changesource($event){
-    if($event.length==1 && $event[0]=="Database"){
-      this.listOfSelectedValue=["sql"];
-      this.outputype$.next(true);
-    }else if($event.length==0){
-      this.listOfSelectedValue=[];
-      this.outputype$.next(true);
-    }else{
-      this.outputype$.next(false); 
+  changetype($event){
+    if(!this.outputype$.value){
+      let index = this.listOfSelectedValue.indexOf($event);
+      if(index > -1){
+        this.listOfSelectedValue.splice(index , 1);
+      }else{
+        this.listOfSelectedValue.push($event);
+      }     
     }
+  }
+  changesource($event){
+    let index = this.listOfSelectedSources.indexOf($event);
+    if(index > -1){
+      this.listOfSelectedSources.splice(index , 1);
+    }else{
+      this.listOfSelectedSources.push($event);
+    }
+
+    if(this.listOfSelectedSources.length > 0){
+      this.outputype$.next(false);
+    }else{
+      this.outputype$.next(true);
+      this.listOfSelectedValue = [];
+    }
+
+  }
+
+  templatechange($event){
+    this.sectedtemplate = $event;
+    console.log($event);
+  }
+  viewtemplate(title , templatedata){
+    const modal :NzModalRef = this.ModalS.create({
+      nzTitle:title,
+      nzClosable:false,
+      nzWrapClassName: 'vertical-center-modal',
+      nzWidth: 'xXL',
+      nzContent: TableTemplateComponent,
+      nzCancelText:"close",
+      nzOkDisabled:true,
+      nzComponentParams:{
+        templatedata,
+      },
+      })
   }
 
 }

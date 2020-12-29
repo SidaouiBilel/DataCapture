@@ -1,4 +1,4 @@
-import { ExtractorService } from './../../services/extractor.service';
+import { ExtractorService } from '../../services/extractor.service';
 import { AppState , selectProfile , NotificationService} from '@app/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';

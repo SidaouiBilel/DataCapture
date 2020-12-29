@@ -17,62 +17,102 @@
           </div>
       </div>
       <nz-divider class="font-weight-bold primary-color" [nzText]="'Output Datasource'" nzOrientation="left"></nz-divider>
-      
-      <div class="row w-100 d-flex flex-column align-items-center" *ngIf="!iscsv()">
-        <div class="selecttype d-flex flex-column align-items-start">
-          <span nz-text class="mb-1">Select Output template :</span>
-          <nz-select 
-                  nzMode="default"
-                  nzShowSearch 
-                  class="selecttype"
-                  nzPlaceHolder="Output Template" 
-                  (ngModelChange)="changesource($event)"
-                  [(ngModel)]="sectedtemplate"> 
-                  <nz-option *ngFor="let source of (listOftemplates$ | async); let i = index" [nzValue]="source._id" [nzLabel]="source.name">
-                  </nz-option>
-          </nz-select>
+      <div class="container">
+          <div class="row w-100 d-flex flex-column align-items-center" *ngIf="!iscsv()">
+            <div class="selecttype d-flex flex-column align-items-start">
+              <span nz-text class="mb-1">Select Output template :</span>
+              <!-- <nz-select 
+                      nzMode="default"
+                      nzShowSearch 
+                      class="selecttype"
+                      nzPlaceHolder="Output Template"
+                      [(ngModel)]="sectedtemplate"> 
+                      <nz-option *ngFor="let source of (listOftemplates$ | async); let i = index" [nzValue]="source._id" [nzLabel]="source.name">
+                      </nz-option>
+              </nz-select> -->
+              <div class="w-100 row ml-0 mr-0 mt-2" *ngIf="templateloaded">
+                <div class="col-md-6 col-lg-4  col-sm-12 p-2"  *ngFor="let template of (listOftemplates$ | async); let i = index">
+                  <div role="button" (click)="templatechange(template._id)" [class.selected]="sectedtemplate === template._id" class="d-flex flex-row align-items-center justify-content-between w-100 pl-2 template">
+                    <div class="d-flex flex-row align-items-center">
+                      <i nz-icon nzType="project" style="font-size: 1.5em;" class="mr-1"></i>
+                      <span  nz-tooltip [nzTooltipTitle]="template.name">{{template.name}}</span>
+                    </div>
+                    <button nz-button nzType="link" nzBlock style="width: auto;" (click)="viewtemplate(template.name , template.template)">Details</button>
+                  </div> 
+                </div>
+         
+              </div>
+
+              <div class="w-100 row ml-0 mr-0 mt-2" *ngIf="!templateloaded" >
+                <div class="col-md-6 col-lg-4  col-sm-12 p-2" *ngFor="let template of templateskelton">
+                  <div class="w-100 template" style="height: 49px;padding-top: 4px;padding-left: 6px;">
+                   <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 0 }"></nz-skeleton>
+                  </div>
+                 </div>
+              </div>
+
+
+            </div>
+
         </div>
+        
+        <br/>
 
-    </div>
-    
-    <br/>
+          <div class="row w-100 d-flex flex-column align-items-center">
+            <div class="selecttype d-flex flex-column align-items-start">
+              <span nz-text class="mb-1">Select Output Source :</span>
+              <!-- <nz-select nzMode="multiple" 
+                      class=" selecttype"
+                      nzPlaceHolder="Output Source" 
+                      (ngModelChange)="changesource($event)"
+                      [(ngModel)]="listOfSelectedSources"> 
+                      <nz-option *ngFor="let source of listOfSources; let i = index" [nzValue]="source.value" [nzLabel]="source.value" [nzCustomContent]="nzCustomContent">
+                        
+                          <i nz-icon [nzType]="source.icon"></i> {{source.value}}
+                        
+                      </nz-option>
+              </nz-select> -->
 
-      <div class="row w-100 d-flex flex-column align-items-center">
-        <div class="selecttype d-flex flex-column align-items-start">
-          <span nz-text class="mb-1">Select Output Source :</span>
-          <nz-select nzMode="multiple" 
-                  class=" selecttype"
-                  nzPlaceHolder="Output Source" 
-                  (ngModelChange)="changesource($event)"
-                  [(ngModel)]="listOfSelectedSources"> 
-                  <nz-option *ngFor="let source of listOfSources; let i = index" [nzValue]="source.value" [nzLabel]="source.value" [nzCustomContent]="nzCustomContent">
-                    
-                      <i nz-icon [nzType]="source.icon"></i> {{source.value}}
-                    
-                  </nz-option>
-          </nz-select>
+              <div class="w-100 row ml-0 mr-0 mt-2">
+              
+                  <div role="button" (click)="changesource(source.value)" [class.selected]="listOfSelectedSources.indexOf(source.value) > -1" class="d-flex flex-column align-items-center justify-content-center pl-2 source m-2" *ngFor="let source of listOfSources; let i = index">
+                      <i nz-icon [nzType]="source.icon" style="font-size: 2.5em;" class="mr-1 mb-2"></i>
+                      <span>{{source.value}}</span>
+                  </div> 
+              </div>
+            </div>
+
         </div>
+        
+        <br/>
 
-    </div>
-    
-    <br/>
+        <div class="row w-100 d-flex flex-column align-items-center mb-3">
+          <div class="selecttype d-flex flex-column align-items-start">   
+            <span nz-text class="mb-1">Select Output type :</span>
+              <!-- <nz-select nzMode="multiple" 
+                      class=" selecttype"
+                      nzPlaceHolder="Output type" 
+                      [nzDisabled]="outputype$ | async"
+                      [(ngModel)]="listOfSelectedValue"> 
+                      <nz-option *ngFor="let type of listOftypes; let i = index" [nzValue]="type.value" [nzLabel]="type.text"></nz-option>
+              </nz-select> -->
 
-    <div class="row w-100 d-flex flex-column align-items-center mb-3">
-      <div class="selecttype d-flex flex-column align-items-start">   
-         <span nz-text class="mb-1">Select Output type :</span>
-          <nz-select nzMode="multiple" 
-                  class=" selecttype"
-                  nzPlaceHolder="Output type" 
-                  [nzDisabled]="outputype$ | async"
-                  [(ngModel)]="listOfSelectedValue"> 
-                  <nz-option *ngFor="let type of listOftypes; let i = index" [nzValue]="type.value" [nzLabel]="type.text"></nz-option>
-          </nz-select>
+              <div class="w-100 row ml-0 mr-0 mt-2">
+                <div role="button" [class.disabled]="(outputype$ | async)" (click)="changetype(type.value)" [class.selected]="listOfSelectedValue.indexOf(type.value) > -1" class="d-flex flex-column align-items-center justify-content-center pl-2 source m-2" *ngFor="let type of listOftypes; let i = index">
+                    <!-- <i nz-icon [nzType]="source.icon" style="font-size: 2.5em;" class="mr-1 mb-2"></i> -->
+                    <i nz-icon [nzType]="type.icon ? type.icon : 'file'" nzTheme="outline" style="font-size: 2.5em;" class="mr-1 mb-2"></i>
+                    <span>{{type.text}}</span>
+                </div> 
+              </div>
+
+          </div>
+        </div>    
+        <div class="row w-100 d-flex flex-column align-items-center mt-2">
+          <button nz-button nzType="primary" nzSize="middle"
+          nzTooltipPlacement="left" (click)="Next()">Validate
+        </button>
+        </div>
       </div>
-    </div>    
-    <div class="row w-100 d-flex flex-column align-items-center mt-2">
-      <button nz-button nzType="primary" nzSize="middle"
-      nzTooltipPlacement="left" (click)="Next()">Validate
-    </button>
-    </div>
+
   </nz-spin>
 </div>

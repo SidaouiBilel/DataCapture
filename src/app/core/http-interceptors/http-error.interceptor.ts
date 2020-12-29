@@ -40,7 +40,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           console.log(window["logout"]);
           if(window["logout"]){
             window["logout"]();
-            window["logoutfromdata"]=true;
           }
         }
         // if (err instanceof HttpErrorResponse) {

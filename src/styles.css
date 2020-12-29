@@ -21,3 +21,8 @@
 .flex-box {
     flex: 1 1 auto;
 }
+
+html,
+body{
+    font-family: 'Poppins', Helvetica, sans-serif !important;
+}

@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit} from '@angular/core';
 import {NotificationService} from '@app/core';
 interface SH{
   sheet:string,
@@ -10,22 +10,72 @@ interface SH{
   templateUrl: './form-template.component.html',
   styleUrls: ['./form-template.component.css']
 })
-export class FormTemplateComponent implements OnInit {
+export class FormTemplateComponent implements OnInit , AfterViewInit   {
 
   validateForm: FormGroup;
   listoftemplates:Array<{title:string,count:number[],SHS:SH[]}>=[];
+  listoftemplatescopy:Array<{title:string,count:number[],SHS:SH[]}>=[];
   maxtags=2;
+  editdata=[];
+  templatename = "";
+  loading = false;
   constructor(private fb: FormBuilder , private notif_S:NotificationService,) { }
 
   ngOnInit() {
+    if(this.editdata.length === 0){
+      this.validateForm = this.fb.group({
+        name: [null, [Validators.required]],
+      })      
+    }else{
+      this.loading = true;
+      this.validateForm = this.fb.group({
+        name: [this.templatename, [Validators.required]],
+      });
 
-    this.validateForm = this.fb.group({
-      name: [null, [Validators.required]],
+      this.gettemplatedata();
+
+    }
+  }
+  ngAfterViewInit(){
+    setTimeout(()=>{
+    this.listoftemplates.push(...this.listoftemplatescopy);
+    this.loading = false;
+    },500);
+  }
+  gettemplatedata(){
+    this.editdata.map(el=>{
+      const control = {
+        title: el.title,
+        count:el.count,
+        SHS:el.SHS.map(el=>(
+              {
+                range: el.range,
+                sheet: el.sheet,
+              }          
+            ))
+      };
+      
+      this.validateForm.addControl(
+        el.title,
+        new FormControl(el.titlevalue, Validators.required)
+      );  
+      this.listoftemplatescopy.push(control);
+      el.SHS.map(el=>{
+          this.validateForm.addControl(
+            el.sheet,
+            new FormControl(el.sheetvalue, Validators.required)
+          );
+      
+          this.validateForm.addControl(
+            el.range,
+            new FormControl( el.rangevalue, Validators.required)
+          );
+      
+      });
 
     })
   }
   submitForm(): void {
-    // tslint:disable-next-line: forin
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
@@ -45,6 +95,7 @@ export class FormTemplateComponent implements OnInit {
         sheet: "sheet:"+id+0,
       }]
     };
+
     const index = this.listoftemplates.push(control);
     this.validateForm.addControl(
       this.listoftemplates[index - 1].SHS[0].sheet,

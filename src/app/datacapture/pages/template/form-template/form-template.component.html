@@ -1,4 +1,5 @@
-<form nz-form [formGroup]="validateForm" class="login-form customscrollY" (ngSubmit)="submitForm()" autocomplete="off">
+<nz-spin nzTip="Loading..." [nzSpinning]="loading" [nzDelay]="500">
+<form nz-form [formGroup]="validateForm" class="login-form customscrollY pr-1" (ngSubmit)="submitForm()" autocomplete="off">
 
     <nz-form-item>
       <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
@@ -24,7 +25,7 @@
             <nz-select class="roles-input"  nzMode="tags" [nzMaxMultipleCount]="maxtags" [formControlName]="SH.range" nzPlaceHolder="Range" [attr.id]="y">
               <nz-option *ngFor="let option of []" [nzLabel]="option" [nzValue]="option"></nz-option>
             </nz-select>           
-            <i nz-icon nz-tooltip [nzTooltipTitle]='"Remove sheet && rating"' nzType="minus-circle-o" class="dynamic-delete-button" role="button" (click)="removeSheet_rating(control , i , y, $event)"></i> 
+            <i nz-icon nz-tooltip [nzTooltipTitle]='"Remove sheet && range"' nzType="minus-circle-o" class="dynamic-delete-button" role="button" (click)="removeSheet_rating(control , i , y, $event)"></i> 
             
           </nz-form-item>
           <div class="plus d-flex justify-content-center mt-2">
@@ -52,10 +53,5 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-  
-  <!-- <div> ADMIN {{user.admin}} </div>
-  <ul >
-    ROLES
-    <li *ngFor="let r of user.roles">{{r | json}}  </li>
-  </ul> -->
+</nz-spin>
   

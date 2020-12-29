@@ -1,6 +1,6 @@
 import { DatalakeContainerComponent } from './datalake/datalake-container/datalake-container.component';
-import { ExtractDBComponent } from './components/extract-db/extract-db.component';
-import { ContainerComponent } from './components/container/container.component';
+import { ExtractDBComponent } from './database/extract-db/extract-db.component';
+import { ContainerComponent } from './container/container.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

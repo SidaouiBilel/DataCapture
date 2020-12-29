@@ -30,15 +30,18 @@ export class ContainerComponent implements OnInit {
     });
     }
 
-    extract_data(){
+    extract_data(edit=false , editdata=[] , templatename=""){
     const modal :NzModalRef = this.ModalS.create({
-    nzTitle:"ADD Template",
+    nzTitle:edit ?"EDIT Template" : "ADD Template",
     nzClosable:false,
     nzWrapClassName: 'vertical-center-modal',
-    nzWidth: 'xXL',
+    nzWidth: '700px',
     nzContent: FormTemplateComponent,
-    nzOkText:"Create",
-    nzComponentParams:{},
+    nzOkText:edit ?"Edit" : "Create",
+    nzComponentParams:{
+      editdata,
+      templatename
+    },
     nzOnOk:componentInstance=>{
     try {
     // modal.getInstance().nzOkLoading = true;
@@ -68,13 +71,16 @@ export class ContainerComponent implements OnInit {
       })
 
       console.log(finale_req);
-      this.service.addTemplate(finale_req).subscribe(
-        data=>{
-          this.notif_S.success("Created");
-          modal.close();
-          this.reload();
-        }
-      )
+      if(!edit){
+        this.service.addTemplate(finale_req).subscribe(
+          data=>{
+            this.notif_S.success("Created");
+            modal.close();
+            this.reload();
+          }
+        )        
+      }
+
     }else {
        this.notif_S.error('Invalid Form');
        setTimeout(() => { modal.getInstance().nzOkLoading = false; }, 1000);
@@ -115,6 +121,32 @@ export class ContainerComponent implements OnInit {
     }
     reload(){
     this.load_templates();
+    }
+    //trans template to pass it to the form
+    trans_template(template){
+      return Object.keys(template).map((el,index)=>{
+        let currentel = template[el];
+        let count = Array.isArray(currentel) ? currentel.length : 1;
+        let countarray = Array.from(Array(count).keys());
+        return {
+          title: "title:"+index,
+          titlevalue:el,
+          count:countarray,
+          SHS:(Array.isArray(currentel) ?currentel :[currentel]).map((e,i)=>(
+                {
+                  range: "range:"+index+i,
+                  rangevalue:e.range.split(':'),
+                  sheetvalue:e.sheet,
+                  sheet: "sheet:"+index+i,
+                }              
+              ))
+        
+        }
+      })
+    }
+    edittemplate(name , template){
+     let editdata = this.trans_template(template);
+     this.extract_data(true , editdata , name );
     }
 
 }

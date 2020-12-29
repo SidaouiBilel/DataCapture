@@ -1,6 +1,6 @@
 import { FomDbComponent } from './../fom-db/fom-db.component';
-import { ExtractorService } from './../../services/extractor.service';
-import { NotificationService } from './../../../../../core/notifications/notification.service';
+import { ExtractorService } from '../../services/extractor.service';
+import { NotificationService } from '../../../../../core/notifications/notification.service';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -30,14 +30,13 @@ ngOnInit() {
 
 extract_data(){
     const modal :NzModalRef = this.ModalS.create({
-    nzTitle:"ADD DataBase Connector",
+    nzTitle:"Extract Data from Database",
     nzClosable:false,
     nzWrapClassName: 'vertical-center-modal',
     nzWidth: 'xXL',
     nzContent: FomDbComponent,
     nzOkText:"Create",
     nzComponentParams:{},
-    nzStyle:{ top: '50px',marginBottom:'10px' },
     nzOnOk:componentInstance=>{
     try {
     modal.getInstance().nzOkLoading = true;

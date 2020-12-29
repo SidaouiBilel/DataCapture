@@ -57,6 +57,8 @@ export class AutoimportComponent implements OnInit {
      this.FI_S.select_file(this.selectedDomain.id,this.Profile.id , filename).subscribe(
       data=>{
         this.auto_import.emit(data);
+       },er=>{
+        this._autoimportloading.emit();
        }
      )
   }

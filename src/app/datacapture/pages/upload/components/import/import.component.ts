@@ -109,7 +109,7 @@ export class ImportComponent implements OnInit {
       this.notification.success(`${fileresponse.filename} file uploaded successfully.`);
   }
   _autoimportloading(){
-    this.autoimportloading = true;
+    this.autoimportloading = !this.autoimportloading;
   }
   cancelUpload(): void {
     this.autoimportloading=false;

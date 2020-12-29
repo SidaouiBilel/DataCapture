@@ -2,7 +2,7 @@ import { SharedModule } from './../../../shared/shared.module';
 import { ConnectorsRoutingModule } from './connectors-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConnectorsComponent } from './Database/connectors/connectors.component';
+import { ConnectorsComponent } from './connectors/connectors.component';
 import { NzPageHeaderModule , NzFormModule   , NzDividerModule , NzSelectModule } from 'ng-zorro-antd';
 import { CreateDBconnectorsComponent } from './Database/create-dbconnectors/create-dbconnectors.component';
 import { ListdbconnectorsComponent } from './Database/listdbconnectors/listdbconnectors.component';

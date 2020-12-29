@@ -45,3 +45,9 @@
 .ant-page-header-heading-sub-title{
     margin: 0 !important;
 }
+
+::ng-deep .vertical-center-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
