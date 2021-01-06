@@ -16,19 +16,19 @@ export class PipelineEditorService {
 
   constructor(private drawer: NzDrawerService) { }
 
-  getNodeClass(category){
-    return this.NODES_LIST.find(c=>c.category==category)
+  getNodeClass(type):any{
+    return this.NODES_LIST.find(c=>c.type==type)
   }
 
   editNode(node){
     return new Observable(observer=>{
-      const nodeClass = this.getNodeClass(node.category)
-      const ref = this.drawer.create({
-        nzContent: nodeClass.componenet,
+      const nodeClass = this.getNodeClass(node.type)
+      const ref: any = this.drawer.create({
+        nzContent: nodeClass.component,
       nzContentParams:{
         data: node
       },
-      nzWidth: '500px'
+      nzWidth: '1000px'
     })
 
     setTimeout(()=> {

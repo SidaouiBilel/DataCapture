@@ -5,16 +5,17 @@ const $ = go.GraphObject.make;
 
 export class PipelineNode{
 
-    // TYPE OVERARCHING CATEGORY
+    // NODE CATEGORY
     static type;
-    // TYPE SUB CATEGOGY THAT WILL BE USED TO REGISTER TEMPLATE
     static category;
+    // TYPE SUB CATEGOGY THAT WILL BE USED TO REGISTER TEMPLATE
+    static template_name;
     // DEFAULT LABEL OF THE NODE 
     static label;
     // NODE COLORATION OR THEME
     static color = 'grey';
 
-    static componenet = PipelineNodeComponent
+    static component: any = PipelineNodeComponent
 
     // PORTS USED FOR THE DATAGRID
     static ports: {id: string, spot: go.Spot}[] = []
@@ -29,34 +30,12 @@ export class PipelineNode{
         return {
             key : String(new Date().getTime()),
             label: this.label,
-            category: this.category,
+            category: this.template_name,
             type: this.type
         }
     }
 
     public static getNodeTemplate(options = {}){
-        // return $(go.Node, 'Spot',
-        // {
-        //     ...options,
-        //     contextMenu:
-        //         $('ContextMenu',
-        //         $('ContextMenuButton',
-        //             $(go.TextBlock, 'Group'),
-        //             { click: function(e, obj) { e.diagram.commandHandler.groupSelection(); } },
-        //             new go.Binding('visible', '', function(o) {
-        //             return o.diagram.selection.count > 1;
-        //             }).ofObject())
-        //         )
-        //     },
-        //     $(go.Panel, 'Auto',
-        //     $(go.Shape, 'RoundedRectangle', { stroke: null, fill: this.color }),
-        //     $(go.TextBlock, { margin: 8, },
-        //         new go.Binding('text', 'label'))
-        //     ),
-        //     // Ports
-        //     ...this.makePorts(),
-        // );
-         
         return $(go.Node, 'Spot',
                     {...options},
                     $(go.Panel, "Horizontal",

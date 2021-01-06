@@ -1,0 +1,22 @@
+<p nz-typography nzEditable [(nzContent)]="data.label"></p>
+
+
+<input class="mb-2" nzPlaceHolder="Connection String" type="text" nz-input [(ngModel)]='data.conn_string'>
+
+<nz-select nzPlaceHolder="Container" class="w-100 mb-2" [(ngModel)]="data.container" (nzOpenChange)='onConatinersOpen()'>
+    <nz-option *ngFor='let o of containers$|async' [nzValue]="o" [nzLabel]="o"></nz-option>
+    <nz-option [nzValue]="data.container" [nzLabel]="data.container"></nz-option>
+</nz-select>
+
+<nz-select nzPlaceHolder="Blob" class="w-100 mb-2" [(ngModel)]="data.blob" (nzOpenChange)='onBlobOpen()'>
+    <nz-option *ngFor='let o of blobs$|async' [nzValue]="o" [nzLabel]="o"></nz-option>
+    <nz-option [nzValue]="data.blob" [nzLabel]="data.blob"></nz-option>
+</nz-select>
+
+<!-- <input class="mb-2" type="text" nz-input [(ngModel)]='data.conn_string'> -->
+
+<div class="button-spacing">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button (click)='cancel()'>Test Connection</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+</div>

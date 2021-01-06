@@ -9,7 +9,7 @@ export const environment = {
   production: false,
   test: false,
   // import: 'http://localhost:5000/import/',
-  import: 'http://localhost:5000/import/v2/',
+  import: 'http://localhost:5001/import/v2/',
   // import: 'https://dcm-import.azurewebsites.net/import/v2/',
   cleansing: 'http://localhost:5002/check',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
@@ -22,7 +22,9 @@ export const environment = {
   upload: 'http://localhost:5004/upload/',
   // upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
-  env: 'DEV'
+  env: 'DEV',
+
+  pipeline: 'http://localhost:8080/admin/'
 };
 
 /*

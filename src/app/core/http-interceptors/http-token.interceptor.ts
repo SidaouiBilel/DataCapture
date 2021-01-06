@@ -29,7 +29,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     if (!request.headers.get('skip') && (this.token || request.headers.get('token'))) {
       request = request.clone({
         setHeaders: {
-          Authorization: this.token || request.headers.get('token')
+          'Authorization': this.token || request.headers.get('token')
         }
       });
     }

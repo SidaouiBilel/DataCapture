@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconsProviderModule } from '@app/icons-provider.module';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule, NzIconService, NzModalModule } from 'ng-zorro-antd';
 import { PageHeaderComponent } from './page-header/page-header.component';
-import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { UtilsService } from './services/utils.service';
 import { BoolIconComponent } from './bool-icon/bool-icon.component';
 import { NsAutoHeightTableDirective } from './directives/auto-table-height.directive';
@@ -25,7 +23,10 @@ import { GridCellAutoTypeComponent } from './grid-cell-auto-type/grid-cell-auto-
 import { DomainHierarchyComponent } from './domain-hierarchy/domain-hierarchy.component';
 import { DomainBreadcrumbComponent } from './domain-breadcrumb/domain-breadcrumb.component';
 import { ClearGridFilterComponent } from './clear-grid-filter/clear-grid-filter.component';
-
+import { StorageAccountComponent } from './setup/nodes/datasources/azure/storage-account/storage-account.component';
+import { BaseNodeTransformationComponent } from './setup/nodes/transformations/base-node-transformation/base-node-transformation.component';
+import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { NodePycodeComponent } from './setup/nodes/other/node-pycode/node-pycode.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -36,9 +37,7 @@ const SharedModules = [
   IconsProviderModule,
   NgZorroAntdModule,
   FormsModule,
-  // HttpClientModule,
   ReactiveFormsModule,
-  MonacoEditorModule,
   NzModalModule,
   AngularResizedEventModule,
 ];
@@ -59,6 +58,8 @@ const Components = [
   GridCellAutoTypeComponent,
   DomainHierarchyComponent,
   DomainBreadcrumbComponent,
+  StorageAccountComponent,
+  BaseNodeTransformationComponent,
   ClearGridFilterComponent
 ];
 
@@ -66,9 +67,11 @@ const Components = [
   imports: [
     ...SharedModules,
     AgGridModule,
+    MonacoEditorModule,
   ],
   declarations: [
     ...Components,
+    NodePycodeComponent,
   ],
   exports: [
     ...SharedModules,
@@ -84,7 +87,11 @@ const Components = [
     AuditComponent,
     RegexHelperDocumentationComponent,
     TagsCellRendererComponent,
-    GridCellAutoTypeComponent
+    GridCellAutoTypeComponent,
+    BaseNodeTransformationComponent,
+    StorageAccountComponent
   ]
 })
 export class SharedModule {}
+
+

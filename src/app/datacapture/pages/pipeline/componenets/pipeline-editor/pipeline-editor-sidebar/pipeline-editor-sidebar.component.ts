@@ -27,7 +27,7 @@ export class PipelineEditorSidebarComponent implements OnInit {
   ngOnInit(): void {
     this.nodesMap = {}
     for (let node of nodeClasses){
-      const arr = DefaultArray(this.nodesMap, this.labels[node.type])
+      const arr = DefaultArray(this.nodesMap, this.labels[node.category] || node.category)
       arr.push(node)
     }
   }

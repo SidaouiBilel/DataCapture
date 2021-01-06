@@ -77,7 +77,6 @@ export class PipelineEditorComponent {
   };
   
   public emitChanges(){
-    console.log('EMITTIND CGANGE')
     this.diagramNodeDataChange.emit(this.diagramNodeData)
     this.diagramLinkDataChange.emit(this.diagramLinkData)
   }

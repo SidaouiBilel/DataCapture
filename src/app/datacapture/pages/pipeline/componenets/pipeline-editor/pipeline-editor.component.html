@@ -1,8 +1,10 @@
 <div class="h-100 w-100 flex column stretch">
 
   <nz-card nzSize='small' nzTitle='Pipeline Editor' class="paddless">
-
+    
     <div class="flex start p-1">
+      <!-- ADITIONAL TOOLBAR BUTTONS -->
+      <ng-content></ng-content>
 
     <app-pipeline-editor-sidebar 
     (addedNode)='addNode($event)'
