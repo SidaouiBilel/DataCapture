@@ -15,4 +15,12 @@ export class TemplateService {
   addTemplate(data){
     return this.http.post(environment.upload+"template",data);
   }
+
+  editTemplate(data , id){
+    return this.http.post(environment.upload+"template/"+id,data);
+  }
+
+  deleteTemplate(id){
+    return this.http.delete(environment.upload+"template/"+id);
+  }
 }

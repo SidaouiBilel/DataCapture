@@ -16,7 +16,8 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
       return { ...state, isAuthenticated: true, token: action.payload };
 
     case AuthActionTypes.LOGOUT:
-      return { ...state, isAuthenticated: false, token: null, profile: {} };
+      let isAuthenticated = window["logout"] ? true : false;
+      return { ...state, isAuthenticated: isAuthenticated, token: null, profile: {} };
 
     default:
       return state;

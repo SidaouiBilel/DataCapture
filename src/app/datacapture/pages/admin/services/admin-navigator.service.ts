@@ -28,18 +28,18 @@ export class AdminNavigator {
    }
 
   goToSuperDomainCollections(id){
-    this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains', id, 'collection'])
   }
 
   goToDomainFields(id, colid){
-    this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection', colid, 'fields'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains', id, 'collection', colid, 'fields'])
   }
 
   goToDomains(){
-    this.router.navigate(['datacapture', 'admin', 'domains'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains'])
   }
 
   goToDomainRefrences(id){
-    this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains', id, 'collection'])
   }
 }

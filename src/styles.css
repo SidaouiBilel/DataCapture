@@ -26,3 +26,6 @@ html,
 body{
     font-family: 'Poppins', Helvetica, sans-serif !important;
 }
+.cursorpointer{
+    cursor: pointer;
+}

@@ -15,6 +15,7 @@ import { CustomTooltipComponent } from './custom-tooltip/custom-tooltip.componen
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { EnvTagComponent } from './env-tag/env-tag.component';
 import { AuditComponent } from './audit/audit.component';
+import { SimpleFilterPipe } from './simple-filter/simple-filter.pipe';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -50,10 +51,12 @@ const Components = [
   ],
   declarations: [
     ...Components,
+    SimpleFilterPipe,
   ],
   exports: [
     ...SharedModules,
-    ...Components
+    ...Components,
+    SimpleFilterPipe
   ],
   providers: [
     UtilsService

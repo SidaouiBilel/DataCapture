@@ -1,8 +1,9 @@
+import { CloneTemplateComponent } from './../clone-template/clone-template.component';
 import { TableTemplateComponent } from './../table-template/table-template.component';
 import { TemplateService } from './../service/template.service';
 import { FormTemplateComponent } from './../form-template/form-template.component';
 import { BehaviorSubject } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AppState, selectProfile  , NotificationService} from '@app/core';
 import { Store } from '@ngrx/store';
@@ -21,16 +22,15 @@ export class ContainerComponent implements OnInit {
 
     templates$ :BehaviorSubject<any[]>=new BehaviorSubject([]);
     Profile:any;
-    searchDE:String;
     loading=false;
+    searchTerm:string;
     ngOnInit() {
     this.store.select(selectProfile).subscribe(res=>{
     this.Profile=res;
     this.load_templates();
     });
     }
-
-    extract_data(edit=false , editdata=[] , templatename=""){
+    extract_data(edit=false , editdata=[] , templatename="" , templateid=""){
     const modal :NzModalRef = this.ModalS.create({
     nzTitle:edit ?"EDIT Template" : "ADD Template",
     nzClosable:false,
@@ -44,7 +44,7 @@ export class ContainerComponent implements OnInit {
     },
     nzOnOk:componentInstance=>{
     try {
-    // modal.getInstance().nzOkLoading = true;
+    modal.getInstance().nzOkLoading = true;
     componentInstance.submitForm();
     if (componentInstance.validateForm.valid) {
       let req=componentInstance.validateForm.value;
@@ -79,6 +79,12 @@ export class ContainerComponent implements OnInit {
             this.reload();
           }
         )        
+      }else{
+        this.service.editTemplate(finale_req , templateid).subscribe(res=>{
+          this.notif_S.success(finale_req.name+" Updated Successfully");
+          modal.close();
+          this.reload();
+        })
       }
 
     }else {
@@ -87,7 +93,6 @@ export class ContainerComponent implements OnInit {
     }
     return false;
     } catch (error) {
-
       this.notif_S.error('Invalid Form');
       setTimeout(() => { modal.getInstance().nzOkLoading = false; }, 1000);
     }
@@ -96,7 +101,7 @@ export class ContainerComponent implements OnInit {
     }
 
     viewtemplate(title , templatedata){
-      const modal :NzModalRef = this.ModalS.create({
+      this.ModalS.create({
         nzTitle:title,
         nzClosable:false,
         nzWrapClassName: 'vertical-center-modal',
@@ -106,8 +111,8 @@ export class ContainerComponent implements OnInit {
         nzOkDisabled:true,
         nzComponentParams:{
           templatedata,
-        },
-        })
+        }
+      })
     }
 
 
@@ -144,9 +149,60 @@ export class ContainerComponent implements OnInit {
         }
       })
     }
-    edittemplate(name , template){
-     let editdata = this.trans_template(template);
-     this.extract_data(true , editdata , name );
+    edittemplate(template){
+     let editdata = this.trans_template(template.template);
+     this.extract_data(true , editdata , template.name , template._id );
+    }
+    deletetemplate(id){
+      this.loading=true;
+      this.service.deleteTemplate(id).subscribe(res=>{
+        console.log(res);
+        this.reload();
+      } , er=>{
+        this.loading=false;
+      })
+    }
+
+    clonedtemplatename="";
+    clonetemplate(clonemodaltitle:TemplateRef<{}> , name , template) :void{
+      this.clonedtemplatename = name;
+      let modal:NzModalRef = this.ModalS.create({
+        nzTitle:clonemodaltitle,
+        nzClosable:false,
+        nzWrapClassName: 'vertical-center-modal',
+        nzWidth: 'xXL',
+        nzContent: CloneTemplateComponent,
+        nzCancelText:"close",
+        nzOkText:"Clone",
+        // nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+        nzOnOk:(componentInstance)=>{
+          try{
+            modal.getInstance().nzOkLoading = true;
+            componentInstance.submitForm();
+            if(componentInstance.validateForm.valid){
+              let Newname=componentInstance.validateForm.value.name;
+              let req={
+                "name":Newname,
+                "template":template,
+                "user":this.Profile.id,
+              }
+
+              this.service.addTemplate(req).subscribe(res=>{
+                modal.close();
+                this.reload();
+              })
+              // console.log(req);
+              // modal.close();
+            }else{
+              modal.getInstance().nzOkLoading = false;
+            }
+          }catch(er){
+            console.log(er);
+          }
+          return false;
+
+        }
+        })
     }
 
 }

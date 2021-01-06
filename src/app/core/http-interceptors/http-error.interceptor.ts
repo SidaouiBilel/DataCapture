@@ -1,3 +1,4 @@
+import { ActionAuthLogout } from './../auth/auth.actions';
 import { Injectable, Injector, ErrorHandler } from '@angular/core';
 import {
   HttpEvent,
@@ -37,15 +38,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       tap(null, (err: any) => {
         console.log(err);
         if(err.status === 401){
-          console.log(window["logout"]);
-          if(window["logout"]){
-            window["logout"]();
-          }
+            this.store.dispatch(new ActionAuthLogout());
+        } else if (err instanceof HttpErrorResponse) {
+          const appErrorHandler = this.injector.get(ErrorHandler);
+          appErrorHandler.handleError(err);
         }
-        // if (err instanceof HttpErrorResponse) {
-        //   const appErrorHandler = this.injector.get(ErrorHandler);
-        //   appErrorHandler.handleError(err);
-        // }
       })
     );
   }

@@ -1,0 +1,10 @@
+<form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" class="clone_template" (ngSubmit)="submitForm()" autocomplete="off">
+
+    <nz-form-item>
+        <nz-form-label  nzRequired nzFor="name" class="m-0">Template Name</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter Template name!">
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+    </nz-form-item>
+
+</form>

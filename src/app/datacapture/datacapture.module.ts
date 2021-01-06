@@ -8,6 +8,7 @@ import { UserBarComponent } from './layout/components/user-bar/user-bar.componen
 import { FormTemplateComponent } from './pages/template/form-template/form-template.component';
 import { ContainerComponent } from './pages/template/container/container.component';
 import { TableTemplateComponent } from './pages/template/table-template/table-template.component';
+import { CloneTemplateComponent } from './pages/template/clone-template/clone-template.component';
 
 
 const components = [
@@ -22,7 +23,7 @@ const components = [
     DataCaptureRoutingModule,
     SharedModule,
   ],
-  declarations: [...components, FormTemplateComponent, ContainerComponent, TableTemplateComponent ],
+  declarations: [...components, FormTemplateComponent, ContainerComponent, TableTemplateComponent, CloneTemplateComponent ],
   exports: [
     LayoutContainer
   ],
@@ -30,7 +31,8 @@ const components = [
   ],
   entryComponents: [
     FormTemplateComponent,
-    TableTemplateComponent
+    TableTemplateComponent,
+    CloneTemplateComponent
   ]
 })
 export class DataCaptureModule {}

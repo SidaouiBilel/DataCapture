@@ -139,11 +139,14 @@ export class LayoutContainer implements OnInit {
     this.profile$.subscribe(
       res=>{
         if(res && res.id){
-          this.service.get_user_data_link(res.id).subscribe(
-            data=>{
-              this.url_data=data["url"];
-            }
-          )          
+          if(this.url_data.trim() == ""){
+            this.service.get_user_data_link(res.id).subscribe(
+              data=>{
+                this.url_data=data["url"];
+              }
+            )              
+          }
+       
         }
       })
   }
@@ -163,17 +166,24 @@ export class LayoutContainer implements OnInit {
   }
 
   checkTokenValidity(): void {
-    this.store.pipe(select(selectToken)).subscribe((token: string) => {
-      if (token) {
-        let ProfileLocalstorage = JSON.parse(localStorage.getItem("data-auth"));
-          if(window['logout'] && ProfileLocalstorage["token"] && ProfileLocalstorage["token"] != token ){
-            this.store.dispatch(new ActionAuthLogin(ProfileLocalstorage["token"]));
-            this.getuser(ProfileLocalstorage["token"]);
-          }else{
-            this.getuser(token); 
-          }
+    if(window['logout']){
+      let ProfileLocalstorage = JSON.parse(localStorage.getItem("data-auth"));
+      if( ProfileLocalstorage && ProfileLocalstorage["token"]){
+        this.store.dispatch(new ActionAuthLogin(ProfileLocalstorage["token"]));
+        this.getuser(ProfileLocalstorage["token"]);
+      }else{
+        this.logoutUser();
       }
-    });
+    }else{
+      this.store.pipe(select(selectToken)).subscribe((token: string) => {
+      if(token){
+        this.getuser(token);
+      }
+      });
+    }
+    
+         
+
   }
 
   logoutUser() {
