@@ -16,7 +16,8 @@ export class NodeTransformations extends PipelineNode{
         {id:"OUTPUT", spot:go.Spot.Right},
     ]
     static transformer: any = null
-    static component = BaseNodeTransformationComponent
+    static component = BaseNodeTransformationComponent;
+
     public static getNodeTemplate(options = {}){
         this.createShape();
 
@@ -42,7 +43,7 @@ export class NodeTransformations extends PipelineNode{
                 ),
                 $(go.Panel, "Auto",
                     $(go.Shape, "RoundedBottomRectangle", { fill: this.background, stroke: null, width: this.width, height: 50 }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, alignment: go.Spot.LeftCenter, margin: 6 }),
+                    $(go.Picture, { desiredSize: new go.Size(35, 35), source: this.icon, alignment: go.Spot.LeftCenter, margin: 6 }),
                     $(go.TextBlock,
                         {
                             name: 'TEXT',
@@ -116,7 +117,10 @@ export class NodeTransformationFormatDate extends NodeTransformations{
     static icon = "assets/images/svg/date.svg";
 }
 export class NodeTransformationGroupBy extends NodeTransformations{
-    static transformer = GroupBy
+    static transformer = GroupBy;
+    static color = "#f28500";
+    static textcolor = "#f28500";
+    static icon = "assets/images/svg/group.svg";
 }
 
 export const NODE_TRANSFORMERS = [
