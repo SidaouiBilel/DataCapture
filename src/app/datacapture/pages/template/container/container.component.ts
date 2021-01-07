@@ -30,6 +30,14 @@ export class ContainerComponent implements OnInit {
     this.load_templates();
     });
     }
+    check_templates_has_name(name){
+    let listoftemplates_names = this.templates$.value.map(el=>{
+      return el.name;
+    });
+    console.log(listoftemplates_names);
+    console.log(listoftemplates_names.indexOf(name));
+    return listoftemplates_names.indexOf(name) > -1;
+    }
     extract_data(edit=false , editdata=[] , templatename="" , templateid=""){
     const modal :NzModalRef = this.ModalS.create({
     nzTitle:edit ?"EDIT Template" : "ADD Template",
@@ -37,7 +45,7 @@ export class ContainerComponent implements OnInit {
     nzWrapClassName: 'vertical-center-modal',
     nzWidth: '700px',
     nzContent: FormTemplateComponent,
-    nzOkText:edit ?"Edit" : "Create",
+    nzOkText:edit ?"Save" : "Create",
     nzComponentParams:{
       editdata,
       templatename
@@ -49,6 +57,11 @@ export class ContainerComponent implements OnInit {
     if (componentInstance.validateForm.valid) {
       let req=componentInstance.validateForm.value;
       let listoftemplates = componentInstance.listoftemplates;
+      if(!edit && this.check_templates_has_name(req.name)){
+        modal.getInstance().nzOkLoading = false;
+        this.notif_S.error("Template Name already exist");
+        return false;
+      }
 
       
       let finale_req={
@@ -74,7 +87,7 @@ export class ContainerComponent implements OnInit {
       if(!edit){
         this.service.addTemplate(finale_req).subscribe(
           data=>{
-            this.notif_S.success("Created");
+            this.notif_S.success(finale_req.name+"Created Successfully");
             modal.close();
             this.reload();
           }
@@ -157,6 +170,7 @@ export class ContainerComponent implements OnInit {
       this.loading=true;
       this.service.deleteTemplate(id).subscribe(res=>{
         console.log(res);
+        this.notif_S.success("Template Deleted Successfully");
         this.reload();
       } , er=>{
         this.loading=false;
@@ -180,6 +194,10 @@ export class ContainerComponent implements OnInit {
             modal.getInstance().nzOkLoading = true;
             componentInstance.submitForm();
             if(componentInstance.validateForm.valid){
+              if(this.check_templates_has_name(componentInstance.validateForm.value.name)){
+                modal.getInstance().nzOkLoading = false;
+                this.notif_S.error("Template Name already exist");
+              }else{
               let Newname=componentInstance.validateForm.value.name;
               let req={
                 "name":Newname,
@@ -189,10 +207,13 @@ export class ContainerComponent implements OnInit {
 
               this.service.addTemplate(req).subscribe(res=>{
                 modal.close();
+                this.notif_S.success("Template Cloned Successfully");
                 this.reload();
               })
               // console.log(req);
               // modal.close();
+              }
+              
             }else{
               modal.getInstance().nzOkLoading = false;
             }

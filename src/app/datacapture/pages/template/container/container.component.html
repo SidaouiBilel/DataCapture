@@ -30,7 +30,7 @@
                 <nz-list-item class="BD-item" [nzActions]="[editAction  , cloneaction , deleteaction]">
                     <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription" >
                         <ng-template #nzTitle>
-                            <div nz-typography class="font-weight-bold">Name : <span nz-typography style="font-weight: 600;">{{item.name | uppercase }}</span></div>
+                            <div nz-typography class="font-weight-bold">Name : <span nz-typography style="font-weight: 600;">{{item.name}}</span></div>
                         </ng-template>
                         <ng-template #nzDescription>
                             <nz-tag [nzColor]="'#108ee9'"  (click)="viewtemplate(item.name , item.template)" role="button" class="cursorpointer">
