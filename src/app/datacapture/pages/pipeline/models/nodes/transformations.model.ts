@@ -12,8 +12,8 @@ export class NodeTransformations extends PipelineNode{
     static background = 'white';
     static label = 'Generic Transformation'
     static ports = [
-        {id:"INPUT", spot:go.Spot.Left},
-        {id:"OUTPUT", spot:go.Spot.Right},
+        {id:"INPUT", spot:go.Spot.LeftCenter},
+        {id:"OUTPUT", spot:go.Spot.RightCenter},
     ]
     static transformer: any = null
     static component = BaseNodeTransformationComponent;
@@ -47,7 +47,7 @@ export class NodeTransformations extends PipelineNode{
                     $(go.TextBlock,
                         {
                             name: 'TEXT',
-                            margin: 45,
+                            margin: 50,
                             font: this.fontFamily,
                             stroke: this.textcolor, maxSize: new go.Size(130, NaN),
                             alignment: go.Spot.LeftCenter
@@ -56,7 +56,7 @@ export class NodeTransformations extends PipelineNode{
                     ),
                 )
             ),
-            // ...this.makePorts()
+            ...this.makePorts()
         )
     }
 }

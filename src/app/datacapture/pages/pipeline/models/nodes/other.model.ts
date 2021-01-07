@@ -10,11 +10,12 @@ export class NodeConcat extends PipelineNode{
     static type = 'concat'
     static category = 'OTHER'
     static template_name = 'CONCAT'
-    static color = 'green'
+    static color = 'black'
+    static icon = 'assets/images/svg/concat.svg';
     static label = 'Concat'
     static ports = [
         {id:"INPUT",spot:go.Spot.TopLeft},
-        {id:"CONCAT",spot:go.Spot.BottomLeft},
+        {id:"CONCAT",spot:go.Spot.LeftCenter},
         {id:"OUTPUT",spot:go.Spot.Right},
     ]
     static component = BaseNodeTransformationComponent
@@ -22,17 +23,23 @@ export class NodeConcat extends PipelineNode{
     public static getNodeTemplate(options = {}){
 
         return $(go.Node, 'Spot',
-                    {...options},
-                    // new go.Binding("location", "Location", go.Point.parse).makeTwoWay(go.Point.stringify),
-                    // new go.Binding("location", "loc").makeTwoWay(),
-                    $(go.Panel, "Vertical",
-                    $(go.Panel, "Auto",
-                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                            $(go.Picture, { desiredSize: new go.Size(40, 40), source: "assets/outline/account-book.svg" }),
-                        )
-                    ),
-                    ...this.makePorts()
-                )
+            {...options},
+            $(go.Panel, "Vertical",
+                $(go.Picture, { desiredSize: new go.Size(40, 40), source: this.icon}),
+                $(go.TextBlock,
+                    {
+                        name: 'TEXT',
+                        font: this.fontFamily,
+                        stroke: this.color,
+                        maxSize: new go.Size(130, NaN),
+                        alignment: go.Spot.BottomCenter,
+                        margin: 14
+                    },
+                    new go.Binding("text", "label")
+                ),
+            ),
+            ...this.makePorts()
+        )
     }
 }
 
@@ -40,43 +47,73 @@ export class NodeJoin extends PipelineNode{
     static type = 'join'
     static category = 'OTHER'
     static template_name = 'JOIN'
-    static color = 'greenyellow'
+    static color = '#000';
+    static icon = 'assets/images/svg/join.svg';
     static label = 'Join'
     static ports = [
-        {id:"INPUT",spot:go.Spot.Left},
-        {id:"JOIN",spot:go.Spot.BottomLeft},
-        {id:"OUTPUT",spot:go.Spot.Right},
+        {id:"INPUT",spot:go.Spot.TopLeft},
+        {id:"JOIN",spot:go.Spot.LeftCenter},
+        {id:"OUTPUT",spot:go.Spot.RightCenter},
     ]
-    static component = BaseNodeTransformationComponent
+    static component = BaseNodeTransformationComponent;
+    public static getNodeTemplate(options = {}){
+
+        return $(go.Node, 'Spot',
+            {...options},
+            $(go.Panel, "Vertical",
+                $(go.Picture, { desiredSize: new go.Size(40, 40), source: this.icon}),
+                $(go.TextBlock,
+                    {
+                        name: 'TEXT',
+                        font: this.fontFamily,
+                        stroke: this.color,
+                        maxSize: new go.Size(130, NaN),
+                        alignment: go.Spot.BottomCenter,
+                        margin: 14
+                    },
+                    new go.Binding("text", "label")
+                ),
+            ),
+            ...this.makePorts()
+        )
+    }
 }
 
 export class NodePycode extends PipelineNode{
     static type = 'pycode'
     static category = 'OTHER'
     static template_name = 'PYCODE'
-    static color = 'red'
+    static color = 'black';
+    static icon = 'assets/images/svg/python.svg';
     static label = 'Pycode'
     static ports = [
         {id:"INPUT",spot:go.Spot.Left},
         {id:"OUTPUT",spot:go.Spot.Right},
-    ]
+    ];
+
+    static component = NodePycodeComponent;
+
     public static getNodeTemplate(options = {}){
 
         return $(go.Node, 'Spot',
-                    {...options},
-                    // new go.Binding("location", "Location", go.Point.parse).makeTwoWay(go.Point.stringify),
-                    // new go.Binding("location", "loc").makeTwoWay(),
-                    $(go.Panel, "Vertical",
-                    $(go.Panel, "Auto",
-                    $(go.Shape, "Circle", { fill: this.color, stroke: null }),
-                            $(go.Picture, { desiredSize: new go.Size(40, 40), source: "assets/images/svg/python.svg" }),
-                        )
-                    ),
-                    ...this.makePorts()
-                )
+            {...options},
+            $(go.Panel, "Vertical",
+                $(go.Picture, { desiredSize: new go.Size(40, 40), source: this.icon}),
+                $(go.TextBlock,
+                    {
+                        name: 'TEXT',
+                        font: this.fontFamily,
+                        stroke: this.color,
+                        maxSize: new go.Size(130, NaN),
+                        alignment: go.Spot.BottomCenter,
+                        margin: 14
+                    },
+                    new go.Binding("text", "label")
+                ),
+            ),
+            ...this.makePorts()
+        )
     }
-
-    static component = NodePycodeComponent
 }
 
 export const NODE_OTHERS = [

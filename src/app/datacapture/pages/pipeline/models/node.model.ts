@@ -74,12 +74,17 @@ export class PipelineNode{
     }
 
     public static makePorts() {
-        return this.ports.map((p)=>$(go.Shape, 'Circle',
+        return this.ports.map((p)=>$(go.Shape, 'Rectangle',
         {
             opacity: 1,
-            fill: "white", strokeWidth: 1, stroke:"grey", desiredSize: new go.Size(15,15),
-            portId: p.id, alignment: p.spot,
-            fromLinkable: true, toLinkable: true
+            fill: "#488e50",
+            strokeWidth: 1,
+            stroke:"grey",
+            desiredSize: new go.Size(8,8),
+            portId: p.id, 
+            alignment: p.spot,
+            fromLinkable: true,
+            toLinkable: true
         })) 
     }
 
