@@ -7,7 +7,7 @@ export class NodeDatasink extends PipelineNode{
     static type = 'DATASINK'
     static category = 'DATASINK'
     static template_name = 'DATASINK'
-    static color = 'red'
+    static color = 'green'
     static icon = 'assets/images/svg/sync.svg'
     static label = 'Generic Datasink'
     static ports = [{id:"INPUT",spot:go.Spot.LeftCenter}]
@@ -16,12 +16,12 @@ export class NodeDatasink extends PipelineNode{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
-            new go.Binding("location", "loc", go.Point.parse),
+            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
                     $(go.Panel, "Auto",
-                        $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
-                        $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
+                        $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
+                        $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
                     ),
                 ),
                 // $(go.TextBlock,
