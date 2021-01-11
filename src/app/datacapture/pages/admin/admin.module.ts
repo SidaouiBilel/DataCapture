@@ -17,7 +17,7 @@ import { CollectionDetailsComponent } from './pages/collection-details/collectio
 import { CollectionCardComponent } from './componenets/collection-card/collection-card.component';
 import { CollectionEditor } from './services/collection-editor.service';
 import { TreePipe } from './pipes/tree.pipe';
-import { MetaComponent } from './componenets/meta/meta.component';
+// import { MetaComponent } from './componenets/meta/meta.component';
 import { SimpleFilterPipe } from './pipes/simple-filter.pipe';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -56,7 +56,7 @@ import { GlobalReferenceDataComponent } from './pages/global-reference-data/glob
     CollectionDetailsComponent,
     CollectionCardComponent,
     TreePipe,
-    MetaComponent,
+    // MetaComponent,
     SimpleFilterPipe,
     DisplayChangerComponent,
     FieldInputComponent,

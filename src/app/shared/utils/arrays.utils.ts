@@ -62,6 +62,17 @@ export function DefaultArray(obj, key) {
   return obj[key] 
 }
 
+export function ToMap(array, keyFn, valueFn){
+  const m = {}
+
+  for (const ele of array) {
+    const key = keyFn(ele)
+    const value = valueFn(ele)
+    m[key]=value
+  }
+
+  return m
+}
 
 
 

@@ -15,16 +15,16 @@ export const environment = {
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   // mapping: 'http://localhost:5001/mapping',
   cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
-  transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-  // transform: 'http://localhost:5001/transfo/',
-  admin: 'https://dcm-admin.azurewebsites.net/',
-  // admin: 'http://localhost:5000/',
-  // upload: 'http://localhost:5004/upload/',
-  upload: 'https://dcm-upload.azurewebsites.net/upload/',
+  // transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
+  transform: 'http://localhost:5001/transfo/',
+  // admin: 'https://dcm-admin.azurewebsites.net/',
+  admin: 'http://localhost:5000/',
+  upload: 'http://localhost:5004/upload/',
+  // upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
   env: 'DEV',
 
-  pipeline: 'http://localhost:8080/admin/'
+  pipeline: 'http://localhost:5005/admin/'
 };
 
 /*
