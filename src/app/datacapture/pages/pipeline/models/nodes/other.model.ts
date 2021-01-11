@@ -14,8 +14,8 @@ export class NodeConcat extends PipelineNode{
     static color = 'orange';
     static label = 'Concat'
     static ports = [
-        {id:"INPUT",spot:go.Spot.TopLeft},
-        {id:"CONCAT",spot:go.Spot.LeftCenter},
+        {id:"INPUT",spot:new go.Spot(0.1,0.2)},
+        {id:"CONCAT",spot: new go.Spot(0.1,0.8)},
         {id:"OUTPUT",spot:go.Spot.Right},
     ]
     static component = BaseNodeTransformationComponent

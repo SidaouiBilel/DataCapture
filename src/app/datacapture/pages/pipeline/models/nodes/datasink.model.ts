@@ -18,12 +18,23 @@ export class NodeDatasink extends PipelineNode{
             {...options},
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
-                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
-                    $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
-                )
+                    $(go.Panel, "Auto",
+                        $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
+                        $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
+                    ),
+                ),
+                // $(go.TextBlock,
+                //     {
+                //         name: this.label,
+                //         margin: 6, font: "12px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB'",
+                //         stroke: "black", maxSize: new go.Size(130, NaN),
+                //         alignment: go.Spot.Center
+                //     },
+                //     new go.Binding("text", "label")
+                // ),
             ),
             { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts()
+            ...this.makePorts(),
         )
     }
 }
