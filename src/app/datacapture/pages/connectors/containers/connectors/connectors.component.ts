@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ToMap } from '@app/shared/utils/arrays.utils';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { CONNECTOR_TYPES } from '../../models/connectors.model';
 import { ConnectorsUtilsService } from '../../services/connectors-utils.service';
 import { ConnectorsService } from '../../services/connectors.service';
 
@@ -12,9 +16,34 @@ export class ConnectorsComponent implements OnInit {
   constructor(private service:ConnectorsService, public utils: ConnectorsUtilsService) { }
 
   ngOnInit(): void {
+    this.loadData()
   }
 
   loadData(){
-
+    this.list$ = this.service.getAll().pipe(take(1))
   }
+  
+  searchTerm = ''
+
+  list$ 
+
+  addConnector(){
+    this.utils.addConnector().subscribe(()=>{
+      this.loadData()
+    })
+  }
+
+  editConnector(conn){
+    this.utils.openSetup(conn).subscribe(()=>{
+      this.loadData()
+    })
+  }
+
+  deleteConnector(conn){
+    this.utils.tryToDelete(conn).subscribe(()=>{
+      this.loadData()
+    })
+  }
+
+  typeLabels = ToMap(CONNECTOR_TYPES, (e)=>e.type, (e)=>e.label)
 }

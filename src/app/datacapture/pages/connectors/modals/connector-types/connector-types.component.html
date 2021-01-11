@@ -10,7 +10,7 @@
 <div nz-row nzType='flex' nzAlign='stretch'>
   <div nz-col class="gutter-row" [nzSpan]="8" *ngFor="let t of types | keyFilter :'label': searchTerm">
     <div class="m-1">
-        <button nz-button nzBlock  style="min-height: 100px;">
+        <button (click)='onSelectType(t.type)' nz-button nzBlock  style="min-height: 100px;">
             <div class="flex column">
                 <i style="font-size: 34px;" nz-icon nzType='copy' nzTheme='twotone'></i>
                 <i class="mt-2">{{t.label}}</i>

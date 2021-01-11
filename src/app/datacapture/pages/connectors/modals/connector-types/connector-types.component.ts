@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalRef } from 'ng-zorro-antd';
+import { CONNECTOR_TYPES } from '../../models/connectors.model';
 
 @Component({
   selector: 'app-connector-types',
@@ -7,18 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConnectorTypesComponent implements OnInit {
 
-  constructor() { }
+  constructor(public modal:NzModalRef) { }
 
   ngOnInit(): void {
   }
 
   searchTerm = ''
   
-  types = [
-    {type:'sqlserver', label:'SQL Server'},
-    {type:'postgres', label:'PostgresSQL'},
-    {type:'azure_blob_storage', label:'Azure Blob Storage'},
-    {type:'amazon_storage', label:'AWS S3'},
-  ]
+  types = CONNECTOR_TYPES
 
+  onSelectType(type){
+    this.modal.close(type)
+  }
+  
 }
