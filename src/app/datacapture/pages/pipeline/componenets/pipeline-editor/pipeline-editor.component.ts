@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PipelineEditorService } from '../../services/pipeline-editor.service';
 import { DataSyncService, DiagramComponent } from 'gojs-angular';
 import * as go from 'gojs';
@@ -10,7 +10,7 @@ import { generateNodesTemplateMap } from '../../models/factories/node-templates.
   templateUrl: './pipeline-editor.component.html',
   styleUrls: ['./pipeline-editor.component.css']
 })
-export class PipelineEditorComponent {
+export class PipelineEditorComponent implements AfterViewInit{
 
   constructor(public editor: PipelineEditorService, private cdr: ChangeDetectorRef) { }
 
@@ -21,7 +21,15 @@ export class PipelineEditorComponent {
   @Output() diagramNodeDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
   @Output() diagramLinkDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
 
-  public onDoubleClicked = new EventEmitter<void>()
+  public onDoubleClicked = new EventEmitter<void>();
+  public diagramDivClassName = 'myDiagramDiv';
+  public diagramModelData: any = { prop: 'value' };
+  public skipsDiagramUpdate = false;
+  public observedDiagram = null;
+  // currently selected node; for inspector
+  public selectedNode: go.Node | null = null;
+  // Overview Component testing
+  public oDivClassName = 'myOverviewDiv';
 
   // initialize diagram / templates
   public initDiagram = (): go.Diagram => {
@@ -44,61 +52,23 @@ export class PipelineEditorComponent {
     const that: PipelineEditorComponent = this;
     dia.nodeTemplateMap = generateNodesTemplateMap({
       doubleClick: (e, node) => {
-        that.editNode(node.data)
+        that.editNode(node.data);
       }
-    })
+    });
 
     dia.linkTemplate = $(go.Link,
       { curve: go.Link.OrientAlong },
       $(go.Shape),
-      $(go.Shape, { toArrow: "Standard" })
+      $(go.Shape, { toArrow: 'Standard' })
     );
 
     return dia;
   }
-  
-  public diagramDivClassName: string = 'myDiagramDiv';
-  public diagramModelData: any = { prop: 'value' };
-  public skipsDiagramUpdate = false;
-
-  // When the diagram model changes, update app data to reflect those changes
-  public diagramModelChange (changes: go.IncrementalData) {
-    // when setting state here, be sure to set skipsDiagramUpdate: true since GoJS already has this update
-    // (since this is a GoJS model changed listener event function)
-    // this way, we don't log an unneeded transaction in the Diagram's undoManager history
-    this.skipsDiagramUpdate = true;
-
-    this.diagramNodeData = DataSyncService.syncNodeData(changes, this.diagramNodeData);
-    this.diagramLinkData = DataSyncService.syncLinkData(changes, this.diagramLinkData);
-    this.diagramModelData = DataSyncService.syncModelData(changes, this.diagramModelData);
-
-    // EMIT CHANGES TO MODEL
-    this.emitChanges()
-  };
-  
-  public emitChanges(){
-    this.diagramNodeDataChange.emit(this.diagramNodeData)
-    this.diagramLinkDataChange.emit(this.diagramLinkData)
-  }
-
-  // Overview Component testing
-  public oDivClassName = 'myOverviewDiv';
-  public initOverview(): go.Overview {
-    const $ = go.GraphObject.make;
-    const overview = $(go.Overview);
-    return overview;
-  }
-  public observedDiagram = null;
-
-  // currently selected node; for inspector
-  public selectedNode: go.Node | null = null;
 
   public ngAfterViewInit() {
-
-    if (this.observedDiagram) return;
+    if (this.observedDiagram) {return; }
     this.observedDiagram = this.myDiagramComponent.diagram;
     this.cdr.detectChanges(); // IMPORTANT: without this, Angular will throw ExpressionChangedAfterItHasBeenCheckedError (dev mode only)
-
     const appComp: PipelineEditorComponent = this;
     // listener for inspector
     this.myDiagramComponent.diagram.addDiagramListener('ChangedSelection', function(e) {
@@ -115,6 +85,31 @@ export class PipelineEditorComponent {
 
   } // end ngAfterViewInit
 
+  // When the diagram model changes, update app data to reflect those changes
+  public diagramModelChange(changes: go.IncrementalData) {
+    // when setting state here, be sure to set skipsDiagramUpdate: true since GoJS already has this update
+    // (since this is a GoJS model changed listener event function)
+    // this way, we don't log an unneeded transaction in the Diagram's undoManager history
+    this.skipsDiagramUpdate = true;
+
+    this.diagramNodeData = DataSyncService.syncNodeData(changes, this.diagramNodeData);
+    this.diagramLinkData = DataSyncService.syncLinkData(changes, this.diagramLinkData);
+    this.diagramModelData = DataSyncService.syncModelData(changes, this.diagramModelData);
+
+    // EMIT CHANGES TO MODEL
+    this.emitChanges();
+  }
+
+  public emitChanges(){
+    this.diagramNodeDataChange.emit(this.diagramNodeData);
+    this.diagramLinkDataChange.emit(this.diagramLinkData);
+  }
+
+  public initOverview(): go.Overview {
+    const $ = go.GraphObject.make;
+    const overview = $(go.Overview);
+    return overview;
+  }
 
   public handleInspectorChange(newNodeData) {
     const key = newNodeData.key;
@@ -126,26 +121,24 @@ export class PipelineEditorComponent {
         index = i;
       }
     }
-
     // here, we set skipsDiagramUpdate to false, since GoJS does not yet have this update
     this.skipsDiagramUpdate = false;
-    const nodeCopy = _.cloneDeep(newNodeData)
+    const nodeCopy = _.cloneDeep(newNodeData);
     if (index === null) {
       this.diagramNodeData[this.diagramNodeData.length] = nodeCopy;
     } else {
       this.diagramNodeData[index] = nodeCopy;
     }
-
-    this.emitChanges()
+    this.emitChanges();
   }
 
   public addNode(node){
-    this.handleInspectorChange(node)
+    this.handleInspectorChange(node);
   }
 
-  public editNode (node) {
-    this.editor.editNode(_.cloneDeep(node)).subscribe(newNode=>{
-      this.handleInspectorChange(newNode)
-    })
-  };
+  public editNode(node) {
+    this.editor.editNode(_.cloneDeep(node)).subscribe(newNode => {
+      this.handleInspectorChange(newNode);
+    });
+  }
 }
