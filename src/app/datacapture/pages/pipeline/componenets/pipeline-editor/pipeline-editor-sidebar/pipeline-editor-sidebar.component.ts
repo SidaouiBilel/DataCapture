@@ -9,30 +9,28 @@ import { nodeClasses } from '../../../models/factories/node-templates.factory';
 })
 export class PipelineEditorSidebarComponent implements OnInit {
 
-  @Output() addedNode = new EventEmitter<any>()
-  @Output() onSave = new EventEmitter<any>()
-  @Output() onSaveAs = new EventEmitter<any>()
-  @Output() onViewTemplate = new EventEmitter<any>()
+  @Output() addedNode = new EventEmitter<any>();
+  @Output() onSave = new EventEmitter<any>();
+  @Output() onSaveAs = new EventEmitter<any>();
+  @Output() onViewTemplate = new EventEmitter<any>();
+  nodesMap;
+  labels = {
+    'DATASINK': 'Datasink',
+    'DATASOURCE': 'Datasource',
+    'TRANSFORMATION': 'Transformation',
+  };
 
   constructor() { }
 
-  nodesMap
-
-  labels = {
-    'DATASINK':'Datasink',
-    'DATASOURCE':'Datasource',
-    'TRANSFORMATION':'Transformation',
-  }
-
   ngOnInit(): void {
-    this.nodesMap = {}
-    for (let node of nodeClasses){
-      const arr = DefaultArray(this.nodesMap, this.labels[node.category] || node.category)
-      arr.push(node)
+    this.nodesMap = {};
+    for (const node of nodeClasses){
+      const arr = DefaultArray(this.nodesMap, this.labels[node.category] || node.category);
+      arr.push(node);
     }
   }
 
   addNode(nodeClass){
-    this.addedNode.emit(nodeClass.createNode())
+    this.addedNode.emit(nodeClass.createNode());
   }
 }

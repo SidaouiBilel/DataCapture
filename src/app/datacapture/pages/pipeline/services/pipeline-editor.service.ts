@@ -10,43 +10,43 @@ import { PipelineNode } from '../models/node.model';
 })
 export class PipelineEditorService {
 
-  NODES_LIST = nodeClasses
-  links = []
-  nodes = []
+  NODES_LIST = nodeClasses;
+  links = [];
+  nodes = [];
 
   constructor(private drawer: NzDrawerService) { }
 
-  getNodeClass(type):any{
-    return this.NODES_LIST.find(c=>c.type==type)
+  getNodeClass(type): any{
+    return this.NODES_LIST.find(c => c.type === type);
   }
 
   editNode(node){
-    return new Observable(observer=>{
-      const nodeClass = this.getNodeClass(node.type)
+    return new Observable(observer => {
+      const nodeClass = this.getNodeClass(node.type);
       const ref: any = this.drawer.create({
         nzContent: nodeClass.component,
-      nzContentParams:{
-        data: node
-      },
-      nzWidth: '1000px'
-    })
+        nzContentParams: {
+          data: node
+        },
+        nzWidth: '1000px'
+      });
 
-    setTimeout(()=> {
-      ref.getContentComponent().onSave.subscribe((newNode)=>{observer.next(newNode); observer.complete() ; ref.close()})
-      ref.getContentComponent().onCancel.subscribe(()=> ref.close())
-    }, 0)
-    })
+      setTimeout(() => {
+        ref.getContentComponent().onSave.subscribe((newNode) => {observer.next(newNode); observer.complete() ; ref.close(); });
+        ref.getContentComponent().onCancel.subscribe(() => ref.close());
+      }, 0);
+    });
   }
 
   viewTemplate(nodes, links){
     const ref = this.drawer.create({
       nzContent: PiplineTemplateViewerComponent,
-      nzContentParams:{
+      nzContentParams: {
         nodes,
         links
       },
       nzWidth: '90vw'
-    })
+    });
   }
 
   updateNode(node){
@@ -57,5 +57,5 @@ export class PipelineEditorService {
 
   deleteNode(node){
   }
-  
+
 }
