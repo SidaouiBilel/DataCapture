@@ -19,10 +19,9 @@ export class NodeTransformations extends PipelineNode{
     static component = BaseNodeTransformationComponent;
 
     public static getNodeTemplate(options = {}){
-        this.createShape();
-
         return $(go.Node, 'Spot',
             {...options},
+            new go.Binding("location", "loc", go.Point.parse),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
                     $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),

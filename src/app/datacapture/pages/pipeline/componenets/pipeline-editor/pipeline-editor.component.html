@@ -7,7 +7,8 @@
       <ng-content></ng-content>
 
       <app-pipeline-editor-sidebar (addedNode)='addNode($event)'
-        (onViewTemplate)='editor.viewTemplate(diagramNodeData ,diagramLinkData)'></app-pipeline-editor-sidebar>
+        (onViewTemplate)='editor.viewTemplate(diagramNodeData ,diagramLinkData)'>
+      </app-pipeline-editor-sidebar>
 
     </div>
   </nz-card>

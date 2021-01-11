@@ -23,6 +23,7 @@ export class NodeConcat extends PipelineNode{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
+            new go.Binding("location", "loc", go.Point.parse),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
                     $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
@@ -51,6 +52,7 @@ export class NodeJoin extends PipelineNode{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
+            new go.Binding("location", "loc", go.Point.parse),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
                     $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
@@ -80,6 +82,7 @@ export class NodePycode extends PipelineNode{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
+            new go.Binding("location", "loc", go.Point.parse),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
                     $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),

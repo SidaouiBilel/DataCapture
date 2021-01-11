@@ -16,6 +16,10 @@ export function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
 }
 
+export function randomPosition(max: number) {
+  return Math.floor(Math.random() * (max) + 1).toString();
+}
+
 export function isInDateFormat(str) {
   const NUMERIC_REGEXP = /[\d]{4}-[\d]{2}-[\d]{2}/;
   return String(str).match(NUMERIC_REGEXP);

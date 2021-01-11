@@ -16,6 +16,7 @@ export class NodeDatasink extends PipelineNode{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
+            new go.Binding("location", "loc", go.Point.parse),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
                     $(go.Panel, "Auto",
