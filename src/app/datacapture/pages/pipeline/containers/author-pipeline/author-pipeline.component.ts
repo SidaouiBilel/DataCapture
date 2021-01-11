@@ -36,12 +36,12 @@ export class AuthorPipelineComponent implements OnInit {
   }
 
   onDiagramNodeDataChange(nodes){
-    console.log('nodes', nodes);
+    // console.log('nodes', nodes);
     this.store.dispatch(new PipelineEditNodes(nodes));
   }
 
   onDiagramLinkDataChange(links){
-    console.log('links', links);
+    // console.log('links', links);
     this.store.dispatch(new PipelineEditLinks(links));
   }
 
