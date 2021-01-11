@@ -1,0 +1,29 @@
+<div class="page-container">
+
+
+    <div class="flex column stretch">
+        <div>
+            <nz-page-header class="site-page-header" [nzTitle]="pageTitle" nzSubtitle="Manage Application Connectors"></nz-page-header>
+            <ng-template #pageTitle><i class="mr-2" nz-icon nzType="api" nzTheme="outline"></i>Connectors</ng-template>
+        </div>
+    </div>
+
+    <div class="fill">
+
+        <div class="flex between">
+            <div class="button-spacing mb-2">
+                <button nz-button class="ghost" (click)='utils.addConnector()'><i nz-icon nzType='plus'></i>Add Connector</button>
+                <button nz-button class="ghost" (click)='loadData()'><i nz-icon nzType='reload'></i></button>      
+            </div>
+            <div class="fill flex-scroll"></div>
+        </div>
+    
+
+    </div>
+  </div>
+
+  
+
+
+
+

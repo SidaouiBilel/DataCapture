@@ -53,6 +53,10 @@
                 <i nz-icon nzType="font-size"></i>
                 <span>References</span>
               </li>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item [nzSelected]="isPrimaryPage('connectors')" [routerLink]="['/datacapture/admin/connectors']">
+                <i nz-icon nzType="api"></i>
+                <span>Connectors</span>
+              </li>
             </ul>
           </li>
 

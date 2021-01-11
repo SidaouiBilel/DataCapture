@@ -1,0 +1,24 @@
+<h5>Select a Connector Type</h5>
+
+<!-- | keyFilter :'name': searchTerm -->
+<nz-input-group class="m-1" [nzSuffix]="suffixIconSearch">
+  <input type="text" [(ngModel)]="searchTerm" nz-input placeholder="Search" />
+</nz-input-group>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+<div nz-row nzType='flex' nzAlign='stretch'>
+  <div nz-col class="gutter-row" [nzSpan]="8" *ngFor="let t of types | keyFilter :'label': searchTerm">
+    <div class="m-1">
+        <button nz-button nzBlock  style="min-height: 100px;">
+            <div class="flex column">
+                <i style="font-size: 34px;" nz-icon nzType='copy' nzTheme='twotone'></i>
+                <i class="mt-2">{{t.label}}</i>
+            </div>
+        </button>
+    </div>
+  </div>
+</div>
+
+
+<div *nzModalFooter></div>
