@@ -13,7 +13,7 @@ export class PipelineNode{
     // DEFAULT LABEL OF THE NODE
     static label;
     // NODE COLORATION OR THEME
-    static color = 'grey';
+    static color = '#c8c811';
     static background = 'white';
     static textcolor = 'black';
     static icon = '';
@@ -74,13 +74,13 @@ export class PipelineNode{
     }
 
     public static makePorts() {
-        return this.ports.map((p)=>$(go.Shape, 'Rectangle',
+        return this.ports.map((p)=>$(go.Shape, 'Circle',
         {
             opacity: 1,
-            fill: "#488e50",
+            fill: "black",
             strokeWidth: 1,
             stroke:"grey",
-            desiredSize: new go.Size(8,8),
+            desiredSize: new go.Size(4,4),
             portId: p.id, 
             alignment: p.spot,
             fromLinkable: true,

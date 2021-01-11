@@ -10,8 +10,8 @@ export class NodeConcat extends PipelineNode{
     static type = 'concat'
     static category = 'OTHER'
     static template_name = 'CONCAT'
-    static color = 'black'
     static icon = 'assets/images/svg/concat.svg';
+    static color = 'orange';
     static label = 'Concat'
     static ports = [
         {id:"INPUT",spot:go.Spot.TopLeft},
@@ -21,23 +21,15 @@ export class NodeConcat extends PipelineNode{
     static component = BaseNodeTransformationComponent
 
     public static getNodeTemplate(options = {}){
-
         return $(go.Node, 'Spot',
             {...options},
             $(go.Panel, "Vertical",
-                $(go.Picture, { desiredSize: new go.Size(40, 40), source: this.icon}),
-                $(go.TextBlock,
-                    {
-                        name: 'TEXT',
-                        font: this.fontFamily,
-                        stroke: this.color,
-                        maxSize: new go.Size(130, NaN),
-                        alignment: go.Spot.BottomCenter,
-                        margin: 14
-                    },
-                    new go.Binding("text", "label")
-                ),
+                $(go.Panel, "Auto",
+                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
+                    $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
+                )
             ),
+            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
             ...this.makePorts()
         )
     }
@@ -46,9 +38,9 @@ export class NodeConcat extends PipelineNode{
 export class NodeJoin extends PipelineNode{
     static type = 'join'
     static category = 'OTHER'
-    static template_name = 'JOIN'
-    static color = '#000';
+    static template_name = 'JOIN';
     static icon = 'assets/images/svg/join.svg';
+    static color = 'orange';
     static label = 'Join'
     static ports = [
         {id:"INPUT",spot:go.Spot.TopLeft},
@@ -57,34 +49,26 @@ export class NodeJoin extends PipelineNode{
     ]
     static component = BaseNodeTransformationComponent;
     public static getNodeTemplate(options = {}){
-
         return $(go.Node, 'Spot',
             {...options},
             $(go.Panel, "Vertical",
-                $(go.Picture, { desiredSize: new go.Size(40, 40), source: this.icon}),
-                $(go.TextBlock,
-                    {
-                        name: 'TEXT',
-                        font: this.fontFamily,
-                        stroke: this.color,
-                        maxSize: new go.Size(130, NaN),
-                        alignment: go.Spot.BottomCenter,
-                        margin: 14
-                    },
-                    new go.Binding("text", "label")
-                ),
+                $(go.Panel, "Auto",
+                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
+                    $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
+                )
             ),
+            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
             ...this.makePorts()
         )
     }
 }
 
 export class NodePycode extends PipelineNode{
-    static type = 'pycode'
-    static category = 'OTHER'
-    static template_name = 'PYCODE'
-    static color = 'black';
-    static icon = 'assets/images/svg/python.svg';
+    static type = 'pycode';
+    static category = 'OTHER';
+    static template_name = 'PYCODE';
+    static icon = 'assets/images/svg/pycode.svg';
+    static color = 'orange';
     static label = 'Pycode'
     static ports = [
         {id:"INPUT",spot:go.Spot.Left},
@@ -94,23 +78,15 @@ export class NodePycode extends PipelineNode{
     static component = NodePycodeComponent;
 
     public static getNodeTemplate(options = {}){
-
         return $(go.Node, 'Spot',
             {...options},
             $(go.Panel, "Vertical",
-                $(go.Picture, { desiredSize: new go.Size(40, 40), source: this.icon}),
-                $(go.TextBlock,
-                    {
-                        name: 'TEXT',
-                        font: this.fontFamily,
-                        stroke: this.color,
-                        maxSize: new go.Size(130, NaN),
-                        alignment: go.Spot.BottomCenter,
-                        margin: 14
-                    },
-                    new go.Binding("text", "label")
-                ),
+                $(go.Panel, "Auto",
+                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
+                    $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
+                )
             ),
+            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
             ...this.makePorts()
         )
     }
