@@ -33,12 +33,18 @@
                     <div nz-col class="gutter-row" [nzSpan]="8"
                     *ngFor="let c of list$ | async | keyFilter :'name': searchTerm">
                     <!-- <nz-card class="inner-box super-domain-card"> -->
-                        <nz-card [nzTitle]='cnTitle' [nzExtra]='cnActions' nzSize='small'>
-                            <h6 nz-typography class="text-muted">{{typeLabels[c.type]}}</h6>
+                        <nz-card class="h-100" [nzTitle]='cnTitle' [nzExtra]='cnActions' nzSize='small'>
+                            <!-- <h6 nz-typography class="text-muted">{{types[c.type].label}}</h6> -->
                             <app-meta [data]="c"></app-meta>                          
                         </nz-card>
                         <ng-template #cnTitle>
-                            {{c.name}}
+                            <div class="flex start">
+                                <app-connector-icon class="m-2"  [type]='c.type'></app-connector-icon>
+                                <div class="flex column start ml-2">
+                                    <h5 class="p-0 m-0">{{c.name}}</h5>
+                                    <h6 class="text-muted p-0 m-0 font-weight-light">{{types[c.type].label}}</h6>
+                                </div>
+                            </div>
                         </ng-template>
 
                         <ng-template #cnActions>

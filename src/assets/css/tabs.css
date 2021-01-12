@@ -11,8 +11,8 @@ nz-tabset .ant-tabs-content.ant-tabs-top-content{
   /* overflow-x: auto; */
 }
 
-nz-tabset .ant-tabs-bar.ant-tabs-top-bar {
-  margin-bottom: 0;
+nz-tabset.topless .ant-tabs-bar.ant-tabs-top-bar {
+  /* margin-bottom: 0; */
 }
 
 a, a:hover {

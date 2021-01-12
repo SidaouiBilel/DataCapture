@@ -17,7 +17,9 @@ export class ConnectorsUtilsService {
   addConnector(){
     return new Observable((observer)=>{
       const types_modal = this.modal.create({
-        nzContent:ConnectorTypesComponent
+        nzContent:ConnectorTypesComponent,
+        nzFooter:null,
+        nzTitle:'Add New Connector'
       })
       
       types_modal.afterClose.subscribe((type)=>{
@@ -42,17 +44,27 @@ export class ConnectorsUtilsService {
       const data = {...default_connector, ...connector}
       const connector_modal = this.modal.create({
         nzContent:connector_def.setupComponenet,
+        nzBodyStyle:{padding:"0"},
         nzComponentParams:{
           data
         },
+        nzTitle: `<i>${connector_def.label}</i> Connector Setup`,
         nzOkText:'Save',
         nzOnOk:()=>{
-          this.service.save(connector_modal.componentInstance.data).subscribe(()=>{
-            observer.next(true)
-            observer.complete()
+          return new Promise((resolve)=>{
+            const comp = connector_modal.componentInstance
+            comp.submitForm()
+            if (comp.isValid()){
+              this.service.save(comp.getModel()).subscribe(()=>{
+                observer.next(true)
+                observer.complete()
+                resolve()
+              }, ()=> resolve(false))
+            } else {
+              resolve(false)
+            }
           })
         },
-        nzOnCancel:()=> observer.complete()
       })
     })
   }
