@@ -8,7 +8,7 @@ const $ = go.GraphObject.make;
 export class NodeDatasource extends PipelineNode{
     static type = 'DATASOURCE'
     static category = 'DATASOURCE'
-    static template_name = 'DATASOURCE'
+    
     static color = '#1ca5cc'
     static label = 'Generic Datasource'
     static ports = [{id:"OUTPUT",spot:go.Spot.RightCenter}]
@@ -31,7 +31,7 @@ export class NodeDatasource extends PipelineNode{
 
 export class NodeImportConnector extends NodeDatasource{
     static connectorDef:any
-    static template_name = 'NODE_IMPORT_CONNECTOR';
+    
     static type = "IMPORT_CONNECTOR"
 
     public static createNode(){
@@ -59,8 +59,9 @@ export class NodeImportConnector extends NodeDatasource{
 
 export class NodeBlobStorage extends NodeImportConnector{
     static label = 'Storage Account'
+    static type = "BLOB_STORAGE_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_BLOB_STORAGE
-    static template_name = 'BLOB_STORAGE_IMPORT_CONNECTOR'
+    
 
     
     static component = StorageAccountComponent
@@ -68,9 +69,9 @@ export class NodeBlobStorage extends NodeImportConnector{
 
 export class NodeSQLImport extends NodeImportConnector{
     static label = 'SQL Server'
+    static type = "SQL_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_SQL
-    static template_name = 'SQL_IMPORT_CONNECTOR'
-
+    
     static component = StorageAccountComponent
 }
 

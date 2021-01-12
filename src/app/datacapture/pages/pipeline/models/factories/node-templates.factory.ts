@@ -11,7 +11,7 @@ export function generateNodesTemplateMap(options={}){
   var templmap = new go.Map<string, go.Part>(); // In TypeScript you could write: new go.Map<string, go.Node>();
   // for each of the node categories, specify which template to use
   for (let c of nodeClasses){
-        templmap.add(c.template_name , c.getNodeTemplate(options));
+        templmap.add(c.type , c.getNodeTemplate(options));
   }
     // for the default category, "", use the same template that Diagrams use by default;
     // this just shows the key value as a simple TextBlock
