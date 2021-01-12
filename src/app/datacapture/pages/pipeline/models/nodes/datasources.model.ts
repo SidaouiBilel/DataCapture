@@ -24,12 +24,12 @@ export class NodeStorageAcount extends NodeDatasource{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
-            new go.Binding("location", "loc", go.Point.parse),
+            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
-                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(40, 40) }),
-                    $(go.Picture, { desiredSize: new go.Size(24, 24), source: this.icon, margin: 8 }),
-                    ),
+                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
+                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
+                ),
                     // $(go.TextBlock,
                     //     {
                         //         name: this.label,

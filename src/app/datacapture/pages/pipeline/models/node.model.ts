@@ -45,7 +45,7 @@ export class PipelineNode{
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
-            new go.Binding("loc", "loc", go.Point.parse),
+            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Panel, 'Horizontal',
                 $(go.Shape, 'Rectangle', {fill: this.color ,stroke: null,width: 6, stretch: go.GraphObject.Vertical, alignment: go.Spot.Left}),
                 $(go.Panel, "Auto",
@@ -83,7 +83,7 @@ export class PipelineNode{
             fill: "black",
             strokeWidth: 1,
             stroke:"grey",
-            desiredSize: new go.Size(4,4),
+            desiredSize: new go.Size(8,8),
             portId: p.id, 
             alignment: p.spot,
             fromLinkable: true,
