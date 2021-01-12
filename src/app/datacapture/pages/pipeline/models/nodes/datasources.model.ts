@@ -1,5 +1,4 @@
 import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
-import { StorageAccountComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
 
@@ -58,22 +57,14 @@ export class NodeImportConnector extends NodeDatasource{
 }
 
 export class NodeBlobStorage extends NodeImportConnector{
-    static label = 'Storage Account'
+    static label = CONNECTOR_DEF_BLOB_STORAGE.label
     static type = "BLOB_STORAGE_IMPORT_CONNECTOR"
-    static connectorDef = CONNECTOR_DEF_BLOB_STORAGE
-    
-
-    
-    static component = StorageAccountComponent
+    static connectorDef = CONNECTOR_DEF_BLOB_STORAGE    
 }
 
 export class NodeSQLImport extends NodeImportConnector{
-    static label = 'SQL Server'
+    static label = CONNECTOR_DEF_SQL.label
     static type = "SQL_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_SQL
-    
-    static component = StorageAccountComponent
+
 }
-
-
-export const DATASOURCE_NODES = [NodeSQLImport, NodeBlobStorage]

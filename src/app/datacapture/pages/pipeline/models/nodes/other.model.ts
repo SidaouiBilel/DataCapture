@@ -1,5 +1,3 @@
-import { NodePycodeComponent } from "@app/shared/setup/nodes/other/node-pycode/node-pycode.component";
-import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transformations/base-node-transformation/base-node-transformation.component";
 
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
@@ -18,7 +16,6 @@ export class NodeConcat extends PipelineNode{
         {id:"CONCAT",spot: new go.Spot(0.1,0.8)},
         {id:"OUTPUT",spot:go.Spot.Right},
     ]
-    static component = BaseNodeTransformationComponent
 
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
@@ -48,7 +45,6 @@ export class NodeJoin extends PipelineNode{
         {id:"JOIN",spot:go.Spot.LeftCenter},
         {id:"OUTPUT",spot:go.Spot.RightCenter},
     ]
-    static component = BaseNodeTransformationComponent;
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
             {...options},
@@ -77,7 +73,6 @@ export class NodePycode extends PipelineNode{
         {id:"OUTPUT",spot:go.Spot.Right},
     ];
 
-    static component = NodePycodeComponent;
 
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
@@ -94,9 +89,3 @@ export class NodePycode extends PipelineNode{
         )
     }
 }
-
-export const NODE_OTHERS = [
-    NodeConcat,
-    NodeJoin,
-    NodePycode
-] 

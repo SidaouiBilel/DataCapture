@@ -39,6 +39,7 @@ export class PipelineEditorComponent implements AfterViewInit{
       'undoManager.isEnabled': true,
       model: $(go.GraphLinksModel,
         {
+          nodeCategoryProperty: "type",
           linkToPortIdProperty: 'toPort',
           linkFromPortIdProperty: 'fromPort',
           linkKeyProperty: 'key' // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
@@ -56,10 +57,16 @@ export class PipelineEditorComponent implements AfterViewInit{
       }
     });
 
-    dia.linkTemplate = $(go.Link,
-      { curve: go.Link.OrientAlong },
+    // dia.linkTemplate =  $(go.Link,
+    //   { routing: go.Link.AvoidsNodes,
+    //     corner: 10 },                  // rounded corners
+    //   $(go.Shape),
+    //   $(go.Shape, { toArrow: "Standard" })
+    // );
+    dia.linkTemplate =  $(go.Link,
+      { curve: go.Link.Bezier },
       $(go.Shape),
-      $(go.Shape, { toArrow: 'Standard' })
+      $(go.Shape, { toArrow: "Standard" })
     );
 
     return dia;

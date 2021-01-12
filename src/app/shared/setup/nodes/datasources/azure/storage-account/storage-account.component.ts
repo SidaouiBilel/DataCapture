@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CONNECTOR_DEF_BLOB_STORAGE } from '@app/datacapture/pages/connectors/models/connectors.model';
 import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
 import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
+import { NodeBlobStorage } from '@app/datacapture/pages/pipeline/models/nodes/datasources.model';
 import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AzureConnectorService } from './services/azure-connector.service';
 
 @Component({
@@ -9,26 +12,23 @@ import { AzureConnectorService } from './services/azure-connector.service';
   templateUrl: './storage-account.component.html',
   styleUrls: ['./storage-account.component.css']
 })
-export class StorageAccountComponent extends PipelineNodeComponent {
+export class StorageAccountComponent extends PipelineNodeComponent implements OnInit {
+
+  nodeClass = NodeBlobStorage
 
   constructor(private con: AzureConnectorService, private connectors: ConnectorsService) { 
     super()
   }
 
+  ngOnInit(){
+    this.getConnectors()
+  }
+
   containers$ = new BehaviorSubject<any>(null)
   blobs$ = new BehaviorSubject<any>(null)
+  connectors$
 
   getConnectors(){
-    
-  }
-
-  onConatinersOpen(){
-    this.containers$.next(null)
-    this.con.getContainers(this.data.conn_string).subscribe(e=>this.containers$.next(e)) 
-  }
-  
-  onBlobOpen(){
-    this.blobs$.next(null)
-    this.con.getBlobs(this.data.conn_string, this.data.container).subscribe(e=>this.blobs$.next(e)) 
+    this.connectors$ = this.connectors.getAllByType(CONNECTOR_DEF_BLOB_STORAGE.type).pipe(take(1))
   }
 }

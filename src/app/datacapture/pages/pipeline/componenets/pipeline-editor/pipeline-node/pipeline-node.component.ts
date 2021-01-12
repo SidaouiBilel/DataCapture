@@ -11,9 +11,12 @@ export class PipelineNodeComponent implements OnInit {
   onSave = new EventEmitter<any>();
   onCancel = new EventEmitter<void>();
 
+  nodeClass
+  
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 

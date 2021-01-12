@@ -28,6 +28,7 @@ import { BaseNodeTransformationComponent } from './setup/nodes/transformations/b
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { NodePycodeComponent } from './setup/nodes/other/node-pycode/node-pycode.component';
 import { MetaComponent } from '@app/datacapture/pages/admin/componenets/meta/meta.component';
+import { SqlImportNodeComponent } from './setup/nodes/datasources/sql-import-node/sql-import-node.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -74,6 +75,7 @@ const Components = [
   declarations: [
     ...Components,
     NodePycodeComponent,
+    SqlImportNodeComponent,
   ],
   exports: [
     ...SharedModules,

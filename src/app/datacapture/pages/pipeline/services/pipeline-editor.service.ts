@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NzDrawerService } from 'ng-zorro-antd';
 import { Observable, Subject } from 'rxjs';
 import { PiplineTemplateViewerComponent } from '../componenets/pipeline-editor/pipline-template-viewer/pipline-template-viewer.component';
-import { nodeClasses } from '../models/factories/node-templates.factory';
+import { ALL_NODES } from '../models/factories/node-templates.factory';
 import { PipelineNode } from '../models/node.model';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { PipelineNode } from '../models/node.model';
 })
 export class PipelineEditorService {
 
-  NODES_LIST = nodeClasses;
+  NODES_LIST = ALL_NODES;
   links = [];
   nodes = [];
 

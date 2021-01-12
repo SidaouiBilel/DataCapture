@@ -1,5 +1,4 @@
 import { Filter, FilterAndReplace, Merge, Replace, DeleteRow, DefaultValue, Splitter, Calculator, FormatDate, GroupBy } from "@app/datacapture/pages/upload/components/transformation/transformations/transformers/transformer.model";
-import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transformations/base-node-transformation/base-node-transformation.component";
 
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
@@ -16,7 +15,6 @@ export class NodeTransformations extends PipelineNode{
         {id:"OUTPUT", spot:go.Spot.RightCenter},
     ]
     static transformer: any = null
-    static component = BaseNodeTransformationComponent;
 
     public static getNodeTemplate(options = {}){
         return $(go.Node, 'Spot',
@@ -75,21 +73,3 @@ export class NodeTransformationGroupBy extends NodeTransformations{
     static transformer = GroupBy;
     static icon = "assets/images/svg/group.svg";
 }
-
-export const NODE_TRANSFORMERS = [
-                NodeTransformationFilter
-                ,NodeTransformationFilterAndReplace
-                ,NodeTransformationMerge
-                ,NodeTransformationReplace
-                ,NodeTransformationDeleteRow
-                ,NodeTransformationDefaultValue
-                ,NodeTransformationSplitter
-                ,NodeTransformationCalculator
-                ,NodeTransformationFormatDate
-                ,NodeTransformationGroupBy
-            ].map(cls =>{
-                const t = new cls.transformer()
-                cls.type = t.type
-                cls.label = t.label
-                return cls
-            })
