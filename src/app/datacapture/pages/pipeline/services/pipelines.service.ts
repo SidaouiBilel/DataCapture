@@ -15,7 +15,7 @@ export class PipelinesService {
   }
 
   saveDag(nodes, links, id){
-    
+    return this.http.post(environment.pipeline + 'dataflow/save' ,{nodes, links, id})
   }
 
   runDag(dag_id){

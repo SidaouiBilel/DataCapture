@@ -2,7 +2,8 @@
   [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)'>
 
   <div class="button-spacing flex start">
-    <button class='ghost' nz-button><i nz-icon nzType='save'></i>Save</button>
+    <button class='ghost' nz-button><i nz-icon nzType='edit'></i>Edit</button>
+    <button class='ghost' nz-button  (click)="save()"><i nz-icon nzType='save'></i>Save</button>
     <button class='ghost' nz-button><i nz-icon nzType='saveAs-o'></i>Save As</button>
     <nz-divider nzType='vertical'></nz-divider>
     <div class="flex">

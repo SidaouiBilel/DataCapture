@@ -35,6 +35,15 @@ export class AuthorPipelineComponent implements OnInit {
         });
   }
 
+  save() {
+    forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1))])
+      .subscribe(([links, nodes]) => {
+        this.pipelines.saveDag(nodes, links, this.pipeId).subscribe(() => {
+            this.ntf.success('Pipeline saved');
+          });
+        });
+  }
+
   onDiagramNodeDataChange(nodes){
     // console.log('nodes', nodes);
     this.store.dispatch(new PipelineEditNodes(nodes));
