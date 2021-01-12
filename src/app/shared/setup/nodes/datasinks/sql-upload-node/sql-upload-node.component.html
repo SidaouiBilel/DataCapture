@@ -22,23 +22,23 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-label nzRequired>Get With</nz-form-label>
+                    <nz-form-label nzRequired>Write Mode</nz-form-label>
                     <nz-form-control >
-                      <nz-select [(ngModel)]="data.get_with" [ngModelOptions]="{standalone: true}">
-                        <nz-option nzValue="schema_and_table" nzLabel="Schema and Table"></nz-option>
-                        <nz-option nzValue="query" nzLabel="Query"></nz-option>
-                      </nz-select>
+                        <nz-radio-group [(ngModel)]="data.write_mode" [ngModelOptions]="{standalone: true}" nzButtonStyle="solid">
+                            <label nz-radio-button nzValue="erase">Erase Old</label>
+                            <label nz-radio-button nzValue="append">Append</label>
+                          </nz-radio-group>
                     </nz-form-control>
                   </nz-form-item>              
                 
-                <nz-form-item *ngIf='getWith("schema_and_table")'>
+                <nz-form-item>
                     <nz-form-label  nzRequired nzFor="container">Schema</nz-form-label>
                     <nz-form-control  >
                         <input nz-input  [(ngModel)]='data.schema' [ngModelOptions]="{standalone: true}"/>
                     </nz-form-control>
                 </nz-form-item>
                 
-                <nz-form-item *ngIf='getWith("schema_and_table")'>
+                <nz-form-item>
                     <nz-form-label  nzRequired nzFor="container">Table Name</nz-form-label>
                     <nz-form-control  >
                         <input nz-input  [(ngModel)]='data.table' [ngModelOptions]="{standalone: true}"/>
@@ -46,14 +46,7 @@
                 </nz-form-item>
                 
                 
-                <nz-form-item *ngIf='getWith("query")'>
-                    <nz-form-label  nzRequired nzFor="container">From Query</nz-form-label>
-                    <nz-form-control  >
-                        <div style="height: 150px" class="border rounded pt-4 pb-4">
-                            <ngx-monaco-editor style="height: 100%"  [ngModelOptions]="{standalone: true}" [options]="editorOptions" [(ngModel)]="data.query"></ngx-monaco-editor>
-                        </div>
-                    </nz-form-control>
-                </nz-form-item>
+              
             
             </form>
 

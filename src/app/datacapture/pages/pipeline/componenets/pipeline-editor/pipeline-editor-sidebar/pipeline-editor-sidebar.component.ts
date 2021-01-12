@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DefaultArray } from '@app/shared/utils/arrays.utils';
-import { ALL_NODES } from '../../../models/factories/node-templates.factory';
+import { ALL_NODES } from '../../../models/factories/templates.factory';
 
 @Component({
   selector: 'app-pipeline-editor-sidebar',

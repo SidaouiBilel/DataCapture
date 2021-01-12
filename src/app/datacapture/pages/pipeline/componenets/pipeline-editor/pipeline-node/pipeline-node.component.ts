@@ -13,10 +13,10 @@ export class PipelineNodeComponent implements OnInit {
 
   nodeClass
   
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
-
   }
 
 

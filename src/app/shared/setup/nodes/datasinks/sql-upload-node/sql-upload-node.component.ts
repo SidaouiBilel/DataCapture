@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
 import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
-import { NodeSQLImport } from '@app/datacapture/pages/pipeline/models/nodes/datasources.model';
+import { NodeSQLUpload } from '@app/datacapture/pages/pipeline/models/nodes/datasink.model';
 import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sql-import-node',
-  templateUrl: './sql-import-node.component.html',
-  styleUrls: ['./sql-import-node.component.css']
+  selector: 'app-sql-upload-node',
+  templateUrl: './sql-upload-node.component.html',
+  styleUrls: ['./sql-upload-node.component.css']
 })
-export class SqlImportNodeComponent extends PipelineNodeComponent {
+export class SqlUploadNodeComponent extends PipelineNodeComponent {
 
-  nodeClass = NodeSQLImport
+  nodeClass = NodeSQLUpload
 
   constructor(private connectors: ConnectorsService) { 
     super()
@@ -32,7 +32,5 @@ export class SqlImportNodeComponent extends PipelineNodeComponent {
   }
 
 
-  getWith(type){
-    return this.data.get_with==type
-  }
+
 }

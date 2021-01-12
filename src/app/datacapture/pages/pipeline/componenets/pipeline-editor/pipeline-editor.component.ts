@@ -3,7 +3,7 @@ import { PipelineEditorService } from '../../services/pipeline-editor.service';
 import { DataSyncService, DiagramComponent } from 'gojs-angular';
 import * as go from 'gojs';
 import * as _ from 'lodash';
-import { generateNodesTemplateMap } from '../../models/factories/node-templates.factory';
+import { generateNodesTemplateMap } from '../../models/factories/templates.factory';
 
 @Component({
   selector: 'app-pipeline-editor',

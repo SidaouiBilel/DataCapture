@@ -11,21 +11,6 @@ export class NodeDatasource extends PipelineNode{
     static color = '#1ca5cc'
     static label = 'Generic Datasource'
     static ports = [{id:"OUTPUT",spot:go.Spot.RightCenter}]
-
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
-                ),
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts(),
-        )
-    }
 }
 
 export class NodeImportConnector extends NodeDatasource{
@@ -46,7 +31,7 @@ export class NodeImportConnector extends NodeDatasource{
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
-                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
+                    $(go.Shape, "RoundedRectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
                     $(go.Picture, { desiredSize: new go.Size(40,40), source: this.connectorDef.svgWhite , margin: 8 }),
                 ),
             ),

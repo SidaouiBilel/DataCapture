@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CONNECTOR_DEF_BLOB_STORAGE } from '@app/datacapture/pages/connectors/models/connectors.model';
 import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
 import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
-import { NodeBlobStorage } from '@app/datacapture/pages/pipeline/models/nodes/datasources.model';
+import { NodeBlobStorageUpload } from '@app/datacapture/pages/pipeline/models/nodes/datasink.model';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AzureConnectorService } from './services/azure-connector.service';
+import { AzureConnectorService } from '../../datasources/azure/storage-account/services/azure-connector.service';
 
 @Component({
-  selector: 'app-storage-account',
-  templateUrl: './storage-account.component.html',
-  styleUrls: ['./storage-account.component.css']
+  selector: 'app-storage-account-upload-node',
+  templateUrl: './storage-account-upload-node.component.html',
+  styleUrls: ['./storage-account-upload-node.component.css']
 })
-export class StorageAccountImportNodeComponent extends PipelineNodeComponent {
+export class StorageAccountUploadNodeComponent extends PipelineNodeComponent {
 
-  nodeClass = NodeBlobStorage
+  nodeClass = NodeBlobStorageUpload
 
   constructor(private con: AzureConnectorService, private connectors: ConnectorsService) { 
     super()
@@ -31,6 +31,7 @@ export class StorageAccountImportNodeComponent extends PipelineNodeComponent {
   connectors$
 
   getConnectors(){
-    this.connectors$ = this.connectors.getAllByType(CONNECTOR_DEF_BLOB_STORAGE.type).pipe(take(1))
+    this.connectors$ = this.connectors.getAllByType(this.nodeClass.connectorDef.type).pipe(take(1))
   }
+
 }
