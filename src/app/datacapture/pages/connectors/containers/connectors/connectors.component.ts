@@ -34,7 +34,7 @@ export class ConnectorsComponent implements OnInit {
   }
 
   editConnector(conn){
-    this.utils.openSetup(conn).subscribe(()=>{
+    this.utils.editConnector(conn).subscribe(()=>{
       this.loadData()
     })
   }
@@ -45,5 +45,5 @@ export class ConnectorsComponent implements OnInit {
     })
   }
 
-  typeLabels = ToMap(CONNECTOR_TYPES, (e)=>e.type, (e)=>e.label)
+  types = ToMap(CONNECTOR_TYPES, (e)=>e.type, (e)=>e)
 }

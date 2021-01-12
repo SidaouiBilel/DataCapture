@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
 import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { BehaviorSubject } from 'rxjs';
 import { AzureConnectorService } from './services/azure-connector.service';
@@ -10,12 +11,16 @@ import { AzureConnectorService } from './services/azure-connector.service';
 })
 export class StorageAccountComponent extends PipelineNodeComponent {
 
-  constructor(private con: AzureConnectorService) { 
+  constructor(private con: AzureConnectorService, private connectors: ConnectorsService) { 
     super()
   }
 
   containers$ = new BehaviorSubject<any>(null)
   blobs$ = new BehaviorSubject<any>(null)
+
+  getConnectors(){
+    
+  }
 
   onConatinersOpen(){
     this.containers$.next(null)

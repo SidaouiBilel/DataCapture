@@ -6,7 +6,7 @@ const $ = go.GraphObject.make;
 export class NodeDatasink extends PipelineNode{
     static type = 'DATASINK'
     static category = 'DATASINK'
-    static template_name = 'DATASINK'
+    
     static color = 'green'
     static icon = 'assets/images/svg/sync.svg'
     static label = 'Generic Datasink'

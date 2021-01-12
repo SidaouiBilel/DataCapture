@@ -8,7 +8,7 @@ const $ = go.GraphObject.make;
 export class NodeTransformations extends PipelineNode{
     static type = 'TRANSFORMATION'
     static category = 'TRANSFORMATION'
-    static template_name = 'TRANSFORMATION'
+    
     static background = 'white';
     static label = 'Generic Transformation'
     static ports = [
@@ -91,6 +91,5 @@ export const NODE_TRANSFORMERS = [
                 const t = new cls.transformer()
                 cls.type = t.type
                 cls.label = t.label
-                cls.template_name = t.type
                 return cls
             })

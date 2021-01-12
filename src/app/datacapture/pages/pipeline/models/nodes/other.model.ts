@@ -9,7 +9,7 @@ const $ = go.GraphObject.make;
 export class NodeConcat extends PipelineNode{
     static type = 'concat'
     static category = 'OTHER'
-    static template_name = 'CONCAT'
+    
     static icon = 'assets/images/svg/concat.svg';
     static color = 'orange';
     static label = 'Concat'
@@ -39,7 +39,7 @@ export class NodeConcat extends PipelineNode{
 export class NodeJoin extends PipelineNode{
     static type = 'join'
     static category = 'OTHER'
-    static template_name = 'JOIN';
+    
     static icon = 'assets/images/svg/join.svg';
     static color = 'orange';
     static label = 'Join'
@@ -68,7 +68,7 @@ export class NodeJoin extends PipelineNode{
 export class NodePycode extends PipelineNode{
     static type = 'pycode';
     static category = 'OTHER';
-    static template_name = 'PYCODE';
+    
     static icon = 'assets/images/svg/pycode.svg';
     static color = 'orange';
     static label = 'Pycode'

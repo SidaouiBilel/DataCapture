@@ -24,7 +24,7 @@ export class PipelineEditorService {
     return new Observable(observer => {
       const nodeClass = this.getNodeClass(node.type);
       const ref: any = this.drawer.create({
-        nzContent: nodeClass.component,
+        nzContent: nodeClass.getComponenent(node),
         nzContentParams: {
           data: node
         },
