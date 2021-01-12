@@ -24,6 +24,10 @@ export class PipelineNode{
     static component: any = PipelineNodeComponent;
 
     // PORTS USED FOR THE DATAGRID
+    public static getComponenent(node){
+        return this.component
+    }
+
     static ports: {id: string, spot: go.Spot}[] = [];
 
     constructor(){}
@@ -38,7 +42,7 @@ export class PipelineNode{
             label: this.label,
             category: this.template_name,
             type: this.type,
-            loc: randomPosition(500) + " 0"
+            loc: randomPosition(200) + " " + randomPosition(200)
         };
     }
 
@@ -80,10 +84,10 @@ export class PipelineNode{
         return this.ports.map((p)=>$(go.Shape, 'Circle',
         {
             opacity: 1,
-            fill: "black",
+            fill: "white",
             strokeWidth: 1,
-            stroke:"grey",
-            desiredSize: new go.Size(8,8),
+            stroke:"lightgrey",
+            desiredSize: new go.Size(10,10),
             portId: p.id, 
             alignment: p.spot,
             fromLinkable: true,

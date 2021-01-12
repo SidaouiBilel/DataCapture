@@ -34,7 +34,7 @@ export class ConnectorsComponent implements OnInit {
   }
 
   editConnector(conn){
-    this.utils.openSetup(conn).subscribe(()=>{
+    this.utils.editConnector(conn).subscribe(()=>{
       this.loadData()
     })
   }

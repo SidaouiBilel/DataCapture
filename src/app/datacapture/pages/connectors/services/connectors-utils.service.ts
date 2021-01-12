@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class ConnectorsUtilsService {
 
-  constructor(private modal:NzModalService, private service: ConnectorsService) { }
+  constructor(private modal:NzModalService, private drawer:NzModalService, private service: ConnectorsService) { }
 
   addConnector(){
     return new Observable((observer)=>{
@@ -30,6 +30,17 @@ export class ConnectorsUtilsService {
       }
       })
     })
+  }
+
+  editConnector(connector){
+    return new Observable(observer=>{
+      this.service.getOne(connector.id).subscribe(connector_data=>{
+        this.openSetup(connector_data).subscribe(()=>{
+          observer.next(true)
+        }, null, ()=> observer.complete())
+      })
+    })
+
   }
 
   openSetup(connector){

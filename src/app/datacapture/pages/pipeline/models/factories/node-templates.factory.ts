@@ -1,11 +1,11 @@
 import * as go from "gojs";
 import { NodeDatasink } from "../nodes/datasink.model";
-import { NodeDatasource, NodeStorageAcount } from "../nodes/datasources.model";
+import { NodeDatasource, NodeBlobStorage, DATASOURCE_NODES } from "../nodes/datasources.model";
 import { PipelineNode } from "../node.model";
 import { NodeTransformations, NODE_TRANSFORMERS } from "../nodes/transformations.model";
 import { NODE_OTHERS } from "../nodes/other.model";
 
-export const nodeClasses = [NodeStorageAcount, NodeDatasink, ...NODE_TRANSFORMERS, ...NODE_OTHERS]
+export const nodeClasses = [...DATASOURCE_NODES, NodeDatasink, ...NODE_TRANSFORMERS, ...NODE_OTHERS]
 
 export function generateNodesTemplateMap(options={}){
   var templmap = new go.Map<string, go.Part>(); // In TypeScript you could write: new go.Map<string, go.Node>();

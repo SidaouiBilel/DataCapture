@@ -9,8 +9,12 @@ export class ConnectorsService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(type=''){
-    return this.http.get(`${environment.admin}connectors/${type}`)
+  getAll(){
+    return this.http.get(`${environment.admin}connectors/`)
+  }
+
+  getOne(id){
+    return this.http.get(`${environment.admin}connectors/${id}`)
   }
 
   save(data){
@@ -19,5 +23,9 @@ export class ConnectorsService {
 
   delete(id){
     return this.http.delete(`${environment.admin}connectors/${id}`)
+  }
+
+  getAllByType(type){
+    return this.http.get(`${environment.admin}connectors/type/${type}`)
   }
 }
