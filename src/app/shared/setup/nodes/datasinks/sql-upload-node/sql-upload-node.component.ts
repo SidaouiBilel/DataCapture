@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
+import { NodeSQLUpload } from '@app/datacapture/pages/automatic-upload/pipeline/models/nodes/datasink.model';
 import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
-import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
-import { NodeSQLUpload } from '@app/datacapture/pages/pipeline/models/nodes/datasink.model';
 import { take } from 'rxjs/operators';
 
 @Component({

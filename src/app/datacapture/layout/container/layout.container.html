@@ -107,14 +107,21 @@
             </ul>
           </li>
 
-          <li nz-menu-item [nzSelected]="isPrimaryPage('pipeline')" [routerLink]="['/datacapture/pipeline']">
-            <i nz-icon nzType="apartment" nzRotate='-90'></i>
-            <span *ngIf='(settings.appSize$ | async)!="compact"'>Automatic Upload</span>
-          </li>
-          
-          <li nz-menu-item [nzSelected]="isPrimaryPage('author')" [routerLink]="['/datacapture/author']">
-            <i nz-icon nzType="edit"></i>
-            <span *ngIf='(settings.appSize$ | async)!="compact"'>Author</span>
+          <li nz-submenu nzIcon="upload" nzTitle="Automatic Upload" >
+            <ul>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('author')" [routerLink]="['/datacapture/automatic/author']">
+                <i nz-icon nzType="edit"></i>
+                <span>Author</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('monitor')" [routerLink]="['/datacapture/automatic/monitor']">
+                <i nz-icon nzType="monitor"></i>
+                <span>Monitor</span>
+              </li>
+              <li nz-menu-item [nzSelected]="isPrimaryPage('pipeline')" [routerLink]="['/datacapture/automatic/pipeline']">
+                <i nz-icon nzType="apartment" nzRotate='-90'></i>
+                <span>Pipeline</span>
+              </li>
+            </ul>
           </li>
         </ul>
       </nz-sider>
