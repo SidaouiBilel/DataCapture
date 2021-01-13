@@ -15,9 +15,11 @@ export class PipelineEditorSidebarComponent implements OnInit {
   @Output() onViewTemplate = new EventEmitter<any>();
   nodesMap;
   labels = {
-    'DATASINK': 'Datasink',
     'DATASOURCE': 'Datasource',
     'TRANSFORMATION': 'Transformation',
+    'MERGE': 'Merge Tools',
+    'SCRIPTS': 'Scripts',
+    'DATASINK': 'Datasink',
   };
 
   constructor() { }
