@@ -4,6 +4,7 @@ import { PipelineMetadata } from '../models/metadata.model';
 export enum PipelineActionTypes {
   EDIT_NODES = '[PIPELINE] EDIT_NODES',
   EDIT_LINKS = '[PIPELINE] EDIT_LINKS',
+  EDIT_PIPELINE = '[PIPELINE] EDIT_PIPELINE',
   EDIT_PIPELINE_METADATA = '[PIPELINE] EDIT_PIPELINE_METADATA',
   RESET = '[PIPELINE] RESET',
 }
@@ -18,6 +19,10 @@ export class PipelineEditMetaData implements Action {
   constructor(readonly metadata: PipelineMetadata) {}
 }
 
+export class PipelineEdit implements Action {
+  readonly type = PipelineActionTypes.EDIT_PIPELINE;
+  constructor(readonly metadata: PipelineMetadata) {}
+}
 export class PipelineEditLinks implements Action {
   readonly type = PipelineActionTypes.EDIT_LINKS;
   constructor(readonly links:any[]) {}

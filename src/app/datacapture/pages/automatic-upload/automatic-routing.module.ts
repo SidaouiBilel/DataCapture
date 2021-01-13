@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthorPipelineComponent } from './pipeline/containers/author-pipeline/author-pipeline.component';
 
 const routes: Routes = [
     {
         path: 'pipeline',
-        loadChildren : () => import('app/datacapture/pages/automatic-upload/pipeline/pipeline.module').then(m => m.PipelineModule)
+        component: AuthorPipelineComponent
+    },
+    {
+        path: 'pipeline/:id',
+        component: AuthorPipelineComponent
     },
     {
         path: 'author',

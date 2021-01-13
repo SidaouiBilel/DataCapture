@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-author-list',
@@ -8,6 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AuthorListComponent implements OnInit {
   loading: boolean;
   @Input() pipelines = [];
+  @Input() search = "";
+  @Output() delete = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit(): void {

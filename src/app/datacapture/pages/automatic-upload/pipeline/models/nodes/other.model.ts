@@ -41,8 +41,8 @@ export class NodeJoin extends PipelineNode{
     static color = 'orange';
     static label = 'Join'
     static ports = [
-        {id:"INPUT",spot:go.Spot.TopLeft},
-        {id:"JOIN",spot:go.Spot.LeftCenter},
+        {id:"INPUT",spot: new go.Spot(0.1,0.2)},
+        {id:"JOIN", spot: new go.Spot(0.1,0.8)},
         {id:"OUTPUT",spot:go.Spot.RightCenter},
     ]
     public static getNodeTemplate(options = {}){
