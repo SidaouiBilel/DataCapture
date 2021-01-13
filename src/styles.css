@@ -30,3 +30,23 @@
 .ant-form-vertical .ant-form-item-label{
     padding: 0;
 }
+
+/* RAW PROGRESS BAR STYLE */
+nz-progress.raw .ant-progress-text{
+    display: none ;
+}
+nz-progress.raw{
+    display: block;
+    line-height: 0;
+}
+nz-progress.raw .ant-progress{
+    line-height: 0 ;
+}
+nz-progress.raw .ant-progress-inner,
+nz-progress.raw .ant-progress-bg{
+    border-radius: 0 !important;
+}   
+nz-progress.raw .ant-progress-show-info .ant-progress-outer{
+    margin: 0 ;
+    padding: 0 ;
+}

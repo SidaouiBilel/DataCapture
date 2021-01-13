@@ -38,4 +38,12 @@ export class PipelinesService {
   deleteDag(dag_id){
 
   }
+
+  trigger(dag_id: any) {
+    return this.http.post(environment.pipeline + `dataflow/${dag_id}/run`,{})
+  }
+
+  getRun(run_id: any) {
+    return this.http.get(environment.pipeline + `monitor/run/${run_id}`)
+  }
 }

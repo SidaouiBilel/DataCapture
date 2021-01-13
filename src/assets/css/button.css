@@ -8,6 +8,10 @@ button.ma{
     margin-right: 2px;
 }
 
+.button-spacing{
+  width: max-content;
+}
+
 .button-spacing [nz-button]{
     margin: 0 2px;
 }

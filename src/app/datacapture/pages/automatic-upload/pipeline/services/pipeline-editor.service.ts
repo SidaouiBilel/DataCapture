@@ -11,6 +11,7 @@ import { ALL_NODES } from '../models/factories/templates.factory';
 })
 export class PipelineEditorService {
 
+
   NODES_LIST = ALL_NODES;
   links = [];
   nodes = [];
