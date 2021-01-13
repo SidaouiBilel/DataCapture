@@ -31,12 +31,8 @@ const routes: Routes = [
           loadChildren : () => import('app/datacapture/data-explorer/data-explorer.module').then(m => m.DataExplorerModule)
         },
         {
-          path: 'pipeline',
-          loadChildren : () => import('app/datacapture/pages/pipeline/pipeline.module').then(m => m.PipelineModule)
-        },
-        {
-          path: 'author',
-          loadChildren : () => import('app/datacapture/pages/author/author.module').then(m => m.AuthorModule)
+          path: 'automatic',
+          loadChildren : () => import('app/datacapture/pages/automatic-upload/automatic.module').then(m => m.AutomaticModule)
         },
         {
           path: '**',

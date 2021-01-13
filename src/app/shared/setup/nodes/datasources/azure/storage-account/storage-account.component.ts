@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
+import { NodeBlobStorage } from '@app/datacapture/pages/automatic-upload/pipeline/models/nodes/datasources.model';
 import { CONNECTOR_DEF_BLOB_STORAGE } from '@app/datacapture/pages/connectors/models/connectors.model';
 import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
-import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
-import { NodeBlobStorage } from '@app/datacapture/pages/pipeline/models/nodes/datasources.model';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AzureConnectorService } from './services/azure-connector.service';

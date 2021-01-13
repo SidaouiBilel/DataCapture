@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PipelineNodeComponent } from '@app/datacapture/pages/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
+import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { NgxEditorModel } from 'ngx-monaco-editor';
 
 @Component({
