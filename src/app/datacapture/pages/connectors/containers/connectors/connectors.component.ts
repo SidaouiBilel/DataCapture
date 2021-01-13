@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '@app/core';
 import { ToMap } from '@app/shared/utils/arrays.utils';
 import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { CONNECTOR_TYPES } from '../../models/connectors.model';
 import { ConnectorsUtilsService } from '../../services/connectors-utils.service';
 import { ConnectorsService } from '../../services/connectors.service';
@@ -13,14 +14,21 @@ import { ConnectorsService } from '../../services/connectors.service';
 })
 export class ConnectorsComponent implements OnInit {
 
-  constructor(private service:ConnectorsService, public utils: ConnectorsUtilsService) { }
+  constructor(
+    private service:ConnectorsService,
+    public utils: ConnectorsUtilsService,
+    public not: NotificationService) { }
 
   ngOnInit(): void {
     this.loadData()
   }
 
   loadData(){
-    this.list$ = this.service.getAll().pipe(take(1))
+    const loader = this.not.loading('Loading connectors...');
+    this.list$ = this.service.getAll().pipe(take(1), tap({
+      next: x => { this.not.close(loader); },
+      error: err => { this.not.close(loader); },
+    }))
   }
   
   searchTerm = ''

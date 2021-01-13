@@ -20,7 +20,7 @@ export class PipelinesService {
   }
 
   runDag(dag_id){
-
+    return this.http.get(environment.pipeline + `dataflow/${dag_id}/list-nodes`)
   }
 
   getDags(){

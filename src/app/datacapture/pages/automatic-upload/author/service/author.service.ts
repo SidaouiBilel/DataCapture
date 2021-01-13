@@ -12,4 +12,8 @@ export class AuthorService {
     getAll(page?, size?){
         return this.http.get(environment.pipeline + 'dataflow/list-pipelines')
     }
+
+    delete(id: string) {
+        return this.http.delete(environment.pipeline + `dataflow/delete/${id}/`)
+    }
 }

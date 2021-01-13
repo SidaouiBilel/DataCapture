@@ -24,7 +24,7 @@ export const environment = {
   auth: 'https://dcm-auth.azurewebsites.net/',
   env: 'DEV',
 
-  pipeline: 'http://localhost:5000/'
+  pipeline: 'http://localhost:5006/'
 };
 
 /*

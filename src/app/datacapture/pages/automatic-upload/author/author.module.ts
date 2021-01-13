@@ -4,6 +4,7 @@ import { AuthorRoutingModule } from './author-routing.module';
 import { AuthorContainer } from './container/author-container.component';
 import { AuthorService } from './service/author.service';
 import { AuthorListComponent } from './components/author-list/author-list.component';
+import { PipelineFilterPipe } from './pipes/pipeline-filter.pipe';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { AuthorListComponent } from './components/author-list/author-list.compon
   ],
   declarations: [
     AuthorContainer,
-    AuthorListComponent
+    AuthorListComponent,
+    PipelineFilterPipe
   ],
   exports: [
   ],

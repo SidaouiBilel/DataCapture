@@ -15,18 +15,26 @@ import { FEATURE_NAME, PipelineReducer } from './store/pipeline.state';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { EditPipelineMetadataComponent } from './componenets/modals/edit-pipeline-metadata/edit-pipeline-metadata.component';
+import { PipelineEffects } from './store/pipeline.effects';
 
 // TODO REMOVE NGX PIPELINE FROM PACKAGE
 @NgModule({
-  declarations: [PipelineEditorComponent, PipelineNodeComponent, PipelineEditorSidebarComponent, PiplineTemplateViewerComponent, AuthorPipelineComponent, EditPipelineMetadataComponent],
+  declarations: [
+    PipelineEditorComponent,
+    PipelineNodeComponent,
+    PipelineEditorSidebarComponent,
+    PiplineTemplateViewerComponent,
+    AuthorPipelineComponent,
+    EditPipelineMetadataComponent
+  ],
   imports: [
+    StoreModule.forFeature(FEATURE_NAME, PipelineReducer),
+    EffectsModule.forFeature([PipelineEffects]),
     CommonModule,
-    PipelineRoutingModule,
+    // PipelineRoutingModule,
     SharedModule,
     GojsAngularModule,
     NgxJsonViewerModule,
-    StoreModule.forFeature(FEATURE_NAME, PipelineReducer),
-    EffectsModule.forFeature([]),
   ]
 })
 export class PipelineModule { }

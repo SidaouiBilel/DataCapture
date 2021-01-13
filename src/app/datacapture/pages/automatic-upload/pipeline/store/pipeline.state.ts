@@ -32,6 +32,9 @@ export function PipelineReducer(state: PipelineState = initialState, action: any
       case PipelineActionTypes.EDIT_PIPELINE_METADATA:
         return {...state, metadata: action.metadata}
 
+      case PipelineActionTypes.EDIT_PIPELINE:
+        return {...state, metadata: action.metadata}
+
       case PipelineActionTypes.RESET:
         return {...initialState};
 

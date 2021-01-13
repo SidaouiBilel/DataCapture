@@ -63,6 +63,9 @@ export class LayoutContainer implements OnInit {
         case 'home':
           return 'home';
 
+        case 'automatic':
+          return "deployment-unit";
+
         case 'pipeline':
           return 'apartment';
 
