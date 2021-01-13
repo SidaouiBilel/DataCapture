@@ -7,15 +7,15 @@
   }
 
 ::ng-deep .myOverviewDiv {
-  width: 200px;
-  height: 150px;
-  background: #ffffff;
+  width: 150px;
+  height: 100px;
+  background: #f0eaea;
   border: 1px dashed lightgrey;
   /* border: 1px solid tra; */
 
   position: absolute;
-  left: 0;
-  top: 0;
+  right: 0;
+  bottom: 0;
   margin: 10px;
 
   z-index: 1000;
@@ -30,5 +30,5 @@
 
 ::ng-deep .editor-box .ant-card-body{
       position: relative;
-      background: rgb(230, 235, 238);
+      background: rgb(255, 255, 255);
 }
