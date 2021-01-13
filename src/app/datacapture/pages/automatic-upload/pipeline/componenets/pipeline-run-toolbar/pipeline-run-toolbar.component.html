@@ -1,12 +1,14 @@
 
 
-<nz-card class="paddless">
-  <nz-progress class="raw"  *ngIf='showProgress' [nzPercent]="progress" nzSize="small" [nzStatus]="progressStatus"></nz-progress>
+<nz-card class="paddless" *ngIf='showProgress'>
 
     <!-- SWITCH STATUS -->
-    <div class="p-2 flex between top">
+    <div class="p-2">
+
+    <div class="flex between top">
+
       <!-- DESCRIPTIONS -->
-      <nz-descriptions *ngIf='showProgress' [nzColon]='false' nzSize="small">
+      <nz-descriptions class="mb-2" *ngIf='showProgress' [nzColon]='false' nzSize="small">
         <nz-descriptions-item nzTitle="Status">{{run.state}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Excecution Date">{{run.execution_date | date}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Tasks">{{doneSteps}} (Done) / {{progressSteps}} (Total)</nz-descriptions-item>
@@ -15,11 +17,12 @@
         <nz-descriptions-item nzTitle="End Date">{{run.end_date | date}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Run ID">{{run.run_id}}</nz-descriptions-item>
       </nz-descriptions>
-        <!-- BUTTONS -->
-        <ng-container [ngSwitch]="runStatus" >
 
-          <div *ngSwitchCase="'not_running'" class="button-spacing fill text-center">
-              <button nzType='primary' nz-button (click)='trigger.emit()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
+        <!-- BUTTONS -->
+        <!-- <ng-container [ngSwitch]="runStatus" >
+
+          <div *ngSwitchCase="'not_running'" class="button-spacing">
+              <button nz-button (click)='trigger.emit()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
               <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
             </div>
             <div *ngSwitchCase="'running'">
@@ -32,6 +35,14 @@
               <button nz-button><i nz-icon nzType='file'></i> View Logs</button>
             </div>
           </div>
-        </ng-container>
+        </ng-container> -->
     </div>
+
+    <nz-progress [nzPercent]="progress" nzSize="small" [nzStatus]="progressStatus"></nz-progress>
+
+  </div>
+
+
+  <!-- <nz-progress class="raw"  *ngIf='showProgress' [nzPercent]="progress" nzSize="small" [nzStatus]="progressStatus"></nz-progress> -->
+
   </nz-card>

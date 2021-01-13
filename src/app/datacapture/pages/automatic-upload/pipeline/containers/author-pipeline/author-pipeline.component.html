@@ -2,10 +2,13 @@
   <app-pipeline-editor class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
   [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)'>
 
-  <div class="button-spacing flex start">
-    <button class='ghost' nz-button (click)="edit()"><i nz-icon nzType='edit'></i>Edit</button>
-    <button class='ghost' nz-button (click)="save()"><i nz-icon nzType='save'></i>Save</button>
+  <div class="button-spacing ghost flex start">
+    <button nz-button (click)="edit()"><i nz-icon nzType='edit'></i>Edit</button>
+    <button nz-button (click)="save()"><i nz-icon nzType='save'></i>Save</button>
     <!-- <button class='ghost' nz-button><i nz-icon nzType='saveAs-o'></i>Save As</button> -->
+    <nz-divider nzType='vertical'></nz-divider>
+    <button  nz-button (click)='onTrigger()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
+    <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
     <nz-divider nzType='vertical'></nz-divider>
     <div class="flex">
       <button (click)='publish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>

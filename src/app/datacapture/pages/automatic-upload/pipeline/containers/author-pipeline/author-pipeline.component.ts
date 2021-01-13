@@ -79,7 +79,7 @@ export class AuthorPipelineComponent implements OnInit {
         const run_id = res.run_id
         // TODO ADD TAKE UNTIL RXJS INSIDE PIPE FOR EXIT SCREEN or ERROR, SUCCESS STATUS
         this.stop$ = new Subject()
-        this.run$ = timer(0,5000).pipe(
+        this.run$ = timer(0,2000).pipe(
           takeUntil(this.stop$), 
           switchMap(()=>this.pipelines.getRun(run_id)),
           tap((run_res:any)=>{
