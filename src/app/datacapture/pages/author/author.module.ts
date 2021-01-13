@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { SharedModule } from '@app/shared';
+import { AuthorRoutingModule } from './author-routing.module';
+import { AuthorContainer } from './container/author-container.component';
+import { AuthorService } from './service/author.service';
+
+
+@NgModule({
+  imports: [
+    SharedModule,
+    AuthorRoutingModule
+  ],
+  declarations: [
+    AuthorContainer
+  ],
+  exports: [
+  ],
+  providers : [
+    AuthorService
+  ],
+  entryComponents: [
+  ]
+})
+export class AuthorModule {}

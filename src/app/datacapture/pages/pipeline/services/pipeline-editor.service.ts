@@ -29,7 +29,8 @@ export class PipelineEditorService {
         nzContentParams: {
           data: node
         },
-        nzWidth: '700px'
+        nzWidth: '700px',
+        nzClosable: false,
       });
 
       setTimeout(() => {
@@ -46,7 +47,8 @@ export class PipelineEditorService {
         nodes,
         links
       },
-      nzWidth: '90vw'
+      nzWidth: '90vw',
+      nzClosable: false,
     });
   }
 

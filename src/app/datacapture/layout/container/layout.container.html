@@ -109,9 +109,13 @@
 
           <li nz-menu-item [nzSelected]="isPrimaryPage('pipeline')" [routerLink]="['/datacapture/pipeline']">
             <i nz-icon nzType="apartment" nzRotate='-90'></i>
-            <span *ngIf='(settings.appSize$ | async)!="compact"'>Pipeline</span>
+            <span *ngIf='(settings.appSize$ | async)!="compact"'>Automatic Upload</span>
           </li>
-
+          
+          <li nz-menu-item [nzSelected]="isPrimaryPage('author')" [routerLink]="['/datacapture/author']">
+            <i nz-icon nzType="edit"></i>
+            <span *ngIf='(settings.appSize$ | async)!="compact"'>Author</span>
+          </li>
         </ul>
       </nz-sider>
     </ng-container>
