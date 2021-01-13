@@ -63,6 +63,12 @@ export class LayoutContainer implements OnInit {
         case 'home':
           return 'home';
 
+        case 'pipeline':
+          return 'apartment';
+
+        case 'author':
+          return 'edit';
+
         case 'users':
           return 'user';
 

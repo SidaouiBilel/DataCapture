@@ -1,14 +1,21 @@
 import { Action } from '@ngrx/store';
+import { PipelineMetadata } from '../models/metadata.model';
 
 export enum PipelineActionTypes {
-  EDIT_NODES = '[PIPELINE] CHANGE_DISPLAY_TYPE',
-  EDIT_LINKS = '[PIPELINE] CHANGE_DISPLAY_SIZE',
+  EDIT_NODES = '[PIPELINE] EDIT_NODES',
+  EDIT_LINKS = '[PIPELINE] EDIT_LINKS',
+  EDIT_PIPELINE_METADATA = '[PIPELINE] EDIT_PIPELINE_METADATA',
   RESET = '[PIPELINE] RESET',
 }
 
 export class PipelineEditNodes implements Action {
   readonly type = PipelineActionTypes.EDIT_NODES;
   constructor(readonly nodes: any[]) {}
+}
+
+export class PipelineEditMetaData implements Action {
+  readonly type = PipelineActionTypes.EDIT_PIPELINE_METADATA;
+  constructor(readonly metadata: PipelineMetadata) {}
 }
 
 export class PipelineEditLinks implements Action {
@@ -22,4 +29,4 @@ export class PipelineReset implements Action {
 }
 
 
-export type PipelineActions =  PipelineEditNodes | PipelineEditLinks | PipelineReset;
+export type PipelineActions =  PipelineEditNodes | PipelineEditLinks | PipelineEditMetaData | PipelineReset;

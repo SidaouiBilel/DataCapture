@@ -14,10 +14,11 @@ import { AuthorPipelineComponent } from './containers/author-pipeline/author-pip
 import { FEATURE_NAME, PipelineReducer } from './store/pipeline.state';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { EditPipelineMetadataComponent } from './componenets/modals/edit-pipeline-metadata/edit-pipeline-metadata.component';
 
 // TODO REMOVE NGX PIPELINE FROM PACKAGE
 @NgModule({
-  declarations: [PipelineEditorComponent, PipelineNodeComponent, PipelineEditorSidebarComponent, PiplineTemplateViewerComponent, AuthorPipelineComponent],
+  declarations: [PipelineEditorComponent, PipelineNodeComponent, PipelineEditorSidebarComponent, PiplineTemplateViewerComponent, AuthorPipelineComponent, EditPipelineMetadataComponent],
   imports: [
     CommonModule,
     PipelineRoutingModule,

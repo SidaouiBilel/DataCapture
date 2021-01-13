@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { NzDrawerService } from 'ng-zorro-antd';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { EditPipelineMetadataComponent } from '../componenets/modals/edit-pipeline-metadata/edit-pipeline-metadata.component';
 import { PiplineTemplateViewerComponent } from '../componenets/pipeline-editor/pipline-template-viewer/pipline-template-viewer.component';
+import { PipelineMetadata } from '../models/metadata.model';
 import { ALL_NODES } from '../models/factories/templates.factory';
-import { PipelineNode } from '../models/node.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,8 @@ export class PipelineEditorService {
         nzContentParams: {
           data: node
         },
-        nzWidth: '700px'
+        nzWidth: '700px',
+        nzClosable: false,
       });
 
       setTimeout(() => {
@@ -45,8 +47,28 @@ export class PipelineEditorService {
         nodes,
         links
       },
-      nzWidth: '90vw'
+      nzWidth: '90vw',
+      nzClosable: false,
     });
+  }
+
+  editPipeline(metaData): BehaviorSubject<PipelineMetadata> {
+    const result = new BehaviorSubject(null);
+    const ref = this.drawer.create({
+      nzTitle: 'Pipeline MetaData',
+      nzContent: EditPipelineMetadataComponent,
+      nzContentParams: {
+        metaData
+      },
+      nzWidth: '40vw',
+      nzClosable: false,
+    })
+    ref.afterClose.subscribe((metadata: PipelineMetadata) => {
+      if (metadata) {
+        result.next(metaData);
+      }
+    });
+    return result;
   }
 
   updateNode(node){

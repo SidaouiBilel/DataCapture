@@ -11,3 +11,8 @@ export const selectPipelineEditLinks = createSelector(
   selectPipeline,
   (object: PipelineState) => object.edit_links
 );
+
+export const selectPipelineMetaData = createSelector(
+  selectPipeline,
+  (object: PipelineState) => object.metadata
+);

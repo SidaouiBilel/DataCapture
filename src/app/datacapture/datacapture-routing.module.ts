@@ -35,6 +35,10 @@ const routes: Routes = [
           loadChildren : () => import('app/datacapture/pages/pipeline/pipeline.module').then(m => m.PipelineModule)
         },
         {
+          path: 'author',
+          loadChildren : () => import('app/datacapture/pages/author/author.module').then(m => m.AuthorModule)
+        },
+        {
           path: '**',
           redirectTo: 'dashboard',
           pathMatch: 'full'
