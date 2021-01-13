@@ -13,7 +13,7 @@ export class PipelineState {
 export const initialState: PipelineState = {
   edit_nodes : [],
   edit_links : [],
-  metadata: {id: null, name: '', description: ''}
+  metadata: {pipeline_id: null, name: '', description: ''}
 };
 
 export const FEATURE_NAME = 'pipeline';

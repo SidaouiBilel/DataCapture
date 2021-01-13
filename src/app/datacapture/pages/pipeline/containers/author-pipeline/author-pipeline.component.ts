@@ -41,8 +41,8 @@ export class AuthorPipelineComponent implements OnInit {
     forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
       .subscribe(([links, nodes, metaData]: any) => {
         if (metaData.name != '') {
-          this.pipelines.saveDag(metaData, nodes, links).subscribe((id) => {
-              this.store.dispatch(new PipelineEditMetaData({...metaData, id}));
+          this.pipelines.saveDag(metaData, nodes, links).subscribe((pipeline_id) => {
+              this.store.dispatch(new PipelineEditMetaData({...metaData, pipeline_id}));
               this.ntf.success('Pipeline saved.');
             });
         } else {

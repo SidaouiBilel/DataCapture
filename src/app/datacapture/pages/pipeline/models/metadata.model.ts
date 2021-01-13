@@ -1,5 +1,5 @@
 export interface PipelineMetadata {
-    id: string;
+    pipeline_id: string;
     name: string;
     description: string;
 }

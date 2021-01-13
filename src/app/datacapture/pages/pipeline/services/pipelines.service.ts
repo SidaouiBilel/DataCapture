@@ -12,7 +12,7 @@ export class PipelinesService {
 
 
   publishDag(nodes, links, meta: PipelineMetadata){
-    return this.http.post(environment.pipeline + 'dags/' ,{nodes, links, id: meta.id})
+    return this.http.post(environment.pipeline + 'dags/' ,{nodes, links, id: meta.pipeline_id})
   }
 
   saveDag(metaData, nodes, links){

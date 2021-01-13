@@ -7,6 +7,14 @@ import { AuthorService } from "../service/author.service";
     styleUrls: ['./author-container.component.css']
 })
 export class AuthorContainer {
+    pipelines:any = [];
+    constructor(private service: AuthorService) {
+        this.getData();
+    }
 
-    constructor(private service: AuthorService) {}
+    getData() {
+        this.service.getAll().subscribe((pipelines) => {
+            this.pipelines = pipelines;
+        })
+    }
 }

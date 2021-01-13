@@ -3,6 +3,7 @@ import { SharedModule } from '@app/shared';
 import { AuthorRoutingModule } from './author-routing.module';
 import { AuthorContainer } from './container/author-container.component';
 import { AuthorService } from './service/author.service';
+import { AuthorListComponent } from './components/author-list/author-list.component';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AuthorService } from './service/author.service';
     AuthorRoutingModule
   ],
   declarations: [
-    AuthorContainer
+    AuthorContainer,
+    AuthorListComponent
   ],
   exports: [
   ],
