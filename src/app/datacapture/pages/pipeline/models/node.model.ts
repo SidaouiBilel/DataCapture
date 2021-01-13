@@ -22,11 +22,16 @@ export class PipelineNode{
     static width = 180;
     static icontype = "";
     static fontFamily = '-apple-system, BlinkMacSystemFont, sans-serif;';
-    static component: any = PipelineNodeComponent;
+    static component: any = null;
 
     // PORTS USED FOR THE DATAGRID
     public static getComponenent(node){
         return this.component
+    }
+
+    public static setComponenet(c){
+        this.component = c
+        return this
     }
 
     static ports: {id: string, spot: go.Spot}[] = [];
@@ -41,7 +46,6 @@ export class PipelineNode{
         return {
             key : String(new Date().getTime()),
             label: this.label,
-            category: this.type,
             type: this.type,
             loc: randomPosition(200) + " " + randomPosition(200)
         };
@@ -85,9 +89,9 @@ export class PipelineNode{
         return this.ports.map((p)=>$(go.Shape, 'Circle',
         {
             opacity: 1,
-            fill: "white",
-            strokeWidth: 1,
-            stroke:"lightgrey",
+            fill: this.color,
+            strokeWidth: 2,
+            stroke:"white",
             desiredSize: new go.Size(10,10),
             portId: p.id, 
             alignment: p.spot,

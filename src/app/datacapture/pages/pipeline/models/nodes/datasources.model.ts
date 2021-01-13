@@ -1,5 +1,4 @@
 import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
-import { StorageAccountComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
 
@@ -12,21 +11,6 @@ export class NodeDatasource extends PipelineNode{
     static color = '#1ca5cc'
     static label = 'Generic Datasource'
     static ports = [{id:"OUTPUT",spot:go.Spot.RightCenter}]
-
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
-                ),
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts(),
-        )
-    }
 }
 
 export class NodeImportConnector extends NodeDatasource{
@@ -47,7 +31,7 @@ export class NodeImportConnector extends NodeDatasource{
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
-                    $(go.Shape, "Rectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
+                    $(go.Shape, "RoundedRectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
                     $(go.Picture, { desiredSize: new go.Size(40,40), source: this.connectorDef.svgWhite , margin: 8 }),
                 ),
             ),
@@ -58,22 +42,14 @@ export class NodeImportConnector extends NodeDatasource{
 }
 
 export class NodeBlobStorage extends NodeImportConnector{
-    static label = 'Storage Account'
+    static label = CONNECTOR_DEF_BLOB_STORAGE.label
     static type = "BLOB_STORAGE_IMPORT_CONNECTOR"
-    static connectorDef = CONNECTOR_DEF_BLOB_STORAGE
-    
-
-    
-    static component = StorageAccountComponent
+    static connectorDef = CONNECTOR_DEF_BLOB_STORAGE    
 }
 
 export class NodeSQLImport extends NodeImportConnector{
-    static label = 'SQL Server'
+    static label = CONNECTOR_DEF_SQL.label
     static type = "SQL_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_SQL
-    
-    static component = StorageAccountComponent
+
 }
-
-
-export const DATASOURCE_NODES = [NodeSQLImport, NodeBlobStorage]

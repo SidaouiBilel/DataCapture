@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StorageAccountComponent } from './storage-account.component';
+import { StorageAccountImportNodeComponent } from './storage-account.component';
 
 describe('StorageAccountComponent', () => {
-  let component: StorageAccountComponent;
-  let fixture: ComponentFixture<StorageAccountComponent>;
+  let component: StorageAccountImportNodeComponent;
+  let fixture: ComponentFixture<StorageAccountImportNodeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StorageAccountComponent ]
+      declarations: [ StorageAccountImportNodeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StorageAccountComponent);
+    fixture = TestBed.createComponent(StorageAccountImportNodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -37,6 +37,18 @@
                         <input nz-input id="blob" [(ngModel)]='data.blob' [ngModelOptions]="{standalone: true}"/>
                     </nz-form-control>
                 </nz-form-item>
+
+
+                <nz-form-item>
+                    <nz-form-label nzRequired>Output Format</nz-form-label>
+                    <nz-form-control >
+                        <nz-radio-group [(ngModel)]="data.output_format" [ngModelOptions]="{standalone: true}" nzButtonStyle="solid">
+                            <label nz-radio-button nzValue="json">JSON</label>
+                            <label nz-radio-button nzValue="csv">CSV</label>
+                            <label nz-radio-button nzValue="xlsx">XLSX</label>
+                          </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>        
             
             </form>
 

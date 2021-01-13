@@ -3,16 +3,15 @@ import { NzDrawerService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { EditPipelineMetadataComponent } from '../componenets/modals/edit-pipeline-metadata/edit-pipeline-metadata.component';
 import { PiplineTemplateViewerComponent } from '../componenets/pipeline-editor/pipline-template-viewer/pipline-template-viewer.component';
-import { nodeClasses } from '../models/factories/node-templates.factory';
 import { PipelineMetadata } from '../models/metadata.model';
-import { PipelineNode } from '../models/node.model';
+import { ALL_NODES } from '../models/factories/templates.factory';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PipelineEditorService {
 
-  NODES_LIST = nodeClasses;
+  NODES_LIST = ALL_NODES;
   links = [];
   nodes = [];
 
@@ -30,7 +29,7 @@ export class PipelineEditorService {
         nzContentParams: {
           data: node
         },
-        nzWidth: '1000px'
+        nzWidth: '700px'
       });
 
       setTimeout(() => {

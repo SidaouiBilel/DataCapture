@@ -1,4 +1,3 @@
-<!-- <p nz-typography nzEditable [(nzContent)]="data.label"></p> -->
 <div class="flex column stretch h-100">
     <div>
         <h6 nz-typography>Edit {{data.label}} ({{nodeClass.connectorDef.label}})</h6>
@@ -9,7 +8,7 @@
             <nz-form-item>
                 <nz-form-label  nzRequired nzFor="container">Name</nz-form-label>
                 <nz-form-control  >
-                    <input nz-input id="container" [(ngModel)]='data.label' [ngModelOptions]="{standalone: true}"/>
+                    <input nz-input  [(ngModel)]='data.label' [ngModelOptions]="{standalone: true}"/>
                 </nz-form-control>
                 </nz-form-item>
                 
@@ -21,22 +20,33 @@
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
-                
+
+                <nz-form-item>
+                    <nz-form-label nzRequired>Write Mode</nz-form-label>
+                    <nz-form-control >
+                        <nz-radio-group [(ngModel)]="data.write_mode" [ngModelOptions]="{standalone: true}" nzButtonStyle="solid">
+                            <label nz-radio-button nzValue="erase">Erase Old</label>
+                            <label nz-radio-button nzValue="append">Append</label>
+                          </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>              
                 
                 <nz-form-item>
-                    <nz-form-label  nzRequired nzFor="container">Container Name</nz-form-label>
+                    <nz-form-label  nzRequired nzFor="container">Schema</nz-form-label>
                     <nz-form-control  >
-                        <input nz-input id="container" [(ngModel)]='data.container' [ngModelOptions]="{standalone: true}"/>
+                        <input nz-input  [(ngModel)]='data.schema' [ngModelOptions]="{standalone: true}"/>
+                    </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                    <nz-form-label  nzRequired nzFor="container">Table Name</nz-form-label>
+                    <nz-form-control  >
+                        <input nz-input  [(ngModel)]='data.table' [ngModelOptions]="{standalone: true}"/>
                     </nz-form-control>
                 </nz-form-item>
                 
                 
-                <nz-form-item>
-                    <nz-form-label  nzRequired nzFor="container">Blob Name</nz-form-label>
-                    <nz-form-control  >
-                        <input nz-input id="blob" [(ngModel)]='data.blob' [ngModelOptions]="{standalone: true}"/>
-                    </nz-form-control>
-                </nz-form-item>
+              
             
             </form>
 
