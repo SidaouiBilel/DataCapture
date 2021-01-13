@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { NzDrawerService } from 'ng-zorro-antd';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { EditPipelineMetadataComponent } from '../componenets/modals/edit-pipeline-metadata/edit-pipeline-metadata.component';
 import { PiplineTemplateViewerComponent } from '../componenets/pipeline-editor/pipline-template-viewer/pipline-template-viewer.component';
 import { nodeClasses } from '../models/factories/node-templates.factory';
+import { PipelineMetadata } from '../models/metadata.model';
 import { PipelineNode } from '../models/node.model';
 
 @Injectable({
@@ -47,6 +49,25 @@ export class PipelineEditorService {
       },
       nzWidth: '90vw'
     });
+  }
+
+  editPipeline(metaData): BehaviorSubject<PipelineMetadata> {
+    const result = new BehaviorSubject(null);
+    const ref = this.drawer.create({
+      nzTitle: 'Pipeline MetaData',
+      nzContent: EditPipelineMetadataComponent,
+      nzContentParams: {
+        metaData
+      },
+      nzWidth: '40vw',
+      nzClosable: false,
+    })
+    ref.afterClose.subscribe((metadata: PipelineMetadata) => {
+      if (metadata) {
+        result.next(metaData);
+      }
+    });
+    return result;
   }
 
   updateNode(node){
