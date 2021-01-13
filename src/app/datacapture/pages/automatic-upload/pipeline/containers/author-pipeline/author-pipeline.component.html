@@ -1,4 +1,5 @@
-<app-pipeline-editor [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
+<div class="flex column stretch h-100">
+  <app-pipeline-editor class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
   [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)'>
 
   <div class="button-spacing flex start">
@@ -11,4 +12,8 @@
     </div>
     <nz-divider nzType='vertical'></nz-divider>
   </div>
-</app-pipeline-editor>
+  </app-pipeline-editor>
+
+  <app-pipeline-run-toolbar [run]='run$|async'></app-pipeline-run-toolbar>
+
+</div>

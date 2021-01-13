@@ -6,7 +6,7 @@ import { PipelineEditLinks, PipelineEditMetaData, PipelineEditNodes } from '../.
 import { selectPipelineEditLinks, selectPipelineEditNodes, selectPipelineMetaData } from '../../store/pipeline.selectors';
 import * as _ from 'lodash';
 import { map, take } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { PipelineEditorService } from '../../services/pipeline-editor.service';
 
 @Component({
@@ -60,13 +60,55 @@ export class AuthorPipelineComponent implements OnInit {
   }
 
   onDiagramNodeDataChange(nodes){
-    // console.log('nodes', nodes);
     this.store.dispatch(new PipelineEditNodes(nodes));
   }
 
   onDiagramLinkDataChange(links){
-    // console.log('links', links);
     this.store.dispatch(new PipelineEditLinks(links));
   }
+
+
+  // MANGAGE RUNS HERE
+  run$=new BehaviorSubject<any>({
+    "id": "1",
+    "dag_id": "52CEAF3E9E65417B829579395EB13463",
+    "execution_date": "2021-01-13T18:33:43.607636+00:00",
+    "run_id": "5B85F4DDE47F4FEFAF9DD1C237453678",
+    "start_date": "2021-01-13T18:33:43.636586+00:00",
+    "state": "running",
+    "end_date": null,
+    "tasks": [
+      {
+        "task_id": "1610555918004",
+        "start_date": "2021-01-13T18:33:52.023382+00:00",
+        "end_date": "2021-01-13T18:33:54.281687+00:00",
+        "state": "failed"
+      },
+      {
+        "task_id": "1610555919392",
+        "start_date": "2021-01-13T18:33:57.190477+00:00",
+        "end_date": "2021-01-13T18:33:57.190495+00:00",
+        "state": "upstream_failed"
+      },
+      {
+        "task_id": "1610555921368",
+        "start_date": "2021-01-13T18:33:57.198525+00:00",
+        "end_date": "2021-01-13T18:33:57.198541+00:00",
+        "state": "upstream_failed"
+      },
+      {
+        "task_id": "1610554482770",
+        "start_date": "2021-01-13T18:33:59.948910+00:00",
+        "end_date": null,
+        "state": "running"
+      },
+      {
+        "task_id": "1610555922698",
+        "start_date": "2021-01-13T18:34:01.347157+00:00",
+        "end_date": "2021-01-13T18:34:01.347172+00:00",
+        "state": "upstream_failed"
+      }
+    ]
+  })
 
 }
