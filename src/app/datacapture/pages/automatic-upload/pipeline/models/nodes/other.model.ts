@@ -16,21 +16,6 @@ export class NodeConcat extends PipelineNode{
         {id:"CONCAT",spot: new go.Spot(0.1,0.8)},
         {id:"OUTPUT",spot:go.Spot.Right},
     ]
-
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
-                )
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts()
-        )
-    }
 }
 
 export class NodeJoin extends PipelineNode{
@@ -45,20 +30,6 @@ export class NodeJoin extends PipelineNode{
         {id:"JOIN", spot: new go.Spot(0.1,0.8)},
         {id:"OUTPUT",spot:go.Spot.RightCenter},
     ]
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
-                )
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts()
-        )
-    }
 }
 
 export class NodePycode extends PipelineNode{
@@ -72,20 +43,4 @@ export class NodePycode extends PipelineNode{
         {id:"INPUT",spot:go.Spot.Left},
         {id:"OUTPUT",spot:go.Spot.Right},
     ];
-
-
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
-                )
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts()
-        )
-    }
 }

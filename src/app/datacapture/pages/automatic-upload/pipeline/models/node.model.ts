@@ -12,6 +12,8 @@ export class PipelineNode{
     static category;
     // DEFAULT LABEL OF THE NODE
     static label;
+    static shape = 'Circle'
+    static showLabel = false
 
 
     // NODE COLORATION OR THEME
@@ -55,34 +57,16 @@ export class PipelineNode{
         return $(go.Node, 'Spot',
             {...options},
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, 'Horizontal',
-                $(go.Shape, 'Rectangle', {fill: this.color ,stroke: null,width: 6, stretch: go.GraphObject.Vertical, alignment: go.Spot.Left}),
+            $(go.Panel, "Vertical",
                 $(go.Panel, "Auto",
-                            $(go.Shape, "Rectangle", { fill: "white", stroke: null }),
-                            $(go.Panel, "Table",
-                                { width: 130, minSize: new go.Size(NaN, 50) },
-                                $(go.TextBlock,
-                                    {
-                                        name: 'TEXT',
-                                        margin: 6, font: '11px Lato, sans-serif',
-                                        stroke: "#000", maxSize: new go.Size(130, NaN),
-                                        alignment: go.Spot.TopLeft
-                                    },
-                                    new go.Binding("text", "label")
-                                ),
-                                $(go.TextBlock,
-                                    {
-                                        text: this.type,
-                                        margin: 6, font: '11px Lato, sans-serif',
-                                        stroke: this.color, maxSize: new go.Size(130, NaN),
-                                        alignment: go.Spot.BottomLeft
-                                    },
-                                )
-                            )
-                        )
-                    ),
-                    ...this.makePorts()
+                    $(go.Shape, this.shape, { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
+                    this.makeIcon(),
                 )
+            ),
+            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 }))},
+            ...this.makeLabels(),
+            ...this.makePorts()
+        )
     }
 
     public static makePorts() {
@@ -98,5 +82,22 @@ export class PipelineNode{
             fromLinkable: true,
             toLinkable: true
         })) 
+    }
+
+    public static makeIcon(){
+        return  $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 })
+    }
+
+    public static makeLabels(){
+        if(this.showLabel){
+            return [
+                $(go.Panel,{padding:4 , alignment: go.Spot.Bottom, alignmentFocus: go.Spot.Top},
+                    $(go.TextBlock, { text: this.label, stroke:'grey'}, new go.Binding("text", "label") )
+                )
+                
+            ]
+        }else{
+            return []
+        }
     }
 }

@@ -7,10 +7,11 @@ const $ = go.GraphObject.make;
 export class NodeDatasource extends PipelineNode{
     static type = 'DATASOURCE'
     static category = 'DATASOURCE'
-    
+    static shape = 'RoundedRectangle'
     static color = '#1ca5cc'
     static label = 'Generic Datasource'
     static ports = [{id:"OUTPUT",spot:go.Spot.RightCenter}]
+    static showLabel = true
 }
 
 export class NodeImportConnector extends NodeDatasource{
@@ -24,37 +25,25 @@ export class NodeImportConnector extends NodeDatasource{
         }   
         return {...super.createNode(), ...connector_data}
     }
-
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "RoundedRectangle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(40,40), source: this.connectorDef.svgWhite , margin: 8 }),
-                ),
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "label")))},
-            ...this.makePorts(),
-        )
-    }
 }
 
 export class NodeBlobStorage extends NodeImportConnector{
-    static label = CONNECTOR_DEF_BLOB_STORAGE.label
     static type = "BLOB_STORAGE_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_BLOB_STORAGE    
 }
 
 export class NodeSQLImport extends NodeImportConnector{
-    static label = CONNECTOR_DEF_SQL.label
     static type = "SQL_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_SQL
 }
 
 export class NodePostgresImport extends NodeImportConnector{
-    static label = CONNECTOR_DEF_POSTGRES.label
     static type = "POSTGRES_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_POSTGRES
+}
+
+// SET UP NODE METADATA
+for (let cls of [NodeBlobStorage, NodeSQLImport, NodePostgresImport]){
+    cls.icon = cls.connectorDef.svgWhite
+    cls.label = cls.connectorDef.label
 }

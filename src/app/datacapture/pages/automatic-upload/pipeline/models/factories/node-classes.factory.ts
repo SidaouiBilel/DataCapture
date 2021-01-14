@@ -9,6 +9,7 @@ import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transfo
 import { SqlUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/sql-upload-node/sql-upload-node.component";
 import { StorageAccountUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/storage-account-upload-node/storage-account-upload-node.component";
 import { PostgresImportNodeComponent } from "@app/shared/setup/nodes/datasources/postgres-import-node/postgres-import-node.component";
+import { assertNotNull } from "@angular/compiler/src/output/output_ast";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),

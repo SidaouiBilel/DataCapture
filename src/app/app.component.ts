@@ -1,9 +1,9 @@
 import browser from 'browser-detect';
-import { Component, OnInit } from '@angular/core';
-import { routeAnimations,LocalStorageService, AppState, selectToken, NotificationService, ActionAuthLogout, ActionSaveProfile,} from '@app/core';
-import { Store, select } from '@ngrx/store';
+import { Component, Injector, OnInit } from '@angular/core';
+import { routeAnimations,LocalStorageService, AppState, NotificationService} from '@app/core';
+import { Store } from '@ngrx/store';
 import { LoginService } from './core/login/service/login.service';
-import { take } from 'rxjs/operators';
+import { ServiceLocator } from './shared/utils/injector.utils';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,11 @@ export class AppComponent{
   constructor(private storageService: LocalStorageService,
               private store: Store<AppState>,
               private service: LoginService,
-              private not: NotificationService) {}
+              private not: NotificationService,
+              private injector: Injector
+              ){    // Create global Service Injector.
+                ServiceLocator.injector = this.injector;
+            }
 
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);

@@ -1,4 +1,6 @@
 import { Filter, FilterAndReplace, Merge, Replace, DeleteRow, DefaultValue, Splitter, Calculator, FormatDate, GroupBy } from "@app/datacapture/pages/upload/components/transformation/transformations/transformers/transformer.model";
+import { CustomIconsService } from "@app/shared/services/custom-icons.service";
+import { ServiceLocator } from "@app/shared/utils/injector.utils";
 
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
@@ -16,19 +18,12 @@ export class NodeTransformations extends PipelineNode{
     ]
     static transformer: any = null
 
-    public static getNodeTemplate(options = {}){
-        return $(go.Node, 'Spot',
-            {...options},
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, "Circle", { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 }),
-                )
-            ),
-            { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 },new go.Binding("text", "color")))},
-            ...this.makePorts()
-        )
+    public static makeIcon(){
+        const t = new this.transformer()
+        const iconsService = ServiceLocator.injector.get(CustomIconsService)
+        const svg = iconsService.getIconSvgElement(t.icon+'-o')
+
+        return  $(go.Picture, { desiredSize: new go.Size(24, 24), element: svg, margin: 8 })
     }
 }
 
