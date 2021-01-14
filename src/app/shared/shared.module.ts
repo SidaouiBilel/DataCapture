@@ -31,6 +31,7 @@ import { MetaComponent } from '@app/datacapture/pages/admin/componenets/meta/met
 import { SqlImportNodeComponent } from './setup/nodes/datasources/sql-import-node/sql-import-node.component';
 import { SqlUploadNodeComponent } from './setup/nodes/datasinks/sql-upload-node/sql-upload-node.component';
 import { StorageAccountUploadNodeComponent } from './setup/nodes/datasinks/storage-account-upload-node/storage-account-upload-node.component';
+import { PostgresImportNodeComponent } from './setup/nodes/datasources/postgres-import-node/postgres-import-node.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -80,6 +81,7 @@ const Components = [
     SqlImportNodeComponent,
     SqlUploadNodeComponent,
     StorageAccountUploadNodeComponent,
+    PostgresImportNodeComponent,
   ],
   exports: [
     ...SharedModules,

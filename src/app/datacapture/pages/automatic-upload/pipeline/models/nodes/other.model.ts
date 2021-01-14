@@ -66,7 +66,7 @@ export class NodePycode extends PipelineNode{
     static category = 'SCRIPTS';
     
     static icon = 'assets/images/svg/pycode.svg';
-    static color = 'orange';
+    static color = 'red';
     static label = 'Pycode'
     static ports = [
         {id:"INPUT",spot:go.Spot.Left},

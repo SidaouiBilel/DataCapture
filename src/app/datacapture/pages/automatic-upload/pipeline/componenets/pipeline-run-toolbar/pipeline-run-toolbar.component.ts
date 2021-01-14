@@ -19,26 +19,24 @@ export class PipelineRunToolbarComponent implements OnInit {
       this.progressSteps = this.run.tasks.length
       this.doneSteps = this.run.tasks.filter(e=>e.state=='success').length
 
-      this.progress = (this.doneSteps / this.progressSteps) * 100
+      this.progress = Math.floor((this.doneSteps / this.progressSteps) * 100)
 
 
       switch(this.runStatus){
         // success, failed, running
         case "success": {
           this.progressStatus = 'success' ;
+          this.badgeType = 'success'
           break;
         }
         case "failed": {
           this.progressStatus = 'exception';
-          this.progress = 100
+          this.badgeType = 'error'
           break;
         }
         case "running": {
           this.progressStatus = 'active' ;
-          break;
-        }
-        default: {
-          this.progressStatus = 'normal';
+          this.badgeType = 'processing'
           break;
         }
       }
@@ -54,6 +52,7 @@ export class PipelineRunToolbarComponent implements OnInit {
     this.runStatus = 'not_running'
     this.progressStatus = 'normal'
     this.showProgress = false
+    this.badgeType = 'default'
   }
 
   runStatus
@@ -62,6 +61,7 @@ export class PipelineRunToolbarComponent implements OnInit {
   progress
   progressStatus
   showProgress
+  badgeType
   
   constructor() { 
     this.reset()

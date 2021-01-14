@@ -7,12 +7,10 @@
     <button nz-button (click)="save()"><i nz-icon nzType='save'></i>Save</button>
     <!-- <button class='ghost' nz-button><i nz-icon nzType='saveAs-o'></i>Save As</button> -->
     <nz-divider nzType='vertical'></nz-divider>
-    <button  nz-button (click)='onTrigger()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
-    <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
+    <button (click)='publish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>
     <nz-divider nzType='vertical'></nz-divider>
-    <div class="flex">
-      <button (click)='publish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>
-    </div>
+    <button  nz-button (click)='onTrigger()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Trigger</button>
+    <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
     <nz-divider nzType='vertical'></nz-divider>
   </div>
   </app-pipeline-editor>

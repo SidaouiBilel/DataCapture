@@ -1,4 +1,4 @@
-import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
+import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_POSTGRES, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
 
@@ -51,5 +51,10 @@ export class NodeSQLImport extends NodeImportConnector{
     static label = CONNECTOR_DEF_SQL.label
     static type = "SQL_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_SQL
+}
 
+export class NodePostgresImport extends NodeImportConnector{
+    static label = CONNECTOR_DEF_POSTGRES.label
+    static type = "POSTGRES_IMPORT_CONNECTOR"
+    static connectorDef = CONNECTOR_DEF_POSTGRES
 }
