@@ -67,7 +67,13 @@ export class PipelineNode{
             ...this.makeRunStatus(),
             $(go.Panel, "Vertical",
             $(go.Panel, "Auto",
-            $(go.Shape, this.shape, { fill: this.color, stroke: null,  desiredSize: new go.Size(this.shapeSize, this.shapeSize) }),
+            $(go.Shape, this.shape, { 
+                fill: this.color, 
+                stroke: null,  
+                desiredSize: new go.Size(this.shapeSize, this.shapeSize) 
+                },
+                this.runBinding('fill')
+                ),
             this.makeIcon(),
             )
             ),
@@ -93,7 +99,9 @@ export class PipelineNode{
             alignment: p.spot,
             fromLinkable: true,
             toLinkable: true
-        })) 
+        },
+        this.runBinding('fill')
+        )) 
     }
 
     public static makeIcon(){
@@ -125,32 +133,36 @@ export class PipelineNode{
     }
 
     public static makeRunStatus(){
-        return [$(go.Panel,
-            $(go.Shape, this.shape, {
-              desiredSize: new go.Size(this.shapeSize, this.shapeSize),
-              fill: null,
-              stroke: null,
-              strokeWidth:5,
-              },
-              new go.Binding("stroke", "run", (run, target)=>{
-                const node = target.part.data
-                const id = node.key
-                console.log(node, run)
-                const task = run.tasks.find(t=>t.task_id==id)
-                if (task){
-                  switch(task.state){
-                    case 'success': return 'lightgreen'
-                    case 'running': return 'lightblue'
-                    case 'failed': return 'red'
-                    case 'scheduled': return 'lightgrey'
-                    case 'queued': return 'skyblue'
-                    default: return null
-                  }
-                } else {
-                  return null
-                }
-              }).ofModel() 
-            ),
-          )]
+        // return [$(go.Panel,
+        //     $(go.Shape, this.shape, {
+        //       desiredSize: new go.Size(this.shapeSize, this.shapeSize),
+        //       fill: null,
+        //       stroke: null,
+        //       strokeWidth:5,
+        //       },
+        //       this.runBinding()
+        //     ),
+        //   )]
+        return []
+    }
+
+    public static runBinding(property="stroke"){
+        return new go.Binding(property, "run", (run, target)=>{
+            const node = target.part.data
+            const id = node.key
+            const task = run.tasks.find(t=>t.task_id==id)
+            if (task){
+              switch(task.state){
+                case 'success': return 'lightgreen'
+                case 'running': return 'lightblue'
+                case 'failed': return 'red'
+                case 'scheduled': return 'lightgrey'
+                case 'queued': return 'skyblue'
+                default: return 'lightgrey'
+              }
+            }
+
+            return this.color
+          }).ofModel()
     }
 }

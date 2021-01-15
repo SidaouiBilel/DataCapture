@@ -90,9 +90,15 @@ export class AuthorPipelineComponent implements OnInit {
     })
   }
 
+  onCancel(){
+    if(this.stop$) this.stop$.next()
+    this.runId$.next(null)
+    this.run$ = null
+  }
+
   monitorRun(runId){
     // CANSEL PREVIOUS POOLING
-    if(this.stop$) this.stop$.next()
+    this.onCancel()
     this.stop$ = new Subject()
     this.run$ = timer(0,2000).pipe(
       takeUntil(this.stop$), 
