@@ -4,6 +4,9 @@ import { DataSyncService, DiagramComponent } from 'gojs-angular';
 import * as go from 'gojs';
 import * as _ from 'lodash';
 import { generateNodesTemplateMap } from '../../models/factories/templates.factory';
+import { ToMap } from '@app/shared/utils/arrays.utils';
+
+const $ = go.GraphObject.make;
 
 @Component({
   selector: 'app-pipeline-editor',
@@ -16,6 +19,11 @@ export class PipelineEditorComponent implements AfterViewInit{
 
   @ViewChild('myDiagram', { static: true }) public myDiagramComponent: DiagramComponent;
 
+  @Input("run") set _run(run){
+    this.diagramModelData.run=run
+
+    this.skipsDiagramUpdate = false;
+  };
   @Input() diagramNodeData: Array<go.ObjectData> = [];
   @Input() diagramLinkData: Array<go.ObjectData> = [];
   @Output() diagramNodeDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
@@ -23,7 +31,7 @@ export class PipelineEditorComponent implements AfterViewInit{
 
   public onDoubleClicked = new EventEmitter<void>();
   public diagramDivClassName = 'myDiagramDiv';
-  public diagramModelData: any = { prop: 'value' };
+  public diagramModelData: go.ObjectData = { prop: 'value' };
   public skipsDiagramUpdate = false;
   public observedDiagram = null;
   // currently selected node; for inspector
@@ -34,7 +42,7 @@ export class PipelineEditorComponent implements AfterViewInit{
   // initialize diagram / templates
   public initDiagram = (): go.Diagram => {
 
-    const $ = go.GraphObject.make;
+    // const $ = go.GraphObject.make;
     const dia = $(go.Diagram, {
       'undoManager.isEnabled': true,
       model: $(go.GraphLinksModel,
@@ -55,7 +63,9 @@ export class PipelineEditorComponent implements AfterViewInit{
       doubleClick: (e, node) => {
         that.editNode(node.data);
       }
-    });
+    },
+    []
+    );
 
     // dia.linkTemplate =  $(go.Link,
     //   { routing: go.Link.AvoidsNodes,
@@ -147,5 +157,12 @@ export class PipelineEditorComponent implements AfterViewInit{
     this.editor.editNode(_.cloneDeep(node)).subscribe(newNode => {
       this.handleInspectorChange(newNode);
     });
+  }
+
+  redrawDiagram() {
+    // const dia = this.myDiagramComponent.diagram
+    // if(dia){
+    //   dia.requestUpdate()
+    // }
   }
 }

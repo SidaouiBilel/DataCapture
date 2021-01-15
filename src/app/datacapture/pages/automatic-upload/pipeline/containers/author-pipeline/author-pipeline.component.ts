@@ -21,11 +21,22 @@ export class AuthorPipelineComponent implements OnInit {
     this.links$ = this.store.select(selectPipelineEditLinks).pipe(map(e => _.cloneDeep(e)));
     this.nodes$ = this.store.select(selectPipelineEditNodes).pipe(map(e => _.cloneDeep(e)));
     this.metadata$ = this.store.select(selectPipelineMetaData);
+
+
+    this.runId$.subscribe((runId)=>{
+      if(runId){
+        this.monitorRun(runId)
+      } else {
+        this.resetRun()
+      }
+    })
    }
 
   links$;
   nodes$;
   metadata$;
+
+  runId$ = new BehaviorSubject("E290369CB43E4E2CBDEE2FB26C1C895B")
 
   ngOnInit(): void {}
 
@@ -75,21 +86,33 @@ export class AuthorPipelineComponent implements OnInit {
   onTrigger(){
     withValue(this.metadata$,(p)=>{
       this.pipelines.trigger(p.pipeline_id).subscribe((res:any)=>{
-        // TO SAVE IN STORE AND CREATE SELECTOR FOR INTERVAL CODE
         const run_id = res.run_id
-        // TODO ADD TAKE UNTIL RXJS INSIDE PIPE FOR EXIT SCREEN or ERROR, SUCCESS STATUS
-        this.stop$ = new Subject()
-        this.run$ = timer(0,2000).pipe(
-          takeUntil(this.stop$), 
-          switchMap(()=>this.pipelines.getRun(run_id)),
-          tap((run_res:any)=>{
-            if(['success','failed'].includes(run_res.state)){
-              this.stop$.next()
-            }
-          })
-          );
+        this.runId$.next(run_id)        
       })
     })
   }
 
+  onCancel(){
+    this.runId$.next(null)
+  }
+
+  monitorRun(runId){
+    // CANSEL PREVIOUS POOLING
+    this.onCancel()
+    this.stop$ = new Subject()
+    this.run$ = timer(0,2000).pipe(
+      takeUntil(this.stop$), 
+      switchMap(()=>this.pipelines.getRun(runId)),
+      tap((run_res:any)=>{
+        if(['success','failed'].includes(run_res.state)){
+          this.stop$.next()
+        }
+      })
+      );
+  }
+
+  resetRun(){
+    if (this.stop$) this.stop$.next()
+    this.run$ = null
+  }
 }

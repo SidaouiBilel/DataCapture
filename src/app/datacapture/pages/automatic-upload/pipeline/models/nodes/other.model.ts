@@ -6,9 +6,8 @@ const $ = go.GraphObject.make;
 
 export class NodeConcat extends PipelineNode{
     static type = 'concat'
-    static category = 'MERGE'
-    
-    static icon = 'assets/images/svg/concat.svg';
+    static category = 'MERGE'    
+    static nzicon = "insert-row-below"
     static color = 'orange';
     static label = 'Concat'
     static ports = [
@@ -21,8 +20,7 @@ export class NodeConcat extends PipelineNode{
 export class NodeJoin extends PipelineNode{
     static type = 'join'
     static category = 'MERGE'
-    
-    static icon = 'assets/images/svg/join.svg';
+    static nzicon = "insert-row-right"
     static color = 'orange';
     static label = 'Join'
     static ports = [
