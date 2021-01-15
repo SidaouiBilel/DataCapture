@@ -1,3 +1,5 @@
+import { CustomIconsService } from "@app/shared/services/custom-icons.service";
+import { ServiceLocator } from "@app/shared/utils/injector.utils";
 import { randomPosition } from "@app/shared/utils/strings.utils";
 import * as go from "gojs";
 import { PipelineNodeComponent } from "../componenets/pipeline-editor/pipeline-node/pipeline-node.component";
@@ -20,7 +22,11 @@ export class PipelineNode{
     static color = '#c8c811';
     static background = 'white';
     static textcolor = 'black';
-    static icon = '';
+    // icons as source
+    static icon = null;
+    // icons as ng zorro type
+    static nzicon = null;
+    static iconSize= 32
     static width = 180;
     static icontype = "";
     static fontFamily = '-apple-system, BlinkMacSystemFont, sans-serif;';
@@ -85,7 +91,16 @@ export class PipelineNode{
     }
 
     public static makeIcon(){
-        return  $(go.Picture, { desiredSize: new go.Size(32, 32), source: this.icon, margin: 8 })
+        let i = {}
+        if (this.nzicon){
+            const iconsService = ServiceLocator.injector.get(CustomIconsService)
+            const svg = iconsService.getIconSvgElement(this.nzicon+'-o')
+            i={element: svg}
+        } else {
+            i ={ source: this.icon }
+        }
+
+        return  $(go.Picture, { desiredSize: new go.Size(this.iconSize, this.iconSize), ...i, margin: 8 })
     }
 
     public static makeLabels(){

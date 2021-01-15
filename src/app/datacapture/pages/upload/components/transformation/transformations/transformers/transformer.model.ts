@@ -154,7 +154,7 @@ export class Merge extends Transformer {
   shortcut = 'control.m';
   type =  'merge';
   label = 'Merge';
-  icon = 'link';
+  icon = 'merge-cells';
   icon_rotation = 45;
 
   getErrors = (params, previousNodes, headers) => {
@@ -190,7 +190,7 @@ export class Filter extends Transformer {
   shortcut = 'control.f';
   type =  'filter';
   label = 'Delete Rows with Filter';
-  icon = 'filter';
+  icon = 'delete-row';
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -221,7 +221,7 @@ export class FilterAndReplace extends Transformer {
   shortcut = 'control.alt.r';
   type =  'find-replace';
   label = 'Find & Replace';
-  icon = 'funnel-plot';
+  icon = 'search';
 
   getErrors = (params, previousNodes, headers) => {
     return [
@@ -256,7 +256,7 @@ export class DefaultValue extends Transformer {
 export class Splitter extends Transformer {
   type =  'split';
   label = 'Split';
-  icon = 'disconnect';
+  icon = 'split-cells';
   shortcut = 'control.alt.s';
   collapse = false;
   icon_rotation = 45;

@@ -17,54 +17,51 @@ export class NodeTransformations extends PipelineNode{
         {id:"OUTPUT", spot:go.Spot.RightCenter},
     ]
     static transformer: any = null
-
-    public static makeIcon(){
-        const t = new this.transformer()
-        const iconsService = ServiceLocator.injector.get(CustomIconsService)
-        const svg = iconsService.getIconSvgElement(t.icon+'-o')
-
-        return  $(go.Picture, { desiredSize: new go.Size(24, 24), element: svg, margin: 8 })
-    }
 }
 
 // TODO IMPLEMENT COMPONENETS FOR EACH TRANSFORMATION
 export class NodeTransformationFilter extends NodeTransformations{
-    static transformer = Filter
-    static icon = "assets/images/svg/filter.svg"
+    static transformer = Filter;
 }
 export class NodeTransformationFilterAndReplace extends NodeTransformations{
     static transformer = FilterAndReplace;
-    static icon = "assets/images/svg/find.svg";
 }
 export class NodeTransformationMerge extends NodeTransformations{
     static transformer = Merge
-    static icon = "assets/images/svg/merge.svg";
 }
 export class NodeTransformationReplace extends NodeTransformations{
     static transformer = Replace;
-    static icon = "assets/images/svg/replace.svg";
 }
 export class NodeTransformationDeleteRow extends NodeTransformations{
     static transformer = DeleteRow;
-    static icon = "assets/images/svg/delete.svg";
 }
 export class NodeTransformationDefaultValue extends NodeTransformations{
     static transformer = DefaultValue;
-    static icon = "assets/images/svg/default.svg";
 }
 export class NodeTransformationSplitter extends NodeTransformations{
     static transformer = Splitter;
-    static icon = "assets/images/svg/split.svg";
 }
 export class NodeTransformationCalculator extends NodeTransformations{
     static transformer = Calculator;
-    static icon = "assets/images/svg/calc.svg";
 }
 export class NodeTransformationFormatDate extends NodeTransformations{
     static transformer = FormatDate;
-    static icon = "assets/images/svg/date.svg";
 }
 export class NodeTransformationGroupBy extends NodeTransformations{
     static transformer = GroupBy;
-    static icon = "assets/images/svg/group.svg";
+}
+
+for (let cls of [
+    NodeTransformationFilter,
+    NodeTransformationFilterAndReplace,
+    NodeTransformationMerge,
+    NodeTransformationReplace,
+    NodeTransformationDeleteRow,
+    NodeTransformationDefaultValue,
+    NodeTransformationSplitter,
+    NodeTransformationCalculator,
+    NodeTransformationFormatDate,
+    NodeTransformationGroupBy,
+]){
+    cls.nzicon = new cls.transformer().icon
 }
