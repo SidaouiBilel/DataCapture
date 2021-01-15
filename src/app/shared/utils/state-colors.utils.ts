@@ -3,7 +3,7 @@
 
 export function stateLabel(state){}
 export function stateColor(state){
-  if( state in Object.keys(RUN_STATES)) 
+  if( Object.keys(RUN_STATES).includes(state) )  
     return RUN_STATES[state].color
   else
     return 'lightgrey'
