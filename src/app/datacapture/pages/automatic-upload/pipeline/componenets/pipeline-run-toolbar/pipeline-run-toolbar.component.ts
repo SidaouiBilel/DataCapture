@@ -72,4 +72,6 @@ export class PipelineRunToolbarComponent implements OnInit {
   }
 
   legend = RUN_STATES
+
+  showDetails = false
 }
