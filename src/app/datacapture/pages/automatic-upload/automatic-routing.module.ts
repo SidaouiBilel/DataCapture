@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren : () => import('app/datacapture/pages/automatic-upload/author/author.module').then(m => m.AuthorModule)
     },
     {
+        path: 'monitor',
+        loadChildren : () => import('app/datacapture/pages/automatic-upload/monitor/monitor.module').then(m => m.MonitorModule)
+    },
+    {
       path: '**',
       redirectTo: 'author',
       pathMatch: 'full'
