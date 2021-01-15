@@ -27,7 +27,7 @@ export class AuthorPipelineComponent implements OnInit {
       if(runId){
         this.monitorRun(runId)
       } else {
-        this.onCancel()
+        this.resetRun()
       }
     })
    }
@@ -93,9 +93,7 @@ export class AuthorPipelineComponent implements OnInit {
   }
 
   onCancel(){
-    if(this.stop$) this.stop$.next()
     this.runId$.next(null)
-    this.run$ = null
   }
 
   monitorRun(runId){
@@ -113,4 +111,8 @@ export class AuthorPipelineComponent implements OnInit {
       );
   }
 
+  resetRun(){
+    if (this.stop$) this.stop$.next()
+    this.run$ = null
+  }
 }
