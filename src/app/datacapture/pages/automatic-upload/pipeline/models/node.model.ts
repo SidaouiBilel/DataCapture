@@ -2,7 +2,6 @@ import { CustomIconsService } from "@app/shared/services/custom-icons.service";
 import { ServiceLocator } from "@app/shared/utils/injector.utils";
 import { randomPosition } from "@app/shared/utils/strings.utils";
 import * as go from "gojs";
-import { PipelineNodeComponent } from "../componenets/pipeline-editor/pipeline-node/pipeline-node.component";
 
 const $ = go.GraphObject.make;
 
@@ -14,14 +13,15 @@ export class PipelineNode{
     static category;
     // DEFAULT LABEL OF THE NODE
     static label;
-    static shape = 'Circle'
     static showLabel = false
-
-
+    
+    
     // NODE COLORATION OR THEME
     static color = '#c8c811';
     static background = 'white';
     static textcolor = 'black';
+    static shape = 'Circle'
+    static shapeSize = 50
     // icons as source
     static icon = null;
     // icons as ng zorro type
@@ -59,20 +59,25 @@ export class PipelineNode{
         };
     }
 
-    public static getNodeTemplate(options = {}){
+    public static getNodeTemplate(options = {}, addons=[]){
         return $(go.Node, 'Spot',
             {...options},
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+            ...this.makeAddons(addons),
             $(go.Panel, "Vertical",
-                $(go.Panel, "Auto",
-                    $(go.Shape, this.shape, { fill: this.color, stroke: null,  desiredSize: new go.Size(50, 50) }),
-                    this.makeIcon(),
-                )
+            $(go.Panel, "Auto",
+            $(go.Shape, this.shape, { fill: this.color, stroke: null,  desiredSize: new go.Size(this.shapeSize, this.shapeSize) }),
+            this.makeIcon(),
+            )
             ),
             { toolTip: $("ToolTip",$(go.TextBlock, { text: this.label, margin: 4 }))},
             ...this.makeLabels(),
-            ...this.makePorts()
+            ...this.makePorts(),
         )
+    }
+
+    public static makeAddons(addons: any[]){
+       return addons.map(a=>a(this))
     }
 
     public static makePorts() {
@@ -96,8 +101,10 @@ export class PipelineNode{
             const iconsService = ServiceLocator.injector.get(CustomIconsService)
             const svg = iconsService.getIconSvgElement(this.nzicon+'-o')
             i={element: svg}
-        } else {
+        } else if(this.icon) {
             i ={ source: this.icon }
+        } else {
+            i={}
         }
 
         return  $(go.Picture, { desiredSize: new go.Size(this.iconSize, this.iconSize), ...i, margin: 8 })
