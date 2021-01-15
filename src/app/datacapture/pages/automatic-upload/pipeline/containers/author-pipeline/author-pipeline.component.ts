@@ -36,7 +36,7 @@ export class AuthorPipelineComponent implements OnInit {
   nodes$;
   metadata$;
 
-  runId$ = new BehaviorSubject("E290369CB43E4E2CBDEE2FB26C1C895B")
+  runId$ = new BehaviorSubject(null)
 
   ngOnInit(): void {}
 
@@ -113,6 +113,6 @@ export class AuthorPipelineComponent implements OnInit {
 
   resetRun(){
     if (this.stop$) this.stop$.next()
-    this.run$ = null
+    this.run$ = new BehaviorSubject(null)
   }
 }

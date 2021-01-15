@@ -9,8 +9,8 @@
     <nz-divider nzType='vertical'></nz-divider>
     <button (click)='publish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>
     <nz-divider nzType='vertical'></nz-divider>
-    <button  nz-button (click)='onTrigger()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Trigger</button>
-    <button  nz-button (click)='onCancel()'><i nz-icon nzType="pause-circle" nzTheme="outline"></i> Cancel</button>
+    <button  nz-button *ngIf='!(runId$|async)' (click)='onTrigger()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Trigger</button>
+    <button  nz-button *ngIf='runId$|async' (click)='onCancel()'><i nz-icon nzType="pause-circle" nzTheme="outline"></i> Cancel</button>
     <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
     <nz-divider nzType='vertical'></nz-divider>
   </div>
