@@ -21,7 +21,11 @@ export class PipelineEditorComponent implements AfterViewInit{
 
   @Input("run") set _run(run){
     this.diagramModelData.run=run
-
+    this.skipsDiagramUpdate = false;
+  };
+  @Input("readOnly") set _readOnly(readOnly){
+    this.readOnly = readOnly
+    if(this.myDiagramComponent.diagram) this.myDiagramComponent.diagram.isReadOnly = readOnly
     this.skipsDiagramUpdate = false;
   };
   @Input() diagramNodeData: Array<go.ObjectData> = [];
@@ -29,6 +33,7 @@ export class PipelineEditorComponent implements AfterViewInit{
   @Output() diagramNodeDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
   @Output() diagramLinkDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
 
+  public readOnly = false
   public onDoubleClicked = new EventEmitter<void>();
   public diagramDivClassName = 'myDiagramDiv';
   public diagramModelData: go.ObjectData = { prop: 'value' };
@@ -78,6 +83,8 @@ export class PipelineEditorComponent implements AfterViewInit{
       $(go.Shape),
       $(go.Shape, { toArrow: "Standard" })
     );
+
+    dia.isReadOnly = this.readOnly
 
     return dia;
   }
@@ -129,24 +136,26 @@ export class PipelineEditorComponent implements AfterViewInit{
   }
 
   public handleInspectorChange(newNodeData) {
-    const key = newNodeData.key;
-    // find the entry in nodeDataArray with this key, replace it with newNodeData
-    let index = null;
-    for (let i = 0; i < this.diagramNodeData.length; i++) {
-      const entry = this.diagramNodeData[i];
-      if (entry.key && entry.key === key) {
-        index = i;
+    if(!this.readOnly){
+      const key = newNodeData.key;
+      // find the entry in nodeDataArray with this key, replace it with newNodeData
+      let index = null;
+      for (let i = 0; i < this.diagramNodeData.length; i++) {
+        const entry = this.diagramNodeData[i];
+        if (entry.key && entry.key === key) {
+          index = i;
+        }
       }
+      // here, we set skipsDiagramUpdate to false, since GoJS does not yet have this update
+      this.skipsDiagramUpdate = false;
+      const nodeCopy = _.cloneDeep(newNodeData);
+      if (index === null) {
+        this.diagramNodeData[this.diagramNodeData.length] = nodeCopy;
+      } else {
+        this.diagramNodeData[index] = nodeCopy;
+      }
+      this.emitChanges();
     }
-    // here, we set skipsDiagramUpdate to false, since GoJS does not yet have this update
-    this.skipsDiagramUpdate = false;
-    const nodeCopy = _.cloneDeep(newNodeData);
-    if (index === null) {
-      this.diagramNodeData[this.diagramNodeData.length] = nodeCopy;
-    } else {
-      this.diagramNodeData[index] = nodeCopy;
-    }
-    this.emitChanges();
   }
 
   public addNode(node){

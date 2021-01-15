@@ -1,7 +1,7 @@
 import { NodeBlobStorageUpload, NodeSQLUpload } from "../nodes/datasink.model";
 import { NodeBlobStorage, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
-import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
-import { NodeConcat, NodeJoin, NodePycode } from "../nodes/other.model";
+import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
+import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
 import { StorageAccountImportNodeComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
 import { SqlImportNodeComponent } from "@app/shared/setup/nodes/datasources/sql-import-node/sql-import-node.component";
 import { NodePycodeComponent } from "@app/shared/setup/nodes/other/node-pycode/node-pycode.component";
@@ -14,7 +14,8 @@ import { assertNotNull } from "@angular/compiler/src/output/output_ast";
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
   NodeJoin.setComponenet(BaseNodeTransformationComponent),
-  NodePycode.setComponenet(NodePycodeComponent)
+  NodePycode.setComponenet(NodePycodeComponent),
+  NodeTransformationPipeline.setComponenet(BaseNodeTransformationComponent)
 ] 
 export const DATASOURCE_NODES = [
   NodeSQLImport.setComponenet(SqlImportNodeComponent), 
@@ -35,7 +36,7 @@ export const NODE_TRANSFORMERS = [
               ,NodeTransformationSplitter
               ,NodeTransformationCalculator
               ,NodeTransformationFormatDate
-              ,NodeTransformationGroupBy
+              ,NodeTransformationHash
           ].map(cls =>{
               const t = new cls.transformer()
               cls.type = t.type
@@ -43,6 +44,7 @@ export const NODE_TRANSFORMERS = [
               cls.setComponenet(BaseNodeTransformationComponent)
               return cls
           })
+
 
 export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS]
 

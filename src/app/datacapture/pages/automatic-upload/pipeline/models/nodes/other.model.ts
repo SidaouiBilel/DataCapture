@@ -17,6 +17,18 @@ export class NodeConcat extends PipelineNode{
     ]
 }
 
+export class NodeTransformationPipeline extends PipelineNode{
+    static type = 'PIPELINE_TRANSFORMATION'
+    static category = 'TRANSFORMATION'    
+    static nzicon = "api"
+    static color = 'darkorange';
+    static label = 'Pipeline'
+    static ports = [
+        {id:"INPUT",spot: go.Spot.Left},
+        {id:"OUTPUT",spot:go.Spot.Right},
+    ]
+}
+
 export class NodeJoin extends PipelineNode{
     static type = 'join'
     static category = 'MERGE'
