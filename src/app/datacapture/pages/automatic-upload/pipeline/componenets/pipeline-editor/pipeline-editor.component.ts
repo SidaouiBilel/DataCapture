@@ -64,49 +64,7 @@ export class PipelineEditorComponent implements AfterViewInit{
         that.editNode(node.data);
       }
     },
-    [
-      (cls)=>$(go.Panel,
-        $(go.Shape, cls.shape, {
-          desiredSize: new go.Size(cls.shapeSize, cls.shapeSize),
-          fill: null,
-          stroke: null,
-          strokeWidth:5,
-          },
-          new go.Binding("stroke", "run", (run, target)=>{
-            const node = target.part.data
-            const id = node.key
-            console.log(node, run)
-            const task = run.tasks.find(t=>t.task_id==id)
-            if (task){
-              switch(task.state){
-                case 'success': return 'lightgreen'
-                case 'running': return 'lightblue'
-                case 'failed': return 'red'
-                case 'scheduled': return 'lightgrey'
-                case 'queued': return 'skyblue'
-                default: return null
-              }
-            } else {
-              return null
-            }
-          }).ofModel() 
-        ),
-      ),
-      // (cls)=>$(go.Panel,{padding:4 , alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom},
-      //   $(go.TextBlock,new go.Binding("text", "run", (run, target)=>{
-      //     const node = target.part.data
-      //     const id = node.key
-      //     console.log(node, run)
-      //     const task = run.tasks.find(t=>t.task_id==id)
-      //     if (task){
-      //       return task.state
-      //     } else {
-      //       return ""
-      //     }
-      //   }).ofModel() 
-      //   )
-      // )
-    ]
+    []
     );
 
     // dia.linkTemplate =  $(go.Link,

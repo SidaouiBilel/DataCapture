@@ -64,6 +64,7 @@ export class PipelineNode{
             {...options},
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             ...this.makeAddons(addons),
+            ...this.makeRunStatus(),
             $(go.Panel, "Vertical",
             $(go.Panel, "Auto",
             $(go.Shape, this.shape, { fill: this.color, stroke: null,  desiredSize: new go.Size(this.shapeSize, this.shapeSize) }),
@@ -121,5 +122,35 @@ export class PipelineNode{
         }else{
             return []
         }
+    }
+
+    public static makeRunStatus(){
+        return [$(go.Panel,
+            $(go.Shape, this.shape, {
+              desiredSize: new go.Size(this.shapeSize, this.shapeSize),
+              fill: null,
+              stroke: null,
+              strokeWidth:5,
+              },
+              new go.Binding("stroke", "run", (run, target)=>{
+                const node = target.part.data
+                const id = node.key
+                console.log(node, run)
+                const task = run.tasks.find(t=>t.task_id==id)
+                if (task){
+                  switch(task.state){
+                    case 'success': return 'lightgreen'
+                    case 'running': return 'lightblue'
+                    case 'failed': return 'red'
+                    case 'scheduled': return 'lightgrey'
+                    case 'queued': return 'skyblue'
+                    default: return null
+                  }
+                } else {
+                  return null
+                }
+              }).ofModel() 
+            ),
+          )]
     }
 }
