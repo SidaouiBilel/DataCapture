@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { RUN_STATES } from '@app/shared/utils/state-colors.utils';
 
 @Component({
   selector: 'app-pipeline-run-toolbar',
@@ -70,4 +71,5 @@ export class PipelineRunToolbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  legend = RUN_STATES
 }

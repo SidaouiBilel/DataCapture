@@ -9,7 +9,14 @@
     <div class="flex between top">
 
       <!-- DESCRIPTIONS -->
-      <ng-template #dscTitle> <div class="font-weight-light"><i nz-icon nzType="fund-projection-screen" nzTheme="outline"></i> Run Information</div></ng-template>
+      <ng-template #dscTitle> 
+        <div class="flex between">
+          <div class="font-weight-light mr-3"><i nz-icon nzType="fund-projection-screen" nzTheme="outline"></i> Run Information</div>
+          <div class="fill">
+            <nz-tag *ngFor='let l of legend | keyvalue' [nzColor]="l.value.color">{{l.value.label}}</nz-tag>
+          </div>
+        </div>
+      </ng-template>
       <nz-descriptions [nzTitle]='dscTitle' class="mb-2" *ngIf='showProgress' [nzColon]='false' nzSize="small">
         <nz-descriptions-item nzTitle="Tasks">{{doneSteps}} (Done) / {{progressSteps}} (Total)</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Status"><nz-badge [nzStatus]="badgeType" [nzText]='run.state'></nz-badge></nz-descriptions-item>

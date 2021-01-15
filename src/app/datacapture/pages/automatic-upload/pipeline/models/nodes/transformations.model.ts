@@ -1,4 +1,4 @@
-import { Filter, FilterAndReplace, Merge, Replace, DeleteRow, DefaultValue, Splitter, Calculator, FormatDate, GroupBy } from "@app/datacapture/pages/upload/components/transformation/transformations/transformers/transformer.model";
+import { Filter, FilterAndReplace, Merge, Replace, DeleteRow, DefaultValue, Splitter, Calculator, FormatDate, GroupBy, Hasher } from "@app/datacapture/pages/upload/components/transformation/transformations/transformers/transformer.model";
 import { CustomIconsService } from "@app/shared/services/custom-icons.service";
 import { ServiceLocator } from "@app/shared/utils/injector.utils";
 
@@ -50,6 +50,9 @@ export class NodeTransformationFormatDate extends NodeTransformations{
 export class NodeTransformationGroupBy extends NodeTransformations{
     static transformer = GroupBy;
 }
+export class NodeTransformationHash extends NodeTransformations{
+    static transformer = Hasher;
+}
 
 for (let cls of [
     NodeTransformationFilter,
@@ -62,6 +65,7 @@ for (let cls of [
     NodeTransformationCalculator,
     NodeTransformationFormatDate,
     NodeTransformationGroupBy,
+    NodeTransformationHash
 ]){
     cls.nzicon = new cls.transformer().icon
 }

@@ -1,5 +1,6 @@
 import { CustomIconsService } from "@app/shared/services/custom-icons.service";
 import { ServiceLocator } from "@app/shared/utils/injector.utils";
+import { stateColor } from "@app/shared/utils/state-colors.utils";
 import { randomPosition } from "@app/shared/utils/strings.utils";
 import * as go from "gojs";
 
@@ -124,8 +125,7 @@ export class PipelineNode{
             return [
                 $(go.Panel,{padding:4 , alignment: go.Spot.Bottom, alignmentFocus: go.Spot.Top},
                     $(go.TextBlock, { text: this.label, stroke:'grey'}, new go.Binding("text", "label") )
-                )
-                
+                ) 
             ]
         }else{
             return []
@@ -133,33 +133,18 @@ export class PipelineNode{
     }
 
     public static makeRunStatus(){
-        // return [$(go.Panel,
-        //     $(go.Shape, this.shape, {
-        //       desiredSize: new go.Size(this.shapeSize, this.shapeSize),
-        //       fill: null,
-        //       stroke: null,
-        //       strokeWidth:5,
-        //       },
-        //       this.runBinding()
-        //     ),
-        //   )]
         return []
     }
 
     public static runBinding(property="stroke"){
         return new go.Binding(property, "run", (run, target)=>{
-            const node = target.part.data
-            const id = node.key
-            const task = run.tasks.find(t=>t.task_id==id)
-            if (task){
-              switch(task.state){
-                case 'success': return 'lightgreen'
-                case 'running': return 'lightblue'
-                case 'failed': return 'red'
-                case 'scheduled': return 'lightgrey'
-                case 'queued': return 'skyblue'
-                default: return 'lightgrey'
-              }
+            if(run){
+                const node = target.part.data
+                const id = node.key
+                const task = run.tasks.find(t=>t.task_id==id)
+                if (task){
+                   return stateColor(task.state)
+                }
             }
 
             return this.color

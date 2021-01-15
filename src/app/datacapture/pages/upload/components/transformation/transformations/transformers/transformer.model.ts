@@ -357,4 +357,37 @@ export class GroupBy extends Transformer {
     return errors;
   }
 
+  
+}
+
+export class Hasher extends Transformer { 
+  type = 'hash';
+  label = 'Hash';
+  icon = 'barcode';
+  shortcut = 'control.alt.h';
+  collapse = false;
+
+  getErrors = (params, previousNodes, headers) => {
+    const errors = [];
+    if (!params.columns || (params.columns && params.columns.length === 0 ) ) {
+        errors.push(new NodeError('columns', 'Missing Column'));
+    } else {
+        const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
+        for ( const column of params.columns ) {
+            if ( previousHeaders.indexOf(column) < 0 ) {
+                errors.push(new NodeError('columns', `${column} does not exist`));
+            }
+
+        }
+    }
+    return errors;
+  }
+
+  getRuleFromGrid(params) {
+    const columns = GAPIColumnsInRange(params.api);
+    return {
+        ...this.getRule(),
+        columns
+    };
+  }
 }

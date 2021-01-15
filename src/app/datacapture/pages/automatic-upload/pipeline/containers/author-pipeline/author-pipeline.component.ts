@@ -81,9 +81,10 @@ export class AuthorPipelineComponent implements OnInit {
 
 
   // MANGAGE RUNS HERE
-  run$
+  run$ = new BehaviorSubject(null)
   stop$
   onTrigger(){
+    this.resetRun()
     withValue(this.metadata$,(p)=>{
       this.pipelines.trigger(p.pipeline_id).subscribe((res:any)=>{
         const run_id = res.run_id
@@ -98,21 +99,21 @@ export class AuthorPipelineComponent implements OnInit {
 
   monitorRun(runId){
     // CANSEL PREVIOUS POOLING
-    this.onCancel()
     this.stop$ = new Subject()
-    this.run$ = timer(0,2000).pipe(
+    timer(0,2000).pipe(
       takeUntil(this.stop$), 
       switchMap(()=>this.pipelines.getRun(runId)),
       tap((run_res:any)=>{
+        this.run$.next(run_res)
         if(['success','failed'].includes(run_res.state)){
           this.stop$.next()
         }
       })
-      );
+      ).subscribe();
   }
 
   resetRun(){
     if (this.stop$) this.stop$.next()
-    this.run$ = new BehaviorSubject(null)
+    this.run$.next(null)
   }
 }
