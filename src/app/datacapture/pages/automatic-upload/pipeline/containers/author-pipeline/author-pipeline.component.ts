@@ -26,6 +26,8 @@ export class AuthorPipelineComponent implements OnInit {
     this.runId$.subscribe((runId)=>{
       if(runId){
         this.monitorRun(runId)
+      } else {
+        this.onCancel()
       }
     })
    }
