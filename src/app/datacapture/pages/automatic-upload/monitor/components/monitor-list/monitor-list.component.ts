@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -12,6 +11,7 @@ export class MonitorListComponent implements OnInit {
   @Input() pipelines = [];
   @Input() getMonitor: (pipe: any, monitors$: BehaviorSubject<any>) => void;
   @Input() getTasks: (pipe: any, tasks$: BehaviorSubject<any>) => void;
+  @Output() openRun: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit(): void {

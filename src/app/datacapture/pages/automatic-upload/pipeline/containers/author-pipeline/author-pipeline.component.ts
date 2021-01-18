@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { PipelinesService } from '../../services/pipelines.service';
-import { PipelineEditLinks, PipelineEditMetaData, PipelineEditNodes } from '../../store/pipeline.actions';
-import { selectPipelineEditLinks, selectPipelineEditNodes, selectPipelineMetaData } from '../../store/pipeline.selectors';
+import { PipelineEditLinks, PipelineEditMetaData, PipelineEditNodes, PipelineEditRunId } from '../../store/pipeline.actions';
+import { selectPipelineEditLinks, selectPipelineEditNodes, selectPipelineMetaData, selectRunId } from '../../store/pipeline.selectors';
 import * as _ from 'lodash';
 import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { BehaviorSubject, forkJoin, interval, Subject, timer } from 'rxjs';
+import { BehaviorSubject, forkJoin, interval, Observable, Subject, timer } from 'rxjs';
 import { PipelineEditorService } from '../../services/pipeline-editor.service';
 import { withValue } from '@app/shared/utils/rxjs.utils';
 
@@ -15,19 +15,19 @@ import { withValue } from '@app/shared/utils/rxjs.utils';
   templateUrl: './author-pipeline.component.html',
   styleUrls: ['./author-pipeline.component.css']
 })
-export class AuthorPipelineComponent implements OnInit {
+export class AuthorPipelineComponent implements OnInit, OnDestroy {
 
   constructor(public pipelines: PipelinesService, private service: PipelineEditorService, private ntf: NotificationService, private store: Store<AppState>) {
     this.links$ = this.store.select(selectPipelineEditLinks).pipe(map(e => _.cloneDeep(e)));
     this.nodes$ = this.store.select(selectPipelineEditNodes).pipe(map(e => _.cloneDeep(e)));
     this.metadata$ = this.store.select(selectPipelineMetaData);
-
+    this.runId$ = this.store.select(selectRunId);
 
     this.runId$.subscribe((runId)=>{
       if(runId){
-        this.monitorRun(runId)
+        this.monitorRun(runId);
       } else {
-        this.resetRun()
+        this.resetRun();
       }
     })
    }
@@ -35,11 +35,15 @@ export class AuthorPipelineComponent implements OnInit {
   links$;
   nodes$;
   metadata$;
-
-  runId$ = new BehaviorSubject(null)
+  runId$: Observable<string>;// MANGAGE RUNS HERE
+  run$ = new BehaviorSubject(null)
+  stop$;
 
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    this.resetRun()
+  }
   publish(){
     forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
       .subscribe(([links, nodes, metaData]: any) => {
@@ -80,24 +84,22 @@ export class AuthorPipelineComponent implements OnInit {
   }
 
 
-  // MANGAGE RUNS HERE
-  run$ = new BehaviorSubject(null)
-  stop$
+  
   onTrigger(){
     this.resetRun()
     withValue(this.metadata$,(p)=>{
       this.pipelines.trigger(p.pipeline_id).subscribe((res:any)=>{
-        const run_id = res.run_id
-        this.runId$.next(run_id)        
+        const run_id = res.run_id;
+        this.store.dispatch(new PipelineEditRunId({run_id, pipeline_id: p.pipeline_id}));
       })
     })
   }
 
   onCancel(){
-    this.runId$.next(null)
+    this.store.dispatch(new PipelineEditRunId({run_id: null, pipeline_id: null}));
   }
 
-  monitorRun(runId){
+  monitorRun(runId) {
     // CANSEL PREVIOUS POOLING
     this.stop$ = new Subject()
     timer(0,2000).pipe(

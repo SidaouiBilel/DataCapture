@@ -8,12 +8,14 @@ export class PipelineState {
   edit_nodes :any[]
   edit_links :any[]
   metadata: PipelineMetadata
+  run_id: string
 }
 
 export const initialState: PipelineState = {
   edit_nodes : [],
   edit_links : [],
-  metadata: {pipeline_id: null, name: '', description: ''}
+  metadata: {pipeline_id: null, name: '', description: ''},
+  run_id: null
 };
 
 export const FEATURE_NAME = 'pipeline';
@@ -35,6 +37,9 @@ export function PipelineReducer(state: PipelineState = initialState, action: any
       case PipelineActionTypes.EDIT_PIPELINE:
         return {...state, metadata: action.metadata}
 
+      case PipelineActionTypes.EDIT_RUN_ID:
+        return {...state, run_id: action.event.run_id}
+        
       case PipelineActionTypes.RESET:
         return {...initialState};
 

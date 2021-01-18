@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AppState, NotificationService } from "@app/core";
 import { Store } from "@ngrx/store";
 import { BehaviorSubject } from "rxjs";
+import { PipelineEditMetaData, PipelineEditRunId } from "../../pipeline/store/pipeline.actions";
 import { MonitorService } from "../service/monitor.service";
 
 @Component({
@@ -40,5 +41,14 @@ export class MonitorContainer {
             tasks$.next(res);
             this.not.close(loader);
         }, (err) => {this.not.close(loader); })
+    }
+
+    openRun(event) {
+        this.store.dispatch(new PipelineEditMetaData({
+            pipeline_id: event.pipeline.id,
+            name: event.pipeline.name,
+            description: event.pipeline.description
+        }));
+        this.store.dispatch(new PipelineEditRunId({run_id: event.run_id, pipeline_id: event.pipeline.id}));
     }
 }
