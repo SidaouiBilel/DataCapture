@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NzDrawerService } from 'ng-zorro-antd';
+import { BehaviorSubject } from 'rxjs';
+import { PipelineTasksComponent } from '../../modals/pipeline-tasks/pipeline-tasks.component';
 
 @Component({
   selector: 'app-monitor-item',
@@ -6,10 +9,25 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./monitor-item.component.css']
 })
 export class MonitorItemComponent implements OnInit {
+  tasks$:BehaviorSubject<any> = new BehaviorSubject<any>(null);
   @Input() monitors:any;
-  constructor() { }
+  @Input() getTasks: (pipe: any, tasks$: BehaviorSubject<any>) => void;
+  constructor(private drawerService: NzDrawerService) { }
 
   ngOnInit(): void {
+  }
+
+  openTask(pipe: any) {
+    this.getTasks(pipe, this.tasks$);
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Tasks',
+      nzWidth: '40vw',
+      nzClosable: false,
+      nzContent: PipelineTasksComponent,
+      nzContentParams: {
+        tasks$: this.tasks$
+      }
+    });
   }
 
 }

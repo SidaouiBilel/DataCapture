@@ -16,4 +16,8 @@ export class MonitorService {
     getMonitors(id) {
         return this.http.get(environment.pipeline + `/monitor/dag/${id}/run`)
     }
+
+    getRunTasks(runId) {
+        return this.http.get(environment.pipeline + `/monitor/run/${runId}`)
+    }
 }

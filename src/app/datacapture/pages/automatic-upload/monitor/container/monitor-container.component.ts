@@ -30,7 +30,14 @@ export class MonitorContainer {
         const loader = this.not.loading('Loading...');
         this.service.getMonitors(pipe.id).subscribe((res: any) => {
             monitors$.next(res);
-            console.log(res);
+            this.not.close(loader);
+        }, (err) => {this.not.close(loader); })
+    }
+
+    getRunTasks = (run: any, tasks$: BehaviorSubject<any>) => {
+        const loader = this.not.loading('Loading...');
+        this.service.getRunTasks(run.run_id).subscribe((res: any) => {
+            tasks$.next(res);
             this.not.close(loader);
         }, (err) => {this.not.close(loader); })
     }

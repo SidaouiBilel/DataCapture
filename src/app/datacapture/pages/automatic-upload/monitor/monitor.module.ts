@@ -5,6 +5,7 @@ import { MonitorRoutingModule } from './monitor-routing.module';
 import { MonitorService } from './service/monitor.service';
 import { MonitorListComponent } from './components/monitor-list/monitor-list.component';
 import { MonitorItemComponent } from './components/monitor-item/monitor-item.component';
+import { PipelineTasksComponent } from './modals/pipeline-tasks/pipeline-tasks.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MonitorItemComponent } from './components/monitor-item/monitor-item.com
   declarations: [
     MonitorContainer,
     MonitorListComponent,
-    MonitorItemComponent
+    MonitorItemComponent,
+    PipelineTasksComponent
   ],
   exports: [
   ],
@@ -23,6 +25,7 @@ import { MonitorItemComponent } from './components/monitor-item/monitor-item.com
     MonitorService
   ],
   entryComponents: [
+    PipelineTasksComponent
   ]
 })
 export class MonitorModule {}
