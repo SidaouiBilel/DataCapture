@@ -32,7 +32,7 @@ export class NodeTransformationPipeline extends PipelineNode{
 export class NodeJoin extends PipelineNode{
     static type = 'join'
     static category = 'MERGE'
-    static nzicon = "insert-row-right"
+    static nzicon = "link"
     static color = 'orange';
     static label = 'Join'
     static ports = [

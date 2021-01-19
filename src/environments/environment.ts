@@ -10,7 +10,7 @@ export const environment = {
   test: false,
   // import: 'http://localhost:5000/import/',
   // import: 'http://localhost:5001/import/v2/',
-  import: 'https://dcm-import.azurewebsites.net/import/v2/',
+  import: 'http://localhost:5001/import/v2/',
   // cleansing: 'http://localhost:5002/check',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   // mapping: 'http://localhost:5001/mapping',
