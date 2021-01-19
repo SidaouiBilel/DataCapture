@@ -16,3 +16,8 @@ export const selectPipelineMetaData = createSelector(
   selectPipeline,
   (object: PipelineState) => object.metadata
 );
+
+export const selectRunId = createSelector(
+  selectPipeline,
+  (object: PipelineState) => object.run_id
+)

@@ -5,7 +5,7 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { tap, map } from "rxjs/operators";
 import { PipelinesService } from "../services/pipelines.service";
-import { PipelineActionTypes, PipelineEdit, PipelineEditLinks, PipelineEditNodes, PipelineReset } from "./pipeline.actions";
+import { PipelineActionTypes, PipelineEdit, PipelineEditLinks, PipelineEditNodes, PipelineEditRunId, PipelineReset } from "./pipeline.actions";
 
 @Injectable()
 export class PipelineEffects {
@@ -22,6 +22,16 @@ export class PipelineEffects {
     ofType<PipelineReset>(PipelineActionTypes.RESET),
     map(() => {
         this.router.navigate(['/datacapture/automatic/pipeline'])
+      }
+    )
+  );
+
+  @Effect({ dispatch: false })
+  openRun = this.actions$.pipe(
+    ofType<PipelineEditRunId>(PipelineActionTypes.EDIT_RUN_ID),
+    map((action) => {
+      if (action.event.pipeline_id)
+        this.router.navigate(['/datacapture/automatic/pipeline/'+ action.event.pipeline_id]);
       }
     )
   );
