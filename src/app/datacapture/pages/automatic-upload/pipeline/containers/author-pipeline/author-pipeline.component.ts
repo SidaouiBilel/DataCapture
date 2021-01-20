@@ -22,14 +22,6 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
     this.nodes$ = this.store.select(selectPipelineEditNodes).pipe(map(e => _.cloneDeep(e)));
     this.metadata$ = this.store.select(selectPipelineMetaData);
     this.runId$ = this.store.select(selectRunId);
-
-    this.runId$.subscribe((runId)=>{
-      if(runId){
-        this.monitorRun(runId);
-      } else {
-        this.resetRun();
-      }
-    })
    }
 
   links$;
@@ -39,11 +31,20 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
   run$ = new BehaviorSubject(null)
   stop$;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.runId$.subscribe((runId)=>{
+      if(runId){
+        this.monitorRun(runId);
+      } else {
+        this.resetRun();
+      }
+    })
+  }
 
   ngOnDestroy(): void {
     this.resetRun()
   }
+
   publish(){
     forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
       .subscribe(([links, nodes, metaData]: any) => {
