@@ -1,5 +1,5 @@
-import { NodeBlobStorageUpload, NodeSQLUpload } from "../nodes/datasink.model";
-import { NodeBlobStorage, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
+import { NodeBlobStorageUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
+import { NodeBlobStorage, NodeCollectionImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
 import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
 import { StorageAccountImportNodeComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
@@ -9,7 +9,6 @@ import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transfo
 import { SqlUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/sql-upload-node/sql-upload-node.component";
 import { StorageAccountUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/storage-account-upload-node/storage-account-upload-node.component";
 import { PostgresImportNodeComponent } from "@app/shared/setup/nodes/datasources/postgres-import-node/postgres-import-node.component";
-import { assertNotNull } from "@angular/compiler/src/output/output_ast";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -18,12 +17,15 @@ export const NODE_OTHERS = [
   NodeTransformationPipeline.setComponenet(BaseNodeTransformationComponent)
 ] 
 export const DATASOURCE_NODES = [
+  NodeCollectionImport.setComponenet(BaseNodeTransformationComponent),
   NodeSQLImport.setComponenet(SqlImportNodeComponent), 
   NodePostgresImport.setComponenet(PostgresImportNodeComponent), 
-  NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent)
+  NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent),
 ]
 export const DATASINK_NODES = [
+  NodeCollectionImport.setComponenet(BaseNodeTransformationComponent), 
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
+  NodePostgresUpload.setComponenet(SqlUploadNodeComponent),
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent), 
 ]
 export const NODE_TRANSFORMERS = [
@@ -38,9 +40,6 @@ export const NODE_TRANSFORMERS = [
               ,NodeTransformationFormatDate
               ,NodeTransformationHash
           ].map(cls =>{
-              const t = new cls.transformer()
-              cls.type = t.type
-              cls.label = t.label
               cls.setComponenet(BaseNodeTransformationComponent)
               return cls
           })

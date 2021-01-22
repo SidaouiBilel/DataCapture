@@ -10,10 +10,10 @@ export function stateColor(state){
 }
 
 export const RUN_STATES = {
-  'success':{label:'Success', color:'lightgreen'},
+  'success':{label:'Success', color:'#339922'},
   'running':{label:'Running', color:'skyblue'},
-  'failed':{label:'Failed', color:'#d66464'},
+  'failed':{label:'Failed', color:'#996464'},
   'queued':{label:'Queued', color:'lightblue'},
   'scheduled':{label:'Scheduled', color:'lightgrey'},
-  'upstream_failed':{label:'Upstream Failed', color:'#c5a3a3'},
+  'upstream_failed':{label:'Upstream Failed', color:'#fa8c16'},
 }

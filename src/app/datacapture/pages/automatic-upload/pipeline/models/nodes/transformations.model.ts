@@ -67,5 +67,8 @@ for (let cls of [
     NodeTransformationGroupBy,
     NodeTransformationHash
 ]){
-    cls.nzicon = new cls.transformer().icon
+    const t = new cls.transformer()
+    cls.type = t.type
+    cls.label = t.label
+    cls.nzicon = t.icon
 }

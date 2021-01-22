@@ -47,3 +47,9 @@ for (let cls of [NodeBlobStorage, NodeSQLImport, NodePostgresImport]){
     cls.icon = cls.connectorDef.svgWhite
     cls.label = cls.connectorDef.label
 }
+
+export class NodeCollectionImport extends NodeDatasource{
+    static type = "COLLECTION_IMPORT"
+    static nzicon = 'folder'
+    static label = 'Collection'
+}

@@ -1,4 +1,4 @@
-import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
+import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_POSTGRES, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
 import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transformations/base-node-transformation/base-node-transformation.component";
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
@@ -29,6 +29,12 @@ export class NodeUploadConnector extends NodeDatasink{
     }
 }
 
+export class NodeCollectionUpload extends NodeDatasink{
+    static type = "COLLECTION_UPLOAD"    
+    static nzicon = 'folder'
+}
+
+
 export class NodeBlobStorageUpload extends NodeUploadConnector{
     static type = "BLOB_STORAGE_UPLOAD_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_BLOB_STORAGE    
@@ -40,7 +46,12 @@ export class NodeSQLUpload extends NodeUploadConnector{
 
 }
 
-for (let cls of [NodeBlobStorageUpload, NodeSQLUpload]){
+export class NodePostgresUpload extends NodeUploadConnector{
+    static type = "POSTGRES_UPLOAD_CONNECTOR"
+    static connectorDef = CONNECTOR_DEF_POSTGRES
+}
+
+for (let cls of [NodeBlobStorageUpload, NodeSQLUpload, NodePostgresUpload]){
     cls.icon = cls.connectorDef.svgWhite
     cls.label = cls.connectorDef.label
 }
