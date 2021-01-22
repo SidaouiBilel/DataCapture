@@ -44,7 +44,7 @@ export class NodeError {
 export class DeleteRow extends Transformer {
   type = 'delete-rows';
   label = 'Delete Rows';
-  icon = 'scissor';
+  icon = 'delete-row';
   shortcut = 'control.d';
   collapse = false;
   getErrors = (params, previousNodes, headers) => {
@@ -76,7 +76,6 @@ export class DeleteColumns extends Transformer {
   type = 'delete-column';
   label = 'Delete Columns';
   icon = 'scissor';
-  icon_rotation = 90;
   shortcut = 'control.alt.d';
   collapse = false;
 
@@ -109,7 +108,7 @@ export class Replace extends Transformer {
   shortcut = 'control.r';
   type =  'replace';
   label = 'Replace';
-  icon = 'font-size';
+  icon = 'swap';
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -155,7 +154,6 @@ export class Merge extends Transformer {
   type =  'merge';
   label = 'Merge';
   icon = 'merge-cells';
-  icon_rotation = 45;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -190,7 +188,7 @@ export class Filter extends Transformer {
   shortcut = 'control.f';
   type =  'filter';
   label = 'Delete Rows with Filter';
-  icon = 'delete-row';
+  icon = 'filter';
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -259,7 +257,6 @@ export class Splitter extends Transformer {
   icon = 'split-cells';
   shortcut = 'control.alt.s';
   collapse = false;
-  icon_rotation = 45;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];

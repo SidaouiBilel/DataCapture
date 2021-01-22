@@ -126,11 +126,11 @@ getMainContextMenuItems = (params) => {
       subMenu: this.getViewModes().map(e => ({...e, icon: null}))
     },
     ...this.getExtraMenuItems(params).map(e => ({...e, icon: null})),
-    'separator',
-    {
-      name: 'Dataset Configuration',
-      subMenu: this.headerSelectionMenu(),
-    },
+    // 'separator',
+    // {
+    //   name: 'Dataset Configuration',
+    //   subMenu: this.headerSelectionMenu(),
+    // },
     'separator',
     'copy',
     'copyWithHeaders',

@@ -14,11 +14,11 @@ import { HashComponent } from './transformation-interface/format/hash/hash.compo
 export const TRANSFORMATIONS = [
   new Filter().setComponent(FilterComponent),
   new FilterAndReplace().setComponent(FindAndReplaceComponent),
-  new Merge().setComponent(MergerComponent),
   new Replace().setComponent(FormatterComponent),
+  new Splitter().setComponent(SplitterComponent),
+  new Merge().setComponent(MergerComponent),
   new DeleteRow().setComponent(DeleteRowsComponent),
   new DefaultValue().setComponent(DefaultValueComponent),
-  new Splitter().setComponent(SplitterComponent),
   new Calculator().setComponent(CalculatorComponent),
   // new DeleteColumns().setComponent(DeleteColumnComponent),
   new FormatDate().setComponent(DateFormatterComponent),

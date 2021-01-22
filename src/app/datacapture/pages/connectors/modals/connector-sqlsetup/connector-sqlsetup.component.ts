@@ -19,7 +19,7 @@ export class ConnectorSQLSetupComponent extends ConnectorSetupBaseComponent{
     this.validateForm = this.fb.group({
       name: [this.data.name, [Validators.required]],
       description: [this.data.description],
-      url: [this.data.url, [Validators.required]],
+      host: [this.data.host, [Validators.required]],
       port: [this.data.port, [Validators.required]],
       database: [this.data.database, [Validators.required]],
       password: [this.data.password, [Validators.required]],
