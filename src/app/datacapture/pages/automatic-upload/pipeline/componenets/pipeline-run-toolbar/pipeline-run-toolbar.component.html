@@ -14,7 +14,7 @@
           <i nz-icon nzType="fund-projection-screen" nzTheme="outline"></i> Run Information
         </div>
         <div>
-          <span class="mr-2" *ngFor='let l of legend | keyvalue'><span class="mr-1" style="display: inline-block; width: 10px; height: 10px;" [style.background-color='l.value.color']></span>{{l.value.label}}</span>
+          <span class="mr-2" *ngFor='let l of legend | keyvalue'><span class="mr-1" style="display: inline-block; width: 10px; height: 10px;" [style.background-color]='l.value.color'></span>{{l.value.label}}</span>
         </div>
       </div>
 
