@@ -32,6 +32,7 @@ export class NodeUploadConnector extends NodeDatasink{
 export class NodeCollectionUpload extends NodeDatasink{
     static type = "COLLECTION_UPLOAD"    
     static nzicon = 'folder'
+    static label = "Collection"
 }
 
 
@@ -52,6 +53,6 @@ export class NodePostgresUpload extends NodeUploadConnector{
 }
 
 for (let cls of [NodeBlobStorageUpload, NodeSQLUpload, NodePostgresUpload]){
-    cls.icon = cls.connectorDef.svgWhite
+    cls.nzicon = cls.connectorDef.icon
     cls.label = cls.connectorDef.label
 }

@@ -33,12 +33,17 @@ export class CustomIconsService extends NzIconService{
     this._loadIconDynamically(type).subscribe(e=>{
       img.innerHTML = e.icon.trim();
       const svgElm = img.firstChild as HTMLElement
-      svgElm.setAttribute('height', '64')
-      svgElm.setAttribute('width', '64')
-      svgElm.setAttribute("xmlns","http://www.w3.org/2000/svg")
-      svgElm.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink")
-      svgElm.setAttribute("viewBox","0 0 1000, 1000" )
-      svgElm.setAttribute("fill","#fff")
+      try{
+
+        svgElm.setAttribute('height', '64')
+        svgElm.setAttribute('width', '64')
+        svgElm.setAttribute("xmlns","http://www.w3.org/2000/svg")
+        svgElm.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink")
+        // svgElm.setAttribute("viewBox","0 0 64, 64" )
+        svgElm.setAttribute("fill","#fff")
+      } catch(exp){
+        console.log('ERROR ON ', type, svgElm, e.icon, e)
+      }
       // svgElm.setAttribute("fill-rule","evenodd")
       
       const source = `data:image/svg+xml;base64,${btoa(svgElm.outerHTML)}`

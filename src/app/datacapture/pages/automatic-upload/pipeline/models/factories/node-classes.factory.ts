@@ -1,4 +1,4 @@
-import { NodeBlobStorageUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
+import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
 import { NodeBlobStorage, NodeCollectionImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
 import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
@@ -23,7 +23,7 @@ export const DATASOURCE_NODES = [
   NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent),
 ]
 export const DATASINK_NODES = [
-  NodeCollectionImport.setComponenet(BaseNodeTransformationComponent), 
+  NodeCollectionUpload.setComponenet(BaseNodeTransformationComponent), 
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
   NodePostgresUpload.setComponenet(SqlUploadNodeComponent),
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent), 

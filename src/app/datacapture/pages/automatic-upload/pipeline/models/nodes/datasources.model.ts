@@ -44,7 +44,7 @@ export class NodePostgresImport extends NodeImportConnector{
 
 // SET UP NODE METADATA
 for (let cls of [NodeBlobStorage, NodeSQLImport, NodePostgresImport]){
-    cls.icon = cls.connectorDef.svgWhite
+    cls.nzicon = cls.connectorDef.icon
     cls.label = cls.connectorDef.label
 }
 
