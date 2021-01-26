@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-postgres-import-node',
-  templateUrl: './postgres-import-node.component.html',
+  templateUrl: '../sql-import-node/sql-import-node.component.html',
   styleUrls: ['./postgres-import-node.component.css']
 })
 export class PostgresImportNodeComponent extends PipelineNodeComponent {

@@ -34,6 +34,7 @@ import { StorageAccountUploadNodeComponent } from './setup/nodes/datasinks/stora
 import { PostgresImportNodeComponent } from './setup/nodes/datasources/postgres-import-node/postgres-import-node.component';
 import { PostgresUploadNodeComponent } from './setup/nodes/datasinks/postgres-upload-node/postgres-upload-node.component';
 import { DcmPreviewGridComponent } from './dcm-preview-grid/dcm-preview-grid.component';
+import { ConnectorPreviewComponent } from './connector-preview/connector-preview.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -68,7 +69,15 @@ const Components = [
   StorageAccountImportNodeComponent,
   BaseNodeTransformationComponent,
   ClearGridFilterComponent,
-  MetaComponent
+  MetaComponent,
+  NodePycodeComponent,
+  SqlImportNodeComponent,
+  SqlUploadNodeComponent,
+  StorageAccountUploadNodeComponent,
+  PostgresImportNodeComponent,
+  PostgresUploadNodeComponent,
+  DcmPreviewGridComponent,
+  ConnectorPreviewComponent,
 ];
 
 @NgModule({
@@ -79,13 +88,6 @@ const Components = [
   ],
   declarations: [
     ...Components,
-    NodePycodeComponent,
-    SqlImportNodeComponent,
-    SqlUploadNodeComponent,
-    StorageAccountUploadNodeComponent,
-    PostgresImportNodeComponent,
-    PostgresUploadNodeComponent,
-    DcmPreviewGridComponent,
   ],
   exports: [
     ...SharedModules,

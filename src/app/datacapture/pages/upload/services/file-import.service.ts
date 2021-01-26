@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '@env/environment';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,17 @@ export class FileImportService {
     return this.http.post(environment.import + 'describe', {
       sheet_id, column
     });
+  }
+
+  public previewConnectorData(connection_data)
+  {
+    return this.http.post(environment.import + 'connectors/preview', connection_data).pipe(
+      catchError(error=>of({
+        "headers": [],
+        "data": [],
+        "total": 0,
+      }))
+    );
   }
 }
 
