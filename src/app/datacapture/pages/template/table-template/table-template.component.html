@@ -1,4 +1,25 @@
-<nz-table #basicTable [nzData]="listOfcolumns" class="table_template" [nzScroll]="{ y: '357px' }">
+
+
+<div nz-row class='ma-b'>
+  <div nz-col [nzSpan]='12'></div>
+  
+  <div nz-col [nzSpan]='12'>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter columns" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </div>
+</div>
+<nz-table 
+        #basicTable 
+        [nzFrontPagination]="pagination" 
+        [nzShowPagination]="pagination" 
+        [nzData]="listOfcolumns | simpleFilter : 'title' : searchTerm" 
+        class="table_template" 
+        style="height: 400px;"
+        [nzScroll]="{ y: '357px' }">
     <thead>
       <tr>
         <th>Column Name</th>

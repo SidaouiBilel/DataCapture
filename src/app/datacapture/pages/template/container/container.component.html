@@ -24,7 +24,7 @@
         </div>
     </div>
   
-    <div class="mb-4 flext bg-white rounded-0 m-0 p-0">
+    <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
         <nz-list class="list_impo" [nzDataSource]="templates$ | async | simpleFilter : 'name' : searchTerm" [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
             <ng-template #item let-item>
                 <nz-list-item class="BD-item" [nzActions]="[editAction  , cloneaction , deleteaction]">

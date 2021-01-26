@@ -11,6 +11,8 @@ export class TableTemplateComponent implements OnInit {
 
   listOfcolumns=[];
   templatedata;
+  pagination = false;
+  searchTerm="";
 
   setlistOfcolumns(template){
     this.listOfcolumns = Object.keys(this.templatedata).map(el=>({

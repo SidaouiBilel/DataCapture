@@ -9,7 +9,7 @@ export class SimpleFilterPipe implements PipeTransform {
     return items.filter(item => {
       const value = (item[property] || '').toLowerCase();
       const lowerTrem = (term || '').toLowerCase();
-      return value.match(lowerTrem);
+      return value.includes(lowerTrem);
   });
   }
 

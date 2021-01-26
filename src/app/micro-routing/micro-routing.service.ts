@@ -23,7 +23,7 @@ export class MicroRoutingService {
                 private router :Router ,
                 private location:Location){
         this.routechanged$ = fromEvent(document , microEvent).pipe(
-            map((event : CustomEvent<RouteChangedEvent>)=>event.detail.route),
+            map((event : CustomEvent<RouteChangedEvent>)=>{console.log(event.detail.route); return event.detail.route}),
             filter((event)=> event.app === this.microApp)
         );
     }
