@@ -22,10 +22,11 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-label nzRequired>Write Mode</nz-form-label>
+                    <nz-form-label nzRequired>If Exists</nz-form-label>
                     <nz-form-control >
-                        <nz-radio-group [(ngModel)]="data.write_mode" [ngModelOptions]="{standalone: true}" nzButtonStyle="solid">
-                            <label nz-radio-button nzValue="erase">Erase Old</label>
+                        <nz-radio-group [(ngModel)]="data.if_exists" [ngModelOptions]="{standalone: true}" nzButtonStyle="solid">
+                            <label nz-radio-button nzValue="fail">Fail</label>
+                            <label nz-radio-button nzValue="replace">Replace</label>
                             <label nz-radio-button nzValue="append">Append</label>
                           </nz-radio-group>
                     </nz-form-control>

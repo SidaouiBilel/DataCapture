@@ -9,6 +9,7 @@ import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transfo
 import { SqlUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/sql-upload-node/sql-upload-node.component";
 import { StorageAccountUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/storage-account-upload-node/storage-account-upload-node.component";
 import { PostgresImportNodeComponent } from "@app/shared/setup/nodes/datasources/postgres-import-node/postgres-import-node.component";
+import { PostgresUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/postgres-upload-node/postgres-upload-node.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -25,7 +26,7 @@ export const DATASOURCE_NODES = [
 export const DATASINK_NODES = [
   NodeCollectionUpload.setComponenet(BaseNodeTransformationComponent), 
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
-  NodePostgresUpload.setComponenet(SqlUploadNodeComponent),
+  NodePostgresUpload.setComponenet(PostgresUploadNodeComponent),
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent), 
 ]
 export const NODE_TRANSFORMERS = [

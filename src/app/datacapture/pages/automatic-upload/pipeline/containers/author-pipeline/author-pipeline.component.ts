@@ -48,10 +48,13 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
   publish(){
     forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
       .subscribe(([links, nodes, metaData]: any) => {
-        this.pipelines.publishDag(nodes, links, metaData).subscribe(() => {
+        // SAVE AND PUBLISH
+        this.pipelines.saveDag(metaData,nodes,links).subscribe(()=>{
+          this.pipelines.publishDag(nodes, links, metaData).subscribe(() => {
             this.ntf.success('Pipeline Published');
           });
         });
+      })
   }
 
   save() {

@@ -66,18 +66,16 @@ export class PipelineEditorComponent implements AfterViewInit{
     const that: PipelineEditorComponent = this;
     dia.nodeTemplateMap = generateNodesTemplateMap({
       doubleClick: (e, node) => {
-        that.editNode(node.data);
+        if(this.diagramModelData.run){
+          this.previweNode(node.data, this.diagramModelData.run)
+        } else {
+          that.editNode(node.data);
+        }
       }
     },
     []
     );
 
-    // dia.linkTemplate =  $(go.Link,
-    //   { routing: go.Link.AvoidsNodes,
-    //     corner: 10 },                  // rounded corners
-    //   $(go.Shape),
-    //   $(go.Shape, { toArrow: "Standard" })
-    // );
     dia.linkTemplate =  $(go.Link,
       { curve: go.Link.Bezier },
       $(go.Shape),
@@ -168,10 +166,8 @@ export class PipelineEditorComponent implements AfterViewInit{
     });
   }
 
-  redrawDiagram() {
-    // const dia = this.myDiagramComponent.diagram
-    // if(dia){
-    //   dia.requestUpdate()
-    // }
+  previweNode(data: any, run: any) {
+    this.editor.previewNode(data, run)
   }
+
 }
