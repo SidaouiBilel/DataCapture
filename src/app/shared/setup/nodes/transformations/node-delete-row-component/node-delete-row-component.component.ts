@@ -7,7 +7,6 @@ import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/p
   styleUrls: ['./node-delete-row-component.component.css', '../base-node-transformation/base-node-transformation.component.css']
 })
 export class NodeDeleteRowComponent extends PipelineNodeComponent {
-
   constructor() {
     super()
   }
