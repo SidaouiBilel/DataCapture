@@ -41,7 +41,7 @@ export const NODE_TRANSFORMERS = [
               ,NodeTransformationFormatDate
               ,NodeTransformationHash
           ].map(cls =>{
-              cls.setComponenet(BaseNodeTransformationComponent)
+              cls.setComponenet(cls.component)
               return cls
           })
 

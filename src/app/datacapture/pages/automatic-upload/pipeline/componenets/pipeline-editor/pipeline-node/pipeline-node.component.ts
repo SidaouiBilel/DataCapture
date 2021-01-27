@@ -8,10 +8,10 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 export class PipelineNodeComponent implements OnInit {
 
   data;
+  nodeClass
   onSave = new EventEmitter<any>();
   onCancel = new EventEmitter<void>();
 
-  nodeClass
   
   constructor() { 
   }

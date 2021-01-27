@@ -32,7 +32,7 @@ export class PipelineEditorSidebarComponent implements OnInit {
     }
   }
 
-  addNode(nodeClass){
+  addNode(nodeClass) {
     this.addedNode.emit(nodeClass.createNode());
   }
 }
