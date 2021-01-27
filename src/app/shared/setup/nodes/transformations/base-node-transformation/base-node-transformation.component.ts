@@ -8,13 +8,13 @@ import { NgxEditorModel } from 'ngx-monaco-editor';
   styleUrls: ['./base-node-transformation.component.css']
 })
 export class BaseNodeTransformationComponent extends PipelineNodeComponent  {
+  editorOptions = {language: 'json'};
+  code = '';
 
   constructor() {
     super()
-   }
+  }
 
-  editorOptions = {language: 'json'};
-  code = ''
 
   ngOnInit(): void {
     this.code = JSON.stringify(this.data, null, 2)

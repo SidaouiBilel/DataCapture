@@ -5,13 +5,13 @@
       <nz-form-item>
         <nz-form-label class="text-left" [nzSm]="24" nzRequired>Column</nz-form-label>
         <nz-form-control [nzSm]="24">
-          <input nz-input nzSize='small' [(ngModel)]='data.destination' name='destination' />
+          <input nz-input [nzSize]='size' [(ngModel)]='data.destination' name='destination' />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label class="text-left" [nzSm]="24" nzRequired>Value</nz-form-label>
         <nz-form-control [nzSm]="24">
-          <input nz-input nzSize='small' [(ngModel)]='data.value' name='value' />
+          <input nz-input [nzSize]='size' [(ngModel)]='data.value' name='value' />
         </nz-form-control>
       </nz-form-item>
     </form>

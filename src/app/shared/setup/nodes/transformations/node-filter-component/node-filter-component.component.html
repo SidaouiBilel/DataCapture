@@ -15,14 +15,14 @@
         <nz-form-item>
           <nz-form-label [nzSm]="8">Column</nz-form-label>
           <nz-form-control [nzSm]="16">
-            <input nz-input nzSize='small' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.column' />
+            <input nz-input [nzSize]='size' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.column' />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="8">Operation</nz-form-label>
           <nz-form-control [nzSm]="16">
-            <nz-select nzSize='small' [(ngModel)]='c.op' [ngModelOptions]=" {standalone: true}" nzPlaceHolder='None'>
+            <nz-select [nzSize]='size' [(ngModel)]='c.op' [ngModelOptions]=" {standalone: true}" nzPlaceHolder='None'>
               <nz-option-group *ngFor='let og of operations' [nzLabel]='og.label'>
                 <nz-option *ngFor='let o of og.operations' [nzValue]='o.value' [nzLabel]='o.label'></nz-option>
               </nz-option-group>
@@ -35,7 +35,7 @@
             </app-regex-helper-trigger>
           </nz-form-label>
           <nz-form-control [nzSm]="16">
-            <input nz-input nzSize='small' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.condition' />
+            <input nz-input [nzSize]='size' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.condition' />
           </nz-form-control>
         </nz-form-item>
 
