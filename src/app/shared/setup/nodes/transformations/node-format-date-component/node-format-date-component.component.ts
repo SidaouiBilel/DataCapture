@@ -7,7 +7,13 @@ import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/p
   styleUrls: ['./node-format-date-component.component.css', '../base-node-transformation/base-node-transformation.component.css']
 })
 export class NodeFormatDateComponent extends PipelineNodeComponent {
-
+  formats = [
+    { label: "dd/mm/yyyy", value:"%d/%m%Y"},
+    { label: "mm/dd/yyyy", value:"%m/%d/%Y"},
+    { label: "yyyy/mm/dd", value:"%Y/%m/%d"},
+    { label: "yyyy-dd-mm", value:"%Y-%d-%m"},
+  ];
+  
   constructor() {
     super()
   }

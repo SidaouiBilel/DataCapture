@@ -9,6 +9,7 @@ export class PipelineNodeComponent implements OnInit {
 
   data: any = {};
   size = "default";
+  form_orientation = 'horizontal';
   nodeClass
   onSave = new EventEmitter<any>();
   onCancel = new EventEmitter<void>();
