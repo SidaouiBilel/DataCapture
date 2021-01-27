@@ -7,6 +7,12 @@ import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/p
   styleUrls: ['./node-groupby-component.component.css', '../base-node-transformation/base-node-transformation.component.css']
 })
 export class NodeGroupbyComponent extends PipelineNodeComponent {
+  aggFunctions = [
+    {label:'Sum', value:"sum"},
+    {label:'Mean/Average', value:"mean"},
+    {label:'Max', value:"max"},
+    {label:'Min', value:"min"},
+  ];
 
   constructor() {
     super()
