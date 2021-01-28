@@ -39,11 +39,19 @@ export class PipelinesService {
 
   }
 
-  trigger(dag_id: any) {
-    return this.http.post(environment.pipeline + `dataflow/${dag_id}/run`,{})
+  trigger(dag_id: any, config) {
+    return this.http.post(environment.pipeline + `dataflow/${dag_id}/run`,config)
   }
 
   getRun(run_id: any) {
     return this.http.get(environment.pipeline + `monitor/run/${run_id}`)
+  }
+
+  unpause(pipeline_id, params) {
+    return this.http.post(environment.pipeline + `dataflow/${pipeline_id}/unpause`,params)
+  }
+
+  pause(pipeline_id, params) {
+    return this.http.post(environment.pipeline + `dataflow/${pipeline_id}/pause`,params)
   }
 }

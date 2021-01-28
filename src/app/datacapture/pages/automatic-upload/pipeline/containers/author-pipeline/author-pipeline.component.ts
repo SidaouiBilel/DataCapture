@@ -31,6 +31,9 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
   run$ = new BehaviorSubject(null)
   stop$;
 
+
+  context :any= {}
+
   ngOnInit(): void {
     this.runId$.subscribe((runId)=>{
       if(runId){
@@ -39,22 +42,42 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
         this.resetRun();
       }
     })
+
+    this.run$.subscribe((run:any)=>{
+      this.context = {}
+      if(run){
+        this.context[run.state] = true
+        this.context.preview = (run.conf)? run.conf.preview: false  
+      } else {
+        this.context.idle = true
+      }
+
+      this.context.monitor = !this.context.preview && (this.context.success || this.context.running || this.context.failed)  
+      
+    })
   }
 
   ngOnDestroy(): void {
     this.resetRun()
   }
 
-  publish(){
-    forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
+  publish(notify=true){
+    return new Observable(observer=>{
+      forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
       .subscribe(([links, nodes, metaData]: any) => {
         // SAVE AND PUBLISH
         this.pipelines.saveDag(metaData,nodes,links).subscribe(()=>{
           this.pipelines.publishDag(nodes, links, metaData).subscribe(() => {
-            this.ntf.success('Pipeline Published');
+            if(notify) this.ntf.success('Pipeline Published');
+            observer.next()
           });
         });
       })
+    })
+  }
+
+  onPublish(){
+    this.publish().subscribe()
   }
 
   save() {
@@ -86,17 +109,19 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
   onDiagramLinkDataChange(links){
     this.store.dispatch(new PipelineEditLinks(links));
   }
-
-
   
-  onTrigger(){
+  onTrigger(config={}){
     this.resetRun()
     withValue(this.metadata$,(p)=>{
-      this.pipelines.trigger(p.pipeline_id).subscribe((res:any)=>{
+      this.pipelines.trigger(p.pipeline_id, config).subscribe((res:any)=>{
         const run_id = res.run_id;
         this.store.dispatch(new PipelineEditRunId({run_id, pipeline_id: p.pipeline_id}));
       })
     })
+  }
+
+  onTriggerPreview(){
+    this.onTrigger({preview:true})
   }
 
   onCancel(){
@@ -104,15 +129,21 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
   }
 
   monitorRun(runId) {
-    // CANSEL PREVIOUS POOLING
+    // CANCEL PREVIOUS POOLING
+    this.resetRun()
+
+    // Start new pooling
     this.stop$ = new Subject()
     timer(0,2000).pipe(
       takeUntil(this.stop$), 
       switchMap(()=>this.pipelines.getRun(runId)),
       tap((run_res:any)=>{
         this.run$.next(run_res)
-        if(['success','failed'].includes(run_res.state)){
-          this.stop$.next()
+        const preview = (run_res.conf)? run_res.conf.preview: false
+        if(!preview){
+          if(['success','failed'].includes(run_res.state)){
+            this.stop$.next()
+          }
         }
       })
       ).subscribe();
@@ -121,5 +152,19 @@ export class AuthorPipelineComponent implements OnInit, OnDestroy {
   resetRun(){
     if (this.stop$) this.stop$.next()
     this.run$.next(null)
+  }
+
+  onJumpNext(){
+    this.publish(false).subscribe((res=>{
+      withValue(this.metadata$, (p)=>{
+        this.pipelines.unpause(p.pipeline_id, {stop_at:null}).subscribe()
+      })
+    }))
+  }
+
+  onPause(){
+    withValue(this.metadata$, (p)=>{
+      this.pipelines.pause(p.pipeline_id, {stop_at:null}).subscribe()
+    })
   }
 }

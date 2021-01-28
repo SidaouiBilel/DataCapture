@@ -22,11 +22,6 @@ button.ma{
     box-shadow: none;
 }
 
-[nz-button]{
-    /* text-transform: uppercase; */
-    /* font-weight: 600; */
-}
-
 .ant-btn-success {
     color: #fff !important;
     background-color: #28a745 !important;

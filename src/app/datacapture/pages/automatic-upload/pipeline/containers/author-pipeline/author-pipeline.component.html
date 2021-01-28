@@ -1,21 +1,26 @@
 <div class="flex column stretch h-100">
-  <app-pipeline-editor [readOnly]="!!(run$|async)" [run]='run$|async' class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
+  <app-pipeline-editor [readOnly]="context.monitor" [run]='run$|async' class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
   [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)'>
 
   <div class="button-spacing ghost flex start">
-    <button nz-button (click)="edit()"><i nz-icon nzType='edit'></i>Edit</button>
-    <button nz-button (click)="save()"><i nz-icon nzType='save'></i>Save</button>
-    <!-- <button class='ghost' nz-button><i nz-icon nzType='saveAs-o'></i>Save As</button> -->
-    <nz-divider nzType='vertical'></nz-divider>
-    <button (click)='publish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>
-    <nz-divider nzType='vertical'></nz-divider>
-    <button  nz-button *ngIf='!(runId$|async)' (click)='onTrigger()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Trigger</button>
-    <button  nz-button *ngIf='runId$|async' (click)='onCancel()'><i nz-icon nzType="pause-circle" nzTheme="outline"></i> Cancel</button>
-    <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
+    <ng-container *ngIf='context.idle'>
+      <button nz-button (click)="edit()"><i nz-icon nzType='edit'></i>Edit</button>
+      <button nz-button (click)="save()"><i nz-icon nzType='save'></i>Save</button>
+      <nz-divider nzType='vertical'></nz-divider>
+    </ng-container>
+    <ng-container *ngIf='context.idle'>
+      <button (click)='onPublish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>
+      <nz-divider nzType='vertical'></nz-divider>
+    </ng-container>
+    <button  nz-button *ngIf='context.idle' (click)='onTrigger()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
+    <button  nz-button *ngIf='context.idle' (click)='onTriggerPreview()'><i nz-icon nzType='bug'></i> Debug</button>
+    <button  nz-button *ngIf='context.running' (click)='onCancel()'><i nz-icon nzType="close" nzTheme="outline"></i> Cancel</button>
+    <button  nz-button *ngIf='context.running' (click)='onPause()'><i nz-icon nzType="pause" nzTheme="outline"></i> Pause</button>
+    <button  nz-button *ngIf='context.success || context.failed' (click)='onCancel()'><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Exit Preview</button>
+    <button  nz-button *ngIf='context.preview' (click)='onJumpNext()'><i nz-icon nzType="arrow-right" nzTheme="outline"></i> Next</button>
     <nz-divider nzType='vertical'></nz-divider>
   </div>
   </app-pipeline-editor>
 
   <app-pipeline-run-toolbar [run]='run$|async' (trigger)='onTrigger()'></app-pipeline-run-toolbar>
-
 </div>
