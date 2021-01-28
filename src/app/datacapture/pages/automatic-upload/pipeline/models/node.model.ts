@@ -56,7 +56,7 @@ export class PipelineNode{
             key : String(new Date().getTime()),
             label: this.label,
             type: this.type,
-            loc: randomPosition(200) + " " + randomPosition(200)
+            loc: randomPosition(100) + " " + randomPosition(0)
         };
     }
 

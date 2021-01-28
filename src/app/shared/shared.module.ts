@@ -35,6 +35,17 @@ import { PostgresImportNodeComponent } from './setup/nodes/datasources/postgres-
 import { PostgresUploadNodeComponent } from './setup/nodes/datasinks/postgres-upload-node/postgres-upload-node.component';
 import { DcmPreviewGridComponent } from './dcm-preview-grid/dcm-preview-grid.component';
 import { ConnectorPreviewComponent } from './connector-preview/connector-preview.component';
+import { NodeFilterComponent } from './setup/nodes/transformations/node-filter-component/node-filter-component.component';
+import { NodeFilterReplaceComponent } from './setup/nodes/transformations/node-filer-replace-component/node-filer-replace-component.component';
+import { NodeMergeComponent } from './setup/nodes/transformations/node-merge-component/node-merge-component.component';
+import { NodeReplaceComponent } from './setup/nodes/transformations/node-replace-component/node-replace-component.component';
+import { NodeDeleteRowComponent } from './setup/nodes/transformations/node-delete-row-component/node-delete-row-component.component';
+import { NodeDefaultComponent } from './setup/nodes/transformations/node-default-component/node-default-component.component';
+import { NodeSplitterComponent } from './setup/nodes/transformations/node-splitter-component/node-splitter-component.component';
+import { NodeCalculcatorComponent } from './setup/nodes/transformations/node-calculcator-component/node-calculcator-component.component';
+import { NodeFormatDateComponent } from './setup/nodes/transformations/node-format-date-component/node-format-date-component.component';
+import { NodeGroupbyComponent } from './setup/nodes/transformations/node-groupby-component/node-groupby-component.component';
+import { NodeHashComponent } from './setup/nodes/transformations/node-hash-component/node-hash-component.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -88,6 +99,17 @@ const Components = [
   ],
   declarations: [
     ...Components,
+    NodeFilterComponent,
+    NodeFilterReplaceComponent,
+    NodeMergeComponent,
+    NodeReplaceComponent,
+    NodeDeleteRowComponent,
+    NodeDefaultComponent,
+    NodeSplitterComponent,
+    NodeCalculcatorComponent,
+    NodeFormatDateComponent,
+    NodeGroupbyComponent,
+    NodeHashComponent,
   ],
   exports: [
     ...SharedModules,
