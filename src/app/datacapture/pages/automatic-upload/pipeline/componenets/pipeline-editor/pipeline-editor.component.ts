@@ -66,11 +66,17 @@ export class PipelineEditorComponent implements AfterViewInit{
     const that: PipelineEditorComponent = this;
     dia.nodeTemplateMap = generateNodesTemplateMap({
       doubleClick: (e, node) => {
-        if(this.diagramModelData.run && !this.diagramModelData.paused){
-          this.previweNode(node.data, this.diagramModelData.run)
-        } else {
-          that.editNode(node.data);
+        const data = node.data
+        if(this.diagramModelData.run){
+          const run = this.diagramModelData.run
+          const task = run.tasks.find(t=>t.task_id==data.key)
+          if(task && ["success","running"].includes(task.state)){
+            this.previweNode(node.data, this.diagramModelData.run)
+            return
+          }
         }
+        that.editNode(data);
+        return
       }
     },
     []

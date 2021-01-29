@@ -53,23 +53,22 @@ export class PipelineEditorService {
     });
   }
 
-  editPipeline(metaData): BehaviorSubject<PipelineMetadata> {
-    const result = new BehaviorSubject(null);
-    const ref = this.drawer.create({
-      nzTitle: 'Pipeline MetaData',
-      nzContent: EditPipelineMetadataComponent,
-      nzContentParams: {
-        metaData
-      },
-      nzWidth: '40vw',
-      nzClosable: false,
+  editPipeline(metaData): Observable<PipelineMetadata> {
+    return new Observable(observer=>{
+      const ref = this.drawer.create({
+        nzTitle: 'Pipeline MetaData',
+        nzContent: EditPipelineMetadataComponent,
+        nzContentParams: {
+          metaData
+        },
+        nzWidth: '40vw',
+        nzClosable: false,
+      })
+      ref.afterClose.subscribe((metadata: PipelineMetadata) => {
+        observer.next(metadata)
+        observer.complete()
+      });
     })
-    ref.afterClose.subscribe((metadata: PipelineMetadata) => {
-      if (metadata) {
-        result.next(metaData);
-      }
-    });
-    return result;
   }
 
   updateNode(node){

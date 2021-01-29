@@ -44,9 +44,7 @@ export class AuthorPipelineComponent implements OnDestroy {
    }
 
    
-  ngOnDestroy(): void {
-    this.resetRunData()
-  }
+  ngOnDestroy(): void {this.resetRunData()}
 
   // METHODS +
   getContextFromRun(run: any) {
@@ -63,164 +61,124 @@ export class AuthorPipelineComponent implements OnDestroy {
     this.context.monitor_as_run = !this.context.preview && this.context.monitor;
   }
 
-  publish(notify=true){
-    return new Observable(observer=>{
-      forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
-      .subscribe(([links, nodes, metaData]: any) => {
-        // SAVE AND PUBLISH
-        this.pipelines.saveDag(metaData,nodes,links).subscribe(()=>{
-          this.pipelines.publishDag(nodes, links, metaData).subscribe(() => {
-            if(notify) this.ntf.success('Pipeline Published');
-            observer.next()
-          });
+  saveAndPublish=()=>this.save().then(()=>this.publish())
+
+  // PUBLISH AND RESOLVE
+  publish=()=>new Promise((resolve, reject) => {
+      forkJoin([this.metadata$.pipe(take(1))])
+      .subscribe(([metaData]: any) => {
+          this.pipelines.publishDag(metaData.pipeline_id).subscribe(() => {
+            this.ntf.success('Pipeline Published');
+            resolve(null)
         });
       })
     })
-  }
 
-  save() {
-    forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
+  // SAVE AND RESOLVE
+  save=()=>new Promise((resolve, reject) => {
+      forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
       .subscribe(([links, nodes, metaData]: any) => {
         if (metaData.name != '') {
           this.pipelines.saveDag(metaData, nodes, links).subscribe((pipeline_id) => {
               this.store.dispatch(new PipelineEditMetaData({...metaData, pipeline_id}));
               this.ntf.success('Pipeline saved.');
+              resolve(pipeline_id)
             });
         } else {
-          this.edit();
+          this.edit().then(this.save).then(resolve).catch(()=>reject("Cannot Proceed without Saving"));
         }
       });
-  }
+    })
 
-  edit() {
+  edit=()=> new Promise((resolve, reject)=>{
     this.metadata$.pipe(take(1)).subscribe((metaData) => {
       this.service.editPipeline({...metaData}).subscribe((r) => {
-        if (r) { this.store.dispatch(new PipelineEditMetaData(r)); }
+        if (r) { 
+          this.store.dispatch(new PipelineEditMetaData(r)); 
+          resolve(true)
+        } else {
+          reject()
+        }
       });
     })
-  }
+  })
 
-  monitorRun(runId) {
-    // CANCEL PREVIOUS POOLING
-    // START POOLING NEW DATA
+  // CANCEL PREVIOUS POOLING
+  // START POOLING NEW DATA
+  monitorRun=(runId)=>{
     this.stopMonitoring()
     this.stop$ = new Subject()
-    timer(0,5000).pipe(
-      takeUntil(this.stop$), 
-      switchMap(()=>this.pipelines.getRun(runId)),
-      tap(this.onRunDataRecieved)
-      ).subscribe();
-  }
-
-  monitorCurrentRun=()=>{
-    // CALL TO GET IMMEDIATE RESULT or RESTART POOLING
-    withValue(this.runId$, (runId)=>{
-      this.monitorRun(runId)
-    })
+    timer(0,2000).pipe(takeUntil(this.stop$), switchMap(()=>this.pipelines.getRun(runId)), tap(this.onRunDataRecieved)).subscribe();
   }
   
-  resetRunData(){
-    // STOP RUN MONITORING AND CLEAR CURRENT RUN DATA
+  // CALL TO GET IMMEDIATE RESULT or RESTART POOLING
+  monitorCurrentRun=()=>{withValue(this.runId$, (runId)=>{if( runId ) this.monitorRun(runId)})}
+  pause=()=>new Promise((resolve)=>{withValue(this.metadata$, (p)=>{this.pipelines.pause(p.pipeline_id, {stop_at:null}).subscribe(()=>resolve(true))})})
+  unpause=()=>new Promise((resolve)=>{withValue(this.metadata$, (p)=>{this.pipelines.unpause(p.pipeline_id, {stop_at:null}).subscribe(()=>resolve(true))})})
+  retry=()=>new Promise((resolve)=>{withValue(this.runId$, (run_id)=>{this.pipelines.retry(run_id, {}).subscribe(()=>resolve(true))})})
+  
+  // STOP RUN MONITORING AND CLEAR CURRENT RUN DATA
+  resetRunData=()=>{
     this.stopMonitoring()
     this.run$.next(null)
     this.getContextFromRun(null);
   }
 
-  stopMonitoring(){
-    // STOP MONITORING THE CURRENT RUN
-    if (this.stop$) this.stop$.next()
-  }
-  // CLASS FUNCIONS -
+  run=(config)=>new Promise(resolve=>{
+      this.resetRunData()
+      withValue(this.metadata$,(p)=>{this.pipelines.trigger(p.pipeline_id, config).subscribe((res:any)=>{
+          const run_id = res.run_id;
+          this.store.dispatch(new PipelineEditRunId({run_id, pipeline_id: p.pipeline_id}));
+          resolve(true)
+        })
+      })
+    })
 
-  // EVENT HANDLERS +
-  onRunIdChanged=(runId)=>{
-    if(runId){
-      this.monitorCurrentRun();
-    } else {
-      this.resetRunData();
+  cancel=()=>new Promise(resolve=>{
+    this.resetRunData()
+    this.store.dispatch(new PipelineEditRunId({run_id: null, pipeline_id: null}));
+    resolve(true)
+  })
+
+  handleTrigger=(method, fn)=>{
+    this.loadingTrigger$.next(method)
+    this.stopMonitoring()
+    try{
+      fn().then(this.onTriggerComplete).then(this.monitorCurrentRun).catch((e)=>{
+        this.ntf.default(e)
+        this.onTriggerComplete()
+      })
+    } catch(e){
+      this.ntf.error(e)
+      this.onTriggerComplete()
     }
   }
 
+  // STOP MONITORING THE CURRENT RUN
+  stopMonitoring=()=>{if (this.stop$) this.stop$.next()}
+  // CLASS FUNCIONS -
+
+  // EVENT HANDLERS +
   onRunDataRecieved=(run_res:any)=>{
     this.getContextFromRun(run_res);
     if(['success','failed'].includes(run_res.state)) this.stopMonitoring()
     else if(this.context.paused) this.stopMonitoring()
     this.run$.next(run_res)
   }
-
-  onDiagramNodeDataChange(nodes){
-    this.store.dispatch(new PipelineEditNodes(nodes));
-  }
-
-  onDiagramLinkDataChange(links){
-    this.store.dispatch(new PipelineEditLinks(links));
-  }
-  
-  onTriggerComplete=()=>{
-    this.loadingTrigger$.next(null)
-  }
+  onRunIdChanged=(runId)=>{(runId)?this.monitorCurrentRun():this.resetRunData();}
+  onDiagramNodeDataChange(nodes){this.store.dispatch(new PipelineEditNodes(nodes));}
+  onDiagramLinkDataChange(links){this.store.dispatch(new PipelineEditLinks(links));}
+  onTriggerComplete=()=>{this.loadingTrigger$.next(null)}
   // EVENT HANDLERS -
 
   // TRIGGER EVENTS +
-  onJumpNext(){
-    // TODO
-    // CHECK IF THERE IS ANY MODIFICATIONS 
-    // IF TRUE SAVE AND PUBLISH THEN UNPAUSE
-    // IF NOT JUST UNPAUSE
-    this.loadingTrigger$.next('continue')
-    this.publish(false).subscribe((res=>{
-      withValue(this.metadata$, (p)=>{
-        this.pipelines.unpause(p.pipeline_id, {stop_at:null}).pipe(tap(this.onTriggerComplete)).pipe(tap(()=>this.monitorCurrentRun())).subscribe()
-      })
-    }))
-  }
-
-  onContinue(){
-    // UNPAUSE DAG EXECUTION
-    this.loadingTrigger$.next('continue')
-    withValue(this.metadata$, (p)=>{
-      this.pipelines.unpause(p.pipeline_id, {stop_at:null}).pipe(tap(this.onTriggerComplete)).pipe(tap(this.monitorCurrentRun)).subscribe()
-    })
-  }
-
-  onPause(){
-    // PAUSE DAG EXECUTION
-    this.loadingTrigger$.next('pause')
-    withValue(this.metadata$, (p)=>{
-      this.pipelines.pause(p.pipeline_id, {stop_at:null}).pipe(tap(this.onTriggerComplete)).pipe(tap(this.monitorCurrentRun)).subscribe()
-    })
-  }
-
-  onCancel(){
-    // TODO
-    // CALL WEBSERVICE TO CANCEL RUN
-    // UPDATE STORE
-    this.loadingTrigger$.next('cancel')
-    this.resetRunData()
-    this.store.dispatch(new PipelineEditRunId({run_id: null, pipeline_id: null}));
-    this.onTriggerComplete()
-  }
-
-  onPublish(){
-    this.loadingTrigger$.next('publish')
-    this.publish().pipe(tap(this.onTriggerComplete)).subscribe()
-  }
-
-  onTrigger(config={}){
-    this.loadingTrigger$.next('run')
-    this.resetRunData()
-    withValue(this.metadata$,(p)=>{
-      this.pipelines.trigger(p.pipeline_id, config)
-      .pipe(tap(this.onTriggerComplete))
-      .subscribe((res:any)=>{
-        const run_id = res.run_id;
-        this.store.dispatch(new PipelineEditRunId({run_id, pipeline_id: p.pipeline_id}));
-      })
-    })
-  }
-
-  onTriggerPreview(){
-    this.onTrigger({preview:true})
-  }
+  onCancel(){this.handleTrigger('cancel', this.cancel)}
+  onPublish(){this.handleTrigger('publish', this.saveAndPublish)}
+  onTrigger(){this.handleTrigger('run', ()=>this.saveAndPublish().then(()=>this.run({})))}
+  onTriggerPreview(){this.handleTrigger('run', ()=>this.saveAndPublish().then(()=>this.run({preview:true})))}
+  onJumpNext(){this.handleTrigger('save_and_continue', ()=>this.saveAndPublish().then(this.unpause))}
+  onPause(){this.handleTrigger('pause', this.pause)}
+  onContinue(){this.handleTrigger('continue', this.unpause)}
+  onRetryFailed(){this.handleTrigger('retry', ()=>this.saveAndPublish().then(this.retry))}
   // TRIGGER EVENTS -
 }
