@@ -6,7 +6,7 @@
       <!-- ADITIONAL TOOLBAR BUTTONS -->
       <ng-content></ng-content>
 
-      <app-pipeline-editor-sidebar (addedNode)='addNode($event)'
+      <app-pipeline-editor-sidebar *ngIf='!readOnly' (addedNode)='addNode($event)'
         (onViewTemplate)='editor.viewTemplate(diagramNodeData ,diagramLinkData)'>
       </app-pipeline-editor-sidebar>
 

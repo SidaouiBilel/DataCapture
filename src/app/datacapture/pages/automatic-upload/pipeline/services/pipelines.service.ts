@@ -54,4 +54,8 @@ export class PipelinesService {
   pause(pipeline_id, params) {
     return this.http.post(environment.pipeline + `dataflow/${pipeline_id}/pause`,params)
   }
+
+  pulsate(run_id, params) {
+    return this.http.post(environment.pipeline + `dataflow/run/${run_id}/pulsate`,params)
+  }
 }
