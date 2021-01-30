@@ -180,5 +180,7 @@ export class AuthorPipelineComponent implements OnDestroy {
   onPause(){this.handleTrigger('pause', this.pause)}
   onContinue(){this.handleTrigger('continue', this.unpause)}
   onRetryFailed(){this.handleTrigger('retry', ()=>this.saveAndPublish().then(this.retry))}
+  onEdit(){this.edit().catch()}
+  onSave(){this.save().catch()}
   // TRIGGER EVENTS -
 }

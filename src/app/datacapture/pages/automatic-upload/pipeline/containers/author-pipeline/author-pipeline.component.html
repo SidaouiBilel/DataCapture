@@ -11,8 +11,8 @@
       <nz-divider nzType='vertical'></nz-divider>
     </ng-container>
     <ng-container *ngIf='context.idle'>
-      <button [disabled]='loadingTrigger$ | async' nz-button (click)="edit()"><i nz-icon nzType='edit'></i>Edit</button>
-      <button [disabled]='loadingTrigger$ | async' nz-button (click)="save()"><i nz-icon nzType='save'></i>Save</button>
+      <button [disabled]='loadingTrigger$ | async' nz-button (click)="onEdit()"><i nz-icon nzType='edit'></i>Edit</button>
+      <button [disabled]='loadingTrigger$ | async' nz-button (click)="onSave()"><i nz-icon nzType='save'></i>Save</button>
       <nz-divider nzType='vertical'></nz-divider>
     </ng-container>
     <ng-container *ngIf='context.idle'>
@@ -24,8 +24,8 @@
     <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.running' (click)='onCancel()'><i nz-icon nzType="close" nzTheme="outline"></i> Cancel</button>
     <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.success || context.failed' (click)='onCancel()'><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Exit Preview</button>
 
-    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.running && !context.paused' (click)='onPause()'><i nz-icon nzType="pause" nzTheme="outline"></i> Pause</button>
-    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_run && context.paused' (click)='onContinue()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Unpause</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.running && !context.paused' (click)='onPause()'><i nz-icon nzType="pause-circle" nzTheme="outline"></i> Pause</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_run && context.paused' (click)='onContinue()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Unpause</button>
     <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_preview && context.paused' (click)='onJumpNext()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Continue</button>
 
     <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_run && context.failed' (click)='onRetryFailed()'><i nz-icon nzType="reload" nzTheme="outline"></i> Retry</button>

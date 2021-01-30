@@ -41,7 +41,7 @@ export class PipelineEffects {
     map((action) => {
       // todo : fill the store with a service that takes id and gets nodes and links
         const loader = this.not.loading('Loading your pipeline...');
-        this.service.runDag(action.metadata.pipeline_id).subscribe((res: any) => {
+        this.service.getDagDetails(action.metadata.pipeline_id).subscribe((res: any) => {
           if (res) {
             this.store.dispatch(new PipelineEditNodes(res.nodes));
             this.store.dispatch(new PipelineEditLinks(res.links));
