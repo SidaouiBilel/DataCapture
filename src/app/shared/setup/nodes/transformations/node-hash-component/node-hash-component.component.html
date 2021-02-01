@@ -6,7 +6,8 @@
       <nz-form-item>
         <nz-form-label class="text-left" [nzSm]="24">Columns</nz-form-label>
         <nz-form-control [nzSm]="24">
-          To do
+          <nz-select nzMode="tags" nzPlaceHolder="Columns" [ngModelOptions]="{standalone: true}" [(ngModel)]="data.columns">
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
 

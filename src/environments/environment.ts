@@ -18,13 +18,13 @@ export const environment = {
   // transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
   transform: 'http://localhost:5001/transfo/',
   // admin: 'https://dcm-admin.azurewebsites.net/',
-  admin: 'http://localhost:5010/',
+  admin: 'http://localhost:5000/',
   upload: 'http://localhost:5004/upload/',
   // upload: 'https://dcm-upload.azurewebsites.net/upload/',
   auth: 'https://dcm-auth.azurewebsites.net/',
   env: 'DEV',
 
-  pipeline: 'http://localhost:5000/'
+  pipeline: 'http://localhost:5006/'
 };
 
 /*
