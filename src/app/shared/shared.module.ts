@@ -48,6 +48,7 @@ import { NodeGroupbyComponent } from './setup/nodes/transformations/node-groupby
 import { NodeHashComponent } from './setup/nodes/transformations/node-hash-component/node-hash-component.component';
 import { CollectionImportComponent } from './setup/nodes/datasources/collection-import/collection-import.component';
 import { CollectionUploadComponent } from './setup/nodes/datasinks/collection-upload/collection-upload.component';
+import { NodeJoinComponent } from './setup/nodes/other/node-join/node-join.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -114,6 +115,7 @@ const Components = [
     NodeHashComponent,
     CollectionImportComponent,
     CollectionUploadComponent,
+    NodeJoinComponent,
   ],
   exports: [
     ...SharedModules,
