@@ -46,6 +46,8 @@ import { NodeCalculcatorComponent } from './setup/nodes/transformations/node-cal
 import { NodeFormatDateComponent } from './setup/nodes/transformations/node-format-date-component/node-format-date-component.component';
 import { NodeGroupbyComponent } from './setup/nodes/transformations/node-groupby-component/node-groupby-component.component';
 import { NodeHashComponent } from './setup/nodes/transformations/node-hash-component/node-hash-component.component';
+import { CollectionImportComponent } from './setup/nodes/datasources/collection-import/collection-import.component';
+import { CollectionUploadComponent } from './setup/nodes/datasinks/collection-upload/collection-upload.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -110,6 +112,8 @@ const Components = [
     NodeFormatDateComponent,
     NodeGroupbyComponent,
     NodeHashComponent,
+    CollectionImportComponent,
+    CollectionUploadComponent,
   ],
   exports: [
     ...SharedModules,

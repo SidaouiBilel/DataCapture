@@ -10,6 +10,8 @@ import { SqlUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/sql-up
 import { StorageAccountUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/storage-account-upload-node/storage-account-upload-node.component";
 import { PostgresImportNodeComponent } from "@app/shared/setup/nodes/datasources/postgres-import-node/postgres-import-node.component";
 import { PostgresUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/postgres-upload-node/postgres-upload-node.component";
+import { CollectionUploadComponent } from "@app/shared/setup/nodes/datasinks/collection-upload/collection-upload.component";
+import { CollectionImportComponent } from "@app/shared/setup/nodes/datasources/collection-import/collection-import.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -18,13 +20,13 @@ export const NODE_OTHERS = [
   NodeTransformationPipeline.setComponenet(BaseNodeTransformationComponent)
 ] 
 export const DATASOURCE_NODES = [
-  NodeCollectionImport.setComponenet(BaseNodeTransformationComponent),
+  NodeCollectionImport.setComponenet(CollectionImportComponent),
   NodeSQLImport.setComponenet(SqlImportNodeComponent), 
   NodePostgresImport.setComponenet(PostgresImportNodeComponent), 
   NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent),
 ]
 export const DATASINK_NODES = [
-  NodeCollectionUpload.setComponenet(BaseNodeTransformationComponent), 
+  NodeCollectionUpload.setComponenet(CollectionUploadComponent), 
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
   NodePostgresUpload.setComponenet(PostgresUploadNodeComponent),
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent), 
