@@ -13,12 +13,13 @@ import { PostgresUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/p
 import { CollectionUploadComponent } from "@app/shared/setup/nodes/datasinks/collection-upload/collection-upload.component";
 import { CollectionImportComponent } from "@app/shared/setup/nodes/datasources/collection-import/collection-import.component";
 import { NodeJoinComponent } from "@app/shared/setup/nodes/other/node-join/node-join.component";
+import { NodePipelineComponent } from "@app/shared/setup/nodes/other/node-pipeline/node-pipeline.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
   NodeJoin.setComponenet(NodeJoinComponent),
   NodePycode.setComponenet(NodePycodeComponent),
-  NodeTransformationPipeline.setComponenet(BaseNodeTransformationComponent)
+  NodeTransformationPipeline.setComponenet(NodePipelineComponent)
 ] 
 export const DATASOURCE_NODES = [
   NodeCollectionImport.setComponenet(CollectionImportComponent),
