@@ -8,6 +8,7 @@
     "build": "ng build",
     "post-build": "node scripts/post-build.js",
     "build:microapp": "ng build --prod --output-hashing none --deploy-url http://ae778a86eb59b457eb3f2ea25469c793-1433705831.eu-west-3.elb.amazonaws.com/ --single-bundle true  --bundle-styles false --keepStyles false",
+    "buildlocal:microapp": "ng build --prod --output-hashing none --deploy-url http://localhost:5000/ --single-bundle true  --bundle-styles false --keepStyles false",
     "serve:microapp": "http-server ./dist/datacapture  -p 5000  ",
     "test": "ng test",
     "lint": "ng lint",

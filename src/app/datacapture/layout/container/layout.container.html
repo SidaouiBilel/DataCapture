@@ -1,12 +1,10 @@
 <nz-layout class="full-h" [ngClass]='settings.appSize$ | async' *ngIf="tokencheck ;else loading">
   <!-- Header -->
-  <nz-header class="topbar">
+  <!-- <nz-header class="topbar">
     <div class="flex between top">
       <div>
         <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
           <a [routerLink]="['/data/datacapture/projects']">
-            <!-- <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
-              src="../../../../assets/images/logo.png" alt="logo"> -->
             <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-bold" style="width: 200px;">
               Deepkube 
               <span class="text-white font-weight-light"style="opacity: 0.6; font-size: .8em;">DatapipeLine</span>
@@ -15,22 +13,10 @@
         </div>
       </div>
       <div class="flex">
-        <!-- <button nz-dropdown [nzDropdownMenu]="zoom" class='ghost' nzShape='circle' nz-button nzType='primary'><i nz-icon
-            nzType="layout"></i></button> -->
-        <!-- <nz-dropdown-menu #zoom="nzDropdownMenu">
-          <ul nz-menu nzSelectable style="min-width: 200px;">
-            <li (click)='settings.setDefaultSize()' nz-menu-item>Default Layout</li>
-            <li (click)='settings.setCompactSize()' nz-menu-item>Compact Layout</li>
-          </ul>
-        </nz-dropdown-menu> -->
-      
-        <!-- <div class="ml-2"><app-env-tag></app-env-tag></div>
-
-        <app-user-bar class="ml-2"></app-user-bar> -->
 
       </div>
     </div>
-  </nz-header>
+  </nz-header> -->
 
   <nz-layout>
     <!-- Sidebar -->
