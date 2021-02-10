@@ -1,3 +1,4 @@
+import { MenuitemsService } from './../service/menuitems.service';
 import { ActionAuthLogin } from './../../../core/auth/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile, ActionSaveProfile, selectToken } from '@app/core';
@@ -23,18 +24,23 @@ export class LayoutContainer implements OnInit {
   env;
   profile$: Observable<any>;
   url_data ="";
+  uploadrouteactivated=[];
 
   constructor(private notification: NotificationService,
               private service: LoginService,
               private store: Store<AppState>,
-              settings: AppSettingsService) {
+              settings: AppSettingsService,
+              private menuitemservice:MenuitemsService) {
+    this.menuitemservice.uploadrouteactivated$.subscribe(activeroutes=>{
+      this.uploadrouteactivated = activeroutes;
+    });
     this.settings = settings;
     this.router$ = this.store.select(selectRouterState);
     this.profile$ = this.store.select(selectProfile);
     this.router$.subscribe((res) => {
       try {
         this.pageList = ['home'];
-        this.pageList = this.pageList.concat(res.state.url.substring(1).split('/').slice(1).filter((e) => {if ( e !== '' ) { return e; }}));
+        this.pageList = this.pageList.concat(res.state.url.substring(1).split('/').slice(1).filter((e) => {if (this.Nobreadcrumb(e)) { return e; }}));
       } catch (error) {
         this.notification.error(error.message);
       }
@@ -46,6 +52,12 @@ export class LayoutContainer implements OnInit {
   }
   ngOnInit(): void {
     this.checkTokenValidity();
+  }
+  Nobreadcrumb(item) :boolean{
+    return !["datacapture" , ""].includes(item);
+  }
+  isuploadrouteactivated(route){
+    return !this.uploadrouteactivated.includes(route);
   }
 
   // This is used to select the primary page in the topbare
@@ -102,6 +114,9 @@ export class LayoutContainer implements OnInit {
         case 'extractors':
           return 'export';
 
+        case 'template':
+          return 'project';
+
         default:
           return 'appstore';
       }
@@ -114,11 +129,13 @@ export class LayoutContainer implements OnInit {
     try {
       let path = '';
       this.pageList.slice(1, id + 1).map((e) => path += '/' + e);
-      return (path.includes('datacapture') ? path : '/datacapture' + path);
+      return ("/data"+(path.includes('datacapture') ? path : '/datacapture' + path));
     } catch (error) {
       this.notification.error(error.message);
     }
   }
+
+
 
   logout(): void {
     this.service.logout().subscribe((res) => {
