@@ -27,6 +27,13 @@ export class NodeImportConnector extends NodeDatasource{
     }
 }
 
+export class NodeManualImport extends NodeDatasource{
+    static type = "IMPORT_MANUAL"  
+    static nzicon = 'import'
+    static label = "Manual"
+}
+
+
 export class NodeBlobStorage extends NodeImportConnector{
     static type = "BLOB_STORAGE_IMPORT_CONNECTOR"
     static connectorDef = CONNECTOR_DEF_BLOB_STORAGE    

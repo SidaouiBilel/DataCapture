@@ -4,8 +4,9 @@
     <div class="site-page-header-ghost-wrapper">
       <nz-page-header nzBordered nzBackIcon (nzBack)="onBack()" [nzGhost]="false">
         <nz-page-header-title>{{(activeRefType$ | async)?.label}}</nz-page-header-title>
-        <nz-page-header-subtitle *ngIf='(activeRefType$ | async)?.shared'>
-          <nz-tag [nzColor]="'#108ee9'">Shared Reference</nz-tag>
+        <nz-page-header-subtitle>
+          <nz-tag>{{(activeRefType$ | async)?.version_label}}</nz-tag>
+          <nz-tag *ngIf='(activeRefType$ | async)?.shared' [nzColor]="'#108ee9'">Shared Reference</nz-tag>
         </nz-page-header-subtitle>
         <nz-page-header-extra>
           <div class="flex between">
