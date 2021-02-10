@@ -10,8 +10,24 @@ export class PipelineRunToolbarComponent implements OnInit {
 
   @Input("run") set _run(value){this.updateData(value)}
   @Output() trigger = new EventEmitter<any>()
-  
-  run:any
+  run:any;
+  runStatus
+  progressSteps
+  doneSteps
+  progress
+  progressStatus
+  showProgress
+  badgeType
+  legend = RUN_STATES
+  showDetails = false
+
+  constructor() { 
+    this.reset()
+  }
+
+  ngOnInit(): void {
+  }
+
   updateData(value){
     this.run = value
     if(this.run){
@@ -46,6 +62,10 @@ export class PipelineRunToolbarComponent implements OnInit {
     }
   }
 
+  openLogs(run: any) {
+    console.log(run);
+  }
+
   reset(){
     this.progressSteps = 0
     this.doneSteps = 0
@@ -55,23 +75,4 @@ export class PipelineRunToolbarComponent implements OnInit {
     this.showProgress = false
     this.badgeType = 'default'
   }
-
-  runStatus
-  progressSteps
-  doneSteps
-  progress
-  progressStatus
-  showProgress
-  badgeType
-  
-  constructor() { 
-    this.reset()
-  }
-
-  ngOnInit(): void {
-  }
-
-  legend = RUN_STATES
-
-  showDetails = false
 }
