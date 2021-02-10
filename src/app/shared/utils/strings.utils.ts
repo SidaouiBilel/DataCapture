@@ -39,9 +39,9 @@ export function isInIntegerFormat(str) {
 
 export function formatDate(str: string) {
     const parts: string[] = str.split('-');
-    const yyyy = parts[0];
-    const mm = parts[1];
-    const dd = parts[2];
+    const yyyy = parts[0].substr(0,4);
+    const mm = parts[1].substr(0,2);
+    const dd = parts[2].substr(0,2);
 
     return `${[mm, dd, yyyy].join('/')}`;
 }

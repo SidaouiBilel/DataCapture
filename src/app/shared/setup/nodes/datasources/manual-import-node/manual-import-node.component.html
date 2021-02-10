@@ -1,0 +1,40 @@
+<nz-spin *ngIf='!imported' class="flex-box" [nzSpinning]="importing">
+    <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false"
+      [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
+      (nzChange)="handleChange($event)">
+      <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="inbox"></i>
+      </p>
+      <p class="ant-upload-text">Click or drag file to this area to import</p>
+      <p class="ant-upload-hint">
+        Once selected the file will be automatically uploaded into our server.
+      </p>
+    </nz-upload>
+  </nz-spin>
+
+  <ng-container *ngIf='imported'>
+    <h4>{{data.filename}}</h4>
+    <p>Select a sheet</p>
+    <nz-spin [nzSpinning]="importing">
+        <div class="flex stretch wrap button-spacing">
+            <button nz-button (click)='onSheetSelected(e)' *ngFor="let e of data.sheets"
+          [ngClass]='{"active": data.sheetId == e.sheetId}' class="flex-1" style="min-height: 100px;">
+          <div class="flex column">
+              <i style="font-size: 34px;" nz-icon nzType='copy' nzTheme='twotone'></i>
+              <i>{{e.sheetName}}</i>
+            </div>
+        </button>
+        </div>      
+    </nz-spin>
+
+</ng-container>
+
+
+<nz-alert class="mt-2" *ngIf='data.sheet_id' nzType="success" nzMessage="Dataset is ready"></nz-alert>
+
+
+<div class="button-spacing mt-2" >
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button (click)='removeData()'>Remove</button>
+</div>

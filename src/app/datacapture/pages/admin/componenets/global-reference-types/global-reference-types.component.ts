@@ -47,4 +47,11 @@ export class GlobalReferenceTypesComponent implements OnInit {
     this.nav.gotToRefData(item.id)
   }
 
+  OnEditVersion(refType, refTypeVersion){
+    this.utils.editRefTypeVersion(refType, refTypeVersion).subscribe(res=> this.laodData())
+  }
+
+  OnCreateVersion(refType){
+    this.utils.createRefTypeVersion(refType).subscribe(res=> this.laodData())
+  }
 }

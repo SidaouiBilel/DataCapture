@@ -39,6 +39,7 @@ import { GlobalReferencesComponent } from './pages/global-references/global-refe
 import { GlobalReferenceTypesComponent } from './componenets/global-reference-types/global-reference-types.component';
 import { ShareWithCollectionsComponent } from './modals/share-with-collections/share-with-collections.component';
 import { GlobalReferenceDataComponent } from './pages/global-reference-data/global-reference-data.component';
+import { ReferenceTypeVersionEditorComponent } from './componenets/references/reference-type-version-editor/reference-type-version-editor.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { GlobalReferenceDataComponent } from './pages/global-reference-data/glob
     GlobalReferencesComponent,
     GlobalReferenceTypesComponent,
     ShareWithCollectionsComponent,
-    GlobalReferenceDataComponent
+    GlobalReferenceDataComponent,
+    ReferenceTypeVersionEditorComponent
   ],
   providers:[
     CollectionEditor,
