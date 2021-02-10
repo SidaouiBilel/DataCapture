@@ -49,14 +49,14 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
   }
   
   removeData(){
-    this.data.filename = null
-    this.data.sheets = null
-    this.data.file_id = null
-    this.data.sheetId = null
-    this.data.sheet_id = null
+    delete this.data.filename
+    delete this.data.sheets
+    delete this.data.file_id
+    delete this.data.sheetId
+    delete this.data.sheet_id
 
-    this.imported = null
-    this.importing = null
+    this.imported = false
+    this.importing = false
   }
   
   onSheetSelected(e){
