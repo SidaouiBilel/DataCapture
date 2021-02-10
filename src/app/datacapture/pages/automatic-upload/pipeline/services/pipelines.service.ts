@@ -44,6 +44,10 @@ export class PipelinesService {
     return this.http.post(environment.pipeline + `run/${run_id}/retry`,params)
   }
 
+  getTaskLogs(runId, taskId, executionDate) {
+    return this.http.get(environment.pipeline + `monitor/log/${runId}/${taskId}/${executionDate}`);
+  }
+
   trigger(dag_id: any, config) {
     return this.http.post(environment.pipeline + `run/dag/${dag_id}`,config).pipe(retryWhen(errors => errors.pipe(delay(1000), take(3))))
   }

@@ -6,18 +6,39 @@
       <nz-form-item>
         <nz-form-label class="text-left" [nzSm]="24" nzRequired>Domain</nz-form-label>
         <nz-form-control [nzSm]="24">
-
           <div>
-            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(data?.domain?.name)"></i>
-            <button [class.req-input]="!(data?.domain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu"
-              class="wd-80" [nzPlacement]="'bottomRight'">
+            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(domain?.name)"></i>
+            <button [class.req-input]="!(domain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu" class="wd-80"
+              [nzPlacement]="'bottomRight'">
               <div style="min-width:200px" class="flex between">
-                <div class="flex-1 text-left">{{ (data?.domain?.name) || 'None' }}</div>
+                <div class="flex-1 text-left">{{ (domain?.name) || 'None' }}</div>
                 <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"
-                  [class.text-danger]="!(data?.domain?.name)"></i>
+                  [class.text-danger]="!(domain?.name)"></i>
               </div>
             </button>
           </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24" nzRequired>Mapping</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <span class="text-primary">Selected Mapping: </span> {{data?.mapping_name}}
+          <nz-divider nzType='vertical'></nz-divider>
+          <button nz-tooltip nzTooltipTitle='Previous Mappings' nz-button class="ghost" (click)='getPreviousMappings()'>
+            <i nz-icon nzType="history"></i> Previous Mappings
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24" nzRequired>Tags</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <nz-select nzMode="tags" nzPlaceHolder="Tags" name="tags" (nzOpenChange)="loadTags($event)"
+            [(ngModel)]="data.tags">
+            <nz-option *ngFor="let tag of tags" [nzLabel]="tag" [nzValue]="tag"></nz-option>
+            <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+              <i nz-icon nzType="loading" class="loading-icon"></i> Loading Tags...
+            </nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
     </form>

@@ -20,4 +20,8 @@ export class MonitorService {
     getRunTasks(runId) {
         return this.http.get(environment.pipeline + `monitor/run/${runId}`)
     }
+
+    getTaskLogs(runId, taskId, executionDate) {
+        return this.http.get(environment.pipeline + `monitor/log/${runId}/${taskId}/${executionDate}`);
+    }
 }

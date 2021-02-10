@@ -6,15 +6,14 @@
       <nz-form-item>
         <nz-form-label class="text-left" [nzSm]="24" nzRequired>Domain</nz-form-label>
         <nz-form-control [nzSm]="24">
-
           <div>
-            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(data?.domain?.name)"></i>
-            <button [class.req-input]="!(data?.domain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu"
+            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(domain?.name)"></i>
+            <button [class.req-input]="!(domain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu"
               class="wd-80" [nzPlacement]="'bottomRight'">
               <div style="min-width:200px" class="flex between">
-                <div class="flex-1 text-left">{{ (data?.domain?.name) || 'None' }}</div>
+                <div class="flex-1 text-left">{{ (domain?.name) || 'None' }}</div>
                 <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"
-                  [class.text-danger]="!(data?.domain?.name)"></i>
+                  [class.text-danger]="!(domain?.name)"></i>
               </div>
             </button>
           </div>

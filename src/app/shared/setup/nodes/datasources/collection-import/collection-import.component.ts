@@ -10,11 +10,13 @@ import { FileImportService } from '@app/datacapture/pages/upload/services/file-i
 export class CollectionImportComponent extends PipelineNodeComponent {
   keys = Object.keys;
   domains = [];
+  domain;
   constructor(private service: FileImportService) {
     super();
     
     this.service.getAllSuper().subscribe((domains: any) => {
       this.domains = domains.resultat;
+      this.fetchDomainData();
     });
   }
 
@@ -24,7 +26,22 @@ export class CollectionImportComponent extends PipelineNodeComponent {
 
   selectDomain(domain) {
     this.data.domain_id = domain.identifier;
-    this.data.domain = domain;
+    this.domain = domain;
+  }
+
+  fetchDomainData() {
+    if (this.data.domain_id) {
+      const domainList = Object.keys(this.domains);
+      for(var i =0; i < domainList.length; i++) {
+        const collection = this.domains[domainList[i]];
+        for(var j=0; j < collection.length; j++) {
+          if (collection[j].identifier === this.data.domain_id) {
+            this.domain = collection[j];
+            return;
+          }
+        };
+      }
+    }
   }
 
 }
