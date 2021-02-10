@@ -1,6 +1,7 @@
 <nz-collapse nzAccordion>
   <nz-collapse-panel *ngFor="let pipeline of pipelines" [nzHeader]="name" (nzActiveChange)="getMonitors(pipeline)">
-    <app-monitor-item [monitors]="monitors$ | async" [pipeline]="pipeline" [getTasks]="getTasks" (openRun)="openRun.emit($event)">
+    <app-monitor-item [monitors]="monitors$ | async" [pipeline]="pipeline" [getTasks]="getTasks"
+      (openRun)="openRun.emit($event)" (download)="downloadLogs($event)">
     </app-monitor-item>
     <ng-template #name>
       <div>

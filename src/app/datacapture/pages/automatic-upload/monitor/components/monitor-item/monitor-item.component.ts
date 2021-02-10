@@ -14,6 +14,7 @@ export class MonitorItemComponent implements OnInit {
   @Input() pipeline:any;
   @Input() getTasks: (pipe: any, tasks$: BehaviorSubject<any>) => void;
   @Output() openRun: EventEmitter<any> = new EventEmitter<any>();
+  @Output() download: EventEmitter<any> = new EventEmitter<any>();
   constructor(private drawerService: NzDrawerService) { }
 
   ngOnInit(): void {
@@ -21,13 +22,22 @@ export class MonitorItemComponent implements OnInit {
 
   openTask(pipe: any) {
     this.getTasks(pipe, this.tasks$);
+    const download$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     const drawerRef = this.drawerService.create({
       nzTitle: 'Tasks',
       nzWidth: '40vw',
       nzClosable: false,
       nzContent: PipelineTasksComponent,
       nzContentParams: {
-        tasks$: this.tasks$
+        tasks$: this.tasks$,
+        task: pipe,
+        download$
+      },
+    });
+
+    download$.subscribe((res) => {
+      if (res) {
+        this.download.emit(res);
       }
     });
   }

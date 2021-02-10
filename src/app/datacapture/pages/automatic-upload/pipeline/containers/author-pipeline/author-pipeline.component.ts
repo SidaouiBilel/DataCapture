@@ -63,6 +63,10 @@ export class AuthorPipelineComponent implements OnDestroy {
 
   saveAndPublish=()=>this.save().then(()=>this.publish())
 
+  downloadtaskLog(task) {
+    this.pipelines.downloadLog(task.runId, task.executionDate, task.taskId);
+  }
+
   // PUBLISH AND RESOLVE
   publish=()=>new Promise((resolve, reject) => {
       forkJoin([this.metadata$.pipe(take(1))])

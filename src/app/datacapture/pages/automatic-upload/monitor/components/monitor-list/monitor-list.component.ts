@@ -11,6 +11,7 @@ export class MonitorListComponent implements OnInit {
   @Input() pipelines = [];
   @Input() getMonitor: (pipe: any, monitors$: BehaviorSubject<any>) => void;
   @Input() getTasks: (pipe: any, tasks$: BehaviorSubject<any>) => void;
+  @Input() downloadLog: (pipe: any, taskId) => void;
   @Output() openRun: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
@@ -19,6 +20,10 @@ export class MonitorListComponent implements OnInit {
 
   getMonitors(pipe: any) {
     this.getMonitor(pipe, this.monitors$);
+  }
+
+  downloadLogs(res) {
+    this.downloadLog(res.task, res.id);
   }
 
 }

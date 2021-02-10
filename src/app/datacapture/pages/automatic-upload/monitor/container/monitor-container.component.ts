@@ -51,4 +51,8 @@ export class MonitorContainer {
         }));
         this.store.dispatch(new PipelineEditRunId({run_id: event.run_id, pipeline_id: event.pipeline.id}));
     }
+
+    downloadLog = (run: any, taskId) => {
+        this.service.downloadLog(run.dag_id, run.execution_date, taskId);
+    }
 }

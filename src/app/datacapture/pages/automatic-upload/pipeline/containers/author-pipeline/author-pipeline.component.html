@@ -35,5 +35,5 @@
   </div>
   </app-pipeline-editor>
 
-  <app-pipeline-run-toolbar [run]='run$|async' (trigger)='onTrigger()'></app-pipeline-run-toolbar>
+  <app-pipeline-run-toolbar [run]='run$|async' (trigger)='onTrigger()' (downloadLog)="downloadtaskLog($event)"></app-pipeline-run-toolbar>
 </div>

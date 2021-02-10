@@ -9,14 +9,16 @@ import { RUN_STATES } from '@app/shared/utils/state-colors.utils';
 export class PipelineRunToolbarComponent implements OnInit {
 
   @Input("run") set _run(value){this.updateData(value)}
-  @Output() trigger = new EventEmitter<any>()
+  @Output() trigger = new EventEmitter<any>();
+  @Output() downloadLog = new EventEmitter<any>();
   run:any;
   runStatus
   progressSteps
   doneSteps
   progress
   progressStatus
-  showProgress
+  showProgress;
+  selectedTask;
   badgeType
   legend = RUN_STATES
   showDetails = false
@@ -62,8 +64,8 @@ export class PipelineRunToolbarComponent implements OnInit {
     }
   }
 
-  openLogs(run: any) {
-    console.log(run);
+  openLogs(runId, executionDate, taskId) {
+    this.downloadLog.emit({runId, executionDate, taskId});
   }
 
   reset(){
