@@ -54,6 +54,9 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     this.data.file_id = null
     this.data.sheetId = null
     this.data.sheet_id = null
+
+    this.imported = null
+    this.importing = null
   }
   
   onSheetSelected(e){
