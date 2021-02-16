@@ -4,6 +4,7 @@ import { AuthActions, AuthActionTypes } from './auth.actions';
 export const initialState: AuthState = {
   isAuthenticated: false,
   token: null,
+  refreshToken:null,
   profile: {}
 };
 
