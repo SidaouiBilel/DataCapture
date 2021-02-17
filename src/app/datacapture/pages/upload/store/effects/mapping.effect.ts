@@ -5,7 +5,8 @@ import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { SaveMappedSources } from '../actions/mapping.actions';
 import { UpdateTransformationHeaders, TransformationActionTypes } from '../../components/transformation/store/transformation.actions';
-import { selectFileHeaders } from '../selectors/import.selectors';
+import { selectHeadersToMap } from '../selectors/preview.selectors';
+import { MultiImportActionTypes } from '../actions/multi-import.actions';
 
 @Injectable()
 export class MappingEffects {
@@ -16,18 +17,18 @@ export class MappingEffects {
 
   @Effect({ dispatch: false})
   onHeadersChange = this.actions$.pipe(
-    ofType<UpdateTransformationHeaders>(TransformationActionTypes.UPDATE_TRANSFORMATION_HEADERS),
-    withLatestFrom(this.store$.select( selectFileHeaders )),
-    map(([payload, headers]) => {
-      if (payload.headers) {
-        const mappingSources = {};
-        payload.headers.forEach((e) => {mappingSources[e] = false; });
-        this.store$.dispatch(new SaveMappedSources(mappingSources));
-      } else {
-        const mappingSources = {};
+    ofType<UpdateTransformationHeaders>(
+      TransformationActionTypes.UPDATE_TRANSFORMATION_HEADERS, 
+      TransformationActionTypes.REMOVE_TRANSFORMATION_SOURCE, 
+      TransformationActionTypes.SELECT_ACTIVE_SHEET, 
+      MultiImportActionTypes.UPDATE_SOURCE,
+      ),
+    withLatestFrom(this.store$.select( selectHeadersToMap )),
+    map(([action, headers]) => {
+      const mappingSources = {};
+        console.log({headers})
         headers.forEach((e) => {mappingSources[e] = false; });
         this.store$.dispatch(new SaveMappedSources(mappingSources));
-      }
     })
   );
 }

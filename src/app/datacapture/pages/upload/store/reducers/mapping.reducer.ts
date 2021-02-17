@@ -1,6 +1,6 @@
 import { Mapping } from '../models/mapping.model';
 import { MappingActionTypes } from '../actions/mapping.actions';
-import { ImportActionTypes } from '../actions/import.actions';
+import { MultiImportActionTypes } from '../actions/multi-import.actions';
 
 
 export const initialState: Mapping = {
@@ -90,7 +90,7 @@ export function MappingReducer(state: Mapping = initialState, action: any): Mapp
         mandatories: action.payload
       };
 
-    case ImportActionTypes.RESET:
+    case MultiImportActionTypes.RESET:
       return initialState;
     default:
       return state;

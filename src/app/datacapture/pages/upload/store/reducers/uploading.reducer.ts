@@ -1,6 +1,6 @@
 import { Uploading } from '../models/uploading.model';
 import { UploadingAtionTypes } from '../actions/uploading.actions';
-import { ImportActionTypes } from '../actions/import.actions';
+import { MultiImportActionTypes } from '../actions/multi-import.actions';
 
 
 export const initialState: Uploading = {
@@ -30,7 +30,7 @@ export function UploadingReducer(state: Uploading = initialState, action: any): 
         result: action.payload
       };
 
-    case ImportActionTypes.RESET:
+    case MultiImportActionTypes.RESET:
         return initialState;
     default:
       return state;

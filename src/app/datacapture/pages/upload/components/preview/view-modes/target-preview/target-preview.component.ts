@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectActivePipe, selectLoadingTransformation, selectTransformedFilePath } from '../../../transformation/store/transformation.selectors';
-import { selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
+import { selectActivePipe, selectLoadingTransformation } from '../../../transformation/store/transformation.selectors';
 import { AppState } from '@app/core';
 import { combineLatest, BehaviorSubject, Subject } from 'rxjs';
-import { selectActiveSourceSheet, selectActiveTargetSheet, selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
+import { selectActiveTargetSheet, selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { PreMappingTransformationService } from '@app/datacapture/pages/upload/services/pre-mapping-transformation.service';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
@@ -21,7 +20,6 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
 
   gridApi = null;
   // DECLARATIONS
-  fileData$;
   activePipe$;
   selectedSheet$;
 

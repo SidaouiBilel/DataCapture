@@ -11,7 +11,7 @@
     <nz-dropdown-menu #sheetsMenu="nzDropdownMenu">
       <ul nz-menu>
         <li nz-tooltip *ngFor="let e of (sheets$|async) | sheetsFilter: (max$ | async) : true" nz-menu-item
-          (click)='onSheetSelected(e.index)'>{{e.sheet}}</li>
+          (click)='onSheetSelected(e.index)'>{{e.label}}</li>
       </ul>
     </nz-dropdown-menu>
   </div>

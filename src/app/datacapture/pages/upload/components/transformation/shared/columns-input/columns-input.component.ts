@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
-import { selectFileHeaders } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { selectInputCloumnsByIndex } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 
 @Component({
@@ -21,7 +20,6 @@ export class ColumnsInputComponent extends AbstractValueAccessor implements OnIn
   columns$;
   constructor(private store: Store<AppState>) {
     super();
-    this.columns$ = this.store.select(selectFileHeaders);
   }
 
   ngOnInit() {

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
-import { selectColRange, selectRowRange } from '../../../store/selectors/import.selectors';
 
 @Component({
   selector: 'app-dataset',

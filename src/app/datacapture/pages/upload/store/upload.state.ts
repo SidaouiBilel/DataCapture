@@ -1,5 +1,4 @@
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
-import { Import } from './models/import.model';
 import { Preview } from './models/preview.model';
 import { Mapping } from './models/mapping.model';
 import { Uploading } from './models/uploading.model';
@@ -9,9 +8,8 @@ import { PreviewReducer } from './reducers/preview.reducer';
 import { UploadingReducer } from './reducers/uploading.reducer';
 import { CleansingReducer } from './reducers/cleansing.reducer';
 import { MappingReducer } from './reducers/mapping.reducer';
-import { ImportReducer } from './reducers/import.reducer';
 import { TransformationReducer } from '../components/transformation/store/transformation.state';
-import { SourceTransformation, Transform } from '../components/transformation/store/transformation.model';
+import { Transform } from '../components/transformation/store/transformation.model';
 import { MultiImport } from './models/multi-import.model';
 import { MultiImportReducer } from './reducers/multi-import.reducer';
 
@@ -21,7 +19,6 @@ export const selectupload = createFeatureSelector<State, UploadState>(
 );
 
 export const uploadReducers: ActionReducerMap<UploadState> = {
-  import: ImportReducer,
   multiImport: MultiImportReducer,
   preview: PreviewReducer,
   mapping: MappingReducer,
@@ -31,7 +28,6 @@ export const uploadReducers: ActionReducerMap<UploadState> = {
 };
 
 export interface UploadState {
-  import: Import;
   multiImport: MultiImport;
   preview: Preview;
   mapping: Mapping;

@@ -70,3 +70,11 @@ export const selectInputCloumnsByIndex = (index) => createSelector(
     return getPreviousHeader(headers, previousNodes)
   }
 );
+
+export const selectHeadersToMap = createSelector(
+  selectActiveSource,
+  selectActiveTranformation,
+  (source:DataSource, transform:SourceTransformation) => {
+    return (transform.transformedFilePath)?transform.tarnsformationHeaders:source.headers
+  }
+);

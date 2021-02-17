@@ -4,7 +4,6 @@ import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 import { Observable, forkJoin, BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectUpdatedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
@@ -17,6 +16,7 @@ import { isEmpty } from '@app/shared/utils/objects.utils';
 import { take } from 'rxjs/operators';
 import { currencyFormatter, dateFormatter, GAPIFilters, INDEX_HEADER, mapGridFilter } from '@app/shared/utils/grid-api.utils';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { selectDomainId } from '../../store/selectors/multi-import.selectors';
 
 @Component({
   selector: 'app-cleansing',
@@ -52,7 +52,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
   // Store
   selectedSheet$: Observable<any>;
   domain$: Observable<any>;
-  fileData$: Observable<any>;
   worksheet$: Observable<any>;
   targetFields$: Observable<any>;
   mappingId$: Observable<any>;
@@ -78,14 +77,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mappingId$     = this.store.select(selectMappingId);
     this.mappingVersion$     = this.store.select(selectMappingVersion);
-    this.fileData$      = this.store.select(selectFileData);
-    this.domain$        = this.store.select(selectDomain);
+    this.domain$        = this.store.select(selectDomainId);
     this.worksheet$     = this.store.select(selectTransformedFilePath);
-    this.fileData$.subscribe((res) => {this.fileData = res; });
     this.targetFields$ = this.store.select(selectMappingFields);
     this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.mappingVersion$.subscribe((res) => { this.mappingVersion = res; });
-    this.domain$.subscribe((domain) => { if (domain) { this.domain = domain.id; } });
+    this.domain$.subscribe((domain_id) => { this.domain = domain_id;  });
     this.targetFields$.subscribe((targetFields) => { if (targetFields) { this.targetFields = targetFields; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { this.worksheet = res; });

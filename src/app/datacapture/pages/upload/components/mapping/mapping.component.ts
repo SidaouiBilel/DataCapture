@@ -10,7 +10,6 @@ import { selectMappingFields, selectMappedSources, selectMandatories,
          selectSourcesPreview, selectMappingVersion } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
          SaveMappingValid, SaveIsModified, SaveMappingVersion, ClearSelectedMapping } from '../../store/actions/mapping.actions';
-import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectUpdatedSheet } from './../../store/selectors/preview.selectors';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
@@ -18,6 +17,7 @@ import { PreviousMappingsComponent } from './previous-mappings/previous-mappings
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
+import { selectDomainId } from '../../store/selectors/multi-import.selectors';
 
 @Component({
   selector: 'app-mapping',
@@ -40,7 +40,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   worksheet: any;
   mappingId: any;
   mappingVersion: any;
-  domain: any;
+  domain_id: any;
   searchTarget: string;
   selectedSource: string;
   // Store
@@ -48,7 +48,6 @@ export class MappingComponent implements OnInit, OnDestroy {
   mappingFields$: Observable<any>;
   sourcesPreview$: Observable<any>;
   isModified$: Observable<any>;
-  fileData$: Observable<any>;
   mappedSources$: Observable<any>; // sources that are mapped
   mandatories$: Observable<any>; // Mandatories
   selectedSheet$: Observable<any>;
@@ -73,13 +72,12 @@ export class MappingComponent implements OnInit, OnDestroy {
     this.mandatories$   = this.store.select(selectMandatories);
     this.mappingId$     = this.store.select(selectMappingId);
     this.mappingVersion$     = this.store.select(selectMappingVersion);
-    this.fileData$      = this.store.select(selectFileData);
-    this.domain$        = this.store.select(selectDomain);
+    this.domain$        = this.store.select(selectDomainId);
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
     this.isModified$.subscribe((res) => { this.isModified = res; });
     this.mappingId$.subscribe((res) => { this.mappingId = res; });
     this.mappingVersion$.subscribe((res) => { this.mappingVersion = res; });
-    this.domain$.subscribe((res) => { this.domain = res; });
+    this.domain$.subscribe((res) => { this.domain_id = res; });
     this.mappingFields$.subscribe((res) => { this.mappingFields = [...res]; });
     this.mappedSources$.subscribe((res) => { this.mappedSources = {...res}; });
     this.mandatories$.subscribe((res) => { this.mandatories = res; });
@@ -115,7 +113,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 
   // called on init to get the target fields
   getTargetFields(): void {
-    this.service.getTargetFields(this.domain.id).subscribe((res: any) => {
+    this.service.getTargetFields(this.domain_id).subscribe((res: any) => {
       if (this.mappingId) {
         // do something
         if (res.length) {
@@ -226,8 +224,8 @@ export class MappingComponent implements OnInit, OnDestroy {
   // Called to load automatic mapping
   loadAutoMapping(): void {
     const x = this.notification.loading('Loading automatic mapping');
-    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
-      .subscribe(([domain, fileData, selectedSheet]) => {
+    forkJoin(this.domain$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
+      .subscribe(([domain, selectedSheet]) => {
       this.service.loadAutoMappingById(domain.id, selectedSheet, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, null, null);
@@ -249,8 +247,8 @@ export class MappingComponent implements OnInit, OnDestroy {
 
   // Called to get previous mapping
   previousMappings(): void {
-    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
-    .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
+    forkJoin(this.domain$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
+    .subscribe(([domain, selectedSheet, mappingId]) => {
       this.service.getPreviouslyMappings(domain.id).subscribe((mappings: any[]) => {
         const modal: NzModalRef = this.modalService.create({
           nzTitle: 'Previously Saved Mappings',
@@ -349,8 +347,8 @@ export class MappingComponent implements OnInit, OnDestroy {
 
   // Update the current mapping by id
   updateMapping(mappingFields: any): void {
-    forkJoin(this.domain$.pipe(take(1)), this.fileData$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
-      .subscribe(([domain, fileData, selectedSheet, mappingId]) => {
+    forkJoin(this.domain$.pipe(take(1)),  this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
+      .subscribe(([domain, selectedSheet, mappingId]) => {
         // tslint:disable-next-line: max-line-length
         this.service.updateMapping(mappingFields, (this.mappingVersion || mappingId), selectedSheet, domain.id)
           .subscribe((res) => {
@@ -397,7 +395,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 
   // mapping name validator
   nameValidator = (control: FormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
-    this.service.checkName(this.domain.id, control.value).subscribe((res) => {
+    this.service.checkName(this.domain_id, control.value).subscribe((res) => {
       if (res) {
         observer.next({ error: true, duplicated: true });
       } else {

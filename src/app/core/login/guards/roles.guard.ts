@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AppState, selectProfile } from '@app/core';
+import { selectDomainId } from '@app/datacapture/pages/upload/store/selectors/multi-import.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectSuperDomain } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 
 @Injectable({providedIn: 'root'})
 export class RolesGuard implements CanActivate {
@@ -13,7 +13,7 @@ export class RolesGuard implements CanActivate {
   selectedDomain$: Observable<any>;
   constructor(private store: Store<AppState>, private router: Router) {
     this.profile$ = this.store.select(selectProfile);
-    this.selectedDomain$ = this.store.select(selectSuperDomain);
+    this.selectedDomain$ = this.store.select(selectDomainId);
     this.profile$.subscribe((res: any) => {this.profile = res; });
     this.selectedDomain$.subscribe((res: any) => {this.selectedDomain = res; });
   }

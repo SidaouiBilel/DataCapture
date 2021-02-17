@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UploadComponentComponent } from './container/upload-component.component';
-import { ImportComponent } from './components/import/import.component';
 import { PreviewComponent } from './components/preview/preview.component';
 import { MappingComponent } from './components/mapping/mapping.component';
 import { CleansingComponent } from './components/cleansing/cleansing.component';
@@ -16,12 +15,6 @@ const routes: Routes = [
       path: '',
       component: UploadComponentComponent,
       children: [
-        // {
-        //   path: 'import',
-        //   component: ImportComponent,
-        //   canActivate: [UploadGuard],
-        //   data: {route: 'IMPORT'}
-        // },
         {
           path: 'import',
           component: MultiImportComponent,

@@ -10,5 +10,7 @@ export interface DataSource{
   sheet_id: string,
   headers: string[]
   file_id: string,
+  label: string,
+
 }
 

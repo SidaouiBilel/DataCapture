@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
-import { selectDomain, selectDomainId } from '../../../store/selectors/multi-import.selectors';
+import { selectDomainId } from '../../../store/selectors/multi-import.selectors';
 import {  LoadTransformation, SetPreviewMode,
           TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode, UpdateNodeOrder } from '../store/transformation.actions';
 import { selectActivePipe,
@@ -18,8 +18,6 @@ import { selectActivePipe,
 import { Observable, ReplaySubject, forkJoin, combineLatest, BehaviorSubject } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
 import { TransformerFactory } from '../transformations/transformers';
-import { ActionSelectColRange, ActionSelectRowRange } from '../../../store/actions/import.actions';
-import { ActionSelectSheet } from '../../../store/actions/preview.actions';
 import { selectSelectedSheet, selectUpdatedSheet } from '../../../store/selectors/preview.selectors';
 import { withValue } from '@app/shared/utils/rxjs.utils';
 import { NzModalService } from 'ng-zorro-antd';

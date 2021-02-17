@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild, TemplateRef, Input, ElementRef } from '@angular/core';
-import { ActionSelectSheet } from '../../../store/actions/preview.actions';
-import { selectFileData } from '../../../store/selectors/import.selectors';
 import { selectActiveSourceSheet, selectSelectedSheet } from '../../../store/selectors/preview.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { NzModalService } from 'ng-zorro-antd';
-import { SheetSelectionConfirmComponent } from './sheet-selection-confirm/sheet-selection-confirm.component';
-import { take, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { TranformationService } from '../../transformation/services/tranformation.service';
 import { combineLatest, BehaviorSubject, Subject } from 'rxjs';
-import { AnyAaaaRecord } from 'dns';
 import { selectDatasources } from '../../../store/selectors/multi-import.selectors';
 import { SelectActiceDatasourceIndex } from '../../transformation/store/transformation.actions';
 

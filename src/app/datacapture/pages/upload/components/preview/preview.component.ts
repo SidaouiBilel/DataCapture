@@ -4,7 +4,6 @@ import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectPreviewMode, selectPipeExpanded } from '../transformation/store/transformation.selectors';
-import { selectSuperDomain } from '../../store/selectors/import.selectors';
 import { selectDomain } from '../../store/selectors/multi-import.selectors';
 import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 

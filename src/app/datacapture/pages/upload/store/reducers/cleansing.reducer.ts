@@ -1,6 +1,6 @@
 import { Cleansing } from '../models/cleansing.model';
 import { CleansingAtionTypes } from '../actions/cleansing.actions';
-import { ImportActionTypes } from '../actions/import.actions';
+import { MultiImportActionTypes } from '../actions/multi-import.actions';
 
 
 export const initialState: Cleansing = {
@@ -23,7 +23,7 @@ export function CleansingReducer(state: Cleansing = initialState, action: any): 
         errors: action.payload
       };
 
-    case ImportActionTypes.RESET:
+    case MultiImportActionTypes.RESET:
       return initialState;
 
     default:

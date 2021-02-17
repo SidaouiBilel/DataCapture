@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NzDrawerRef } from 'ng-zorro-antd';
 import { selectTranformationNodes, selectPipeExpanded } from '../store/transformation.selectors';
 import { AddTransNode, ResetTransformation, TransformationFlipExpand } from '../store/transformation.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { TRANSFORMATIONS } from '../transformations/transformers';
 import { TranformationService } from '../services/tranformation.service';
-import { take } from 'rxjs/operators';
-import { selectDomain } from '../../../store/selectors/import.selectors';
-import { forkJoin, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
+import { selectDomainId } from '../../../store/selectors/multi-import.selectors';
 
 
 @Component({
@@ -35,7 +33,7 @@ export class TransformationPipeComponent implements OnInit {
     private pipes: TranformationService
     ) {
     this.pipe$ = this.store.select(selectTranformationNodes);
-    this.domain$ = this.store.select(selectDomain);
+    this.domain$ = this.store.select(selectDomainId);
     this.expanded$ = this.store.select(selectPipeExpanded);
     this.active$ = this.pipes.active$;
     this.active$.subscribe((active: any) => {

@@ -3,7 +3,6 @@ import { SharedModule } from '@app/shared';
 import { UploadRoutingModule } from './upload-routing.module';
 import { UploadComponentComponent } from './container/upload-component.component';
 import { StepperComponent } from './components/stepper/stepper.component';
-import { ImportComponent } from './components/import/import.component';
 import { MappingComponent } from './components/mapping/mapping.component';
 import { CleansingComponent } from './components/cleansing/cleansing.component';
 import { PreviewComponent } from './components/preview/preview.component';
@@ -61,7 +60,6 @@ import { UploadDataComponent } from './components/upload/upload-data/upload-data
 import { FilterPipe } from './pipe/source-filter.pipe';
 import { CalculatorComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator.component';
 import { CalculatorModalComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator-modal/calculator-modal.component';
-import { ImportedFileInfoComponent } from './components/import/imported-file-info/imported-file-info.component';
 import { DateFormatterComponent } from './components/transformation/transformations/transformation-interface/format/date-formatter/date-formatter.component';
 import { DatasetComponent } from './components/import/dataset/dataset.component';
 import { HeaderDescriptionComponent } from './components/transformation/modals/transformation-preview-help/header-description/header-description.component';
@@ -74,7 +72,6 @@ import { HeaderPreviewComponent } from './components/multi-import/header-preview
 const components = [
   UploadComponentComponent,
   StepperComponent,
-  ImportComponent,
   MappingComponent,
   CleansingComponent,
   PreviewComponent,
@@ -115,7 +112,6 @@ const components = [
   FilterPipe,
   CalculatorComponent,
   CalculatorModalComponent,
-  ImportedFileInfoComponent,
   DateFormatterComponent,
   DatasetComponent, 
   HeaderDescriptionComponent, 

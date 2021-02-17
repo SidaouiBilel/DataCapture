@@ -1,10 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { UploadState, selectupload } from './upload.state';
 
-export const selectImport = createSelector(
-  selectupload,
-  (state: UploadState) => {if (state) { return state.import; }}
-);
 
 export const selectMultiImport = createSelector(
   selectupload,

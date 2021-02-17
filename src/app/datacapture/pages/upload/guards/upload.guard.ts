@@ -2,13 +2,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { Observable } from 'rxjs';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
-import { selectFileData } from '../store/selectors/import.selectors';
 import { Injectable } from '@angular/core';
 import { selectUpdatedSheet } from './../store/selectors/preview.selectors';
 import { selectMandatories, selectMappingId, selectMappingValid } from './../store/selectors/mapping.selectors';
 import { selectCleansingErrors } from '../store/selectors/cleansing.selectors';
 import { selectUploadingStatus } from '../store/selectors/upload.selectors';
-import { selectDatasources, selectDomain, selectDomainId } from '../store/selectors/multi-import.selectors';
+import { selectDatasources, selectDomainId } from '../store/selectors/multi-import.selectors';
 
 @Injectable()
 export class UploadGuard implements CanActivate {
@@ -21,7 +20,6 @@ export class UploadGuard implements CanActivate {
   mappingValid: boolean;
   uploadStatus: string;
   // Store
-  fileData$: Observable<any>;
   errors$: Observable<any>;
   mappingId$: Observable<any>;
   selectedDomain$: Observable<any>;
@@ -33,7 +31,6 @@ export class UploadGuard implements CanActivate {
   hasDatasources = false
 
   constructor(private store: Store<AppState>) {
-    this.fileData$ = this.store.select(selectFileData);
     this.errors$ = this.store.select(selectCleansingErrors);
     this.mappingValid$  = this.store.select(selectMappingValid);
     this.uploadStatus$ = store.select(selectUploadingStatus);
@@ -42,7 +39,6 @@ export class UploadGuard implements CanActivate {
     this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
     this.errors$.subscribe((errors) => {this.errors = errors; });
-    this.fileData$.subscribe((res) => {this.fileData = res; });
     this.mappingId$.subscribe((mappingId) => { this.mappingId = mappingId; });
     this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
     this.uploadStatus$.subscribe((uploadStatus) => {this.uploadStatus = uploadStatus; });

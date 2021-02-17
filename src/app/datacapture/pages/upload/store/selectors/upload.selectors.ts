@@ -6,18 +6,20 @@ import { Uploading } from '../models/uploading.model';
 export const selectUploadOverview = createSelector(
   selectupload,
   (object: UploadState) => {
-    const activeTransformation = object.transformation.sourceTransformations[object.transformation.activeSourceIndex]
+    const activeIndex = object.transformation.activeSourceIndex
+    const activeTransformation = object.transformation.sourceTransformations[activeIndex]
+    const activeSource = object.multiImport.sources[activeIndex]
 
     return {
-      fileName: object.import.selectedFile ? object.import.selectedFile.token : null,
-      fileExtension: object.import.selectedFile ? object.import.selectedFile.extension : null,
-      sheet: object.import.fileData ? object.import.fileData.sheets[object.preview.selectedSheet] : null,
-      domain: object.import.selectedDomain ? object.import.selectedDomain.name : null,
+      fileName: activeSource.label,
+      fileExtension: "",
+      sheet: '',
+      domain: object.multiImport.domain.name,
       pipe: activeTransformation.activePipe ? activeTransformation.activePipe.name : null,
       mappingName: object.mapping.mappingName,
       mappingId: object.mapping.mappingVersion || object.mapping.mappingId,
-      domainId: object.import.selectedDomain ? object.import.selectedDomain.id : null,
-      fileId: object.import.fileData.metaData ? object.import.fileData.metaData.file_id : null,
+      domainId: object.multiImport.domain._id,
+      fileId: activeSource.file_id,
       transformationId: activeTransformation.transformedFilePath,
       cleansingId: object.cleansing.jobId,
       // tslint:disable-next-line: max-line-length
