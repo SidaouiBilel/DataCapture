@@ -1,29 +1,15 @@
 <div class="p-3">
-  <div class="button-spacing">
-    <button nz-button nzType='primary' (click)="onAddDatasource()"><i nz-icon nzType="plus"></i> Add Source</button>
-  
-    <button [class.req-input]="!(selectedDomain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
-        <i nz-icon nzType="block"></i>
-        <span>{{ (selectedDomain?.name) || 'None' }}</span>
-        <i style="opacity: 0.5;" nz-icon nzType="down"></i>
-    </button>
-  
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li *ngFor="let item of domains | keyvalue" nz-submenu [nzTitle]="domainTemplate">
-          <ng-template #domainTemplate>
-            <i nz-icon nzType="folder" nzTheme="outline"></i>
-            {{item.key}}
-          </ng-template>
-          <ul>
-            <li *ngFor="let domain of domains[item.key]" nz-menu-item (click)="OnSelectDomain(domain)">
-              <i nz-icon nzType="block" nzTheme="outline"></i>
-              {{domain.name}}
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nz-dropdown-menu>
+  <div class="flex between">
+
+    <div class="button-spacing">
+      <button [class.req-input]="!(selectedDomain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'"><i nz-icon nzType="block"></i><span>{{ (selectedDomain?.name) || 'None' }}</span><i style="opacity: 0.5;" nz-icon nzType="down"></i></button>
+      <button nz-button nzType='dashed' (click)="onAddDatasource()"><i nz-icon nzType="plus"></i> Add Source</button>
+    </div>
+
+    <div class="button-spacing">
+      <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"nzTooltipPlacement="left" (click)="goToPreview()">Next<i nz-icon nzType="caret-right"></i></button>
+      <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"(click)="cancelUpload()"><i nz-icon nzType="close"></i></button>
+    </div>
   </div>
   
   
@@ -31,7 +17,7 @@
       <nz-tab *ngFor='let ds of datasources$|async; let i=index' [nzTitle]="Title">
         <ng-template #Title>{{ds.type + ' ' + (i+1)}} <i nz-icon nzType='close' (click)='onRemove(i)'></i></ng-template>
         <ng-container [ngSwitch]="ds.type">
-            <div class="p-3" *ngSwitchCase="'manual'">
+            <div *ngSwitchCase="'manual'">
                 <app-import-manual-source [data]='ds' (update)='onDataChanged($event, i)'></app-import-manual-source>
             </div>
             <div *ngSwitchDefault>NOT SUPPORTED YET</div>
@@ -39,3 +25,21 @@
       </nz-tab>
     </nz-tabset>
 </div>
+
+<!-- DOMAIN MENU -->
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of domains | keyvalue" nz-submenu [nzTitle]="domainTemplate">
+      <ng-template #domainTemplate>
+        <i nz-icon nzType="folder" nzTheme="outline"></i>
+        {{item.key}}
+      </ng-template>
+      <ul>
+        <li *ngFor="let domain of domains[item.key]" nz-menu-item (click)="OnSelectDomain(domain)">
+          <i nz-icon nzType="block" nzTheme="outline"></i>
+          {{domain.name}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>

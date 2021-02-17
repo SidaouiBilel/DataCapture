@@ -3,6 +3,8 @@ import { NotificationService } from '@app/core';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { environment } from '@env/environment';
 import * as _ from 'lodash'
+import { NzModalService } from 'ng-zorro-antd';
+import { DatasetComponent } from '../../../import/dataset/dataset.component';
 
 @Component({
   selector: 'app-import-manual-source',
@@ -25,7 +27,7 @@ export class ImportManualSourceComponent implements OnInit {
   
   url = environment.import + '?domainId=' + null;
   
-  constructor(private ntf: NotificationService, private service: FileImportService) { 
+  constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) { 
   }
 
   ngOnInit(){
@@ -55,12 +57,7 @@ export class ImportManualSourceComponent implements OnInit {
   }
   
   removeData(){
-    delete this.data.filename
-    delete this.data.sheets
-    delete this.data.file_id
-    delete this.data.sheetId
-    delete this.data.sheet_id
-    delete this.data.headers
+    this.data = {type:this.data.type}
 
     this.imported = false
     this.importing = false
@@ -71,8 +68,9 @@ export class ImportManualSourceComponent implements OnInit {
   onSheetSelected(e){
     this.data.sheetId = e.sheetId
     this.importing = true
-    this.ntf.default('Preparing Dataset')
-    this.service.generateSheet(this.data.file_id, this.data.sheetId, 0, 0 ,0 ,0).subscribe((generated_sheet:any)=>{
+    const row_range = this.data.row_range || [0,0]
+    const col_range = this.data.col_range || [0,0]
+    this.service.generateSheet(this.data.file_id, this.data.sheetId, col_range[0], col_range[1] ,row_range[0], row_range[1]).subscribe((generated_sheet:any)=>{
       this.service.getFileData(1, generated_sheet.sheet_id, 0).subscribe((data)=>{
         this.data.headers = data.headers
         this.importing = false
@@ -89,11 +87,36 @@ export class ImportManualSourceComponent implements OnInit {
     this.update.emit(this.data)
   }
 
-  openConfig(){
 
+  openConfig(): void {
+    const row_range = this.data.row_range || [0,0]
+    const col_range = this.data.col_range || [0,0]
+
+    const modal = this.modal.create({
+      nzTitle: 'Dataset Ranges',
+      nzContent: DatasetComponent,
+      nzComponentParams:{
+        colValue:col_range,
+        rowValue:row_range
+      },
+      nzClosable: false,
+      nzWrapClassName: 'vertical-center-modal',
+      nzWidth: 'xXL',
+      nzOnOk: componentInstance => {
+        this.onRangeSelected(componentInstance.rowValue, componentInstance.colValue)
+      }
+    });
   }
 
-  resetRange(){
-    
+  onRangeSelected(row_range, col_range){
+      this.data.row_range = row_range
+      this.data.col_range = col_range
+
+      const sheetId = this.data.sheetId
+      if(sheetId){
+        this.onSheetSelected({sheetId})
+      } else {
+        this.disptach()
+      }
   }
 }

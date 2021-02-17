@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { FileImportService } from '../../../services/file-import.service';
-import { ActionAddSource, ActionMultiImportRemoveSource, ActionMultiImportSelectDomain, ActionMultiImportUpdateSource } from '../../../store/actions/multi-import.actions';
+import { ActionAddSource, ActionMultiImportRemoveSource, ActionMultiImportReset, ActionMultiImportSelectDomain, ActionMultiImportUpdateSource } from '../../../store/actions/multi-import.actions';
 import { selectDomain } from '../../../store/selectors/multi-import.selectors';
 import { selectDatasources } from '../../../store/selectors/multi-import.selectors';
 
@@ -19,7 +20,7 @@ export class MultiImportComponent implements OnInit {
   domains
   selectedDomain
 
-  constructor(private store: Store<AppState>, private service: FileImportService) { 
+  constructor(private store: Store<AppState>, private service: FileImportService, private router: Router) { 
     this.selectedDomain$ = this.store.select(selectDomain);
     this.selectedDomain$.subscribe((domain: any) => {
       this.selectedDomain = domain;
@@ -52,4 +53,11 @@ export class MultiImportComponent implements OnInit {
     this.store.dispatch(new ActionMultiImportSelectDomain(domain))
   }
 
+  cancelUpload(): void {
+    this.store.dispatch(new ActionMultiImportReset());
+  }
+
+  goToPreview(): void {
+    this.router.navigate(['/datacapture/upload/transform']);
+  }
 }
