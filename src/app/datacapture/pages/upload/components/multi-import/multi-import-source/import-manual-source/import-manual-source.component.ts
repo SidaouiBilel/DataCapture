@@ -65,8 +65,9 @@ export class ImportManualSourceComponent implements OnInit {
     this.disptach()
   }
   
-  onSheetSelected(e){
-    this.data.sheetId = e.sheetId
+  onSheetSelected(sheetData){
+    this.data.sheetId = sheetData.sheetId
+
     this.importing = true
     const row_range = this.data.row_range || [0,0]
     const col_range = this.data.col_range || [0,0]
@@ -76,6 +77,7 @@ export class ImportManualSourceComponent implements OnInit {
         this.importing = false
         this.data.sheet_id = generated_sheet.sheet_id
         this.ntf.success('Dataset ready')
+        this.data.label = sheetData.sheetName
 
         this.disptach()
       })
@@ -113,8 +115,9 @@ export class ImportManualSourceComponent implements OnInit {
       this.data.col_range = col_range
 
       const sheetId = this.data.sheetId
+      const sheetName = this.data.label
       if(sheetId){
-        this.onSheetSelected({sheetId})
+        this.onSheetSelected({sheetId, sheetName})
       } else {
         this.disptach()
       }

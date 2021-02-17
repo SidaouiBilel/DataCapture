@@ -15,7 +15,7 @@
   
   <nz-tabset>
       <nz-tab *ngFor='let ds of datasources$|async; let i=index' [nzTitle]="Title">
-        <ng-template #Title>{{ds.type + ' ' + (i+1)}} <i nz-icon nzType='close' (click)='onRemove(i)'></i></ng-template>
+        <ng-template #Title>{{ds.label || ('Datasource' + (i+1))}} <i nz-icon nzType='close' (click)='onRemove(i)'></i></ng-template>
         <ng-container [ngSwitch]="ds.type">
             <div *ngSwitchCase="'manual'">
                 <app-import-manual-source [data]='ds' (update)='onDataChanged($event, i)'></app-import-manual-source>

@@ -33,13 +33,14 @@
               <i>{{e.sheetName}}</i>
             </div>
         </button>
-        </div>    
-        
+        </div> 
+         
+        <ng-container *ngIf='data.headers'>
+          <app-header-preview class="mt-2" [data]='data'></app-header-preview>
+        </ng-container>
         
     </nz-spin>
     
-    <ng-container *ngIf='data.headers'>
-      <app-header-preview class="mt-2" [data]='data'></app-header-preview>
-    </ng-container>
+   
 
 </ng-container>
