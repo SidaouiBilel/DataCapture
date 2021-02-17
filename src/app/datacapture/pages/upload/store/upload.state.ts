@@ -12,6 +12,8 @@ import { MappingReducer } from './reducers/mapping.reducer';
 import { ImportReducer } from './reducers/import.reducer';
 import { TransformationReducer } from '../components/transformation/store/transformation.state';
 import { Transformation } from '../components/transformation/store/transformation.model';
+import { MultiImport } from './models/multi-import.model';
+import { MultiImportReducer } from './reducers/multi-import.reducer';
 
 export const FEATURE_NAME = 'upload';
 export const selectupload = createFeatureSelector<State, UploadState>(
@@ -20,6 +22,7 @@ export const selectupload = createFeatureSelector<State, UploadState>(
 
 export const uploadReducers: ActionReducerMap<UploadState> = {
   import: ImportReducer,
+  multiImport: MultiImportReducer,
   preview: PreviewReducer,
   mapping: MappingReducer,
   cleansing: CleansingReducer,
@@ -29,6 +32,7 @@ export const uploadReducers: ActionReducerMap<UploadState> = {
 
 export interface UploadState {
   import: Import;
+  multiImport: MultiImport;
   preview: Preview;
   mapping: Mapping;
   cleansing: Cleansing;

@@ -37,6 +37,8 @@ export class ImportComponent implements OnInit {
     this.fileData$.subscribe((fileData) => {
       this.fileData = fileData;
     })
+    this.selectedDomain$ = this.store.select(selectDomain);
+
     this.selectedDomain$.subscribe((domain: any) => {
       this.selectedDomain = domain;
       if (domain) {

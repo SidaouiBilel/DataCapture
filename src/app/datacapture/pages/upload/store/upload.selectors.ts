@@ -6,6 +6,11 @@ export const selectImport = createSelector(
   (state: UploadState) => {if (state) { return state.import; }}
 );
 
+export const selectMultiImport = createSelector(
+  selectupload,
+  (state: UploadState) => {if (state) { return state.multiImport; }}
+);
+
 export const selectPreview = createSelector(
   selectupload,
   (state: UploadState) => state.preview

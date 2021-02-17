@@ -9,15 +9,22 @@ import { UploadComponent } from './components/upload/upload.component';
 import { UploadGuard } from './guards/upload.guard';
 import { DeactivateUploadGuard } from './guards/deactivate-upload.guard';
 import { RolesGuard } from '@app/core/login/guards/roles.guard';
+import { MultiImportComponent } from './components/multi-import/multi-import/multi-import.component';
 
 const routes: Routes = [
   {
       path: '',
       component: UploadComponentComponent,
       children: [
+        // {
+        //   path: 'import',
+        //   component: ImportComponent,
+        //   canActivate: [UploadGuard],
+        //   data: {route: 'IMPORT'}
+        // },
         {
           path: 'import',
-          component: ImportComponent,
+          component: MultiImportComponent,
           canActivate: [UploadGuard],
           data: {route: 'IMPORT'}
         },

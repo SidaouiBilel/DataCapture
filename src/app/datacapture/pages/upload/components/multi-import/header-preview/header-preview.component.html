@@ -1,0 +1,12 @@
+    <nz-statistic nzValue="" [nzTitle]="'Header Preview'"></nz-statistic>
+  <div class="border rounded" >
+    <nz-collapse [nzBordered]='false' nzSize="small">
+      <nz-collapse-panel *ngFor='let h of data.headers' [nzHeader]="title" [nzActive]="false" [nzDisabled]="false" (nzActiveChange)='onColumnChange(h, $event)'>
+        <ng-template #title><nz-tag>{{h}}</nz-tag></ng-template>
+        <nz-spin nzSimple *ngIf='!descriptions[h]' nzSize="small"></nz-spin>
+        <nz-descriptions *ngIf='descriptions[h]; let description'>
+          <nz-descriptions-item *ngFor='let d of description' [nzTitle]="d.label">{{d.value}}</nz-descriptions-item>
+        </nz-descriptions>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
