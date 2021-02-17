@@ -1,0 +1,40 @@
+:host{
+    height: 100%;
+}
+.list_impo{
+    height: 100%;
+}
+.site-page-header{
+    margin: 0;
+    padding: 0;
+}
+:host ::ng-deep .ant-page-header {
+    padding-left: 6px !important;
+}
+
+.flex-box {
+    flex: 1 1 auto;
+}
+.DBconnectors-container{
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+:host{
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+}
+.file_item{
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 10px;    
+}
+a:disabled{
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+}
+.disabled{
+    cursor: not-allowed;
+}

@@ -1,0 +1,30 @@
+[nz-form] {
+    /* width: 500px;
+    max-width: 600px; */
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+  }
+  @media screen and (max-width:700px){
+    [nz-form]{
+      width: auto !important;
+    }
+  }
+  
+  .roles-input {
+    width: 45%;
+    margin-right: 8px;
+  }
+  
+  .add-button {
+    width: 60%;
+  }
+  .plus{
+    width: calc(97% - 16px);
+  }
+  .colone{
+    margin-bottom: 10px !important;
+  }
+  .SHS{
+    margin-bottom: 5px !important;
+  }
+  

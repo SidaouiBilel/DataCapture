@@ -19,6 +19,20 @@
 @import "ag-grid-community/dist/styles/ag-theme-balham.css";
 /* @import "ag-grid-community/dist/styles/ag-theme-fresh.css"; */
 
+.driver{
+    margin: 5px 0 5px 0 !important; 
+}
+.flex-box {
+    flex: 1 1 auto;
+}
+
+html,
+body{
+    font-family: 'Poppins', Helvetica, sans-serif !important;
+}
+.cursorpointer{
+    cursor: pointer;
+}
 
 .ghost.ant-tree{
     background: transparent;

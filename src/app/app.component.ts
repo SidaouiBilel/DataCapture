@@ -9,7 +9,7 @@ import { ServiceLocator } from './shared/utils/injector.utils';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  animations: [routeAnimations]
+  // animations: [routeAnimations]
 })
 export class AppComponent{
   isCollapsed = false;

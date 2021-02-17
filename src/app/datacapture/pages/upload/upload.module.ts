@@ -67,6 +67,7 @@ import { DatasetComponent } from './components/import/dataset/dataset.component'
 import { HeaderDescriptionComponent } from './components/transformation/modals/transformation-preview-help/header-description/header-description.component';
 import { GroupByComponent } from './components/transformation/transformations/transformation-interface/format/group-by/group-by.component';
 import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
+import { AutoimportComponent } from './components/autoimport/autoimport.component';
 
 const components = [
   UploadComponentComponent,
@@ -117,7 +118,8 @@ const components = [
   DatasetComponent, 
   HeaderDescriptionComponent, 
   GroupByComponent,
-  HashComponent
+  HashComponent,
+  AutoimportComponent
 ];
 
 @NgModule({

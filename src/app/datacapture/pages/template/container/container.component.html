@@ -1,0 +1,70 @@
+
+<div class="DBconnectors-container p-1">
+  
+    <nz-page-header class="site-page-header" nzTitle="Template List">
+            <!-- <ng-template #tooltip>
+                <button nzShape="circle" nzTooltipTitle="" nzTooltipPlacement="top" nz-button nz-tooltip><i nz-icon nzType="question"></i></button>
+            </ng-template> -->
+    </nz-page-header>
+  
+    <div nz-row class='ma-b'>
+        <div nz-col [nzSpan]='18'>
+          <button nz-button class='ghost' (click)="extract_data()">
+            <i nz-icon nzType="plus"></i>New Template
+          </button>
+          <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
+        </div>
+        <div nz-col [nzSpan]='6'>
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Templates" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </div>
+    </div>
+  
+    <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+        <nz-list class="list_impo" [nzDataSource]="templates$ | async | simpleFilter : 'name' : searchTerm" [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+            <ng-template #item let-item>
+                <nz-list-item class="BD-item" [nzActions]="[editAction  , cloneaction , deleteaction]">
+                    <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription" >
+                        <ng-template #nzTitle>
+                            <div nz-typography class="font-weight-bold">Name : <span nz-typography style="font-weight: 600;">{{item.name}}</span></div>
+                        </ng-template>
+                        <ng-template #nzDescription>
+                            <nz-tag [nzColor]="'#108ee9'"  (click)="viewtemplate(item.name , item.template)" role="button" class="cursorpointer">
+                              <div class="d-flex align-items-center justify-content-center">
+                                <i nz-icon nzType="info-circle" nzTheme="outline" class="mr-1"></i>
+                                <strong>Detail</strong>
+                              </div>
+                            </nz-tag>
+                        </ng-template>
+
+                    </nz-list-item-meta>
+                </nz-list-item>
+                <ng-template #editAction>
+                    <button nzTooltipTitle="Edit Template" nzTooltipPlacement="top"  nz-tooltip nz-button class="ghost" (click)="edittemplate(item)" >
+                      <i nz-icon nzType="edit" class="btns"></i>
+                    </button>
+                </ng-template>
+                <ng-template #cloneaction>
+                    <button nzTooltipTitle="Clone Template" nzTooltipPlacement="top"  nz-tooltip nz-button class="ghost" (click)="clonetemplate(clonemodaltitle , item.name ,item.template)">
+                      <i nz-icon nzType="copy" class="btns"></i>
+                    </button>
+                </ng-template>
+                <ng-template #deleteaction>
+                    <button nzTooltipTitle="delete Template" nzTooltipPlacement="top"  nz-tooltip nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this template?" nzPopconfirmPlacement="left"
+                      (nzOnConfirm)="deletetemplate(item._id)">
+                      <i nz-icon nzType="delete" class="btns"></i>
+                    </button>
+                </ng-template>
+            </ng-template>
+        </nz-list>
+    </div> 
+  
+  </div>
+
+<ng-template #clonemodaltitle>
+  <span>Clone Template from  <strong class="text-primary-1">{{clonedtemplatename}}</strong></span>
+</ng-template>

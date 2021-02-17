@@ -155,4 +155,7 @@ export class LayoutContainer implements OnInit {
     // this.notification.error('Token exp');
     this.store.dispatch(new ActionAuthLogout());
   }
+  openmydata(){
+    
+  }
 }

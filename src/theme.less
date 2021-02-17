@@ -1,19 +1,15 @@
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
-
-// These are shared variables that can be extracted to their own file
-@primary-color: #00adb5;
-@border-radius-base: 4px;
 // The prefix to use on all css classes from ant.
 @ant-prefix: ant;
 
 // An override for the html selector for theme prefixes
-@html-selector: .alt;
+@html-selector: html;
 
 // -------- Colors -----------
-@primary-color: #3f8ad1;
-@info-color: #557fa7;
-@success-color: #79a03c;
-@processing-color: @blue-6;
+@primary-color: #005999;
+@info-color: #005999;
+@success-color: @green-6;
+@processing-color: #005999;
 @error-color: @red-6;
 @highlight-color: @red-6;
 @warning-color: @gold-6;
@@ -40,12 +36,10 @@
 // ---#167fe0
 
 // Background color for `<body>`
-@body-background: #fff;
+@body-background: #f0f2f5 !important;
 // Base background color for most components
 @component-background: #fff;
-@font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-'Segoe UI Emoji', 'Segoe UI Symbol';
+@font-family: 'Roboto';
 @code-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 @text-color: fade(@black, 65%);
 @text-color-secondary: fade(@black, 45%);
@@ -250,9 +244,9 @@
 
 // Layout
 @layout-body-background: #f0f2f5;
-@layout-header-background: #2e394b;
+@layout-header-background: #005999;
 @layout-footer-background: @layout-body-background;
-@layout-header-height: 64px;
+@layout-header-height: 40px;
 @layout-header-padding: 0 50px;
 @layout-footer-padding: 24px 50px;
 @layout-sider-background: #e0eff6;
@@ -710,6 +704,45 @@
   color: #49cc90;
 }
 
-.bg-primary{
-  background-color: #2e394b;
+.customscrollY{
+  /* width */
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: @primary-color; 
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: fade(@primary-color, 35%);; 
+  }
+}
+.customscrollX{
+  /* width */
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: @primary-color; 
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: fade(@primary-color, 35%);; 
+  }
 }

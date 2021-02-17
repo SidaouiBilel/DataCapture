@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 import { AppState } from '../core.state';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../auth/auth.selectors';
+import { ActionAuthLogout } from './../auth/auth.actions';
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
@@ -33,6 +34,12 @@ export class HttpTokenInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(request);
+    return next.handle(request).pipe(
+      tap(null , (err)=>{
+        if(err.status === 401){
+          this.store.dispatch(new ActionAuthLogout());
+        }
+      })
+    )
   }
 }

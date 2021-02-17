@@ -5,7 +5,7 @@ import { SharedModule } from './../shared/shared.module';
 import { SidebarComponent } from './layout/components/sidebar/sidebar.component';
 import { HeaderComponent } from './layout/components/header/header.component';
 import { UserBarComponent } from './layout/components/user-bar/user-bar.component';
-
+import {TemplateModule} from "./pages/template/template.module";
 
 const components = [
   LayoutContainer,
@@ -18,6 +18,7 @@ const components = [
   imports: [
     DataCaptureRoutingModule,
     SharedModule,
+    TemplateModule
   ],
   declarations: [...components ],
   exports: [

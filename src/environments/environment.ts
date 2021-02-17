@@ -5,26 +5,21 @@
 import { meta } from './environment.meta';
 
 export const environment = {
-  ...meta,
+   ...meta,
   production: false,
   test: false,
-  // import: 'http://localhost:5000/import/',
-  // import: 'http://localhost:5001/import/v2/',
-  import: 'http://localhost:5001/import/v2/',
-  // cleansing: 'http://localhost:5002/check',
+  admin: 'http://ac0b933ce948d409c964edc04005e5bd-1554195617.eu-west-3.elb.amazonaws.com/',
+  import: 'https://dcm-import.azurewebsites.net/import/v2/',
+  // upload: 'http://localhost:5000/import/',
   mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
   // mapping: 'http://localhost:5001/mapping',
-  cleansing: 'http://localhost:5005/check',
-  // cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
-  // transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-  transform: 'http://localhost:5002/transfo/',
-  // admin: 'https://dcm-admin.azurewebsites.net/',
-  admin: 'http://localhost:5000/',
-  // upload: 'http://localhost:5004/upload/',
+  cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
+  // TRANSFORMATION
+  // transform: 'http://localhost:5000/transfo/'
+  transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
   upload: 'https://dcm-upload.azurewebsites.net/upload/',
-  auth: 'https://dcm-auth.azurewebsites.net/',
-  env: 'DEV',
-
+  auth: 'http://a2e9394e012b340deb401c155c14fd62-121625260.eu-west-3.elb.amazonaws.com/',
+  env: 'PRD',
   pipeline: 'http://localhost:5006/'
 };
 

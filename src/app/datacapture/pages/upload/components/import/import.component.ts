@@ -38,6 +38,7 @@ export class ImportComponent implements OnInit {
       this.fileData = fileData;
     })
     this.selectedDomain$.subscribe((domain: any) => {
+      console.log(domain);
       this.selectedDomain = domain;
       if (domain) {
         this.url = urls.environment.import + '?domainId=' + domain.id;
@@ -83,6 +84,7 @@ export class ImportComponent implements OnInit {
   }
 
   cancelUpload(): void {
+    this.autoimportloading=false;
     this.store.dispatch(new ActionImportReset());
   }
 
@@ -96,5 +98,27 @@ export class ImportComponent implements OnInit {
       return;
     }
     this.router.navigate(['/datacapture/upload/transform']);
+  }
+
+  autoimportloading=false;
+  auto_import(fileresponse){
+    // this.SuccessMessage="Your file has been selected successfully.";
+    const uploadedFile: any = {
+      token: fileresponse.filename,
+      sheets: [],
+      numberOfRows: [],
+      extension: fileresponse.filetype,
+      data: [],
+      headers: [],
+      file: [{response:fileresponse}]
+    };
+      this.store.dispatch(new ActionUploadFile({file: uploadedFile, importing: false, imported: true, error: false, progress: 100}));
+      // tslint:disable-next-line: max-line-length
+      this.store.dispatch(new ActionSaveFile({metaData: fileresponse, sheets: Object.keys(fileresponse.worksheets_map), data: [], headers: []}));
+      this.store.dispatch(new ActionSelectSheet(0));
+      this.notification.success(`${fileresponse.filename} file uploaded successfully.`);
+  }
+  _autoimportloading(){
+    this.autoimportloading = !this.autoimportloading;
   }
 }

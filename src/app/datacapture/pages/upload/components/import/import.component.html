@@ -32,17 +32,28 @@
   <!-- If The file isn't uploaded -->
   <div class="flex-child" *ngIf="!(importState$ | async)?.error && !(importState$ | async)?.imported">
     <nz-spin class="flex-box" [nzSpinning]="(importState$ | async)?.importing">
-      <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false" [nzDisabled]="!(selectedDomain?.id)"
-        [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
-        (nzChange)="handleChange($event)">
-        <p class="ant-upload-drag-icon">
-          <i nz-icon nzType="inbox"></i>
-        </p>
-        <p class="ant-upload-text">Click or drag file to this area to import</p>
-        <p class="ant-upload-hint">
-          Once selected the file will be automatically uploaded into our server.
-        </p>
-      </nz-upload>
+      <div class="row h-100">
+        <nz-upload class="col-6" nzType="drag" [nzAction]="url" [nzShowUploadList]="false" [nzDisabled]="!(selectedDomain?.id)"
+          [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
+          (nzChange)="handleChange($event)">
+          <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+          </p>
+          <p class="ant-upload-text">Click or drag file to this area to import</p>
+          <p class="ant-upload-hint">
+            Once selected the file will be automatically uploaded into our server.
+          </p>
+        </nz-upload>
+        <div class="col-6">
+          <app-autoimport 
+          [autoimportloading]="autoimportloading"
+          (_autoimportloading)="_autoimportloading()"
+          (auto_import)="auto_import($event)"
+          ></app-autoimport>
+        </div>
+      </div>
+
+
     </nz-spin>
   </div>
 

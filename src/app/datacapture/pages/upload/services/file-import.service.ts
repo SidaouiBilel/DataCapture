@@ -11,6 +11,16 @@ export class FileImportService {
 
   constructor(private http: HttpClient) {
   }
+  importURL = "http://a8b41132de2dc41baa67d550c73f6171-2042249671.eu-west-3.elb.amazonaws.com/import/";
+
+  get_extracted_files(uid){
+    return this.http.get<any[]>( this.importURL + 'files/'+uid);
+  }
+
+  select_file(domainid,uid,filename){
+    return this.http.get<any[]>( this.importURL + 'files/select/'+domainid+"/"+uid+"/"+filename);
+  }
+
 
   getAll() {
     return this.http.get( environment.admin + 'domain/');

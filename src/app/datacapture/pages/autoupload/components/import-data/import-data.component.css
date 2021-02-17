@@ -1,0 +1,11 @@
+.selecttype{
+    width: 100%;
+    max-width: 250px;
+}
+.import-data-container{
+    min-height: 100%;
+    height: auto;
+}
+.primary-color{
+    color: #005999;
+}

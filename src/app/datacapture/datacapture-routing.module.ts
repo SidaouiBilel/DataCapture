@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutContainer } from './layout/container/layout.container';
 import { RolesGuard } from '@app/core/login/guards/roles.guard';
-
+import { ContainerComponent } from './pages/template/container/container.component';
 const routes: Routes = [
   {
       path: '',
@@ -33,6 +33,14 @@ const routes: Routes = [
         {
           path: 'automatic',
           loadChildren : () => import('app/datacapture/pages/automatic-upload/automatic.module').then(m => m.AutomaticModule)
+        },
+        {
+          path: 'autoupload',
+          loadChildren : () => import('app/datacapture/pages/autoupload/autoupload.module').then(m => m.AutouploadModule)
+        },
+        {
+          path: 'template',
+          component:ContainerComponent
         },
         {
           path: '**',

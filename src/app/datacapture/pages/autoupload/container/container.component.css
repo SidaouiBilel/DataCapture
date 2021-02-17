@@ -1,0 +1,21 @@
+:host ::ng-deep .ant-page-header {
+    padding-left: 16px !important;
+}
+
+.flex-box {
+    flex: 1 1 auto;
+}
+.Container{
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+:host{
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+  }
