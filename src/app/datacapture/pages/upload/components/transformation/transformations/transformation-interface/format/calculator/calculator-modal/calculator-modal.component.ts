@@ -1,12 +1,9 @@
-import { tokenName } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
-import { selectFileHeaders } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
+import { selectInputCloumnsByIndex } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { Parser } from '@app/shared/utils/paerser.utils';
 import { Store } from '@ngrx/store';
 import { NzModalRef } from 'ng-zorro-antd';
-import { throwError } from 'rxjs';
-import { selectInputCloumnsByIndex } from '../../../../../store/transformation.selectors';
 
 @Component({
   selector: 'app-calculator-modal',

@@ -1,30 +1,43 @@
 import { selectupload, UploadState } from '../../../store/upload.state';
 import { createSelector } from '@ngrx/store';
-import { Transformation } from './transformation.model';
-import { selectHeaders } from '../../../store/selectors/import.selectors';
-import { max } from 'rxjs/operators';
+import { SourceTransformation, Transform } from './transformation.model';
+import { selectActiveSourceHeaders } from '../../../store/selectors/preview.selectors';
 import { getPreviousHeader } from '../shared/utils/transformers.util';
 import { isStrEmpty } from '@app/shared/utils/strings.utils';
-import { selectMappedSources } from '../../../store/selectors/mapping.selectors';
 
 export const selectTranformation = createSelector(
   selectupload,
   (object: UploadState) => object.transformation
 );
 
-export const selectTranformationNodes = createSelector(
+export const selectPreviewMode = createSelector(
   selectTranformation,
-  (object: Transformation) => object.nodes
+  (object: Transform) => object.previwMode
 );
 
 export const selectPipeExpanded = createSelector(
   selectTranformation,
-  (object: Transformation) => object.expanded
+  (object: Transform) => object.expanded
+);
+
+export const selectActiveTransformationIndex = createSelector(
+  selectTranformation,
+  (object: Transform) => object.activeSourceIndex
+);
+
+export const selectActiveTranformation = createSelector(
+  selectTranformation,
+  (object: Transform) => object.sourceTransformations[object.activeSourceIndex] || {}
+);
+
+export const selectTranformationNodes = createSelector(
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.nodes
 );
 
 export const selectActivePipe = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.activePipe
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.activePipe
 );
 
 export const selectActivePipeId = createSelector(
@@ -33,28 +46,28 @@ export const selectActivePipeId = createSelector(
 );
 
 export const selectTranformationNode = (index) => createSelector(
-  selectTranformation,
-  (object: Transformation) => object.nodes[index]
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.nodes[index]
 );
 
 export const selectTranformationPipe = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.nodes
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.nodes
 );
 
 export const selectEdiedTranformationPipeInfo = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.editedPipeInfo
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.editedPipeInfo
 );
 
 export const selectTranformationNodesStatus = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.validation_states
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.validation_states
 );
 
 export const selectTranformationNodeStatus = (index) => createSelector(
-  selectTranformation,
-  (object: Transformation) => {
+  selectActiveTranformation,
+  (object: SourceTransformation) => {
     const status = object.validation_states[index]
     if (status)
       return [status.length == 0, status]
@@ -63,40 +76,19 @@ export const selectTranformationNodeStatus = (index) => createSelector(
   }
 );
 
-export const selectPreviewMode = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.previwMode
-);
-
-
 export const selectTransformedFilePath = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.transformedFilePath
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.transformedFilePath
 );
 
 export const selectLoadingTransformation = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.loadingTransformation
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.loadingTransformation
 );
 
 export const selectTransformationHeaders = createSelector(
-  selectTranformation,
-  (object: Transformation) => object.tarnsformationHeaders
-);
-
-export const selectActiveHeaders = createSelector(
-  selectHeaders, selectTransformationHeaders, selectActivePipeId,
-  (sourceHeaders, targetHeaders, pipeId:any[]) => (pipeId)?targetHeaders:sourceHeaders
-);
-
-export const selectInputCloumnsByIndex = (index) => createSelector(
-  selectHeaders, selectTranformationPipe, selectMappedSources,
-  (headers, pipe:any[]) => {
-    const last = Math.max((index), 0)
-    const previousNodes = pipe.slice(0, last)
-
-    return getPreviousHeader(headers, previousNodes)
-  }
+  selectActiveTranformation,
+  (object: SourceTransformation) => object.tarnsformationHeaders
 );
 
 export const selectTranformationInfoValid = createSelector(
@@ -127,7 +119,7 @@ export const selectActivePipeModified = createSelector(
         if (JSON.stringify(edited.nodes) != JSON.stringify(nodes) )
           return true
       } else {
-        return nodes.length > 0
+        return (nodes || []).length > 0
       }
 
       return false

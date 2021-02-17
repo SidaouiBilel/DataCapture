@@ -10,7 +10,6 @@ import { selectMappingFields, selectMappedSources, selectMandatories,
          selectSourcesPreview, selectMappingVersion } from './../../store/selectors/mapping.selectors';
 import { SaveMappingFields, SaveMappedSources, SaveMappingId, SaveMappingName,
          SaveMappingValid, SaveIsModified, SaveMappingVersion, ClearSelectedMapping } from '../../store/actions/mapping.actions';
-import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectUpdatedSheet } from './../../store/selectors/preview.selectors';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
@@ -18,6 +17,7 @@ import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { PreviousMappingsComponent } from './previous-mappings/previous-mappings.component';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { deepCopy } from '@app/shared/utils/objects.utils';
+import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 
 @Component({
   selector: 'app-mapping',
@@ -409,7 +409,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 
   // Navigation
   cancelUpload(): void {
-    this.store.dispatch(new ActionImportReset());
+    this.store.dispatch(new ActionMultiImportReset());
   }
 
   goToPreview(): void {

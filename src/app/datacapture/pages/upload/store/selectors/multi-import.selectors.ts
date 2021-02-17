@@ -24,7 +24,7 @@ export const selectDomain = createSelector(
   (object: MultiImport) => object.domain
 );
 
-export const selectSuperDomain = createSelector(
+export const selectDomainId = createSelector(
   selectMultiImport,
-  (object: MultiImport) => {if (object) { return object.super_domain_id; }}
+  (object: MultiImport) => object.domain_id
 );

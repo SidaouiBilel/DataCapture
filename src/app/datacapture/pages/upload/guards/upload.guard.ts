@@ -2,12 +2,13 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { Observable } from 'rxjs';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
-import { selectFileData, selectDomain } from '../store/selectors/import.selectors';
+import { selectFileData } from '../store/selectors/import.selectors';
 import { Injectable } from '@angular/core';
 import { selectUpdatedSheet } from './../store/selectors/preview.selectors';
 import { selectMandatories, selectMappingId, selectMappingValid } from './../store/selectors/mapping.selectors';
 import { selectCleansingErrors } from '../store/selectors/cleansing.selectors';
 import { selectUploadingStatus } from '../store/selectors/upload.selectors';
+import { selectDatasources, selectDomain, selectDomainId } from '../store/selectors/multi-import.selectors';
 
 @Injectable()
 export class UploadGuard implements CanActivate {
@@ -28,13 +29,16 @@ export class UploadGuard implements CanActivate {
   mandatories$: Observable<number>;
   mappingValid$: Observable<boolean>;
   uploadStatus$: Observable<string>;
+
+  hasDatasources = false
+
   constructor(private store: Store<AppState>) {
     this.fileData$ = this.store.select(selectFileData);
     this.errors$ = this.store.select(selectCleansingErrors);
     this.mappingValid$  = this.store.select(selectMappingValid);
     this.uploadStatus$ = store.select(selectUploadingStatus);
     this.mappingId$ = this.store.select(selectMappingId);
-    this.selectedDomain$ = this.store.select(selectDomain);
+    this.selectedDomain$ = this.store.select(selectDomainId);
     this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
     this.errors$.subscribe((errors) => {this.errors = errors; });
@@ -44,7 +48,12 @@ export class UploadGuard implements CanActivate {
     this.uploadStatus$.subscribe((uploadStatus) => {this.uploadStatus = uploadStatus; });
     this.mappingValid$.subscribe((mappingValid) => { this.mappingValid = mappingValid; });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id; } });
+    this.selectedDomain$.subscribe((domain_id) => { this.selectedDomain = domain_id });
+
+
+    this.store.select(selectDatasources).subscribe((datasources=>{
+      this.hasDatasources = datasources.length > 0 
+    }))
   }
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -53,14 +62,14 @@ export class UploadGuard implements CanActivate {
         return ['READY'].includes(this.uploadStatus);
       }
       case 'TRANSFORM': {
-        if (this.fileData.metaData && this.selectedDomain && ['READY'].includes(this.uploadStatus)) {
+        if (this.selectedDomain && this.hasDatasources && ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
             return false;
         }
       }
       case 'MAPPING': {
-        if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null &&
+        if (this.selectedDomain && this.hasDatasources && this.selectedSheet != null &&
             ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
@@ -68,7 +77,7 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'CLEANSING': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 &&
+        if (this.selectedDomain && this.hasDatasources && this.mandatories === 0 &&
             this.mappingId && this.mappingValid && ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
@@ -76,7 +85,7 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'UPLOAD': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
+        if (this.selectedDomain && this.hasDatasources && this.mandatories === 0 && this.errors === 0) {
             return true;
         } else {
             return false;

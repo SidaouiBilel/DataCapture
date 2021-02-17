@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState } from '@app/core';
 import { UploadChangeParam } from 'ng-zorro-antd/upload';
 import { Store } from '@ngrx/store';
-import { ActionUploadFile, ActionImportReset, ActionSaveFile, ActionSelectDomain } from '../../store/actions/import.actions';
+import { ActionUploadFile, ActionSaveFile, ActionSelectDomain } from '../../store/actions/import.actions';
 import { Observable } from 'rxjs';
 import { Import } from '../../store/models/import.model';
 import { selectImport } from '../../store/upload.selectors';
@@ -11,6 +11,7 @@ import { FileImportService } from '../../services/file-import.service';
 import * as urls from '@env/environment';
 import { selectDomain, selectFileData } from '../../store/selectors/import.selectors';
 import { ActionSelectSheet } from '../../store/actions/preview.actions';
+import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 
 @Component({
   selector: 'app-import',
@@ -85,7 +86,7 @@ export class ImportComponent implements OnInit {
   }
 
   cancelUpload(): void {
-    this.store.dispatch(new ActionImportReset());
+    this.store.dispatch(new ActionMultiImportReset());
   }
 
   goToPreview(): void {

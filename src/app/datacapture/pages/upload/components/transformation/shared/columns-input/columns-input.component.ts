@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { AbstractValueAccessor, MakeProvider } from '../abstarct.accessor';
 import { selectFileHeaders } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
-import { selectInputCloumnsByIndex } from '../../store/transformation.selectors';
+import { selectInputCloumnsByIndex } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 
 @Component({
   selector: 'app-columns-input',

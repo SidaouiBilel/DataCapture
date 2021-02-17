@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { ActionImportReset } from '../../store/actions/import.actions';
 import { selectUploadingStatus, selectUploadOverview } from '../../store/selectors/upload.selectors';
 import { Observable } from 'rxjs';
+import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 
 @Component({
   selector: 'app-upload',
@@ -24,7 +24,7 @@ export class UploadComponent implements OnInit {
   }
 
   cancelUpload(): void {
-    this.store.dispatch(new ActionImportReset());
+    this.store.dispatch(new ActionMultiImportReset());
   }
 
   goToCleansing(): void {

@@ -4,7 +4,7 @@ import { selectActivePipe, selectLoadingTransformation, selectTransformedFilePat
 import { selectFileMetaData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { AppState } from '@app/core';
 import { combineLatest, BehaviorSubject, Subject } from 'rxjs';
-import { selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
+import { selectActiveSourceSheet, selectActiveTargetSheet, selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { PreMappingTransformationService } from '@app/datacapture/pages/upload/services/pre-mapping-transformation.service';
 import { TranformationService } from '../../../transformation/services/tranformation.service';
 import { TransformationHotKeysService } from '../../../transformation/services/transformation-hot-keys.service';
@@ -49,9 +49,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
     _hotkeys: TransformationHotKeysService
     ) {
       super(_transformService, _hotkeys);
-      this.selectedSheet$ = this.store.select(selectUpdatedSheet);
-      this.fileData$ = this.store.select(selectFileMetaData);
-      this.generatedFileId$ = this.store.select(selectTransformedFilePath);
+      this.generatedFileId$ = this.store.select(selectActiveTargetSheet);
       this.activePipe$ = this.store.select(selectActivePipe);
       this.loading$ = this.store.select(selectLoadingTransformation);
       this.transformService.reset$.subscribe((res) => {

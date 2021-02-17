@@ -5,14 +5,14 @@ import { AppState } from '@app/core';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { TranformationService } from '../services/tranformation.service';
 // tslint:disable-next-line: max-line-length
-import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders, UpdateLoadingTransformation } from './transformation.actions';
-import { selectActivePipe, selectTranformationNodes } from './transformation.selectors';
+import { TransformationActionTypes, UpdateTransformedFilePath, UpdateNodeStatus, UpdateTransformationHeaders, UpdateLoadingTransformation, AddTransSource, RemoveTransSource, SetPreviewMode } from './transformation.actions';
+import {  selectActivePipeId, selectActiveTranformation, selectTranformationNodes } from './transformation.selectors';
 import { PreMappingTransformationService } from '../../../services/pre-mapping-transformation.service';
-import { selectFileData, selectHeaders } from '../../../store/selectors/import.selectors';
-import { selectUpdatedSheet } from '../../../store/selectors/preview.selectors';
-import { ImportActionTypes } from '../../../store/actions/import.actions';
+import { selectActiveSourceHeaders } from '../../../store/selectors/preview.selectors';
+import { selectActiveSourceFileId, selectActiveSourceSheet } from '../../../store/selectors/preview.selectors';
+import { MultiImportActionTypes } from '../../../store/actions/multi-import.actions';
 import { TransformerFactory } from '../transformations/transformers';
-import { PreviewActionTypes } from '../../../store/actions/preview.actions';
+import { SourceTransformation } from './transformation.model';
 
 @Injectable()
 export class TransformationEffects {
@@ -26,32 +26,73 @@ export class TransformationEffects {
 
   @Effect({ dispatch: false })
   onReset = this.actions$.pipe(
-    ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE, PreviewActionTypes.SelectSheet) ,
-    withLatestFrom(this.store$.select( selectActivePipe )),
-    withLatestFrom(this.store$.select( selectUpdatedSheet )),
-    withLatestFrom(this.store$.select( selectFileData )),
-    map(([[[action, pipe], sheetId], file]) => {
-      if (file.metaData && sheetId !== null) {
-        const pipeId = (pipe) ? pipe.id : null;
+    ofType(TransformationActionTypes.LOAD) ,
+    withLatestFrom(this.store$.select( selectActiveSourceFileId )),
+    withLatestFrom(this.store$.select( selectActiveSourceSheet )),
+    withLatestFrom(this.store$.select( selectActivePipeId )),
+    map(([[[action, file_id], sheet_id], pipe_id]) => {
+      if (sheet_id && pipe_id && file_id) {
         this.store$.dispatch(new UpdateLoadingTransformation(false));
-        if ( file && file.metaData && pipeId && sheetId !== null) {
-          const fileId = file.metaData.file_id;
           this.store$.dispatch(new UpdateLoadingTransformation(true));
-          this.job.startJob(fileId, sheetId, pipeId).subscribe(res => {
+          this.job.startJob(file_id, sheet_id, pipe_id).subscribe(res => {
             const id = res.transformed_file_id;
             this.store$.dispatch(new UpdateTransformedFilePath(id));
             this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
               this.store$.dispatch(new UpdateLoadingTransformation(false));
               this.store$.dispatch(new UpdateTransformationHeaders(jobRes.headers));
-            });
           });
-        } else {
-          this.store$.dispatch(new UpdateTransformedFilePath(null));
-          this.store$.dispatch(new UpdateTransformationHeaders(null));
-        }
+        });
+      } else {
+        this.store$.dispatch(new UpdateTransformedFilePath(null));
+        this.store$.dispatch(new UpdateTransformationHeaders(null));
       }
     })
   );
+
+  @Effect({ dispatch: false })
+  onSourceAdded = this.actions$.pipe(
+    ofType(MultiImportActionTypes.ADD_SOURCE) ,
+    map((action:any) => {
+      const sourceTransformation : SourceTransformation = {
+        nodes : [],
+        validation_states : [],
+        editedPipeInfo :null,
+        activePipe :null,
+        transformedFilePath : null,
+        loadingTransformation : false,
+        tarnsformationHeaders : [],
+      }
+      this.store$.dispatch(new AddTransSource(sourceTransformation));
+    })
+  );
+
+  // @Effect({ dispatch: false })
+  // onSourceUpdated = this.actions$.pipe(
+  //   ofType(MultiImportActionTypes.UPDATE_SOURCE) ,
+  //   map((action:any) => {
+  //     this.store$.dispatch(new AddTransSource(sourceTransformation));
+  //   })
+  // );
+
+  @Effect({ dispatch: false })
+  onSheetSelectedRemoved = this.actions$.pipe(
+    ofType(TransformationActionTypes.SELECT_ACTIVE_SHEET) ,
+    withLatestFrom(this.store$.select( selectActiveTranformation )),
+    map(([action, sourceTransformation]:any) => {
+      if(!sourceTransformation.transformedFilePath)
+        this.store$.dispatch(new SetPreviewMode("SOURCE"));
+      else
+        this.store$.dispatch(new SetPreviewMode("TARGET"));
+    })
+  ); 
+
+  @Effect({ dispatch: false })
+  onSourceRemoved = this.actions$.pipe(
+    ofType(MultiImportActionTypes.REMOVE_SOURCE) ,
+    map((action:any) => {
+      this.store$.dispatch(new RemoveTransSource(action.index));
+    })
+  ); 
 
   @Effect({ dispatch: false })
   onNodesUpdated = this.actions$.pipe(
@@ -62,7 +103,7 @@ export class TransformationEffects {
       TransformationActionTypes.UPDATE_FILE_PATH,
     ),
     withLatestFrom(this.store$.select( selectTranformationNodes )),
-    withLatestFrom(this.store$.select( selectHeaders )),
+    withLatestFrom(this.store$.select( selectActiveSourceHeaders )),
     map(([[action, nodes], headers]) => {
       const nodeStatuses = [];
       let i = 0;

@@ -1,11 +1,16 @@
-export interface Transformation{
+export interface Transform{
+    sourceTransformations: SourceTransformation[]
+    activeSourceIndex: any,
+    previwMode: 'SOURCE' | 'TARGET',
+    expanded: boolean;
+}
+
+export interface SourceTransformation{
     // PRE MAPPING TRANSFORMERS
     nodes: any[];
     editedPipeInfo: any;
     validation_states: any[];
-    expanded: boolean;
     activePipe: any;
-    previwMode: 'SOURCE' | 'TARGET';
     transformedFilePath: string;
     loadingTransformation: boolean;
     tarnsformationHeaders: string[]

@@ -1,67 +1,73 @@
-import { Transformation } from './transformation.model';
+import { Transform, SourceTransformation } from './transformation.model';
 import { TransformationActionTypes } from './transformation.actions';
 import { swapArrayElements } from '@app/shared/utils/arrays.utils';
+import * as _ from "lodash"
 
-export const initialState: Transformation = {
-    nodes:[],
-    editedPipeInfo: null,
-    validation_states:[],
+export const initialState: Transform = {
+    sourceTransformations: [],
+    activeSourceIndex: 0,
+    previwMode: "SOURCE",
     expanded: true,
-    activePipe: null,
-    previwMode:'SOURCE',
-    transformedFilePath:null,
-    tarnsformationHeaders: null,
-    loadingTransformation: false
 }
 
 const ACTIONS = TransformationActionTypes
 
-export function TransformationReducer(state: Transformation = initialState, action: any): Transformation {
+export function TransformationReducer(state: Transform = initialState, action: any): Transform {
+
+    const sourceTransformations = [...state.sourceTransformations]
+    const activeSourceIndex = state.activeSourceIndex
+    const activeSource: SourceTransformation = _.cloneDeep(state.sourceTransformations[activeSourceIndex])
+    // GET AND ASSIGN IF VALID
+    if(activeSource){
+        sourceTransformations[activeSourceIndex] = activeSource
+    }
+
   switch (action.type) {
 
+    case ACTIONS.ADD_TRANSFORMATION_SOURCE:{
+        sourceTransformations.push(action.transformation)
+        return {...state, sourceTransformations}
+    } 
+
+    case ACTIONS.REMOVE_TRANSFORMATION_SOURCE:{
+        sourceTransformations.splice(action.index, 1)
+        return {...state, sourceTransformations}
+    } 
+
     case ACTIONS.ADD_NODE:{
-        const nodes = [...state.nodes]
-        const validation_states = [...state.validation_states]
-        nodes.push(action.payload)
-        validation_states.push([])
-        return {...state, nodes: nodes, validation_states:validation_states}
+        activeSource.nodes.push(action.payload)
+        activeSource.validation_states.push([])
+        return {...state, sourceTransformations}
     } 
 
     case ACTIONS.UPDATE_NODE:{
         const i = action.index
-        const nodes = [...state.nodes]
-        const validation_states = [...state.validation_states]
-        console.log(action)
-        nodes[i] = action.payload
-        validation_states[i] = []
+        activeSource.nodes[i] = action.payload
+        activeSource.validation_states[i] = []
 
-        return {...state, nodes: nodes, validation_states:validation_states}
+        return {...state, sourceTransformations}
     }
 
     case ACTIONS.UPDATE_NODE_STATUS:{
-        const validation_states = [...state.validation_states]
-        validation_states[action.index] = action.status
-        return {...state, validation_states:validation_states}
+        activeSource.validation_states[action.index] = action.status
+        return {...state, sourceTransformations}
     }
 
 
     case ACTIONS.DELETE_NODE:{
         const i = action.index
-        const nodes = [...state.nodes]
-        const validation_states = [...state.validation_states]
-
-        nodes.splice(i, 1)
-        validation_states.splice(i, 1)
-        return {...state, nodes: nodes, validation_states:validation_states}
+        activeSource.nodes.splice(i, 1)
+        activeSource.validation_states.splice(i, 1)
+        return {...state, sourceTransformations}
     }
 
     case ACTIONS.UPDATE_NODE_ORDER:{
         const index = action.index
         const newIndex = action.step + index
-        const nodes = swapArrayElements([...state.nodes], index, newIndex)
-        const validation_states = swapArrayElements([...state.validation_states], index, newIndex)
+        swapArrayElements([...activeSource.nodes], index, newIndex)
+        swapArrayElements([...activeSource.validation_states], index, newIndex)
 
-        return {...state, nodes: nodes, validation_states:validation_states}
+        return {...state, sourceTransformations}
     }
 
     case ACTIONS.FLIP:{
@@ -80,37 +86,51 @@ export function TransformationReducer(state: Transformation = initialState, acti
             }
             editedPipeInfo = {...pipe}
         }
-        return {...state, activePipe: pipe, nodes: nodes, editedPipeInfo: editedPipeInfo, validation_states: validation_states}
+        activeSource.activePipe = pipe 
+        activeSource.nodes = nodes
+        activeSource.validation_states = validation_states
+        activeSource.editedPipeInfo = editedPipeInfo
+        return {...state, sourceTransformations}
     }
 
     case ACTIONS.UPDATE_EDITED:{
         const editedPipeInfo = {...action.payload};
-        return {...state, editedPipeInfo: editedPipeInfo}
+        activeSource.editedPipeInfo = editedPipeInfo
+        return {...state, sourceTransformations}
     }
 
     case ACTIONS.UPDATE_TRANSFORMATION_HEADERS:{
         let headers = [];
         if ( action.headers )
             headers = headers.concat(action.headers)
-        return {...state, tarnsformationHeaders: headers}
+
+        activeSource.tarnsformationHeaders = headers
+        return {...state, sourceTransformations}
     }
 
     case ACTIONS.SET_PREVIEW_MODE:{
         return {...state, previwMode: action.mode}
     }
+
+    case ACTIONS.SELECT_ACTIVE_SHEET:{
+        return {...state, activeSourceIndex: action.index}
+    }
     
     case ACTIONS.UPDATE_FILE_PATH:{
-        return {...state, transformedFilePath: action.filePath}
+        activeSource.transformedFilePath = action.filePath
+        return {...state, sourceTransformations}
     }
-
+    
+    
+    case ACTIONS.LOADING_TRANSFORMATION:{
+        activeSource.loadingTransformation = action.loading
+        return {...state, sourceTransformations}
+    } 
+    
     case ACTIONS.RESET:{
         return {...initialState}
     }
 
-    case ACTIONS.LOADING_TRANSFORMATION:{
-        return {...state, loadingTransformation: action.loading}
-    } 
-    
     default:
       return state;
   }

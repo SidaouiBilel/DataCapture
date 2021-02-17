@@ -1,14 +1,14 @@
 export interface MultiImport {
-  domain_id: String,
+  domain_id: string,
   domain: any
-  super_domain_id: String,
+  super_domain_id: string,
   sources: DataSource[]
 }
 
 export interface DataSource{
-  type: String,
-  sheet_id: String,
-  headers: String[]
-  file_id: String,
+  type: string,
+  sheet_id: string,
+  headers: string[]
+  file_id: string,
 }
 

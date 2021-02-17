@@ -11,6 +11,7 @@ import { ResetTransformation } from '../../components/transformation/store/trans
 import { PreviewActionTypes, ActionSelectSheet, SaveTotal, ResetPreview } from '../actions/preview.actions';
 import { selectColRange, selectFileData, selectRowRange } from '../selectors/import.selectors';
 import { UpdateSheet } from './../actions/preview.actions';
+import { MultiImportActionTypes } from '../actions/multi-import.actions';
 
 @Injectable()
 export class ImportEffects {
@@ -25,7 +26,7 @@ export class ImportEffects {
 
   @Effect({ dispatch: false })
   onReset = this.actions$.pipe(
-    ofType<ActionImportReset>(ImportActionTypes.RESET),
+    ofType<ActionImportReset>(MultiImportActionTypes.RESET),
     // withLatestFrom(this.store$.select( selectSelectedFile )),
     map((action) => {
       this.store$.dispatch(new ResetTransformation());

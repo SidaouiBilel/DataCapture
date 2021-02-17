@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
-import { ActionImportReset } from '../../store/actions/import.actions';
+import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 import { Observable, forkJoin, BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { selectFileData, selectDomain } from '../../store/selectors/import.selectors';
 import { selectUpdatedSheet } from '../../store/selectors/preview.selectors';
@@ -358,7 +358,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   }
 
   cancelUpload(): void {
-    this.store.dispatch(new ActionImportReset());
+    this.store.dispatch(new ActionMultiImportReset());
   }
 
   goToMapping(): void {

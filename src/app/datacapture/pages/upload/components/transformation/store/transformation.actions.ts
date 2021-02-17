@@ -1,7 +1,11 @@
 import { Action } from '@ngrx/store';
+import { SourceTransformation } from './transformation.model';
 
 
 export enum TransformationActionTypes {
+    SELECT_ACTIVE_SHEET = '[TRANS] SELECT_ACTIVE_SHEET',
+    ADD_TRANSFORMATION_SOURCE = '[TRANS] ADD_TRANSFORMATION_SOURCE',
+    REMOVE_TRANSFORMATION_SOURCE = '[TRANS] REMOVE_TRANSFORMATION_SOURCE',
     ADD_NODE = '[TRANS] ADD NODE',
     UPDATE_NODE_STATUS = '[TRANS] UPDATE_NODE_STATUS',
     UPDATE_NODE_ORDER = '[TRANS] UPDATE_NODE_ORDER',
@@ -15,6 +19,16 @@ export enum TransformationActionTypes {
     UPDATE_FILE_PATH = '[TRANS] UPDATE_FILE_PATH',
     UPDATE_TRANSFORMATION_HEADERS = '[TRANS] UPDATE_TRANSFORMATION_HEADERS',
     LOADING_TRANSFORMATION = "[TRANS] LOADING_TRANSFORMATION"
+}
+
+export class AddTransSource implements Action {
+  readonly type = TransformationActionTypes.ADD_TRANSFORMATION_SOURCE;
+  constructor(readonly transformation: SourceTransformation) {}
+}
+
+export class RemoveTransSource implements Action {
+  readonly type = TransformationActionTypes.REMOVE_TRANSFORMATION_SOURCE;
+  constructor(readonly index: any) {}
 }
 
 export class AddTransNode implements Action {
@@ -82,6 +96,11 @@ export class UpdateLoadingTransformation implements Action {
   constructor(readonly loading:boolean) {}
 }
 
+export class SelectActiceDatasourceIndex implements Action {
+  readonly type = TransformationActionTypes.SELECT_ACTIVE_SHEET;
+  constructor(readonly index:any) {}
+}
+
 export type TransformationAction =  UpdateNodeStatus 
                                     | UpdateEditedPipeInfo 
                                     | UpdateTransformedFilePath 
@@ -95,4 +114,5 @@ export type TransformationAction =  UpdateNodeStatus
                                     | ResetTransformation
                                     | UpdateTransformationHeaders
                                     | UpdateLoadingTransformation
-                                    ;
+                                    | AddTransSource
+                                    | RemoveTransSource;

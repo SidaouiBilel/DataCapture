@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
-import { selectColRange, selectDomain, selectRowRange } from '../../../store/selectors/import.selectors';
+import { selectDomain, selectDomainId } from '../../../store/selectors/multi-import.selectors';
 import {  LoadTransformation, SetPreviewMode,
           TransformationFlipExpand, UpdateEditedPipeInfo, AddTransNode, UpdateNodeOrder } from '../store/transformation.actions';
 import { selectActivePipe,
@@ -48,12 +48,12 @@ export class TranformationService {
     private msg: NotificationService,
     private modalService: NzModalService,
     ) {
-      this.store.select(selectDomain).subscribe((domainId) => {
+      this.store.select(selectDomainId).subscribe((domainId) => { 
         if (domainId) {
-          if (this.domainId && (this.domainId !== domainId.id)) {
+          if (this.domainId && (this.domainId !== domainId)) {
             this.setActive(null);
           }
-          this.domainId = domainId.id;
+          this.domainId = domainId;
         }
         this.loadDomainPipes();
       });
@@ -73,7 +73,6 @@ export class TranformationService {
       tap(() => this.loadDomainPipes()),
       tap((active) => {
         this.setActive(active);
-
       }),
     );
   }
@@ -94,9 +93,7 @@ export class TranformationService {
 
   setActive(active) {
     this.store.dispatch(new LoadTransformation(active));
-    if (active) {
-      this.upadatePreviewMode('TARGET');
-    } else { this.upadatePreviewMode('SOURCE'); }
+    if (active) { this.upadatePreviewMode('TARGET'); } else { this.upadatePreviewMode('SOURCE'); }
   }
 
   get(domainId) {
@@ -196,38 +193,38 @@ export class TranformationService {
   }
 
   selectHeader(api) {
-    const ranges = api.getCellRanges();
-    if (ranges.length > 1) {
-      this.msg.warn('More than one range selected');
-      return;
-    }
-    const range = ranges[0];
-    if (range.startRow.rowIndex !== range.endRow.rowIndex) {
-      this.msg.warn('More than one line selected');
-      return;
-    }
+    // const ranges = api.getCellRanges();
+    // if (ranges.length > 1) {
+    //   this.msg.warn('More than one range selected');
+    //   return;
+    // }
+    // const range = ranges[0];
+    // if (range.startRow.rowIndex !== range.endRow.rowIndex) {
+    //   this.msg.warn('More than one line selected');
+    //   return;
+    // }
 
-    const relativeRowStart = range.startRow.rowIndex + 2;
-    forkJoin([this.store.select(selectRowRange).pipe(take(1)), this.store.select(selectColRange).pipe(take(1))])
-    .subscribe(([previouRowRange, previouColRange]) => {
-      const previousRowStart = previouRowRange[0];
-      const rowStartOffset = (previousRowStart === 0) ? 0 : previousRowStart - 1;
-      const absoluteRowStart = relativeRowStart + rowStartOffset;
-      const previousRowEnd = previouRowRange[1];
-      this.selectRanges(absoluteRowStart, previousRowEnd, previouColRange[0], previouColRange[1]);
-    });
+    // const relativeRowStart = range.startRow.rowIndex + 2;
+    // forkJoin([this.store.select(selectRowRange).pipe(take(1)), this.store.select(selectColRange).pipe(take(1))])
+    // .subscribe(([previouRowRange, previouColRange]) => {
+    //   const previousRowStart = previouRowRange[0];
+    //   const rowStartOffset = (previousRowStart === 0) ? 0 : previousRowStart - 1;
+    //   const absoluteRowStart = relativeRowStart + rowStartOffset;
+    //   const previousRowEnd = previouRowRange[1];
+    //   this.selectRanges(absoluteRowStart, previousRowEnd, previouColRange[0], previouColRange[1]);
+    // });
   }
 
   clearRangeSelection() {
-    this.selectRanges();
+    // this.selectRanges();
   }
 
   selectRanges(rs= 0, re= 0, cs= 0, ce= 0) {
-    this.store.dispatch(new ActionSelectRowRange([rs, re]));
-    this.store.dispatch(new ActionSelectColRange([cs, ce]));
-    this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
-      this.store.dispatch(new ActionSelectSheet(sheet));
-    });
+    // this.store.dispatch(new ActionSelectRowRange([rs, re]));
+    // this.store.dispatch(new ActionSelectColRange([cs, ce]));
+    // this.sheet$.pipe(take(1)).subscribe((sheet: any) => {
+    //   this.store.dispatch(new ActionSelectSheet(sheet));
+    // });
   }
 
 }

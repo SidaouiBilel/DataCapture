@@ -3,7 +3,7 @@ import { BehaviorSubject, Subject, combineLatest, Observable } from 'rxjs';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
-import { selectSelectedSheet, selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
+import { selectActiveSourceSheet, selectSelectedSheet, selectUpdatedSheet } from '@app/datacapture/pages/upload/store/selectors/preview.selectors';
 import { selectFileData } from '@app/datacapture/pages/upload/store/selectors/import.selectors';
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, GAPIformatCell, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { PreviewGridComponent } from '../preview-grid.component';
@@ -18,8 +18,7 @@ import { SaveSourcesPreview } from '@app/datacapture/pages/upload/store/actions/
 })
 export class SourcePreviewComponent extends PreviewGridComponent implements OnInit, OnDestroy {
   // Store
-  fileData$: Observable<any>;
-  selectedSheet$: Observable<any>;
+  selectedSheet$;
   // Grid
   paginator$: any;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -36,18 +35,17 @@ export class SourcePreviewComponent extends PreviewGridComponent implements OnIn
     _transformService: TranformationService,
     _hotkeys: TransformationHotKeysService) {
       super(_transformService, _hotkeys);
-      this.selectedSheet$ = this.store.select(selectUpdatedSheet);
-      this.fileData$ = this.store.select(selectFileData);
+      this.selectedSheet$ = this.store.select(selectActiveSourceSheet);
       this.transformService.reset$.subscribe((res) => {
         if (res && this.gridApi) {this.gridApi.api.setFilterModel(null); }
       });
   }
 
   ngOnInit(): void {
-    this.paginator$ = combineLatest([this.size$, this.fileData$, this.selectedSheet$, this.gridReady$])
-      .subscribe(([size, file, selectedSheet, grid]) => {
+    this.paginator$ = combineLatest([this.size$, this.selectedSheet$, this.gridReady$])
+      .subscribe(([size, selectedSheet, grid]:any) => {
         this.onReset();
-        if (file.metaData) {
+        if (selectedSheet) {
           this.generateDataSource(grid, selectedSheet, size);
         }
       });

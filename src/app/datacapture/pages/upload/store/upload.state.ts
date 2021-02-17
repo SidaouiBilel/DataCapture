@@ -11,7 +11,7 @@ import { CleansingReducer } from './reducers/cleansing.reducer';
 import { MappingReducer } from './reducers/mapping.reducer';
 import { ImportReducer } from './reducers/import.reducer';
 import { TransformationReducer } from '../components/transformation/store/transformation.state';
-import { Transformation } from '../components/transformation/store/transformation.model';
+import { SourceTransformation, Transform } from '../components/transformation/store/transformation.model';
 import { MultiImport } from './models/multi-import.model';
 import { MultiImportReducer } from './reducers/multi-import.reducer';
 
@@ -37,7 +37,7 @@ export interface UploadState {
   mapping: Mapping;
   cleansing: Cleansing;
   uploading: Uploading;
-  transformation: Transformation;
+  transformation: Transform;
 }
 
 export interface State extends AppState {

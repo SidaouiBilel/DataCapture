@@ -39,13 +39,24 @@ export function MultiImportReducer(state: MultiImport = initialState, action: an
     }
       
 
-    case actions.SELECT_DOMAIN:
-      return {
-        ...state,
-        domain: action.domain
-      };
-  
-
+    case actions.SELECT_DOMAIN:{
+      const dom = action.domain
+      if (dom){
+        return {
+          ...state,
+          domain: dom,
+          domain_id: dom._id,
+          super_domain_id: dom.super_domain_id
+        };
+      } else {
+        return {
+          ...state,
+          domain: null,
+          domain_id: null,
+          super_domain_id: null
+        };
+      }
+    }
 
     case actions.RESET:
       return initialState;
