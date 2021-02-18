@@ -31,12 +31,12 @@ export class PreviewComponent {
   }
 
   goToImport(): void {
-    this.router.navigate(['/datacapture/upload/import']);
+    this.router.navigate(['/data/datacapture/upload/import']);
   }
 
 
   goToMapping(): void {
-    this.router.navigate(['/datacapture/upload/mapping']);
+    this.router.navigate(['/data/datacapture/upload/mapping']);
   }
 
   onNext() {

@@ -25,6 +25,12 @@ export class LoginService {
     this.store.select(selectProfile).subscribe((res: boolean) => {this.profile = res; });
   }
 
+  get_user_data_link(id){
+    return this.http.post("http://ae4ac4a0e7fe54b59b2fe6577ad5aeb7-966793033.eu-west-3.elb.amazonaws.com/pma/spawner/pma/",{
+      "user_id":id
+    })
+  }
+  
   requestLogin(email, password){
     return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}})
   }
@@ -33,7 +39,7 @@ export class LoginService {
     return this.requestLogin(email, password).pipe(
       tap((res:any)=>{
         this.store.dispatch(new ActionAuthLogin(res.Authorization));
-        this.router.navigate(['/datacapture'])
+        this.router.navigate(['/data/datacapture'])
       }),
       catchError(this.logout)
     );

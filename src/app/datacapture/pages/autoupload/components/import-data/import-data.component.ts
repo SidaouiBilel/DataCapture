@@ -15,8 +15,8 @@ export class ImportDataComponent implements OnInit {
   importTypes=[
     "Extracted files",
     "Filesystem",
-    "Database",
-    "Datalake"
+    // "Database",
+    // "Datalake"
   ];
   Importtype$ :BehaviorSubject<String>  = new BehaviorSubject("Extracted files");
   UserFiles$  :BehaviorSubject<any[]>   = new BehaviorSubject([]);

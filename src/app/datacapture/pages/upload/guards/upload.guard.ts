@@ -9,7 +9,10 @@ import { selectMandatories, selectMappingId, selectMappingValid } from './../sto
 import { selectCleansingErrors } from '../store/selectors/cleansing.selectors';
 import { selectUploadingStatus } from '../store/selectors/upload.selectors';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class UploadGuard implements CanActivate {
   fileData: any;
   selectedDomain: string;

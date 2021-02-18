@@ -10,7 +10,7 @@ import { RefernceData } from './reference.model';
 import { ReferenceService } from './reference.service';
 import { RefrenceTypeEditorComponent } from './refrence-type-editor/refrence-type-editor.component';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ReferenceUtilsService {
   setActiveRefType(item: any) {
     this.activeRefType$.next(item)

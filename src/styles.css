@@ -64,3 +64,6 @@ nz-progress.raw .ant-progress-show-info .ant-progress-outer{
     margin: 0 ;
     padding: 0 ;
 }
+.bg-primary {
+    background-color: #005999;
+}

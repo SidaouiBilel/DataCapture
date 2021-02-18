@@ -21,7 +21,7 @@ export class PipelineEffects {
   reset = this.actions$.pipe(
     ofType<PipelineReset>(PipelineActionTypes.RESET),
     map(() => {
-        this.router.navigate(['/datacapture/automatic/pipeline'])
+        this.router.navigate(['/data/datacapture/automatic/pipeline'])
       }
     )
   );
@@ -31,7 +31,7 @@ export class PipelineEffects {
     ofType<PipelineEditRunId>(PipelineActionTypes.EDIT_RUN_ID),
     map((action) => {
       if (action.event.pipeline_id)
-        this.router.navigate(['/datacapture/automatic/pipeline/'+ action.event.pipeline_id]);
+        this.router.navigate(['/data/datacapture/automatic/pipeline/'+ action.event.pipeline_id]);
       }
     )
   );
@@ -46,7 +46,7 @@ export class PipelineEffects {
             this.store.dispatch(new PipelineEditNodes(res.nodes));
             this.store.dispatch(new PipelineEditLinks(res.links));
             this.not.close(loader);
-            this.router.navigate(['/datacapture/automatic/pipeline/' + action.metadata.pipeline_id])
+            this.router.navigate(['/data/datacapture/automatic/pipeline/' + action.metadata.pipeline_id])
           }
         }, (err) => this.not.close(loader))
       }

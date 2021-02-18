@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, AppState, selectRouterState, ActionAuthLogout, selectProfile, ActionSaveProfile, selectToken } from '@app/core';
+import { NotificationService, AppState, selectRouterState, ActionAuthLogout, ActionAuthLogin , selectProfile, ActionSaveProfile, selectToken } from '@app/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
@@ -39,7 +39,8 @@ export class LayoutContainer implements OnInit {
       }
     });
 
-    settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
+    this.isCollapsed = false
+    // settings.appSize$.subscribe(size => this.isCollapsed = (size === 'compact') ? true : false);
   }
   ngOnInit(): void {
     this.checkTokenValidity()
@@ -114,7 +115,7 @@ export class LayoutContainer implements OnInit {
     try {
       let path = '';
       this.pageList.slice(1, id + 1).map((e) => path += '/' + e);
-      return (path.includes('datacapture') ? path : '/datacapture' + path);
+      return (path.includes('datacapture') ? path : '/data/datacapture' + path);
     } catch (error) {
       // this.notification.error(error.message);
     }
@@ -135,27 +136,67 @@ export class LayoutContainer implements OnInit {
     }
   }
 
-  checkTokenValidity(): void {
-    this.store.pipe(select(selectToken)).subscribe((token: string) => {
-      if (token) {
-        this.service.info(token).subscribe((res) => {
-          if (res) {
-            if (res.status !== 'success') {
-              this.logoutUser();
-            } else {
-              this.store.dispatch(new ActionSaveProfile(res.data));
-            }
+  tokencheck = false; 
+  url_data ="";
+  geturl_data(){
+    this.profile$.subscribe(
+      res=>{
+        if(res && res.id){
+          if(this.url_data.trim() == ""){
+            this.service.get_user_data_link(res.id).subscribe(
+              data=>{
+                this.url_data=data["url"];
+              }
+            )              
           }
-        }, () => this.logoutUser());
-      }
-    });
+       
+        }
+      })
   }
+  getuser(token){
+    this.service.info(token).subscribe((res) => {
+      if (res) {
+        if (res.status !== 'success') {
+          this.logoutUser();
+        } else {
+          this.store.dispatch(new ActionSaveProfile(res.data));
+          this.tokencheck = true;
+          this.geturl_data();
+        }
+      }
+    }, () => this.logoutUser());
+  }
+
+  checkTokenValidity(): void {
+    if(window['logout']){
+      let ProfileLocalstorage = JSON.parse(localStorage.getItem("data-auth"));
+      if( ProfileLocalstorage && ProfileLocalstorage["token"]){
+        this.store.dispatch(new ActionAuthLogin(ProfileLocalstorage["token"]));
+        this.getuser(ProfileLocalstorage["token"]);
+      }else{
+        this.logoutUser();
+      }
+    }else{
+      this.store.pipe(select(selectToken)).subscribe((token: string) => {
+      if(token){
+        this.getuser(token);
+      }
+      });
+    }
+    
+         
+
+  }
+
 
   logoutUser() {
     // this.notification.error('Token exp');
     this.store.dispatch(new ActionAuthLogout());
   }
   openmydata(){
-    
+    if(this.url_data.trim() !== ""){
+      var win = window.open(this.url_data, '_blank');
+      win.focus();      
+    }
   }
 }

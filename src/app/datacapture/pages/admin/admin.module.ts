@@ -78,8 +78,8 @@ import { ReferenceTypeVersionEditorComponent } from './componenets/references/re
     ReferenceTypeVersionEditorComponent
   ],
   providers:[
-    CollectionEditor,
-    ReferenceUtilsService
+    // CollectionEditor,
+    // ReferenceUtilsService
   ],
   imports: [
     CommonModule,

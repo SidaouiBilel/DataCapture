@@ -14,7 +14,7 @@
 } */
 
 .full-h {
-  height: 100vh;
+  height: calc(100vh  - 65px);
   width: 100vw;
 }
 
@@ -134,10 +134,10 @@ nz-content {
   box-sizing: content-box;
 }
 
-::ng-deep .compact .ant-layout-header{
+/* ::ng-deep .compact .ant-layout-header{
   height: 48px;
   line-height: 48px;
-}
+} */
 
 .nav{
   margin: 0 !important;

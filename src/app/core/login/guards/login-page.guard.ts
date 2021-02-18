@@ -17,7 +17,7 @@ export class LoginPageGuard implements CanActivate {
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     return new Observable((observer)=>{
       if (this.isAuthenticated) {
-        this.router.navigate(['/datacapture']);
+        this.router.navigate(['/data/datacapture']);
         observer.next(false);
       } else {
         observer.next(true);

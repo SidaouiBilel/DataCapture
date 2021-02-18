@@ -4,17 +4,19 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { InterceptedHttpError } from './intercepted-error.model';
-
+import { Store } from '@ngrx/store';
+import { AppState } from '../core.state';
+import { ActionAuthLogout } from '../auth/auth.actions';
 /** Application-wide error handler that adds a UI notification to the error handling
  * provided by the default Angular ErrorHandler.
  */
 @Injectable()
 export class HttpErrorHandler implements HttpInterceptor {
     
-  constructor(public injector: Injector) {
+  constructor(public injector: Injector , private store : Store<AppState>) {
   }
  
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error) => {
         let title = 'Server Error'
@@ -30,6 +32,11 @@ export class HttpErrorHandler implements HttpInterceptor {
             } 
             if (error.status == 407){
               title = 'Unauthorized'
+            }
+            if(error.status === 401){
+              title = 'Unauthorized';
+              console.log("walooooo")
+              this.store.dispatch(new ActionAuthLogout());
             }
           }
         } catch (error) {

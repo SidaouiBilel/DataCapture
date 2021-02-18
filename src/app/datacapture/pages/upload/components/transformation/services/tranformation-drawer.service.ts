@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { TransformationPipeComponent } from '../transformation-pipe/transformation-pipe.component';
 import { NzDrawerService } from 'ng-zorro-antd';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class TranformationDrawerService {
 
   constructor(private drawerService: NzDrawerService) {}

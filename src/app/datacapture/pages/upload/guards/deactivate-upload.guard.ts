@@ -6,7 +6,10 @@ import { take } from 'rxjs/operators';
 import { PipeChangesAlertComponent } from '../components/preview/pipe-changes-alert/pipe-changes-alert.component';
 import { NzModalService } from 'ng-zorro-antd';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class DeactivateUploadGuard<T> implements CanDeactivate<T> {
 
   constructor(private pipe: TranformationService, private modal: NzModalService) {}

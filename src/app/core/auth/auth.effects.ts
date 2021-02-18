@@ -25,7 +25,7 @@ export class AuthEffects {
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
     tap(() =>
       setTimeout(() => {
-        // this.router.navigate(['/datacapture/dashboard']);
+        // this.router.navigate(['/data/datacapture/dashboard']);
       }, 0)
     )
   );
@@ -34,7 +34,11 @@ export class AuthEffects {
   logout = this.actions$.pipe(
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
-        // this.router.navigate(['/login']);
+      if(window["logout"]){
+        window["logout"]();
+      }else{
+        this.router.navigate(['/login']);
+      }
     })
   );
 }

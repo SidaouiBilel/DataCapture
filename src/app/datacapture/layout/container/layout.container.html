@@ -4,7 +4,7 @@
     <div class="flex between top">
       <div class="flex start">
         <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
-          <a [routerLink]="['/datacapture/projects']">
+          <a [routerLink]="['/data/datacapture/projects']">
             <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
             src="../../../../assets/images/logo.png" alt="logo">
             <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-light">C&C <span
@@ -35,56 +35,56 @@
     <ng-container *ngIf="true">
       <nz-header class="nav" #navbar>
         <ul nz-menu nzMode="horizontal" class="sider-menu customscrollX d-flex" [nzInlineCollapsed]="isCollapsed">
-          <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/dashboard']">
+          <!-- <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/dashboard']">
             <i nz-icon nzType="dashboard"></i>
             <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>
-          </li>
+          </li> -->
 
           <li nz-submenu nzIcon="tool" nzTitle="Admin" >
             <ul>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/users']">
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/users']">
                 <i nz-icon nzType="user"></i>
                 <span>Users</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/domains']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/domains']">
                 <i nz-icon nzType="folder"></i>
                 <span>Domains</span>
               </li>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/references']">
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/references']">
                 <i nz-icon nzType="font-size"></i>
                 <span>References</span>
               </li>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/connectors']">
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/connectors']">
                 <i nz-icon nzType="api"></i>
                 <span>Connectors</span>
               </li>
             </ul>
           </li>
 
-          <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/template']">
+          <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/template']">
             <i nz-icon nzType="project"></i>
             <span>Template</span>
           </li>
-          <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/autoupload']">
+          <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/autoupload']">
             <i nz-icon nzType="export"></i>
             <span>Auto Upload</span>
           </li>
 
           <!-- <li nz-submenu nzIcon="database" nzTitle="Data Explorer" >
             <ul>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/explorer/uploads']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/explorer/uploads']">
                 <i nz-icon nzType="upload"></i>
                 <span>Uploads</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/explorer/data']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/explorer/data']">
                 <i nz-icon nzType="table"></i>
                 <span>Collection Data</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/explorer/tags']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/explorer/tags']">
                 <i nz-icon nzType="tags"></i>
                 <span>Tags</span>
               </li>
-              <li nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/datacapture/explorer/tags']">
+              <li nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/data/datacapture/explorer/tags']">
                 <span>References</span>
               </li>
             </ul>
@@ -92,25 +92,25 @@
 
           <li nz-submenu nzIcon="upload" nzTitle="Manual Upload" >
             <ul>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/import']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>
                 <span>Import</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/transform']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/upload/transform']">
                 <i nz-icon nzType="sliders"></i>
                 <span>Transform</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/mapping']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/upload/mapping']">
                 <i nz-icon nzType="arrows-alt"></i>
                 <span>Mapping</span>
               </li>
               <li nz-menu-item nzMatchRouter
-                [routerLink]="['/datacapture/upload/cleansing']">
+                [routerLink]="['/data/datacapture/upload/cleansing']">
                 <i nz-icon nzType="monitor"></i>
                 <span>Cleansing</span>
               </li>
               <li nz-menu-item nzMatchRouter
-                [routerLink]="['/datacapture/upload/uploading']">
+                [routerLink]="['/data/datacapture/upload/uploading']">
                 <i nz-icon nzType="upload"></i>
                 <span>Upload</span>
               </li>
@@ -119,15 +119,15 @@
 
           <li nz-submenu nzIcon="deployment-unit" nzTitle="Automatic Upload" >
             <ul>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/author']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/automatic/author']">
                 <i nz-icon nzType="edit"></i>
                 <span>Author</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/monitor']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/automatic/monitor']">
                 <i nz-icon nzType="monitor"></i>
                 <span>Monitor</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/pipeline']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/automatic/pipeline']">
                 <i nz-icon nzType="apartment" nzRotate='-90'></i>
                 <span>Pipeline</span>
               </li>

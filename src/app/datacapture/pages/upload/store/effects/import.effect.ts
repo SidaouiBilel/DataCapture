@@ -30,7 +30,7 @@ export class ImportEffects {
     map((action) => {
       this.store$.dispatch(new ResetTransformation());
       this.store$.dispatch(new ResetPreview());
-      this.router.navigate(['/datacapture/upload/import']);
+      this.router.navigate(['/data/datacapture/upload/import']);
     })
 
   );

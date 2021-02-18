@@ -1,3 +1,6 @@
+import { environment } from './../environments/environment';
+import { NzIconService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 import browser from 'browser-detect';
 import { Component, Injector, OnInit } from '@angular/core';
 import { routeAnimations,LocalStorageService, AppState, NotificationService} from '@app/core';
@@ -17,9 +20,16 @@ export class AppComponent{
               private store: Store<AppState>,
               private service: LoginService,
               private not: NotificationService,
-              private injector: Injector
+              private injector: Injector,
+              private route : Router, 
+              private IconS:NzIconService
               ){    // Create global Service Injector.
                 ServiceLocator.injector = this.injector;
+                // this.route.navigate(["data/datacapture/dashboard"]);
+              
+                if(environment.production){
+                  this.IconS.changeAssetsSource("http://localhost:8080/");
+                }
             }
 
   private static isIEorEdgeOrSafari() {

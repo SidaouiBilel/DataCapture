@@ -413,7 +413,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   }
 
   goToPreview(): void {
-    this.router.navigate(['/datacapture/upload/transform']);
+    this.router.navigate(['/data/datacapture/upload/transform']);
   }
 
   goToCleansing(): void {
@@ -437,7 +437,7 @@ export class MappingComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.mandatories === 0) {
-      this.router.navigate(['/datacapture/upload/cleansing']);
+      this.router.navigate(['/data/datacapture/upload/cleansing']);
     } else if (this.mandatories !== 0) {
       this.notification.warn('Please map all the mandatory fields');
     }

@@ -25,7 +25,9 @@ import { withValue } from '@app/shared/utils/rxjs.utils';
 import { NzModalService } from 'ng-zorro-antd';
 import { HeaderDescriptionComponent } from '../modals/transformation-preview-help/header-description/header-description.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TranformationService {
 
   url = environment.transform;

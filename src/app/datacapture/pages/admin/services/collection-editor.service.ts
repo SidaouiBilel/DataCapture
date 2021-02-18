@@ -10,7 +10,7 @@ import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { Domain } from '../models/domain';
 import { SuperDomainService } from './super-domain.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CollectionEditor {
 
   constructor(private ds: DomainService, private modal: NzModalService, private sds: SuperDomainService) {}

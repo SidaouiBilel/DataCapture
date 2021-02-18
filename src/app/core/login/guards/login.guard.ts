@@ -22,7 +22,7 @@ export class DatafactureGuard implements CanActivate {
         this.service.attemptLogin().subscribe(succeeded=>{
           if(succeeded){
             observer.next(true)
-            // this.router.navigate(['/datacapture']);
+            // this.router.navigate(['/data/datacapture']);
           } else {
             observer.next(false) 
             this.router.navigate(['/login']);
