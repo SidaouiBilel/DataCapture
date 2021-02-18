@@ -28,7 +28,7 @@ export class AppComponent{
                 // this.route.navigate(["data/datacapture/dashboard"]);
               
                 if(environment.production){
-                  this.IconS.changeAssetsSource("http://localhost:8080/");
+                  this.IconS.changeAssetsSource("http://ae778a86eb59b457eb3f2ea25469c793-1433705831.eu-west-3.elb.amazonaws.com/");
                 }
             }
 
