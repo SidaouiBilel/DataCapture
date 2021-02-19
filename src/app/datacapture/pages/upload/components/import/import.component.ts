@@ -38,7 +38,6 @@ export class ImportComponent implements OnInit {
       this.fileData = fileData;
     })
     this.selectedDomain$.subscribe((domain: any) => {
-      console.log(domain);
       this.selectedDomain = domain;
       if (domain) {
         this.url = urls.environment.import + '?domainId=' + domain.id;
