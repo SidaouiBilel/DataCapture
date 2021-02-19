@@ -110,11 +110,11 @@ export class ImportComponent implements OnInit {
       extension: fileresponse.filetype,
       data: [],
       headers: [],
-      file: [{response:fileresponse}]
+      file: [fileresponse]
     };
       this.store.dispatch(new ActionUploadFile({file: uploadedFile, importing: false, imported: true, error: false, progress: 100}));
       // tslint:disable-next-line: max-line-length
-      this.store.dispatch(new ActionSaveFile({metaData: fileresponse, sheets: Object.keys(fileresponse.worksheets_map), data: [], headers: []}));
+      this.store.dispatch(new ActionSaveFile({metaData: fileresponse, sheets: Object.keys(fileresponse.worksheets), data: [], headers: []}));
       this.store.dispatch(new ActionSelectSheet(0));
       this.notification.success(`${fileresponse.filename} file uploaded successfully.`);
   }

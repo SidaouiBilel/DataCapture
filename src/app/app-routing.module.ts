@@ -8,7 +8,7 @@ import { MicroRoutingModule } from './micro-routing/micro-routing.module';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'data/datacapture/dashboard',
+    redirectTo: 'data/datacapture/admin/domains',
     pathMatch: 'full'
   },
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'data/datacapture/dashboard'
+    redirectTo: 'data/datacapture/admin/domains'
   }
 ];
 

@@ -1,3 +1,4 @@
+import { MenuitemsService } from './../service/menuitems.service';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, ActionAuthLogin , selectProfile, ActionSaveProfile, selectToken } from '@app/core';
 import { select, Store } from '@ngrx/store';
@@ -22,11 +23,17 @@ export class LayoutContainer implements OnInit {
   router$: Observable<any>;
   env;
   profile$: Observable<any>;
-
+  uploadrouteactivated=[];
   constructor(private notification: NotificationService,
               private service: LoginService,
               private store: Store<AppState>,
-              settings: AppSettingsService) {
+              settings: AppSettingsService ,
+              // private menuitemservice :MenuitemsService
+              ) {
+    //  this.menuitemservice.uploadrouteactivated$.subscribe(activeroutes=>{
+    //    console.log(activeroutes);
+    //   this.uploadrouteactivated = activeroutes;
+    // });             
     this.settings = settings;
     this.router$ = this.store.select(selectRouterState);
     this.profile$ = this.store.select(selectProfile);
@@ -45,7 +52,9 @@ export class LayoutContainer implements OnInit {
   ngOnInit(): void {
     this.checkTokenValidity()
   }
-
+  isuploadrouteactivated(route){
+    return !this.uploadrouteactivated.includes(route);
+  }
   // This is used to select the primary pqge in the sidebqr
   isPrimaryPage(page: string): boolean {
     try {

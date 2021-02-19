@@ -21,15 +21,13 @@ export class AppComponent{
               private service: LoginService,
               private not: NotificationService,
               private injector: Injector,
-              private route : Router, 
-              private IconS:NzIconService
               ){    // Create global Service Injector.
                 ServiceLocator.injector = this.injector;
                 // this.route.navigate(["data/datacapture/dashboard"]);
               
-                if(environment.production){
-                  this.IconS.changeAssetsSource("http://ae778a86eb59b457eb3f2ea25469c793-1433705831.eu-west-3.elb.amazonaws.com/");
-                }
+                // if(!environment.production){
+                //   this.IconS.changeAssetsSource("http://127.0.0.1:8080");
+                // }
             }
 
   private static isIEorEdgeOrSafari() {

@@ -17,7 +17,7 @@
         <nz-form-control [nzSm]="20" [nzXs]="20"
           nzErrorTip="Please enter Column info.">
 
-          <input nz-input [formControlName]="control.title" placeholder="Title"  [attr.id]="i" />
+          <input nz-input [formControlName]="control.title" class="mb-1" placeholder="Title"  [attr.id]="i" />
 
           <nz-form-item class="SHS" *ngFor="let SH of control.SHS; let y = index">
             <input class="roles-input" nz-input [formControlName]="SH.sheet" placeholder="Sheet" [attr.id]="y" />
@@ -25,7 +25,13 @@
             <nz-select class="roles-input"  nzMode="tags" [nzMaxMultipleCount]="maxtags" [formControlName]="SH.range" nzPlaceHolder="Range" [attr.id]="y" nzShowSearch>
               <nz-option *ngFor="let option of []" [nzLabel]="option" [nzValue]="option"></nz-option>
             </nz-select>           
-            <i nz-icon nz-tooltip [nzTooltipTitle]='"Remove sheet && range"' nzType="minus-circle-o" class="dynamic-delete-button" role="button" (click)="removeSheet_rating(control , i , y, $event)"></i> 
+            <i  nz-icon 
+                nz-tooltip 
+                [nzTooltipTitle]='"Remove sheet && range"' 
+                style="display: flex;align-items: center;"
+                nzType="minus-circle-o" class="dynamic-delete-button" 
+                role="button" 
+                (click)="removeSheet_rating(control , i , y, $event)"></i> 
             
           </nz-form-item>
           <div class="plus d-flex justify-content-center mt-2">

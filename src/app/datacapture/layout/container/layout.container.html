@@ -42,18 +42,18 @@
 
           <li nz-submenu nzIcon="tool" nzTitle="Admin" >
             <ul>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/users']">
+              <!-- <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/users']">
                 <i nz-icon nzType="user"></i>
                 <span>Users</span>
-              </li>
+              </li> -->
               <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/domains']">
                 <i nz-icon nzType="folder"></i>
                 <span>Domains</span>
               </li>
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/references']">
+              <!-- <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/references']">
                 <i nz-icon nzType="font-size"></i>
                 <span>References</span>
-              </li>
+              </li> -->
               <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/connectors']">
                 <i nz-icon nzType="api"></i>
                 <span>Connectors</span>

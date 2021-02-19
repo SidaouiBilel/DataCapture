@@ -10,18 +10,18 @@ export class TemplateService {
 
   uploadURL = "http://a639a20b446ca46f2a463cb206e7ca06-1781217483.eu-west-3.elb.amazonaws.com/upload/";
   getTemplates(){
-    return this.http.get<any[]>(this.uploadURL+"template");
+    return this.http.get<any[]>(environment.upload+"template");
   }
 
   addTemplate(data){
-    return this.http.post(this.uploadURL+"template",data);
+    return this.http.post(environment.upload+"template",data);
   }
 
   editTemplate(data , id){
-    return this.http.post(this.uploadURL+"template/"+id,data);
+    return this.http.post(environment.upload+"template/"+id,data);
   }
 
   deleteTemplate(id){
-    return this.http.delete(this.uploadURL+"template/"+id);
+    return this.http.delete(environment.upload+"template/"+id);
   }
 }

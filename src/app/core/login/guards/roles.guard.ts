@@ -35,7 +35,7 @@ export class RolesGuard implements CanActivate {
           this.router.navigate(['/data/datacapture/upload/cleansing']);
           return false;
         case 'ADMIN': {
-          this.router.navigate(['/data/datacapture/dashboard']);
+          this.router.navigate(['/data/datacapture/admin/domains']);
           return false;
         }
         default:
