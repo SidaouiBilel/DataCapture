@@ -41,14 +41,14 @@ export class MenuitemsService {
     this.selectedDomain$ = this.store.select(selectDomain);
     this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mandatories$ = this.store.select(selectMandatories);
-    this.errors$.subscribe((errors) => {this.errors = errors; });
-    this.fileData$.subscribe((res) => {this.fileData = res; });
+    this.errors$.subscribe((errors) => {this.errors = errors; this.runtestactiveRoute();});
+    this.fileData$.subscribe((res) => {this.fileData = res; this.runtestactiveRoute(); });
     this.mappingId$.subscribe((mappingId) => { this.mappingId = mappingId; });
-    this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; });
+    this.mandatories$.subscribe((mandatories) => { this.mandatories = mandatories; this.runtestactiveRoute();});
     this.uploadStatus$.subscribe((uploadStatus) => {this.uploadStatus = uploadStatus; });
     this.mappingValid$.subscribe((mappingValid) => { this.mappingValid = mappingValid; });
-    this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
-    this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id; } });
+    this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; this.runtestactiveRoute();});
+    this.selectedDomain$.subscribe((domain) => { if (domain) { this.selectedDomain = domain.id;  this.runtestactiveRoute();} });
   }
   uploadrouteactivated$: BehaviorSubject<string[]> = new BehaviorSubject([]);
   runtestactiveRoute(){
@@ -64,14 +64,14 @@ export class MenuitemsService {
         return ['READY'].includes(this.uploadStatus);
       }
       case 'TRANSFORM': {
-        if (this.fileData.metaData && this.selectedDomain && ['READY'].includes(this.uploadStatus)) {
+        if (this.fileData?.metaData && this.selectedDomain && ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
             return false;
         }
       }
       case 'MAPPING': {
-        if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null &&
+        if (this.fileData?.metaData && this.selectedDomain && this.selectedSheet != null &&
             ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
@@ -79,7 +79,7 @@ export class MenuitemsService {
         }
       }
       case 'CLEANSING': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 &&
+        if (this.fileData?.metaData && this.selectedDomain && this.mandatories === 0 &&
             this.mappingId && this.mappingValid && ['READY'].includes(this.uploadStatus)) {
             return true;
         } else {
@@ -87,7 +87,7 @@ export class MenuitemsService {
         }
       }
       case 'UPLOAD': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
+        if (this.fileData?.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
             return true;
         } else {
             return false;

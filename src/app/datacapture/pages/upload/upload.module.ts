@@ -126,8 +126,8 @@ const components = [
   imports: [
     UploadRoutingModule,
     SharedModule,
-    StoreModule.forFeature('upload', uploadReducers),
-    EffectsModule.forFeature([ImportEffects, TransformationEffects, MappingEffects]),
+    // StoreModule.forFeature('upload', uploadReducers),
+    // EffectsModule.forFeature([ImportEffects, TransformationEffects, MappingEffects]),
     // Drag and Drop
     DndModule,
     NgDragDropModule.forRoot(),

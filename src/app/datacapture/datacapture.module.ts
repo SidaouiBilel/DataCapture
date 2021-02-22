@@ -1,3 +1,9 @@
+import { MappingEffects } from './pages/upload/store/effects/mapping.effect';
+import { TransformationEffects } from './pages/upload/components/transformation/store/transformation.effect';
+import { ImportEffects } from './pages/upload/store/effects/import.effect';
+import { uploadReducers } from './pages/upload/store/upload.state';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 import { LayoutContainer } from './layout/container/layout.container';
 import { DataCaptureRoutingModule } from './datacapture-routing.module';
@@ -18,7 +24,9 @@ const components = [
   imports: [
     DataCaptureRoutingModule,
     SharedModule,
-    TemplateModule
+    TemplateModule,
+    StoreModule.forFeature('upload', uploadReducers),
+    EffectsModule.forFeature([ImportEffects, TransformationEffects, MappingEffects]),
   ],
   declarations: [...components ],
   exports: [

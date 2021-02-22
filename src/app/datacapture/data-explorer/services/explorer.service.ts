@@ -21,6 +21,6 @@ export class ExplorerService {
 
   goToCollectionData(id){
     this.setCollection(id)
-    this.router.navigate(['datacapture', 'explorer', 'data'])
+    this.router.navigate(['data','datacapture', 'explorer', 'data'])
   }
 }

@@ -28,12 +28,11 @@ export class LayoutContainer implements OnInit {
               private service: LoginService,
               private store: Store<AppState>,
               settings: AppSettingsService ,
-              // private menuitemservice :MenuitemsService
+              private menuitemservice :MenuitemsService
               ) {
-    //  this.menuitemservice.uploadrouteactivated$.subscribe(activeroutes=>{
-    //    console.log(activeroutes);
-    //   this.uploadrouteactivated = activeroutes;
-    // });             
+     this.menuitemservice.uploadrouteactivated$.subscribe(activeroutes=>{
+      this.uploadrouteactivated = activeroutes;
+    });             
     this.settings = settings;
     this.router$ = this.store.select(selectRouterState);
     this.profile$ = this.store.select(selectProfile);

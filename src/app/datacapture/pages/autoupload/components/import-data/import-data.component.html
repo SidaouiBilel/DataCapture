@@ -68,7 +68,7 @@
                          </div>
                     
                       <div nz-row class='w-50'>
-                          <nz-list class="list_impo" [nzDataSource]="UserFiles$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
+                          <nz-list class="list_impo w-100" [nzDataSource]="UserFiles$ | async " [nzRenderItem]="item"  [nzLoading]="loading" [nzItemLayout]="'vertical'">
                               <ng-template #item let-item>
                                   <nz-list-item class="BD-item">
                   

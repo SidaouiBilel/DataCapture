@@ -96,21 +96,19 @@
                 <i nz-icon nzType="import"></i>
                 <span>Import</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/upload/transform']">
+              <li nz-menu-item  [nzDisabled]="isuploadrouteactivated('TRANSFORM')" [routerLink]="['/data/datacapture/upload/transform']" nzMatchRouter>
                 <i nz-icon nzType="sliders"></i>
                 <span>Transform</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/upload/mapping']">
+              <li nz-menu-item  [nzDisabled]="isuploadrouteactivated('MAPPING')" [routerLink]="['/data/datacapture/upload/mapping']" nzMatchRouter>
                 <i nz-icon nzType="arrows-alt"></i>
                 <span>Mapping</span>
               </li>
-              <li nz-menu-item nzMatchRouter
-                [routerLink]="['/data/datacapture/upload/cleansing']">
+              <li nz-menu-item  [nzDisabled]="isuploadrouteactivated('CLEANSING')" [routerLink]="['/data/datacapture/upload/cleansing']" nzMatchRouter>
                 <i nz-icon nzType="monitor"></i>
                 <span>Cleansing</span>
               </li>
-              <li nz-menu-item nzMatchRouter
-                [routerLink]="['/data/datacapture/upload/uploading']">
+              <li nz-menu-item [nzDisabled]="isuploadrouteactivated('UPLOAD')" [routerLink]="['/data/datacapture/upload/uploading']" nzMatchRouter>
                 <i nz-icon nzType="upload"></i>
                 <span>Upload</span>
               </li>
