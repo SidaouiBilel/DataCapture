@@ -19,13 +19,15 @@
           <ul nz-menu>
             <li nz-submenu nzTitle="All">
               <ul>
-                <li nz-menu-item (click)="download('csv')">CSV File</li>
+                <li nz-menu-item (click)="download('csv')">CSV File(;)</li>
+                <li nz-menu-item (click)="download('csvcomma')">CSV File(,)</li>
                 <li nz-menu-item (click)="download('xlsx')">Excel File</li>
               </ul>
             </li>
             <li nz-submenu nzTitle="With Filters">
               <ul>
-                <li nz-menu-item (click)="download('csv', true)">CSV File</li>
+                <li nz-menu-item (click)="download('csv', true)">CSV File(;)</li>
+                <li nz-menu-item (click)="download('csvcomma', true)">CSV File(,)</li>
                 <li nz-menu-item (click)="download('xlsx', true)">Excel File</li>
               </ul>
             </li>

@@ -1,0 +1,31 @@
+<form nz-form [nzLayout]="'horizontal'">
+
+
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8">Column</nz-form-label>
+        <nz-form-control [nzSm]="16">
+            <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.column' name='column' (change)='onDataChanged()'></app-columns-input>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8"><i nz-icon nzType='function'></i></nz-form-label>
+        <nz-form-control [nzSm]="16">
+            <nz-select [nzSize]='size' name='transformation' [(ngModel)]='data.transformation' (ngModelChange)='onDataChanged()'>
+                <nz-option *ngFor='let f of aggFunctions' [nzLabel]='f.label' [nzValue]='f.value'></nz-option>
+            </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+   <nz-form-item *ngIf="data.transformation=='round'">
+        <nz-form-label [nzSm]="8">Decimals</nz-form-label>
+        <nz-form-control [nzSm]="16">
+            <input nz-input [nzSize]='size' [(ngModel)]='data.decimals' name='decimals' (change)='onDataChanged()'/>
+        </nz-form-control>
+      </nz-form-item>
+
+</form>

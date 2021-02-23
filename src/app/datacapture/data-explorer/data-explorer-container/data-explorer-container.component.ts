@@ -13,7 +13,7 @@ export class DataExplorerContainerComponent implements OnInit {
   }
 
   tabs = [
-    {label:'Uplaods', icon:'upload', route:['uploads']},
+    {label:'Uploads', icon:'upload', route:['uploads']},
     {label:'Collection Data', icon:'table', route:['data']},
     {label:'Tags', icon:'tags', route:['tags']},
   ]

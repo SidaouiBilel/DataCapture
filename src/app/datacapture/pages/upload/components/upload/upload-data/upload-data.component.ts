@@ -70,7 +70,7 @@ export class UploadDataComponent implements OnInit, OnDestroy {
       res.upload_tags = res.upload_tags.map((e) => ({color: this.getRandom(), value: e }));
       this.result$.next(res);
       this.store.dispatch(new ActionSaveUploadingStatus(res.upload_status));
-      if (['ERROR', 'DONE'].includes(res.upload_status)) {
+      if (['ERROR', 'DONE'].includes(res.upload_status.toUpperCase())) {
         if (this.status$) { this.status$.unsubscribe(); }
       }
     });

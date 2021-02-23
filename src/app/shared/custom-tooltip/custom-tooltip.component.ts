@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
 export class CustomTooltipComponent implements ITooltipAngularComp  {
   private params: any;
   // private data: any;
-  errors = [];
+  errors:any = {};
   field = '';
   agInit(params): void {
     this.params = params;

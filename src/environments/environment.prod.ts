@@ -1,21 +1,19 @@
 import { meta } from './environment.meta';
 
-const packageJson = require('../../package.json');
-
 export const environment = {
   ...meta,
   production: true,
   test: false,
-  admin: 'https://dcm-admin.azurewebsites.net/',
-  import: 'https://dcm-import.azurewebsites.net/import/v2/',
-  // upload: 'http://localhost:5000/import/',
-  mapping: 'https://dcm-mapping.azurewebsites.net/mapping',
+  admin: 'http://aendevccbe01:5000/',
+  import: 'http://aendevccbe01:5003/import/v2/',
+  //upload: 'http://localhost:5000/import/',
+  mapping: 'http://aendevccbe01:5001/mapping',
   // mapping: 'http://localhost:5001/mapping',
-  cleansing: 'https://dcm-datacheck.azurewebsites.net/check',
+  cleansing: 'http://aendevccbe01:5002/check',
   // TRANSFORMATION
-  // transform: 'http://localhost:5000/transfo/'
-  transform: 'https://dcm-transforming.azurewebsites.net/transfo/',
-  upload: 'https://dcm-upload.azurewebsites.net/upload/',
-  auth: 'https://dcm-auth.azurewebsites.net/',
+  // transform: 'http:///transfo/'
+  transform: 'http://aendevccbe01:5004/transfo/',
+  upload: 'http://aendevccbe01:5006/upload/',
+  auth: 'http://aendevccbe01:5005/',
   env: 'PRD'
 };

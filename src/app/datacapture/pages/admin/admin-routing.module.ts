@@ -57,10 +57,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'connectors',
-    loadChildren : () => import('app/datacapture/pages/connectors/connectors.module').then(m => m.ConnectorsModule)
-  },
-  {
     path: '**',
     redirectTo: 'references'
   }

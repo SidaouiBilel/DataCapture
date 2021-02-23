@@ -66,7 +66,8 @@ import { DateFormatterComponent } from './components/transformation/transformati
 import { DatasetComponent } from './components/import/dataset/dataset.component';
 import { HeaderDescriptionComponent } from './components/transformation/modals/transformation-preview-help/header-description/header-description.component';
 import { GroupByComponent } from './components/transformation/transformations/transformation-interface/format/group-by/group-by.component';
-import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
+import { NumericTransformationComponent } from './components/transformation/transformations/transformation-interface/format/numeric-transformation/numeric-transformation.component';
+import { UploadDataResultComponent } from './components/upload/upload-data-result/upload-data-result.component';
 
 const components = [
   UploadComponentComponent,
@@ -114,10 +115,11 @@ const components = [
   CalculatorModalComponent,
   ImportedFileInfoComponent,
   DateFormatterComponent,
-  DatasetComponent, 
-  HeaderDescriptionComponent, 
+  DatasetComponent,
+  HeaderDescriptionComponent,
   GroupByComponent,
-  HashComponent
+  NumericTransformationComponent,
+  UploadDataResultComponent
 ];
 
 @NgModule({
@@ -165,7 +167,8 @@ const components = [
     DateFormatterComponent,
     DatasetComponent,
     GroupByComponent,
-    HashComponent
+    UploadDataResultComponent,
+    NumericTransformationComponent
   ]
 })
 export class UploadModule {}

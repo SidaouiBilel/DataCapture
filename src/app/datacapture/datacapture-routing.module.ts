@@ -31,10 +31,6 @@ const routes: Routes = [
           loadChildren : () => import('app/datacapture/data-explorer/data-explorer.module').then(m => m.DataExplorerModule)
         },
         {
-          path: 'automatic',
-          loadChildren : () => import('app/datacapture/pages/automatic-upload/automatic.module').then(m => m.AutomaticModule)
-        },
-        {
           path: '**',
           redirectTo: 'dashboard',
           pathMatch: 'full'

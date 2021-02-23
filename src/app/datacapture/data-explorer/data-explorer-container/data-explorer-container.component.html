@@ -12,7 +12,7 @@
     <div class="fill flex column stretch">
         <nz-card class="explorer" nzSize='small' [nzTitle]='explorerTitle'>
            
-            <nz-tabset nzLinkRouter class="topless">
+            <nz-tabset nzLinkRouter>
                 <nz-tab *ngFor="let tab of tabs">
                     <a nz-tab-link [routerLink]="tab.route"> <i nz-icon [nzType]='tab.icon'></i> {{tab.label}}</a>
                 </nz-tab>

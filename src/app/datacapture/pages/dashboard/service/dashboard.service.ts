@@ -42,7 +42,8 @@ export class DashboardService {
     const x = this.not.loading('Your file is being downloaded...');
     return this.http.post(`${environment.upload}data/${domainId}/export/${type}`, payload, { responseType: 'blob' })
       .subscribe((res: any) => {
-        this.saveFile(res, domainId, type);
+        let ext = (type=='xlsx')? 'xlsx': 'csv' 
+        this.saveFile(res, domainId, ext);
         this.not.close(x);
         this.not.success('Your file has been successfully downloaded.');
       });

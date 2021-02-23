@@ -32,32 +32,23 @@
                             <nz-divider nzType="vertical"></nz-divider>
                             <i nz-icon nzType="block" nzTheme="outline" class="mr-2"></i>
                             <i>Used in </i>
-                            {{item.domain_ids.length}}
+                            {{item?.domain_ids?.length}}
                             <i>Collection(s)</i>
                         </span >
                     </div>
 
 
-                    <div class="mt-2">
-                            <nz-button-group class="mr-2" *ngFor="let version of item.versions">
-                                <button nz-button (click)='openReferenceData(version)'>{{version.version_label}}</button>
-                                <button nz-button nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight"><i nz-icon nzType="ellipsis"></i></button>
-                                <nz-dropdown-menu #menu1="nzDropdownMenu">
-                                    <ul nz-menu>
-                                      <li (click)='OnEditVersion(item, version)' nz-menu-item>Edit</li>
-                                      <li (click)='deleteRefrenceType(version)' nz-menu-item>Delete</li>
-                                    </ul>
-                                </nz-dropdown-menu>
-                        </nz-button-group>
+                    <div class="button-spacing mt-2">
+                        <button nz-button (click)='openReferenceData(item)'>Reference Data</button>
+                        <button *ngIf='!item.shared' nz-button (click)='shareRefrenceType(item)'><i nz-icon nzType='share-alt'></i>Share with Collections</button>
                     </div>
-                    
                 </div>
                 
-                <div class="button-spacing">
-                    <button class="ghost" nz-button (click)='OnCreateVersion(item)'><i nz-icon nzType='plus'> </i>Create Version</button>
-                    <button class="ghost" *ngIf='!item.shared' nz-button (click)='shareRefrenceType(item)'><i nz-icon nzType='share-alt'></i>Share</button>
-                    <button nz-button class="ghost" (click)='editRefrenceType(item)'><i nz-icon nzType='edit'></i></button>
-                    <button nz-button class="ghost" (click)='deleteRefrenceType(item)'><i nz-icon nzType='delete'></i></button>
+                <div>
+                    <button nz-button nzShape='circle' class="ghost" (click)='editRefrenceType(item)'><i nz-icon nzType='edit'></i></button>
+                    <!-- <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon nzType="ellipsis" [nzRotate]='90'></i></button> -->
+                    <!-- <button nz-button nzShape='circle' class="ghost" (click)='editRefrenceType(item)'><i nz-icon nzType='setting'></i></button> -->
+                    <button nz-button nzShape='circle' class="ghost" (click)='deleteRefrenceType(item)'><i nz-icon nzType='delete'></i></button>
                 </div>
                     
             </div>

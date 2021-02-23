@@ -14,7 +14,7 @@ import { selectToken } from '../auth/auth.selectors';
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
-export class HttpTokenInterceptor implements HttpInterceptor {
+export class HttpErrorInterceptor implements HttpInterceptor {
   token: string;
   token$: Observable<string>;
   constructor(private injector: Injector, private store: Store<AppState>) {
@@ -33,6 +33,13 @@ export class HttpTokenInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(request);
+    return next.handle(request).pipe(
+      tap(null, (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          const appErrorHandler = this.injector.get(ErrorHandler);
+          appErrorHandler.handleError(err);
+        }
+      })
+    );
   }
 }

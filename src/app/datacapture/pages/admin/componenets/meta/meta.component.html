@@ -1,3 +1,7 @@
+<p nz-paragraph class="dom-description">
+  {{data?.description}}
+</p>
+
 <div nz-paragraph class="mb-2">
   <i nz-icon nzType="clock-circle" nzTheme="outline"></i><i> Created On</i>
   {{data?.created_on | date: 'dd/MM/yyyy HH:mm'}}
@@ -18,8 +22,3 @@
     <nz-tag nzColor='#108ee9'>Datafactory Enabled</nz-tag>
   </span>
 </div>
-
-<p nz-paragraph class="dom-description">
-  {{data?.description}}
-</p>
-

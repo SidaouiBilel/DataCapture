@@ -28,7 +28,7 @@ export class RefrenceTypeEditorComponent extends EntityModal implements OnInit {
       this.save();
     }, (err) => {
       this.loading = false;
-      // this.not.error('Reference Type Name is redondant. Please choose another one.');
+      this.not.error('Reference Type Name is redondant. Please choose another one.');
     });
   }
 

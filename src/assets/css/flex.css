@@ -68,7 +68,7 @@
     overflow-x: hidden;
 }
 
-.flex.column > .fill{
+.flex.column .fill{
     height: 0;
 }
 

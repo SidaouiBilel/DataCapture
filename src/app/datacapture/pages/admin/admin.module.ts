@@ -17,7 +17,7 @@ import { CollectionDetailsComponent } from './pages/collection-details/collectio
 import { CollectionCardComponent } from './componenets/collection-card/collection-card.component';
 import { CollectionEditor } from './services/collection-editor.service';
 import { TreePipe } from './pipes/tree.pipe';
-// import { MetaComponent } from './componenets/meta/meta.component';
+import { MetaComponent } from './componenets/meta/meta.component';
 import { SimpleFilterPipe } from './pipes/simple-filter.pipe';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -39,7 +39,6 @@ import { GlobalReferencesComponent } from './pages/global-references/global-refe
 import { GlobalReferenceTypesComponent } from './componenets/global-reference-types/global-reference-types.component';
 import { ShareWithCollectionsComponent } from './modals/share-with-collections/share-with-collections.component';
 import { GlobalReferenceDataComponent } from './pages/global-reference-data/global-reference-data.component';
-import { ReferenceTypeVersionEditorComponent } from './componenets/references/reference-type-version-editor/reference-type-version-editor.component';
 
 
 @NgModule({
@@ -57,7 +56,7 @@ import { ReferenceTypeVersionEditorComponent } from './componenets/references/re
     CollectionDetailsComponent,
     CollectionCardComponent,
     TreePipe,
-    // MetaComponent,
+    MetaComponent,
     SimpleFilterPipe,
     DisplayChangerComponent,
     FieldInputComponent,
@@ -74,8 +73,7 @@ import { ReferenceTypeVersionEditorComponent } from './componenets/references/re
     GlobalReferencesComponent,
     GlobalReferenceTypesComponent,
     ShareWithCollectionsComponent,
-    GlobalReferenceDataComponent,
-    ReferenceTypeVersionEditorComponent
+    GlobalReferenceDataComponent
   ],
   providers:[
     CollectionEditor,

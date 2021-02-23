@@ -8,10 +8,6 @@ button.ma{
     margin-right: 2px;
 }
 
-.button-spacing{
-  width: max-content;
-}
-
 .button-spacing [nz-button]{
     margin: 0 2px;
 }
@@ -20,6 +16,11 @@ button.ma{
     border: 0;
     background: transparent;
     box-shadow: none;
+}
+
+[nz-button]{
+    /* text-transform: uppercase; */
+    /* font-weight: 600; */
 }
 
 .ant-btn-success {

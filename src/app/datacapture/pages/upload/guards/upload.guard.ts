@@ -1,4 +1,4 @@
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
@@ -28,7 +28,7 @@ export class UploadGuard implements CanActivate {
   mandatories$: Observable<number>;
   mappingValid$: Observable<boolean>;
   uploadStatus$: Observable<string>;
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.fileData$ = this.store.select(selectFileData);
     this.errors$ = this.store.select(selectCleansingErrors);
     this.mappingValid$  = this.store.select(selectMappingValid);
@@ -50,40 +50,63 @@ export class UploadGuard implements CanActivate {
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     switch (next.data.route) {
       case 'IMPORT': {
-        return ['READY'].includes(this.uploadStatus);
+        if ( 'READY' === this.uploadStatus) {
+          return true;
+        } else {
+          this.router.navigate(['/datacapture/upload/uploading']);
+          return false;
+        }
       }
       case 'TRANSFORM': {
-        if (this.fileData.metaData && this.selectedDomain && ['READY'].includes(this.uploadStatus)) {
+        if ( 'READY' === this.uploadStatus) {
+          if (this.fileData.metaData && this.selectedDomain) {
             return true;
-        } else {
+          } else {
             return false;
+          }
+        } else {
+          this.router.navigate(['/datacapture/upload/uploading']);
+          return false;
         }
       }
       case 'MAPPING': {
-        if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null &&
-            ['READY'].includes(this.uploadStatus)) {
-            return true;
+        if ( 'READY' === this.uploadStatus) {
+          if (this.fileData.metaData && this.selectedDomain && this.selectedSheet != null) {
+              return true;
+          } else {
+              return false;
+          }
         } else {
-            return false;
+          this.router.navigate(['/datacapture/upload/uploading']);
+          return false;
         }
       }
       case 'CLEANSING': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 &&
-            this.mappingId && this.mappingValid && ['READY'].includes(this.uploadStatus)) {
-            return true;
+        if ( 'READY' === this.uploadStatus) {
+          if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 &&
+              this.mappingId && this.mappingValid) {
+              return true;
+          } else {
+              return false;
+          }
         } else {
-            return false;
+          this.router.navigate(['/datacapture/upload/uploading']);
+          return false;
         }
       }
       case 'UPLOAD': {
-        if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
-            return true;
+        if ( 'READY' === this.uploadStatus) {
+          if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
+              return true;
+          } else {
+              return false;
+          }
         } else {
-            return false;
+          return true;
         }
       }
       default:
-                return true;
+        return true;
     }
   }
 }

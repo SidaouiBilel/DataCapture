@@ -26,7 +26,8 @@ export class CalculatorComponent  extends TransformationInterfaceComponent imple
       nzComponentParams:{
         node_index: this.index,
         formula: deepCopy(this.data.formula || [])
-      }
+      },
+      nzFooter: null
     })
 
     modal.afterClose.subscribe(

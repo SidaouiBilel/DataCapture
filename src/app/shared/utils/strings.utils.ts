@@ -16,10 +16,6 @@ export function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
 }
 
-export function randomPosition(max: number) {
-  return Math.floor(Math.random() * (max) + 1).toString();
-}
-
 export function isInDateFormat(str) {
   const NUMERIC_REGEXP = /[\d]{4}-[\d]{2}-[\d]{2}/;
   return String(str).match(NUMERIC_REGEXP);
@@ -39,9 +35,9 @@ export function isInIntegerFormat(str) {
 
 export function formatDate(str: string) {
     const parts: string[] = str.split('-');
-    const yyyy = parts[0].substr(0,4);
-    const mm = parts[1].substr(0,2);
-    const dd = parts[2].substr(0,2);
+    const yyyy = parts[0];
+    const mm = parts[1];
+    const dd = parts[2];
 
     return `${[mm, dd, yyyy].join('/')}`;
 }
@@ -81,4 +77,19 @@ export function formatByType(value: string, type: string){
   }
 }
 
+export function transformExcelHeader(val: string) {
+  var chrs = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ', mode = chrs.length - 1, number = 0;
+    for(var p = 0; p < val.length; p++){
+        number = number * mode + chrs.indexOf(val[p]) - 1;
+    }
+    return number;
+};
 
+export function numberToLetters(num: number) {
+  let letters = '';
+  while (num >= 0) {
+      letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num % 26] + letters
+      num = Math.floor(num / 26) - 1
+  }
+  return letters
+}

@@ -57,25 +57,6 @@ export function ArrayLast(array) {
   return array[array.length - 1];
 }
 
-export function DefaultArray(obj, key) {
-  obj[key] = obj[key] || []
-  return obj[key] 
-}
-
-export function ToMap(array, keyFn, valueFn){
-  const m = {}
-
-  for (const ele of array) {
-    const key = keyFn(ele)
-    const value = valueFn(ele)
-    m[key]=value
-  }
-
-  return m
-}
-
-
-
   
   
   

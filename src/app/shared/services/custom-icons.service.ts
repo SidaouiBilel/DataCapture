@@ -4,7 +4,6 @@ import { Inject, Injectable, RendererFactory2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { map, take, tap } from 'rxjs/operators';
 
 const SaveAsOutline = {
   name: 'saveAs-o',
@@ -18,39 +17,11 @@ const AutoSaveOutline = {
   </svg>`
 };
 
-@Injectable({
-  providedIn:'root'
-})
+@Injectable()
 export class CustomIconsService extends NzIconService{
 
   constructor(rendererFactory: RendererFactory2, sanitizer: DomSanitizer, nzConfigService: NzConfigService, handler: HttpBackend, @Inject(DOCUMENT) _document: Document) { 
     const icons = [SaveAsOutline, AutoSaveOutline]
     super(rendererFactory,sanitizer,nzConfigService,handler,_document , icons)
   }
-
-  getIconSvgElement(type){
-    var img = document.createElement('img');
-    this._loadIconDynamically(type).subscribe(e=>{
-      img.innerHTML = e.icon.trim();
-      const svgElm = img.firstChild as HTMLElement
-      try{
-
-        svgElm.setAttribute('height', '64')
-        svgElm.setAttribute('width', '64')
-        svgElm.setAttribute("xmlns","http://www.w3.org/2000/svg")
-        svgElm.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink")
-        // svgElm.setAttribute("viewBox","0 0 64, 64" )
-        svgElm.setAttribute("fill","#fff")
-      } catch(exp){
-        console.log('ERROR ON ', type, svgElm, e.icon, e)
-      }
-      // svgElm.setAttribute("fill-rule","evenodd")
-      
-      const source = `data:image/svg+xml;base64,${btoa(svgElm.outerHTML)}`
-      img.setAttribute('src', source)
-    })
-    return img
-  }
-
-  
 }

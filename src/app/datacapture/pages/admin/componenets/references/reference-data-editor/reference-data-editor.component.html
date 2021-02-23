@@ -1,12 +1,12 @@
 <div *nzModalTitle>Reference Data</div>
 
 <nz-form-item>
-    <nz-form-label [nzSpan]="7" >Code</nz-form-label>
+    <nz-form-label [nzSpan]="7" >Target value</nz-form-label>
     <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.code' nz-input /></nz-form-control>
 </nz-form-item>
 
 <nz-form-item>
-    <nz-form-label [nzSpan]="7" >Alias</nz-form-label>
+    <nz-form-label [nzSpan]="7" >Source Alias</nz-form-label>
     <nz-form-control [nzSpan]="14">
         <nz-select nzMode="tags" [(ngModel)]="data.alias" style="width: 100%;">
             <!-- <nz-option *ngFor="let tag of tags" [nzLabel]="tag" [nzValue]="tag"></nz-option> -->

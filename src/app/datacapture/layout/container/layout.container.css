@@ -13,6 +13,11 @@
   padding: 0 16px !important;
 }
 
+.scrollable-sidebar {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
 .full-h {
   height: 100vh;
   width: 100vw;
@@ -63,7 +68,7 @@
   border-right: 0;
   max-height: 100%;
   overflow-y: auto;
-  padding-bottom: 48px;
+  padding-bottom: 48px
 }
 
 .inner-layout {
@@ -102,11 +107,13 @@ nz-content {
   box-shadow: none;
 }
 
-:host ::ng-deep .ant-menu-submenu, .ant-menu-submenu-inline:focus  {
+:host ::ng-deep .ant-menu-submenu,
+.ant-menu-submenu-inline:focus {
   outline-color: #dadde0;
 }
 
-:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::after, :host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
   background: #808386;
 }
 
@@ -120,20 +127,20 @@ nz-content {
   background: #002140;
 } */
 
-::ng-deep .compact .compatable{
+::ng-deep .compact .compatable {
   display: none;
 }
 
-::ng-deep .compact nz-layout{
+::ng-deep .compact nz-layout {
   padding: 0 !important;
 }
 
-::ng-deep .compact nz-sider{
+::ng-deep .compact nz-sider {
   border-right: 1px solid #e8e8e8;
   box-sizing: content-box;
 }
 
-::ng-deep .compact .ant-layout-header{
+::ng-deep .compact .ant-layout-header {
   height: 48px;
   line-height: 48px;
 }

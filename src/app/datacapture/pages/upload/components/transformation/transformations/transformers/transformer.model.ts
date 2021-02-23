@@ -44,7 +44,7 @@ export class NodeError {
 export class DeleteRow extends Transformer {
   type = 'delete-rows';
   label = 'Delete Rows';
-  icon = 'delete-row';
+  icon = 'scissor';
   shortcut = 'control.d';
   collapse = false;
   getErrors = (params, previousNodes, headers) => {
@@ -76,6 +76,7 @@ export class DeleteColumns extends Transformer {
   type = 'delete-column';
   label = 'Delete Columns';
   icon = 'scissor';
+  icon_rotation = 90;
   shortcut = 'control.alt.d';
   collapse = false;
 
@@ -108,7 +109,7 @@ export class Replace extends Transformer {
   shortcut = 'control.r';
   type =  'replace';
   label = 'Replace';
-  icon = 'swap';
+  icon = 'font-size';
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -153,7 +154,8 @@ export class Merge extends Transformer {
   shortcut = 'control.m';
   type =  'merge';
   label = 'Merge';
-  icon = 'merge-cells';
+  icon = 'link';
+  icon_rotation = 45;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -193,7 +195,7 @@ export class Filter extends Transformer {
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
     let i = 0;
-    const conditions = (params.conditions || []) 
+    const conditions = (params.conditions || [])
     if ( conditions.length == 0 )  errors.push(new NodeError(null, `Number of conditions should be at least 1`));
     for (const c of conditions) {
         if (isStrEmpty(c.column)) { errors.push(new NodeError('column', `Column ${i + 1} missing`)); }
@@ -219,7 +221,7 @@ export class FilterAndReplace extends Transformer {
   shortcut = 'control.alt.r';
   type =  'find-replace';
   label = 'Find & Replace';
-  icon = 'search';
+  icon = 'funnel-plot';
 
   getErrors = (params, previousNodes, headers) => {
     return [
@@ -239,7 +241,7 @@ export class FilterAndReplace extends Transformer {
 
 export class DefaultValue extends Transformer {
   type =  'default-value';
-  label = 'Default';
+  label = 'Create Column';
   icon = 'file-add';
   shortcut = 'control.shift.d';
   collapse = false;
@@ -254,9 +256,10 @@ export class DefaultValue extends Transformer {
 export class Splitter extends Transformer {
   type =  'split';
   label = 'Split';
-  icon = 'split-cells';
+  icon = 'disconnect';
   shortcut = 'control.alt.s';
   collapse = false;
+  icon_rotation = 45;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -296,7 +299,7 @@ export class Calculator extends Transformer {
         }
       }
     }
-  
+
     return errors;
   }
 
@@ -354,37 +357,22 @@ export class GroupBy extends Transformer {
     return errors;
   }
 
-  
 }
 
-export class Hasher extends Transformer { 
-  type = 'hash';
-  label = 'Hash';
-  icon = 'barcode';
-  shortcut = 'control.alt.h';
-  collapse = false;
+export class TransformNumeric extends Transformer {
+  type =  'transform_numeric';
+  label = 'Numeric Transformation';
+  icon = 'calendar';
+  shortcut = 'control.alt.n';
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
-    if (!params.columns || (params.columns && params.columns.length === 0 ) ) {
-        errors.push(new NodeError('columns', 'Missing Column'));
-    } else {
-        const previousHeaders: any[] = getPreviousHeader(headers, previousNodes);
-        for ( const column of params.columns ) {
-            if ( previousHeaders.indexOf(column) < 0 ) {
-                errors.push(new NodeError('columns', `${column} does not exist`));
-            }
 
-        }
-    }
+    if (isStrEmpty(params.column)) { errors.push(new NodeError('column', 'column Missing')); }
+    if (isStrEmpty(params.transformation)) { errors.push(new NodeError('transformation', 'Transformation Missing')); }
+
     return errors;
   }
 
-  getRuleFromGrid(params) {
-    const columns = GAPIColumnsInRange(params.api);
-    return {
-        ...this.getRule(),
-        columns
-    };
-  }
 }
+

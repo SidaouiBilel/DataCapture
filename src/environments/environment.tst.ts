@@ -8,13 +8,17 @@ export const environment = {
   ...meta,
   production: true,
   test: false,
-  import: 'https://tst-dcm-import.azurewebsites.net/import/',
-  mapping: 'https://tst-dcm-mapping.azurewebsites.net/mapping',
-  cleansing: 'https://tst-dcm-datacheck.azurewebsites.net/check',
-  transform: 'https://tst-dcm-transforming.azurewebsites.net/transfo/',
-  admin: 'https://tst-dcm-admin.azurewebsites.net/',
-  upload: 'https://tst-dcm-upload.azurewebsites.net/upload/',
-  auth: 'https://tst-dcm-auth.azurewebsites.net/',
+  admin: 'http://aendevccbe01:5000/',
+  import: 'http://aendevccbe01:5003/import/v2/',
+  //upload: 'http://localhost:5000/import/',
+  mapping: 'http://aendevccbe01:5001/mapping',
+  // mapping: 'http://localhost:5001/mapping',
+  cleansing: 'http://aendevccbe01:5002/check',
+  // TRANSFORMATION
+  // transform: 'http:///transfo/'
+  transform: 'http://aendevccbe01:5004/transfo/',
+  upload: 'http://aendevccbe01:5006/upload/',
+  auth: 'http://aendevccbe01:5005/',
   env: 'TST'
 };
 

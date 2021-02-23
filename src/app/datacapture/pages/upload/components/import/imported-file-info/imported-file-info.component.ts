@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { withValue } from '@app/shared/utils/rxjs.utils';
+import { transformExcelHeader } from '@app/shared/utils/strings.utils';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -62,11 +63,21 @@ export class ImportedFileInfoComponent implements OnInit {
     const modal = this.modalService.create({
       nzTitle: 'Dataset Ranges',
       nzContent: DatasetComponent,
+      nzComponentParams: {
+        fileData$: this.fileData$
+      },
       nzClosable: false,
       nzWrapClassName: 'vertical-center-modal',
       nzWidth: 'xXL',
       nzOnOk: componentInstance => {
-        this.selectRange(componentInstance.rowValue, componentInstance.colValue);
+        if (componentInstance.fileExtension === 'xlsx') {
+          const cols = [0, 0];
+          cols[0] = transformExcelHeader(componentInstance.colValue[0]);
+          cols[1] = transformExcelHeader(componentInstance.colValue[1]);
+          this.selectRange(componentInstance.rowValue, cols);
+        } else {
+          this.selectRange(componentInstance.rowValue, componentInstance.colValue);
+        }
       }
     });
   }
