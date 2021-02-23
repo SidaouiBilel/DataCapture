@@ -217,7 +217,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             }
             that.filters$.next(GAPIFilters(params.request.filterModel));
             // tslint:disable-next-line: max-line-length
-            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel)
+            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel, that.domain)
             .subscribe((res: any) => {
               that.total$.next(res.total);
               const newErrors = {};
@@ -286,12 +286,12 @@ export class CleansingComponent implements OnInit, OnDestroy {
               }
             } catch (error) {}
             try {
-              if (this.results[i][f].errors.length > 0) {
+              if (this.results[i][f].errors.check_type) {
                 return 'error-cell';
               }
             } catch (error) {}
             try {
-              if (this.results[i][f].warnings.length > 0) {
+              if (this.results[i][f].warnings.check_type) {
                 return 'warning-cell';
               }
             } catch (error) {}
@@ -394,7 +394,8 @@ export class CleansingComponent implements OnInit, OnDestroy {
     rowNode.stub = true;
     api.redrawRows({ rowNodes: [rowNode] });
     this.runWithEditedCell().subscribe(() => {
-      this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
+      // tslint:disable-next-line: max-line-length
+      this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed, 'all' , this.domain).subscribe((data: any) => {
         // tslint:disable-next-line: variable-name
         const absolute_index = line;
         this.results[absolute_index] = data.results[absolute_index];

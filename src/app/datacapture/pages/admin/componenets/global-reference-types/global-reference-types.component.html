@@ -3,7 +3,7 @@
     <div class="flex between">
         <div class="button-spacing mb-2">
             <button nz-button class="ghost" (click)='addRefrenceType()'><i nz-icon nzType='plus'></i>Add Reference Type</button>
-            <button nz-button class="ghost" (click)='laodData()'><i nz-icon nzType='reload'></i></button>      
+            <button nz-button class="ghost" (click)='laodData()'><i nz-icon nzType='reload'></i></button>
         </div>
         <div></div>
     </div>
@@ -15,7 +15,7 @@
 
                 <div>
                     <h6 class="font-weight-light mb-2">{{ item.label }}</h6>
-                    
+
                     <div *ngIf='item.shared'>
                         <nz-tag [nzColor]="'#108ee9'">Shared Reference</nz-tag>
                     </div>
@@ -32,7 +32,7 @@
                             <nz-divider nzType="vertical"></nz-divider>
                             <i nz-icon nzType="block" nzTheme="outline" class="mr-2"></i>
                             <i>Used in </i>
-                            {{item.domain_ids.length}}
+                            {{item?.domain_ids?.length}}
                             <i>Collection(s)</i>
                         </span >
                     </div>
@@ -50,16 +50,16 @@
                                 </nz-dropdown-menu>
                         </nz-button-group>
                     </div>
-                    
+
                 </div>
-                
+
                 <div class="button-spacing">
                     <button class="ghost" nz-button (click)='OnCreateVersion(item)'><i nz-icon nzType='plus'> </i>Create Version</button>
                     <button class="ghost" *ngIf='!item.shared' nz-button (click)='shareRefrenceType(item)'><i nz-icon nzType='share-alt'></i>Share</button>
                     <button nz-button class="ghost" (click)='editRefrenceType(item)'><i nz-icon nzType='edit'></i></button>
                     <button nz-button class="ghost" (click)='deleteRefrenceType(item)'><i nz-icon nzType='delete'></i></button>
                 </div>
-                    
+
             </div>
         </nz-card>
 </div>
