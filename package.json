@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:microapp":"ng build --prod --deploy-url http://ae778a86eb59b457eb3f2ea25469c793-1433705831.eu-west-3.elb.amazonaws.com/",
+    "build:microapp":"ng build --prod --deploy-url http://af0ce28e5554549b3bf5476ae4ed648e-1225037206.eu-west-1.elb.amazonaws.com/",
     "build:microapp_dev":"ng build --prod --deploy-url http://localhost:8080/",
     "test": "ng test",
     "lint": "ng lint",
