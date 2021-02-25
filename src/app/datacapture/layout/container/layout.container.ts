@@ -172,20 +172,23 @@ export class LayoutContainer implements OnInit {
           this.geturl_data();
         }
       }
-    }, () => this.logoutUser());
+    } 
+    // , () => this.logoutUser()
+    );
   }
 
   checkTokenValidity(): void {
     if(window['logout']){
       let ProfileLocalstorage = JSON.parse(localStorage.getItem("data-auth"));
       if( ProfileLocalstorage && ProfileLocalstorage["token"]){
-        this.store.dispatch(new ActionAuthLogin(ProfileLocalstorage["token"]));
+        this.store.dispatch(new ActionAuthLogin({token : ProfileLocalstorage["token"] ,refreshToken:ProfileLocalstorage["refreshToken"]}));
         this.getuser(ProfileLocalstorage["token"]);
       }else{
         this.logoutUser();
       }
     }else{
       this.store.pipe(select(selectToken)).subscribe((token: string) => {
+        // console.log(token);
       if(token){
         this.getuser(token);
       }

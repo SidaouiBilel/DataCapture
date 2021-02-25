@@ -25,10 +25,10 @@ export class ContainerComponent implements OnInit {
     loading=false;
     searchTerm:string;
     ngOnInit() {
-    this.store.select(selectProfile).subscribe(res=>{
-    this.Profile=res;
-    this.load_templates();
-    });
+      this.store.select(selectProfile).subscribe(res=>{
+          this.Profile=res;
+          this.load_templates();
+      });
     }
     check_templates_has_name(name){
     let listoftemplates_names = this.templates$.value.map(el=>{
