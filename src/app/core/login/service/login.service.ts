@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { catchError, tap } from 'rxjs/operators';
 import { ActionAuthLogout } from '@app/core/auth/auth.actions';
 import { Router } from '@angular/router';
-import { selectProfile } from '@app/core/auth/auth.selectors';
+import { selectProfile , selectRefreshToken} from '@app/core/auth/auth.selectors';
 import { NotificationService } from '@app/core/notifications/notification.service';
 
 @Injectable({providedIn: 'root'})
@@ -19,10 +19,13 @@ export class LoginService {
 
   isAuthenticated = false;
   profile = null;
+  refreshToken = null;
+  RefreshTokenURL = "http://ec2-3-236-14-93.compute-1.amazonaws.com:9001/api/v1/store/auth/";
 
   constructor(private http: HttpClient, private store: Store<any>, private router: Router, private msg: NotificationService) {
     this.store.select(selectIsAuthenticated).subscribe((res: boolean) => {this.isAuthenticated = res; });
     this.store.select(selectProfile).subscribe((res: boolean) => {this.profile = res; });
+    this.store.select(selectRefreshToken).subscribe((res: string) => {this.refreshToken = res; });
   }
 
   get_user_data_link(id){
@@ -38,7 +41,7 @@ export class LoginService {
   login(email: string, password: string) {
     return this.requestLogin(email, password).pipe(
       tap((res:any)=>{
-        this.store.dispatch(new ActionAuthLogin(res.Authorization));
+        this.store.dispatch(new ActionAuthLogin({token : res.Authorization , refreshToken:null}));
         this.router.navigate(['/data/datacapture'])
       }),
       catchError(this.logout)
@@ -68,7 +71,12 @@ export class LoginService {
   }
 
   info(token: string): any {
-    return this.http.get(environment.auth + `auth/info`, {headers: {token}});
+    
+    return this.http.get(environment.auth + `auth/info`, {headers: {token , Connection: "Keep-Alive" , 'Keep-Alive':"timeout=1000"}});
+  }
+
+  refreshingToken(refreshToken): any {
+    return this.http.post(this.RefreshTokenURL + "refresh?refresh_token="+refreshToken , {});
   }
 
   saveCredentialsPassword(email, password){
@@ -91,7 +99,7 @@ export class LoginService {
       if(email && password){
         const message = this.msg.loading(`Loging in as ${email}`)
         this.requestLogin(email, password).subscribe((res:any)=>{
-          this.store.dispatch(new ActionAuthLogin(res.Authorization));
+          this.store.dispatch(new ActionAuthLogin({token : res.Authorization , refreshToken:null}));
           observer.next(true)
         }, ()=> {
           observer.next(false)

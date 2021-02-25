@@ -3,7 +3,8 @@ import { Action } from '@ngrx/store';
 export enum AuthActionTypes {
   LOGIN = '[Auth] Login',
   SAVE = '[Auth] Save Profile',
-  LOGOUT = '[Auth] Logout'
+  LOGOUT = '[Auth] Logout',
+  REFRESH = '[Auth] Refresh Token'
 }
 
 export class ActionAuthLogin implements Action {
@@ -16,8 +17,13 @@ export class ActionSaveProfile implements Action {
   constructor(public payload: any) {}
 }
 
+export class ActionRefreshToken implements Action {
+  readonly type = AuthActionTypes.REFRESH;
+  constructor(public payload: any) {}
+}
+
 export class ActionAuthLogout implements Action {
   readonly type = AuthActionTypes.LOGOUT;
 }
 
-export type AuthActions = ActionAuthLogin | ActionAuthLogout | ActionSaveProfile;
+export type AuthActions = ActionAuthLogin | ActionAuthLogout | ActionSaveProfile | ActionRefreshToken;

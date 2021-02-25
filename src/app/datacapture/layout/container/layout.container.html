@@ -1,4 +1,4 @@
-<nz-layout class="full-h" [ngClass]='settings.appSize$ | async'>
+<nz-layout class="full-h" [ngClass]='settings.appSize$ | async' *ngIf="tokencheck ;else loading">
   <!-- Header -->
   <!-- <nz-header>
     <div class="flex between top">
@@ -154,3 +154,7 @@
     </nz-layout>
   </nz-layout>
 </nz-layout>
+
+<ng-template #loading>
+  <nz-spin nzTip="Loading..." style="min-width: 100%;min-height: 500px;"></nz-spin>
+</ng-template>
