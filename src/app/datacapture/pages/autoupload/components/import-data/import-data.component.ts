@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AppState, selectProfile } from '@app/core';
+import {environment} from "@env/environment"
 @Component({
   selector: 'app-import-data',
   templateUrl: './import-data.component.html',
@@ -35,8 +36,8 @@ export class ImportDataComponent implements OnInit {
     this.store.select(selectProfile).subscribe(res=>{
       let id = "995dd4c3-1366-48c6-915b-a994df119831";
       this.Profile=res;
-      this.load_extracted_files(id);
-      this.url="http://a639a20b446ca46f2a463cb206e7ca06-1781217483.eu-west-3.elb.amazonaws.com/upload/import/"+id;
+      this.load_extracted_files(res.id);
+      this.url=environment.upload+"/import/"+res.id;
     });
     this.SuccessMessage =this.dataupload.filename!='' ?this.dataupload.filename+" imported successfully" :"";
 
