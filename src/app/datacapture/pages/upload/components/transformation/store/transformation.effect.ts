@@ -17,33 +17,42 @@ import { PreviewActionTypes } from '../../../store/actions/preview.actions';
 @Injectable()
 export class TransformationEffects {
 
+  status$: any;
+
   constructor(
     private actions$: Actions<Action>,
     private store$: Store<AppState>,
     private service: TranformationService,
     private job: PreMappingTransformationService,
-  ) {}
+  ) { }
 
   @Effect({ dispatch: false })
   onReset = this.actions$.pipe(
-    ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE, PreviewActionTypes.SelectSheet) ,
-    withLatestFrom(this.store$.select( selectActivePipe )),
-    withLatestFrom(this.store$.select( selectUpdatedSheet )),
-    withLatestFrom(this.store$.select( selectFileData )),
+    ofType(TransformationActionTypes.LOAD, ImportActionTypes.SAVE_FILE, PreviewActionTypes.SelectSheet),
+    withLatestFrom(this.store$.select(selectActivePipe)),
+    withLatestFrom(this.store$.select(selectUpdatedSheet)),
+    withLatestFrom(this.store$.select(selectFileData)),
     map(([[[action, pipe], sheetId], file]) => {
       if (file.metaData && sheetId !== null) {
         const pipeId = (pipe) ? pipe.id : null;
         this.store$.dispatch(new UpdateLoadingTransformation(false));
-        if ( file && file.metaData && pipeId && sheetId !== null) {
+        if (file && file.metaData && pipeId && sheetId !== null) {
           const fileId = file.metaData.file_id;
           this.store$.dispatch(new UpdateLoadingTransformation(true));
-          this.job.startJob(fileId, sheetId, pipeId).subscribe(res => {
-            const id = res.transformed_file_id;
-            this.store$.dispatch(new UpdateTransformedFilePath(id));
-            this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
-              this.store$.dispatch(new UpdateLoadingTransformation(false));
-              this.store$.dispatch(new UpdateTransformationHeaders(jobRes.headers));
-            });
+          // Hereee =================>
+          this.job.startJob(fileId, sheetId, pipeId).subscribe((jobId: any) => {
+            this.status$ = this.job.checkJobStatus(jobId).subscribe((job) => {
+              if (['ERROR', 'DONE'].includes(job.job_status)) {
+                if (this.status$) { this.status$.unsubscribe() }
+                //Here we should job.result.transformed_file_id
+                const id = job.transformed_file_id;
+                this.store$.dispatch(new UpdateTransformedFilePath(id));
+                this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
+                  this.store$.dispatch(new UpdateLoadingTransformation(false));
+                  this.store$.dispatch(new UpdateTransformationHeaders(jobRes.headers));
+                });
+              }
+            })
           });
         } else {
           this.store$.dispatch(new UpdateTransformedFilePath(null));
@@ -61,8 +70,8 @@ export class TransformationEffects {
       TransformationActionTypes.UPDATE_NODE,
       TransformationActionTypes.UPDATE_FILE_PATH,
     ),
-    withLatestFrom(this.store$.select( selectTranformationNodes )),
-    withLatestFrom(this.store$.select( selectHeaders )),
+    withLatestFrom(this.store$.select(selectTranformationNodes)),
+    withLatestFrom(this.store$.select(selectHeaders)),
     map(([[action, nodes], headers]) => {
       const nodeStatuses = [];
       let i = 0;
