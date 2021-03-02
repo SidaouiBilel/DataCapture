@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AppState, selectProfile } from '@app/core';
-import {environment} from "@env/environment"
+import { env as environment } from '@app/env.service';
 @Component({
   selector: 'app-import-data',
   templateUrl: './import-data.component.html',

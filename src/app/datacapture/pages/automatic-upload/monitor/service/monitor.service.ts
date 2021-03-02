@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NotificationService } from "@app/core";
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { saveAs } from 'file-saver';
 
 @Injectable({

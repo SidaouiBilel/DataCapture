@@ -1,4 +1,4 @@
-import { environment } from './../environments/environment';
+import { env as environment } from '@app/env.service';
 import { NzIconService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import browser from 'browser-detect';
@@ -14,7 +14,7 @@ import { ServiceLocator } from './shared/utils/injector.utils';
   styleUrls: ['./app.component.css'],
   // animations: [routeAnimations]
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
   isCollapsed = false;
 
   constructor(private storageService: LocalStorageService,
@@ -35,6 +35,10 @@ export class AppComponent{
   @HostListener('window:popstate', ['$event']) onPopState(event) {
     console.log('Back button pressed', window.location.pathname);
     this.router.navigate([window.location.pathname]);
+  }
+
+  ngOnInit(){
+    // console.log("apppp");
   }
 
   private static isIEorEdgeOrSafari() {

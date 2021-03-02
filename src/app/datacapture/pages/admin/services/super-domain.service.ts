@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class SuperDomainService {
 
-  url = environment.admin;
+  // url = environment.admin;
 
   hierarchy$ = new Subject();
 
@@ -22,23 +22,23 @@ export class SuperDomainService {
   }
 
   get(){
-    return this.http.get( this.url + "domain/super/")
+    return this.http.get( environment.admin + "domain/super/")
   }
 
   getById(id){
-    return this.http.get( this.url + "domain/super/"+id)
+    return this.http.get( environment.admin + "domain/super/"+id)
   }
 
   getHierarchy() {
-    return this.http.get( this.url + 'domain/super/hierarchy');
+    return this.http.get( environment.admin + 'domain/super/hierarchy');
   }
 
   save(domain) {
-    return this.http.post( this.url + 'domain/super/', domain).pipe(tap(() => this.loadHierarchy()));
+    return this.http.post( environment.admin + 'domain/super/', domain).pipe(tap(() => this.loadHierarchy()));
   }
 
   delete(domain) {
-    return this.http.request('DELETE', this.url + 'domain/super/', {
+    return this.http.request('DELETE', environment.admin + 'domain/super/', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         }),

@@ -8,7 +8,8 @@ import { Import } from '../../store/models/import.model';
 import { selectImport } from '../../store/upload.selectors';
 import { Router } from '@angular/router';
 import { FileImportService } from '../../services/file-import.service';
-import * as urls from '@env/environment';
+// import * as urls from '@env/environment';
+import { env as urls } from '@app/env.service';
 import { selectDomain, selectFileData } from '../../store/selectors/import.selectors';
 import { ActionSelectSheet } from '../../store/actions/preview.actions';
 
@@ -40,7 +41,7 @@ export class ImportComponent implements OnInit {
     this.selectedDomain$.subscribe((domain: any) => {
       this.selectedDomain = domain;
       if (domain) {
-        this.url = urls.environment.import + '?domainId=' + domain.id;
+        this.url = urls.import + '?domainId=' + domain.id;
       }
     });
     this.domains = [];

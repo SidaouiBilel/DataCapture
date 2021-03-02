@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 
 @Component({
   selector: 'app-env-tag',

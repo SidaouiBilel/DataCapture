@@ -84,7 +84,11 @@ export class ContainerComponent implements OnInit {
         
       })
 
-      console.log(finale_req);
+      if(Object.keys(finale_req.template).length==0){
+        this.notif_S.error("Template can't be empty !");
+        modal.updateConfig({...config , nzOkLoading:false});
+        return false; 
+      }
       if(!edit){
         this.service.addTemplate(finale_req).subscribe(
           data=>{
@@ -103,12 +107,12 @@ export class ContainerComponent implements OnInit {
 
     }else {
        this.notif_S.error('Invalid Form');
-       setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:true}); }, 1000);
+       setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:false}); }, 1000);
     }
     return false;
     } catch (error) {
       this.notif_S.error('Invalid Form');
-      setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:true}); }, 1000);
+      setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:false}); }, 1000);
     }
     }
     })
@@ -165,6 +169,7 @@ export class ContainerComponent implements OnInit {
     }
     edittemplate(template){
      let editdata = this.trans_template(template.template);
+     console.log(template.name);
      this.extract_data(true , editdata , template.name , template._id );
     }
     deletetemplate(id){

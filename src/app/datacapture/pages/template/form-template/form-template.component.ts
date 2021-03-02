@@ -22,18 +22,13 @@ export class FormTemplateComponent implements OnInit , AfterViewInit   {
   constructor(private fb: FormBuilder , private notif_S:NotificationService,) { }
 
   ngOnInit() {
-    if(this.editdata.length === 0){
-      this.validateForm = this.fb.group({
-        name: [null, [Validators.required]],
-      })      
-    }else{
+
+    this.validateForm = this.fb.group({
+      name: [this.templatename, [Validators.required]],
+    })  
+    if(this.editdata.length > 0){
       this.loading = true;
-      this.validateForm = this.fb.group({
-        name: [this.templatename, [Validators.required]],
-      });
-
       this.gettemplatedata();
-
     }
   }
   ngAfterViewInit(){

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { Session } from 'protractor';
 import { Observable } from 'rxjs';
 import { ActionAuthLogin, selectIsAuthenticated } from '@app/core';
@@ -72,7 +72,7 @@ export class LoginService {
 
   info(token: string): any {
     
-    return this.http.get(environment.auth + `auth/info`, {headers: {token , Connection: "Keep-Alive" , 'Keep-Alive':"timeout=1000"}});
+    return this.http.get(environment.auth + `auth/info`, {headers: {token}});
   }
 
   refreshingToken(refreshToken): any {

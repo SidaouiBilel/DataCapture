@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { Observable } from 'rxjs';
 import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';

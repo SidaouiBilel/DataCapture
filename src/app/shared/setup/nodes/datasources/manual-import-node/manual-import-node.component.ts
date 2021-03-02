@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '@app/core';
 import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 
 @Component({
   selector: 'app-manual-import-node',

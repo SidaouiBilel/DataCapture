@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -8,12 +8,12 @@ import { map } from 'rxjs/operators';
 })
 export class ChecksService {
 
-  url = environment.admin;
+  // url = environment.admin;
 
   constructor(private http: HttpClient) { }
 
   getDomainChecks(domain_id) {
-    return this.http.get( this.url + `domain/${domain_id}/checks`);
+    return this.http.get(  environment.admin+ `domain/${domain_id}/checks`);
   }
 
   getDomainChecksMap(domain_id) {

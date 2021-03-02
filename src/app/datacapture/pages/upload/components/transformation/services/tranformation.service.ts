@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { selectColRange, selectDomain, selectRowRange } from '../../../store/selectors/import.selectors';
@@ -30,7 +30,7 @@ import { HeaderDescriptionComponent } from '../modals/transformation-preview-hel
 })
 export class TranformationService {
 
-  url = environment.transform;
+  // url = environment.transform;
   domainId = null;
   domainPipes$ = new ReplaySubject<any>();
   active$: Observable<any>;
@@ -71,7 +71,7 @@ export class TranformationService {
   }
 
   save(pipe) {
-    return this.http.post(`${this.url}`, pipe).pipe(
+    return this.http.post(environment.transform, pipe).pipe(
       tap(() => this.loadDomainPipes()),
       tap((active) => {
         this.setActive(active);
@@ -81,7 +81,7 @@ export class TranformationService {
   }
 
   delete(pipeInfo) {
-    return this.http.request('DELETE', `${this.url}`, {
+    return this.http.request('DELETE', environment.transform, {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',
         }),
@@ -102,10 +102,11 @@ export class TranformationService {
   }
 
   get(domainId) {
-    return this.http.get(`${this.url}${domainId}`);
+    return this.http.get(environment.transform+`${domainId}`);
   }
 
   getInContext() {
+    if(!this.domainId){return new Observable(null)}
     return this.get(this.domainId);
   }
 

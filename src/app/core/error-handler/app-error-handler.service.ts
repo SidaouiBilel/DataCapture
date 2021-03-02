@@ -1,6 +1,6 @@
 import {Injectable, ErrorHandler, Injector} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { InterceptedHttpError } from './intercepted-error.model';
 

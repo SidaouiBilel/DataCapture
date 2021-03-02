@@ -6,8 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:microapp":"ng build --prod --deploy-url http://af0ce28e5554549b3bf5476ae4ed648e-1225037206.eu-west-1.elb.amazonaws.com/",
-    "build:microapp_dev":"ng build --prod --deploy-url http://localhost:8080/",
+    "build:microapp":"ng build --prod --deploy-url http://af0ce28e5554549b3bf5476ae4ed648e-1225037206.eu-west-1.elb.amazonaws.com/ && node createBUNDLE.js",
+    "build:microapp_dev":"ng build --prod --deploy-url http://localhost:8080/ && node createBUNDLE.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 import { LoginService } from '@app/core/login/service/login.service';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 
 @Component({
   selector: 'app-layout',

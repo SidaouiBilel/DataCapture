@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {environment} from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -11,8 +11,6 @@ export class FileImportService {
 
   constructor(private http: HttpClient) {
   }
-  importURL = "http://a8b41132de2dc41baa67d550c73f6171-2042249671.eu-west-3.elb.amazonaws.com/import/";
-
   get_extracted_files(uid){
     return this.http.get<any[]>( environment.import + 'files/'+uid);
   }

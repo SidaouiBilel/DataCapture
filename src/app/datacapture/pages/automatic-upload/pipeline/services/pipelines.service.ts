@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotificationService } from '@app/core';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { delay, retryWhen, take } from 'rxjs/operators';
 import { PipelineMetadata } from '../models/metadata.model';
 import { saveAs } from 'file-saver';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { AppState, selectToken } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { env as environment } from '@app/env.service';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -28,26 +28,26 @@ export class AdminNavigator {
    }
 
   goToSuperDomainCollections(id){
-    this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains', id, 'collection'])
   }
 
   goToDomainFields(id, colid){
-    this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection', colid, 'fields'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains', id, 'collection', colid, 'fields'])
   }
 
   goToDomains(){
-    this.router.navigate(['datacapture', 'admin', 'domains'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains'])
   }
 
   goToDomainRefrences(id){
-    this.router.navigate(['datacapture', 'admin', 'domains', id, 'collection'])
+    this.router.navigate(['data','datacapture', 'admin', 'domains', id, 'collection'])
   }
 
   gotToRefData(ref_type_id: any) {
-    this.router.navigate(['datacapture', 'admin', 'references', ref_type_id])
+    this.router.navigate(['data','datacapture', 'admin', 'references', ref_type_id])
   }
 
   gotToRefTypes() {
-    this.router.navigate(['datacapture', 'admin', 'references'])
+    this.router.navigate(['data','datacapture', 'admin', 'references'])
   }
 }
