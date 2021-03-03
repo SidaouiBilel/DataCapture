@@ -24,7 +24,7 @@ export class PreMappingTransformationService {
   // Get Job Status with jobId
   public getJobStatus(jobId) {
     console.log('get Job Status ========>')
-    return this.http.get(`${environment.transform}transformation/jobId /status`)
+    return this.http.get(`${environment.transform}transformation/${jobId}/status`)
   }
 
   // Check the job status (getJobStatus) until it's DONE or ERROR
