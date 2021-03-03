@@ -1,4 +1,4 @@
-import { TableTemplateComponent } from './../../../template/table-template/table-template.component';
+import { TableTemplateComponent } from '../../../template/components/table-template/table-template.component';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TemplateService } from './../../../template/service/template.service';
 import { BehaviorSubject } from 'rxjs';

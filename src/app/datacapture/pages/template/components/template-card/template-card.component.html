@@ -1,0 +1,45 @@
+
+<ng-template #extraTemplate>
+    <div class="button-spacing ghost" >
+        <button  nzShape='circle' nz-button (click)='edit.emit(data)'><i nz-icon nzType="edit"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button  nzShape='circle' nz-button (click)='cloneEmmiter(clonemodaltitle , data)'><i nz-icon nzType="copy"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button nzTooltipTitle="delete Template" 
+                nzTooltipPlacement="top"  
+                nz-tooltip 
+                nz-button 
+                class="ghost" 
+                nz-popconfirm 
+                nzPopconfirmTitle="Are you sure delete this template?" 
+                nzPopconfirmPlacement="left"
+                (nzOnConfirm)="delete.emit(data._id)">
+                <i nz-icon nzType="delete" class="btns"></i>
+        </button>
+        <!-- <button  nzShape='circle' nz-button (click)='delete.emit(data)'><i nz-icon nzType="delete"></i></button> -->
+    </div>
+  </ng-template>
+  <ng-template #titleTemplate>
+    <div class="flex start wrap">
+      <h4>
+            <nz-avatar [nzSize]="42" nzIcon="code-sandbox" style="background-color:#f56a00;"></nz-avatar>
+            <!-- <i nz-icon *ngIf='small' style="color: #f56a00;" nzType='folder'></i> -->
+            <!-- <i nz-icon *ngIf='small' style="color: #f56a00;"  nzType="code-sandbox"></i> -->
+              {{data?.name}}
+            </h4>
+    </div>
+  </ng-template>
+  
+  <ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
+  <ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
+  <ng-template #clonemodaltitle>
+    <span>Clone Template from  <strong class="text-primary-1">{{data.name}}</strong></span>
+  </ng-template>
+  <nz-card class="domain-card"
+           [nzExtra]="extraTemplate" 
+           [nzTitle]='titleTemplate'>
+    <!-- <app-meta *ngIf='!small' [data]='data'></app-meta> -->
+    <button (click)='Seetemplate.emit(data)' nz-button nzType="default">
+        <i nz-icon nzType="info-circle" nzTheme="outline"></i>Detail</button>
+      <ng-content></ng-content>
+  </nz-card>

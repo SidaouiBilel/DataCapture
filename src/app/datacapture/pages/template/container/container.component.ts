@@ -1,7 +1,7 @@
-import { CloneTemplateComponent } from './../clone-template/clone-template.component';
-import { TableTemplateComponent } from './../table-template/table-template.component';
-import { TemplateService } from './../service/template.service';
-import { FormTemplateComponent } from './../form-template/form-template.component';
+import { CloneTemplateComponent } from '../components/clone-template/clone-template.component';
+import { TableTemplateComponent } from '../components/table-template/table-template.component';
+import { TemplateService } from '../service/template.service';
+import { FormTemplateComponent } from '../components/form-template/form-template.component';
 import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
@@ -22,7 +22,6 @@ export class ContainerComponent implements OnInit {
 
     templates$ :BehaviorSubject<any[]>=new BehaviorSubject([]);
     Profile:any;
-    loading=false;
     searchTerm:string;
     ngOnInit() {
       this.store.select(selectProfile).subscribe(res=>{
@@ -118,9 +117,10 @@ export class ContainerComponent implements OnInit {
     })
     }
 
-    viewtemplate(title , templatedata){
+    viewtemplate(data){
+      let {name , template} = data;
       this.ModalS.create({
-        nzTitle:title,
+        nzTitle:name,
         nzClosable:false,
         nzWrapClassName: 'vertical-center-modal',
         nzWidth: 'xXL',
@@ -128,19 +128,19 @@ export class ContainerComponent implements OnInit {
         nzCancelText:"close",
         nzOkDisabled:true,
         nzComponentParams:{
-          templatedata,
+          templatedata:template,
         }
       })
     }
 
 
     load_templates(){
-    this.loading=true;
+    const loader = this.notif_S.loading('Loading templates...');
     this.service.getTemplates().subscribe(res=>{
       this.templates$.next(res);
-      this.loading=false;
-      console.log(res);
-    })
+      console.log(res); 
+      this.notif_S.close(loader);
+    }, (err) => {this.notif_S.close(loader);})
     }
     reload(){
     this.load_templates();
@@ -173,22 +173,26 @@ export class ContainerComponent implements OnInit {
      this.extract_data(true , editdata , template.name , template._id );
     }
     deletetemplate(id){
-      this.loading=true;
+      const loader = this.notif_S.loading('Deleting tepmlate...');
       this.service.deleteTemplate(id).subscribe(res=>{
         console.log(res);
         this.notif_S.success("Template Deleted Successfully");
+        this.notif_S.close(loader);
         this.reload();
       } , er=>{
-        this.loading=false;
+        this.notif_S.close(loader);
       })
     }
 
     clonedtemplatename="";
     loading1 = false
-    clonetemplate(clonemodaltitle:TemplateRef<{}> , name , template) :void{
+    clonetemplate(params) :void{
+      let {templateref , data} = params;
+      let {template , name} = data;
+      console.log(params);
       this.clonedtemplatename = name;
       let modal:NzModalRef = this.ModalS.create({
-        nzTitle:clonemodaltitle,
+        nzTitle:templateref,
         nzClosable:false,
         nzWrapClassName: 'vertical-center-modal',
         nzWidth: 'xXL',
@@ -213,7 +217,7 @@ export class ContainerComponent implements OnInit {
                 "template":template,
                 "user":this.Profile.id,
               }
-
+              console.log(req);
               this.service.addTemplate(req).subscribe(res=>{
                 modal.close();
                 this.notif_S.success("Template Cloned Successfully");
