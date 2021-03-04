@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DashboardService } from '@app/datacapture/pages/dashboard/service/dashboard.service';
 import { withValue } from '@app/shared/utils/rxjs.utils';
 import { NzModalService } from 'ng-zorro-antd';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { ExplorerService } from '../services/explorer.service';
 
@@ -20,7 +20,7 @@ export class UploadTagsComponent implements OnInit, OnDestroy {
 
 
   loading$ = new BehaviorSubject(false)
-  tags$
+  tags$: Observable<any>;
   paramChanges
   editValue = null
   editTag = null
