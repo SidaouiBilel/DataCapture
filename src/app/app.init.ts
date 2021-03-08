@@ -8,7 +8,7 @@ export class AppInitService {
 
     public init() {
         return new Promise((resolve, reject) => {
-            fetch(environment.deployURL+'assets/data-config.json?nocache='+(new Date()).getTime())
+            fetch((window["dk-data-deployUrl"] || "")+'assets/data-config.json?nocache='+(new Date()).getTime())
                 .then(res=>(res.json()))
                 .then(config => {
                     // console.log({...environment , ...config});

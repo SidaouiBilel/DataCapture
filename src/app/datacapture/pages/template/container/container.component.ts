@@ -117,8 +117,8 @@ export class ContainerComponent implements OnInit {
     })
     }
 
-    viewtemplate(data){
-      let {name , template} = data;
+    viewtemplate(index){
+      let {name , template} = this.templates$.value[index];
       this.ModalS.create({
         nzTitle:name,
         nzClosable:false,

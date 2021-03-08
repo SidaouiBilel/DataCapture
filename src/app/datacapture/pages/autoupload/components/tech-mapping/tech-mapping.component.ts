@@ -50,8 +50,10 @@ export class TechMappingComponent implements OnInit {
   submitloading=false;
   Next(){
     console.log(this.sectedtemplate)
-   if(this.listOfSelectedValue.length===0 || !this.iscsv() && !this.sectedtemplate){
-     this.notif.warn("You need to Select Output type !!")
+   if(this.listOfSelectedValue.length===0 ){
+     this.notif.warn("Output type is Required !!")
+   }else if(!this.iscsv() && !this.sectedtemplate){
+     this.notif.warn("Template is Required !!")
    }else{
 
      this.addoutputs.emit(this.listOfSelectedValue);

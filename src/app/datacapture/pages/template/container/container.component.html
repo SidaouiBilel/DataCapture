@@ -30,8 +30,9 @@
     <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
       <div nz-row nzType='flex' nzAlign='stretch'>
         <div nz-col class="gutter-row" [nzSpan]="12"
-        *ngFor="let template of(templates$ | async | simpleFilter : 'name' : searchTerm)">
-          <app-template-card [data]="template" 
+        *ngFor="let template of(templates$ | async | simpleFilter : 'name' : searchTerm) ,let i = index ">
+          <app-template-card  [data]="template" 
+                              [index]="i" 
                               (Seetemplate)="viewtemplate($event)"
                               (edit)="edittemplate($event)"
                               (delete)="deletetemplate($event)"

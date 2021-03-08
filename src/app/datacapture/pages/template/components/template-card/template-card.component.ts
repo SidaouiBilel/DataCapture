@@ -10,6 +10,7 @@ export class TemplateCardComponent implements OnInit {
   constructor() { }
 
   @Input() data;
+  @Input() index;
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() clone = new EventEmitter<any>();

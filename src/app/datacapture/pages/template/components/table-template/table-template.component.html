@@ -19,15 +19,16 @@
         [nzData]="listOfcolumns | simpleFilter : 'title' : searchTerm" 
         class="table_template" 
         style="height: 400px;"
-        [nzScroll]="{ y: '357px' }">
+        [nzScroll]="{ y: '357px' }"
+        nzBordered>
     <thead>
       <tr>
-        <th>Column Name</th>
-        <th>Sheet</th>
-        <th>Range</th>
+        <th nzWidth="40%">Column Name</th>
+        <th nzWidth="30%">Sheet</th>
+        <th nzWidth="40%">Range</th>
       </tr>
     </thead>
-    <tbody class="customscrollY">
+    <tbody>
       <ng-container *ngFor="let data of basicTable.data">
         
         <ng-container *ngIf="data.dataArray; else  obj">

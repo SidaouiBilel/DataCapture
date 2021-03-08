@@ -17,12 +17,12 @@
         <nz-form-control [nzSm]="20" [nzXs]="20"
           nzErrorTip="Please enter Column info.">
 
-          <input nz-input [formControlName]="control.title" class="mb-1" placeholder="Title"  [attr.id]="i" />
+          <input nz-input [formControlName]="control.title" class="mb-1" placeholder="Title"  [attr.id]="'template-title'+i" />
 
           <nz-form-item class="SHS" *ngFor="let SH of control.SHS; let y = index">
-            <input class="roles-input" nz-input [formControlName]="SH.sheet" placeholder="Sheet" [attr.id]="y" />
+            <input class="roles-input" nz-input [formControlName]="SH.sheet" placeholder="Sheet" [attr.id]="'sheet'+y+i" />
 
-            <nz-select class="roles-input"  nzMode="tags" [nzMaxMultipleCount]="maxtags" [formControlName]="SH.range" nzPlaceHolder="Range" [attr.id]="y" nzShowSearch>
+            <nz-select class="roles-input"  nzMode="tags" [nzMaxMultipleCount]="maxtags" [formControlName]="SH.range" nzPlaceHolder="Range" [attr.id]="'range'+y+i" nzShowSearch>
               <nz-option *ngFor="let option of []" [nzLabel]="option" [nzValue]="option"></nz-option>
             </nz-select>           
             <i  nz-icon 

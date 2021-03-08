@@ -1,9 +1,9 @@
 
 <ng-template #extraTemplate>
     <div class="button-spacing ghost" >
-        <button  nzShape='circle' nz-button (click)='edit.emit(data)'><i nz-icon nzType="edit"></i></button>
+        <button  nzTooltipTitle="edit Template" nzTooltipPlacement="top"  nz-tooltip nz-button nzShape='circle' nz-button (click)='edit.emit(data)'><i nz-icon nzType="edit"></i></button>
         <nz-divider nzType='vertical'></nz-divider>
-        <button  nzShape='circle' nz-button (click)='cloneEmmiter(clonemodaltitle , data)'><i nz-icon nzType="copy"></i></button>
+        <button  nzTooltipTitle="clone Template" nzTooltipPlacement="top"  nz-tooltip nz-button nzShape='circle' nz-button (click)='cloneEmmiter(clonemodaltitle , data)'><i nz-icon nzType="copy"></i></button>
         <nz-divider nzType='vertical'></nz-divider>
         <button nzTooltipTitle="delete Template" 
                 nzTooltipPlacement="top"  
@@ -39,7 +39,7 @@
            [nzExtra]="extraTemplate" 
            [nzTitle]='titleTemplate'>
     <!-- <app-meta *ngIf='!small' [data]='data'></app-meta> -->
-    <button (click)='Seetemplate.emit(data)' nz-button nzType="default">
+    <button (click)='Seetemplate.emit(index)' nz-button nzType="default">
         <i nz-icon nzType="info-circle" nzTheme="outline"></i>Detail</button>
       <ng-content></ng-content>
   </nz-card>
