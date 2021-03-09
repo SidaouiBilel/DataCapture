@@ -7,47 +7,74 @@
         <input nz-input formControlName="name" id="name" />
       </nz-form-control>
     </nz-form-item>
-      <nz-form-item class="colone" class="mb-3" *ngFor="let control of listoftemplates; let i = index">
-        <nz-form-label [nzSm]="4" [nzXs]="24"  [nzFor]="i" nzRequired>
-          <span>Column {{i+1}}</span> 
-        </nz-form-label>
-        <!-- <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="i">
-          <i nz-icon nzType="delete" nzTheme="outline" class="text-danger"></i> 
-        </nz-form-label> -->
-        <nz-form-control [nzSm]="20" [nzXs]="20"
-          nzErrorTip="Please enter Column info.">
 
-          <input nz-input [formControlName]="control.title" class="mb-1" placeholder="Title"  [attr.id]="'template-title'+i" />
-
-          <nz-form-item class="SHS" *ngFor="let SH of control.SHS; let y = index">
-            <input class="roles-input" nz-input [formControlName]="SH.sheet" placeholder="Sheet" [attr.id]="'sheet'+y+i" />
-
-            <nz-select class="roles-input"  nzMode="tags" [nzMaxMultipleCount]="maxtags" [formControlName]="SH.range" nzPlaceHolder="Range" [attr.id]="'range'+y+i" nzShowSearch>
-              <nz-option *ngFor="let option of []" [nzLabel]="option" [nzValue]="option"></nz-option>
-            </nz-select>           
-            <i  nz-icon 
-                nz-tooltip 
-                [nzTooltipTitle]='"Remove sheet && range"' 
-                style="display: flex;align-items: center;"
-                nzType="minus-circle-o" class="dynamic-delete-button" 
-                role="button" 
-                (click)="removeSheet_rating(control , i , y, $event)"></i> 
-            
-          </nz-form-item>
-          <div class="plus d-flex justify-content-center mt-2">
-            <!-- <i nz-icon nz-tooltip [nzTooltipTitle]='"Add sheet && rating"' nzType="plus-circle-o" class="dynamic-delete-button"  role="button" (click)="addSheet_rating(control,i, $event)"></i> -->
-            <!-- <i nz-icon nz-tooltip [nzTooltipTitle]='"Add sheet && rating"' role="button" nzType="delete" nzTheme="outline" class="text-danger" (click)="removeField(control , $event)"></i>  -->
-            <button nz-button nzType="default" (click)="addSheet_rating(control,i, $event)" class="mr-2">
-              <i nz-icon nzType="plus"></i>
-              New Range
-            </button>
-            <button  nz-button nzType="default" nzDanger (click)="removeField(control , $event)">
-              <i nz-icon nzType="delete"></i>
-              Remove Column
-            </button>
+    <!-- <nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate">
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate>
+          <div class="d-flex justify-content-center align-items-center">
+            {{ tab }}
+            <i nz-icon nzType="close" (click)="closeTab(tab)" class="ant-tabs-close-x"></i>
           </div>
-        </nz-form-control>
-      </nz-form-item>
+        </ng-template>
+        Content of {{ tab }}
+      </nz-tab>
+    </nz-tabset>
+
+    <ng-template #extraTemplate>
+      <button nz-button nzType="default" (click)="newTab()">
+        <i  nz-icon nzType="plus"></i> new sheet
+      </button>
+    </ng-template> -->
+
+    <div  class="demo-infinite-container customscrollY " id="template-content">
+      <div class="cdk-virtual-scroll-content-wrapper w-100 pt-2 pb-2 pr-2">
+        <div  *ngFor="let control of listoftemplates; let i = index">
+          <nz-skeleton *ngIf="!control"></nz-skeleton>
+          <nz-form-item class="colone" class="mb-3" *ngIf="control">
+            <nz-form-label [nzSm]="4" [nzXs]="24"  [nzFor]="i" nzRequired>
+              <span>Column {{i+1}}</span> 
+            </nz-form-label>
+            <!-- <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="i">
+              <i nz-icon nzType="delete" nzTheme="outline" class="text-danger"></i> 
+            </nz-form-label> -->
+            <nz-form-control [nzSm]="20" [nzXs]="20"
+              nzErrorTip="Please enter Column info.">
+
+              <input nz-input [formControlName]="control.title" class="mb-1" placeholder="Title"  [attr.id]="'template-title'+i" />
+
+              <nz-form-item class="SHS" *ngFor="let SH of control.SHS; let y = index">
+                <input class="roles-input" nz-input [formControlName]="SH.sheet" placeholder="Sheet" [attr.id]="'sheet'+y+i" />
+
+                <nz-select class="roles-input"  nzMode="tags" [nzMaxMultipleCount]="maxtags" [formControlName]="SH.range" nzPlaceHolder="Range" [attr.id]="'range'+y+i" nzShowSearch>
+                  <nz-option *ngFor="let option of []" [nzLabel]="option" [nzValue]="option"></nz-option>
+                </nz-select>           
+                <i  nz-icon 
+                    nz-tooltip 
+                    [nzTooltipTitle]='"Remove sheet && range"' 
+                    style="display: flex;align-items: center;"
+                    nzType="minus-circle-o" class="dynamic-delete-button" 
+                    role="button" 
+                    (click)="removeSheet_rating(control , i , y, $event)"></i> 
+                
+              </nz-form-item>
+              <div class="plus d-flex justify-content-center mt-2">
+                <!-- <i nz-icon nz-tooltip [nzTooltipTitle]='"Add sheet && rating"' nzType="plus-circle-o" class="dynamic-delete-button"  role="button" (click)="addSheet_rating(control,i, $event)"></i> -->
+                <!-- <i nz-icon nz-tooltip [nzTooltipTitle]='"Add sheet && rating"' role="button" nzType="delete" nzTheme="outline" class="text-danger" (click)="removeField(control , $event)"></i>  -->
+                <button nz-button nzType="default" (click)="addSheet_rating(control,i, $event)" class="mr-2">
+                  <i nz-icon nzType="plus"></i>
+                  New Range
+                </button>
+                <button  nz-button nzType="default" nzDanger (click)="removeField(control , $event)">
+                  <i nz-icon nzType="delete"></i>
+                  Remove Column
+                </button>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>      
+    </div>
+
 
       
     <nz-form-item class="flex center mt-3">

@@ -28,3 +28,24 @@
     margin-bottom: 5px !important;
   }
   
+
+  .demo-infinite-container {
+    height: calc(100vh - 400px);
+    border: 1px solid #e8e8e8;
+    /* border-radius: 4px; */
+
+    display: block;
+    position: relative;
+    overflow: auto;
+    contain: strict;
+    transform: translateZ(0);
+    will-change: scroll-position;
+    scroll-behavior: smooth;
+  }
+
+  .cdk-virtual-scroll-content-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    contain: content;
+  }

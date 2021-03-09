@@ -37,7 +37,7 @@ export class ContainerComponent implements OnInit {
     console.log(listoftemplates_names.indexOf(name));
     return listoftemplates_names.indexOf(name) > -1;
     }
-    extract_data(edit=false , editdata=[] , templatename="" , templateid=""){
+    extract_data(edit=false , editdata=[] , templatename="" , templateid="" , dataInsheets={}){
     const modal :NzModalRef = this.ModalS.create({
     nzTitle:edit ?"EDIT Template" : "ADD Template",
     nzClosable:false,
@@ -47,7 +47,8 @@ export class ContainerComponent implements OnInit {
     nzOkText:edit ?"Save" : "Create",
     nzComponentParams:{
       editdata,
-      templatename
+      templatename,
+      dataInsheets
     },
     nzOnOk:componentInstance=>{
     let config = modal.getConfig();
@@ -167,10 +168,25 @@ export class ContainerComponent implements OnInit {
         }
       })
     }
+
+    trans_template1(template){
+      let trans = this.trans_template(template);
+      let result ={};
+      trans.map(el=>{
+        let sheet = el.SHS[0].sheetvalue;
+        if(result[sheet]){
+          result[sheet] = [ ...result[sheet] , el];
+        }else{
+          result[sheet] = [el];
+        }
+      })
+      return result;
+    }
     edittemplate(template){
      let editdata = this.trans_template(template.template);
+     let dataInsheets = this.trans_template1(template.template);
      console.log(template.name);
-     this.extract_data(true , editdata , template.name , template._id );
+     this.extract_data(true , editdata , template.name , template._id , dataInsheets);
     }
     deletetemplate(id){
       const loader = this.notif_S.loading('Deleting tepmlate...');

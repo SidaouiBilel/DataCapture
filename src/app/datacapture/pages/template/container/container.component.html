@@ -31,6 +31,7 @@
       <div nz-row nzType='flex' nzAlign='stretch'>
         <div nz-col class="gutter-row" [nzSpan]="12"
         *ngFor="let template of(templates$ | async | simpleFilter : 'name' : searchTerm) ,let i = index ">
+          <!-- <button nz-button nzType="default" (click)="trans_template1(template.template)">Default</button> -->
           <app-template-card  [data]="template" 
                               [index]="i" 
                               (Seetemplate)="viewtemplate($event)"

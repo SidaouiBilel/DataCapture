@@ -19,6 +19,7 @@ export class FormTemplateComponent implements OnInit , AfterViewInit   {
   editdata=[];
   templatename = "";
   loading = false;
+  dataInsheets={};
   constructor(private fb: FormBuilder , private notif_S:NotificationService,) { }
 
   ngOnInit() {
@@ -27,6 +28,7 @@ export class FormTemplateComponent implements OnInit , AfterViewInit   {
       name: [this.templatename, [Validators.required]],
     })  
     if(this.editdata.length > 0){
+      this.tabs = Object.keys(this.dataInsheets)
       this.loading = true;
       this.gettemplatedata();
     }
@@ -105,6 +107,9 @@ export class FormTemplateComponent implements OnInit , AfterViewInit   {
       this.listoftemplates[index - 1].title,
       new FormControl(null, Validators.required)
     );
+      setTimeout(()=>{
+        document.getElementById("template-content").scrollTop = document.getElementById("template-content").scrollHeight+110;
+      } , 200);
   }
   removeField(i: { title:string,count:number[],SHS:SH[] }, e: MouseEvent): void {
     e.preventDefault();
@@ -164,5 +169,16 @@ export class FormTemplateComponent implements OnInit , AfterViewInit   {
       this.notif_S.error("You cant have less than 1 Sheet");
     }
 
+  }
+
+  tabs = [];
+  selectedIndex = 0;
+  closeTab({ index }: { index: number }): void {
+    this.tabs.splice(index, 1);
+  }
+
+  newTab(): void {
+    this.tabs.push('New Tab');
+    this.selectedIndex = this.tabs.length;
   }
 }

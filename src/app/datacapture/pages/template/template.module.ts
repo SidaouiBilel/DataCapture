@@ -6,7 +6,6 @@ import { TableTemplateComponent } from './components/table-template/table-templa
 import { CloneTemplateComponent } from './components/clone-template/clone-template.component';
 import { TemplateCardComponent } from './components/template-card/template-card.component';
 
-
 @NgModule({
   imports: [
     SharedModule
