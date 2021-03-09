@@ -18,7 +18,7 @@ export class ReferenceUtilsService {
 
   constructor(private modal: NzModalService, private service: ReferenceService) { }
 
-  activeRefType$ = new Subject()
+  activeRefType$:Subject<any> = new Subject();
 
   onAddRefType(collection_id){
     return this.openRefTypeEditor(new RefernceType(collection_id))

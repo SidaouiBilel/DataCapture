@@ -5,7 +5,9 @@ export class RefernceType{
     created_on
     modified_on
     shared
-
+    versions = []
+    parent_id: string;
+    version_label: string;
     properties :RefernceTypeProperty[] = []
 
     constructor(domain_id?){
