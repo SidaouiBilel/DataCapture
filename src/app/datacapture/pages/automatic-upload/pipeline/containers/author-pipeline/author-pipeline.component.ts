@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AppState, NotificationService } from '@app/core';
+import { AppState, NotificationService, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
 import { PipelinesService } from '../../services/pipelines.service';
 import { PipelineEditLinks, PipelineEditMetaData, PipelineEditNodes, PipelineEditRunId } from '../../store/pipeline.actions';
@@ -21,6 +21,7 @@ export class AuthorPipelineComponent implements OnDestroy {
   links$;
   nodes$;
   metadata$;
+  profile$;
 
   // RUN DATA
   runId$: Observable<string>;// MANGAGE RUNS HERE
@@ -38,6 +39,7 @@ export class AuthorPipelineComponent implements OnDestroy {
     this.nodes$ = this.store.select(selectPipelineEditNodes).pipe(map(e => _.cloneDeep(e)));
     this.metadata$ = this.store.select(selectPipelineMetaData);
     this.runId$ = this.store.select(selectRunId);
+    this.profile$ = this.store.select(selectProfile);
 
     // LISTENERS
     this.runId$.pipe(tap(this.onRunIdChanged)).subscribe()
@@ -80,10 +82,10 @@ export class AuthorPipelineComponent implements OnDestroy {
 
   // SAVE AND RESOLVE
   save=()=>new Promise((resolve, reject) => {
-      forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1))])
-      .subscribe(([links, nodes, metaData]: any) => {
+      forkJoin([this.links$.pipe(take(1)), this.nodes$.pipe(take(1)), this.metadata$.pipe(take(1)) , this.profile$.pipe(take(1))])
+      .subscribe(([links, nodes, metaData , profile]: any) => {
         if (metaData.name != '') {
-          this.pipelines.saveDag(metaData, nodes, links).subscribe((pipeline_id) => {
+          this.pipelines.saveDag(metaData, nodes, links , profile.id).subscribe((pipeline_id) => {
               this.store.dispatch(new PipelineEditMetaData({...metaData, pipeline_id}));
               this.ntf.success('Pipeline saved.');
               resolve(pipeline_id)

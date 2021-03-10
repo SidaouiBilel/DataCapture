@@ -26,7 +26,7 @@ export class ContainerComponent implements OnInit {
     ngOnInit() {
       this.store.select(selectProfile).subscribe(res=>{
           this.Profile=res;
-          this.load_templates();
+          this.load_templates(res.id);
       });
     }
     check_templates_has_name(name){
@@ -37,7 +37,7 @@ export class ContainerComponent implements OnInit {
     console.log(listoftemplates_names.indexOf(name));
     return listoftemplates_names.indexOf(name) > -1;
     }
-    extract_data(edit=false , editdata=[] , templatename="" , templateid="" , dataInsheets={}){
+    extract_data(edit=false  , templatename="" , templateid="" , dataInsheets={}){
     const modal :NzModalRef = this.ModalS.create({
     nzTitle:edit ?"EDIT Template" : "ADD Template",
     nzClosable:false,
@@ -46,7 +46,7 @@ export class ContainerComponent implements OnInit {
     nzContent: FormTemplateComponent,
     nzOkText:edit ?"Save" : "Create",
     nzComponentParams:{
-      editdata,
+      // editdata,
       templatename,
       dataInsheets
     },
@@ -58,6 +58,7 @@ export class ContainerComponent implements OnInit {
     if (componentInstance.validateForm.valid) {
       let req=componentInstance.validateForm.value;
       let listoftemplates = componentInstance.listoftemplates;
+      let sheets = componentInstance.tabs;
       if(!edit && this.check_templates_has_name(req.name)){
         //modal.getInstance().nzOkLoading = false;
         this.notif_S.error("Template Name already exist");
@@ -75,7 +76,7 @@ export class ContainerComponent implements OnInit {
         
        let req_Sr = template.count.map((el,i)=>{
           return{
-            "sheet":req[template.SHS[i].sheet],
+            "sheet":sheets[template.sheetIndex].name,
             "range":req[template.SHS[i].range].reduce((accumulator, currentValue) => accumulator+ ":" + currentValue)
           }
         });
@@ -135,16 +136,16 @@ export class ContainerComponent implements OnInit {
     }
 
 
-    load_templates(){
+    load_templates(id){
     const loader = this.notif_S.loading('Loading templates...');
-    this.service.getTemplates().subscribe(res=>{
+    this.service.getTemplates(id).subscribe(res=>{
       this.templates$.next(res);
       console.log(res); 
       this.notif_S.close(loader);
     }, (err) => {this.notif_S.close(loader);})
     }
     reload(){
-    this.load_templates();
+    this.load_templates(this.Profile.id);
     }
     //trans template to pass it to the form
     trans_template(template){
@@ -152,16 +153,15 @@ export class ContainerComponent implements OnInit {
         let currentel = template[el];
         let count = Array.isArray(currentel) ? currentel.length : 1;
         let countarray = Array.from(Array(count).keys());
+        let sheet = Array.isArray(currentel) ? currentel[0].sheet : currentel.sheet;
         return {
           title: "title:"+index,
           titlevalue:el,
           count:countarray,
+          sheet:sheet,
           SHS:(Array.isArray(currentel) ?currentel :[currentel]).map((e,i)=>(
                 {
-                  range: "range:"+index+i,
-                  rangevalue:e.range.split(':'),
-                  sheetvalue:e.sheet,
-                  sheet: "sheet:"+index+i,
+                  rangevalue:e.range.split(':')
                 }              
               ))
         
@@ -169,11 +169,11 @@ export class ContainerComponent implements OnInit {
       })
     }
 
-    trans_template1(template){
+    trans_template_whith_sheet(template){
       let trans = this.trans_template(template);
       let result ={};
       trans.map(el=>{
-        let sheet = el.SHS[0].sheetvalue;
+        let sheet = el.sheet;
         if(result[sheet]){
           result[sheet] = [ ...result[sheet] , el];
         }else{
@@ -183,10 +183,10 @@ export class ContainerComponent implements OnInit {
       return result;
     }
     edittemplate(template){
-     let editdata = this.trans_template(template.template);
-     let dataInsheets = this.trans_template1(template.template);
+    //  let editdata = this.trans_template(template.template);
+     let dataInsheets = this.trans_template_whith_sheet(template.template);
      console.log(template.name);
-     this.extract_data(true , editdata , template.name , template._id , dataInsheets);
+     this.extract_data(true , template.name , template._id , dataInsheets);
     }
     deletetemplate(id){
       const loader = this.notif_S.loading('Deleting tepmlate...');

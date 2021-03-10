@@ -8,8 +8,8 @@ export class TemplateService {
 
   constructor(private http:HttpClient) { }
 
-  getTemplates(){
-    return this.http.get<any[]>(environment.upload+"template");
+  getTemplates(id){
+    return this.http.get<any[]>(environment.upload+"template/user/"+id);
   }
 
   addTemplate(data){

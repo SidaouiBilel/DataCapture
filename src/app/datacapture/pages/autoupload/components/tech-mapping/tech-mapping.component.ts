@@ -34,7 +34,7 @@ export class TechMappingComponent implements OnInit {
     if(this.dataupload.outputs.length>0){
         this.listOfSelectedValue=this.dataupload.outputs;
     }
-    this.templateS.getTemplates().subscribe(res=>{
+    this.templateS.getTemplates(this.profile.id).subscribe(res=>{
       this.templateloaded = true;
       this.listOftemplates$.next(res);
     });

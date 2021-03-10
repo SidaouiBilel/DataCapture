@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AppState, NotificationService } from "@app/core";
+import { AppState, NotificationService, selectProfile } from "@app/core";
 import { Store } from "@ngrx/store";
 import { PipelineMetadata } from "../../pipeline/models/metadata.model";
 import { PipelineEdit, PipelineReset } from "../../pipeline/store/pipeline.actions";
@@ -13,18 +13,25 @@ import { AuthorService } from "../service/author.service";
 export class AuthorContainer {
     pipelines:any = [];
     searchPipeline = "";
+    Profile :any;
     constructor(private service: AuthorService,
                 private not: NotificationService,
                 private store: Store<AppState>) {
-        this.getData();
+                    this.store.select(selectProfile).subscribe(res=>{
+                        this.Profile=res;
+                        this.getData();
+                    })
     }
 
     getData() {
-        const loader = this.not.loading('Loading pipelines...');
-        this.service.getAll().subscribe((pipelines) => {
-            this.pipelines = pipelines;
-            this.not.close(loader);
-        }, (err) => {this.not.close(loader); })
+        if(this.Profile){
+            const loader = this.not.loading('Loading pipelines...');
+            this.service.getAll(this.Profile.id).subscribe((pipelines) => {
+                this.pipelines = pipelines;
+                this.not.close(loader);
+            }, (err) => {this.not.close(loader); })            
+        }
+
     }
 
     addPipeline() {

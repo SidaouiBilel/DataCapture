@@ -9,8 +9,8 @@ export class AuthorService {
 
     constructor(private http: HttpClient) {}
 
-    getAll(page?, size?){
-        return this.http.get(environment.pipeline + 'dataflow/list-pipelines')
+    getAll(id?){
+        return this.http.get(environment.pipeline + 'dataflow/list-pipelines/'+id)
     }
 
     delete(id: string) {

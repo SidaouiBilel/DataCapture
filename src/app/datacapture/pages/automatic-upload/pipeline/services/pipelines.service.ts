@@ -18,8 +18,8 @@ export class PipelinesService {
     return this.http.post(environment.pipeline + 'dataflow/' + dag_id + "/publish", {})
   }
 
-  saveDag(metaData, nodes, links){
-    return this.http.post(environment.pipeline + 'dataflow/save' ,{...metaData, nodes, links})
+  saveDag(metaData, nodes, links , uid){
+    return this.http.post(environment.pipeline + 'dataflow/save' ,{...metaData, nodes, links , uid})
   }
 
   getRun(run_id: any) {
