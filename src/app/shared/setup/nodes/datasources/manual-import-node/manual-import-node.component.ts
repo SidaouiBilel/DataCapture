@@ -13,20 +13,21 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
 
   importing = false
   imported = false
-  
+  status$: any;
+
   url = environment.import + '?domainId=' + null;
-  
-  constructor(private ntf: NotificationService, private service: FileImportService) { 
+
+  constructor(private ntf: NotificationService, private service: FileImportService) {
     super()
   }
 
-  ngOnInit(){
-    if (this.data.file_id){
+  ngOnInit() {
+    if (this.data.file_id) {
       this.imported = true
     }
   }
 
-  
+
   handleChange({ file, fileList }): void {
     const status = file.status;
     if (status === 'uploading') {
@@ -37,8 +38,8 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
       const result = file.response
       this.data.filename = file.name
       this.data.sheets = result.worksheets
-      this.data.file_id = result.file_id 
-      
+      this.data.file_id = result.file_id
+
       this.imported = true
       this.importing = false
       this.ntf.success(`${file.name} file uploaded successfully.`);
@@ -47,8 +48,8 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
       this.importing = false
     }
   }
-  
-  removeData(){
+
+  removeData() {
     delete this.data.filename
     delete this.data.sheets
     delete this.data.file_id
@@ -58,15 +59,21 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     this.imported = false
     this.importing = false
   }
-  
-  onSheetSelected(e){
+
+  onSheetSelected(e) {
     this.data.sheetId = e.sheetId
     this.importing = true
     this.ntf.default('Preparing Dataset')
-    this.service.generateSheet(this.data.file_id, this.data.sheetId, 0, 0 ,0 ,0).subscribe((generated_sheet:any)=>{
-      this.importing = false
-      this.data.sheet_id = generated_sheet.sheet_id
-      this.ntf.success('Dataset ready')
-    }, err=> this.imported = false)
+    this.service.generateSheet(this.data.file_id, this.data.sheetId, 0, 0, 0, 0).subscribe((jobId: any) => {
+      this.status$ = this.service.checkJobStatus(jobId).subscribe((job) => {
+        if (['ERROR', 'DONE'].includes(job.job_status)) {
+          if (this.status$) { this.status$.unsubscribe() }
+          this.importing = false
+          this.data.sheet_id = job.result.sheet_id
+          this.ntf.success('Dataset ready')
+        }
+      });
+     
+    }, err => this.imported = false)
   }
 }

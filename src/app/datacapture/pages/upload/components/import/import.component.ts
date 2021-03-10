@@ -89,12 +89,19 @@ export class ImportComponent implements OnInit {
   }
 
   goToPreview(): void {
+    console.log(' ========> ')
+    console.log(this.fileData.headers)
     if ( !this.selectedDomain ) {
       this.notification.warn('Please select a domain.');
       return;
     }
     if ( !this.fileData.metaData ) {
       this.notification.warn('Please import your file.');
+      return;
+    }
+    // to disable next button
+    if ( this.fileData.headers.length == 0 ) {
+      this.notification.warn('Please generate a sheet.');
       return;
     }
     this.router.navigate(['/data/datacapture/upload/transform']);
