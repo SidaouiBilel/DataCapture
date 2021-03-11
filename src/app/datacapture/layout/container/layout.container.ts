@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { MenuitemsService } from './../service/menuitems.service';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, ActionAuthLogin , selectProfile, ActionSaveProfile, selectToken } from '@app/core';
@@ -145,22 +146,7 @@ export class LayoutContainer implements OnInit {
   }
 
   tokencheck = false; 
-  url_data ="";
-  geturl_data(){
-    this.profile$.subscribe(
-      res=>{
-        if(res && res.id){
-          if(this.url_data.trim() == ""){
-            this.service.get_user_data_link(res.id).subscribe(
-              data=>{
-                this.url_data=data["url"];
-              }
-            )              
-          }
-       
-        }
-      })
-  }
+
   getuser(token){
     this.service.info(token).subscribe((res) => {
       if (res) {
@@ -169,7 +155,7 @@ export class LayoutContainer implements OnInit {
         } else {
           this.store.dispatch(new ActionSaveProfile(res.data));
           this.tokencheck = true;
-          this.geturl_data();
+          // this.geturl_data();
         }
       }
     } 
@@ -204,10 +190,34 @@ export class LayoutContainer implements OnInit {
     // this.notification.error('Token exp');
     this.store.dispatch(new ActionAuthLogout());
   }
+
+  url_data ="";
+  urldataloding=false;
+  geturl_data(){
+    if(this.urldataloding) { return ;}
+    if(this.url_data.trim() == ""){
+    this.profile$.pipe(take(1)).subscribe(
+      res=>{
+        if(res && res.id){
+          this.urldataloding = true;
+          let notif = this.notification.loading("Generating database console url")
+            this.service.get_user_data_link(res.id).subscribe(
+              data=>{
+                this.url_data=data["url"];
+                this.urldataloding = false;
+                this.openmydata();
+                this.notification.close(notif);
+              } , er=>{
+                this.notification.close(notif);
+              }
+            )              
+      }})
+    }else{
+        this.openmydata()
+    }
+  }
   openmydata(){
-    if(this.url_data.trim() !== ""){
       var win = window.open(this.url_data, '_blank');
       win.focus();      
-    }
   }
 }
