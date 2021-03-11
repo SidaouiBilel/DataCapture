@@ -3,7 +3,7 @@
 </button>
 <nz-result [nzIcon]="icon" [nzTitle]="title">
   <div nz-result-extra>
-    <button *ngIf="!(uploadingId$ | async)" class="upload" nz-button nzType="default" (click)="onUpload()">
+    <button [disabled]="!out_filename.trim()" *ngIf="!(uploadingId$ | async)" class="upload" nz-button nzType="default" (click)="onUpload()">
       <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
       Upload
     </button>
@@ -42,6 +42,15 @@
 
 <ng-template #title>
   <div *ngIf="!(uploadingId$ | async)" class="ant-result-title"> You are all set to upload your data.</div>
+  <div *ngIf="!(uploadingId$ | async)" class="ant-result-title"> 
+    <nz-input-group [nzSuffix]="suffixTemplateInfo" style="width: 300px;">
+      <input nz-input placeholder="Output Name*" [(ngModel)]="out_filename" />      
+    </nz-input-group>
+    <ng-template #suffixTemplateInfo>
+      <i nz-icon nz-tooltip nzTooltipTitle="Name of the generated file" nzType="info-circle"></i>
+    </ng-template>
+
+  </div>
   <div *ngIf="(result$ | async) && !(['ERROR', 'DONE'].includes(uploadStatus$ | async))" class="ant-result-title">  <nz-spin nzSimple [nzSize]="'large'"></nz-spin> </div>
   <div *ngIf="(uploadStatus$ | async) === 'DONE'" class="ant-result-title"> Success</div>
   <div *ngIf="(uploadStatus$ | async) === 'ERROR'" class="ant-result-title"> The upload has failed.</div>

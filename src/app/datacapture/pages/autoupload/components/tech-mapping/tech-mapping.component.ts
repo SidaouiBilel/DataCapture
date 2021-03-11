@@ -28,6 +28,7 @@ export class TechMappingComponent implements OnInit {
   listOftemplates$:BehaviorSubject<any[]>=new BehaviorSubject([]);
   templateloaded = false;
   templateskelton = [1,2,3];
+  out_filename="";
   constructor( private ModalS:NzModalService , private notif:NotificationService , private autoS:AutouploadService , private templateS :TemplateService) { }
 
   ngOnInit() {
@@ -54,13 +55,16 @@ export class TechMappingComponent implements OnInit {
      this.notif.warn("Output type is Required !!")
    }else if(!this.iscsv() && !this.sectedtemplate){
      this.notif.warn("Template is Required !!")
-   }else{
+   }else if(!this.out_filename.trim()){
+    this.notif.warn("Output Name is Required !!")
+    }else{
 
      this.addoutputs.emit(this.listOfSelectedValue);
      this.submitloading=true;
      let template = this.iscsv() ? {template:false} : {template:true,template_id:this.sectedtemplate};
      this.autoS.auto_upload({
        ...{...this.dataupload , outputs:this.listOfSelectedValue , ...template},
+       out_filename:this.out_filename,
        uid:this.profile.id
      }).subscribe(
        data=>{

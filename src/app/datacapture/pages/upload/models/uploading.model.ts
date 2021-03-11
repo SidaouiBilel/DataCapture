@@ -8,4 +8,5 @@ export interface UploadingPayload {
   transformation_id: string;
   user_id: string;
   mapping_id: string;
+  out_filename:string;
 }

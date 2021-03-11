@@ -1,3 +1,4 @@
+import { NotificationService } from './../../../../../../core/notifications/notification.service';
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { UploadService } from './../../../services/upload.service';
 import { UploadingPayload } from './../../../models/uploading.model';
@@ -25,7 +26,11 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   result$: BehaviorSubject<any> = new BehaviorSubject(null);
   uploadStatus$: Observable<string>;
   uploadingId$: Observable<string>;
-  constructor(private service: UploadService, private store: Store<AppState>, private explorer: ExplorerService) {
+  out_filename="";
+  constructor(private service: UploadService, 
+              private store: Store<AppState>, 
+              private explorer: ExplorerService ,
+              private notS: NotificationService) {
     this.uploadingId$ = store.select(selectUploadingId);
     this.uploadStatus$ = store.select(selectUploadingStatus);
   }
@@ -43,6 +48,10 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   }
 
   onUpload(): void {
+    if(!this.out_filename.trim()){
+      this.notS.warn("Output Name is Required !");
+      return ;
+    }
     this.store.select(selectProfile).pipe(take(1)).subscribe(((profile: any) => {
       const payload: UploadingPayload = {
         id: null,
@@ -53,7 +62,8 @@ export class UploadDataComponent implements OnInit, OnDestroy {
         cleansing_job_id: this.metaData.cleansingId,
         transformation_id: this.metaData.transformationId,
         user_id: profile.id,
-        mapping_id: this.metaData.mappingId
+        mapping_id: this.metaData.mappingId,
+        out_filename:this.out_filename
       };
       this.store.dispatch(new ActionSaveUploadingStatus('STARTED'));
       this.progress = 0;
