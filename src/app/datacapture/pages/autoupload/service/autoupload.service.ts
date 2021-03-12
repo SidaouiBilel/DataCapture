@@ -11,8 +11,8 @@ export class AutouploadService {
   auto_upload(data){
     return this.Http.post(environment.upload+"automtic",data);
   }
-  getoutputs(){
-    return this.Http.get<any[]>(environment.upload+"datalake");
+  getoutputs(uid){
+    return this.Http.get<any[]>(environment.upload+"datalake/"+uid);
   }
   get_extracted_files(uid){
     return this.Http.get<any[]>( environment.import + 'files/'+uid);

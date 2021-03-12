@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { AutouploadService } from './../../service/autoupload.service';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-output',
@@ -29,6 +29,7 @@ export class OutputComponent implements OnInit {
   ];
   
   @Output() reset :EventEmitter<any>=new EventEmitter();
+  @Input() profile :any;
   OutputList:BehaviorSubject<any[]>=new BehaviorSubject([]);
   loading=false;
   pagination=false;
@@ -36,7 +37,7 @@ export class OutputComponent implements OnInit {
 
   ngOnInit() {
     this.loading=true;
-    this.auto_S.getoutputs()
+    this.auto_S.getoutputs(this.profile.id)
     .subscribe(
       data=>{
         this.OutputList.next(data.sort((b,a)=>{return this.datecompare(a["LastModified"], b["LastModified"])}));
