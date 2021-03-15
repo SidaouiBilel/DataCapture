@@ -53,7 +53,7 @@ export class MenuitemsService {
   uploadrouteactivated$: BehaviorSubject<string[]> = new BehaviorSubject([]);
   runtestactiveRoute(){
     this.uploadrouteactivated$.next(
-         ["TRANSFORM", "MAPPING","CLEANSING","UPLOAD"].filter(route=>{
+         ["IMPORT" , "TRANSFORM", "MAPPING","CLEANSING","UPLOAD"].filter(route=>{
             return this.canActivateRoute(route);
          }) 
     );

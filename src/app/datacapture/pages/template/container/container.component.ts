@@ -93,7 +93,7 @@ export class ContainerComponent implements OnInit {
       if(!edit){
         this.service.addTemplate(finale_req).subscribe(
           data=>{
-            this.notif_S.success(finale_req.name+"Created Successfully");
+            this.notif_S.success(finale_req.name+" Created Successfully");
             modal.close();
             this.reload();
           }
@@ -108,12 +108,12 @@ export class ContainerComponent implements OnInit {
 
     }else {
        this.notif_S.error('Invalid Form');
-       setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:false}); }, 1000);
+       setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:false}); }, 500);
     }
     return false;
     } catch (error) {
       this.notif_S.error('Invalid Form');
-      setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:false}); }, 1000);
+      setTimeout(() => {   modal.updateConfig({...config , nzOkLoading:false}); }, 500);
     }
     }
     })

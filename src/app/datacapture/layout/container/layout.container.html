@@ -92,7 +92,7 @@
 
           <li nz-submenu nzIcon="upload" nzTitle="Manual Upload" >
             <ul>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/upload/import']">
+              <li nz-menu-item nzMatchRouter [nzDisabled]="isuploadrouteactivated('IMPORT')" [routerLink]="['/data/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>
                 <span>Import</span>
               </li>

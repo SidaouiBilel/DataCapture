@@ -38,7 +38,7 @@
                     <div class="h-100 w-100 mt-3" *ngSwitchCase="'Filesystem'">
                         <nz-spin class="flex-box" [nzSpinning]="fileloading">
                           <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false"
-                            [nzAccept]="'.csv, .xlsm, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'"
+                            [nzAccept]="'.csv, .xlsx'"
                             (nzChange)="handleChange($event)">
                             <p class="ant-upload-drag-icon">
                               <i nz-icon nzType="inbox"></i>
