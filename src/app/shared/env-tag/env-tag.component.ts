@@ -25,6 +25,7 @@ export class EnvTagComponent implements OnInit {
       case 'TST': return '#87d068'
       case 'PRD': return '#108ee9'
       case 'DEV': return '#2db7f5'
+      case 'UAT': return '#d8a542'
       default: return '#f50'
     }
   }
@@ -34,6 +35,7 @@ export class EnvTagComponent implements OnInit {
       case 'TST': return 'TST'
       case 'PRD': return 'PRD'
       case 'DEV': return 'DEV'
+      case 'UAT': return 'UAT'
       default: env
     }
   }
