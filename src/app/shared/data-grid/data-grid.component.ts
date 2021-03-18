@@ -18,9 +18,9 @@ export class DataGridComponent implements OnInit {
   @Input() paginationPageSize = 50;
   @Input() contextMenu = null;
   @Input() mainContextMenu = null;
+  @Input() enableCharts = false;
   @Input() rangeSelection = false;
   @Input() floatingFilter = true;
-
   @Input() gridOptions = {
     onRangeSelectionChanged: GAPIGridSelectionOverride,
     defaultColDef: {

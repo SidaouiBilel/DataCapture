@@ -6,8 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:microapp":"ng build --prod --deploy-url && node createBUNDLE.js",
-    "build:microapp_dev":"ng build --prod  && node createBUNDLE.js",
+    "build:microapp": "ng build --prod --deploy-url && node createBUNDLE.js",
+    "build:microapp_dev": "ng build --prod  && node createBUNDLE.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
