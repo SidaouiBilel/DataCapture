@@ -200,15 +200,24 @@ export class LayoutContainer implements OnInit {
       res=>{
         if(res && res.id){
           this.urldataloding = true;
-          let notif = this.notification.loading("Generating database console url")
+          let notif = this.notification.loading("Generating database console url");
             this.service.get_user_data_link(res.id).subscribe(
               data=>{
-                this.url_data=data["url"];
-                this.urldataloding = false;
-                this.openmydata();
-                this.notification.close(notif);
+                if(data["url"]){
+                  this.url_data=data["url"];
+                  this.urldataloding = false;
+                  this.openmydata();
+                  return ;
+                }else{
+                  this.notification.close(notif);                
+                  this.notification.warn("Unable to generate database console url" , 1000);
+                  this.urldataloding = false;
+                }               
+
               } , er=>{
                 this.notification.close(notif);
+                // this.notification.warn("Unable to generate database console url" , 1000);
+                this.urldataloding = false;
               }
             )              
       }})
