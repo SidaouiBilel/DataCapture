@@ -16,6 +16,7 @@ export const INDEX_HEADER = {
   pinned: 'left',
   floatingFilter: false,
   filter: false,
+  chartDataType: 'category',
   cellClass : (params) => 'index-cell',
   onCellClicked: (params) => {
       params.api.clearRangeSelection();
