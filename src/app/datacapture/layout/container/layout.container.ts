@@ -207,13 +207,11 @@ export class LayoutContainer implements OnInit {
                   this.url_data=data["url"];
                   this.urldataloding = false;
                   this.openmydata();
-                  return ;
-                }else{
-                  this.notification.close(notif);                
+                }else{                
                   this.notification.warn("Unable to generate database console url" , 1000);
                   this.urldataloding = false;
-                }               
-
+                }            
+                this.notification.close(notif);   
               } , er=>{
                 this.notification.close(notif);
                 // this.notification.warn("Unable to generate database console url" , 1000);
