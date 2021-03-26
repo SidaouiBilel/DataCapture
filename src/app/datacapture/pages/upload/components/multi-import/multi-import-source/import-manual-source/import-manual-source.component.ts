@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NotificationService } from '@app/core';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
+import { DatasetComponent } from '@app/shared/dataset/dataset.component';
 import { environment } from '@env/environment';
 import * as _ from 'lodash'
 import { NzModalService } from 'ng-zorro-antd';
-import { DatasetComponent } from '../../../import/dataset/dataset.component';
 
 @Component({
   selector: 'app-import-manual-source',

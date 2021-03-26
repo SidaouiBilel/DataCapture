@@ -61,13 +61,13 @@ import { FilterPipe } from './pipe/source-filter.pipe';
 import { CalculatorComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator.component';
 import { CalculatorModalComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator-modal/calculator-modal.component';
 import { DateFormatterComponent } from './components/transformation/transformations/transformation-interface/format/date-formatter/date-formatter.component';
-import { DatasetComponent } from './components/import/dataset/dataset.component';
 import { HeaderDescriptionComponent } from './components/transformation/modals/transformation-preview-help/header-description/header-description.component';
 import { GroupByComponent } from './components/transformation/transformations/transformation-interface/format/group-by/group-by.component';
 import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
 import { MultiImportComponent } from './components/multi-import/multi-import/multi-import.component';
 import { ImportManualSourceComponent } from './components/multi-import/multi-import-source/import-manual-source/import-manual-source.component';
 import { HeaderPreviewComponent } from './components/multi-import/header-preview/header-preview.component';
+import { JoinerComponent } from './components/transformation/transformations/transformation-interface/format/joiner/joiner.component';
 
 const components = [
   UploadComponentComponent,
@@ -112,8 +112,7 @@ const components = [
   FilterPipe,
   CalculatorComponent,
   CalculatorModalComponent,
-  DateFormatterComponent,
-  DatasetComponent, 
+  DateFormatterComponent, 
   HeaderDescriptionComponent, 
   GroupByComponent,
   HashComponent,
@@ -132,7 +131,7 @@ const components = [
     DndModule,
     NgDragDropModule.forRoot(),
   ],
-  declarations: [...components],
+  declarations: [...components, JoinerComponent],
   exports: [
   ],
   providers : [
@@ -165,7 +164,6 @@ const components = [
     CalculatorComponent,
     CalculatorModalComponent,
     DateFormatterComponent,
-    DatasetComponent,
     GroupByComponent,
     HashComponent
   ]

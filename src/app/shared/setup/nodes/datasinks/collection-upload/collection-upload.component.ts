@@ -39,6 +39,7 @@ export class CollectionUploadComponent extends PipelineNodeComponent {
   selectDomain(domain) {
     this.data.domain_id = domain.identifier;
     this.domain = domain;
+    this.data.label=domain.name
   }
 
   fetchDomainData() {

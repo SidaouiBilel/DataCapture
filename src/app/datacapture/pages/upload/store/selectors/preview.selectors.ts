@@ -40,7 +40,12 @@ export const selectActiveSourceFileId = createSelector(
   }
 )
 
-
+export const selectActiveFileId = createSelector(
+  selectActiveSource,
+  (source:DataSource)=>{
+    return source.file_id
+  }
+)
 export const selectActiveSourceHeaders = createSelector(
   selectActiveSource,
   (source:DataSource) => source.headers || []
@@ -75,6 +80,6 @@ export const selectHeadersToMap = createSelector(
   selectActiveSource,
   selectActiveTranformation,
   (source:DataSource, transform:SourceTransformation) => {
-    return (transform.transformedFilePath)?transform.tarnsformationHeaders:source.headers
+    return ((transform.transformedFilePath)?transform.tarnsformationHeaders:source.headers)|| []
   }
 );

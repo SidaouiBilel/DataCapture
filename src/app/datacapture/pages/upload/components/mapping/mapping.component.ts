@@ -204,7 +204,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     forkJoin(this.domain$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, selectedSheet]) => {
       // tslint:disable-next-line: max-line-length
-      this.service.postAutomaticMapping(domain.id, selectedSheet, this.validateForm.controls.name.value, this.mappingFields, parentId, description, this.worksheet)
+      this.service.postAutomaticMapping(domain, selectedSheet, this.validateForm.controls.name.value, this.mappingFields, parentId, description, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, parentId || res.mapping_id, res.mapping_id);
           this.notification.success(`Success.`);
@@ -226,7 +226,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     const x = this.notification.loading('Loading automatic mapping');
     forkJoin(this.domain$.pipe(take(1)), this.selectedSheet$.pipe(take(1)))
       .subscribe(([domain, selectedSheet]) => {
-      this.service.loadAutoMappingById(domain.id, selectedSheet, this.worksheet)
+      this.service.loadAutoMappingById(domain, selectedSheet, this.worksheet)
         .subscribe((res) => {
           this.updateLocalMapping(res, null, null);
           this.notification.success(`The mapping was loaded successfully.`);
@@ -249,7 +249,7 @@ export class MappingComponent implements OnInit, OnDestroy {
   previousMappings(): void {
     forkJoin(this.domain$.pipe(take(1)), this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
     .subscribe(([domain, selectedSheet, mappingId]) => {
-      this.service.getPreviouslyMappings(domain.id).subscribe((mappings: any[]) => {
+      this.service.getPreviouslyMappings(domain).subscribe((mappings: any[]) => {
         const modal: NzModalRef = this.modalService.create({
           nzTitle: 'Previously Saved Mappings',
           nzClosable: false,
@@ -260,14 +260,14 @@ export class MappingComponent implements OnInit, OnDestroy {
           nzComponentParams: {
             mappings,
             mappingId,
-            domain: domain.id,
+            domain: domain,
             selectedVersion: this.mappingVersion || this.mappingId
           },
         });
         modal.afterClose.subscribe((map) => {
           if (map && map.version) {
             // Apply the mapping
-            this.service.getMappingById(domain.id, selectedSheet, map.version).subscribe((res: any) => {
+            this.service.getMappingById(domain, selectedSheet, map.version).subscribe((res: any) => {
               this.updateLocalMapping(res, map.id, map.version);
               this.store.dispatch(new SaveMappingName(map.name));
               this.notification.success('The mapping was applied successfully.');
@@ -350,7 +350,7 @@ export class MappingComponent implements OnInit, OnDestroy {
     forkJoin(this.domain$.pipe(take(1)),  this.selectedSheet$.pipe(take(1)), this.mappingId$.pipe(take(1)))
       .subscribe(([domain, selectedSheet, mappingId]) => {
         // tslint:disable-next-line: max-line-length
-        this.service.updateMapping(mappingFields, (this.mappingVersion || mappingId), selectedSheet, domain.id)
+        this.service.updateMapping(mappingFields, (this.mappingVersion || mappingId), selectedSheet, domain)
           .subscribe((res) => {
             this.notification.success('The mapping is successfully updated');
             this.store.dispatch(new SaveIsModified(false));

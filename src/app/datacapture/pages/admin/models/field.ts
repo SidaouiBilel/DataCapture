@@ -5,5 +5,6 @@ export class Field{
     description
     type
     collection
+    primary
 
 }

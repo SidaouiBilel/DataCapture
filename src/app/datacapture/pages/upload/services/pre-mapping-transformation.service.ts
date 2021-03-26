@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 
@@ -17,13 +17,20 @@ export class PreMappingTransformationService {
     return this.http.get( `${this.url}${fileid}/${sheetid}/${pipeid}`);
   }
 
-  getResult(fileid: any, page: any, nrows=10, filter:any[]=[], sort:any=null) {
-    // return this.http.get( `${this.url}preview/removeit?page=${page}&nrows=${nrows}&filename=${fileid.replace(/\//g,'\\\\')}`);
-    const body = {
-      filter,
-      sort,
-      filename:fileid
-    }
-    return this.http.post( `${this.url}preview?page=${page}&nrows=${nrows}`, body);
+  // getResult(fileid: any, page: any, nrows=10, filter:any[]=[], sort:any=null) {
+  //   // return this.http.get( `${this.url}preview/removeit?page=${page}&nrows=${nrows}&filename=${fileid.replace(/\//g,'\\\\')}`);
+  //   const body = {
+  //     filter,
+  //     sort,
+  //     filename:fileid
+  //   }
+  //   return this.http.post( `${this.url}preview?page=${page}&nrows=${nrows}`, body);
+  // }
+  public getResult( worksheet: string,page: number, nrows: number=10, filters=[]): Observable<any> {
+    const params = new HttpParams()
+    .set('page', page + '')
+    .set('lob', 0 + '')
+    .set('nrows', nrows + '');
+    return this.http.put(environment.import + 'data/' + worksheet, {filters} ,{ params });
   }
 }

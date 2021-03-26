@@ -239,7 +239,7 @@ export class FilterAndReplace extends Transformer {
 
 export class DefaultValue extends Transformer {
   type =  'default-value';
-  label = 'Default';
+  label = 'Create Column';
   icon = 'file-add';
   shortcut = 'control.shift.d';
   collapse = false;
@@ -256,7 +256,7 @@ export class Splitter extends Transformer {
   label = 'Split';
   icon = 'split-cells';
   shortcut = 'control.alt.s';
-  collapse = false;
+  collapse = true;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -280,6 +280,7 @@ export class Calculator extends Transformer {
   label = 'Calculator';
   icon = 'calculator';
   shortcut = 'control.alt.c';
+  collapse = false
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -307,6 +308,7 @@ export class FormatDate extends Transformer {
   label = 'Date Formatter';
   icon = 'calendar';
   shortcut = 'control.alt.d';
+  collapse = true
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -324,6 +326,7 @@ export class GroupBy extends Transformer {
   label = 'Group By';
   icon = 'group';
   shortcut = 'control.alt.g';
+  collapse = true
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -362,7 +365,7 @@ export class Hasher extends Transformer {
   label = 'Hash';
   icon = 'barcode';
   shortcut = 'control.alt.h';
-  collapse = false;
+  collapse = true;
 
   getErrors = (params, previousNodes, headers) => {
     const errors = [];
@@ -386,5 +389,20 @@ export class Hasher extends Transformer {
         ...this.getRule(),
         columns
     };
+  }
+}
+
+export class Joiner extends Transformer { 
+  type = 'join';
+  label = 'Join';
+  icon = 'link';
+  shortcut = 'control.alt.j';
+  collapse = false;
+
+  getErrors = (params, previousNodes, headers) => {
+    const errors = [];
+    if (isStrEmpty(params.join_on)) { errors.push(new NodeError('join_on', 'column Missing')); }
+    if (params.sheet_id === null) { errors.push(new NodeError('sheet_id', 'No Dataset Selected')); }
+    return errors;
   }
 }

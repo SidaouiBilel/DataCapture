@@ -1,4 +1,4 @@
-<div class="p-3">
+<div class="p-3 flex column stretch" >
   <div class="flex between">
 
     <div class="button-spacing">
@@ -13,7 +13,7 @@
   </div>
   
   
-  <nz-tabset>
+  <nz-tabset class="flex">
       <nz-tab *ngFor='let ds of datasources$|async; let i=index' [nzTitle]="Title">
         <ng-template #Title>{{ds.label || ('Datasource' + (i+1))}} <i nz-icon nzType='close' (click)='onRemove(i)'></i></ng-template>
         <ng-container [ngSwitch]="ds.type">

@@ -1,0 +1,27 @@
+
+<form nz-form [nzLayout]="form_orientation">
+<nz-form-item>
+    <nz-form-label [nzSm]="8">With</nz-form-label>
+    <nz-form-control [nzSm]="16">
+        <nz-select [ngModelOptions]=" {standalone: true}" [compareWith]='compareWith' style="width: 100%;" [ngModel]='{sheet_id:data.join_sheet_id}' nzPlaceHolder='Dataset' (ngModelChange)='onDataSourceSelected($event)'>
+            <nz-option *ngFor='let o of datasources$ | async; let i = index' [nzLabel]="o.label" [nzValue]="o"></nz-option>
+        </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">On</nz-form-label>
+    <nz-form-control [nzSm]="16">
+        <app-columns-input [ngModelOptions]=" {standalone: true}" [nodeIndex]='index' (change)='onDataChanged()' [(ngModel)]='data.join_on' ></app-columns-input>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">How</nz-form-label>
+    <nz-form-control [nzSm]="16">
+        <nz-radio-group [ngModelOptions]=" {standalone: true}" [(ngModel)]="data.join_how" (ngModelChange)='onDataChanged()'>
+            <label nz-radio nzValue="left">Left</label>
+            <label nz-radio nzValue="right">Right</label>
+            <label nz-radio nzValue="inner">Inner</label>
+          </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>

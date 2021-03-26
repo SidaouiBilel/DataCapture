@@ -64,8 +64,8 @@ export function TransformationReducer(state: Transform = initialState, action: a
     case ACTIONS.UPDATE_NODE_ORDER:{
         const index = action.index
         const newIndex = action.step + index
-        swapArrayElements([...activeSource.nodes], index, newIndex)
-        swapArrayElements([...activeSource.validation_states], index, newIndex)
+        swapArrayElements(activeSource.nodes, index, newIndex)
+        swapArrayElements(activeSource.validation_states, index, newIndex)
 
         return {...state, sourceTransformations}
     }

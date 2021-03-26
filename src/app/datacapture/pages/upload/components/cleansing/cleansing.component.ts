@@ -4,7 +4,7 @@ import { AppState, NotificationService } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionMultiImportReset } from '../../store/actions/multi-import.actions';
 import { Observable, forkJoin, BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { selectUpdatedSheet } from '../../store/selectors/preview.selectors';
+import { selectActiveSourceFileId, selectUpdatedSheet } from '../../store/selectors/preview.selectors';
 import { CleansingService } from '../../services/cleansing.service';
 import { selectTransformedFilePath } from '../transformation/store/transformation.selectors';
 import { selectMappingFields, selectMappingId, selectMappingVersion } from '../../store/selectors/mapping.selectors';
@@ -29,7 +29,6 @@ export class CleansingComponent implements OnInit, OnDestroy {
   domain: string;
   results: any;
   worksheet: any;
-  fileData: any;
   numberOfRows = 100;
   selectedSheet: number;
   targetFields: any;
@@ -39,6 +38,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
   modifications: any = {};
   keys = Object.keys;
   autosave = true;
+  fileId = null;
   // BS
   filters$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   metaData$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -60,13 +60,13 @@ export class CleansingComponent implements OnInit, OnDestroy {
   errorLevels = [
     {level: 'all', label: 'All', type: 'primary'}
     , {level: 'errors', label: 'Errors', type: 'danger'}
-    // , {level: 'warnings', label: 'Warnings', type: 'warning'}
-    // ,{level:'warnings', label:'Warnings', type:'warning'}
+    , {level: 'warnings', label: 'Warnings', type: 'warning'}
   ];
   selectedErrorLevel$ = new BehaviorSubject('all');
   loadCleansingData$;
   datasource$;
   gridReady$ = new Subject();
+  fileId$
 
   constructor(private router: Router,
               private store: Store<AppState>,
@@ -74,6 +74,8 @@ export class CleansingComponent implements OnInit, OnDestroy {
               private modalService: NzModalService,
               public hotkeys: CleansingHotKeysService,
               private not: NotificationService) {
+
+    this.fileId$ = this.store.select(selectActiveSourceFileId);
     this.selectedSheet$ = this.store.select(selectUpdatedSheet);
     this.mappingId$     = this.store.select(selectMappingId);
     this.mappingVersion$     = this.store.select(selectMappingVersion);
@@ -86,10 +88,11 @@ export class CleansingComponent implements OnInit, OnDestroy {
     this.targetFields$.subscribe((targetFields) => { if (targetFields) { this.targetFields = targetFields; } });
     this.selectedSheet$.subscribe((sheet) => { this.selectedSheet = sheet; });
     this.worksheet$.subscribe((res) => { this.worksheet = res; });
+    this.fileId$.subscribe((fileId) => { this.fileId = fileId; });
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.selectedSheet;
     // tslint:disable-next-line: max-line-length
-    this.service.startJob(this.fileData.metaData.file_id, ws, this.domain, isTransformed, this.mappingVersion || this.mappingId).subscribe((job) => {
+    this.service.startJob(this.fileId, ws, this.domain, isTransformed, this.mappingVersion || this.mappingId).subscribe((job) => {
       if (job) {
         this.jobId = job.job_id;
         this.store.dispatch(new ActionSaveJobId(job.job_id));
@@ -214,7 +217,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
             }
             that.filters$.next(GAPIFilters(params.request.filterModel));
             // tslint:disable-next-line: max-line-length
-            that.service.getJobData(that.fileData.metaData.file_id, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel)
+            that.service.getJobData(that.fileId, ws, page , that.numberOfRows, adaptedFilter, adaptedSort, isTransformed, errorLevel)
             .subscribe((res: any) => {
               that.total$.next(res.total);
               const newErrors = {};
@@ -341,7 +344,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     const isTransformed = this.worksheet !== null;
     const ws = this.worksheet ? this.worksheet : this.selectedSheet;
     // tslint:disable-next-line: max-line-length
-    this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingVersion || this.mappingId, this.jobId).subscribe((res: any) => {
+    this.service.editCell(this.fileId, ws, this.domain, this.modifications, isTransformed, this.mappingVersion || this.mappingId, this.jobId).subscribe((res: any) => {
       this.fetchData(this.grid);
       if (this.jobId) {
         this.service.getJobMetaData(this.jobId).subscribe((metaData: any) => {
@@ -391,7 +394,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
     rowNode.stub = true;
     api.redrawRows({ rowNodes: [rowNode] });
     this.runWithEditedCell().subscribe(() => {
-      this.service.getJobData(this.fileData.metaData.file_id, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
+      this.service.getJobData(this.fileId, ws, line , 1, [], {}, isTransformed).subscribe((data: any) => {
         // tslint:disable-next-line: variable-name
         const absolute_index = line;
         this.results[absolute_index] = data.results[absolute_index];
@@ -409,7 +412,7 @@ export class CleansingComponent implements OnInit, OnDestroy {
       const isTransformed = this.worksheet !== null;
       const ws = this.worksheet ? this.worksheet : this.selectedSheet;
       // tslint:disable-next-line: max-line-length
-      this.service.editCell(this.fileData.metaData.file_id, ws, this.domain, this.modifications, isTransformed, this.mappingVersion || this.mappingId, this.jobId).subscribe((res: any) => {
+      this.service.editCell(this.fileId, ws, this.domain, this.modifications, isTransformed, this.mappingVersion || this.mappingId, this.jobId).subscribe((res: any) => {
         observer.next(); observer.complete();
        });
     });

@@ -6,6 +6,7 @@ import { PiplineTemplateViewerComponent } from '../componenets/pipeline-editor/p
 import { PipelineMetadata } from '../models/metadata.model';
 import { ALL_NODES } from '../models/factories/templates.factory';
 import { DcmPreviewGridComponent } from '@app/shared/dcm-preview-grid/dcm-preview-grid.component';
+import { DcmCleansingGridComponent } from '@app/shared/dcm-cleansing-grid/dcm-cleansing-grid.component';
 
 @Injectable({
   providedIn: 'root'
@@ -100,6 +101,27 @@ export class PipelineEditorService {
       this.msg.info('No Preview for this Node')
     } else {
       this.msg.info('Preview is not ready')
+    }
+  }
+
+  cleanseNode(data: any, run: any) {
+    const task = run.tasks.find(t=>t.task_id==data.key)
+    const input = task.input || {}
+    console.log(task)
+    // TODO WEIRD OUTPUT SHOULD INVESTIGATE
+    if(input.file_id && input.sheet_id){
+      this.drawer.create({
+        nzTitle: data.label + ' Cleansing',
+        nzContent: DcmCleansingGridComponent,
+        nzContentParams: {
+          file_id: input.file_id,
+          sheet_id: input.sheet_id,
+          folder: input.folder,
+          cleansing_job_id: task.cleansing_job_id,
+          domain_id: data.domain_id
+        },
+        nzWidth: '90vw',
+      })
     }
   }
 

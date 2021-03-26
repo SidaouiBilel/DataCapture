@@ -4,10 +4,11 @@ import { UploadingPayload } from './../../../models/uploading.model';
 import { AppState, selectProfile } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ActionSaveUploadId, ActionSaveUploadingStatus } from '../../../store/actions/uploading.actions';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { selectUploadingId, selectUploadingStatus } from '../../../store/selectors/upload.selectors';
-import { take } from 'rxjs/operators';
+import { combineAll, take } from 'rxjs/operators';
 import { ExplorerService } from '@app/datacapture/data-explorer/services/explorer.service';
+import { selectActiveFileId, selectActiveTargetSheet, selectUpdatedSheet } from '../../../store/selectors/preview.selectors';
 
 @Component({
   selector: 'app-upload-data',
@@ -43,13 +44,18 @@ export class UploadDataComponent implements OnInit, OnDestroy {
   }
 
   onUpload(): void {
-    this.store.select(selectProfile).pipe(take(1)).subscribe(((profile: any) => {
+    combineLatest(
+      this.store.select(selectProfile).pipe(take(1)), 
+      this.store.select(selectUpdatedSheet).pipe(take(1)),
+      this.store.select(selectActiveFileId).pipe(take(1))
+      )
+    .subscribe((([profile, sheet_id, file_id]: any) => {
       const payload: UploadingPayload = {
         id: null,
         tags: this.selectedTags,
         domain_id: this.metaData.domainId,
-        sheet_id: this.metaData.sheetId,
-        file_id: this.metaData.fileId,
+        sheet_id: sheet_id,
+        file_id: file_id,
         cleansing_job_id: this.metaData.cleansingId,
         transformation_id: this.metaData.transformationId,
         user_id: profile.id,

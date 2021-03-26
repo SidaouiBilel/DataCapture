@@ -1,0 +1,23 @@
+<div class="flex column stretch h-100">
+  <div class="flex start">
+    <nz-badge class="mr-3" nz-tooltip nzTooltipTitle="Total errors" [nzOverflowCount]="99999999"[nzCount]="(metadata$ | async)?.totalErrors || 0" [nzShowZero]="true"></nz-badge>
+    <nz-badge nz-tooltip nzTooltipTitle="Total Rows in Error" [nzOverflowCount]="99999999"[nzCount]="(metadata$ | async)?.totalRowsInError || 0" [nzShowZero]="true"></nz-badge>
+  
+    <!-- <app-clear-grid-filter [gridApi]="(gridApi$ | async)?.api" [filters]="filters$ | async"></app-clear-grid-filter> -->
+  
+    <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='round' class="ghost" nz-button (click)="auditTrial()"><i nz-icon nzType="audit"></i></button>
+    <div class="button-spacing">
+      <button *ngFor='let b of errorLevels' nz-button
+        [ngClass]='{"ghost": (b.level!=(level$ | async))}'
+        [nzType]='(b.level==(level$ | async))?b.type:"default"' (click)='level$.next(b.level)'
+        nzShape='round'>{{b.label}}</button>
+    </div>
+  </div>
+  
+  <div class="flex-1 mt-2">
+    <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="nrows"
+    (cellValueChanged)="onCellEdit($event)" (gridReady)="gridApi$.next($event)">
+  </app-data-grid>
+  </div>
+  
+</div>

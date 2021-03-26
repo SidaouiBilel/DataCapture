@@ -60,9 +60,16 @@ export class PipelineNode{
         };
     }
 
+    public static getNodeOptions(){
+        return {}
+    }
+
     public static getNodeTemplate(options = {}, addons=[]){
         return $(go.Node, 'Spot',
-            {...options},
+            {
+                ...options,
+                ...this.getNodeOptions(),
+            },
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             ...this.makeAddons(addons),
             ...this.makeRunStatus(),

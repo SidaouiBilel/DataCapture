@@ -17,7 +17,7 @@ export const getPreviousHeader = (headers, previousNodes) => {
           }
           break;
           case 'split':
-            if (t.column){
+            if (t.column && !t.into_rows){
               all.add(`${t.column}_part_0`);
               all.add(`${t.column}_part_1`);
             }

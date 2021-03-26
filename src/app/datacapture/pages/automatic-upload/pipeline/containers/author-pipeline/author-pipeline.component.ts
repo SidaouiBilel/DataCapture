@@ -56,9 +56,12 @@ export class AuthorPipelineComponent implements OnDestroy {
     } else {
       this.context.idle = true;
     }
+    
     this.context.monitor = (this.context.success || this.context.running || this.context.failed);
     this.context.monitor_as_preview = this.context.preview && this.context.monitor;
     this.context.monitor_as_run = !this.context.preview && this.context.monitor;
+
+    this.context.is_running = this.context.running  && !this.context.paused
   }
 
   saveAndPublish=()=>this.save().then(()=>this.publish())
@@ -68,7 +71,7 @@ export class AuthorPipelineComponent implements OnDestroy {
       forkJoin([this.metadata$.pipe(take(1))])
       .subscribe(([metaData]: any) => {
           this.pipelines.publishDag(metaData.pipeline_id).subscribe(() => {
-            this.ntf.success('Pipeline Published');
+            // this.ntf.success('Pipeline Published');
             resolve(null)
         });
       })
@@ -81,7 +84,7 @@ export class AuthorPipelineComponent implements OnDestroy {
         if (metaData.name != '') {
           this.pipelines.saveDag(metaData, nodes, links).subscribe((pipeline_id) => {
               this.store.dispatch(new PipelineEditMetaData({...metaData, pipeline_id}));
-              this.ntf.success('Pipeline saved.');
+              // this.ntf.success('Pipeline saved.');
               resolve(pipeline_id)
             });
         } else {
@@ -108,7 +111,8 @@ export class AuthorPipelineComponent implements OnDestroy {
   monitorRun=(runId)=>{
     this.stopMonitoring()
     this.stop$ = new Subject()
-    timer(0,2000).pipe(takeUntil(this.stop$), switchMap(()=>this.pipelines.getRun(runId)), tap(this.onRunDataRecieved)).subscribe();
+    timer(0,2000).pipe(takeUntil(this.stop$), switchMap(()=>this.pipelines.getRun(runId)), tap(this.onRunDataRecieved))
+      .subscribe((null),()=>this.resetRunData());
   }
   
   // CALL TO GET IMMEDIATE RESULT or RESTART POOLING
@@ -168,7 +172,7 @@ export class AuthorPipelineComponent implements OnDestroy {
   onRunIdChanged=(runId)=>{(runId)?this.monitorCurrentRun():this.resetRunData();}
   onDiagramNodeDataChange(nodes){this.store.dispatch(new PipelineEditNodes(nodes));}
   onDiagramLinkDataChange(links){this.store.dispatch(new PipelineEditLinks(links));}
-  onTriggerComplete=()=>{this.loadingTrigger$.next(null)}
+  onTriggerComplete=()=>{this.loadingTrigger$.next(false)}
   // EVENT HANDLERS -
 
   // TRIGGER EVENTS +
