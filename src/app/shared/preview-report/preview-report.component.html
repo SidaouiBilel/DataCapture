@@ -1,0 +1,172 @@
+<div class="loading" *ngIf="!report_content">
+  <nz-spin nzSimple nzTip="Loading the report..."></nz-spin>
+</div>
+
+<div *ngIf="report_content">
+  <nz-tabset>
+    <nz-tab nzTitle="Overview">
+      <div class="overview-container">
+        <div class="over">
+          <h3>Dataset statistics: </h3>
+          <div class="var-stat">
+            <b>Number of variables:</b>
+            <p>{{report_content?.table?.n_var}}</p>
+          </div>
+  
+          <div class="var-stat">
+            <b>Number of observations:</b>
+            <p>{{report_content?.table?.n}}</p>
+          </div>
+  
+          <div class="var-stat">
+            <b>Missing cells:</b>
+            <p>{{report_content?.table?.n_cells_missing}}</p>
+          </div>
+  
+          <div class="var-stat">
+            <b>Missing cells (%):</b>
+            <p>{{(report_content?.table?.p_cells_missing*100).toFixed(2)}}</p>
+          </div>
+  
+          <div class="var-stat">
+            <b>Duplicate rows: </b>
+            <p>{{report_content?.table?.n_duplicates}}</p>
+          </div>
+          <div class="var-stat">
+            <b>Duplicate rows (%) :</b>
+            <p>{{(report_content?.table?.p_duplicates*100).toFixed(2)}}</p>
+          </div>
+        </div>
+        <div class="over">
+          <h3>Variable types: </h3>
+          <div class="var-stat">
+            <b>Numeric:</b>
+            <p>{{report_content?.table?.types?.Numeric}}</p>
+          </div>
+          <div class="var-stat">
+            <b>Categorical:</b>
+            <p>{{report_content?.table?.types?.Categorical}}</p>
+          </div>
+          <div class="var-stat">
+            <b>Unsupported:</b>
+            <p>{{report_content?.table?.types?.Unsupported}}</p>
+          </div>
+  
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="Reproduction">
+      <div class="reproduction">
+        <h3>Reproduction: </h3>
+        <div class="var-stat">
+          <b>Analysis started:</b>
+          <p>{{report_content?.analysis?.date_start}}</p>
+        </div>
+        <div class="var-stat">
+          <b>Analysis finished:</b>
+          <p>{{report_content?.analysis?.date_end}}</p>
+        </div>
+        <div class="var-stat">
+          <b>Duration:</b>
+          <p>{{report_content?.analysis?.duration}}</p>
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="Variables ({{length_vars}})">
+      <div class="variables">
+        <nz-collapse nzAccordion>
+          <nz-collapse-panel *ngFor="let varriable of report_content?.variables | keyvalue" [nzHeader]="varriable.key">
+            <div class="var-container">
+              <div class="left">
+                <div class="vars">
+                  <h3>{{varriable.key}}</h3>
+                  <div *ngFor="let item of varriable.value | keyvalue">
+                    <div class="var-stat" *ngIf="item.key === 'type'">
+                      <b>Type:</b>
+                      <p>{{item.value}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="vars" *ngFor="let item of varriable.value | keyvalue">
+                  <div class="var-stat" *ngIf="item.key === 'n_distinct'">
+                    <b>Distinct:</b>
+                    <p>{{item.value}}</p>
+                  </div>
+                  <div class="var-stat" *ngIf="item.key === 'p_distinct'">
+                    <b>Distinct (%):</b>
+                    <p>{{(item.value*100).toFixed(2)}}</p>
+                  </div>
+                  <div class="var-stat" *ngIf="item.key === 'n_missing'">
+                    <b>Missing: </b>
+                    <p>{{item.value}}</p>
+                  </div>
+                  <div class="var-stat" *ngIf="item.key === 'p_missing'">
+                    <b>Missing (%):</b>
+                    <p>{{(item.value*100).toFixed(2)}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="right">
+                <div class="sample">
+                  <h3>Unique</h3>
+                  <div class="unique" *ngFor="let item of varriable.value | keyvalue">
+                    <div class="stat" *ngIf="item.key === 'n_unique'">
+                      <b>Unique:</b>
+                      <p>{{item.value}}</p>
+                    </div>
+                    <div class="stat" *ngIf="item.key === 'p_unique'">
+                      <b>Unique(%):</b>
+                      <p>{{(item.value*100).toFixed(2)}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="sample">
+                  <h3>Sample</h3>
+                  <div *ngFor="let item of varriable.value | keyvalue">
+                    <div *ngIf="item.key === 'first_rows'">
+                      <div class="unique" *ngFor="let sample of item.value | keyvalue">
+      
+                        <div class="stat" *ngIf="sample.key === '0'">
+                          <b>1st row:</b>
+                          <p>{{sample.value}}</p>
+                        </div>
+                        <div class="stat" *ngIf="sample.key === '1'">
+                          <b>2nd row:</b>
+                          <p>{{sample.value}}</p>
+                        </div>
+      
+                        <div class="stat" *ngIf="sample.key === '2'">
+                          <b>3rd row:</b>
+                          <p>{{sample.value}}</p>
+                        </div>
+      
+                        <div class="stat" *ngIf="sample.key === '3'">
+                          <b>4th row:</b>
+                          <p>{{sample.value}}</p>
+                        </div>
+      
+                        <div class="stat" *ngIf="sample.key === '4'">
+                          <b>5th row:</b>
+                          <p>{{sample.value}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="Warnings ({{report_content?.messages.length}})">
+      <div class="warnings">
+        <div style="width: 60%;">
+          <p class="tr-warn" *ngFor="let warning of report_content?.messages | keyvalue">
+            {{warning.value}}
+          </p>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>

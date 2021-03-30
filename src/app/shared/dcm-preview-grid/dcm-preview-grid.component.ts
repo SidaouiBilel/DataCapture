@@ -62,7 +62,7 @@ export class DcmPreviewGridComponent implements OnInit {
                 cellRenderer: 'autoTypeRenderer',
                 filter: GAPIFilterComponenet('string'),
                 filterParams: GAPIAllFilterParams(params),
-                chartDataType: 'series'
+                chartDataType: (h == '#####' || h == '####') ? 'category' : 'series',
             }));
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);

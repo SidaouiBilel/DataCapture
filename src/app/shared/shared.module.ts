@@ -53,6 +53,7 @@ import { NodePipelineComponent } from './setup/nodes/other/node-pipeline/node-pi
 import { NodeTranformationService } from './setup/nodes/other/node-pipeline/service/node-transformation.service';
 import { ManualImportNodeComponent } from './setup/nodes/datasources/manual-import-node/manual-import-node.component';
 import { SimpleFilterPipe } from './simple-filter/simple-filter.pipe';
+import { PreviewReportComponent } from './preview-report/preview-report.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -96,6 +97,7 @@ const Components = [
   PostgresUploadNodeComponent,
   DcmPreviewGridComponent,
   ConnectorPreviewComponent,
+  PreviewReportComponent
 ];
 
 @NgModule({

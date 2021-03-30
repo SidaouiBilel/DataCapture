@@ -67,19 +67,85 @@ export class PipelineEditorComponent implements AfterViewInit{
     dia.nodeTemplateMap = generateNodesTemplateMap({
       doubleClick: (e, node) => {
         const data = node.data
-        if(this.diagramModelData.run){
+        if (this.diagramModelData.run) {
           const run = this.diagramModelData.run
-          const task = run.tasks.find(t=>t.task_id==data.key)
-          if(task && ["success","running"].includes(task.state)){
+          const task = run.tasks.find(t => t.task_id == data.key)
+          if (task && ["success", "running"].includes(task.state)) {
             this.previweNode(node.data, this.diagramModelData.run)
             return
           }
         }
+
         that.editNode(data);
         return
-      }
+      },
+/*       click: (e, node) => {
+        const run = this.diagramModelData.run;
+        if (run && ["success"].includes(run.state)) {
+          console.log('---> Clicked')
+          console.log(node);
+          console.log(node.data);
+        }
+      }, */
+      contextMenu:
+        $("ContextMenu",
+          $("ContextMenuButton",
+            $(go.Shape,
+              {
+                stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
+              },
+            ),
+            $(go.TextBlock,
+              {
+                text: 'Table', margin: 0, font: "11pt sans-serif", alignment: go.Spot.Center
+              }),
+            {
+              click: (e, obj) => {
+                const node = obj.part;
+                const data = node.data
+
+                if (this.diagramModelData.run) {
+                  const run = this.diagramModelData.run
+                  const task = run.tasks.find(t=>t.task_id==data.key)
+                  if(task && ["success","running"].includes(task.state)){
+                    this.previweNode(node.data, this.diagramModelData.run)
+                    return
+                  }
+                }
+                that.editNode(data);
+                return
+              }
+            }),
+          $("ContextMenuButton",
+            $(go.Shape,
+              {
+                stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
+              },
+            ),
+            $(go.TextBlock,
+              {
+                text: 'Report', margin: 0, font: "11pt sans-serif", alignment: go.Spot.Center
+              }),
+            {
+              click: (e, obj) => {
+                const node = obj.part;
+                if (this.diagramModelData.run) {
+                  const run = this.diagramModelData.run
+                  const task = run.tasks.find(t => t.task_id == node.data.key)
+
+                  if (task && ["success"].includes(task.state)) {
+                    console.log('REPORT')
+                    this.reportNode(task);
+                    return
+                  }
+
+                }
+
+              }
+            })
+        )
     },
-    []
+      []
     );
 
     dia.linkTemplate =  $(go.Link,
@@ -176,4 +242,7 @@ export class PipelineEditorComponent implements AfterViewInit{
     this.editor.previewNode(data, run)
   }
 
+  reportNode(task: any) {
+    this.editor.reportNode(task)
+  }
 }
