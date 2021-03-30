@@ -32,6 +32,10 @@ export class FileImportService {
     return this.http.put(environment.import + 'data/' + worksheet, {filters} ,{ params });
   }
 
+  public getReportData(sheet_id: any) {
+    return this.http.get(environment.import + 'report/' + sheet_id);
+  }
+
   public updateRow(filename: string, worksheet: string, worksheetId: string, nrows: number, page: number, num: number[], lines: string[]) {
     return this.http.post('environment.endPoints.upload1' + 'data', {
       filename,
