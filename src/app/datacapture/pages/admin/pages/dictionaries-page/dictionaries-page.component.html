@@ -5,19 +5,30 @@
             <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Application Dictionnaries"></nz-page-header>
             <ng-template #userTitle><i class="mr-2" nz-icon nzType="book" nzTheme="outline"></i>Dictionaries</ng-template>
         </div>
-
+        
         <div class="fill w-100">
             <div class="flex fill stretch column">
-                <div class="flex between">
+                <div class="flex wrap between mb-2">
                     <div class="button-spacing mb-2">
                         <button nz-button class="ghost" (click)='addDictionary()'><i nz-icon nzType='plus'></i>Add Dictionary</button>
                         <button nz-button class="ghost" (click)='loadData()'><i nz-icon nzType='reload'></i></button>      
                     </div>
                     <div></div>
                 </div>
+                
+                <div class="flex-1 flex-scroll bg-grey">
+                    <div nz-row nzType='flex' nzAlign='stretch'>
+                        <div nz-col class="gutter-row" [nzSpan]="24"
+                        *ngFor="let dict of dictionaries$">
+                            
+                        <app-dictionary-card [data]='dict' [loading]='loading' ></app-dictionary-card>
+                    
+                      </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
-        
     </div>
 
   </div>

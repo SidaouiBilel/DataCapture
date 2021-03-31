@@ -19,7 +19,7 @@ export class DictionaryModalComponent extends EntityModal implements OnInit {
   }
 
   canSave() {
-    return this.data.name && this.data.description;
+    return this.data.name;
   }
 
   canClose() {

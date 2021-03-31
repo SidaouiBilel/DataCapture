@@ -1,0 +1,39 @@
+<ng-template #extraTemplate>
+    <div class="button-spacing ghost">
+      <button nzShape='circle' nz-button (click)='onEdit()'><i nz-icon nzType="edit"></i></button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nzShape='circle' nz-button (click)='onCopy()'><i nz-icon nzType="copy"></i></button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    </div>
+  </ng-template>
+  <ng-template #titleTemplate>
+    <div class="flex start wrap">
+      <h4>
+        <nz-avatar [nzSize]="42" nzIcon="block" style="background-color:#1f306b;"></nz-avatar>
+        {{data?.name}}
+      </h4>
+    </div>
+  </ng-template>
+  
+  <ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
+  <ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
+
+  <nz-card [nzLoading]='loading' [nzExtra]="extraTemplate" [nzTitle]='titleTemplate'>
+
+    <div nz-paragraph class="mb-2">
+        <i nz-icon nzType="clock-circle" nzTheme="outline"></i><i> Created On</i>
+        {{data?.created_on | date: 'dd/MM/yyyy HH:mm'}}
+        <nz-divider nzType="vertical"></nz-divider>
+        <i nz-icon nzType="edit" nzTheme="outline"></i><i> Modified On</i>
+        {{data?.modified_on | date: 'dd/MM/yyyy HH:mm'}}
+      
+        <p nz-paragraph class="dom-description">
+            {{data?.description}}
+        </p>
+      
+    </div>
+
+    <ng-content></ng-content>
+  </nz-card>
+  

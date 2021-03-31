@@ -42,6 +42,7 @@ import { GlobalReferenceDataComponent } from './pages/global-reference-data/glob
 import { ReferenceTypeVersionEditorComponent } from './componenets/references/reference-type-version-editor/reference-type-version-editor.component';
 import { DictionariesPageComponent } from './pages/dictionaries-page/dictionaries-page.component';
 import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-modal.component';
+import { DictionaryCardComponent } from './componenets/dictionary-card/dictionary-card.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-m
     GlobalReferenceDataComponent,
     ReferenceTypeVersionEditorComponent,
     DictionariesPageComponent,
-    DictionaryModalComponent
+    DictionaryModalComponent,
+    DictionaryCardComponent
   ],
   providers:[
     CollectionEditor,

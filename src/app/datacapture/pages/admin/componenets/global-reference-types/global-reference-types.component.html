@@ -1,5 +1,4 @@
 <div class="flex fill stretch column">
-
     <div class="flex between">
         <div class="button-spacing mb-2">
             <button nz-button class="ghost" (click)='addRefrenceType()'><i nz-icon nzType='plus'></i>Add Reference Type</button>
@@ -7,9 +6,8 @@
         </div>
         <div></div>
     </div>
-
-
-<div class="flex-scroll  bg-grey">
+    
+    <div class="flex-scroll  bg-grey">
         <nz-card *ngFor="let item of list$ | async">
             <div class="flex between top">
 
@@ -62,5 +60,5 @@
                     
             </div>
         </nz-card>
-</div>
+    </div>
 </div>
