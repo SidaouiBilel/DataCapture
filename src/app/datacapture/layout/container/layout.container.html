@@ -57,6 +57,10 @@
                 <i nz-icon nzType="api"></i>
                 <span>Connectors</span>
               </li>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/dictionaries']">
+                <i nz-icon nzType="book"></i>
+                <span>Dictionaries</span>
+              </li>
             </ul>
           </li>
 

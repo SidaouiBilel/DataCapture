@@ -40,6 +40,8 @@ import { GlobalReferenceTypesComponent } from './componenets/global-reference-ty
 import { ShareWithCollectionsComponent } from './modals/share-with-collections/share-with-collections.component';
 import { GlobalReferenceDataComponent } from './pages/global-reference-data/global-reference-data.component';
 import { ReferenceTypeVersionEditorComponent } from './componenets/references/reference-type-version-editor/reference-type-version-editor.component';
+import { DictionariesPageComponent } from './pages/dictionaries-page/dictionaries-page.component';
+import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-modal.component';
 
 
 @NgModule({
@@ -75,7 +77,9 @@ import { ReferenceTypeVersionEditorComponent } from './componenets/references/re
     GlobalReferenceTypesComponent,
     ShareWithCollectionsComponent,
     GlobalReferenceDataComponent,
-    ReferenceTypeVersionEditorComponent
+    ReferenceTypeVersionEditorComponent,
+    DictionariesPageComponent,
+    DictionaryModalComponent
   ],
   providers:[
     CollectionEditor,

@@ -1,0 +1,29 @@
+<div class="dict-container">
+
+    <div class="flex column fill stretch">
+        <div>
+            <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Application Dictionnaries"></nz-page-header>
+            <ng-template #userTitle><i class="mr-2" nz-icon nzType="book" nzTheme="outline"></i>Dictionaries</ng-template>
+        </div>
+
+        <div class="fill w-100">
+            <div class="flex fill stretch column">
+                <div class="flex between">
+                    <div class="button-spacing mb-2">
+                        <button nz-button class="ghost" (click)='addDictionary()'><i nz-icon nzType='plus'></i>Add Dictionary</button>
+                        <button nz-button class="ghost" (click)='loadData()'><i nz-icon nzType='reload'></i></button>      
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+  </div>
+
+  
+
+
+
+

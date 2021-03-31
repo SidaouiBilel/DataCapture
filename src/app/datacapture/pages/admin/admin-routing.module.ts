@@ -8,6 +8,7 @@ import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.componen
 import { CollectionDetailsComponent } from './pages/collection-details/collection-details.component';
 import { GlobalReferencesComponent } from './pages/global-references/global-references.component';
 import { GlobalReferenceDataComponent } from './pages/global-reference-data/global-reference-data.component';
+import { DictionariesPageComponent } from './pages/dictionaries-page/dictionaries-page.component';
 
 
 const routes: Routes = [
@@ -59,6 +60,19 @@ const routes: Routes = [
   {
     path: 'connectors',
     loadChildren : () => import('app/datacapture/pages/connectors/connectors.module').then(m => m.ConnectorsModule)
+  },
+  {
+    path: 'dictionaries',
+    children:[
+      {
+        path: '',
+        component: DictionariesPageComponent,
+      },
+      {
+        path: '**',
+        redirectTo: ''
+      }
+    ]
   },
   {
     path: '**',
