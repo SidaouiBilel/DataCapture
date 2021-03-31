@@ -46,12 +46,12 @@ import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-m
 
 @NgModule({
   declarations: [
-    RefernceDataPageComponent, 
-    FieldsPageComponent, 
-    DomainsPageComponent, 
+    RefernceDataPageComponent,
+    FieldsPageComponent,
+    DomainsPageComponent,
     DomainConfigModalComponent,
     SuperDomainConfigModalComponent,
-    FieldModalComponent, 
+    FieldModalComponent,
     SuperDomainsPageComponent,
     DomainCardComponent,
     DomainsHierarchyComponent,
@@ -93,6 +93,6 @@ import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-m
     StoreModule.forFeature(FEATURE_NAME, AdminReducer),
     EffectsModule.forFeature([]),
   ],
-  entryComponents:[ShareWithCollectionsComponent, DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent, RefrenceTypeEditorComponent, ReferenceDataEditorComponent]
+  entryComponents:[ShareWithCollectionsComponent,DictionaryModalComponent, DomainConfigModalComponent, FieldModalComponent, SuperDomainConfigModalComponent, RefrenceTypeEditorComponent, ReferenceDataEditorComponent]
 })
 export class AdminModule { }

@@ -8,12 +8,12 @@ import { DictionaryService } from '../../services/dictionary.service';
 })
 export class DictionariesPageComponent implements OnInit {
 
-  constructor(private editor: DictionaryService) {
+  constructor(private dictService: DictionaryService) {
     this.loadData()
   }
 
   addDictionary() {
-    this.editor.openAddDictionary().subscribe(() => {
+    this.dictService.openDictionaryModal().subscribe(() => {
       this.loadData();
     });
   }

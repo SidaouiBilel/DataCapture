@@ -15,17 +15,17 @@ export class DictionaryService {
 
   url = environment.admin
 
-  constructor(private modal: NzModalService, private http: HttpClient) { }
+  constructor(private modalService: NzModalService, private http: HttpClient) { }
 
-  openAddDictionary() {
-    let obj = new Dictionary()
+  openDictionaryModal() {
+    let dictionary = new Dictionary()
 
-    const modal = this.modal.create({
+    const modal = this.modalService.create({
       nzTitle: 'Add Dictionary',
       nzFooter:[],
       nzContent: DictionaryModalComponent,
       nzComponentParams: {
-        data: obj
+        data: dictionary,
       },
     });
 
@@ -43,7 +43,7 @@ export class DictionaryService {
     return this.http.post( this.url + "dictionary/", dict)
   }
 
-  getAll(){
+  getAllDictionaries(){
     return this.http.get( this.url + "dictionary/")
   }
 }
