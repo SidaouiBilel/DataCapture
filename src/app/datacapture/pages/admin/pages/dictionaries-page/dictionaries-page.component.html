@@ -1,40 +1,32 @@
-<div class="dict-container">
-
-    <div class="flex column fill stretch">
-        <div>
-            <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Application Dictionnaries"></nz-page-header>
-            <ng-template #userTitle><i class="mr-2" nz-icon nzType="book" nzTheme="outline"></i>Dictionaries</ng-template>
-        </div>
+<div class="flex-1 flex stretch column h-100">
+    <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Application Dictionnaries"></nz-page-header>
+    <ng-template #userTitle><i class="mr-2" nz-icon nzType="book" nzTheme="outline"></i>Dictionaries</ng-template>
         
-        <div class="fill w-100">
-            <div class="flex fill stretch column">
-                <div class="flex wrap between mb-2">
-                    <div class="button-spacing mb-2">
-                        <button nz-button class="ghost" (click)='addDictionary()'><i nz-icon nzType='plus'></i>Add Dictionary</button>
-                        <button nz-button class="ghost" (click)='loadData()'><i nz-icon nzType='reload'></i></button>      
-                    </div>
-                    <div></div>
-                </div>
-                
-                <div class="flex-1 flex-scroll bg-grey">
-                    <div nz-row nzType='flex' nzAlign='stretch'>
-                        <div nz-col class="gutter-row" [nzSpan]="24"
-                        *ngFor="let dict of dictionaries$">
-                            
-                        <app-dictionary-card [data]='dict' [loading]='loading' ></app-dictionary-card>
-                    
-                      </div>
-                    </div>
-                    
-                </div>
-            </div>
+    <div class="flex wrap between mb-2">
+        <div class="button-spacing">
+            <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async))" (click)='addDictionary()'><i nz-icon nzType='plus'></i>Add Dictionary</button>
+            <button nz-button class="ghost" nzType="default" (click)='loadData()'><i nz-icon nzType='reload'></i></button>
         </div>
-    </div>
-
-  </div>
-
   
+      <app-display-changer></app-display-changer>
 
-
-
-
+      <div>
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Dictionaries"/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+  
+    </div>
+  
+    <div class="flex-1 flex-scroll bg-grey">
+      <div nz-row nzType='flex' nzAlign='stretch'>
+        <div nz-col class="gutter-row" *ngFor="let dict of dictionaries$ | async | filter :'name': searchTerm" [nzSpan]="(s.displayList$ | async) ? 24 : 8">
+            <app-dictionary-card [class]='(s.displayList$ | async) ? "" : "h-100"' [data]='dict' [loading]='loading'
+            (edited)='loadData()' (deleted)='loadData()'></app-dictionary-card>
+        </div>
+      </div>
+    </div>
+</div>

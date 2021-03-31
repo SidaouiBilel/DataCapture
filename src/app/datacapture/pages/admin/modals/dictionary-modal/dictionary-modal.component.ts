@@ -22,21 +22,16 @@ export class DictionaryModalComponent extends EntityModal implements OnInit {
     return this.data.name;
   }
 
-  canClose() {
-    return !this.loading;
-  }
-
-  close() {
-    this.modalrRef.close(false);
-  }
-
   save() {
     if (this.canSave()) {
-      this.loading = false;
+      this.loading = true;
       this.dictService.saveDictionary(this.data).subscribe(res => {
         this.modalrRef.close(true);
+        this.loading = false;
+      }, (err) => {
+        this.loading = false
       });
     }
   }
-
+  
 }

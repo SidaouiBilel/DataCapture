@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DictionaryEditorService } from '../../services/dictionary-editor.service';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-dictionary-card',
@@ -8,19 +10,33 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DictionaryCardComponent implements OnInit {
   @Input() data;
   @Input() loading;
+  @Input() class;
+  small;
 
-  constructor() { }
+  @Output() edited = new EventEmitter<boolean>();
+  @Output() deleted = new EventEmitter<boolean>();
 
+  constructor(private dictEditorService: DictionaryEditorService, public s: StoreService) {
+    s.displaySize$.subscribe((size) => this.small = (size === 'small'));
+  }
+
+  categories() {
+
+  }
+  
   ngOnInit(): void {
   }
 
   onEdit() {
-  }
-
-  onCopy() {
+    this.dictEditorService.openDictionaryModal(this.data).subscribe(() => {
+      this.edited.emit(true);
+    });
   }
 
   onDelete() {
+    this.dictEditorService.showDeleteConfirm(this.data).subscribe(() => {
+      this.deleted.emit(true);
+    });
   }
 
 }
