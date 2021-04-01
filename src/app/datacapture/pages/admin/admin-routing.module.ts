@@ -1,3 +1,4 @@
+import { CategoryPageComponent } from './pages/category-page/category-page.component';
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DomainsPageComponent } from './pages/domains-page/domains-page.component';
@@ -29,8 +30,8 @@ const routes: Routes = [
         component: CollectionDetailsComponent,
         children: [
           {
-          path: 'fields',
-          component: FieldsPageComponent,
+            path: 'fields',
+            component: FieldsPageComponent,
           },
           {
             path: 'references',
@@ -42,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'references',
-    children:[
+    children: [
       {
         path: '',
         component: GlobalReferencesComponent,
@@ -59,19 +60,23 @@ const routes: Routes = [
   },
   {
     path: 'connectors',
-    loadChildren : () => import('app/datacapture/pages/connectors/connectors.module').then(m => m.ConnectorsModule)
+    loadChildren: () => import('app/datacapture/pages/connectors/connectors.module').then(m => m.ConnectorsModule)
   },
   {
     path: 'dictionaries',
-    children:[
+    children: [
       {
         path: '',
         component: DictionariesPageComponent,
       },
       {
+        path: ':id/category',
+        component: CategoryPageComponent
+      },
+      {
         path: '**',
         redirectTo: ''
-      }
+      },
     ]
   },
   {

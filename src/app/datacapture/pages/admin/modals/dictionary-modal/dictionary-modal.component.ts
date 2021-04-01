@@ -33,5 +33,9 @@ export class DictionaryModalComponent extends EntityModal implements OnInit {
       });
     }
   }
-  
+
+  canClose() {
+    return !this.loading;
+  }
+
 }

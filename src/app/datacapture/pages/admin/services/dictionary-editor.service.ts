@@ -18,16 +18,16 @@ export class DictionaryEditorService {
     let edit = false;
     let dictionary = new Dictionary()
     if(data) {
-      dictionary = data;
+      dictionary = { ...data};
       edit = true
-    } 
+    }
     const modal = this.modalService.create({
       nzTitle: 'Add Dictionary',
       nzFooter:[],
       nzContent: DictionaryModalComponent,
       nzComponentParams: {
         data: dictionary,
-        edit: edit
+        edit
       },
     });
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { DictionaryEditorService } from '../../services/dictionary-editor.service';
 import { StoreService } from '../../services/store.service';
 
@@ -16,14 +17,14 @@ export class DictionaryCardComponent implements OnInit {
   @Output() edited = new EventEmitter<boolean>();
   @Output() deleted = new EventEmitter<boolean>();
 
-  constructor(private dictEditorService: DictionaryEditorService, public s: StoreService) {
+  constructor(private dictEditorService: DictionaryEditorService, public s: StoreService,private router: Router) {
     s.displaySize$.subscribe((size) => this.small = (size === 'small'));
   }
 
   categories() {
 
   }
-  
+
   ngOnInit(): void {
   }
 
@@ -37,6 +38,11 @@ export class DictionaryCardComponent implements OnInit {
     this.dictEditorService.showDeleteConfirm(this.data).subscribe(() => {
       this.deleted.emit(true);
     });
+  }
+
+
+  navigate(r) {
+    this.router.navigate(r);
   }
 
 }

@@ -1,0 +1,39 @@
+<div *nzModalTitle>Reference Type</div>
+
+<h6 nz-typography>Add Category</h6>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Code</nz-form-label>
+  <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.code' nz-input /></nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">CAT</nz-form-label>
+  <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.cat' nz-input /></nz-form-control>
+</nz-form-item>
+
+
+
+<h6 nz-typography>Keywords</h6>
+<div *ngFor="let p of data.keywords ; let i=index">
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">Key {{i+1}}</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <nz-input-group nzCompact>
+        <input style="width: 50%;" nzPlaceholder='Keyword' [(ngModel)]='p.keyword' nz-input/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+
+<button nz-button nzType='dashed' nzBlock (click)='data.keywords.push({})'><i nz-icon nzType='plus'></i>Add
+  keywords</button>
+
+
+<div *nzModalFooter>
+  <div class="button-spacing flex end">
+    <button nz-button (click)='close()'>Cancel</button>
+    <button nz-button nzType='primary' [nzLoading]='loading' (click)='onSave()'>Save</button>
+  </div>
+</div>

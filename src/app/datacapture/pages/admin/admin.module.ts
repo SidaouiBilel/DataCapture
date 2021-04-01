@@ -43,6 +43,9 @@ import { ReferenceTypeVersionEditorComponent } from './componenets/references/re
 import { DictionariesPageComponent } from './pages/dictionaries-page/dictionaries-page.component';
 import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-modal.component';
 import { DictionaryCardComponent } from './componenets/dictionary-card/dictionary-card.component';
+import { CategoryPageComponent } from './pages/category-page/category-page.component';
+import { CategoryModalComponent } from './modals/category-modal/category-modal.component';
+import { CategoryCardComponent } from './componenets/category-card/category-card.component';
 
 
 @NgModule({
@@ -81,7 +84,10 @@ import { DictionaryCardComponent } from './componenets/dictionary-card/dictionar
     ReferenceTypeVersionEditorComponent,
     DictionariesPageComponent,
     DictionaryModalComponent,
-    DictionaryCardComponent
+    DictionaryCardComponent,
+    CategoryPageComponent,
+    CategoryModalComponent,
+    CategoryCardComponent
   ],
   providers:[
     CollectionEditor,

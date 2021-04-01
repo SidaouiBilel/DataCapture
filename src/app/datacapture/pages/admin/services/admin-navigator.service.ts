@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AdminNavigator {
 
+
   activeDomain$ = new BehaviorSubject(null);
   activeSubDomina$ = new BehaviorSubject(null);
 
@@ -17,7 +18,7 @@ export class AdminNavigator {
 
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd && event.url) {
-        const phrase = event.url; 
+        const phrase = event.url;
         const collection = /collection\/([0-9a-zA-z]*)\//.exec(phrase);
         const domain = /domains\/([0-9a-zA-z]*)\//.exec(phrase);
 
@@ -50,4 +51,9 @@ export class AdminNavigator {
   gotToRefTypes() {
     this.router.navigate(['datacapture', 'admin', 'references'])
   }
+
+  gotToCategorieData(id: any) {
+    this.router.navigate(['datacapture', 'admin', 'dictionaries',id,'category'])
+  }
+
 }

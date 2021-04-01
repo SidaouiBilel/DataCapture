@@ -52,7 +52,7 @@ export class DomainsPageComponent implements OnInit {
             return true;
           }
         }
-      }  
+      }
     }
     return false;
   }

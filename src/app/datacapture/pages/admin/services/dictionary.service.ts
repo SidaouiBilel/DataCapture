@@ -21,9 +21,6 @@ export class DictionaryService {
   }
 
   deleteDictionary(dict){
-    return this.http.request('DELETE', this.url + "dictionary/", {
-      headers: new HttpHeaders({'Content-Type': 'application/json'}),
-      body: dict
-    })
+    return this.http.delete( this.url + "dictionary/"+dict.id)
   }
 }
