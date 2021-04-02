@@ -23,6 +23,33 @@
   [nzSize]='s.displaySize$ | async'>
   <app-meta *ngIf='!small' [data]='data'></app-meta>
 
-  <button nz-button nzType="default" (click)="navigate(['/datacapture/admin/dictionaries', data.id, 'category'])"><i
+  <!--(click)="navigate(['/datacapture/admin/dictionaries', data.id, 'category'])"-->
+
+  <button nz-button nzType="default" (click)="goKeyword()"><i
       nz-icon nzType="font-size" nzTheme="outline"></i>Keywords</button>
+
+
+
+      <div *ngIf="table">
+        <nz-divider></nz-divider>
+        <nz-table #basicTable [nzData]="data?.keywords">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let key of basicTable.data; let i = index">
+              <td>{{i + 1}} - {{key.keyword}}</td>
+              <td>
+                <button nzShape='circle' nz-button (click)='onEditKeyword(i)'><i nz-icon nzType="edit"></i></button>
+                <nz-divider nzType='vertical'></nz-divider>
+                <button nzShape='circle' nz-button (click)='onDeleteKeyword(i)'><i nz-icon nzType="delete"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+
 </nz-card>

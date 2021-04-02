@@ -13,7 +13,8 @@ export class CategoryCardComponent implements OnInit {
   @Input() data;
   @Input() loading;
   @Input() class;
-  small
+  small;
+  table = false;
 
   @Output() edited = new EventEmitter<boolean>();
   @Output() deleted = new EventEmitter<boolean>();
@@ -21,6 +22,10 @@ export class CategoryCardComponent implements OnInit {
 
   constructor( public s: StoreService,private router: Router,private catService:CategoryService) {
     s.displaySize$.subscribe((size) => this.small = (size === 'small'));
+  }
+
+  goKeyword() {
+    this.table = !this.table
   }
 
   ngOnInit(): void {
@@ -33,6 +38,14 @@ export class CategoryCardComponent implements OnInit {
       this.edited.emit(true);
     });
 
+  }
+
+  onEditKeyword(index) {
+    console.log(index)
+  }
+
+  onDeleteKeyword(index) {
+    console.log(index)
   }
 
   onDelete() {
