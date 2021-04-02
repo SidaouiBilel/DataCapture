@@ -11,6 +11,9 @@ import { EntityModal } from '../entity-modal';
 export class CategoryModalComponent extends EntityModal implements OnInit {
 
   data
+  key = false
+  index
+
   constructor(private mr: NzModalRef, private ds: DomainService, private catService: CategoryService) {
     super(mr);
   }
@@ -23,7 +26,6 @@ export class CategoryModalComponent extends EntityModal implements OnInit {
     this.modalrRef.close(false);
   }
 
-  //Save a category
   onSave() {
     if (this.canSave()) {
       this.loading = true;

@@ -20,20 +20,31 @@ export class CategoryService {
 
   loading = false;
 
-  openCategoryModal(data: any) {
-    let edit = false;
+  openCategoryModal(data, i, key) {
     let category = new Category(data.dict_id);
+    let keyword = false
+    let index = null
+
     if (data) {
       category = { ...data };
     }
+
+    if (key && i != null) {
+      keyword = true;
+      index = i;
+    }
+
     const modal = this.modal.create({
       nzTitle: 'Edit Category',
       nzFooter: [],
       nzContent: CategoryModalComponent,
       nzComponentParams: {
         data: category,
+        key: keyword,
+        index: index
       },
     });
+
     return new Observable(observer => {
       modal.afterClose.subscribe(success => {
         if (success) {
@@ -58,19 +69,14 @@ export class CategoryService {
     return Observable.create((done: Observer<any>) => {
       modal.afterClose.subscribe(result => {
         if (result) {
-          // this.ds.saveDomain(result).subscribe((saved)=>{
-          // this.updateHierarchy()
           done.next(result)
           done.complete()
-          // })
         }
       });
     })
-
-
   }
 
-  getAllCategories(dict_id) {
+  getAllWords(dict_id) {
     return this.http.get(this.url + "category/" + dict_id)
   }
 
@@ -80,7 +86,7 @@ export class CategoryService {
   }
 
   saveCategorie(cat): Observable<any> {
-    return this.http.post(this.url + "category/" + cat['dict_id'], cat)
+    return this.http.post(this.url + "category/", cat)
   }
 
   showDeleteConfirm(data) {
@@ -105,11 +111,28 @@ export class CategoryService {
   }
 
   deleteCategory(cat: any): Observable<any> {
-    return this.http.request('DELETE', this.url + "category/"+cat['id'], {
-      headers: new HttpHeaders({'Content-Type': 'application/json'}),
-      body: cat
-    })
+    return this.http.delete(this.url + "category/" + cat['id']);
   }
 
+  deleteKeyword(data) {
+    return new Observable(observer => {
+      this.modal.confirm({
+        nzTitle: 'Are you sure to delete this keyword ?',
+        nzContent: 'This action cannot be reverted.',
+        nzOkText: 'Yes',
+        nzOkType: 'danger',
+        nzOnOk: () => {
+          this.loading = true
+          this.saveCategorie(data).subscribe(
+            res => {
+              observer.next(res)
+              observer.complete()
+            })
+        },
+        nzCancelText: 'No',
+        nzOnCancel: () => { }
+      })
+    })
+  }
 
 }

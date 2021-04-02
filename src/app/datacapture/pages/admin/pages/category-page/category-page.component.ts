@@ -42,22 +42,22 @@ export class CategoryPageComponent implements OnInit {
 
   load_data() {
     this.loading = true;
-    const msg = this.ntf.loading('Loading Categories');
-    this.categoryService.getAllCategories(this.dict_id).subscribe(
+    const msg = this.ntf.loading('Loading Words');
+    this.categoryService.getAllWords(this.dict_id).subscribe(
       (data:any) => {
         this.ntf.close(msg);
         this.loading = false;
         this.categories$.next(data)
       }, err => {
         this.ntf.close(msg);
-        this.ntf.error('Failed to load Categories');
+        this.ntf.error('Failed to load Words');
         this.loading = false;
         this.categories$.next([]);
       }
     )
   }
 
-  openConfig(dict_id) {
+  openConfig() {
     this.categoryService.openConfig(this.dict_id).subscribe(() => {
       console.log('not listening');
       this.load_data();

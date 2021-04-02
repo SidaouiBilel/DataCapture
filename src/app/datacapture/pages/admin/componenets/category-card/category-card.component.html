@@ -23,12 +23,8 @@
   [nzSize]='s.displaySize$ | async'>
   <app-meta *ngIf='!small' [data]='data'></app-meta>
 
-  <!--(click)="navigate(['/datacapture/admin/dictionaries', data.id, 'category'])"-->
-
   <button nz-button nzType="default" (click)="goKeyword()"><i
       nz-icon nzType="font-size" nzTheme="outline"></i>Keywords</button>
-
-
 
       <div *ngIf="table">
         <nz-divider></nz-divider>

@@ -20,7 +20,7 @@ export class CategoryCardComponent implements OnInit {
   @Output() deleted = new EventEmitter<boolean>();
   @Output() copied = new EventEmitter<boolean>();
 
-  constructor( public s: StoreService,private router: Router,private catService:CategoryService) {
+  constructor(public s: StoreService,private router: Router,private catService:CategoryService) {
     s.displaySize$.subscribe((size) => this.small = (size === 'small'));
   }
 
@@ -34,18 +34,23 @@ export class CategoryCardComponent implements OnInit {
 
 
   onEdit() {
-    this.catService.openCategoryModal(this.data).subscribe(() => {
+    this.catService.openCategoryModal(this.data, null, false).subscribe(() => {
       this.edited.emit(true);
     });
 
   }
 
   onEditKeyword(index) {
-    console.log(index)
+    this.catService.openCategoryModal(this.data, index, true).subscribe(() => {
+      this.edited.emit(true);
+    });
   }
 
   onDeleteKeyword(index) {
-    console.log(index)
+    this.data["keywords"].splice(index,1);
+    this.catService.deleteKeyword(this.data).subscribe(() => {
+      this.deleted.emit(true);
+    });
   }
 
   onDelete() {

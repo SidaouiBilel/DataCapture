@@ -1,12 +1,12 @@
 <div class="flex-1 flex stretch column h-100">
   <nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/dictionaries/'])" nzBackIcon
-    nzTitle="Categories" nzSubtitle="Manage Categories">
+    nzTitle="Words" nzSubtitle="Manage Words">
   </nz-page-header>
 
   <div class="flex wrap between mb-2">
     <div class="button-spacing">
       <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async))" (click)='openConfig(dict_id)'><i
-          nz-icon nzType="plus"></i>Add Categorie</button>
+          nz-icon nzType="plus"></i>Add Word</button>
       <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
     </div>
 
@@ -14,7 +14,7 @@
 
     <div>
       <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Categories" />
+        <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Words" />
       </nz-input-group>
       <ng-template #suffixIconSearch>
         <i nz-icon nzType="search"></i>
@@ -26,7 +26,7 @@
   <div class="flex-1 flex-scroll bg-grey">
     <div nz-row nzType='flex' nzAlign='stretch'>
 
-      <div nz-col nz-col class="gutter-row" [nzSpan]="24" *ngFor="let cat of categories$ | async | filter :'name': searchTerm" [nzSpan]="(s.displayList$ | async) ? 24 : 8">
+      <div nz-col nz-col class="gutter-row" [nzSpan]="24" *ngFor="let cat of categories$ | async | filter :'code': searchTerm" [nzSpan]="(s.displayList$ | async) ? 24 : 8">
 
         <app-category-card [class]='(s.displayList$ | async) ? "" : "h-100"' [data]='cat' [loading]='loading'
         (edited)='load_data()' (deleted)='load_data()'></app-category-card>
