@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryService } from '../../services/category.service';
+import { WordService } from '../../services/word.service';
 import { StoreService } from '../../services/store.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class CategoryCardComponent implements OnInit {
   @Output() deleted = new EventEmitter<boolean>();
   @Output() copied = new EventEmitter<boolean>();
 
-  constructor(public s: StoreService,private router: Router,private catService:CategoryService) {
+  constructor(public s: StoreService, private router: Router, public wordService: WordService,
+  ) {
     s.displaySize$.subscribe((size) => this.small = (size === 'small'));
   }
 
@@ -34,27 +35,27 @@ export class CategoryCardComponent implements OnInit {
 
 
   onEdit() {
-    this.catService.openCategoryModal(this.data, null, false).subscribe(() => {
+    this.wordService.openCategoryModal(this.data, null, false).subscribe(() => {
       this.edited.emit(true);
     });
 
   }
 
   onEditKeyword(index) {
-    this.catService.openCategoryModal(this.data, index, true).subscribe(() => {
+    this.wordService.openCategoryModal(this.data, index, true).subscribe(() => {
       this.edited.emit(true);
     });
   }
 
   onDeleteKeyword(index) {
-    this.data["keywords"].splice(index,1);
-    this.catService.deleteKeyword(this.data).subscribe(() => {
+    this.data["keywords"].splice(index, 1);
+    this.wordService.deleteKeyword(this.data).subscribe(() => {
       this.deleted.emit(true);
     });
   }
 
   onDelete() {
-    this.catService.showDeleteConfirm(this.data).subscribe(() => {
+    this.wordService.showDeleteConfirm(this.data).subscribe(() => {
       this.deleted.emit(true);
     });
   }

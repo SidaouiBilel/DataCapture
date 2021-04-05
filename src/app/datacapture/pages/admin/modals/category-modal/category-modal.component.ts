@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
-import { CategoryService } from '../../services/category.service';
+import { WordService } from '../../services/word.service';
 import { DomainService } from '../../services/domain.service';
 import { EntityModal } from '../entity-modal';
 
@@ -14,7 +14,7 @@ export class CategoryModalComponent extends EntityModal implements OnInit {
   key = false
   index
 
-  constructor(private mr: NzModalRef, private ds: DomainService, private catService: CategoryService) {
+  constructor(private mr: NzModalRef, private ds: DomainService, private WordService: WordService) {
     super(mr);
   }
 
@@ -24,12 +24,13 @@ export class CategoryModalComponent extends EntityModal implements OnInit {
 
   close() {
     this.modalrRef.close(false);
+    this.save()
   }
 
   onSave() {
     if (this.canSave()) {
       this.loading = true;
-      this.catService.saveCategorie(this.data).subscribe(res => {
+      this.WordService.saveCategorie(this.data).subscribe(res => {
         this.save()
         this.loading = false;
       }, (err) => {

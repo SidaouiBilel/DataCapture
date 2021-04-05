@@ -1,17 +1,17 @@
-import { CategoryModalComponent } from './../modals/category-modal/category-modal.component';
+import { CategoryModalComponent } from '../modals/category-modal/category-modal.component';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable, Observer } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { SuperDomainService } from './super-domain.service';
-import { Category } from '../models/category';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Word } from '../models/word';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class WordService {
 
   url = environment.admin
 
@@ -20,8 +20,9 @@ export class CategoryService {
 
   loading = false;
 
+  //To edit a word or edit a keyword
   openCategoryModal(data, i, key) {
-    let category = new Category(data.dict_id);
+    let category = new Word(data.dict_id);
     let keyword = false
     let index = null
 
@@ -33,7 +34,6 @@ export class CategoryService {
       keyword = true;
       index = i;
     }
-
     const modal = this.modal.create({
       nzTitle: 'Edit Category',
       nzFooter: [],
@@ -56,7 +56,7 @@ export class CategoryService {
   }
 
   openConfig(dict_id) {
-    let category = new Category(dict_id)
+    let category = new Word(dict_id)
     const modal = this.modal.create({
       nzTitle: 'Add Category',
       nzFooter: [],

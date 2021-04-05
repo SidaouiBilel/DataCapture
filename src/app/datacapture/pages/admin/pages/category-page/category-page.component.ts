@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@app/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CategoryService } from '../../services/category.service';
 import { StoreService } from '../../services/store.service';
+import { WordService } from '../../services/word.service';
 
 @Component({
   selector: 'app-category-page',
@@ -23,7 +23,7 @@ export class CategoryPageComponent implements OnInit {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
-    public categoryService: CategoryService,
+    public wordService: WordService,
     private ntf: NotificationService,
     public s: StoreService
   ) {this.load_data() }
@@ -43,7 +43,7 @@ export class CategoryPageComponent implements OnInit {
   load_data() {
     this.loading = true;
     const msg = this.ntf.loading('Loading Words');
-    this.categoryService.getAllWords(this.dict_id).subscribe(
+    this.wordService.getAllWords(this.dict_id).subscribe(
       (data:any) => {
         this.ntf.close(msg);
         this.loading = false;
@@ -57,8 +57,8 @@ export class CategoryPageComponent implements OnInit {
     )
   }
 
-  openConfig() {
-    this.categoryService.openConfig(this.dict_id).subscribe(() => {
+  openConfig(dict_id) {
+    this.wordService.openConfig(this.dict_id).subscribe(() => {
       console.log('not listening');
       this.load_data();
     });
