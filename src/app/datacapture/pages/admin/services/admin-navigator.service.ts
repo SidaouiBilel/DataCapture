@@ -52,8 +52,4 @@ export class AdminNavigator {
     this.router.navigate(['datacapture', 'admin', 'references'])
   }
 
-  gotToCategorieData(id: any) {
-    this.router.navigate(['datacapture', 'admin', 'dictionaries',id,'category'])
-  }
-
 }

@@ -22,7 +22,7 @@ export class DictionaryEditorService {
       edit = true
     }
     const modal = this.modalService.create({
-      nzTitle: 'Add Dictionary',
+      nzTitle: 'Dictionary',
       nzFooter:[],
       nzContent: DictionaryModalComponent,
       nzComponentParams: {

@@ -1,0 +1,11 @@
+.inner-box{
+  margin-bottom: 14px;
+  /* margin-right: 14px; */
+}
+
+.ref-data-container {
+  /* background-color: white; */
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}

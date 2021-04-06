@@ -23,6 +23,6 @@
   [nzSize]='s.displaySize$ | async'>
   <app-meta *ngIf='!small' [data]='data'></app-meta>
 
-  <button nz-button nzType="default" (click)="navigate(['/datacapture/admin/dictionaries', data.id, 'category'])"><i
+  <button nz-button nzType="default" (click)="navigate(['/datacapture/admin/dictionaries', data.id, 'word'])"><i
       nz-icon nzType="font-size" nzTheme="outline"></i>Words</button>
 </nz-card>

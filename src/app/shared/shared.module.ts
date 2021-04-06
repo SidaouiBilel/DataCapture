@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconsProviderModule } from '@app/icons-provider.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgZorroAntdModule, NzIconService, NzModalModule } from 'ng-zorro-antd';
+import { NzTagModule, NgZorroAntdModule, NzIconService, NzModalModule } from 'ng-zorro-antd';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { UtilsService } from './services/utils.service';
 import { BoolIconComponent } from './bool-icon/bool-icon.component';
@@ -65,6 +65,7 @@ const SharedModules = [
   ReactiveFormsModule,
   NzModalModule,
   AngularResizedEventModule,
+  NzTagModule
 ];
 
 const Components = [

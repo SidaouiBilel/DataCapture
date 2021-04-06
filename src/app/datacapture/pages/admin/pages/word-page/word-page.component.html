@@ -1,0 +1,51 @@
+<div class="ref-data-container">
+  <div class="flex column fill stretch">
+
+    <div class="site-page-header-ghost-wrapper">
+      <nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/dictionaries/'])" nzBackIcon
+        nzTitle="Words" nzSubtitle="Manage Words"></nz-page-header>
+
+      <div class="flex wrap between mb-2">
+        <div class="button-spacing">
+          <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async))" (click)='onAddWord(null)'><i
+              nz-icon nzType="plus"></i>Add Word</button>
+          <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
+        </div>
+      </div>
+
+    </div>
+
+    <nz-card class="flex fill" nzSize='small' nzTitle='Words'>
+      <div class="h-100" style="position: relative;">
+        <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(words$ | async )' nzSize='small'
+          [nzLoading]='loading'>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Cat</th>
+              <th>Keywords</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <td>{{data.code}}</td>
+              <td>
+                <nz-tag [nzColor]="'processing'">{{data.cat}}</nz-tag>
+              </td>
+              <td>
+                <nz-tag *ngFor='let key of data.keywords'>{{key}}</nz-tag>
+              </td>
+              <td nzRight class="text-right">
+                <button nzShape='circle' class="ghost" nz-button (click)="onEditWord(data)"><i nz-icon nzType='edit'></i></button>
+                <nz-divider nzType="vertical"></nz-divider>
+                <button nzShape='circle' class="ghost" nz-button (click)="onDeleteWord(data)"><i nz-icon nzType='delete'></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-card>
+
+  </div>
+</div>

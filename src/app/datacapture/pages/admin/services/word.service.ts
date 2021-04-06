@@ -1,11 +1,10 @@
-import { CategoryModalComponent } from '../modals/category-modal/category-modal.component';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
-import { SuperDomainService } from './super-domain.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Word } from '../models/word';
+import { WordModalComponent } from '../modals/word-modal/word-modal.component';
 
 
 @Injectable({
@@ -15,33 +14,26 @@ export class WordService {
 
   url = environment.admin
 
-
-  constructor(private modal: NzModalService, private sds: SuperDomainService, private http: HttpClient) { }
+  constructor(private modal: NzModalService, private http: HttpClient) { }
 
   loading = false;
 
-  //To edit a word or edit a keyword
-  openCategoryModal(data, i, key) {
-    let category = new Word(data.dict_id);
-    let keyword = false
-    let index = null
+  // To add or edit a word
+  openWordModal(data, dict_id) {
+    let word = new Word(dict_id);
 
+    const edit = data? true : false;
     if (data) {
-      category = { ...data };
+      word = { ...data };
     }
 
-    if (key && i != null) {
-      keyword = true;
-      index = i;
-    }
     const modal = this.modal.create({
-      nzTitle: 'Edit Category',
+      nzTitle: 'Word',
       nzFooter: [],
-      nzContent: CategoryModalComponent,
+      nzContent: WordModalComponent,
       nzComponentParams: {
-        data: category,
-        key: keyword,
-        index: index
+        data: word,
+        edit
       },
     });
 
@@ -55,84 +47,37 @@ export class WordService {
     })
   }
 
-  openConfig(dict_id) {
-    let category = new Word(dict_id)
-    const modal = this.modal.create({
-      nzTitle: 'Add Category',
-      nzFooter: [],
-      nzContent: CategoryModalComponent,
-      nzComponentParams: {
-        data: category,
-      },
-    });
-    const instance = modal.getContentComponent();
-    return Observable.create((done: Observer<any>) => {
-      modal.afterClose.subscribe(result => {
-        if (result) {
-          done.next(result)
-          done.complete()
-        }
-      });
+  showDeleteConfirm(data) {
+    return new Observable(observer => {
+      this.modal.confirm({
+        nzTitle: 'Are you sure to delete this Word ?',
+        nzContent: 'This action cannot be reverted.',
+        nzOkText: 'Yes',
+        nzOkType: 'danger',
+        nzOnOk: () => {
+          this.loading = true
+          this.deleteWord(data).subscribe(
+            res => {
+              observer.next(res)
+              observer.complete()
+            })
+        },
+        nzCancelText: 'No',
+        nzOnCancel: () => { }
+      })
     })
   }
 
   getAllWords(dict_id) {
-    return this.http.get(this.url + "category/" + dict_id)
+    return this.http.get(this.url + "word/" + dict_id)
   }
 
-  // Update all domains
-  updateHierarchy() {
-    throw new Error('Method not implemented.');
+  saveWord(cat): Observable<any> {
+    return this.http.post(this.url + "word/", cat)
   }
 
-  saveCategorie(cat): Observable<any> {
-    return this.http.post(this.url + "category/", cat)
-  }
-
-  showDeleteConfirm(data) {
-    return new Observable(observer => {
-      this.modal.confirm({
-        nzTitle: 'Are you sure to delete this Dictionary ?',
-        nzContent: 'This action cannot be reverted.',
-        nzOkText: 'Yes',
-        nzOkType: 'danger',
-        nzOnOk: () => {
-          this.loading = true
-          this.deleteCategory(data).subscribe(
-            res => {
-              observer.next(res)
-              observer.complete()
-            })
-        },
-        nzCancelText: 'No',
-        nzOnCancel: () => { }
-      })
-    })
-  }
-
-  deleteCategory(cat: any): Observable<any> {
-    return this.http.delete(this.url + "category/" + cat['id']);
-  }
-
-  deleteKeyword(data) {
-    return new Observable(observer => {
-      this.modal.confirm({
-        nzTitle: 'Are you sure to delete this keyword ?',
-        nzContent: 'This action cannot be reverted.',
-        nzOkText: 'Yes',
-        nzOkType: 'danger',
-        nzOnOk: () => {
-          this.loading = true
-          this.saveCategorie(data).subscribe(
-            res => {
-              observer.next(res)
-              observer.complete()
-            })
-        },
-        nzCancelText: 'No',
-        nzOnCancel: () => { }
-      })
-    })
+  deleteWord(cat: any): Observable<any> {
+    return this.http.delete(this.url + "word/" + cat['id']);
   }
 
 }

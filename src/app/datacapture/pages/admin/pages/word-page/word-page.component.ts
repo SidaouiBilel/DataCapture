@@ -6,20 +6,16 @@ import { StoreService } from '../../services/store.service';
 import { WordService } from '../../services/word.service';
 
 @Component({
-  selector: 'app-category-page',
-  templateUrl: './category-page.component.html',
-  styleUrls: ['./category-page.component.css']
+  selector: 'app-word-page',
+  templateUrl: './word-page.component.html',
+  styleUrls: ['./word-page.component.css']
 })
-export class CategoryPageComponent implements OnInit {
+export class WordPageComponent implements OnInit {
   sub: any;
   loading = false;
   dict_id = null;
-  loadingList = [{}];
-  searchTerm: string;
   profile$: Observable<any>;
-  categories$ = new BehaviorSubject<any>([]);
-
-  cats$: any;
+  words$ = new BehaviorSubject<any>([]);
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -36,8 +32,12 @@ export class CategoryPageComponent implements OnInit {
     });
   }
 
+
   enableAddbtn(profile): boolean {
-    return true;
+    if(profile){
+      if(profile.admin) return true
+    }
+    return false;
   }
 
   load_data() {
@@ -47,19 +47,30 @@ export class CategoryPageComponent implements OnInit {
       (data:any) => {
         this.ntf.close(msg);
         this.loading = false;
-        this.categories$.next(data)
+        this.words$.next(data)
       }, err => {
         this.ntf.close(msg);
         this.ntf.error('Failed to load Words');
         this.loading = false;
-        this.categories$.next([]);
+        this.words$.next([]);
       }
     )
   }
 
-  openConfig(dict_id) {
-    this.wordService.openConfig(this.dict_id).subscribe(() => {
-      console.log('not listening');
+  onAddWord(data) {
+    this.wordService.openWordModal(data, this.dict_id).subscribe(() => {
+      this.load_data();
+    });
+  }
+
+  onEditWord(data) {
+    this.wordService.openWordModal(data, data.dict_id).subscribe(() => {
+      this.load_data();
+    });
+  }
+
+  onDeleteWord(data) {
+    this.wordService.showDeleteConfirm(data).subscribe(() => {
       this.load_data();
     });
   }
