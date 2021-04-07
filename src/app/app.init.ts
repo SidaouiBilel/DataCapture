@@ -12,7 +12,7 @@ export class AppInitService {
                 .then(res=>(res.json()))
                 .then(config => {
                     // console.log({...environment , ...config});
-                    updateConfig({...environment , ...config});
+                    updateConfig({...environment , ...config , "dk_data_displayed":true});
                     resolve(true);
                 })
         })

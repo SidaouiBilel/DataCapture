@@ -29,7 +29,10 @@ export class AppErrorHandler extends ErrorHandler {
       /*
       This will create NzNotificationService Property
        */
-      this.injector.get(NzNotificationService).error('JavaScript Error', displayMessage, {nzDuration: 3000, nzAnimate: true});
+      if(environment.dk_data_displayed){
+          this.injector.get(NzNotificationService).error('JavaScript Error', displayMessage, {nzDuration: 3000, nzAnimate: true});
+      }
+      
       super.handleError(error);
     } catch (error) {
       console.log('Error', error.message);

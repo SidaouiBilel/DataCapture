@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-
+import { env as environment } from '@app/env.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +14,7 @@ export class NotificationService {
   }
 
   default(message: string) {
+  if(!environment.dk_data_displayed) return;
     this.show(message, 'DEFAULT', {
       nzDuration: 2000,
       nzAnimate: true,
@@ -21,7 +22,11 @@ export class NotificationService {
     });
   }
 
-  close(id: any) {
+  close(id: any = null) {
+    if(!id){
+      this.notfication.remove();
+      return ; 
+    }
     this.notfication.remove(id);
   }
 
@@ -59,6 +64,7 @@ export class NotificationService {
   }
 
   private show(message: string, type: string, configuration: any, title?: string) {
+    if(!environment.dk_data_displayed) return;
     // Need to open snackBar from Angular zone to prevent issues with its position per
     // https://stackoverflow.com/questions/50101912/snackbar-position-wrong-when-use-errorhandler-in-angular-5-and-material
     const finalConfig: any = {...configuration, nzPauseOnHover: true};

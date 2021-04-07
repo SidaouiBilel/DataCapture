@@ -3,10 +3,9 @@ import { MenuitemsService } from './../service/menuitems.service';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, AppState, selectRouterState, ActionAuthLogout, ActionAuthLogin , selectProfile, ActionSaveProfile, selectToken } from '@app/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { AppSettingsService } from '@app/datacapture/settings/app-settings.service';
 import { LoginService } from '@app/core/login/service/login.service';
-import { env as environment } from '@app/env.service';
 
 @Component({
   selector: 'app-layout',
@@ -180,41 +179,38 @@ export class LayoutContainer implements OnInit {
       }
       });
     }
-    
-         
-
   }
 
 
   logoutUser() {
-    // this.notification.error('Token exp');
     this.store.dispatch(new ActionAuthLogout());
   }
 
   url_data ="";
   urldataloding=false;
+  statuschecking=false;
   geturl_data(){
-    if(this.urldataloding) { return ;}
+    if(this.urldataloding ||  this.statuschecking) { return ;}
     if(this.url_data.trim() == ""){
     this.profile$.pipe(take(1)).subscribe(
       res=>{
         if(res && res.id){
           this.urldataloding = true;
           let notif = this.notification.loading("Generating database console url");
+         
             this.service.get_user_data_link(res.id).subscribe(
               data=>{
                 if(data["url"]){
                   this.url_data=data["url"];
                   this.urldataloding = false;
-                  this.openmydata();
+                  this.check_data_url_status(res.id);
                 }else{                
                   this.notification.warn("Unable to generate database console url" , 1000);
                   this.urldataloding = false;
                 }            
-                this.notification.close(notif);   
+                this.notification.close(notif);
               } , er=>{
                 this.notification.close(notif);
-                // this.notification.warn("Unable to generate database console url" , 1000);
                 this.urldataloding = false;
               }
             )              
@@ -222,6 +218,40 @@ export class LayoutContainer implements OnInit {
     }else{
         this.openmydata()
     }
+  }
+  get_status(userid , _callbackS , _callbackF ){
+    this.service.get_user_data_link_status(userid).subscribe((res:any)=>{
+      console.log(res);
+      if(res.status && res.status==="Ready"){
+        this.openmydata();
+        _callbackS();
+      }
+    }, (er=>{_callbackF()}))
+  }
+  check_data_url_status(userid){
+    this.statuschecking = true;
+    const check = interval(3000).pipe(take(5));
+    
+    let notif = null;
+    setTimeout(()=>{notif = this.notification.loading("Checking status.");} , 300);
+
+    let _callbackS = ()=>{
+      this.statuschecking = false;
+      this.notification.close(notif);
+      checksubs.unsubscribe();
+    }
+    let _callbackF = ()=>{
+      this.statuschecking = false;
+      this.notification.close(notif);
+      this.notification.warn("Unable to generate database console url" , 1000);
+      this.url_data = "";
+      checksubs.unsubscribe();
+    }
+    let checksubs = check.subscribe(x=>{
+      if(x <= 3){
+        this.get_status(userid , _callbackS , _callbackF);
+      }
+    },(er)=>{} ,()=>{_callbackF()} );
   }
   openmydata(){
       var win = window.open(this.url_data, '_blank');

@@ -32,6 +32,10 @@ export class LoginService {
       "user_id":id
     })
   }
+
+  get_user_data_link_status(id){
+    return this.http.get(environment.prefix+"pma/spawner/pma/?user_id="+id)
+  }
   
   requestLogin(email, password){
     return this.http.post(environment.auth + `auth/login`, {email, password}, {headers: {skip: 'true'}})

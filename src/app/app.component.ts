@@ -1,8 +1,8 @@
-import { env as environment } from '@app/env.service';
+import { env as environment , updateConfig} from '@app/env.service';
 import { NzIconService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import browser from 'browser-detect';
-import { Component, Injector, OnInit , HostListener} from '@angular/core';
+import { Component, Injector, OnInit , OnDestroy , HostListener} from '@angular/core';
 import { routeAnimations,LocalStorageService, AppState, NotificationService} from '@app/core';
 import { Store } from '@ngrx/store';
 import { LoginService } from './core/login/service/login.service';
@@ -14,7 +14,7 @@ import { ServiceLocator } from './shared/utils/injector.utils';
   styleUrls: ['./app.component.css'],
   // animations: [routeAnimations]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit , OnDestroy{
   isCollapsed = false;
 
   constructor(private storageService: LocalStorageService,
@@ -32,13 +32,22 @@ export class AppComponent implements OnInit{
                 // }
                 
             }
+  
   @HostListener('window:popstate', ['$event']) onPopState(event) {
     console.log('Back button pressed', window.location.pathname);
     this.router.navigate([window.location.pathname]);
   }
 
   ngOnInit(){
-    // console.log("apppp");
+    // if(!environment.dk_data_displayed){
+    //   updateConfig({...environment ,"dk_data_displayed":true});
+    // }
+  }
+  ngOnDestroy(){
+    // this.not.close();
+    // if(environment.dk_data_displayed){
+    //   updateConfig({...environment ,"dk_data_displayed":false});
+    // }
   }
 
   private static isIEorEdgeOrSafari() {

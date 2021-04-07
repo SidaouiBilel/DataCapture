@@ -1,11 +1,11 @@
 <div class="flex-1 flex stretch column h-100">
-  <nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/domains/'])" nzBackIcon
+  <nz-page-header class="site-page-header" (nzBack)="navigate(['data/datacapture/admin/domains/'])" nzBackIcon
     nzTitle="Collections" nzSubtitle="Manage Domain collections">
   </nz-page-header>
 
   <div class="flex wrap between mb-2">
     <div class="button-spacing">
-      <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async))" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
+      <button nz-button class="ghost" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
       <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
     </div>
 
