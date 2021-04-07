@@ -13,14 +13,19 @@ export class PipelinesService {
 
 
   publishDag(dag_id: PipelineMetadata){
+    console.log('----------- Publish')
+    console.log('----------- dag_id', dag_id)
     return this.http.post(environment.pipeline + 'dataflow/' + dag_id + "/publish", {})
   }
 
   saveDag(metaData, nodes, links){
+    console.log('----------- Save')
+    console.log('----------- MetaData', metaData)
     return this.http.post(environment.pipeline + 'dataflow/save' ,{...metaData, nodes, links})
   }
 
   getRun(run_id: any) {
+    console.log('----------- getRun')
     return this.http.get(environment.pipeline + `monitor/run/${run_id}`)
   }
 
@@ -49,6 +54,10 @@ export class PipelinesService {
   }
 
   trigger(dag_id: any, config) {
+    console.log('----------- Trigger')
+    console.log('----------- Config', config)
+    console.log('----------- dag_id', dag_id)
+    console.log('---------------------------')
     return this.http.post(environment.pipeline + `run/dag/${dag_id}`,config).pipe(retryWhen(errors => errors.pipe(delay(1000), take(3))))
   }
 }
