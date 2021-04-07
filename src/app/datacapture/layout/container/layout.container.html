@@ -40,7 +40,19 @@
             <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>
           </li> -->
 
-          <li nz-submenu nzIcon="tool" nzTitle="Admin" >
+         
+
+          <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/template']">
+            <i nz-icon nzType="project"></i>
+            <span>Template</span>
+          </li>
+          
+          <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/autoupload']">
+            <i nz-icon nzType="export"></i>
+            <span>Auto Upload</span>
+          </li>
+
+          <li nz-submenu nzIcon="apartment" nzTitle="Domains & Connectors" >
             <ul>
               <!-- <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/users']">
                 <i nz-icon nzType="user"></i>
@@ -54,20 +66,11 @@
                 <i nz-icon nzType="font-size"></i>
                 <span>References</span>
               </li> -->
-              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/connectors']">
+              <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/admin/connectors']">
                 <i nz-icon nzType="api"></i>
                 <span>Connectors</span>
               </li>
             </ul>
-          </li>
-
-          <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/template']">
-            <i nz-icon nzType="project"></i>
-            <span>Template</span>
-          </li>
-          <li nz-menu-item nzMatchRouter [routerLink]="['/data/datacapture/autoupload']">
-            <i nz-icon nzType="export"></i>
-            <span>Auto Upload</span>
           </li>
 
           <!-- <li nz-submenu nzIcon="database" nzTitle="Data Explorer" >
