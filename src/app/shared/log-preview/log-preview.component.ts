@@ -1,5 +1,7 @@
 import { MonitorService } from './../../datacapture/pages/automatic-upload/monitor/service/monitor.service';
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '@app/core/notifications/notification.service';
+import { NzDrawerRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-log-preview',
@@ -10,14 +12,12 @@ export class LogPreviewComponent implements OnInit {
   task_id
   execution_date
   dag_id
+  logs
 
-  constructor(private monitorService: MonitorService) { }
+  constructor(private monitorService: MonitorService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
 
   ngOnInit(): void {
     if (this.task_id && this.execution_date && this.dag_id) {
-      console.log('task_id', this.task_id)
-      console.log('execution_date', this.execution_date)
-      console.log('dag_id', this.dag_id)
       this.getLogs(this.dag_id, this.task_id, this.execution_date)
     }
   }
@@ -25,7 +25,11 @@ export class LogPreviewComponent implements OnInit {
   getLogs(dag_id: any, task_id: any, execution_date: any) {
     this.monitorService.getTaskLogs(dag_id, task_id, execution_date).subscribe(
       data => {
-        console.log(data);
+        this.ntf.success('Logs generated successfully...');
+        this.logs = data
+      }, err => {
+        this.drawerRef.close();
+        this.ntf.warn('Logs failed...');
       }
     )
   }

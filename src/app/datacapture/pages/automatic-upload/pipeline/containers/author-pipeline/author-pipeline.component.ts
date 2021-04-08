@@ -43,7 +43,7 @@ export class AuthorPipelineComponent implements OnDestroy {
     this.runId$.pipe(tap(this.onRunIdChanged)).subscribe()
    }
 
-   
+
   ngOnDestroy(): void {this.resetRunData()}
 
   // METHODS +
@@ -93,8 +93,8 @@ export class AuthorPipelineComponent implements OnDestroy {
   edit=()=> new Promise((resolve, reject)=>{
     this.metadata$.pipe(take(1)).subscribe((metaData) => {
       this.service.editPipeline({...metaData}).subscribe((r) => {
-        if (r) { 
-          this.store.dispatch(new PipelineEditMetaData(r)); 
+        if (r) {
+          this.store.dispatch(new PipelineEditMetaData(r));
           resolve(true)
         } else {
           reject()
@@ -110,13 +110,13 @@ export class AuthorPipelineComponent implements OnDestroy {
     this.stop$ = new Subject()
     timer(0,2000).pipe(takeUntil(this.stop$), switchMap(()=>this.pipelines.getRun(runId)), tap(this.onRunDataRecieved)).subscribe();
   }
-  
+
   // CALL TO GET IMMEDIATE RESULT or RESTART POOLING
   monitorCurrentRun=()=>{withValue(this.runId$, (runId)=>{if( runId ) this.monitorRun(runId)})}
   pause=()=>new Promise((resolve)=>{withValue(this.metadata$, (p)=>{this.pipelines.pause(p.pipeline_id, {stop_at:null}).subscribe(()=>resolve(true))})})
   unpause=()=>new Promise((resolve)=>{withValue(this.metadata$, (p)=>{this.pipelines.unpause(p.pipeline_id, {stop_at:null}).subscribe(()=>resolve(true))})})
   retry=()=>new Promise((resolve)=>{withValue(this.runId$, (run_id)=>{this.pipelines.retry(run_id, {}).subscribe(()=>resolve(true))})})
-  
+
   // STOP RUN MONITORING AND CLEAR CURRENT RUN DATA
   resetRunData=()=>{
     this.stopMonitoring()
@@ -174,7 +174,15 @@ export class AuthorPipelineComponent implements OnDestroy {
   // TRIGGER EVENTS +
   onCancel(){this.handleTrigger('cancel', this.cancel)}
   onPublish(){this.handleTrigger('publish', this.saveAndPublish)}
-  onTrigger(){this.handleTrigger('run', ()=>this.saveAndPublish().then(()=>this.run({})))}
+  onTrigger(){this.handleTrigger('run', ()=>this.saveAndPublish().then(
+    ()=> {
+      forkJoin([this.metadata$.pipe(take(1))])
+      .subscribe(([metaData]: any) => {
+        if(metaData.scheduler == 'None')
+          this.run({})
+      })
+    }
+    ))}
   onTriggerPreview(){this.handleTrigger('run', ()=>this.saveAndPublish().then(()=>this.run({preview:true})))}
   onJumpNext(){this.handleTrigger('save_and_continue', ()=>this.saveAndPublish().then(this.unpause))}
   onPause(){this.handleTrigger('pause', this.pause)}

@@ -11,6 +11,21 @@
         <input nz-input formControlName="description" id="description" />
       </nz-form-control>
     </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="scheduler">Scheduler</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24">
+        <nz-select formControlName="scheduler" id="scheduler">
+          <nz-option nzValue="None" nzLabel="Immediately"></nz-option>
+          <nz-option nzValue="'@hourly'" nzLabel="Hourly"></nz-option>
+          <nz-option nzValue="'@daily'" nzLabel="Daily"></nz-option>
+          <nz-option nzValue="'@weekly'" nzLabel="Weekly"></nz-option>
+          <nz-option nzValue="'@monthly'" nzLabel="Monthly"></nz-option>
+          <nz-option nzValue="'@yearly'" nzLabel="Yearly"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
     <nz-form-item>
       <nz-form-control [nzSm]="24" [nzXs]="24">
       </nz-form-control>
@@ -20,4 +35,3 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-  

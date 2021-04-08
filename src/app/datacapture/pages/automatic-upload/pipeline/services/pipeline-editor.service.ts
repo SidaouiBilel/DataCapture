@@ -114,7 +114,7 @@ export class PipelineEditorService {
           execution_date: run.execution_date,
           dag_id: run.dag_id,
         },
-        nzWidth: '70vw',
+        nzWidth: '80vw',
       })
     } else {
       this.msg.info('Log is not ready')
