@@ -52,6 +52,9 @@ import { NodeJoinComponent } from './setup/nodes/other/node-join/node-join.compo
 import { NodePipelineComponent } from './setup/nodes/other/node-pipeline/node-pipeline.component';
 import { NodeTranformationService } from './setup/nodes/other/node-pipeline/service/node-transformation.service';
 import { ManualImportNodeComponent } from './setup/nodes/datasources/manual-import-node/manual-import-node.component';
+import { DatasetComponent } from './dataset/dataset.component';
+import { DcmCleansingGridComponent } from './dcm-cleansing-grid/dcm-cleansing-grid.component';
+import { CategoryFilterComponent } from './setup/nodes/category/category-filter/category-filter.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -95,6 +98,24 @@ const Components = [
   PostgresUploadNodeComponent,
   DcmPreviewGridComponent,
   ConnectorPreviewComponent,
+  DatasetComponent,
+  DcmCleansingGridComponent,
+  NodeFilterComponent,
+  NodeFilterReplaceComponent,
+  NodeMergeComponent,
+  NodeReplaceComponent,
+  NodeDeleteRowComponent,
+  NodeDefaultComponent,
+  NodeSplitterComponent,
+  NodeCalculcatorComponent,
+  NodeFormatDateComponent,
+  NodeGroupbyComponent,
+  NodeHashComponent,
+  CollectionImportComponent,
+  CollectionUploadComponent,
+  NodeJoinComponent,
+  NodePipelineComponent,
+  ManualImportNodeComponent
 ];
 
 @NgModule({
@@ -105,22 +126,7 @@ const Components = [
   ],
   declarations: [
     ...Components,
-    NodeFilterComponent,
-    NodeFilterReplaceComponent,
-    NodeMergeComponent,
-    NodeReplaceComponent,
-    NodeDeleteRowComponent,
-    NodeDefaultComponent,
-    NodeSplitterComponent,
-    NodeCalculcatorComponent,
-    NodeFormatDateComponent,
-    NodeGroupbyComponent,
-    NodeHashComponent,
-    CollectionImportComponent,
-    CollectionUploadComponent,
-    NodeJoinComponent,
-    NodePipelineComponent,
-    ManualImportNodeComponent,
+    CategoryFilterComponent
   ],
   exports: [
     ...SharedModules,

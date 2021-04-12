@@ -16,4 +16,11 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Split Into Rows</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <label nz-checkbox [(ngModel)]='data.into_rows' (change)='onDataChanged()' name='into_rows'></label>
+    </nz-form-control>
+  </nz-form-item>
+
 </form>

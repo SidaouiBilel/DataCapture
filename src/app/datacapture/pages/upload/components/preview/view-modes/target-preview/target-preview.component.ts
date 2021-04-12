@@ -102,11 +102,10 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
           // that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
-            res.headers.forEach((e, i) => {
-              previewData[e] = res.data.slice(1, 10).map((data) => data[e]);
-            });
+            console.log(res.headers.join("\n")) 
             that.store.dispatch(new SaveSourcesPreview(previewData));
             that.totalRecords$.next(res.total);
+           
             const headers = res.headers.map(h => (
               {
                 field: h,
@@ -125,7 +124,17 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
           const lastRow = () =>  res.total;
           gridApi.columnApi.autoSizeAllColumns();
           // gridApi.columnApi.sizeColumnsToFit([INDEX_HEADER.colId]);
-          params.successCallback(res.data, lastRow());
+          const data = [];
+          for (const row of res.data) {
+            const rowObject = {};
+            let i = 0;
+            for (const h of res.headers) {
+              rowObject[h] = row[i];
+              i++;
+            }
+            data.push(rowObject);
+          }
+          params.successCallback(data, lastRow());
         }, (error) => {
           params.failCallback();
           that.onError(error);

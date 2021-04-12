@@ -25,9 +25,16 @@ export const selectActiveTransformationIndex = createSelector(
   (object: Transform) => object.activeSourceIndex
 );
 
-export const selectActiveTranformation = createSelector(
+export const selectSourceTranformations = createSelector(
   selectTranformation,
-  (object: Transform) => object.sourceTransformations[object.activeSourceIndex] || {}
+  (object: Transform) => object.sourceTransformations
+);
+
+
+export const selectActiveTranformation = createSelector(
+  selectSourceTranformations,
+  selectActiveTransformationIndex,
+  (object: SourceTransformation[], index) => object[index] || {}
 );
 
 export const selectTranformationNodes = createSelector(
@@ -116,10 +123,10 @@ export const selectActivePipeModified = createSelector(
   selectTranformationNodes, selectEdiedTranformationPipeInfo,
     (nodes, edited) => {
       if(edited){
-        if (JSON.stringify(edited.nodes) != JSON.stringify(nodes) )
+        if ( JSON.stringify(edited.nodes) != JSON.stringify(nodes) )
           return true
       } else {
-        return (nodes || []).length > 0
+        return false
       }
 
       return false

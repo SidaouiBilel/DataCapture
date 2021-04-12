@@ -14,10 +14,52 @@ export class NodeDatasink extends PipelineNode{
     static ports = [{id:"INPUT",spot:go.Spot.LeftCenter}]
     static showLabel = true
     static component = BaseNodeTransformationComponent;
-}
 
-export class NodeUploadConnector extends NodeDatasink{
-    static connectorDef:any
+    public static getNodeOptions(){
+        return {
+            contextMenu:                            // define a context menu for each node
+              $("ContextMenu", "Spot",              // that has several buttons around
+                $(go.Placeholder, { padding: 5 }),  // a Placeholder object
+                $("ContextMenuButton", 
+                $(go.TextBlock, "Toggle Output", new go.Binding('text', "show_output", (show_output)=>(show_output)?'Remove Output':'Add Output')),
+                  {click: (e, obj)=>{
+                    var myDiagram = e.diagram 
+                    myDiagram.startTransaction("addOutputPort");
+                    myDiagram.selection.each(function(node) {
+                        if (!(node instanceof go.Node)) return;
+                        var visibility = (node.data.show_output)? 0: 1;
+                        myDiagram.model.setDataProperty(node.data, "show_output", visibility)
+                    });
+                    myDiagram.commitTransaction("addOutputPort");
+                  } })
+              )  // end Adornment
+          }
+    }
+
+    public static makePorts(){
+        return [...super.makePorts(),
+            $(go.Shape, 'Circle',
+            {
+                visible: false,
+            opacity: 1,
+            fill: this.color,
+            strokeWidth: 2,
+            stroke:"white",
+            desiredSize: new go.Size(10,10),
+            portId: "OUTPUT", 
+            alignment: go.Spot.RightCenter,
+            fromLinkable: true,
+            toLinkable: true
+        },
+        new go.Binding("visible", "show_output"),
+        this.runBinding('fill')
+        )
+            ]
+            }
+        }
+        
+    export class NodeUploadConnector extends NodeDatasink{
+        static connectorDef:any
     
     static type = "UPLOAD_CONNECTOR"
 

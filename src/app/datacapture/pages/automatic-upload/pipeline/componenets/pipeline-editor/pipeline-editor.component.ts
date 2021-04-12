@@ -70,8 +70,12 @@ export class PipelineEditorComponent implements AfterViewInit{
         if(this.diagramModelData.run){
           const run = this.diagramModelData.run
           const task = run.tasks.find(t=>t.task_id==data.key)
+          if(task.cleansing_job_id){
+            this.clenaseNode(data, run)
+            return
+          }
           if(task && ["success","running"].includes(task.state)){
-            this.previweNode(node.data, this.diagramModelData.run)
+            this.previweNode(data, run)
             return
           }
         }
@@ -174,6 +178,10 @@ export class PipelineEditorComponent implements AfterViewInit{
 
   previweNode(data: any, run: any) {
     this.editor.previewNode(data, run)
+  }
+
+  clenaseNode(data: any, run: any) {
+    this.editor.cleanseNode(data, run)
   }
 
 }

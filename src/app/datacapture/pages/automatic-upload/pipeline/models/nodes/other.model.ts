@@ -50,7 +50,40 @@ export class NodePycode extends PipelineNode{
     static color = 'red';
     static label = 'Pycode'
     static ports = [
-        {id:"INPUT",spot:go.Spot.Left},
+        // {id:"INPUT",spot:go.Spot.Left},
         {id:"OUTPUT",spot:go.Spot.Right},
     ];
+
+    public static makePorts(){
+        return [...super.makePorts(),
+            // created for each item in the itemArray, bound to data.leftArray
+            $(go.Panel, "Vertical",
+          new go.Binding("itemArray", "inputs"),
+          {
+            row: 1, column: 0,
+            alignment: go.Spot.Left,
+            itemTemplate:
+              $(go.Panel,
+                {
+                  _side: "left",  // internal property to make it easier to tell which side it's on
+                //   fromSpot: go.Spot.Left, toSpot: go.Spot.Left,
+                  fromLinkable: true, toLinkable: true, cursor: "pointer",
+                  alignment: go.Spot.Left,
+                },
+                new go.Binding("portId", "portId"),
+                $(go.Shape, 'Circle',
+                {
+                    strokeWidth: 2,
+                    stroke:"white",
+                    desiredSize: new go.Size(10,10),
+                    alignment: go.Spot.Left,
+                },
+                this.runBinding('fill')
+                )
+              )  // end itemTemplate
+          }
+        ),  // end Vertical Panel
+            ]
+            
+        }
 }

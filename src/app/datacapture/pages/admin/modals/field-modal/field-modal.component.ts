@@ -31,10 +31,10 @@ export class FieldModalComponent extends EntityModal implements OnInit {
         this.data.rules[EMPTY_CHECK.id]=this.data.mandatory
       }
     },
-    // { name: 'Editable',
-    //   field: 'editable',
-    //   type: 'checkbox',
-    // },
+    { name: 'Primary',
+      field: 'primary',
+      type: 'checkbox',
+    },
     { name: 'Mandatory',
       field: 'mandatory',
       type: 'checkbox',

@@ -15,6 +15,8 @@ import { CollectionImportComponent } from "@app/shared/setup/nodes/datasources/c
 import { NodeJoinComponent } from "@app/shared/setup/nodes/other/node-join/node-join.component";
 import { NodePipelineComponent } from "@app/shared/setup/nodes/other/node-pipeline/node-pipeline.component";
 import { ManualImportNodeComponent } from "@app/shared/setup/nodes/datasources/manual-import-node/manual-import-node.component";
+import { NodeFilterByCategory } from "../nodes/categorization.model";
+import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/category-filter/category-filter.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -51,8 +53,11 @@ export const NODE_TRANSFORMERS = [
               return cls
           })
 
+export const CATEGORY_NODES = [
+  NodeFilterByCategory.setComponenet(CategoryFilterComponent)
+]
 
-export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS]
+export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
 
 export function getNodeClassBy(type){
   return ALL_NODES.find(e=>e.type===type)

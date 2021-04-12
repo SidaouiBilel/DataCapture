@@ -35,7 +35,7 @@ export class TransformationEffects {
         this.store$.dispatch(new UpdateLoadingTransformation(false));
           this.store$.dispatch(new UpdateLoadingTransformation(true));
           this.job.startJob(file_id, sheet_id, pipe_id).subscribe(res => {
-            const id = res.transformed_file_id;
+            const id = res.transformed_file_id.split('\\').pop();
             this.store$.dispatch(new UpdateTransformedFilePath(id));
             this.job.getResult(id, 1, 0).subscribe((jobRes: any) => {
               this.store$.dispatch(new UpdateLoadingTransformation(false));

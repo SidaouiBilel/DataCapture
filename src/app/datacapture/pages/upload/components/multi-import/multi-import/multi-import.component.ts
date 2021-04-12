@@ -27,7 +27,6 @@ export class MultiImportComponent implements OnInit {
     });
     this.domains = [];
 
-
     this.datasources$ = this.store.select(selectDatasources)
   }
 

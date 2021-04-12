@@ -60,9 +60,16 @@ export class PipelineNode{
         };
     }
 
+    public static getNodeOptions(){
+        return {}
+    }
+
     public static getNodeTemplate(options = {}, addons=[]){
         return $(go.Node, 'Spot',
-            {...options},
+            {
+                ...options,
+                ...this.getNodeOptions(),
+            },
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             ...this.makeAddons(addons),
             ...this.makeRunStatus(),
@@ -88,7 +95,7 @@ export class PipelineNode{
        return addons.map(a=>a(this))
     }
 
-    public static makePorts() {
+    public static makePorts():any[] {
         return this.ports.map((p)=>$(go.Shape, 'Circle',
         {
             opacity: 1,
