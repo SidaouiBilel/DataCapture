@@ -95,7 +95,7 @@ export class PipelineNode{
        return addons.map(a=>a(this))
     }
 
-    public static makePorts() {
+    public static makePorts():any[] {
         return this.ports.map((p)=>$(go.Shape, 'Circle',
         {
             opacity: 1,

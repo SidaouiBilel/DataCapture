@@ -1,11 +1,18 @@
-<p nz-typography nzEditable [(nzContent)]="data.label"></p>
-<p nz-typography class="text-muted">Takes df:pd.Dataframe as input and return df</p>
+<div>
+    <p nz-typography nzEditable [(nzContent)]="data.label"></p>
+    <p nz-typography class="text-muted"><b>Input: </b> <nz-tag *ngFor='let i of data.inputs'>{{i.name}}</nz-tag></p>
 
-<div style="height: 700px" class="border rounded pt-3 pb-3">
+    <div class="button-spacing mb-3">
+        <button nz-button (click)='addInput()'>Add Input</button>
+        <button nz-button (click)='removeInput()'>Remove Input</button>
+    </div>
+    
+    <div style="height: 700px" class="border rounded pt-3 pb-3">
     <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="data.code"></ngx-monaco-editor>
-</div>
+    </div>
 
-<div class="button-spacing mt-2">
-    <button nz-button (click)='cancel()'>Cancel</button>
-    <button nz-button nzType='primary' (click)='save()'>Save</button>
+    <div class="button-spacing mt-2">
+        <button nz-button (click)='cancel()'>Cancel</button>
+        <button nz-button nzType='primary' (click)='save()'>Save</button>
+    </div>
 </div>

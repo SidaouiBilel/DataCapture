@@ -17,4 +17,21 @@ export class NodePycodeComponent extends PipelineNodeComponent  {
   ngOnInit(): void {
   }
 
+  addInput(){
+    this.data.inputs = this.data.inputs || []
+    const inputs = this.data.inputs
+
+    const index = inputs.length
+    const prefix = (index)?("_"+index): ""
+    const portId = "INPUT"+prefix
+    const name = "df"+prefix
+    inputs.push({portId, name})
+  }
+
+  removeInput(){
+    this.data.inputs = this.data.inputs || []
+    const inputs = this.data.inputs
+    inputs.pop()
+  }
+
 }
