@@ -3,4 +3,6 @@ export interface PipelineMetadata {
     name: string;
     description: string;
     scheduler?: string;
+    start_date?: Date;
+
 }

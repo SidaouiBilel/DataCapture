@@ -14,7 +14,7 @@ export class PipelineState {
 export const initialState: PipelineState = {
   edit_nodes : [],
   edit_links : [],
-  metadata: {pipeline_id: null, name: '', description: '', scheduler: ''},
+  metadata: {pipeline_id: null, name: '', description: '', scheduler: '', start_date:null},
   run_id: null
 };
 
