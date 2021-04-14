@@ -1,5 +1,5 @@
-import { CategoryPageComponent } from './pages/category-page/category-page.component';
-import { NgModule, Component } from '@angular/core';
+import { WordPageComponent } from './pages/word-page/word-page.component';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DomainsPageComponent } from './pages/domains-page/domains-page.component';
 import { FieldsPageComponent } from './pages/fields-page/fields-page.component';
@@ -70,8 +70,8 @@ const routes: Routes = [
         component: DictionariesPageComponent,
       },
       {
-        path: ':id/category',
-        component: CategoryPageComponent
+        path: ':id/word',
+        component: WordPageComponent
       },
       {
         path: '**',

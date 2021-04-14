@@ -1,3 +1,4 @@
+import { LogPreviewComponent } from './../../../../../shared/log-preview/log-preview.component';
 import { Injectable } from '@angular/core';
 import { NzDrawerService, NzMessageService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -122,6 +123,22 @@ export class PipelineEditorService {
         },
         nzWidth: '90vw',
       })
+    }
+  }
+  logsNode(task: any, run: any) {
+    if(task.task_id && run.execution_date && run.dag_id){
+      this.drawer.create({
+        nzTitle: 'Log Preview',
+        nzContent: LogPreviewComponent,
+        nzContentParams: {
+          task_id: task.task_id,
+          execution_date: run.execution_date,
+          dag_id: run.dag_id,
+        },
+        nzWidth: '80vw',
+      })
+    } else {
+      this.msg.info('Log is not ready')
     }
   }
 

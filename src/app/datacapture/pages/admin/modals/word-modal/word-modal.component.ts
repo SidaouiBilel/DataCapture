@@ -5,14 +5,13 @@ import { DomainService } from '../../services/domain.service';
 import { EntityModal } from '../entity-modal';
 
 @Component({
-  selector: 'app-category-modal',
-  templateUrl: './category-modal.component.html'
+  selector: 'app-word-modal',
+  templateUrl: './word-modal.component.html'
 })
-export class CategoryModalComponent extends EntityModal implements OnInit {
+export class WordModalComponent extends EntityModal implements OnInit {
 
   data
-  key = false
-  index
+  edit
 
   constructor(private mr: NzModalRef, private ds: DomainService, private WordService: WordService) {
     super(mr);
@@ -30,7 +29,7 @@ export class CategoryModalComponent extends EntityModal implements OnInit {
   onSave() {
     if (this.canSave()) {
       this.loading = true;
-      this.WordService.saveCategorie(this.data).subscribe(res => {
+      this.WordService.saveWord(this.data).subscribe(res => {
         this.save()
         this.loading = false;
       }, (err) => {

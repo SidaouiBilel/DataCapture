@@ -19,6 +19,8 @@ export class EditPipelineMetadataComponent implements OnInit {
     this.validateForm = this.fb.group({
       name: [this.metaData ? this.metaData.name : null, [Validators.required]],
       description: [this.metaData ? this.metaData.description : null, [Validators.required]],
+      scheduler: ['None', this.metaData ? this.metaData.scheduler : null],
+      start_date: [this.metaData ? this.metaData.start_date : null],
     });
   }
 
@@ -31,6 +33,8 @@ export class EditPipelineMetadataComponent implements OnInit {
     if ( this.validateForm.valid) {
       this.metaData.name = this.validateForm.controls.name.value;
       this.metaData.description = this.validateForm.controls.description.value;
+      this.metaData.scheduler = this.validateForm.controls.scheduler.value;
+      this.metaData.start_date = this.validateForm.controls.start_date.value;
       this.drawerRef.close(this.metaData);
     }
   }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoryCardComponent } from './category-card.component';
+import { LogPreviewComponent } from './log-preview.component';
 
-describe('CategoryCardComponent', () => {
-  let component: CategoryCardComponent;
-  let fixture: ComponentFixture<CategoryCardComponent>;
+describe('LogPreviewComponent', () => {
+  let component: LogPreviewComponent;
+  let fixture: ComponentFixture<LogPreviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CategoryCardComponent ]
+      declarations: [ LogPreviewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategoryCardComponent);
+    fixture = TestBed.createComponent(LogPreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

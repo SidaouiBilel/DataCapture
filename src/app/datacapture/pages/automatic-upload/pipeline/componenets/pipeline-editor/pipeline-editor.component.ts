@@ -81,7 +81,35 @@ export class PipelineEditorComponent implements AfterViewInit{
         }
         that.editNode(data);
         return
-      }
+      },
+      contextMenu:
+      $("ContextMenu",
+      $("ContextMenuButton",
+            $(go.Shape,
+              {
+                stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
+              },
+            ),
+            $(go.TextBlock,
+              {
+                text: 'Logs', margin: 0, font: "11pt sans-serif", alignment: go.Spot.Center
+              }),
+            {
+              click: (e, obj) => {
+                const node = obj.part;
+                if (this.diagramModelData.run) {
+                  const run = this.diagramModelData.run
+                  const task = run.tasks.find(t => t.task_id == node.data.key)
+
+                  if (task && ["success", "failed"].includes(task.state)) {
+                    this.logsNode(task, run);
+                    return
+                  }
+
+                }
+              }
+            }),
+      )
     },
     []
     );
@@ -182,6 +210,10 @@ export class PipelineEditorComponent implements AfterViewInit{
 
   clenaseNode(data: any, run: any) {
     this.editor.cleanseNode(data, run)
+  }
+  
+  logsNode(task: any, run: any) {
+    this.editor.logsNode(task, run)
   }
 
 }

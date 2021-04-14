@@ -1,0 +1,35 @@
+<div>
+  <h6 nz-typography>{{edit? "Edit": "Add"}}</h6>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">Code</nz-form-label>
+    <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.code' nz-input /></nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">Cat</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <nz-select ngModel="PER" [(ngModel)]='data.cat'>
+        <nz-option nzValue="PER" nzLabel="PER"></nz-option>
+        <nz-option nzValue="RGPD" nzLabel="RGPD"></nz-option>
+        <nz-option nzValue="MED" nzLabel="MEDICAL"></nz-option>
+        <nz-option nzValue="ECOM" nzLabel="ECOMMERCE"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" >Keywords</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+        <nz-select nzMode="tags" [(ngModel)]="data.keywords" style="width: 100%;">
+        </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+
+
+<div *nzModalFooter>
+  <div class="button-spacing flex end">
+    <button nz-button (click)='close()'>Cancel</button>
+    <button nz-button nzType='primary' [nzLoading]='loading' (click)='onSave()'>{{edit? "Update": "Create"}}</button>
+  </div>
+</div>

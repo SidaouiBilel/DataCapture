@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconsProviderModule } from '@app/icons-provider.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgZorroAntdModule, NzIconService, NzModalModule } from 'ng-zorro-antd';
+import { NzTagModule, NgZorroAntdModule, NzIconService, NzModalModule } from 'ng-zorro-antd';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { UtilsService } from './services/utils.service';
 import { BoolIconComponent } from './bool-icon/bool-icon.component';
@@ -55,6 +55,7 @@ import { ManualImportNodeComponent } from './setup/nodes/datasources/manual-impo
 import { DatasetComponent } from './dataset/dataset.component';
 import { DcmCleansingGridComponent } from './dcm-cleansing-grid/dcm-cleansing-grid.component';
 import { CategoryFilterComponent } from './setup/nodes/category/category-filter/category-filter.component';
+import { LogPreviewComponent } from './log-preview/log-preview.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -68,6 +69,7 @@ const SharedModules = [
   ReactiveFormsModule,
   NzModalModule,
   AngularResizedEventModule,
+  NzTagModule
 ];
 
 const Components = [
@@ -126,7 +128,24 @@ const Components = [
   ],
   declarations: [
     ...Components,
-    CategoryFilterComponent
+    CategoryFilterComponent,
+    NodeFilterComponent,
+    NodeFilterReplaceComponent,
+    NodeMergeComponent,
+    NodeReplaceComponent,
+    NodeDeleteRowComponent,
+    NodeDefaultComponent,
+    NodeSplitterComponent,
+    NodeCalculcatorComponent,
+    NodeFormatDateComponent,
+    NodeGroupbyComponent,
+    NodeHashComponent,
+    CollectionImportComponent,
+    CollectionUploadComponent,
+    NodeJoinComponent,
+    NodePipelineComponent,
+    ManualImportNodeComponent,
+    LogPreviewComponent,
   ],
   exports: [
     ...SharedModules,
