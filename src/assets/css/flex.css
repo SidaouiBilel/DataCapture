@@ -80,6 +80,15 @@
     overflow-x: hidden;
 }
 
+.page-container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: stretch;
+    height: 100%;
+    flex-direction: column;
+    background: white;
+}
+
 
 /* TODO MEDIA QURIES FOR FLEX */
 /* @media(max-width: 1333px) {

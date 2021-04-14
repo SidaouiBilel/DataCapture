@@ -202,3 +202,11 @@ button.ma{
     background: transparent !important;
     border-color: #117a8b !important;
   }
+
+
+  .b-0[nz-button],
+  .b-0 > [nz-button]
+  {
+    border-color: transparent;
+    border-radius: 0;
+  }

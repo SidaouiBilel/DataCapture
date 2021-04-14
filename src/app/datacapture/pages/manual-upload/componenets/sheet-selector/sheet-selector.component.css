@@ -1,0 +1,7 @@
+::ng-deep .sheet-selector [nz-button] {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+    overflow-x:auto;
+    border-radius: 0;
+}

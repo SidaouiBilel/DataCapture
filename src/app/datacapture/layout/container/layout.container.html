@@ -86,6 +86,10 @@
 
           <li nz-submenu nzIcon="upload" nzTitle="Manual Upload" >
             <ul>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/manual/transform']">
+                <i nz-icon nzType="import"></i>
+                <span>manual</span>
+              </li>
               <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/import']">
                 <i nz-icon nzType="import"></i>
                 <span>Import</span>

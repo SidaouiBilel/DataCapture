@@ -1,0 +1,25 @@
+.transform-grid{
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid: gap 1em;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+}
+
+.transform-grid .grid-block{
+    display: block;
+    grid-column: span 3;
+}
+.transform-grid .sheet-selector-block{
+    grid-column: span 3;
+}
+.transform-grid .transform-block{
+    /* border: 1px solid grey; */
+}
+
+/* .transform-grid .grid-block,
+.transform-grid .sheet-selector-block,
+.transform-grid .transform-block{
+    border: 1px solid lightgray;
+} */

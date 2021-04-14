@@ -1,0 +1,21 @@
+
+<div class="flex w-100">
+
+    <nz-steps nzSize="small" class="flex-1">
+        <nz-step nzTitle="Import" nzSubtitle=""
+        nzMatchRouter [routerLink]="['/datacapture/manual/import']"> </nz-step>
+        <nz-step nzTitle="Transform" nzSubtitle=""
+        nzMatchRouter [routerLink]="['/datacapture/manual/transform']"> </nz-step>
+        <nz-step nzTitle="Control" nzSubtitle=""
+        nzMatchRouter [routerLink]="['/datacapture/manual/control']"> </nz-step>
+        <nz-step nzTitle="Report" nzSubtitle=""
+        nzMatchRouter [routerLink]="['/datacapture/manual/report']"> </nz-step>
+    </nz-steps>
+
+    <div>
+        <button nz-button nzType="primary" nzGhost ><i nz-icon nzType="caret-left"></i> Previous</button>
+        <button nz-button nzType="primary" nzShap>Next<i nz-icon nzType="caret-right"></i></button>
+    </div>
+
+</div>
+  

@@ -35,6 +35,10 @@ const routes: Routes = [
           loadChildren : () => import('app/datacapture/pages/automatic-upload/automatic.module').then(m => m.AutomaticModule)
         },
         {
+          path: 'manual',
+          loadChildren : () => import('app/datacapture/pages/manual-upload/manual-upload.module').then(m => m.ManualUploadModule)
+        },
+        {
           path: '**',
           redirectTo: 'dashboard',
           pathMatch: 'full'
