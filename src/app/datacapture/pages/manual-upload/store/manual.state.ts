@@ -1,5 +1,6 @@
 import { AppState } from '@app/core';
-import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
+import { createFeatureSelector } from '@ngrx/store';
+import { Dataset, Operation } from './manual.model';
 
 
 export const FEATURE_NAME = 'manual';
