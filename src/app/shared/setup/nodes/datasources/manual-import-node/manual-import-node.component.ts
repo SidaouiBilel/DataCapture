@@ -19,10 +19,10 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
 
   importing = false
   imported = false
-  
+
   url = environment.import + '?domainId=' + null;
-  
-  constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) { 
+
+  constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) {
     super()
   }
 
@@ -42,8 +42,8 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
       const result = file.response
       this.data.filename = file.name
       this.data.sheets = result.worksheets
-      this.data.file_id = result.file_id 
-      
+      this.data.file_id = result.file_id
+
       this.imported = true
       this.importing = false
       this.ntf.success(`${file.name} file uploaded successfully.`);
@@ -54,7 +54,7 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
       this.importing = false
     }
   }
-  
+
   removeData(){
     delete this.data.filename
     delete this.data.sheets
@@ -68,7 +68,7 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
 
     this.disptach()
   }
-  
+
   onSheetSelected(sheetData){
     this.data.sheetId = sheetData.sheetId
 
@@ -126,4 +126,5 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
         this.disptach()
       }
   }
+
 }

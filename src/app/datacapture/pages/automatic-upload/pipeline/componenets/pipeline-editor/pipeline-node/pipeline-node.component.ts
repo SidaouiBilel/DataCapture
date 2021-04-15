@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pipeline-node',
@@ -11,11 +11,11 @@ export class PipelineNodeComponent implements OnInit {
   size = "default";
   form_orientation = 'horizontal';
   nodeClass
-  onSave = new EventEmitter<any>();
+  @Output() onSave = new EventEmitter<any>();
   onCancel = new EventEmitter<void>();
 
-  
-  constructor() { 
+
+  constructor() {
   }
 
   ngOnInit(): void {

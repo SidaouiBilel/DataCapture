@@ -1,5 +1,6 @@
+import { ImportTypes } from './manual.actions';
 import { AppState } from '@app/core';
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, Action } from '@ngrx/store';
 import { Dataset, Operation } from './manual.model';
 
 
@@ -9,7 +10,7 @@ export const selectManualupload = createFeatureSelector<State, ManualState>(
 );
 
 export interface ManualState {
-  // list of source files 
+  // list of source files
   sheets:Dataset[],
 
   // list of consecutive transformations includes source ids for each transformations,
@@ -21,7 +22,7 @@ export interface ManualState {
   context_id: string,
 
   // similar to automatic process run result:
-  // contains transformation ids and result sheet ids to load data into grid 
+  // contains transformation ids and result sheet ids to load data into grid
   result:any[]
   preview_operation_id:string
 }
@@ -36,6 +37,8 @@ export const initialState: ManualState = {
 
 export function ManualUploadReducer(state: ManualState = initialState, action: any): ManualState {
   switch (action.type) {
+    case ImportTypes.MANUAL_IMPORT:
+      return {...state, sheets: [...state.sheets, action.dataSet]}
     default:
       return state;
   }

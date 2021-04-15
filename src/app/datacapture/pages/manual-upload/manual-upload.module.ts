@@ -14,15 +14,17 @@ import { DefaultToolbarComponent } from './componenets/default-toolbar/default-t
 import { TransformationEditorComponent } from './componenets/transformation-editor/transformation-editor.component';
 import { ManualUploadReducer, FEATURE_NAME } from './store/manual.state';
 import { StoreModule } from '@ngrx/store';
+import { ImportDatasourceModalComponent } from './modals/import-datasource-modal/import-datasource-modal.component';
 
 
 @NgModule({
-  declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent, ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent],
+  declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent, ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent, ImportDatasourceModalComponent],
   imports: [
     CommonModule,
     SharedModule,
     ManualUploadRoutingModule,
     StoreModule.forFeature(FEATURE_NAME, ManualUploadReducer),
-  ]
+  ],
+  entryComponents:[ImportDatasourceModalComponent]
 })
 export class ManualUploadModule { }
