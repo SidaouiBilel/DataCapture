@@ -1,5 +1,5 @@
 import { Dataset } from './../../store/manual.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ManualUploadEditorService } from '../../services/manual-upload-editor.service';
@@ -13,6 +13,8 @@ import { selectImportSheet } from '../../store/manual.selectors';
 })
 export class SheetSelectorComponent implements OnInit {
 
+  @Output() sheet: EventEmitter<Dataset> = new EventEmitter();
+
   sheets$: Observable<Dataset[]>;
   constructor(private editor: ManualUploadEditorService,private store: Store<AppState>) {
     // FETCH STORE DATA
@@ -24,8 +26,11 @@ export class SheetSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  displayGrid(sheet: any){
+    this.sheet.emit(sheet);
+  }
 
-  kilki(){
+  openModal(){
     this.editor.openImport();
   }
 

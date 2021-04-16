@@ -1,12 +1,12 @@
 <div class="flex">
   <div class="sheet-selector b-0">
-    <button nzType='primary' (click)="kilki()" nz-button> <i nz-icon nzType='plus'></i></button>
+    <button nzType='primary' (click)="openModal()" nz-button> <i nz-icon nzType='plus'></i></button>
     <button ghost nz-button> <i nz-icon nzType='setting'></i></button>
   </div>
   <div class="sheet-selector flex-1">
     <ng-container *ngFor='let sheet of sheets$ | async; let i = index'>
-      <button class="b-0 border-left" nz-tooltip nz-button>
-        <span nz-typography nzEditable [nzContent]="'Sheet ' + i+1"></span>
+      <button class="b-0 border-left" nz-tooltip nz-button (click) = "displayGrid(sheet)">
+        <span nz-typography nzEditable [nzContent]="'Sheet ' + i + 1"></span>
       </button>
     </ng-container>
   </div>

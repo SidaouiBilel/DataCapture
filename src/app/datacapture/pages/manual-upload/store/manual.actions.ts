@@ -14,3 +14,5 @@ export class ManualImport implements Action {
    constructor(readonly dataSet: Dataset) {}
 
 }
+
+export type ImportActions =  ManualImport;
