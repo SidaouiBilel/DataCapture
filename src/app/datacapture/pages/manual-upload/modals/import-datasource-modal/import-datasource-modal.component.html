@@ -7,7 +7,7 @@
     <nz-option nzValue="postgre" nzLabel="PostgreSQL"></nz-option>
     <nz-option nzValue="azure" nzLabel="Azure Blob Storage"></nz-option>
   </nz-select>
-  <br>
+  <nz-divider></nz-divider>
   <container-element [ngSwitch]="importType">
 
     <ng-container *ngSwitchCase="'collection'">

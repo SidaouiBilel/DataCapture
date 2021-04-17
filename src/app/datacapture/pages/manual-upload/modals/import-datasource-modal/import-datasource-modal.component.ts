@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import * as uuid from 'uuid';
+import { NzModalRef } from 'ng-zorro-antd';
 
 
 @Component({
@@ -13,7 +14,7 @@ import * as uuid from 'uuid';
 export class ImportDatasourceModalComponent implements OnInit {
 
   importType: string = 'manual';
-  constructor(private store: Store<AppState>) {
+  constructor(private ref: NzModalRef,private store: Store<AppState>) {
   }
 
   ngOnInit() {
@@ -26,10 +27,10 @@ export class ImportDatasourceModalComponent implements OnInit {
       file_id: event.file_id,
       sheet_id: event.sheet_id,
       id: uuid.v4(),
-      type: 'hmmmmmmm'
+      type: this.importType
     }
     this.store.dispatch(new ManualImport(data));
-
+    this.ref.close()
   }
 
 }

@@ -27,14 +27,14 @@ export class TransformComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    combineLatest([this.gridReady$]).subscribe(([grid]:any) => {
+    combineLatest([this.gridReady$]).subscribe(([grid]: any) => {
       combineLatest([this.size$, this.selectedSheet$])
-      .subscribe(([size, selectedSheet]:any) => {
-        this.onReset()
-        if (selectedSheet) {
-          this.generateDataSource(grid, selectedSheet, size);
-        }
-      });
+        .subscribe(([size, selectedSheet]: any) => {
+          this.onReset()
+          if (selectedSheet) {
+            this.generateDataSource(grid, selectedSheet, size);
+          }
+        });
     });
   }
 
@@ -44,8 +44,11 @@ export class TransformComponent implements OnInit {
   }
 
   selectedSheet(sheet) {
+    this.viewGrid = false
     this.selectedSheet$ = of(sheet);
-    this.viewGrid = true;
+    setTimeout(() => {
+      this.viewGrid = true
+    }, 100);
   }
 
   generateDataSource(gridApi: any, selectedSheet: Dataset, size: number) {
@@ -65,13 +68,13 @@ export class TransformComponent implements OnInit {
             });
             const headers = res.headers.map(h => ({
               field: h,
-                colId: h,
-                headerName: h,
-                editable: false,
-                resizable: true,
-                cellRenderer: 'autoTypeRenderer',
-                filter: GAPIFilterComponenet('string'),
-                filterParams: GAPIAllFilterParams(params)
+              colId: h,
+              headerName: h,
+              editable: false,
+              resizable: true,
+              cellRenderer: 'autoTypeRenderer',
+              filter: GAPIFilterComponenet('string'),
+              filterParams: GAPIAllFilterParams(params)
             }));
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
@@ -90,8 +93,8 @@ export class TransformComponent implements OnInit {
           gridApi.columnApi.autoSizeAllColumns();
           params.successCallback(data, lastRow());
         }, (error) => {
-            params.failCallback();
-            // that.onError(error);
+          params.failCallback();
+          // that.onError(error);
         });
       }
     });
