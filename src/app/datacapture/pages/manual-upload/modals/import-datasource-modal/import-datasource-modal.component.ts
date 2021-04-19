@@ -14,6 +14,7 @@ import { NzModalRef } from 'ng-zorro-antd';
 export class ImportDatasourceModalComponent implements OnInit {
 
   importType: string = 'manual';
+  btnGenerate = true;
   constructor(private ref: NzModalRef,private store: Store<AppState>) {
   }
 

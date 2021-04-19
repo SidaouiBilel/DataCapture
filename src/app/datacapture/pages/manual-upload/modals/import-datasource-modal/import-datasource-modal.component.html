@@ -1,4 +1,4 @@
-<div style="height: 40em;">
+<div style="height: 100%;">
 
   <nz-select style="width: 190px;" ngModel="manual" [(ngModel)]='importType'>
     <nz-option nzValue="manual" nzLabel="Manual"></nz-option>
@@ -7,29 +7,29 @@
     <nz-option nzValue="postgre" nzLabel="PostgreSQL"></nz-option>
     <nz-option nzValue="azure" nzLabel="Azure Blob Storage"></nz-option>
   </nz-select>
+
   <nz-divider></nz-divider>
+
   <container-element [ngSwitch]="importType">
-
-    <ng-container *ngSwitchCase="'collection'">
-      <app-collection-import></app-collection-import>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'sql'">
-      <app-sql-import-node></app-sql-import-node>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'postgre'">
-      <app-postgres-import-node></app-postgres-import-node>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'azure'">
-      <app-storage-account></app-storage-account>
-    </ng-container>
-
     <ng-container *ngSwitchDefault>
       <app-manual-import-node (onSave)="onSaveHandler($event)"></app-manual-import-node>
     </ng-container>
 
+    <ng-container *ngSwitchCase="'collection'">
+      <app-collection-import [btnGenerate]="btnGenerate"></app-collection-import>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'sql'">
+      <app-sql-import-node [btnGenerate]="btnGenerate"></app-sql-import-node>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'postgre'">
+      <app-postgres-import-node [btnGenerate]="btnGenerate"></app-postgres-import-node>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'azure'">
+      <app-storage-account [btnGenerate]="btnGenerate"></app-storage-account>
+    </ng-container>
   </container-element>
 
 

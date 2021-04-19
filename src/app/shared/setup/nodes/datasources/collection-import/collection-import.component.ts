@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 
@@ -8,12 +8,15 @@ import { FileImportService } from '@app/datacapture/pages/upload/services/file-i
   styleUrls: ['./collection-import.component.css']
 })
 export class CollectionImportComponent extends PipelineNodeComponent {
+  @Input() btnGenerate = false;
+
   keys = Object.keys;
   domains = [];
   domain;
+
   constructor(private service: FileImportService) {
     super();
-    
+
     this.service.getAllSuper().subscribe((domains: any) => {
       this.domains = domains.resultat;
       this.fetchDomainData();

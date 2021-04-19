@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { NodeBlobStorage } from '@app/datacapture/pages/automatic-upload/pipeline/models/nodes/datasources.model';
 import { CONNECTOR_DEF_BLOB_STORAGE } from '@app/datacapture/pages/connectors/models/connectors.model';
@@ -13,10 +13,10 @@ import { AzureConnectorService } from './services/azure-connector.service';
   styleUrls: ['./storage-account.component.css']
 })
 export class StorageAccountImportNodeComponent extends PipelineNodeComponent {
-
+  @Input() btnGenerate = false;
   nodeClass = NodeBlobStorage
 
-  constructor(private con: AzureConnectorService, private connectors: ConnectorsService) { 
+  constructor(private con: AzureConnectorService, private connectors: ConnectorsService) {
     super()
   }
 

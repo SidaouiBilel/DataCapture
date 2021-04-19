@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { NodePostgresImport } from '@app/datacapture/pages/automatic-upload/pipeline/models/nodes/datasources.model';
 import { ConnectorsService } from '@app/datacapture/pages/connectors/services/connectors.service';
@@ -10,10 +10,10 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./postgres-import-node.component.css']
 })
 export class PostgresImportNodeComponent extends PipelineNodeComponent {
-
+  @Input() btnGenerate = false;
   nodeClass = NodePostgresImport
 
-  constructor(private connectors: ConnectorsService) { 
+  constructor(private connectors: ConnectorsService) {
     super()
   }
 

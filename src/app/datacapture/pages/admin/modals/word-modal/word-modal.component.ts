@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
 import { WordService } from '../../services/word.service';
-import { DomainService } from '../../services/domain.service';
 import { EntityModal } from '../entity-modal';
 
 @Component({
@@ -13,7 +12,7 @@ export class WordModalComponent extends EntityModal implements OnInit {
   data
   edit
 
-  constructor(private mr: NzModalRef, private ds: DomainService, private WordService: WordService) {
+  constructor(private mr: NzModalRef, private WordService: WordService) {
     super(mr);
   }
 

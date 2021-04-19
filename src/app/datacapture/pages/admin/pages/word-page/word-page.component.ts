@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@app/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StoreService } from '../../services/store.service';
+import { WordEditorService } from '../../services/word-editor.service';
 import { WordService } from '../../services/word.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class WordPageComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     public wordService: WordService,
+    private editor: WordEditorService,
     private ntf: NotificationService,
     public s: StoreService
   ) {this.load_data() }
@@ -58,19 +60,19 @@ export class WordPageComponent implements OnInit {
   }
 
   onAddWord(data) {
-    this.wordService.openWordModal(data, this.dict_id).subscribe(() => {
+    this.editor.openWordModal(data, this.dict_id).subscribe(() => {
       this.load_data();
     });
   }
 
   onEditWord(data) {
-    this.wordService.openWordModal(data, data.dict_id).subscribe(() => {
+    this.editor.openWordModal(data, data.dict_id).subscribe(() => {
       this.load_data();
     });
   }
 
   onDeleteWord(data) {
-    this.wordService.showDeleteConfirm(data).subscribe(() => {
+    this.editor.showDeleteConfirm(data).subscribe(() => {
       this.load_data();
     });
   }
