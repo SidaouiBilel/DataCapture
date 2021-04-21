@@ -18,6 +18,10 @@
     /* border: 1px solid grey; */
 }
 
+.nz-empty{
+  margin-top: 9em;
+}
+
 /* .transform-grid .grid-block,
 .transform-grid .sheet-selector-block,
 .transform-grid .transform-block{

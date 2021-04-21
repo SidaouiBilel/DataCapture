@@ -23,8 +23,8 @@ export class ImportDatasourceModalComponent implements OnInit {
 
 
   onSaveHandler(event: Dataset) {
-    console.log(event)
     const data : Dataset  = {
+      file_name: event['filename'].split(".")[0],
       file_id: event.file_id,
       sheet_id: event.sheet_id,
       id: uuid.v4(),

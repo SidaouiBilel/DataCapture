@@ -18,7 +18,7 @@ export class TransformComponent implements OnInit {
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
   viewGrid = false;
-
+  noData=true;
 
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -52,6 +52,7 @@ export class TransformComponent implements OnInit {
   }
 
   generateDataSource(gridApi: any, selectedSheet: Dataset, size: number) {
+    this.noData=false;
     const that = this;
     // this.gridApi = gridApi;
     gridApi.api.setServerSideDatasource({

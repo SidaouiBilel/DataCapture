@@ -1,10 +1,11 @@
 <div class="transform-grid">
-    <app-sheet-selector class="sheet-selector-block border" (sheet)="selectedSheet($event)"></app-sheet-selector>
-    <app-transformation-editor  class="transform-block border" style="grid-column: span 1; grid-row: span 3;"></app-transformation-editor>
-    <app-default-toolbar class="border" style="grid-column: span 3;"></app-default-toolbar>
-    <app-data-grid *ngIf="viewGrid"
-    (gridReady)="gridReady$.next($event)"
-    [paginationPageSize]='size$ | async' [rangeSelection]='true'
-    [columnDefs]="headers$ | async"
-    class="grid-block border"></app-data-grid>
+  <app-sheet-selector class="sheet-selector-block border" (sheet)="selectedSheet($event)"></app-sheet-selector>
+  <app-transformation-editor class="transform-block border" style="grid-column: span 1; grid-row: span 3;">
+  </app-transformation-editor>
+  <app-default-toolbar class="border" style="grid-column: span 3;"></app-default-toolbar>
+  <div class="grid-block border">
+    <nz-empty class="nz-empty" *ngIf="noData"></nz-empty>
+    <app-data-grid *ngIf="viewGrid" (gridReady)="gridReady$.next($event)" [paginationPageSize]='size$ | async'
+      [rangeSelection]='true' [columnDefs]="headers$ | async" ></app-data-grid>
+  </div>
 </div>

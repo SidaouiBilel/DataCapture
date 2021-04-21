@@ -1,4 +1,4 @@
-<div style="height: 100%;">
+<div style="height: 100vh;">
 
   <nz-select style="width: 190px;" ngModel="manual" [(ngModel)]='importType'>
     <nz-option nzValue="manual" nzLabel="Manual"></nz-option>
@@ -12,7 +12,7 @@
 
   <container-element [ngSwitch]="importType">
     <ng-container *ngSwitchDefault>
-      <app-manual-import-node (onSave)="onSaveHandler($event)"></app-manual-import-node>
+      <app-manual-import-node [previewGrid]=true (onSave)="onSaveHandler($event)"></app-manual-import-node>
     </ng-container>
 
     <ng-container *ngSwitchCase="'collection'">

@@ -16,21 +16,28 @@ export class SheetSelectorComponent implements OnInit {
   @Output() sheet: EventEmitter<Dataset> = new EventEmitter();
 
   sheets$: Observable<Dataset[]>;
-  constructor(private editor: ManualUploadEditorService,private store: Store<AppState>) {
-    // FETCH STORE DATA
-    this.sheets$ = this.store.select(selectImportSheet);
-
+  constructor(private editor: ManualUploadEditorService, private store: Store<AppState>) {
   }
 
 
   ngOnInit(): void {
+    // FETCH STORE DATA
+    this.sheets$ = this.store.select(selectImportSheet);
+
+    // display saved sheet
+    this.store.select(selectImportSheet).subscribe(
+      (sheets: Dataset[]) => {
+        if (sheets.length)
+          this.displayGrid(sheets[sheets.length-1])
+      }
+    )
   }
 
-  displayGrid(sheet: any){
+  displayGrid(sheet: any) {
     this.sheet.emit(sheet);
   }
 
-  openModal(){
+  openModal() {
     this.editor.openImport();
   }
 

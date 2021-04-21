@@ -4,9 +4,9 @@
     <button ghost nz-button> <i nz-icon nzType='setting'></i></button>
   </div>
   <div class="sheet-selector flex-1">
-    <ng-container *ngFor='let sheet of sheets$ | async; let i = index'>
+    <ng-container *ngFor='let sheet of sheets$ | async'>
       <button nz-button nzType="default" class="b-0 border-left" (click)="displayGrid(sheet)">
-        <i nz-icon nzType="edit"></i>Sheet {{i+1}}
+        <i nz-icon nzType="edit"></i>{{sheet.file_name}}
       </button>
     </ng-container>
   </div>
