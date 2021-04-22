@@ -28,8 +28,6 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
 
   url = environment.import + '?domainId=' + null;
 
-  // ha li zedna
-  selectedSheet$: Observable<Dataset>;
   paginator$: any;
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
@@ -37,6 +35,13 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
   noData = true;
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+  style = {
+    marginTop: '20px',
+    marginBottom: '20px',
+    width: '100%',
+    height: '225px',
+  };
 
   constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) {
     super()
@@ -187,9 +192,9 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
           }
-          const lastRow = () => res.total;
+          const lastRow = () => 5;
           const data = [];
-          for (const row of res.data.slice(1, 5)) {
+          for (const row of res.data.slice(0, 5)) {
             const rowObject = {};
             let i = 0;
             for (const h of res.headers) {

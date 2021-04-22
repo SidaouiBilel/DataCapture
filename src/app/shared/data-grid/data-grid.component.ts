@@ -32,10 +32,16 @@ export class DataGridComponent implements OnInit {
   };
   // @Input() fillOperation: (args: any) => void;
 
+  @Input() style = {
+    width: '100%',
+    height: '100%',
+    flex: '1 1 auto'
+  };
+
   @Output() gridReady: EventEmitter<any> = new EventEmitter<any>();
   @Output() cellValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  public loadingCellRendererParams = { loadingMessage: 'One moment please...'};
+  public loadingCellRendererParams = { loadingMessage: 'One moment please...' };
   public modules: any[] = AllEnterpriseModules;
   public frameworkComponents = {
     customTooltip: CustomTooltipComponent,
