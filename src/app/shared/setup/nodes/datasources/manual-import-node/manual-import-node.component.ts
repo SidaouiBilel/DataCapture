@@ -7,7 +7,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import * as _ from 'lodash'
 import { DatasetComponent } from '@app/shared/dataset/dataset.component';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { Dataset } from '@app/datacapture/pages/manual-upload/store/manual.model';
+
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 
 @Component({
@@ -18,10 +18,10 @@ import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } 
 export class ManualImportNodeComponent extends PipelineNodeComponent implements OnInit {
 
   @Output() update = new EventEmitter<any>()
-  data
+
   @Input() previewGrid = false;
   isDatasetReady = false;
-
+  data
   importing = false
   imported = false
 

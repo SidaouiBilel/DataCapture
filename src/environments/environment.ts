@@ -26,6 +26,7 @@ export const environment = {
   upload: 'http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-upload/upload/',
 
   auth: 'http://localhost:5000/',
+  // auth: 'http://20.74.12.165/dk-auth/',
   env: 'DEV',
 
   pipeline: 'http://localhost:5006/'
