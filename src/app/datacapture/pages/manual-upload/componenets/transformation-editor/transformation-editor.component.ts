@@ -3,6 +3,7 @@ import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { AddTransformationNode } from '../../store/actions/transformation.actions';
+import { selectTransformation } from '../../store/manual.selectors';
 import { TRANSFORMATIONS } from '../transformations/transformers';
 
 
@@ -13,12 +14,14 @@ import { TRANSFORMATIONS } from '../transformations/transformers';
 })
 export class TransformationEditorComponent implements OnInit {
 
-  constructor(private modal: NzModalService, private store: Store<AppState>) { }
-
   transformations = TRANSFORMATIONS
+  nodes$ = null;
+
+  constructor(private modal: NzModalService, private store: Store<AppState>) {
+    this.nodes$ = this.store.select(selectTransformation);
+  }
 
   ngOnInit(): void {
-    console.log(this.transformations[0])
   }
 
   addTransformation(t) {
@@ -33,4 +36,7 @@ export class TransformationEditorComponent implements OnInit {
     //   },
     // })
   }
+
+
+
 }
