@@ -5,7 +5,3 @@ export interface Dataset{
     id: string,
     type: string
 }
-export interface Operation{
-    // used to get calculation tree
-    dataset_ids: string[]
-}

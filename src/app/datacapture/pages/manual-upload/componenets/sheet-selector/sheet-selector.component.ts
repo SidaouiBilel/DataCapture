@@ -4,7 +4,7 @@ import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { ManualUploadEditorService } from '../../services/manual-upload-editor.service';
 import { Observable } from 'rxjs';
-import { selectImportSheet } from '../../store/manual.selectors';
+import { selectImportSheet } from '../../store/selectors/import.selectors';
 
 @Component({
   selector: 'app-sheet-selector',

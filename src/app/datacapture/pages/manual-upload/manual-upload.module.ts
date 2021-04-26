@@ -12,7 +12,7 @@ import { SharedModule } from '@app/shared';
 import { SheetSelectorComponent } from './componenets/sheet-selector/sheet-selector.component';
 import { DefaultToolbarComponent } from './componenets/default-toolbar/default-toolbar.component';
 import { TransformationEditorComponent } from './componenets/transformation-editor/transformation-editor.component';
-import { ManualUploadReducer, FEATURE_NAME } from './store/manual.state';
+import { FEATURE_NAME, manualReducers } from './store/manual.state';
 import { StoreModule } from '@ngrx/store';
 import { ImportDatasourceModalComponent } from './modals/import-datasource-modal/import-datasource-modal.component';
 import { NewCalculatorModalComponent } from './componenets/transformations/modals/new-calculator-modal/new-calculator-modal.component';
@@ -27,7 +27,7 @@ import { NewCalculatorComponent } from './componenets/transformations/components
     CommonModule,
     SharedModule,
     ManualUploadRoutingModule,
-    StoreModule.forFeature(FEATURE_NAME, ManualUploadReducer),
+    StoreModule.forFeature(FEATURE_NAME, manualReducers),
   ],
   entryComponents:[ImportDatasourceModalComponent, NewCalculatorModalComponent]
 })

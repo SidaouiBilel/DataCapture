@@ -4,8 +4,8 @@ import { Parser } from '@app/shared/utils/paerser.utils';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Dataset } from '../../../../store/manual.model';
-import { selectImportSheet } from '../../../../store/manual.selectors';
 import { NzModalRef } from 'ng-zorro-antd';
+import { selectImportSheet } from '@app/datacapture/pages/manual-upload/store/selectors/import.selectors';
 
 
 @Component({

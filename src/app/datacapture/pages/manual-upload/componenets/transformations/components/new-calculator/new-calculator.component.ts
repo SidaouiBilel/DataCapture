@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Dataset } from '@app/datacapture/pages/manual-upload/store/manual.model';
-import { selectImportSheet } from '@app/datacapture/pages/manual-upload/store/manual.selectors';
+import { selectImportSheet } from '@app/datacapture/pages/manual-upload/store/selectors/import.selectors';
 import { TransformationInterfaceComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { Store } from '@ngrx/store';

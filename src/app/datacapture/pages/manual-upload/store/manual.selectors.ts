@@ -1,8 +1,8 @@
+import { selectManual, ManualState } from './manual.state';
 import { createSelector } from '@ngrx/store';
-import { selectManualupload, ManualState } from './manual.state';
 
 
-export const selectImportSheet = createSelector(
-  selectManualupload,
-  (object: ManualState) => object.sheets
+export const selectManualImport = createSelector(
+  selectManual,
+  (state: ManualState) => state.import
 );

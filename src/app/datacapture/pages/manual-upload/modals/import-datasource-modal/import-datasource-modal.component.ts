@@ -1,10 +1,10 @@
 import { Dataset } from './../../store/manual.model';
-import { ManualImport } from './../../store/manual.actions';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import * as uuid from 'uuid';
 import { NzModalRef } from 'ng-zorro-antd';
+import { ManualImport } from '../../store/actions/import.actions';
 
 
 @Component({

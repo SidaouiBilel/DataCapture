@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AppState } from '@app/core';
+import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
+import { AddTransformationNode } from '../../store/actions/transformation.actions';
 import { TRANSFORMATIONS } from '../transformations/transformers';
 
 
@@ -10,7 +13,7 @@ import { TRANSFORMATIONS } from '../transformations/transformers';
 })
 export class TransformationEditorComponent implements OnInit {
 
-  constructor(private modal: NzModalService) { }
+  constructor(private modal: NzModalService, private store: Store<AppState>) { }
 
   transformations = TRANSFORMATIONS
 
@@ -19,12 +22,15 @@ export class TransformationEditorComponent implements OnInit {
   }
 
   addTransformation(t) {
-      const modal = this.modal.create({
-      nzContent: t.component,
-      nzFooter: null,
-      nzWidth: 400,
-      nzComponentParams:{
-      },
-    })
+    const node = { type: t.type, applied: false, valid: false };
+    this.store.dispatch(new AddTransformationNode(node))
+
+    //   const modal = this.modal.create({
+    //   nzContent: t.component,
+    //   nzFooter: null,
+    //   nzWidth: 400,
+    //   nzComponentParams:{
+    //   },
+    // })
   }
 }
