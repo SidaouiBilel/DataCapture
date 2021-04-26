@@ -28,21 +28,21 @@
 <div class="flex">
   <div class="operations-bar">
     <div class="calculator-button-wrapper" *ngFor='let btn of ["+", "-","*", "/"]'><button
-        (click)='addToken(null, btn, "operator")' class="calculator-button" nz-button>{{btn}}</button></div>
-    <div class="calculator-button-wrapper"><button (click)='addToken(null, "(", "lp")' class="calculator-button"
+        (click)='addToken(btn, "operator")' class="calculator-button" nz-button>{{btn}}</button></div>
+    <div class="calculator-button-wrapper"><button (click)='addToken("(", "lp")' class="calculator-button"
         nz-button>(</button></div>
-    <div class="calculator-button-wrapper"><button (click)='addToken(null, ")", "rp")' class="calculator-button"
+    <div class="calculator-button-wrapper"><button (click)='addToken(")", "rp")' class="calculator-button"
         nz-button>)</button></div>
   </div>
 
   <div class="button-grid flex-1">
     <div class="calculator-button-wrapper" style="grid-column: span 2;">
-      <button nz-dropdown nzTrigger='click' [nzDropdownMenu]="menu" class="calculator-button" nzBlock nz-button>Sheet
+      <button nz-dropdown nzTrigger='click' [nzDropdownMenu]="menu" class="calculator-button" nzBlock nz-button>
+        {{!selectedSheet ? "Sheet" : selectedSheet?.file_name }}
         <i nz-icon nzType='down'></i></button>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu class="w-100 calculator">
           <li *ngFor='let s of sheets$ | async' (click)='selectSheet(s)' nz-menu-item>{{s.file_name}}</li>
-          <!-- (click)='addToken(s, "sheet")'' -->
         </ul>
       </nz-dropdown-menu>
     </div>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="calculator-button-wrapper" *ngFor='let btn of [1,2,3,4,5,6,7,8,9,".", 0]'><button
-        (click)='addToken(null, btn, "number")' class="calculator-button" nz-button nzBlock>{{btn}}</button></div>
+        (click)='addToken(btn, "number")' class="calculator-button" nz-button nzBlock>{{btn}}</button></div>
     <div class="calculator-button-wrapper"><button (click)='removeLastToken()' class="calculator-button" nzBlock
         nz-button><i nz-icon nzType='left'></i></button></div>
     <div class="calculator-button-wrapper"><button (click)='clear()' class="calculator-button" nz-button

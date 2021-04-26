@@ -3,8 +3,8 @@ import { AppState } from '@app/core';
 import { Parser } from '@app/shared/utils/paerser.utils';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Dataset } from '../../store/manual.model';
-import { selectImportSheet } from '../../store/manual.selectors';
+import { Dataset } from '../../../../store/manual.model';
+import { selectImportSheet } from '../../../../store/manual.selectors';
 import { NzModalRef } from 'ng-zorro-antd';
 
 
@@ -21,9 +21,7 @@ export class NewCalculatorModalComponent implements OnInit {
   node_index = 0
   sheets$: Observable<Dataset[]>;
   column = ''
-  selectedSheet = null;
-  columns = []
-
+  selectedSheet: Dataset = null;
 
   ngOnInit(): void {
     this.sheets$ = this.store.select(selectImportSheet);
@@ -33,22 +31,16 @@ export class NewCalculatorModalComponent implements OnInit {
   }
 
   onEnter() {
-  /* const col = {
-      sheet: this.selectedSheet,
-      col: this.column
-    }
-    this.columns.push(col)
-    console.log(this.columns) */
     if(this.column != '')
-    this.addToken(this.selectedSheet, this.column, "column")
+    this.addToken(this.column, "column")
 
     this.column = ''
   }
 
-  addToken(sheet, value, type){
+  addToken(value, type){
 
     const token = {
-      sheet,
+      sheet: this.selectedSheet.id,
       value,
       type
     }

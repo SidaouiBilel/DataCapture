@@ -46,9 +46,9 @@ export class CalculatorModalComponent implements OnInit {
         const next_token = this.formula[next_index]
         if (next_token && next_token.type == 'number'){
           this.formula.splice(next_index, 1)
-          token.value = String(token.value).concat(next_token.value) 
+          token.value = String(token.value).concat(next_token.value)
         }
-      }      
+      }
       token = this.formula[++index]
     }
 
@@ -73,7 +73,7 @@ export class CalculatorModalComponent implements OnInit {
         case 'number': {
           const token_len = token.value.length
           if(token_len > 1){
-            token.value = String(token.value).substr(0, token_len - 1) 
+            token.value = String(token.value).substr(0, token_len - 1)
             break
           }
         }

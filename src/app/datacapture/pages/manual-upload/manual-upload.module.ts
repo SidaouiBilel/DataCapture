@@ -15,13 +15,14 @@ import { TransformationEditorComponent } from './componenets/transformation-edit
 import { ManualUploadReducer, FEATURE_NAME } from './store/manual.state';
 import { StoreModule } from '@ngrx/store';
 import { ImportDatasourceModalComponent } from './modals/import-datasource-modal/import-datasource-modal.component';
-import { NewCalculatorModalComponent } from './modals/new-calculator-modal/new-calculator-modal.component';
+import { NewCalculatorModalComponent } from './componenets/transformations/modals/new-calculator-modal/new-calculator-modal.component';
+import { NewCalculatorComponent } from './componenets/transformations/components/new-calculator/new-calculator.component';
 
 
 @NgModule({
   declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent,
      ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
-     ImportDatasourceModalComponent, NewCalculatorModalComponent],
+     ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent],
   imports: [
     CommonModule,
     SharedModule,

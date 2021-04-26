@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CalculatorComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/format/calculator/calculator.component';
-import { TransformationInterfaceComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/transformation-interface.component';
-import { TRANSFORMATIONS } from '@app/datacapture/pages/upload/components/transformation/transformations/transformers';
 import { NzModalService } from 'ng-zorro-antd';
+import { TRANSFORMATIONS } from '../transformations/transformers';
 
 
 @Component({
@@ -17,14 +15,16 @@ export class TransformationEditorComponent implements OnInit {
   transformations = TRANSFORMATIONS
 
   ngOnInit(): void {
+    console.log(this.transformations[0])
   }
 
   addTransformation(t) {
       const modal = this.modal.create({
-      nzContent: t.component, // || TransformationInterfaceComponent,
+      nzContent: t.component,
+      nzFooter: null,
+      nzWidth: 400,
       nzComponentParams:{
-        typeModal: true
-      }
+      },
     })
   }
 }

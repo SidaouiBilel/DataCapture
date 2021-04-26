@@ -1,26 +1,25 @@
 
 <nz-card nzTitle='Operations' nzSize='small' class="paddless"></nz-card>
-<!-- <small class="p-2 text-muted border-bottom">Clikc list</small> -->
  <div class="b-0 w-100 border-bottom">
     <button *ngFor='let t of transformations' nzShape='circle' nz-button nzType='default'
       (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
         [nzRotate]='t.icon_rotation || 0'></i></button>
   </div>
 
-  <div class="border-bottom p-2" *ngFor='let t of [1,2,3,4]'>
+<!--   <div class="border-bottom p-2" *ngFor='let t of [0]'>
     <div class="flex between">
       <div>
         <small>
-          <span><i class="mr-2" nz-icon [nzType]="transformations[t].icon"></i></span>Operation description on 
+          <span><i class="mr-2" nz-icon [nzType]="transformations[t].icon"></i></span>Operation description on
           <span class="text-muted"><i nz-icon nzType='file'></i> Sheet 1</span>
         </small>
       </div>
       <div>
         <button class="b-0" nz-button><i nz-icon nzType='edit'></i></button>
         <button class="b-0" nz-button><i nz-icon nzType='menu'></i></button>
-        <!-- <button class="b-0" nz-button><i nz-icon nzType='delete'></i></button> -->
-        <!-- <button class="b-0" nz-button><i nz-icon nzType='eye'></i></button> -->
-        <!-- <button class="b-0" nz-button><i nz-icon nzType='delete'></i></button> -->
+        <button class="b-0" nz-button><i nz-icon nzType='delete'></i></button>
+        <button class="b-0" nz-button><i nz-icon nzType='eye'></i></button>
+        <button class="b-0" nz-button><i nz-icon nzType='delete'></i></button>
       </div>
     </div>
-  </div>
+  </div> -->
