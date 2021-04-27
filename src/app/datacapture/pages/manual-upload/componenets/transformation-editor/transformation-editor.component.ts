@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
+import { selectTranformationNodes } from '@app/datacapture/pages/upload/components/transformation/store/transformation.selectors';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { AddTransformationNode } from '../../store/actions/transformation.actions';
-import { selectTransformation } from '../../store/manual.selectors';
 import { TRANSFORMATIONS } from '../transformations/transformers';
 
 
@@ -18,7 +18,7 @@ export class TransformationEditorComponent implements OnInit {
   nodes$ = null;
 
   constructor(private modal: NzModalService, private store: Store<AppState>) {
-    this.nodes$ = this.store.select(selectTransformation);
+    this.nodes$ = this.store.select(selectTranformationNodes);
   }
 
   ngOnInit(): void {

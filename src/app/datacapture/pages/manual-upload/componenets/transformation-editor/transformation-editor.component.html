@@ -6,6 +6,15 @@
         [nzRotate]='t.icon_rotation || 0'></i></button>
   </div>
 
+  <div class="trans-container">
+    <ng-container *ngFor='let node of nodes$ | async; let i = index'>
+      <i *ngIf='i!=0' class="trans-arrow alt"> </i>
+      <div class="trans-block w-100" >
+        <app-transformation-node [index]=i [params]='node'></app-transformation-node>
+      </div>
+    </ng-container>
+
+
 <!--   <div class="border-bottom p-2" *ngFor='let t of [0]'>
     <div class="flex between">
       <div>
