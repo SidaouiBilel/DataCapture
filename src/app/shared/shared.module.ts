@@ -60,6 +60,7 @@ import { CategoryHashComponent } from './setup/nodes/category/category-hash/cate
 import { CategoryPipe } from './pipes/category.pipe';
 import { PreviewReportComponent } from './preview-report/preview-report.component';
 import { WarningsFilterPipe } from './pipes/warnings-filter.pipe';
+import { WarningsExistPipe } from './preview-report/warnings-exist.pipe';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -133,6 +134,7 @@ const Components = [
     MonacoEditorModule,
   ],
   declarations: [
+
     ...Components,
     CategoryFilterComponent,
     NodeFilterComponent,
@@ -153,7 +155,8 @@ const Components = [
     ManualImportNodeComponent,
     LogPreviewComponent,
     CategoryHashComponent,
-    WarningsFilterPipe
+    WarningsFilterPipe,
+    WarningsExistPipe
   ],
   exports: [
     ...SharedModules,
