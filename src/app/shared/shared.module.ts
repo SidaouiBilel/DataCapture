@@ -54,6 +54,7 @@ import { NodeTranformationService } from './setup/nodes/other/node-pipeline/serv
 import { ManualImportNodeComponent } from './setup/nodes/datasources/manual-import-node/manual-import-node.component';
 import { SimpleFilterPipe } from './simple-filter/simple-filter.pipe';
 import { PreviewReportComponent } from './preview-report/preview-report.component';
+import { WarningsFilterPipe } from './pipes/warnings-filter.pipe';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -125,11 +126,13 @@ const Components = [
     NodePipelineComponent,
     ManualImportNodeComponent,
     SimpleFilterPipe,
+    WarningsFilterPipe
   ],
   exports: [
     ...SharedModules,
     ...Components,
-    SimpleFilterPipe
+    SimpleFilterPipe,
+    WarningsFilterPipe
   ],
   providers: [
     UtilsService,

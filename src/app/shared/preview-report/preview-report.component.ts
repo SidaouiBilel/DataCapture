@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NotificationService } from '@app/core/notifications/notification.service';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { NzDrawerRef } from 'ng-zorro-antd';
@@ -21,7 +21,7 @@ export class PreviewReportComponent implements OnInit {
         (res: any) => {
           this.report_content = res;
           this.ntf.success('Report generated successfully...');
-          this.length_vars = Object.keys( this.report_content.variables ).length;
+          this.length_vars = Object.keys(this.report_content.variables).length;
         }, (err) => {
           this.drawerRef.close();
           this.ntf.warn('Report failed...');
@@ -29,6 +29,5 @@ export class PreviewReportComponent implements OnInit {
       );
     }
   }
-
 
 }
