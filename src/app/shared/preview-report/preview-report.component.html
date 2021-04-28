@@ -139,7 +139,7 @@
                   </div>
                 </div>
               </div>
-              <div class="warning">
+              <div class="warning" *ngIf="report_content?.messages | warningsExist:varriable.key">
                 <div class="warnings">
                   <h3>Warnings</h3>
                   <div style="width: 60%;">

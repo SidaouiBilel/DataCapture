@@ -1,7 +1,7 @@
 {
-  "admin": "http://localhost:5009/",
+  "admin": "http://localhost:5002/",
   "import": "http://localhost:5001/import/v2/",
-  "transform": "http://localhost:5002/transfo/",
+  "transform": "http://localhost:5003/transfo/",
   "auth": "http://localhost:5000/",
   "pipeline": "http://localhost:5006/",
 
@@ -9,5 +9,5 @@
   "cleansing": "http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-check/check",
   "upload": "http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-upload/upload/",
   "dkAuth": "http://ec2-3-236-14-93.compute-1.amazonaws.com:9001/api/v1/store/auth/",
-  "prefix": "http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/"
+  "prefix":"http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/"
 }

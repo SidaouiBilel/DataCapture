@@ -55,6 +55,7 @@ import { ManualImportNodeComponent } from './setup/nodes/datasources/manual-impo
 import { SimpleFilterPipe } from './simple-filter/simple-filter.pipe';
 import { PreviewReportComponent } from './preview-report/preview-report.component';
 import { WarningsFilterPipe } from './pipes/warnings-filter.pipe';
+import { WarningsExistPipe } from './preview-report/warnings-exist.pipe';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -108,6 +109,7 @@ const Components = [
     MonacoEditorModule,
   ],
   declarations: [
+
     ...Components,
     NodeFilterComponent,
     NodeFilterReplaceComponent,
@@ -126,13 +128,14 @@ const Components = [
     NodePipelineComponent,
     ManualImportNodeComponent,
     SimpleFilterPipe,
-    WarningsFilterPipe
+    WarningsFilterPipe,
+    WarningsExistPipe
   ],
   exports: [
     ...SharedModules,
     ...Components,
     SimpleFilterPipe,
-    WarningsFilterPipe
+    WarningsFilterPipe,
   ],
   providers: [
     UtilsService,
