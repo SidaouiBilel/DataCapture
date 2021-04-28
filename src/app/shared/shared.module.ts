@@ -59,6 +59,7 @@ import { LogPreviewComponent } from './log-preview/log-preview.component';
 import { CategoryHashComponent } from './setup/nodes/category/category-hash/category-hash.component';
 import { CategoryPipe } from './pipes/category.pipe';
 import { PreviewReportComponent } from './preview-report/preview-report.component';
+import { WarningsFilterPipe } from './pipes/warnings-filter.pipe';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -152,10 +153,12 @@ const Components = [
     ManualImportNodeComponent,
     LogPreviewComponent,
     CategoryHashComponent,
+    WarningsFilterPipe
   ],
   exports: [
     ...SharedModules,
     ...Components,
+    WarningsFilterPipe
   ],
   providers: [
     UtilsService,
