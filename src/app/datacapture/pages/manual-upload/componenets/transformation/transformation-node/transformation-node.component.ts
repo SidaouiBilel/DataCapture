@@ -2,10 +2,10 @@ import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewCont
 import { AppState } from '@app/core';
 import { UpdateTransformationNode } from '@app/datacapture/pages/manual-upload/store/actions/transformation.actions';
 import { selectTranformationNodeStatus } from '@app/datacapture/pages/upload/components/transformation/store/transformation.selectors';
-import { TransformationInterfaceComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { TRANSFORMATIONS } from '../transformations/transformers';
+import { TransformationInterfaceComponent } from '../transformations/trasnformation-intefrace/transformation-interface.component';
 
 @Component({
   selector: 'app-transformation-node',
@@ -14,7 +14,7 @@ import { TRANSFORMATIONS } from '../transformations/transformers';
 })
 export class TransformationNodeComponent implements OnInit {
 
-  @ViewChild('paramsHost', {static: true, read: ViewContainerRef}) paramsHost: ViewContainerRef;
+  @ViewChild('paramsHost', { static: true, read: ViewContainerRef }) paramsHost: ViewContainerRef;
 
   transformationComponent: TransformationInterfaceComponent;
 
@@ -30,7 +30,7 @@ export class TransformationNodeComponent implements OnInit {
     this.index = value
     // this.status$ = this.store.select(selectTranformationNodeStatus(this.index))
   }
-  @Input("params") set _params(value){
+  @Input("params") set _params(value) {
     this.params = JSON.parse(JSON.stringify(value))
     this.updateTransformation()
     this.loadComponent();
@@ -41,10 +41,10 @@ export class TransformationNodeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateTransformation(){
-    if (this.params && this.params.type){
-      for (let t of TRANSFORMATIONS){
-        if (t.type == this.params.type){
+  updateTransformation() {
+    if (this.params && this.params.type) {
+      for (let t of TRANSFORMATIONS) {
+        if (t.type == this.params.type) {
           this.transofrmation = t;
           break;
         }
@@ -53,7 +53,7 @@ export class TransformationNodeComponent implements OnInit {
   }
 
   loadComponent() {
-    if (this.transofrmation){
+    if (this.transofrmation) {
 
       const component = this.getTranformerComponent()
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
@@ -65,26 +65,24 @@ export class TransformationNodeComponent implements OnInit {
 
       this.transformationComponent.data = this.params;
       this.transformationComponent.index = this.index;
-      // this.transformationComponent.dataChanged.subscribe(data => this.onDataChanged(data))
+      this.transformationComponent.dataChanged.subscribe(data => this.onDataChanged(data))
     }
   }
 
-  onDataChanged(data){
-    console.log('waayi',this.index)
-    console.log(data)
+  onDataChanged(data) {
     this.store.dispatch(new UpdateTransformationNode(data, this.index))
   }
 
-  getTranformerComponent(){
+  getTranformerComponent() {
     const component = this.transofrmation.component || TransformationInterfaceComponent;
 
     return component;
   }
 
-  onDelete(){
+  onDelete() {
   }
 
-  onChangeOrder(step){
+  onChangeOrder(step) {
   }
 
   showCompAsModal(): void {

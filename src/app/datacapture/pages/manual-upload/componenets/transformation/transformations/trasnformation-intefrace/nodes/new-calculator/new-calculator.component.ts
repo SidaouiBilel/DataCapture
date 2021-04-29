@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Dataset } from '@app/datacapture/pages/manual-upload/store/manual.model';
 import { selectImportSheet } from '@app/datacapture/pages/manual-upload/store/selectors/import.selectors';
-import { TransformationInterfaceComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { deepCopy } from '@app/shared/utils/objects.utils';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
+import { TransformationInterfaceComponent } from '../../transformation-interface.component';
 import { NewCalculatorModalComponent } from './new-calculator-modal/new-calculator-modal.component';
 
 @Component({
