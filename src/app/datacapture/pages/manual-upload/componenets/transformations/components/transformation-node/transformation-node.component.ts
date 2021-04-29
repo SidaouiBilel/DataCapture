@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { AppState } from '@app/core';
 import { selectTranformationNodeStatus } from '@app/datacapture/pages/upload/components/transformation/store/transformation.selectors';
+import { TransformationInterfaceComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { TRANSFORMATIONS } from '../../transformers';
@@ -11,6 +12,11 @@ import { TRANSFORMATIONS } from '../../transformers';
   styleUrls: ['./transformation-node.component.css']
 })
 export class TransformationNodeComponent implements OnInit {
+
+  @ViewChild('paramsHost', {static: true, read: ViewContainerRef}) paramsHost: ViewContainerRef;
+
+  transformationComponent: TransformationInterfaceComponent;
+
 
   transofrmation
 
@@ -26,10 +32,10 @@ export class TransformationNodeComponent implements OnInit {
   @Input("params") set _params(value){
     this.params = JSON.parse(JSON.stringify(value))
     this.updateTransformation()
-    // this.loadComponent();
+    this.loadComponent();
   }
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }
@@ -45,4 +51,40 @@ export class TransformationNodeComponent implements OnInit {
     }
   }
 
+  loadComponent() {
+    if (this.transofrmation){
+
+      const component = this.getTranformerComponent()
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+
+      const viewContainerRef = this.paramsHost;
+
+      const transformationRef = viewContainerRef.createComponent(componentFactory);
+      this.transformationComponent = (transformationRef.instance) as TransformationInterfaceComponent;
+
+      this.transformationComponent.data = this.params;
+      this.transformationComponent.index = this.index;
+      // this.transformationComponent.dataChanged.subscribe(data => this.onDataChanged(data))
+    }
+  }
+
+  onDataChanged(data){
+    // this.store.dispatch(new UpdateTransNode(data, this.index))
+  }
+
+  getTranformerComponent(){
+    const component = this.transofrmation.component || TransformationInterfaceComponent;
+
+    return component;
+  }
+
+  onDelete(){
+  }
+
+  onChangeOrder(step){
+  }
+
+  showCompAsModal(): void {
+
+  }
 }

@@ -1,5 +1,5 @@
-<!-- [nzDropdownMenu]="menu"  -->
 <nz-card
+  [nzDropdownMenu]="menu"
   nz-dropdown nzPlacement='bottomLeft'
   nzHoverable [nzTitle]='title' [nzSize]="'small'"
   [style.border-color]="transofrmation?.color"
@@ -28,3 +28,11 @@
   </div>
 
 </nz-card>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="button-spacing flex" nz-menu>
+    <button nz-tooltip nzTooltipTitle='edit' class="ghost" nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="edit"></i></button>
+    <button nz-tooltip nzTooltipTitle='order up' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(-1)'><i nz-icon nzType="up"></i></button>
+    <button nz-tooltip nzTooltipTitle='order down' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(+1)'><i nz-icon nzType="down"></i></button>
+    <button nz-tooltip nzTooltipTitle='delete' class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+  </div>
+</nz-dropdown-menu>
