@@ -1,9 +1,9 @@
-import { selectTransformationNodes } from './../../store/selectors/transformation.selectors';
+import { selectTransformationNodes } from '../../../store/selectors/transformation.selectors';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
-import { AddTransformationNode } from '../../store/actions/transformation.actions';
+import { AddTransformationNode } from '../../../store/actions/transformation.actions';
 import { TRANSFORMATIONS } from '../transformations/transformers';
 
 

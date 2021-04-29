@@ -3,7 +3,7 @@ import { AppState } from '@app/core';
 import { Parser } from '@app/shared/utils/paerser.utils';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Dataset } from '../../../../store/manual.model';
+import { Dataset } from '../../../../../../../store/manual.model';
 import { NzModalRef } from 'ng-zorro-antd';
 import { selectImportSheet } from '@app/datacapture/pages/manual-upload/store/selectors/import.selectors';
 
@@ -33,7 +33,6 @@ export class NewCalculatorModalComponent implements OnInit {
   onEnter() {
     if(this.column != '')
     this.addToken(this.column, "column")
-
     this.column = ''
   }
 
@@ -104,5 +103,6 @@ export class NewCalculatorModalComponent implements OnInit {
   submit(){
     this.modal.close(this.formula)
   }
+
 
 }

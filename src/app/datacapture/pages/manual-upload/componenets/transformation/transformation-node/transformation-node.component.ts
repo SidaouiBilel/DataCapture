@@ -1,10 +1,11 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { AppState } from '@app/core';
+import { UpdateTransformationNode } from '@app/datacapture/pages/manual-upload/store/actions/transformation.actions';
 import { selectTranformationNodeStatus } from '@app/datacapture/pages/upload/components/transformation/store/transformation.selectors';
 import { TransformationInterfaceComponent } from '@app/datacapture/pages/upload/components/transformation/transformations/transformation-interface/transformation-interface.component';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
-import { TRANSFORMATIONS } from '../../transformers';
+import { TRANSFORMATIONS } from '../transformations/transformers';
 
 @Component({
   selector: 'app-transformation-node',
@@ -69,7 +70,9 @@ export class TransformationNodeComponent implements OnInit {
   }
 
   onDataChanged(data){
-    // this.store.dispatch(new UpdateTransNode(data, this.index))
+    console.log('waayi',this.index)
+    console.log(data)
+    this.store.dispatch(new UpdateTransformationNode(data, this.index))
   }
 
   getTranformerComponent(){

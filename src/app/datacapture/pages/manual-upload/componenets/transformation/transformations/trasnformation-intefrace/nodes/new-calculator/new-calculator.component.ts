@@ -7,7 +7,7 @@ import { deepCopy } from '@app/shared/utils/objects.utils';
 import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
-import { NewCalculatorModalComponent } from '../../modals/new-calculator-modal/new-calculator-modal.component';
+import { NewCalculatorModalComponent } from './new-calculator-modal/new-calculator-modal.component';
 
 @Component({
   selector: 'app-new-calculator',
