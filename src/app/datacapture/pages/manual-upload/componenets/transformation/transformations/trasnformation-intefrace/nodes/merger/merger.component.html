@@ -1,0 +1,54 @@
+<form nz-form [nzLayout]="'horizontal'">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6">Seperator</nz-form-label>
+    <nz-form-control [nzSm]="18">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.separator' (change)='onDataChanged()' name='separator' />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6">Destination</nz-form-label>
+    <nz-form-control [nzSm]="10">
+      <nz-select [(ngModel)]='data.destination_sheet' (ngModelChange)='onDataChanged()'
+      nzPlaceHolder='Sheet' name='destination_sheet'>
+        <nz-option *ngFor='let s of sheets$ | async'
+                    nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+    <nz-form-control class="inputs-wrapper" [nzSm]="8">
+      <input class="input-columns" nz-input [nzSize]='size' [(ngModel)]='data.destination_column'
+      (change)='onDataChanged()' name='destination_column' placeHolder="Column"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div *ngFor='let src of data.sources; let i = index'>
+
+    <div class="flex between">
+      <div></div>
+      <button class="ghost p-0" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Remove Source"
+        (click)='onRemoveSource(i)'><i nz-icon nzType="minus"></i></button>
+    </div>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6">Source {{i+1}}</nz-form-label>
+      <nz-form-control [nzSm]="10">
+        <nz-select [(ngModel)]='src.sheet_id' (ngModelChange)='onDataChanged()'
+        nzPlaceHolder='Sheet' [ngModelOptions]=" {standalone: true}">
+          <nz-option *ngFor='let s of sheets$ | async'
+                      nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+      <nz-form-control class="inputs-wrapper" [nzSm]="8">
+        <input class="input-columns" nz-input [nzSize]='size' [(ngModel)]='src.column' (change)='onDataChanged()'
+        placeHolder="Column" [ngModelOptions]=" {standalone: true}"/>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="flex"><button class="ghost" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Add Source"
+      (click)='onAddSource()'><i nz-icon nzType="plus"></i></button>
+  </div>
+
+</form>

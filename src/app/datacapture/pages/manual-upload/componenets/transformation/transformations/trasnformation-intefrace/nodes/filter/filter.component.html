@@ -22,7 +22,8 @@
     <nz-form-item>
       <nz-form-label [nzSm]="8">Column</nz-form-label>
       <nz-form-control [nzSm]="16">
-        <input nz-input [nzSize]='size' [(ngModel)]='c.column' (change)='onDataChanged()' name='column' />
+        <input nz-input [nzSize]='size' [(ngModel)]='c.column' (change)='onDataChanged()'
+        [ngModelOptions]=" {standalone: true}" />
       </nz-form-control>
     </nz-form-item>
 
