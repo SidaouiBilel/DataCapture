@@ -1,10 +1,6 @@
-<nz-card
-  [nzDropdownMenu]="menu"
-  nz-dropdown nzPlacement='bottomLeft'
-  nzHoverable [nzTitle]='title' [nzSize]="'small'"
-  [style.border-color]="transofrmation?.color"
-  class="transformation-card">
-    <!-- TITLE -->
+<nz-card [nzDropdownMenu]="menu" nz-dropdown nzPlacement='bottomLeft' nzHoverable [nzTitle]='title' [nzSize]="'small'"
+  [style.border-color]="transofrmation?.color" class="transformation-card">
+  <!-- TITLE -->
   <ng-template #title>
     <div class="flex between">
       <div class="flex start">
@@ -16,23 +12,25 @@
 
       <div>
         <!-- <i class="mr-2" nz-icon nzType='info' nz-tooltip [nzTooltipTitle]='transofrmation.description'></i> -->
-<!--         <app-node-status [valid]='((status$ | async) || [])[0]' [messages]='((status$ | async) || [])[1]'></app-node-status>-->
+        <!--         <app-node-status [valid]='((status$ | async) || [])[0]' [messages]='((status$ | async) || [])[1]'></app-node-status>-->
       </div>
 
     </div>
   </ng-template>
 
   <!-- BODY -->
-  <div [hidden]='(expanded$ | async)' >
+  <div [hidden]='(expanded$ | async)'>
     <ng-template #paramsHost></ng-template>
   </div>
 
 </nz-card>
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <div class="button-spacing flex" nz-menu>
-    <button nz-tooltip nzTooltipTitle='edit' class="ghost" nzShape='circle' nz-button (click)='showCompAsModal()'><i nz-icon nzType="edit"></i></button>
-    <button nz-tooltip nzTooltipTitle='order up' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(-1)'><i nz-icon nzType="up"></i></button>
-    <button nz-tooltip nzTooltipTitle='order down' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(+1)'><i nz-icon nzType="down"></i></button>
-    <button nz-tooltip nzTooltipTitle='delete' class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    <button nz-tooltip nzTooltipTitle='order up' class="ghost" nzShape='circle' nz-button (click)='onChangeOrder(-1)'><i
+        nz-icon nzType="up"></i></button>
+    <button nz-tooltip nzTooltipTitle='order down' class="ghost" nzShape='circle' nz-button
+      (click)='onChangeOrder(+1)'><i nz-icon nzType="down"></i></button>
+    <button nz-tooltip nzTooltipTitle='delete' class="ghost" nzShape='circle' nz-button (click)='onDelete()'><i nz-icon
+        nzType="delete"></i></button>
   </div>
 </nz-dropdown-menu>

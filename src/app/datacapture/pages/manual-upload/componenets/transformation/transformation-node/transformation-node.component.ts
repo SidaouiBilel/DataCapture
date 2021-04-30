@@ -1,3 +1,4 @@
+import { DeleteTransformationNode, UpdateNodeOrder } from './../../../store/actions/transformation.actions';
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { AppState } from '@app/core';
 import { UpdateTransformationNode } from '@app/datacapture/pages/manual-upload/store/actions/transformation.actions';
@@ -75,17 +76,15 @@ export class TransformationNodeComponent implements OnInit {
 
   getTranformerComponent() {
     const component = this.transofrmation.component || TransformationInterfaceComponent;
-
     return component;
   }
 
   onDelete() {
+    this.store.dispatch(new DeleteTransformationNode(this.index))
   }
 
   onChangeOrder(step) {
+    this.store.dispatch(new UpdateNodeOrder(this.index,step))
   }
 
-  showCompAsModal(): void {
-
-  }
 }
