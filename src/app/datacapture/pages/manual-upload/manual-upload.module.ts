@@ -20,6 +20,7 @@ import { NewCalculatorComponent } from './componenets/transformation/transformat
 import { TransformationNodeComponent } from './componenets/transformation/transformation-node/transformation-node.component';
 import { TransformationInterfaceComponent } from './componenets/transformation/transformations/trasnformation-intefrace/transformation-interface.component';
 import { FilterComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/filter/filter.component';
+import { JoinerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/joiner/joiner.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FilterComponent } from './componenets/transformation/transformations/tr
      ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
      ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
      TransformationInterfaceComponent,
-     FilterComponent],
+     FilterComponent,
+     JoinerComponent],
   imports: [
     CommonModule,
     SharedModule,

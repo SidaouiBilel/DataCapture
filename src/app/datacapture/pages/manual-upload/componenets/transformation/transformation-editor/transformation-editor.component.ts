@@ -27,14 +27,6 @@ export class TransformationEditorComponent implements OnInit {
   addTransformation(t) {
     const node = { type: t.type, applied: false, valid: false };
     this.store.dispatch(new AddTransformationNode(node))
-
-    //   const modal = this.modal.create({
-    //   nzContent: t.component,
-    //   nzFooter: null,
-    //   nzWidth: 400,
-    //   nzComponentParams:{
-    //   },
-    // })
   }
 
 
