@@ -2,13 +2,14 @@ import { DeleteRow, Replace, Merge, Filter, FilterAndReplace, DefaultValue, Spli
   FormatDate, GroupBy, Hasher, Joiner } from "@app/datacapture/pages/upload/components/transformation/transformations/transformers/transformer.model";
 import { FilterComponent } from "./trasnformation-intefrace/nodes/filter/filter.component";
 import { MergerComponent } from "./trasnformation-intefrace/nodes/merger/merger.component";
+import { JoinerComponent } from "./trasnformation-intefrace/nodes/joiner/joiner.component";
 import { NewCalculatorComponent } from "./trasnformation-intefrace/nodes/new-calculator/new-calculator.component";
 
 export const TRANSFORMATIONS = [
   new Calculator().setComponent(NewCalculatorComponent),
   new Filter().setComponent(FilterComponent),
   new Merge().setComponent(MergerComponent),
-
+  new Joiner().setComponent(JoinerComponent)
 /*   ,
   new FilterAndReplace().setComponent(FindAndReplaceComponent),
   new Replace().setComponent(FormatterComponent),

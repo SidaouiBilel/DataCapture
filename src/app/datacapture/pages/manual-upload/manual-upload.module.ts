@@ -21,6 +21,7 @@ import { TransformationNodeComponent } from './componenets/transformation/transf
 import { TransformationInterfaceComponent } from './componenets/transformation/transformations/trasnformation-intefrace/transformation-interface.component';
 import { FilterComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/filter/filter.component';
 import { MergerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/merger/merger.component';
+import { JoinerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/joiner/joiner.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MergerComponent } from './componenets/transformation/transformations/tr
      ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
      TransformationInterfaceComponent,
      FilterComponent,
-     MergerComponent],
+     MergerComponent,
+     JoinerComponent],
   imports: [
     CommonModule,
     SharedModule,

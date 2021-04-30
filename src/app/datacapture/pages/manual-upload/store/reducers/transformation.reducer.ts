@@ -5,13 +5,13 @@ import { TransformationActionTypes } from "../actions/transformation.actions";
 export interface TransformationState {
   // used to get calculation tree
   nodes: any[]
-  dataset_ids: string[]
+  // dataset_ids: string[]
 }
 
 
 export const initialState: TransformationState = {
   nodes: [],
-  dataset_ids: []
+  // dataset_ids: []
 }
 
 const ACTIONS = TransformationActionTypes
