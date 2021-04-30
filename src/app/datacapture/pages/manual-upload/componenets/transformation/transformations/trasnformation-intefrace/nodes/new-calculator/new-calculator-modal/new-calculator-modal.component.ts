@@ -39,9 +39,13 @@ export class NewCalculatorModalComponent implements OnInit {
   addToken(value, type){
 
     const token = {
-      sheet: this.selectedSheet.id,
+      sheet: '',
       value,
       type
+    }
+
+    if(type == 'column') {
+      token.sheet = this.selectedSheet.id
     }
 
     this.formula.push(token)

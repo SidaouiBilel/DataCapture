@@ -12,7 +12,7 @@
       <nz-form-control [nzSm]="18">
         <nz-select [(ngModel)]='data.sheet_destination' (ngModelChange)='onDataChanged()' name='sheet'>
           <nz-option *ngFor='let s of sheets$ | async'
-                      nzValue="{{s.sheet_id}}" nzLabel="{{s.file_name}}">
+                      nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
           </nz-option>
         </nz-select>
       </nz-form-control>
