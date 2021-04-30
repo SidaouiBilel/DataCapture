@@ -7,15 +7,25 @@
         (click)='onRemoveCondition(i)'><i nz-icon nzType="minus"></i></button>
     </div>
 
-    <!-- </ng-template> -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Sheet</nz-form-label>
+      <nz-form-control [nzSm]="16">
+        <nz-select [(ngModel)]='c.source_sheet' (ngModelChange)='onDataChanged()' name='sheet'
+        nzPlaceHolder='None'>
+          <nz-option *ngFor='let s of sheets$ | async'
+                      nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSm]="8">Column</nz-form-label>
       <nz-form-control [nzSm]="16">
-        <app-columns-input [nzSize]='size' [nodeIndex]='index' [ngModelOptions]=" {standalone: true}"
-          [(ngModel)]='c.column' (change)='onDataChanged()'></app-columns-input>
+        <input nz-input [nzSize]='size' [(ngModel)]='c.column' (change)='onDataChanged()' name='column' />
       </nz-form-control>
     </nz-form-item>
+
 
     <nz-form-item>
       <nz-form-label [nzSm]="8">Operation</nz-form-label>

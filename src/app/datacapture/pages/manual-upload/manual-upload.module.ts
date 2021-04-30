@@ -19,13 +19,15 @@ import { NewCalculatorModalComponent } from './componenets/transformation/transf
 import { NewCalculatorComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/new-calculator/new-calculator.component';
 import { TransformationNodeComponent } from './componenets/transformation/transformation-node/transformation-node.component';
 import { TransformationInterfaceComponent } from './componenets/transformation/transformations/trasnformation-intefrace/transformation-interface.component';
+import { FilterComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/filter/filter.component';
 
 
 @NgModule({
   declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent,
      ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
      ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
-     TransformationInterfaceComponent],
+     TransformationInterfaceComponent,
+     FilterComponent],
   imports: [
     CommonModule,
     SharedModule,
