@@ -67,6 +67,12 @@ export class PipelineEditorComponent implements AfterViewInit{
     dia.nodeTemplateMap = generateNodesTemplateMap({
       doubleClick: (e, node) => {
         const data = node.data
+/*         console.log('===============================')
+        console.log(node)
+        console.log(this.diagramModelData)
+        console.log(this.diagramModelData.run)
+        console.log('===============================') */
+
         if(this.diagramModelData.run){
           const run = this.diagramModelData.run
           const task = run.tasks.find(t=>t.task_id==data.key)
@@ -211,7 +217,7 @@ export class PipelineEditorComponent implements AfterViewInit{
   clenaseNode(data: any, run: any) {
     this.editor.cleanseNode(data, run)
   }
-  
+
   logsNode(task: any, run: any) {
     this.editor.logsNode(task, run)
   }

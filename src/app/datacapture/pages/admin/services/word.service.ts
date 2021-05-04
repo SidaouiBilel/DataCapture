@@ -25,4 +25,7 @@ export class WordService {
     return this.http.delete(this.url + "word/" + cat['id']);
   }
 
+  getWordsByCat(cat) {
+    return this.http.get(this.url + "word/categories/" + cat)
+  }
 }
