@@ -1,20 +1,32 @@
+<div class="flex column h-100 stretch">
+  
+  <nz-card nzTitle='Operations' nzSize='small' class="paddless"></nz-card>
 
-<nz-card nzTitle='Operations' nzSize='small' class="paddless"></nz-card>
- <div class="b-0 w-100 border-bottom">
+  <div class="button-spacing b-0 border-bottom w-100">
+    <button nz-button (click)='apply()'><i nz-icon nzType='caret-right'></i>Apply</button>
+    <button nz-button (click)='reset()'><i nz-icon nzType='close'></i>Reset</button>
+  </div>
+
+  <div class="b-0 w-100 border-bottom">
     <button *ngFor='let t of transformations' nzShape='circle' nz-button nzType='default'
       (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
         [nzRotate]='t.icon_rotation || 0'></i></button>
   </div>
 
-  <div class="trans-container">
-    <ng-container *ngFor='let node of nodes$ | async; let i = index'>
-      <i *ngIf='i!=0' class="trans-arrow alt"> </i>
-      <div class="trans-block w-100" >
-        <app-transformation-node [index]=i [params]='node'></app-transformation-node>
-      </div>
-    </ng-container>
+ <div class="trans-container flex-1">
+   <ng-container *ngFor='let node of nodes$ | async; let i = index'>
+     <i *ngIf='i!=0' class="trans-arrow alt"> </i>
+     <div class="trans-block w-100" >
+       <app-transformation-node [index]=i [params]='node'></app-transformation-node>
+     </div>
+   </ng-container>
 
 
+
+   
+  </div>
+
+</div>
 <!--   <div class="border-bottom p-2" *ngFor='let t of [0]'>
     <div class="flex between">
       <div>

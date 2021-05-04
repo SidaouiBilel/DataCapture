@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { AddTransformationNode } from '../../../store/actions/transformation.actions';
 import { TRANSFORMATIONS } from '../transformations/transformers';
+import { ManualJobRun } from '../../../store/actions/job.actions';
 
 
 @Component({
@@ -28,7 +29,13 @@ export class TransformationEditorComponent implements OnInit {
     const node = { type: t.type, applied: false, valid: false };
     this.store.dispatch(new AddTransformationNode(node))
   }
-
-
+  
+  reset(){
+    
+  }
+  
+  apply(){
+    this.store.dispatch(new ManualJobRun())
+  }
 
 }

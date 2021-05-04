@@ -22,7 +22,7 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({keys: ['upload', 'admin', 'pipeline'], rehydrate: true})(reducer);
+  return localStorageSync({keys: ['upload', 'admin', 'pipeline', 'manual'], rehydrate: true})(reducer);
   // return localStorageSync({keys: ['auth', 'upload', 'admin'], rehydrate: true})(reducer);
 }
 
