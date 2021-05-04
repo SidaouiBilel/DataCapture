@@ -17,7 +17,7 @@ export const environment = {
   // mapping: 'http://localhost:5001/mapping',
   // cleansing: 'http://localhost:5005/check',
   cleansing: 'http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-check/check',
-  transform: 'http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-transforming/transfo/',
+  transform: 'http://127.0.0.1:5008/transfo/',
   // transform: 'http://localhost:5002/transfo/',
   // admin: 'https://dcm-admin.azurewebsites.net/',
   admin: 'http://localhost:5002/',

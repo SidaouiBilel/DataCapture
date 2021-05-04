@@ -56,6 +56,7 @@ import { DatasetComponent } from './dataset/dataset.component';
 import { DcmCleansingGridComponent } from './dcm-cleansing-grid/dcm-cleansing-grid.component';
 import { CategoryFilterComponent } from './setup/nodes/category/category-filter/category-filter.component';
 import { LogPreviewComponent } from './log-preview/log-preview.component';
+import { CategoryHashComponent } from './setup/nodes/category/category-hash/category-hash.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -146,6 +147,7 @@ const Components = [
     NodePipelineComponent,
     ManualImportNodeComponent,
     LogPreviewComponent,
+    CategoryHashComponent,
   ],
   exports: [
     ...SharedModules,

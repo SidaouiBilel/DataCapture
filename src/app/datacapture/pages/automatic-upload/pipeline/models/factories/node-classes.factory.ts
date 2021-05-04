@@ -15,27 +15,28 @@ import { CollectionImportComponent } from "@app/shared/setup/nodes/datasources/c
 import { NodeJoinComponent } from "@app/shared/setup/nodes/other/node-join/node-join.component";
 import { NodePipelineComponent } from "@app/shared/setup/nodes/other/node-pipeline/node-pipeline.component";
 import { ManualImportNodeComponent } from "@app/shared/setup/nodes/datasources/manual-import-node/manual-import-node.component";
-import { NodeFilterByCategory } from "../nodes/categorization.model";
+import { NodeFilterByCategory, NodeHashByCategory } from "../nodes/categorization.model";
 import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/category-filter/category-filter.component";
+import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
   NodeJoin.setComponenet(NodeJoinComponent),
   NodePycode.setComponenet(NodePycodeComponent),
   NodeTransformationPipeline.setComponenet(NodePipelineComponent)
-] 
+]
 export const DATASOURCE_NODES = [
   NodeCollectionImport.setComponenet(CollectionImportComponent),
-  NodeSQLImport.setComponenet(SqlImportNodeComponent), 
-  NodePostgresImport.setComponenet(PostgresImportNodeComponent), 
+  NodeSQLImport.setComponenet(SqlImportNodeComponent),
+  NodePostgresImport.setComponenet(PostgresImportNodeComponent),
   NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent),
   NodeManualImport.setComponenet(ManualImportNodeComponent),
 ]
 export const DATASINK_NODES = [
-  NodeCollectionUpload.setComponenet(CollectionUploadComponent), 
+  NodeCollectionUpload.setComponenet(CollectionUploadComponent),
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
   NodePostgresUpload.setComponenet(PostgresUploadNodeComponent),
-  NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent), 
+  NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent),
 ]
 export const NODE_TRANSFORMERS = [
               NodeTransformationFilter
@@ -54,7 +55,8 @@ export const NODE_TRANSFORMERS = [
           })
 
 export const CATEGORY_NODES = [
-  NodeFilterByCategory.setComponenet(CategoryFilterComponent)
+  NodeFilterByCategory.setComponenet(CategoryFilterComponent),
+  NodeHashByCategory.setComponenet(CategoryHashComponent)
 ]
 
 export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
