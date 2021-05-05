@@ -47,7 +47,26 @@
   </div>
   <div>
     <app-data-grid *ngIf="previewGrid && isDatasetReady" (gridReady)="gridReady$.next($event)" [style]="style"
-    [paginationPageSize]='size$ | async' [rangeSelection]='true' [columnDefs]="headers$ | async"></app-data-grid>
+      [paginationPageSize]='size$ | async' [rangeSelection]='true' [columnDefs]="headers$ | async"></app-data-grid>
+
+    <div class="columns-warnings" *ngIf="isDatasetReady && listOfCols">
+      <nz-alert nzType="warning" nzMessage="Warning" nzDescription="Columns below must be anonymised." nzShowIcon> </nz-alert>
+      <nz-divider></nz-divider>
+      <nz-table #cols [nzData]="listOfCols">
+        <thead>
+          <tr>
+            <th>Column</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let col of cols.data">
+            <td>{{ col['column'] }}</td>
+            <td><nz-tag [nzColor]="'processing'">{{col['category']}}</nz-tag></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
 
 
 

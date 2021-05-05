@@ -22,7 +22,6 @@ export class CategoryHashComponent extends PipelineNodeComponent {
   }
 
   getWordsByCat(cat) {
-    console.log(cat)
     this.wordService.getWordsByCat(cat).subscribe(
       data => {
         this.words = data
@@ -34,20 +33,15 @@ export class CategoryHashComponent extends PipelineNodeComponent {
         });
       }
     )
-    console.log(this.keywords)
   }
 
-  log(event){
-    console.log(event)
-    console.log(this.data)
-  }
 
   categories$ = new BehaviorSubject([
-    {value:'MED', label:'Medical'},
-    {value:'PER', label:'Personal'},
-    {value:'COM', label:'Commercial'},
+    {value:'Medical', label:'Medical'},
+    {value:'Personal', label:'Personal'},
+    {value:'Commercial', label:'Commercial'},
     {value:'RGPD', label:'RGPD'},
-    {value:'OTH', label:'Uncategorized'},
+    {value:'Uncategorized', label:'Uncategorized'},
   ])
 
 }

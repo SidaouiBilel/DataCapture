@@ -14,8 +14,7 @@
     <nz-form-item>
       <nz-form-label class="text-left" [nzSm]="24" nzRequired>Columns</nz-form-label>
       <nz-form-control [nzSm]="24">
-        <nz-select nzMode="mutliple" name='columns' [(ngModel)]="data.columns"
-        (ngModelChange)="log($event)">
+        <nz-select nzMode="mutliple" name='columns' [(ngModel)]="data.columns">
           <nz-option *ngFor="let key of keywords" [nzValue]="key" [nzLabel]="key"></nz-option>
       </nz-select>
       </nz-form-control>

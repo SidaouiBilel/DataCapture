@@ -43,6 +43,18 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     height: '225px',
   };
 
+  listOfCols : any[];
+  // [
+  //   {
+  //     'column': 'LATITUDE',
+  //     'category': 'Personal'
+  //   },
+  //   {
+  //     'column': 'LONGITUDE',
+  //     'category': 'Personal'
+  //   }
+  // ];
+
   constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) {
     super()
   }
@@ -103,6 +115,7 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
         this.ntf.success('Dataset ready');
         this.data.label = sheetData.sheetName;
         this.isDatasetReady = true;
+        this.listOfCols = data.categories;
         this.prepareGrid(this.data.sheet_id);
         this.disptach()
       })
