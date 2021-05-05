@@ -48,6 +48,7 @@ export class CategoryHashComponent extends PipelineNodeComponent {
     { value: 'Personal', label: 'Personal' },
     { value: 'Commercial', label: 'Commercial' },
     { value: 'RGPD', label: 'RGPD' },
+    { value: 'Geo', label: 'Geo' },
     { value: 'Uncategorized', label: 'Uncategorized' },
   ])
 

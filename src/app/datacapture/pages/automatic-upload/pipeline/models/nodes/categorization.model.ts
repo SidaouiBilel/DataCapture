@@ -56,6 +56,7 @@ export class NodeHashByCategory extends PipelineNode{
               case 'Commercial':nzicon='shopping-cart';break;
               case 'Personal':nzicon='idcard';break;
               case 'Medical':nzicon='medicine-box';break;
+              case 'Geo':nzicon='global';break;
               case 'OTH':nzicon='flag';break;
           }
           const iconsService = ServiceLocator.injector.get(CustomIconsService)
