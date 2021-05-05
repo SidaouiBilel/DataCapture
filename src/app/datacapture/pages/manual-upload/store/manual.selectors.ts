@@ -8,6 +8,10 @@ export const selectManualImport = createSelector(
   (state: ManualState) => state.import
 );
 
+export const selectManualJob = createSelector(
+  selectManual,
+  (state: ManualState) => state.job
+);
 
 export const selectTransformation = createSelector(
   selectManual,

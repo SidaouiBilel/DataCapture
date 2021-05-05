@@ -1,17 +1,19 @@
 import { Action } from '@ngrx/store';
-import { AnyARecord, AnyPtrRecord } from 'dns';
-import { Dataset } from '../manual.model';
 
 
-export enum JobActionTypes {
+export enum ManualJobActionTypes {
   RUN = '[MANUAL_JOB] RUN',
-
+  LOAD = '[MANUAL_JOB] LOAD WORKBOOK',
 }
 
 export class ManualJobRun implements Action {
-   readonly type = JobActionTypes.RUN;
+   readonly type = ManualJobActionTypes.RUN;
    constructor() {}
-
 }
 
-export type JobActions =  ManualJobRun;
+export class ManualJobLoadWorkbook implements Action {
+  readonly type = ManualJobActionTypes.LOAD;
+  constructor(readonly workbook_id: string) {}
+}
+
+export type ManualJobActions =  ManualJobRun | ManualJobLoadWorkbook;

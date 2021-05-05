@@ -22,6 +22,8 @@ import { TransformationInterfaceComponent } from './componenets/transformation/t
 import { FilterComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/filter/filter.component';
 import { MergerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/merger/merger.component';
 import { JoinerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/joiner/joiner.component';
+import { EffectsModule } from '@ngrx/effects';
+import { ManualJobEffects } from './store/effects/job.effect';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { JoinerComponent } from './componenets/transformation/transformations/tr
     SharedModule,
     ManualUploadRoutingModule,
     StoreModule.forFeature(FEATURE_NAME, manualReducers),
+    EffectsModule.forFeature([ManualJobEffects])
   ],
   entryComponents:[ImportDatasourceModalComponent, NewCalculatorModalComponent, TransformationInterfaceComponent]
 })
