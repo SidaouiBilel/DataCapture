@@ -20,6 +20,7 @@ export class CategoryFilterComponent extends PipelineNodeComponent  {
     {value:'MED', label:'Medical'},
     {value:'PER', label:'Personal'},
     {value:'COM', label:'Commercial'},
+    {value:'GEO', label:'Geographic'},
     {value:'OTH', label:'Uncategorized'},
   ])
 }

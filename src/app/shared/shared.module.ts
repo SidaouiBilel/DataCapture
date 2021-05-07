@@ -57,6 +57,7 @@ import { DcmCleansingGridComponent } from './dcm-cleansing-grid/dcm-cleansing-gr
 import { CategoryFilterComponent } from './setup/nodes/category/category-filter/category-filter.component';
 import { LogPreviewComponent } from './log-preview/log-preview.component';
 import { CategoryHashComponent } from './setup/nodes/category/category-hash/category-hash.component';
+import { CategoryPipe } from './pipes/category.pipe';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -118,7 +119,8 @@ const Components = [
   CollectionUploadComponent,
   NodeJoinComponent,
   NodePipelineComponent,
-  ManualImportNodeComponent
+  ManualImportNodeComponent,
+  CategoryPipe
 ];
 
 @NgModule({
@@ -151,7 +153,7 @@ const Components = [
   ],
   exports: [
     ...SharedModules,
-    ...Components
+    ...Components,
   ],
   providers: [
     UtilsService,

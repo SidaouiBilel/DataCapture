@@ -31,7 +31,7 @@
             <tr *ngFor="let data of basicTable.data">
               <td>{{data.code}}</td>
               <td>
-                <nz-tag [nzColor]="'processing'">{{data.cat}}</nz-tag>
+                <nz-tag [nzColor]="'processing'">{{data.cat | categoryPipe}}</nz-tag>
               </td>
               <td>
                 <nz-tag *ngFor='let key of data.keywords'>{{key}}</nz-tag>

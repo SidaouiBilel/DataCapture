@@ -8,13 +8,12 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7">Cat</nz-form-label>
     <nz-form-control [nzSpan]="14">
-      <nz-select ngModel="Personal" [(ngModel)]='data.cat'>
-        <nz-option nzValue="Medical" nzLabel="Medical"></nz-option>
-        <nz-option nzValue="Personal" nzLabel="Personal"></nz-option>
-        <nz-option nzValue="Commercial" nzLabel="Commercial"></nz-option>
-        <nz-option nzValue="RGPD" nzLabel="RGPD"></nz-option>
-        <nz-option nzValue="Geo" nzLabel="Geo"></nz-option>
-        <nz-option nzValue="Uncategorized" nzLabel="Uncategorized"></nz-option>
+      <nz-select ngModel="PER" [(ngModel)]='data.cat'>
+        <nz-option nzValue="MED" nzLabel="Medical"></nz-option>
+        <nz-option nzValue="PER" nzLabel="Personal"></nz-option>
+        <nz-option nzValue="COM" nzLabel="Commercial"></nz-option>
+        <nz-option nzValue="GEO" nzLabel="Geographic"></nz-option>
+        <nz-option nzValue="OTH" nzLabel="Uncategorized"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

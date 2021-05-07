@@ -52,17 +52,17 @@
     <div class="columns-warnings" *ngIf="isDatasetReady && listOfCols">
       <nz-alert nzType="warning" nzMessage="Warning" nzDescription="Columns below must be anonymised." nzShowIcon> </nz-alert>
       <nz-divider></nz-divider>
-      <nz-table #cols [nzData]="listOfCols">
+      <nz-table #cols [nzData]="listOfCols" nzBordere nzSize='small'>
         <thead>
           <tr>
-            <th>Column</th>
-            <th>Category</th>
+            <th [nzSortFn]="sortByColumn">Column</th>
+            <th [nzSortFn]="sortByCategory">Category</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let col of cols.data">
             <td>{{ col['column'] }}</td>
-            <td><nz-tag [nzColor]="'processing'">{{col['category']}}</nz-tag></td>
+            <td><nz-tag [nzColor]="'processing'">{{col['category'] | categoryPipe}}</nz-tag></td>
           </tr>
         </tbody>
       </nz-table>

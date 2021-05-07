@@ -44,12 +44,10 @@ export class CategoryHashComponent extends PipelineNodeComponent {
 
 
   categories$ = new BehaviorSubject([
-    { value: 'Medical', label: 'Medical' },
-    { value: 'Personal', label: 'Personal' },
-    { value: 'Commercial', label: 'Commercial' },
-    { value: 'RGPD', label: 'RGPD' },
-    { value: 'Geo', label: 'Geo' },
-    { value: 'Uncategorized', label: 'Uncategorized' },
+    {value:'MED', label:'Medical'},
+    {value:'PER', label:'Personal'},
+    {value:'COM', label:'Commercial'},
+    {value:'GEO', label:'Geographic'},
+    {value:'OTH', label:'Uncategorized'},
   ])
-
 }

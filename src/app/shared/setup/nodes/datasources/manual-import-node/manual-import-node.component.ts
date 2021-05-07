@@ -44,16 +44,6 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
   };
 
   listOfCols : any[];
-  // [
-  //   {
-  //     'column': 'LATITUDE',
-  //     'category': 'Personal'
-  //   },
-  //   {
-  //     'column': 'LONGITUDE',
-  //     'category': 'Personal'
-  //   }
-  // ];
 
   constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) {
     super()
@@ -64,6 +54,9 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
       this.imported = true
     }
   }
+
+  sortByCategory = (a: any, b: any) => a.category.localeCompare(b.category);
+  sortByColumn = (a: any, b: any) => a.column.localeCompare(b.column);
 
   handleChange({ file, fileList }): void {
     const status = file.status;
