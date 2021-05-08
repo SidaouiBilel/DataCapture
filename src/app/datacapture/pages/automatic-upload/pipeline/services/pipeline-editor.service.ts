@@ -8,6 +8,7 @@ import { ALL_NODES } from '../models/factories/templates.factory';
 import { DcmPreviewGridComponent } from '@app/shared/dcm-preview-grid/dcm-preview-grid.component';
 import { PreviewReportComponent } from '@app/shared/preview-report/preview-report.component';
 import { DcmCleansingGridComponent } from '@app/shared/dcm-cleansing-grid/dcm-cleansing-grid.component';
+import { LogPreviewComponent } from '@app/shared/log-preview/log-preview.component';
 
 @Injectable({
   providedIn: 'root'

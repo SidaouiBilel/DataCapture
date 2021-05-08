@@ -137,12 +137,8 @@ export class PipelineEditorComponent implements AfterViewInit{
                 }
 
               }
-            })
-        )
-      },
-      contextMenu:
-      $("ContextMenu",
-      $("ContextMenuButton",
+            }),
+          $("ContextMenuButton",
             $(go.Shape,
               {
                 stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
@@ -167,7 +163,7 @@ export class PipelineEditorComponent implements AfterViewInit{
                 }
               }
             }),
-      )
+        )
     },
     []
     );

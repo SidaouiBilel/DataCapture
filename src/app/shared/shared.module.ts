@@ -105,7 +105,7 @@ const Components = [
   PostgresUploadNodeComponent,
   DcmPreviewGridComponent,
   ConnectorPreviewComponent,
-  PreviewReportComponent
+  PreviewReportComponent,
   DatasetComponent,
   DcmCleansingGridComponent,
   NodeFilterComponent,
