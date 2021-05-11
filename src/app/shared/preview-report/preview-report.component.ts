@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import { NotificationService } from '@app/core/notifications/notification.service';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { NzDrawerRef } from 'ng-zorro-antd';
@@ -9,15 +9,24 @@ import { NzDrawerRef } from 'ng-zorro-antd';
   styleUrls: ['./preview-report.component.css']
 })
 export class PreviewReportComponent implements OnInit {
-  sheet_id;
+  @Input() sheet_id;
   report_content;
   length_vars;
 
   constructor(public importService: FileImportService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
 
   ngOnInit(): void {
-    if (this.sheet_id) {
-      this.importService.getReportData(this.sheet_id).subscribe(
+    this.getReport(this.sheet_id)
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.report_content = null
+    this.getReport(changes.sheet_id.currentValue)
+  }
+
+  getReport(sheet_id) {
+    if (sheet_id) {
+      this.importService.getReportData(sheet_id).subscribe(
         (res: any) => {
           this.report_content = res;
           this.ntf.success('Report generated successfully...');

@@ -32,6 +32,7 @@ export class PipelineEditorComponent implements AfterViewInit{
   @Input() diagramLinkData: Array<go.ObjectData> = [];
   @Output() diagramNodeDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
   @Output() diagramLinkDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
+  @Output() onSelectionChanged: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
 
   public readOnly = false
   public onDoubleClicked = new EventEmitter<void>();
@@ -186,6 +187,20 @@ export class PipelineEditorComponent implements AfterViewInit{
     const appComp: PipelineEditorComponent = this;
     // listener for inspector
     this.myDiagramComponent.diagram.addDiagramListener('ChangedSelection', function(e) {
+      const selected_nodes = []
+      e.diagram.selection.each(node => {
+        if (node instanceof go.Node) {
+          if(appComp.diagramModelData.run) {
+            const run = appComp.diagramModelData.run
+            const task = run.tasks.find(t => t.task_id == node.data.key)
+            if(task && ["success"].includes(task.state)) {
+              selected_nodes.push(task)
+            }
+          }
+        }
+      });
+      appComp.onSelectionChanged.emit(selected_nodes)
+
       if (e.diagram.selection.count === 0) {
         appComp.selectedNode = null;
       }

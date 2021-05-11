@@ -1,3 +1,4 @@
+import { GlobalReportComponent } from './../../../../../shared/global-report/global-report.component';
 import { Injectable } from '@angular/core';
 import { NzDrawerService, NzMessageService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -99,6 +100,17 @@ export class PipelineEditorService {
     } else {
       this.msg.info('Preview is not ready')
     }
+  }
+
+  globalReport(tasks: any) {
+    this.drawer.create({
+      nzTitle: 'Global Report',
+      nzContent: GlobalReportComponent,
+      nzContentParams: {
+        tasks: tasks
+      },
+      nzWidth: '80vw',
+    })
   }
 
   previewNode(data: any, run: any) {

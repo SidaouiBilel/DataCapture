@@ -1,0 +1,34 @@
+<nz-tabset>
+  <nz-tab nzTitle="Data Quality">
+    <div>
+      <div class="nodes">
+        <nz-select class="node-select" [(ngModel)]="selectedNode">
+          <nz-option *ngFor="let task of tasks; let i = index" [nzValue]="task" nzLabel="Node {{i+1}}"></nz-option>
+        </nz-select>
+      </div>
+      <div class="report" *ngIf="selectedNode">
+        <app-preview-report [sheet_id]="selectedNode.output.sheet_id"></app-preview-report>
+      </div>
+    </div>
+  </nz-tab>
+  <nz-tab nzTitle="Anonymization">
+    <h6>Columns below are anonymized</h6>
+    <br>
+    <nz-table #cols [nzData]="anonymization" nzBordere nzSize='small'>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let col of cols.data">
+          <td>{{ col['column'] }}</td>
+          <td>
+            <nz-tag [nzColor]="'processing'">{{col['category'] | categoryPipe}}</nz-tag>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-tab>
+</nz-tabset>
