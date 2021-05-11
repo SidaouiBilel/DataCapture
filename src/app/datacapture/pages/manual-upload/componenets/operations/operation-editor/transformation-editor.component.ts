@@ -2,7 +2,6 @@ import { selectTransformationNodes } from '../../../store/selectors/transformati
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
-import { NzModalService } from 'ng-zorro-antd';
 import { AddTransformationNode } from '../../../store/actions/transformation.actions';
 import { TRANSFORMATIONS } from '../operations-node/transformations/manual_transformers';
 import { ManualJobRun } from '../../../store/actions/job.actions';
@@ -18,10 +17,10 @@ export class TransformationEditorComponent implements OnInit {
 
   transformations = TRANSFORMATIONS
   checks = CHECKS
-  
+
   nodes$ = null;
 
-  constructor(private modal: NzModalService, private store: Store<AppState>) {
+  constructor(private store: Store<AppState>) {
     this.nodes$ = this.store.select(selectTransformationNodes);
   }
 
@@ -32,11 +31,11 @@ export class TransformationEditorComponent implements OnInit {
     const node = { type: t.type, applied: false, valid: false };
     this.store.dispatch(new AddTransformationNode(node))
   }
-  
+
   reset(){
-    
+
   }
-  
+
   apply(){
     this.store.dispatch(new ManualJobRun())
   }

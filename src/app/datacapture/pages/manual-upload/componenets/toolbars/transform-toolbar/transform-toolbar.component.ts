@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
 import { Store } from '@ngrx/store';
-import { AddTransformationNode } from '../../../store/actions/transformation.actions';
+import { TransformationEditorComponent } from '../../operations/operation-editor/transformation-editor.component';
 import { TRANSFORMATIONS } from '../../operations/operations-node/transformations/manual_transformers';
 
 @Component({
@@ -9,20 +9,15 @@ import { TRANSFORMATIONS } from '../../operations/operations-node/transformation
   templateUrl: './transform-toolbar.component.html',
   styleUrls: ['./transform-toolbar.component.css']
 })
-export class TransformToolbarComponent implements OnInit {
+export class TransformToolbarComponent extends TransformationEditorComponent {
 
   transformations = TRANSFORMATIONS
 
-
-  constructor(private store: Store<AppState>) {
+  constructor(store: Store<AppState>) {
+    super(store);
   }
 
   ngOnInit(): void {
-  }
-
-  addTransformation(t) {
-    const node = { type: t.type, applied: false, valid: false };
-    this.store.dispatch(new AddTransformationNode(node))
   }
 
 

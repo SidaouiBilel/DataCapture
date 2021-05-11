@@ -15,13 +15,6 @@
   <!-- OPERATIONS -->
 
 
-  <!-- CHECKS -->
-  <div class="b-0 w-100 border-bottom">
-    <button *ngFor='let t of checks' nzShape='circle' nz-button nzType='default'
-      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
-        [nzRotate]='t.icon_rotation || 0'></i></button>
-  </div>
-
  <div class="scroll-container flex-1 w-100">
    <div class="w-100" style="padding: .25em;">
         <app-transformation-node  *ngFor='let node of nodes$ | async; let i = index' [index]=i [params]='node'></app-transformation-node>

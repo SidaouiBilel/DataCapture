@@ -22,20 +22,20 @@
       <ng-container *ngSwitchDefault>
         <app-manual-import-node [previewGrid]=true (onSave)="onSaveHandler($event)"></app-manual-import-node>
       </ng-container>
-    
-      <ng-container *ngSwitchCase="'collection'">
+
+<!--       <ng-container *ngSwitchCase="'collection'">
         <app-collection-import [btnGenerate]="btnGenerate"></app-collection-import>
-      </ng-container>
-    
-      <ng-container *ngSwitchCase="'sql'">
+      </ng-container> -->
+
+      <ng-container *ngSwitchCase="'sqlserver'">
         <app-sql-import-node [btnGenerate]="btnGenerate"></app-sql-import-node>
       </ng-container>
-    
-      <ng-container *ngSwitchCase="'postgre'">
+
+      <ng-container *ngSwitchCase="'postgres'">
         <app-postgres-import-node [btnGenerate]="btnGenerate"></app-postgres-import-node>
       </ng-container>
-    
-      <ng-container *ngSwitchCase="'azure'">
+
+      <ng-container *ngSwitchCase="'azure_blob_storage'">
         <app-storage-account [btnGenerate]="btnGenerate"></app-storage-account>
       </ng-container>
     </container-element>

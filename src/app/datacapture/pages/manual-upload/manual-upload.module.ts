@@ -28,6 +28,7 @@ import { OperationComponent } from './componenets/operations/operations-node/ope
 import { LimitCheckComponent } from './componenets/operations/operations-node/checks/limit-check/limit-check.component';
 import { OverviewComponent } from './componenets/overview/overview.component';
 import { TransformToolbarComponent } from './componenets/toolbars/transform-toolbar/transform-toolbar.component';
+import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/control-toolbar.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { TransformToolbarComponent } from './componenets/toolbars/transform-tool
      PycodeComponent,
      LimitCheckComponent,
      OverviewComponent,
-     TransformToolbarComponent],
+     TransformToolbarComponent,
+     ControlToolbarComponent],
   imports: [
     CommonModule,
     SharedModule,
