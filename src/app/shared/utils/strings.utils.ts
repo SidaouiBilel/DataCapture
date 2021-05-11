@@ -26,7 +26,7 @@ export function isInDateFormat(str) {
 }
 
 export function isInDoubleFormat(str: string) {
-  const NUMERIC_REGEXP = /^[-]{0,1}[\d]*[.]{1}[\d]+(E[-]{0,1}[\d]+)?$/;
+  const NUMERIC_REGEXP = /^[-]{0,1}[\d]*[.]{1}[\d]+((E|e)[-]{0,1}[\d]+)?$/;
   return String(str).match(NUMERIC_REGEXP);
 }
 

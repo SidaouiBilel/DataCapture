@@ -1,0 +1,35 @@
+<div style="padding-top: 20px;">
+  <form nz-form [nzLayout]="'horizontal'">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6">Destination</nz-form-label>
+      <nz-form-control [nzSm]="18">
+        <input nz-input [nzSize]='size' [(ngModel)]='data.destination' (change)='onDataChanged()' name='destination' />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6">Sheet</nz-form-label>
+      <nz-form-control [nzSm]="18">
+        <nz-select [nzSize]='size' [(ngModel)]='data.sheet_destination' (ngModelChange)='onDataChanged()'
+        nzPlaceHolder='None' name='sheet'>
+          <nz-option *ngFor='let s of sheets$ | async'
+                      nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6">Formula</nz-form-label>
+      <nz-form-control [nzSm]="18">
+        <nz-input-group [nzSize]='size' [nzAddOnAfter]="formulaButton">
+          <input type="text" disabled [nzSize]='size' nz-input placeholder="=" [value]="getFormulaText()" />
+          <ng-template #formulaButton>
+            <button nzBlock [nzSize]='size' nz-button (click)='openFormula()'><i nz-icon nzType='edit'></i></button>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>
+</div>

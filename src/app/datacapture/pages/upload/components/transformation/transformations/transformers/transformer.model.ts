@@ -2,16 +2,12 @@ import { getPreviousHeader } from '../../shared/utils/transformers.util';
 import { isStrEmpty } from '@app/shared/utils/strings.utils';
 import { GAPIColumnsInRange, GAPICellValue, GAPSeletedRowRange } from '@app/shared/utils/grid-api.utils';
 import { isArrayEmpty } from '@app/shared/utils/arrays.utils';
+import { Operation } from './operations.model';
 
-export class Transformer {
-  type;
-  label;
-  icon;
-  component;
-  icon_rotation = 0;
-  description = 'Description Template';
-  shortcut = null;
-  collapse = false;
+export class Transformer extends Operation {
+
+  category='TRANSFORMATION'
+  color='#c8c811'
 
   getErrors = (params, previousNodes, headers): any => {
       return [];
@@ -25,11 +21,6 @@ export class Transformer {
 
   getRuleFromGrid(params) {
       return this.getRule();
-  }
-
-  setComponent(comp) {
-      this.component = comp;
-      return this;
   }
 }
 
@@ -405,4 +396,13 @@ export class Joiner extends Transformer {
     if (params.sheet_id === null) { errors.push(new NodeError('sheet_id', 'No Dataset Selected')); }
     return errors;
   }
+}
+
+export class Pycode extends Transformer{
+  color='red'
+  type = 'pycode';
+  label = 'Code';
+  icon = 'code';
+  shortcut = 'control.alt.p';
+  collapse = false;
 }

@@ -18,4 +18,8 @@ export class WorkbookService {
       sheets, transformations 
     }).pipe(catchError(e=> of(null)));
   }
+
+  get(workbook_id){
+    return this.http.get(`${this.url}workbook/${workbook_id}`);
+  }
 }

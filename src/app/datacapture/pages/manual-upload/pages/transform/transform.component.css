@@ -1,20 +1,19 @@
-.transform-grid{
+.manual-editor-grid{
     display: grid;
     height: 100%;
     width: 100%;
-    grid: gap 1em;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: min-content min-content 1fr min-content;
 }
 
-.transform-grid .grid-block{
+.manual-editor-grid .grid-block{
     display: block;
     grid-column: span 3;
 }
-.transform-grid .sheet-selector-block{
+.manual-editor-grid .sheet-selector-block{
     grid-column: span 3;
 }
-.transform-grid .transform-block{
+.manual-editor-grid .transform-block{
     /* border: 1px solid grey; */
 }
 
@@ -22,8 +21,22 @@
   margin-top: 9em;
 }
 
-/* .transform-grid .grid-block,
-.transform-grid .sheet-selector-block,
-.transform-grid .transform-block{
-    border: 1px solid lightgray;
-} */
+
+::ng-deep .manual-editor-grid .ag-root{
+    border: 0;
+}
+::ng-deep .manual-editor-grid .ag-status-bar{
+    display: none;
+}
+
+::ng-deep .manual-editor-grid .ant-card-bordered{
+    border: 0;
+}
+
+::ng-deep .manual-editor-grid nz-tabset.editor-block .ant-tabs-bar {
+    margin: 0;
+}
+
+.manual-editor-grid .editor-block{
+    background: white;
+}

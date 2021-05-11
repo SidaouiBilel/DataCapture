@@ -8,6 +8,7 @@ import { selectPipeExpanded, selectTranformationNodeStatus } from '../store/tran
 import { NzModalService } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
 import { deepCopy } from '@app/shared/utils/objects.utils';
+import { CHECKS } from '@app/datacapture/pages/manual-upload/componenets/operations/operations-node/checks/manual_checks';
 
 @Component({
   selector: 'app-transformation-node',
@@ -49,7 +50,7 @@ export class TransformationNodeComponent implements OnInit {
 
   updateTransformation(){
     if (this.params && this.params.type){
-      for (let t of TRANSFORMATIONS){
+      for (let t of [...TRANSFORMATIONS,...CHECKS]){
         if (t.type == this.params.type){
           this.transofrmation = t;
           break;

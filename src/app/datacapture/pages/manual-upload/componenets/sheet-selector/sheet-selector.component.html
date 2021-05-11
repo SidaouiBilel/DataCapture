@@ -1,13 +1,22 @@
-<div class="flex">
-  <div class="sheet-selector b-0">
-    <button nzType='primary' (click)="openModal()" nz-button> <i nz-icon nzType='plus'></i></button>
-    <button ghost nz-button> <i nz-icon nzType='setting'></i></button>
-  </div>
-  <div class="sheet-selector flex-1">
-    <ng-container *ngFor='let sheet of sheets$ | async'>
-      <button nz-button nzType="default" class="b-0 border-left" (click)="displayGrid(sheet)">
+<!-- <div class="flex">
+  <div class="sheet-selector">
+    <ng-container *ngFor='let sheet of (sheets$ | async); let i = index'>
+      <button nz-button [nzType]="(i === activeIndex)?'primary':'default'" class="b-0 border-left" (click)="displayGrid(sheet, i)">
         <i nz-icon nzType="edit"></i>{{sheet.file_name}}
       </button>
     </ng-container>
   </div>
-</div>
+
+  <div class="sheet-selector border-right b-0">
+    <button class="border-left" (click)="openModal()" nz-button> <i nz-icon nzType='plus'></i>Sheet</button>
+  </div>
+
+  <div class="flex-1"></div>
+</div> -->
+
+<nz-tabset class="sheet-selector" [nzSize]="'small'" nzTabPosition='bottom' [nzSelectedIndex]="activeIndex" nzType="card">
+  <nz-tab *ngFor='let sheet of (sheets$ | async); let i = index' (nzSelect)="displayGrid(sheet, i)"  [nzTitle]="sheet.file_name"></nz-tab>
+  
+  <nz-tab (nzSelect)="openModal()"  [nzTitle]="plus"></nz-tab>
+  <ng-template #plus><i class="m-0" nz-icon nzType='plus'></i></ng-template>
+</nz-tabset>

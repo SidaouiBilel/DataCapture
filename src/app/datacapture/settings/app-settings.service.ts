@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AppSettingsService {
 
-  appSize$= new BehaviorSubject('default')
+  appSize$= new BehaviorSubject('compact')
 
   constructor() { }
 

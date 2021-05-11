@@ -50,3 +50,13 @@ nz-progress.raw .ant-progress-show-info .ant-progress-outer{
     margin: 0 ;
     padding: 0 ;
 }
+
+
+.scroll-container{
+    position: relative;
+}
+.scroll-container > div{
+    height: 100%;
+    position: absolute;
+    overflow: auto;
+}

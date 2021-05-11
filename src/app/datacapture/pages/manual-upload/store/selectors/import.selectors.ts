@@ -3,7 +3,17 @@ import { selectManualImport } from '../manual.selectors';
 import { ImportState } from '../reducers/import.reducer';
 
 
-export const selectImportSheet = createSelector(
+export const selectImportedSheets = createSelector(
   selectManualImport,
-  (object: ImportState) => object.sheets
+  (object: ImportState) => object.sheets || []
+);
+
+export const selectImportedSheetByIndex = (index) => createSelector(
+  selectImportedSheets,
+  (object) => object[index]
+);
+
+export const selectImportedSheetById = (index) => createSelector(
+  selectImportedSheets,
+  (object) => object[index]
 );

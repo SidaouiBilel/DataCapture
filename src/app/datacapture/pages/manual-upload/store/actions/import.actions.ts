@@ -8,11 +8,9 @@ export enum ImportTypes {
 
 }
 
-
 export class ManualImport implements Action {
    readonly type = ImportTypes.MANUAL_IMPORT;
    constructor(readonly dataSet: Dataset) {}
-
 }
 
 export type ImportActions =  ManualImport;

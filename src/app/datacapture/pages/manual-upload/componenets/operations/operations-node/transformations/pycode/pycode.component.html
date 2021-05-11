@@ -1,0 +1,4 @@
+<div style="height: 300px" class="border rounded pt-3 pb-3">
+    <!-- <ngx-monaco-editor name="code" ngDefaultControl (ngModelChange)='onDataChanged()' style="height: 100%" [options]="editorOptions" [(ngModel)]="data.code"></ngx-monaco-editor> -->
+    <ngx-monaco-editor (change)='onCodeChanged($event)' style="height: 100%" [options]="editorOptions" [(ngModel)]="data.code"></ngx-monaco-editor>
+</div>

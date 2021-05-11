@@ -1,10 +1,15 @@
 import { Dataset } from './../../store/manual.model';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, Subject, Observable, of, concat } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subject, Observable, of, concat, ReplaySubject, merge } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
+import { selectWorkbookId } from '../../store/selectors/job.selectors';
+import { concatMap, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { selectEditorSheet } from '../../store/selectors/editor.selector';
+import { selectImportedSheets } from '../../store/selectors/import.selectors';
+import { arrayToDict } from '@app/shared/utils/objects.utils';
 
 
 @Component({
@@ -13,10 +18,10 @@ import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } 
   styleUrls: ['./transform.component.css']
 })
 export class TransformComponent implements OnInit {
-  selectedSheet$: Observable<Dataset>;
+  // selectedSheet$: Subject<Dataset>;
   paginator$: any;
   size$ = new BehaviorSubject<number>(200);
-  gridReady$ = new Subject<string>();
+  gridReady$ = new ReplaySubject<any>();
   viewGrid = false;
   noData=true;
 
@@ -27,14 +32,20 @@ export class TransformComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    combineLatest([this.gridReady$]).subscribe(([grid]: any) => {
-      combineLatest([this.size$, this.selectedSheet$])
-        .subscribe(([size, selectedSheet]: any) => {
-          this.onReset()
-          if (selectedSheet) {
-            this.generateDataSource(grid, selectedSheet, size);
-          }
-        });
+    // INIT EDITOR DIPSLAY PARAMS
+    this.viewModeTarget$ = this.store.select(selectWorkbookId).pipe(map((id)=>id?true:false))
+    this.viewGrid$ = this.store.select(selectImportedSheets).pipe(map((sheets)=>sheets.length > 0))
+
+    // SELECT SHEET TO DISLAY
+    this.selectedSheet$ = combineLatest([this.viewSheetIndex$, this.viewModeTarget$])
+      .pipe(switchMap(([index, istargetMode])=>this.store.select(selectEditorSheet(index, !!istargetMode))))
+
+     // FETCH DATA 
+     combineLatest([this.gridReady$, this.size$, this.selectedSheet$]).subscribe(([grid, size, selectedSheet]:any) => {
+       this.onReset()
+       if (selectedSheet) {
+         this.generateDataSource(grid, selectedSheet, size);
+       }
     });
   }
 
@@ -44,11 +55,7 @@ export class TransformComponent implements OnInit {
   }
 
   selectedSheet(sheet) {
-    this.viewGrid = false
-    this.selectedSheet$ = of(sheet);
-    setTimeout(() => {
-      this.viewGrid = true
-    }, 100);
+    this.viewSheetIndex$.next(sheet.index)
   }
 
   generateDataSource(gridApi: any, selectedSheet: Dataset, size: number) {
@@ -60,45 +67,68 @@ export class TransformComponent implements OnInit {
         const page = params.request.endRow / size;
         const filters = GAPIFilters(params.request.filterModel);
         that.loading$.next(true);
-        that.service.getFileData(page, selectedSheet.sheet_id, size, filters).subscribe((res: any) => {
+
+        that.service.getFileData(page, selectedSheet.sheet_id, size, filters).pipe(
+          mergeMap((preview)=>that.service.getResultData(selectedSheet.result_id ,preview.index).pipe(map(result=>([preview, result])))),
+        ).subscribe(([preview, result]: any) => {
+          console.log({preview, result})
           that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
-            res.headers.forEach((e, i) => {
-              previewData[e] = res.data.slice(1, 10).map((f: any) => f[i]);
+            preview.headers.forEach((e, i) => {
+              previewData[e] = preview.data.slice(1, 10).map((f: any) => f[i]);
             });
-            const headers = res.headers.map(h => ({
-              field: h,
-              colId: h,
-              headerName: h,
-              editable: false,
-              resizable: true,
-              cellRenderer: 'autoTypeRenderer',
-              filter: GAPIFilterComponenet('string'),
-              filterParams: GAPIAllFilterParams(params)
+            const headers = preview.headers.map(h => ({
+              field: h, colId: h, headerName: h, editable: false, resizable: true, cellRenderer: 'autoTypeRenderer', filter: GAPIFilterComponenet('string'), filterParams: GAPIAllFilterParams(params),
+              // COLOR DATA
+              cellClass:(params) => {
+                const checks = params.data.DATA_CHECKS || []
+                const field_checks = checks.filter(c=> c.field == params.colDef.field) 
+                
+                if(field_checks.length){
+                  if ( field_checks.filter(c=> c.code && c.level == 'error').length )
+                    return 'error-cell';
+                  if ( field_checks.filter(c=> c.code && c.level == 'warning') .length )
+                    return 'warning-cell';
+
+                  return 'valid-cell'
+                }
+                
+
+                return null;
+              }
             }));
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
           }
-          const lastRow = () => res.total;
-          const data = [];
-          for (const row of res.data) {
-            const rowObject = {};
-            let i = 0;
-            for (const h of res.headers) {
-              rowObject[h] = row[i];
-              i++;
-            }
-            data.push(rowObject);
+
+          const data = arrayToDict(preview.data, preview.headers);
+
+          let current_row = 0
+          let checks_metadata =  result.headers    
+          for (let row of data){
+            row.DATA_CHECKS = checks_metadata.map((cm,i)=>({
+              field: cm[2],
+              type: cm[1],
+              id: cm[0],
+              code: result.data[current_row][i],
+              level:'error'
+            }))    
+            current_row++;
           }
+         
           gridApi.columnApi.autoSizeAllColumns();
-          params.successCallback(data, lastRow());
+          params.successCallback(data, preview.total);
         }, (error) => {
           params.failCallback();
-          // that.onError(error);
         });
       }
     });
   }
 
+  // @edit HASSEN MAHDI
+  viewSheetIndex$ = new BehaviorSubject(null)
+  viewModeTarget$
+  selectedSheet$
+  viewGrid$
 }

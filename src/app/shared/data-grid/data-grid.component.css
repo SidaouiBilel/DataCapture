@@ -1,6 +1,17 @@
 ::ng-deep .error-cell {
-  background-color: #f3bebe;
+  color: #db4f5f;
+  /* font-weight: 700; */
+  background-color: #f5efef;
   /* border-color: #ffbfbf !important; */
+  /* border-left: 2px solid #db4f5f !important; */
+}
+
+::ng-deep .valid-cell {
+  /* font-weight: 700; */
+  color: #608b50;
+  background-color: #edf5eb;
+  /* border-left: 2px solid #608b50 !important; */
+  /* color: white; */
 }
 
 ::ng-deep .edited-cell {

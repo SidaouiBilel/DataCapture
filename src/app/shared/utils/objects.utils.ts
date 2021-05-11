@@ -12,3 +12,18 @@ export const isEmpty = (obj) => {
 
   return JSON.stringify(obj) === JSON.stringify({});
 };
+
+export const arrayToDict = (array, keys) => {
+  const data = [];
+  for (const row of array) {
+    const rowObject = {};
+    let i = 0;
+    for (const h of keys) {
+      rowObject[h] = row[i];
+      i++;
+    }
+    data.push(rowObject);
+  }
+
+  return data
+}

@@ -11,29 +11,35 @@ import { ContainerComponent } from './pages/container/container.component';
 import { SharedModule } from '@app/shared';
 import { SheetSelectorComponent } from './componenets/sheet-selector/sheet-selector.component';
 import { DefaultToolbarComponent } from './componenets/default-toolbar/default-toolbar.component';
-import { TransformationEditorComponent } from './componenets/transformation/transformation-editor/transformation-editor.component';
+import { TransformationEditorComponent } from './componenets/operations/operation-editor/transformation-editor.component';
 import { FEATURE_NAME, manualReducers } from './store/manual.state';
 import { StoreModule } from '@ngrx/store';
 import { ImportDatasourceModalComponent } from './modals/import-datasource-modal/import-datasource-modal.component';
-import { NewCalculatorModalComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/new-calculator/new-calculator-modal/new-calculator-modal.component';
-import { NewCalculatorComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/new-calculator/new-calculator.component';
-import { TransformationNodeComponent } from './componenets/transformation/transformation-node/transformation-node.component';
-import { TransformationInterfaceComponent } from './componenets/transformation/transformations/trasnformation-intefrace/transformation-interface.component';
-import { FilterComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/filter/filter.component';
-import { MergerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/merger/merger.component';
-import { JoinerComponent } from './componenets/transformation/transformations/trasnformation-intefrace/nodes/joiner/joiner.component';
+import { NewCalculatorModalComponent } from './componenets/operations/operations-node/transformations/new-calculator/new-calculator-modal/new-calculator-modal.component';
+import { NewCalculatorComponent } from './componenets/operations/operations-node/transformations/new-calculator/new-calculator.component';
+import { TransformationNodeComponent } from './componenets/operations/operation-container/transformation-node.component';
+import { FilterComponent } from './componenets/operations/operations-node/transformations/filter/filter.component';
+import { MergerComponent } from './componenets/operations/operations-node/transformations/merger/merger.component';
+import { JoinerComponent } from './componenets/operations/operations-node/transformations/joiner/joiner.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ManualJobEffects } from './store/effects/job.effect';
+import { PycodeComponent } from './componenets/operations/operations-node/transformations/pycode/pycode.component';
+import { OperationComponent } from './componenets/operations/operations-node/operation.component';
+import { LimitCheckComponent } from './componenets/operations/operations-node/checks/limit-check/limit-check.component';
+import { OverviewComponent } from './componenets/overview/overview.component';
 
 
 @NgModule({
   declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent,
      ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
      ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
-     TransformationInterfaceComponent,
+     OperationComponent,
      FilterComponent,
      MergerComponent,
-     JoinerComponent],
+     JoinerComponent,
+     PycodeComponent,
+     LimitCheckComponent,
+     OverviewComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -41,6 +47,6 @@ import { ManualJobEffects } from './store/effects/job.effect';
     StoreModule.forFeature(FEATURE_NAME, manualReducers),
     EffectsModule.forFeature([ManualJobEffects])
   ],
-  entryComponents:[ImportDatasourceModalComponent, NewCalculatorModalComponent, TransformationInterfaceComponent]
+  entryComponents:[ImportDatasourceModalComponent, NewCalculatorModalComponent, OperationComponent]
 })
 export class ManualUploadModule { }

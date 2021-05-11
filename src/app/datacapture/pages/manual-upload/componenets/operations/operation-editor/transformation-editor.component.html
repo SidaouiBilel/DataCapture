@@ -1,0 +1,38 @@
+<div class="flex column start stretch h-100 w-100">
+ 
+  <!-- <nz-tabset>
+    <nz-tab nzTitle="All"></nz-tab>
+    <nz-tab nzTitle="Transformations"></nz-tab>
+    <nz-tab nzTitle="Checks"></nz-tab>
+  </nz-tabset> -->
+  
+  <div class="b-0 border-bottom w-100 flex between">
+    <button nz-button (click)='apply()'><i nz-icon nzType='reload'></i>Update</button>
+    <!-- <button nz-button (click)='apply()'><i nz-icon nzType='check'></i>Validate</button> -->
+    <button nz-button (click)='reset()'><i nz-icon nzType='delete'></i>Clear All</button>
+  </div>
+
+  <!-- OPERATIONS -->
+
+  <!-- TRANSFORMATIONS -->
+  <div class="b-0 w-100 border-bottom">
+    <button *ngFor='let t of transformations' nzShape='circle' nz-button nzType='default'
+      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
+        [nzRotate]='t.icon_rotation || 0'></i></button>
+  </div>
+
+  <!-- CHECKS -->
+  <div class="b-0 w-100 border-bottom">
+    <button *ngFor='let t of checks' nzShape='circle' nz-button nzType='default'
+      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
+        [nzRotate]='t.icon_rotation || 0'></i></button>
+  </div>
+
+ <div class="scroll-container flex-1 w-100">
+   <div>
+        <app-transformation-node  *ngFor='let node of nodes$ | async; let i = index' class="w-100" [index]=i [params]='node'></app-transformation-node>
+    </div>
+  </div>
+
+
+</div>

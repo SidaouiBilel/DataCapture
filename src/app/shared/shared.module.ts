@@ -70,7 +70,8 @@ const SharedModules = [
   ReactiveFormsModule,
   NzModalModule,
   AngularResizedEventModule,
-  NzTagModule
+  NzTagModule,
+  MonacoEditorModule
 ];
 
 const Components = [
@@ -125,7 +126,6 @@ const Components = [
   imports: [
     ...SharedModules,
     AgGridModule,
-    MonacoEditorModule,
   ],
   declarations: [
     ...Components,

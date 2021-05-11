@@ -1,31 +1,45 @@
-<nz-select style="width: 190px;" ngModel="manual" [(ngModel)]='importType'>
-  <nz-option nzValue="manual" nzLabel="Manual"></nz-option>
-  <nz-option nzValue="collection" nzLabel="Collection"></nz-option>
-  <nz-option nzValue="sql" nzLabel="SQL Server"></nz-option>
-  <nz-option nzValue="postgre" nzLabel="PostgreSQL"></nz-option>
-  <nz-option nzValue="azure" nzLabel="Azure Blob Storage"></nz-option>
-</nz-select>
+<nz-steps [nzCurrent]="step" (nzIndexChange)='step=$event'  nzSize="small">
+  <nz-step nzTitle="Source"></nz-step>
+  <nz-step nzTitle="Import"></nz-step>
+  <nz-step nzTitle="Preview"></nz-step>
+</nz-steps>
 
 <nz-divider></nz-divider>
 
-<container-element [ngSwitch]="importType">
-  <ng-container *ngSwitchDefault>
-    <app-manual-import-node [previewGrid]=true (onSave)="onSaveHandler($event)"></app-manual-import-node>
-  </ng-container>
+<div [ngSwitch]="step">
 
-  <ng-container *ngSwitchCase="'collection'">
-    <app-collection-import [btnGenerate]="btnGenerate"></app-collection-import>
-  </ng-container>
+  <div *ngSwitchCase="0">
+    <p class="text-mmuted">Select your Data Source</p>
+    <div  style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 1rem;">
+      <button style="height: fit-content;" (click)='importType=t.type; step=1' *ngFor="let t of types" nz-button><div class="flex column" nz-tooltip [nzTooltipTitle]='t.label'>
+          <div class="p-3"><i style="font-size: 40px;" nz-icon [nzType]='t.icon'></i></div>
+          <div class="pb-2">{{t.label}}</div>
+      </div></button>
+    </div>
+  </div>
+  <div *ngSwitchCase="1">
+    <container-element [ngSwitch]="importType">
+      <ng-container *ngSwitchDefault>
+        <app-manual-import-node [previewGrid]=true (onSave)="onSaveHandler($event)"></app-manual-import-node>
+      </ng-container>
+    
+      <ng-container *ngSwitchCase="'collection'">
+        <app-collection-import [btnGenerate]="btnGenerate"></app-collection-import>
+      </ng-container>
+    
+      <ng-container *ngSwitchCase="'sql'">
+        <app-sql-import-node [btnGenerate]="btnGenerate"></app-sql-import-node>
+      </ng-container>
+    
+      <ng-container *ngSwitchCase="'postgre'">
+        <app-postgres-import-node [btnGenerate]="btnGenerate"></app-postgres-import-node>
+      </ng-container>
+    
+      <ng-container *ngSwitchCase="'azure'">
+        <app-storage-account [btnGenerate]="btnGenerate"></app-storage-account>
+      </ng-container>
+    </container-element>
+  </div>
 
-  <ng-container *ngSwitchCase="'sql'">
-    <app-sql-import-node [btnGenerate]="btnGenerate"></app-sql-import-node>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="'postgre'">
-    <app-postgres-import-node [btnGenerate]="btnGenerate"></app-postgres-import-node>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="'azure'">
-    <app-storage-account [btnGenerate]="btnGenerate"></app-storage-account>
-  </ng-container>
-</container-element>
+  <div *ngSwitchDefault>ADD PREVIEW HERE</div>
+</div>

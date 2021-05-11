@@ -1,0 +1,25 @@
+<nz-card nzSize='small' [nzExtra]="extra" [nzTitle]='title' class="headless border rounded m-1">
+  
+  <!-- TITLE -->
+  <ng-template #title>
+        <nz-avatar [style.background-color]='transofrmation?.color' [nzIcon]="transofrmation.icon" nzSize='small'></nz-avatar>
+        <span class="ml-2">{{transofrmation?.label}}</span>
+  </ng-template>
+
+  <ng-template #extra>
+    <div class="button-spacing b-0">
+      <button nz-button (click)='onChangeOrder(-1)'><i nz-icon nzType="up"></i></button>
+      <button nz-button (click)='onChangeOrder(+1)'><i nz-icon nzType="down"></i></button>
+      <button nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+    </div>
+  </ng-template>
+
+  <!-- BODY -->
+  <div>
+    <ng-template #paramsHost></ng-template>
+  </div>
+
+</nz-card>
+
+<!-- MENU -->
+

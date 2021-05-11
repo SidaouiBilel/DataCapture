@@ -5,3 +5,17 @@
     overflow-x:auto;
     border-radius: 0;
 }
+
+::ng-deep .sheet-selector .ant-tabs-tab{
+    border-bottom : 0 !important;
+    border-radius: 0 !important;
+}
+
+::ng-deep .sheet-selector .ant-tabs-nav>div:first-child{
+    border-left : 0 !important;
+}
+
+::ng-deep .sheet-selector.ant-tabs-bottom .ant-tabs-bottom-bar{
+    padding : 0 !important;
+    margin : 0 !important;
+}

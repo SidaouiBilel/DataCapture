@@ -20,10 +20,18 @@ export function ManualJobReducer(state: ManualJobState = initialState, action: a
   switch (action.type) {
 
     case ManualJobActionTypes.RUN:
-      return {loading: 'RUNNING', workbook_id: null, ...state} 
+      return {...state, loading: 'RUNNING'} 
       
     case ManualJobActionTypes.LOAD:
-      return {loading: 'LOADING',workbook_id:action.workbook_id, ...state} 
+      return {...state,loading: 'LOADING',workbook_id:action.workbook_id} 
+
+    case ManualJobActionTypes.SET_WORKFLOW_DATA:
+        console.log(action)
+        const {transformations, worksheets} = action
+        return {...state, loading: null,applied_transformations:transformations, generated_workbook: worksheets} 
+
+    case ManualJobActionTypes.RESET_WORKFLOW_DATA:
+      return {...initialState} 
 
     default:
       return state;

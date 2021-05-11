@@ -14,10 +14,11 @@ export class ManualUploadEditorService {
   openImport() {
 
     const modal = this.modalService.create({
-      nzTitle: 'Import Datasource',
-      nzFooter: [],
+      nzTitle: null,
+      nzFooter: null,
       nzContent: ImportDatasourceModalComponent,
       nzComponentParams: { },
+      nzWidth:'70vw'
     });
 
   }
