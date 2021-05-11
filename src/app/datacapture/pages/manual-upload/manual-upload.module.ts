@@ -10,7 +10,7 @@ import { NavigatorComponent } from './componenets/navigator/navigator.component'
 import { ContainerComponent } from './pages/container/container.component';
 import { SharedModule } from '@app/shared';
 import { SheetSelectorComponent } from './componenets/sheet-selector/sheet-selector.component';
-import { DefaultToolbarComponent } from './componenets/default-toolbar/default-toolbar.component';
+import { DefaultToolbarComponent } from './componenets/toolbars/default-toolbar/default-toolbar.component';
 import { TransformationEditorComponent } from './componenets/operations/operation-editor/transformation-editor.component';
 import { FEATURE_NAME, manualReducers } from './store/manual.state';
 import { StoreModule } from '@ngrx/store';
@@ -27,6 +27,7 @@ import { PycodeComponent } from './componenets/operations/operations-node/transf
 import { OperationComponent } from './componenets/operations/operations-node/operation.component';
 import { LimitCheckComponent } from './componenets/operations/operations-node/checks/limit-check/limit-check.component';
 import { OverviewComponent } from './componenets/overview/overview.component';
+import { TransformToolbarComponent } from './componenets/toolbars/transform-toolbar/transform-toolbar.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { OverviewComponent } from './componenets/overview/overview.component';
      JoinerComponent,
      PycodeComponent,
      LimitCheckComponent,
-     OverviewComponent],
+     OverviewComponent,
+     TransformToolbarComponent],
   imports: [
     CommonModule,
     SharedModule,

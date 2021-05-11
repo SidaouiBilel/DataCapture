@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefaultToolbarComponent } from './default-toolbar.component';
+import { TransformToolbarComponent } from './transform-toolbar.component';
 
-describe('DefaultToolbarComponent', () => {
-  let component: DefaultToolbarComponent;
-  let fixture: ComponentFixture<DefaultToolbarComponent>;
+describe('TransformToolbarComponent', () => {
+  let component: TransformToolbarComponent;
+  let fixture: ComponentFixture<TransformToolbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DefaultToolbarComponent ]
+      declarations: [ TransformToolbarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DefaultToolbarComponent);
+    fixture = TestBed.createComponent(TransformToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

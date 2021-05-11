@@ -1,22 +1,22 @@
 <div class="manual-editor-grid">
   <nz-card  style="grid-column: span 4;" nzSize='small' nzTitle='Workbook Editor' class="editor-block paddless"></nz-card>
-  
+
   <nz-tabset class="editor-block" style="grid-column: span 3;" nzSize="small">
     <nz-tab nzTitle="General"><app-default-toolbar></app-default-toolbar></nz-tab>
-    <nz-tab nzTitle="Transform"><app-default-toolbar></app-default-toolbar></nz-tab>
+    <nz-tab nzTitle="Transform"><app-transform-toolbar></app-transform-toolbar></nz-tab>
     <nz-tab nzTitle="Control"><app-default-toolbar></app-default-toolbar></nz-tab>
     <nz-tab nzTitle="Filter"><app-default-toolbar></app-default-toolbar></nz-tab>
     <nz-tab nzTitle="Settings"><app-default-toolbar></app-default-toolbar></nz-tab>
   </nz-tabset>
 
   <app-transformation-editor class="editor-block transform-block border" style="grid-column: span 1; grid-row: span 4;"></app-transformation-editor>
-  
+
   <div class="editor-block grid-block border">
     <app-data-grid *ngIf="(viewGrid$ | async); else noData"  (gridReady)="gridReady$.next($event)" [paginationPageSize]='size$ | async'
     [rangeSelection]='true' [columnDefs]="headers$ | async" ></app-data-grid>
     <ng-template #noData><nz-empty class="nz-empty"></nz-empty></ng-template>
   </div>
-  
+
   <app-overview class="editor-block" style="grid-column: span 3;"></app-overview>
 
   <app-sheet-selector [activeIndex]='viewSheetIndex$ | async' class="editor-block sheet-selector-block" (sheet)="selectedSheet($event)"></app-sheet-selector>
