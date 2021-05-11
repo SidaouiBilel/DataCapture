@@ -53,10 +53,11 @@ export class NodeHashByCategory extends PipelineNode{
       return  $(go.Picture,  new go.Binding("element", "category", (category,t)=>{
           let nzicon = this.nzicon
           switch(category){
-              case 'COM':nzicon='shopping-cart';break;
-              case 'PER':nzicon='idcard';break;
-              case 'MED':nzicon='medicine-box';break;
-              case 'OTH':nzicon='flag';break;
+            case 'MED':nzicon='medicine-box';break;
+            case 'PER':nzicon='idcard';break;
+            case 'COM':nzicon='shopping-cart';break;
+            case 'GEO':nzicon='global';break;
+            case 'OTH':nzicon='flag';break;
           }
           const iconsService = ServiceLocator.injector.get(CustomIconsService)
           const svg = iconsService.getIconSvgElement(nzicon+'-o')

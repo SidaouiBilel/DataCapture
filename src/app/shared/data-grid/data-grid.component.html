@@ -2,6 +2,8 @@
 <!-- [defaultColDef]="defaultColDef" -->
 <ag-grid-angular #agGrid
   [columnDefs]="columnDefs"
+  [enableCharts]="enableCharts"
+  [enableRangeSelection]="rangeSelection"
   class="ag-theme-balham"
   [ngStyle]="style"
   [rowStyle] = "{background: 'white'}"
@@ -20,7 +22,6 @@
   [frameworkComponents]="frameworkComponents"
   [getContextMenuItems]="contextMenu"
   [getMainMenuItems]="mainContextMenu"
-  [enableRangeSelection]="rangeSelection"
   [gridOptions]='gridOptions'
   (cellValueChanged)="cellValueChanged.emit($event)"
   [floatingFilter]='floatingFilter'

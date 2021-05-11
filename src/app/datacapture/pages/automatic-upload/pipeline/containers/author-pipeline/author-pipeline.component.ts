@@ -9,6 +9,7 @@ import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, forkJoin, interval, Observable, Subject, timer } from 'rxjs';
 import { PipelineEditorService } from '../../services/pipeline-editor.service';
 import { withValue } from '@app/shared/utils/rxjs.utils';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-author-pipeline',
@@ -21,6 +22,7 @@ export class AuthorPipelineComponent implements OnDestroy {
   links$;
   nodes$;
   metadata$;
+  selectedNodes = [];
 
   // RUN DATA
   runId$: Observable<string>;// MANGAGE RUNS HERE
@@ -32,7 +34,7 @@ export class AuthorPipelineComponent implements OnDestroy {
   // LOADERS
   loadingTrigger$ = new BehaviorSubject<any>(null)
 
-  constructor(public pipelines: PipelinesService, private service: PipelineEditorService, private ntf: NotificationService, private store: Store<AppState>) {
+  constructor(public pipelines: PipelinesService, private service: PipelineEditorService, private ntf: NotificationService, private msg: NzMessageService, private store: Store<AppState>) {
     // FETCH STORE DATA
     this.links$ = this.store.select(selectPipelineEditLinks).pipe(map(e => _.cloneDeep(e)));
     this.nodes$ = this.store.select(selectPipelineEditNodes).pipe(map(e => _.cloneDeep(e)));
@@ -56,7 +58,7 @@ export class AuthorPipelineComponent implements OnDestroy {
     } else {
       this.context.idle = true;
     }
-    
+
     this.context.monitor = (this.context.success || this.context.running || this.context.failed);
     this.context.monitor_as_preview = this.context.preview && this.context.monitor;
     this.context.monitor_as_run = !this.context.preview && this.context.monitor;
@@ -174,6 +176,22 @@ export class AuthorPipelineComponent implements OnDestroy {
   onDiagramLinkDataChange(links){this.store.dispatch(new PipelineEditLinks(links));}
   onTriggerComplete=()=>{this.loadingTrigger$.next(false)}
   // EVENT HANDLERS -
+
+  onSelectionChanged(selectedNodes) {
+    this.selectedNodes = selectedNodes
+  }
+
+  onReport() {
+    if(this.context.success && this.selectedNodes?.length != 0 ) {
+      this.service.globalReport(this.selectedNodes)
+    }
+    else if(this.context.success && this.selectedNodes?.length == 0 ) {
+      this.msg.info('Please select nodes')
+    }
+    else if(this.context.failed) {
+      this.msg.info('Dag is failed')
+    }
+  }
 
   // TRIGGER EVENTS +
   onCancel(){this.handleTrigger('cancel', this.cancel)}

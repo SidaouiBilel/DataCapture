@@ -36,6 +36,14 @@ export class FileImportService {
     return this.http.post(environment.import + 'results/', { result_id, indices});
   }
 
+  public getReportData(sheet_id: any) {
+    return this.http.get(environment.import + 'report/' + sheet_id);
+  }
+
+/*   public getDataCorrelation(sheet_id: any) {
+    return this.http.get(environment.import + 'data/' + sheet_id + '/correlation');
+  } */
+
   public updateRow(filename: string, worksheet: string, worksheetId: string, nrows: number, page: number, num: number[], lines: string[]) {
     return this.http.post('environment.endPoints.upload1' + 'data', {
       filename,

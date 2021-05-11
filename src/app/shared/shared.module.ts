@@ -57,6 +57,11 @@ import { DcmCleansingGridComponent } from './dcm-cleansing-grid/dcm-cleansing-gr
 import { CategoryFilterComponent } from './setup/nodes/category/category-filter/category-filter.component';
 import { LogPreviewComponent } from './log-preview/log-preview.component';
 import { CategoryHashComponent } from './setup/nodes/category/category-hash/category-hash.component';
+import { CategoryPipe } from './pipes/category.pipe';
+import { PreviewReportComponent } from './preview-report/preview-report.component';
+import { WarningsFilterPipe } from './pipes/warnings-filter.pipe';
+import { WarningsExistPipe } from './pipes/warnings-exist.pipe';
+import { GlobalReportComponent } from './global-report/global-report.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -102,6 +107,7 @@ const Components = [
   PostgresUploadNodeComponent,
   DcmPreviewGridComponent,
   ConnectorPreviewComponent,
+  PreviewReportComponent,
   DatasetComponent,
   DcmCleansingGridComponent,
   NodeFilterComponent,
@@ -119,7 +125,8 @@ const Components = [
   CollectionUploadComponent,
   NodeJoinComponent,
   NodePipelineComponent,
-  ManualImportNodeComponent
+  ManualImportNodeComponent,
+  CategoryPipe
 ];
 
 @NgModule({
@@ -128,6 +135,7 @@ const Components = [
     AgGridModule,
   ],
   declarations: [
+
     ...Components,
     CategoryFilterComponent,
     NodeFilterComponent,
@@ -148,10 +156,15 @@ const Components = [
     ManualImportNodeComponent,
     LogPreviewComponent,
     CategoryHashComponent,
+    WarningsFilterPipe,
+    WarningsExistPipe,
+    GlobalReportComponent
   ],
   exports: [
     ...SharedModules,
-    ...Components
+    ...Components,
+    WarningsFilterPipe,
+    WarningsExistPipe
   ],
   providers: [
     UtilsService,

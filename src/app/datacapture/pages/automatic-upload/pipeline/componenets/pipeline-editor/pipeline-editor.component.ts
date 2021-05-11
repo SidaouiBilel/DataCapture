@@ -32,8 +32,7 @@ export class PipelineEditorComponent implements AfterViewInit{
   @Input() diagramLinkData: Array<go.ObjectData> = [];
   @Output() diagramNodeDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
   @Output() diagramLinkDataChange: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
-
-  @Output() onSelectionChanged: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() onSelectionChanged: EventEmitter<Array<go.ObjectData>> = new EventEmitter<Array<go.ObjectData>>();
 
   public readOnly = false
   public onDoubleClicked = new EventEmitter<void>();
@@ -85,8 +84,62 @@ export class PipelineEditorComponent implements AfterViewInit{
         return
       },
       contextMenu:
-      $("ContextMenu",
-      $("ContextMenuButton",
+        $("ContextMenu",
+          $("ContextMenuButton",
+            $(go.Shape,
+              {
+                stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
+              },
+            ),
+            $(go.TextBlock,
+              {
+                text: 'Table', margin: 0, font: "11pt sans-serif", alignment: go.Spot.Center
+              }),
+            {
+              click: (e, obj) => {
+                const node = obj.part;
+                const data = node.data
+
+                if (this.diagramModelData.run) {
+                  const run = this.diagramModelData.run
+                  const task = run.tasks.find(t=>t.task_id==data.key)
+                  if(task && ["success","running"].includes(task.state)){
+                    this.previweNode(node.data, this.diagramModelData.run)
+                    return
+                  }
+                }
+                that.editNode(data);
+                return
+              }
+            }),
+          $("ContextMenuButton",
+            $(go.Shape,
+              {
+                stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
+              },
+            ),
+            $(go.TextBlock,
+              {
+                text: 'Report', margin: 0, font: "11pt sans-serif", alignment: go.Spot.Center
+              }),
+            {
+              click: (e, obj) => {
+                const node = obj.part;
+                if (this.diagramModelData.run) {
+                  const run = this.diagramModelData.run
+                  const task = run.tasks.find(t => t.task_id == node.data.key)
+
+                  if (task && ["success"].includes(task.state)) {
+                    console.log('REPORT')
+                    this.reportNode(task);
+                    return
+                  }
+
+                }
+
+              }
+            }),
+          $("ContextMenuButton",
             $(go.Shape,
               {
                 stroke: null, strokeWidth: 0, fill: null, width: 80, height: 25
@@ -111,7 +164,7 @@ export class PipelineEditorComponent implements AfterViewInit{
                 }
               }
             }),
-      )
+        )
     },
     []
     );
@@ -134,14 +187,19 @@ export class PipelineEditorComponent implements AfterViewInit{
     const appComp: PipelineEditorComponent = this;
     // listener for inspector
     this.myDiagramComponent.diagram.addDiagramListener('ChangedSelection', function(e) {
-      const selected_keys = []
+      const selected_nodes = []
       e.diagram.selection.each(node => {
         if (node instanceof go.Node) {
-          selected_keys.push(node.data.key)
+          if(appComp.diagramModelData.run) {
+            const run = appComp.diagramModelData.run
+            const task = run.tasks.find(t => t.task_id == node.data.key)
+            if(task && ["success"].includes(task.state)) {
+              selected_nodes.push(task)
+            }
+          }
         }
       });
-      appComp.onSelectionChanged.emit(selected_keys)
-      console.log({selected_keys})
+      appComp.onSelectionChanged.emit(selected_nodes)
 
       if (e.diagram.selection.count === 0) {
         appComp.selectedNode = null;
@@ -219,10 +277,13 @@ export class PipelineEditorComponent implements AfterViewInit{
     this.editor.previewNode(data, run)
   }
 
+  reportNode(task: any) {
+    this.editor.reportNode(task)
+  }
   clenaseNode(data: any, run: any) {
     this.editor.cleanseNode(data, run)
   }
-  
+
   logsNode(task: any, run: any) {
     this.editor.logsNode(task, run)
   }

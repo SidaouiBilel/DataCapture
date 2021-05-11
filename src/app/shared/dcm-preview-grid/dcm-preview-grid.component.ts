@@ -13,7 +13,6 @@ export class DcmPreviewGridComponent implements OnInit {
   file_id
   sheet_id
   folder = 'imports'
-
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
@@ -40,7 +39,6 @@ export class DcmPreviewGridComponent implements OnInit {
 
   generateDataSource(gridApi: any, folder: string, file_id: any, sheet_id: any, size: number) {
     const that = this;
-    // this.gridApi = gridApi;
     gridApi.api.setServerSideDatasource({
       getRows(params) {
         const page = params.request.endRow / size;
@@ -63,7 +61,8 @@ export class DcmPreviewGridComponent implements OnInit {
                 resizable: true,
                 cellRenderer: 'autoTypeRenderer',
                 filter: GAPIFilterComponenet('string'),
-                filterParams: GAPIAllFilterParams(params)
+                filterParams: GAPIAllFilterParams(params),
+                chartDataType: (h == '#####' || h == '####') ? 'category' : 'series',
             }));
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);

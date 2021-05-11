@@ -1,6 +1,6 @@
 <div class="flex column stretch h-100">
   <app-pipeline-editor [readOnly]="context.monitor_as_run && !context.failed" [run]='run$|async' class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
-  [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)'>
+  [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)' (onSelectionChanged)='onSelectionChanged($event)'>
 
   <div class="button-spacing ghost flex start">
     <ng-container *ngIf='context.monitor'>
@@ -30,8 +30,10 @@
 
     <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_run && context.failed' (click)='onRetryFailed()'><i nz-icon nzType="reload" nzTheme="outline"></i> Retry</button>
     <nz-divider nzType='vertical'></nz-divider>
+    <ng-container *ngIf='context.success'>
+      <button  [disabled]='loadingTrigger$ | async' nz-button (click)='onReport()'><i nz-icon nzType="audit" nzTheme="outline"></i> Report</button>
+    </ng-container>
 
-   
   </div>
   </app-pipeline-editor>
 

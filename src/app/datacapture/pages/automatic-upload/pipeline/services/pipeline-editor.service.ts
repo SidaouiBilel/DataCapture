@@ -1,4 +1,4 @@
-import { LogPreviewComponent } from './../../../../../shared/log-preview/log-preview.component';
+import { GlobalReportComponent } from './../../../../../shared/global-report/global-report.component';
 import { Injectable } from '@angular/core';
 import { NzDrawerService, NzMessageService } from 'ng-zorro-antd';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -7,7 +7,9 @@ import { PiplineTemplateViewerComponent } from '../componenets/pipeline-editor/p
 import { PipelineMetadata } from '../models/metadata.model';
 import { ALL_NODES } from '../models/factories/templates.factory';
 import { DcmPreviewGridComponent } from '@app/shared/dcm-preview-grid/dcm-preview-grid.component';
+import { PreviewReportComponent } from '@app/shared/preview-report/preview-report.component';
 import { DcmCleansingGridComponent } from '@app/shared/dcm-cleansing-grid/dcm-cleansing-grid.component';
+import { LogPreviewComponent } from '@app/shared/log-preview/log-preview.component';
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +84,35 @@ export class PipelineEditorService {
   deleteNode(node){
   }
 
+  reportNode(task: any) {
+    const output = task.output || {}
+    if (output.file_id && output.sheet_id) {
+      this.drawer.create({
+        nzTitle: 'Preview Report',
+        nzContent: PreviewReportComponent,
+        nzContentParams: {
+          sheet_id: output.sheet_id
+        },
+        nzWidth: '70vw',
+      })
+    } else if(output.status == 'success') {
+      this.msg.info('No Preview for this Node')
+    } else {
+      this.msg.info('Preview is not ready')
+    }
+  }
+
+  globalReport(tasks: any) {
+    this.drawer.create({
+      nzTitle: 'Global Report',
+      nzContent: GlobalReportComponent,
+      nzContentParams: {
+        tasks: tasks
+      },
+      nzWidth: '80vw',
+    })
+  }
+
   previewNode(data: any, run: any) {
     const task = run.tasks.find(t=>t.task_id==data.key)
     const output = task.output || {}
@@ -141,5 +172,6 @@ export class PipelineEditorService {
       this.msg.info('Log is not ready')
     }
   }
+
 
 }
