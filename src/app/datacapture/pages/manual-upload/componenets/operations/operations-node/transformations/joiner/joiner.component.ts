@@ -25,13 +25,10 @@ export class JoinerComponent extends OperationComponent implements OnInit {
   }
 
   onDataSourceSelected(sheet) {
-    console.log('====================================')
-    console.log(sheet.sheet_id)
     this.data.join_sheet_id = sheet.sheet_id
     this.data.join_file_id = sheet.file_id
 
     this.onDataChanged()
-    console.log('====================================')
   }
 
   compareWith(o1, o2) {

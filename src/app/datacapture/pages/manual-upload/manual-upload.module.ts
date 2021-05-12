@@ -29,6 +29,8 @@ import { LimitCheckComponent } from './componenets/operations/operations-node/ch
 import { OverviewComponent } from './componenets/overview/overview.component';
 import { TransformToolbarComponent } from './componenets/toolbars/transform-toolbar/transform-toolbar.component';
 import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/control-toolbar.component';
+import { FormatterComponent } from './componenets/operations/operations-node/transformations/formatter/formatter.component';
+import { FindAndReplaceComponent } from './componenets/operations/operations-node/transformations/find-and-replace/find-and-replace.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/
      LimitCheckComponent,
      OverviewComponent,
      TransformToolbarComponent,
-     ControlToolbarComponent],
+     ControlToolbarComponent,
+     FormatterComponent,
+     FindAndReplaceComponent],
   imports: [
     CommonModule,
     SharedModule,
