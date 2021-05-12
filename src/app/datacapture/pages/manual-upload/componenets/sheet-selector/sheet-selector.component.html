@@ -16,7 +16,7 @@
 
 <nz-tabset class="sheet-selector" [nzTabBarExtraContent]='plus' [nzSize]="'small'" nzTabPosition='bottom' [nzSelectedIndex]="activeIndex" nzType="card">
   <nz-tab *ngFor='let sheet of (sheets$ | async); let i = index' (nzSelect)="displayGrid(sheet, i)"  [nzTitle]="sheet.file_name"></nz-tab>
-  
-  <nz-tab (nzClick)="openModal()" [nzTitle]="plus"></nz-tab>
+
+  <nz-tab (nzClick)="openModal()"  [nzTitle]="plus"></nz-tab>
   <ng-template #plus><i class="m-0" nz-icon nzType='plus'></i></ng-template>
 </nz-tabset>
