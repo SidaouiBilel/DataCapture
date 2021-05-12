@@ -1,11 +1,3 @@
-::ng-deep .sheet-selector [nz-button] {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 200px;
-    overflow-x:auto;
-    border-radius: 0;
-}
-
 ::ng-deep .sheet-selector .ant-tabs-tab{
     border-bottom : 0 !important;
     border-radius: 0 !important;
@@ -16,6 +8,8 @@
 }
 
 ::ng-deep .sheet-selector.ant-tabs-bottom .ant-tabs-bottom-bar{
-    padding : 0 !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 16px !important;
     margin : 0 !important;
 }
