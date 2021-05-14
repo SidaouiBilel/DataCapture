@@ -11,6 +11,7 @@ import { FindAndReplaceComponent } from "./find-and-replace/find-and-replace.com
 import { FormatterComponent } from "./formatter/formatter.component";
 import { SplitterComponent } from "./splitter/splitter.component";
 import { DeleteRowsComponent } from "./delete-rows/delete-rows.component";
+import { DefaultValueComponent } from "./default-value/default-value.component";
 import { DateFormatterComponent } from "./date-formatter/date-formatter.component";
 
 export const TRANSFORMATIONS = [
@@ -24,10 +25,9 @@ export const TRANSFORMATIONS = [
   new Splitter().setComponent(SplitterComponent),
   new DeleteRow().setComponent(DeleteRowsComponent),
   new FormatDate().setComponent(DateFormatterComponent),
-
+  new DefaultValue().setComponent(DefaultValueComponent)
 
   /*
-    new DefaultValue().setComponent(DefaultValueComponent),
     new GroupBy().setComponent(GroupByComponent),
     new Hasher().setComponent(HashComponent),
   */

@@ -34,6 +34,7 @@ import { FindAndReplaceComponent } from './componenets/operations/operations-nod
 import { SplitterComponent } from './componenets/operations/operations-node/transformations/splitter/splitter.component';
 import { DeleteRowsComponent } from './componenets/operations/operations-node/transformations/delete-rows/delete-rows.component';
 import { DateFormatterComponent } from './componenets/operations/operations-node/transformations/date-formatter/date-formatter.component';
+import { DefaultValueComponent } from './componenets/operations/operations-node/transformations/default-value/default-value.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { DateFormatterComponent } from './componenets/operations/operations-node
     FindAndReplaceComponent,
     SplitterComponent,
     DeleteRowsComponent,
-    DateFormatterComponent],
+    DateFormatterComponent,
+    DefaultValueComponent],
   imports: [
     CommonModule,
     SharedModule,
