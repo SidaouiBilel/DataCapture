@@ -1,6 +1,6 @@
 import {
   DeleteRow, Replace, Merge, Filter, FilterAndReplace, DefaultValue, Splitter, Calculator,
-  FormatDate, GroupBy, Hasher, Joiner, Pycode
+  FormatDate, GroupBy, Hasher, Joiner, Pycode, DeleteColumns
 } from "@app/datacapture/pages/upload/components/transformation/transformations/transformers/transformer.model";
 import { FilterComponent } from "./filter/filter.component";
 import { MergerComponent } from "./merger/merger.component";
@@ -13,6 +13,8 @@ import { SplitterComponent } from "./splitter/splitter.component";
 import { DeleteRowsComponent } from "./delete-rows/delete-rows.component";
 import { DefaultValueComponent } from "./default-value/default-value.component";
 import { DateFormatterComponent } from "./date-formatter/date-formatter.component";
+import { DeleteColumnComponent } from "./delete-column/delete-column.component";
+import { HashComponent } from "./hash/hash.component";
 
 export const TRANSFORMATIONS = [
   new Calculator().setComponent(NewCalculatorComponent),
@@ -25,11 +27,12 @@ export const TRANSFORMATIONS = [
   new Splitter().setComponent(SplitterComponent),
   new DeleteRow().setComponent(DeleteRowsComponent),
   new FormatDate().setComponent(DateFormatterComponent),
-  new DefaultValue().setComponent(DefaultValueComponent)
+  new DefaultValue().setComponent(DefaultValueComponent),
+  new DeleteColumns().setComponent(DeleteColumnComponent),
+  new Hasher().setComponent(HashComponent),
 
   /*
     new GroupBy().setComponent(GroupByComponent),
-    new Hasher().setComponent(HashComponent),
   */
 ];
 

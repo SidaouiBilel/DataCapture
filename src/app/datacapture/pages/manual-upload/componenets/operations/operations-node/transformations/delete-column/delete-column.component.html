@@ -1,0 +1,10 @@
+<form nz-form [nzLayout]="form_orientation">
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Column</nz-form-label>
+      <nz-form-control [nzSm]="16">
+          <input nz-input [nzSize]='size' [(ngModel)]='data.column' (change)='onDataChanged()' name='column' />
+      </nz-form-control>
+    </nz-form-item>
+
+</form>

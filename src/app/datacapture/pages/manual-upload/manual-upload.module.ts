@@ -35,6 +35,8 @@ import { SplitterComponent } from './componenets/operations/operations-node/tran
 import { DeleteRowsComponent } from './componenets/operations/operations-node/transformations/delete-rows/delete-rows.component';
 import { DateFormatterComponent } from './componenets/operations/operations-node/transformations/date-formatter/date-formatter.component';
 import { DefaultValueComponent } from './componenets/operations/operations-node/transformations/default-value/default-value.component';
+import { DeleteColumnComponent } from './componenets/operations/operations-node/transformations/delete-column/delete-column.component';
+import { HashComponent } from './componenets/operations/operations-node/transformations/hash/hash.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { DefaultValueComponent } from './componenets/operations/operations-node/
     SplitterComponent,
     DeleteRowsComponent,
     DateFormatterComponent,
-    DefaultValueComponent],
+    DefaultValueComponent,
+    DeleteColumnComponent,
+    HashComponent],
   imports: [
     CommonModule,
     SharedModule,
