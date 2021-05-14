@@ -31,23 +31,27 @@ import { TransformToolbarComponent } from './componenets/toolbars/transform-tool
 import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/control-toolbar.component';
 import { FormatterComponent } from './componenets/operations/operations-node/transformations/formatter/formatter.component';
 import { FindAndReplaceComponent } from './componenets/operations/operations-node/transformations/find-and-replace/find-and-replace.component';
+import { SplitterComponent } from './componenets/operations/operations-node/transformations/splitter/splitter.component';
+import { DeleteRowsComponent } from './componenets/operations/operations-node/transformations/delete-rows/delete-rows.component';
 
 
 @NgModule({
   declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent,
-     ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
-     ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
-     OperationComponent,
-     FilterComponent,
-     MergerComponent,
-     JoinerComponent,
-     PycodeComponent,
-     LimitCheckComponent,
-     OverviewComponent,
-     TransformToolbarComponent,
-     ControlToolbarComponent,
-     FormatterComponent,
-     FindAndReplaceComponent],
+    ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
+    ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
+    OperationComponent,
+    FilterComponent,
+    MergerComponent,
+    JoinerComponent,
+    PycodeComponent,
+    LimitCheckComponent,
+    OverviewComponent,
+    TransformToolbarComponent,
+    ControlToolbarComponent,
+    FormatterComponent,
+    FindAndReplaceComponent,
+    SplitterComponent,
+    DeleteRowsComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -55,6 +59,6 @@ import { FindAndReplaceComponent } from './componenets/operations/operations-nod
     StoreModule.forFeature(FEATURE_NAME, manualReducers),
     EffectsModule.forFeature([ManualJobEffects])
   ],
-  entryComponents:[ImportDatasourceModalComponent, NewCalculatorModalComponent, OperationComponent]
+  entryComponents: [ImportDatasourceModalComponent, NewCalculatorModalComponent, OperationComponent]
 })
 export class ManualUploadModule { }

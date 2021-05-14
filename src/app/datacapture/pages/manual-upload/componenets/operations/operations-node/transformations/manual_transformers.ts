@@ -9,6 +9,8 @@ import { NewCalculatorComponent } from "./new-calculator/new-calculator.componen
 import { PycodeComponent } from "./pycode/pycode.component";
 import { FindAndReplaceComponent } from "./find-and-replace/find-and-replace.component";
 import { FormatterComponent } from "./formatter/formatter.component";
+import { SplitterComponent } from "./splitter/splitter.component";
+import { DeleteRowsComponent } from "./delete-rows/delete-rows.component";
 
 export const TRANSFORMATIONS = [
   new Calculator().setComponent(NewCalculatorComponent),
@@ -18,9 +20,11 @@ export const TRANSFORMATIONS = [
   new Pycode().setComponent(PycodeComponent),
   new FilterAndReplace().setComponent(FindAndReplaceComponent),
   new Replace().setComponent(FormatterComponent),
+  new Splitter().setComponent(SplitterComponent),
+  new DeleteRow().setComponent(DeleteRowsComponent),
 
 
-  /*   ,
+  /*
     new Replace().setComponent(FormatterComponent),
     new Splitter().setComponent(SplitterComponent),
     new Merge().setComponent(MergerComponent),
@@ -29,7 +33,8 @@ export const TRANSFORMATIONS = [
     new FormatDate().setComponent(DateFormatterComponent),
     new GroupBy().setComponent(GroupByComponent),
     new Hasher().setComponent(HashComponent),
-    new Joiner().setComponent(JoinerComponent) */
+    new Joiner().setComponent(JoinerComponent)
+  */
 ];
 
 export const TransformerFactory = (type) => {
