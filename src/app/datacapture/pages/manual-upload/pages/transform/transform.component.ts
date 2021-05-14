@@ -1,12 +1,12 @@
 import { Dataset } from './../../store/manual.model';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject, Observable, of, concat, ReplaySubject, merge } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
 import { selectWorkbookId } from '../../store/selectors/job.selectors';
-import { concatMap, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, map, mergeMap, switchMap } from 'rxjs/operators';
 import { selectEditorSheet } from '../../store/selectors/editor.selector';
 import { selectImportedSheets } from '../../store/selectors/import.selectors';
 import { arrayToDict } from '@app/shared/utils/objects.utils';
@@ -15,7 +15,9 @@ import { arrayToDict } from '@app/shared/utils/objects.utils';
 @Component({
   selector: 'app-transform',
   templateUrl: './transform.component.html',
-  styleUrls: ['./transform.component.css']
+  styleUrls: ['./transform.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class TransformComponent implements OnInit {
   // selectedSheet$: Subject<Dataset>;
@@ -32,6 +34,7 @@ export class TransformComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('))))))vfdqovqodfnvqfj')
     // INIT EDITOR DIPSLAY PARAMS
     this.viewModeTarget$ = this.store.select(selectWorkbookId).pipe(map((id)=>id?true:false))
     this.viewGrid$ = this.store.select(selectImportedSheets).pipe(map((sheets)=>sheets.length > 0))
@@ -40,7 +43,7 @@ export class TransformComponent implements OnInit {
     this.selectedSheet$ = combineLatest([this.viewSheetIndex$, this.viewModeTarget$])
       .pipe(switchMap(([index, istargetMode])=>this.store.select(selectEditorSheet(index, !!istargetMode))))
 
-     // FETCH DATA 
+     // FETCH DATA
      combineLatest([this.gridReady$, this.size$, this.selectedSheet$]).subscribe(([grid, size, selectedSheet]:any) => {
        this.onReset()
        if (selectedSheet) {
@@ -83,8 +86,8 @@ export class TransformComponent implements OnInit {
               // COLOR DATA
               cellClass:(params) => {
                 const checks = params.data.DATA_CHECKS || []
-                const field_checks = checks.filter(c=> c.field == params.colDef.field) 
-                
+                const field_checks = checks.filter(c=> c.field == params.colDef.field)
+
                 if(field_checks.length){
                   if ( field_checks.filter(c=> c.code && c.level == 'error').length )
                     return 'error-cell';
@@ -93,7 +96,7 @@ export class TransformComponent implements OnInit {
 
                   return 'valid-cell'
                 }
-                
+
 
                 return null;
               }
@@ -105,7 +108,7 @@ export class TransformComponent implements OnInit {
           const data = arrayToDict(preview.data, preview.headers);
 
           let current_row = 0
-          let checks_metadata =  result.headers    
+          let checks_metadata =  result.headers
           for (let row of data){
             row.DATA_CHECKS = checks_metadata.map((cm,i)=>({
               field: cm[2],
@@ -113,10 +116,10 @@ export class TransformComponent implements OnInit {
               id: cm[0],
               code: result.data[current_row][i],
               level:'error'
-            }))    
+            }))
             current_row++;
           }
-         
+
           gridApi.columnApi.autoSizeAllColumns();
           params.successCallback(data, preview.total);
         }, (error) => {

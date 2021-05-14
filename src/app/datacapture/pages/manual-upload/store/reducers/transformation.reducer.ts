@@ -59,6 +59,13 @@ export function TransformationReducer(state: TransformationState = initialState,
       }
     }
 
+    case ACTIONS.CLEAR_ALL_NODES: {
+      return {
+        ...state,
+        nodes: []
+      }
+    }
+
     default:
       return state;
   }

@@ -1,3 +1,4 @@
+import { ClearAllNodes } from './../../../store/actions/transformation.actions';
 import { selectTransformationNodes } from '../../../store/selectors/transformation.selectors';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '@app/core';
@@ -33,7 +34,7 @@ export class TransformationEditorComponent implements OnInit {
   }
 
   reset(){
-
+    this.store.dispatch(new ClearAllNodes())
   }
 
   apply(){
