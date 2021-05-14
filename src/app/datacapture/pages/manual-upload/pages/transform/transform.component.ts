@@ -10,6 +10,7 @@ import { concatMap, map, mergeMap, switchMap, take, tap, withLatestFrom } from '
 import { selectEditorSheet } from '../../store/selectors/editor.selector';
 import { selectImportedSheets } from '../../store/selectors/import.selectors';
 import { arrayToDict } from '@app/shared/utils/objects.utils';
+import { ActiveSheetIndex } from '../../store/actions/import.actions';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class TransformComponent implements OnInit {
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new ReplaySubject<any>();
   viewGrid = false;
-  noData=true;
+  noData = true;
 
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -33,19 +34,19 @@ export class TransformComponent implements OnInit {
 
   ngOnInit(): void {
     // INIT EDITOR DIPSLAY PARAMS
-    this.viewModeTarget$ = this.store.select(selectWorkbookId).pipe(map((id)=>id?true:false))
-    this.viewGrid$ = this.store.select(selectImportedSheets).pipe(map((sheets)=>sheets.length > 0))
+    this.viewModeTarget$ = this.store.select(selectWorkbookId).pipe(map((id) => id ? true : false))
+    this.viewGrid$ = this.store.select(selectImportedSheets).pipe(map((sheets) => sheets.length > 0))
 
     // SELECT SHEET TO DISLAY
     this.selectedSheet$ = combineLatest([this.viewSheetIndex$, this.viewModeTarget$])
-      .pipe(switchMap(([index, istargetMode])=>this.store.select(selectEditorSheet(index, !!istargetMode))))
+      .pipe(switchMap(([index, istargetMode]) => this.store.select(selectEditorSheet(index, !!istargetMode))))
 
-     // FETCH DATA 
-     combineLatest([this.gridReady$, this.size$, this.selectedSheet$]).subscribe(([grid, size, selectedSheet]:any) => {
-       this.onReset()
-       if (selectedSheet) {
-         this.generateDataSource(grid, selectedSheet, size);
-       }
+    // FETCH DATA
+    combineLatest([this.gridReady$, this.size$, this.selectedSheet$]).subscribe(([grid, size, selectedSheet]: any) => {
+      this.onReset()
+      if (selectedSheet) {
+        this.generateDataSource(grid, selectedSheet, size);
+      }
     });
   }
 
@@ -56,10 +57,11 @@ export class TransformComponent implements OnInit {
 
   selectedSheet(sheet) {
     this.viewSheetIndex$.next(sheet.index)
+    this.store.dispatch(new ActiveSheetIndex(sheet.index))
   }
 
   generateDataSource(gridApi: any, selectedSheet: Dataset, size: number) {
-    this.noData=false;
+    this.noData = false;
     const that = this;
     // this.gridApi = gridApi;
     gridApi.api.setServerSideDatasource({
@@ -69,9 +71,9 @@ export class TransformComponent implements OnInit {
         that.loading$.next(true);
 
         that.service.getFileData(page, selectedSheet.sheet_id, size, filters).pipe(
-          mergeMap((preview)=>that.service.getResultData(selectedSheet.result_id ,preview.index).pipe(map(result=>([preview, result])))),
+          mergeMap((preview) => that.service.getResultData(selectedSheet.result_id, preview.index).pipe(map(result => ([preview, result])))),
         ).subscribe(([preview, result]: any) => {
-          console.log({preview, result})
+          console.log({ preview, result })
           that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
@@ -81,19 +83,19 @@ export class TransformComponent implements OnInit {
             const headers = preview.headers.map(h => ({
               field: h, colId: h, headerName: h, editable: false, resizable: true, cellRenderer: 'autoTypeRenderer', filter: GAPIFilterComponenet('string'), filterParams: GAPIAllFilterParams(params),
               // COLOR DATA
-              cellClass:(params) => {
+              cellClass: (params) => {
                 const checks = params.data.DATA_CHECKS || []
-                const field_checks = checks.filter(c=> c.field == params.colDef.field) 
-                
-                if(field_checks.length){
-                  if ( field_checks.filter(c=> c.code && c.level == 'error').length )
+                const field_checks = checks.filter(c => c.field == params.colDef.field)
+
+                if (field_checks.length) {
+                  if (field_checks.filter(c => c.code && c.level == 'error').length)
                     return 'error-cell';
-                  if ( field_checks.filter(c=> c.code && c.level == 'warning') .length )
+                  if (field_checks.filter(c => c.code && c.level == 'warning').length)
                     return 'warning-cell';
 
                   return 'valid-cell'
                 }
-                
+
 
                 return null;
               }
@@ -105,18 +107,18 @@ export class TransformComponent implements OnInit {
           const data = arrayToDict(preview.data, preview.headers);
 
           let current_row = 0
-          let checks_metadata =  result.headers    
-          for (let row of data){
-            row.DATA_CHECKS = checks_metadata.map((cm,i)=>({
+          let checks_metadata = result.headers
+          for (let row of data) {
+            row.DATA_CHECKS = checks_metadata.map((cm, i) => ({
               field: cm[2],
               type: cm[1],
               id: cm[0],
               code: result.data[current_row][i],
-              level:'error'
-            }))    
+              level: 'error'
+            }))
             current_row++;
           }
-         
+
           gridApi.columnApi.autoSizeAllColumns();
           params.successCallback(data, preview.total);
         }, (error) => {

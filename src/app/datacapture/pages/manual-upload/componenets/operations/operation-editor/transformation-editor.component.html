@@ -16,7 +16,7 @@
 
 
  <div class="scroll-container flex-1 w-100">
-   <div class="w-100" style="padding: .25em;">
+   <div class="w-100">
         <app-transformation-node  *ngFor='let node of nodes$ | async; let i = index' [index]=i [params]='node'></app-transformation-node>
     </div>
   </div>

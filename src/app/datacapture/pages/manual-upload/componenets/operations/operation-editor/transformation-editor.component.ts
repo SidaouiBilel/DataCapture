@@ -6,7 +6,7 @@ import { AddTransformationNode } from '../../../store/actions/transformation.act
 import { TRANSFORMATIONS } from '../operations-node/transformations/manual_transformers';
 import { ManualJobRun } from '../../../store/actions/job.actions';
 import { CHECKS } from '../operations-node/checks/manual_checks';
-
+import { selectActiveSheetIndex, selectImportedSheetByIndex } from '../../../store/selectors/import.selectors';
 
 @Component({
   selector: 'app-transformation-editor',
@@ -28,15 +28,33 @@ export class TransformationEditorComponent implements OnInit {
   }
 
   addTransformation(t) {
-    const node = { type: t.type, applied: false, valid: false };
+    const sheet = this.getActiveSheet();
+    const node = { type: t.type, applied: false, valid: false, sheet: sheet };
     this.store.dispatch(new AddTransformationNode(node))
   }
 
-  reset(){
+  getActiveSheet() {
+    let sheet_id = null
+
+    // GET INDEX
+    const activeSheetIndex$ = this.store.select(selectActiveSheetIndex);
+
+    // // GET ACTIVE SHEET BY INDEX
+    activeSheetIndex$.subscribe(index => {
+      this.store.select(selectImportedSheetByIndex(index)).subscribe(
+        sheet => {
+          sheet_id = sheet.id
+        }
+      )
+    })
+    return sheet_id
+  }
+
+  reset() {
 
   }
 
-  apply(){
+  apply() {
     this.store.dispatch(new ManualJobRun())
   }
 

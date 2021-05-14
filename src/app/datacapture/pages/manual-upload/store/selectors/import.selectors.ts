@@ -17,3 +17,8 @@ export const selectImportedSheetById = (index) => createSelector(
   selectImportedSheets,
   (object) => object[index]
 );
+
+export const selectActiveSheetIndex = createSelector(
+  selectManualImport,
+  (object: ImportState) => object.activeSheetIndex
+);

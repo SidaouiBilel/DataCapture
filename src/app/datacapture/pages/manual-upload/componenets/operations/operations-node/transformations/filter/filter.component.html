@@ -1,17 +1,4 @@
 <form nz-form [nzLayout]="'horizontal'">
-
-  <nz-form-item>
-    <nz-form-label [nzSm]="8">Sheet</nz-form-label>
-    <nz-form-control [nzSm]="16">
-      <nz-select [(ngModel)]='data.sheet' (ngModelChange)='onDataChanged()' name='sheet'
-      nzPlaceHolder='None'>
-        <nz-option *ngFor='let s of sheets$ | async'
-                    nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-
   <div *ngFor='let c of data.conditions; let i = index'>
 
     <div class="flex between">
