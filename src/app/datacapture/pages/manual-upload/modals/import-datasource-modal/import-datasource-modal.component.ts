@@ -15,10 +15,10 @@ import { CONNECTOR_TYPES } from '@app/datacapture/pages/connectors/models/connec
 export class ImportDatasourceModalComponent implements OnInit {
 
   step = 0
-  types = [...CONNECTOR_TYPES, {type:'manual', label: 'XLSX or CSV', icon: 'file'}]
+  types = [...CONNECTOR_TYPES, { type: 'manual', label: 'XLSX or CSV', icon: 'file' }]
   importType: string = 'manual';
   btnGenerate = true;
-  constructor(private ref: NzModalRef,private store: Store<AppState>) {
+  constructor(private ref: NzModalRef, private store: Store<AppState>) {
   }
 
   ngOnInit() {
@@ -26,13 +26,14 @@ export class ImportDatasourceModalComponent implements OnInit {
 
 
   onSaveHandler(event: Dataset) {
-    const data : Dataset  = {
+    const data: Dataset = {
       file_name: event['filename'].split(".")[0],
       file_id: event.file_id,
       sheet_id: event.sheet_id,
       id: uuid.v4(),
       type: this.importType,
-      result_id: null
+      result_id: null,
+      headers: event['headers']
     }
     this.store.dispatch(new ManualImport(data));
     this.ref.close()

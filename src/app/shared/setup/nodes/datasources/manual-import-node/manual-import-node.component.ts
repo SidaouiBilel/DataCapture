@@ -43,7 +43,7 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     height: '225px',
   };
 
-  listOfCols : any[];
+  listOfCols: any[];
 
   constructor(private ntf: NotificationService, private service: FileImportService, private modal: NzModalService) {
     super()
@@ -102,7 +102,7 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     const col_range = this.data.col_range || [0, 0]
     this.service.generateSheet(this.data.file_id, this.data.sheetId, col_range[0], col_range[1], row_range[0], row_range[1]).subscribe((generated_sheet: any) => {
       this.service.getFileData(1, generated_sheet.sheet_id, 0).subscribe((data) => {
-        // this.data.headers = data.headers
+        this.data.headers = data.headers
         this.importing = false
         this.data.sheet_id = generated_sheet.sheet_id
         this.ntf.success('Dataset ready');

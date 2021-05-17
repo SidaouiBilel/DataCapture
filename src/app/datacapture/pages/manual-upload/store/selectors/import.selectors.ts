@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { Dataset } from '../manual.model';
 import { selectManualImport } from '../manual.selectors';
 import { ImportState } from '../reducers/import.reducer';
 
@@ -21,4 +22,17 @@ export const selectImportedSheetById = (index) => createSelector(
 export const selectActiveSheetIndex = createSelector(
   selectManualImport,
   (object: ImportState) => object.activeSheetIndex
+);
+
+export const selectActiveSheet = createSelector(
+  selectActiveSheetIndex,
+  selectImportedSheets,
+  (index: number, sheets: Dataset[]) => {
+    return (sheets[index] || {})
+  }
+);
+
+export const selectActiveSheetHeaders = createSelector(
+  selectActiveSheet,
+  (sheet: Dataset) => sheet.headers || []
 );

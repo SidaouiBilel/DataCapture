@@ -10,7 +10,7 @@ export interface ImportState {
 
 export const initialState: ImportState = {
   sheets: [],
-  activeSheetIndex: null
+  activeSheetIndex: -1,
 };
 
 
