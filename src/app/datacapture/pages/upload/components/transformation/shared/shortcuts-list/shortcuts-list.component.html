@@ -1,5 +1,5 @@
-<div class="flex start wrap">
-    <div *ngFor='let s of shortcuts; let i=index'>
+<div class="shortcuts-container flex start wrap">
+    <div *ngFor='let s of shortcuts; let i=index' class="mr-4">
         <div class="flex between" nz-tooltip [nzTooltipTitle]='s.name'>
             <div class="mr-2">
                 <i nz-icon class="mr-1" [nzType]='s.icon'></i>
@@ -8,3 +8,11 @@
         </div>
     </div>
 </div>
+
+<style>
+    .shortcuts-container{
+        padding: 4px 16px;
+        font-size: small;
+        /* justify-content: flex-end; */
+    }
+</style>

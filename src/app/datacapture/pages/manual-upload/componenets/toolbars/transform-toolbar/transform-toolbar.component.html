@@ -1,5 +1,4 @@
-  <div class="b-0 w-100 border-bottom">
-    <button *ngFor='let t of transformations' nzShape='circle' nz-button nzType='default'
-      (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
-        [nzRotate]='t.icon_rotation || 0'></i></button>
+  <div class="b-0 w-100">
+    <button *ngFor='let t of transformations' nz-button nzType='default' (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label">
+      <i nz-icon [nzType]="t.icon"></i>{{t.label}}</button>
   </div>

@@ -178,7 +178,7 @@ export class Merge extends Transformer {
 export class Filter extends Transformer {
   shortcut = 'control.f';
   type =  'filter';
-  label = 'Delete Rows with Filter';
+  label = 'Filter';
   icon = 'filter';
 
   getErrors = (params, previousNodes, headers) => {

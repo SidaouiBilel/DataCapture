@@ -1,23 +1,22 @@
 <div class="editor-overview">
-    <span class="overview-label">Total Lines <span class="overview-value">100</span></span>
-    <span class="overview-label">Lines in error <span class="overview-value">10</span></span>
-    <span class="overview-label">Warnings <span class="overview-value">32</span></span>
-    <span class="overview-label">Errors <span class="overview-value">2323</span></span>
+
+    <i class="overview-icon" nz-icon nzType="book" nzTheme="twotone"></i>
+    
+    <ng-container *ngIf='worksheet_meta$|async; let meta; else nometa'>
+        <span class='overview-item'><span class="overview-label">Flagged Lines </span><nz-tag [nzColor]="'red'" class="overview-value">{{meta.flagged_lines}}</nz-tag></span>
+        <span class='overview-item'><span class="overview-label">Flagged Cells </span><nz-tag [nzColor]="'red'" class="overview-value">{{meta.errors}}</nz-tag></span>
+    </ng-container>
+    
+    <nz-divider nzType='vertical'></nz-divider>
+
+    <i  class="overview-icon" nz-icon nzType='file'  nzTheme="twotone"></i>
+    <ng-container *ngIf='worksheet_meta$|async; let meta; else nometa'>
+        <span class='overview-item'><span class="overview-label">Flagged Lines </span><nz-tag [nzColor]="'red'" class="overview-value">{{meta.flagged_lines}}</nz-tag></span>
+        <span class='overview-item'><span class="overview-label">Flagged Cells </span><nz-tag [nzColor]="'red'" class="overview-value">{{meta.errors}}</nz-tag></span>
+    </ng-container>
+    
 </div>
 
-
-<style>
-    .editor-overview{
-        font-size: smaller;
-        padding: 4px 12px;
-    }
-
-    .editor-overview .overview-label{
-        margin-right: 24px;
-    }
-
-    .overview-value{
-        font-weight: 600;
-    }
-
-</style>
+<ng-template #nometa>
+    <span class='overview-item'><span class="overview-label">Nothing to show</span></span>
+</ng-template>

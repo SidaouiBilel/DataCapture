@@ -29,6 +29,8 @@ import { LimitCheckComponent } from './componenets/operations/operations-node/ch
 import { OverviewComponent } from './componenets/overview/overview.component';
 import { TransformToolbarComponent } from './componenets/toolbars/transform-toolbar/transform-toolbar.component';
 import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/control-toolbar.component';
+import { ShortcutsListComponent } from '../upload/components/transformation/shared/shortcuts-list/shortcuts-list.component';
+import { LookInComponent } from './componenets/operations/operations-node/checks/look-in/look-in.component';
 
 
 @NgModule({
@@ -43,7 +45,10 @@ import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/
      LimitCheckComponent,
      OverviewComponent,
      TransformToolbarComponent,
-     ControlToolbarComponent],
+     ControlToolbarComponent,
+     ShortcutsListComponent,
+     LookInComponent
+    ],
   imports: [
     CommonModule,
     SharedModule,

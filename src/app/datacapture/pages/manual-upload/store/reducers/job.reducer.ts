@@ -4,13 +4,15 @@ export interface ManualJobState {
   workbook_id: String
   generated_workbook: any[]
   applied_transformations: any[]
-  loading: string
+  control_results_metadata: any[]
+  loading: string,
 }
 
 export const initialState: ManualJobState = {
   workbook_id: null,
   generated_workbook: null,
   applied_transformations: null,
+  control_results_metadata: null,
   loading: null
 };
 
@@ -27,8 +29,8 @@ export function ManualJobReducer(state: ManualJobState = initialState, action: a
 
     case ManualJobActionTypes.SET_WORKFLOW_DATA:
         console.log(action)
-        const {transformations, worksheets} = action
-        return {...state, loading: null,applied_transformations:transformations, generated_workbook: worksheets} 
+        const {transformations, worksheets, results} = action
+        return {...state, loading: null,control_results_metadata: results, applied_transformations:transformations, generated_workbook: worksheets} 
 
     case ManualJobActionTypes.RESET_WORKFLOW_DATA:
       return {...initialState} 

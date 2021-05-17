@@ -11,7 +11,7 @@ export const environment = {
 
   import: 'http://localhost:5001/import/v2/',
   transform: 'http://localhost:5002/transfo/',
-  auth: 'http://localhost:5000/',
+  auth: 'http://localhost:5010/',
   pipeline: 'http://localhost:5006/',
   admin: 'http://localhost:5003/',
 

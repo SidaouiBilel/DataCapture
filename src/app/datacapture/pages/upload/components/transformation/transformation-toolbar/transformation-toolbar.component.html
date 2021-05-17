@@ -2,10 +2,10 @@
 
   <ng-container *ngIf='showTransformation'>
     <div class="flex between w-100">
-      <div class="flex-1">
-        <button class='ghost' *ngFor='let t of (shownTrans$ | async)' nzShape='circle' nz-button nzType='default'
+      <div class="flex-1 b-0">
+        <button class='ghost' *ngFor='let t of (shownTrans$ | async)' nz-button nzType='default'
           (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
-            [nzRotate]='t.icon_rotation || 0'></i></button>
+            [nzRotate]='t.icon_rotation || 0'></i>{{t.label}}</button>
       </div>
 
       <div class="ml-3" *ngIf='(collapsedTrans$ | async) && (collapsedTrans$ | async).length > 0'>

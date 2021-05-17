@@ -25,4 +25,7 @@ export const selectWorkbookSheetBySheetId = (sheet_id) => createSelector(
   (object) => object.find((s)=>s.id==sheet_id)
 );
 
-
+export const selectWorkbookSheetResults = createSelector(
+  selectManualJob,
+  (object: ManualJobState) => object.control_results_metadata || []
+);

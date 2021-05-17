@@ -1,0 +1,24 @@
+.editor-overview{
+    padding: 4px 12px;
+}
+
+.editor-overview .overview-label{
+    color: grey;
+}
+
+.editor-overview .overview-item{
+    font-size: smaller;
+    margin-right: 0 12px;
+}
+
+.editor-overview .overview-value{
+    font-weight: 600;
+}
+.editor-overview .overview-value.ant-tag{
+    padding: 2px 8px;
+    line-height: 1;
+}
+
+.editor-overview .overview-icon{
+    margin-right: 12px;
+}

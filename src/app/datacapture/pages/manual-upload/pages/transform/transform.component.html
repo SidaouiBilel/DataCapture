@@ -1,5 +1,5 @@
 <div class="manual-editor-grid">
-  <nz-card  style="grid-column: span 4;" nzSize='small' nzTitle='Workbook Editor' class="editor-block paddless"></nz-card>
+  <nz-card  style="grid-column: span 4;" nzSize='small' nzTitle='Workbook Editor' class="editor-block paddless border-bottom"></nz-card>
 
   <nz-tabset class="editor-block" style="grid-column: span 3;" nzSize="small">
     <nz-tab nzTitle="General"><app-default-toolbar></app-default-toolbar></nz-tab>
@@ -17,8 +17,10 @@
     <ng-template #noData><nz-empty class="nz-empty"></nz-empty></ng-template>
   </div>
 
-  <app-overview class="editor-block" style="grid-column: span 3;"></app-overview>
+  <app-overview [activeIndex]='viewSheetIndex$ | async' class="editor-block" style="grid-column: span 3;"></app-overview>
 
   <app-sheet-selector [activeIndex]='viewSheetIndex$ | async' class="editor-block sheet-selector-block" (sheet)="selectedSheet($event)"></app-sheet-selector>
+
+  <!-- <app-shortcuts-list  class="editor-block border-top" style="grid-column: span 4;"></app-shortcuts-list> -->
 
 </div>

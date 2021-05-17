@@ -42,9 +42,9 @@ import { NodeStatusComponent } from './components/transformation/shared/node-sta
 import { TransformationPreviewHelpComponent } from './components/transformation/modals/transformation-preview-help/transformation-preview-help.component';
 import { TransformationHotKeysService } from './components/transformation/services/transformation-hot-keys.service';
 import { GridBottomToolbarComponent } from './components/preview/view-modes/grid-bottom-toolbar/grid-bottom-toolbar.component';
-import { ShortcutsListComponent } from './components/transformation/shared/shortcuts-list/shortcuts-list.component';
+// import { ShortcutsListComponent } from './components/transformation/shared/shortcuts-list/shortcuts-list.component';
 import { HotkeysFilterPipe } from './components/transformation/pipes/hotkeys-filter.pipe';
-import { ShortcutsListHorizontalComponent } from './components/transformation/shared/shortcuts-list-horizontal/shortcuts-list-horizontal.component';
+// import { ShortcutsListHorizontalComponent } from './components/transformation/shared/shortcuts-list-horizontal/shortcuts-list-horizontal.component';
 import { SheetSelectionConfirmComponent } from './components/preview/sheet-selector/sheet-selection-confirm/sheet-selection-confirm.component';
 import { SheetsFilterPipe } from './components/preview/sheet-selector/sheets-filter.pipe';
 import { FindAndReplaceComponent } from './components/transformation/transformations/transformation-interface/format/find-and-replace/find-and-replace.component';
@@ -97,9 +97,9 @@ const components = [
   NodeStatusComponent,
   TransformationPreviewHelpComponent,
   GridBottomToolbarComponent,
-  ShortcutsListComponent,
+  // ShortcutsListComponent,
   HotkeysFilterPipe,
-  ShortcutsListHorizontalComponent,
+  // ShortcutsListHorizontalComponent,
   SheetSelectionConfirmComponent,
   SheetsFilterPipe,
   FindAndReplaceComponent,

@@ -40,8 +40,8 @@ export class ManualJobEffects {
     ofType(ManualJobActionTypes.LOAD),
     switchMap((action)=>this.wb.get(action['workbook_id'])),
     map((result:any) => {
-      const {worksheets, transformations} = result
-      this.store$.dispatch(new ManualJobSetWorkbookData( worksheets, transformations))
+      const {worksheets, transformations, results} = result
+      this.store$.dispatch(new ManualJobSetWorkbookData( worksheets, transformations, results))
     })
   );
 

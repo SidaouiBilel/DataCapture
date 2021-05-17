@@ -1,0 +1,15 @@
+
+<nz-input-group nzCompact>
+    <nz-select [(ngModel)]='data.sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
+      <nz-option *ngFor='let s of sheets$ | async'  nzValue="{{s.id}}" nzLabel="{{s.file_name}}"></nz-option>
+    </nz-select>
+    <input style="width:25%;"  nz-input [(ngModel)]='data.column' (change)='onDataChanged()' placeHolder="Column"/>
+</nz-input-group>
+
+
+<nz-input-group nzCompact>
+    <nz-select [(ngModel)]='data.search_sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
+      <nz-option *ngFor='let s of sheets$ | async'  nzValue="{{s.id}}" nzLabel="{{s.file_name}}"></nz-option>
+    </nz-select>
+    <input style="width:25%;"  nz-input [(ngModel)]='data.search_column' (change)='onDataChanged()' placeHolder="Column"/>
+</nz-input-group>

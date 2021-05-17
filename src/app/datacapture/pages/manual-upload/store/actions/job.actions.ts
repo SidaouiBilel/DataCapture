@@ -20,7 +20,7 @@ export class ManualJobLoadWorkbook implements Action {
 
 export class ManualJobSetWorkbookData implements Action {
   readonly type = ManualJobActionTypes.SET_WORKFLOW_DATA;
-  constructor(readonly worksheets, readonly transformations ) {}
+  constructor(readonly worksheets, readonly transformations, readonly results) {}
 }
 
 export class ManualJobResetWorkbookData implements Action {

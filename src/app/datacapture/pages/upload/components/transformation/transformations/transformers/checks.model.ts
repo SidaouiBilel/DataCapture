@@ -20,3 +20,27 @@ export class LookForCheck extends Check {
   label = 'Look For';
   icon = 'search';
 }
+
+export class ReferenceCheck extends Check {
+  type = 'reference-check';
+  label = 'Is Reference';
+  icon = 'font-size';
+}
+
+export class FormatCheck extends Check {
+  type = 'format-check';
+  label = 'Format Check';
+  icon = 'field-string';
+}
+
+export class ComparisonCheck extends Check {
+  type = 'comparison-check';
+  label = 'Compare';
+  icon = 'right';
+}
+
+export class CustomCheck extends Check {
+  type = 'custom-check';
+  label = 'Custom';
+  icon = 'code';
+}
