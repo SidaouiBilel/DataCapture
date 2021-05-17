@@ -37,6 +37,8 @@ import { DateFormatterComponent } from './componenets/operations/operations-node
 import { DefaultValueComponent } from './componenets/operations/operations-node/transformations/default-value/default-value.component';
 import { HeadersInputComponent } from './componenets/operations/shared/headers-input/headers-input.component';
 import { GroupByComponent } from './componenets/operations/operations-node/transformations/group-by/group-by.component';
+import { DeleteColumnComponent } from './componenets/operations/operations-node/transformations/delete-column/delete-column.component';
+import { HashComponent } from './componenets/operations/operations-node/transformations/hash/hash.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { GroupByComponent } from './componenets/operations/operations-node/trans
     DateFormatterComponent,
     DefaultValueComponent,
     HeadersInputComponent,
-    GroupByComponent],
+    GroupByComponent,
+    DeleteColumnComponent,
+    HashComponent],
   imports: [
     CommonModule,
     SharedModule,
