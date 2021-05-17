@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { NzModalService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
 import { OperationComponent } from '../../operation.component';
-import { NewCalculatorModalComponent } from './new-calculator-modal/new-calculator-modal.component';
+import { NewCalculatorModalComponent } from './calculator-modal/new-calculator-modal.component';
 
 @Component({
   selector: 'app-new-calculator',
@@ -26,10 +26,10 @@ export class NewCalculatorComponent extends OperationComponent implements OnInit
     this.sheets$ = this.store.select(selectImportedSheets);
   }
 
-  openFormula(){
+  openFormula() {
     const modal = this.modal.create({
       nzContent: NewCalculatorModalComponent,
-      nzComponentParams:{
+      nzComponentParams: {
         node_index: this.index,
         formula: deepCopy(this.data.formula || [])
       },
@@ -37,8 +37,8 @@ export class NewCalculatorComponent extends OperationComponent implements OnInit
     })
 
     modal.afterClose.subscribe(
-      (formula)=>{
-        if(formula){
+      (formula) => {
+        if (formula) {
           this.data.formula = formula
           this.onDataChanged()
         }
@@ -46,8 +46,8 @@ export class NewCalculatorComponent extends OperationComponent implements OnInit
     )
   }
 
-  getFormulaText(){
-    return (this.data.formula || []).map(e=>e.value).join(' ')
+  getFormulaText() {
+    return (this.data.formula || []).map(e => e.value).join(' ')
   }
 
 }

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Dataset } from '../../../../../../store/manual.model';
 import { NzModalRef } from 'ng-zorro-antd';
-import { selectImportedSheets } from '@app/datacapture/pages/manual-upload/store/selectors/import.selectors';
+import { selectImportedSheetHeadersById, selectImportedSheets } from '@app/datacapture/pages/manual-upload/store/selectors/import.selectors';
 
 
 @Component({
@@ -20,23 +20,23 @@ export class NewCalculatorModalComponent implements OnInit {
   formula = []
   node_index = 0
   sheets$: Observable<Dataset[]>;
-  column = ''
   selectedSheet: Dataset = null;
+  headers$;
 
   ngOnInit(): void {
     this.sheets$ = this.store.select(selectImportedSheets);
   }
   selectSheet(s) {
     this.selectedSheet = s
+    this.getHeaders(this.selectedSheet.id)
   }
 
-  onEnter() {
-    if(this.column != '')
-    this.addToken(this.column, "column")
-    this.column = ''
+  getHeaders(id) {
+    this.headers$ = this.store.select(selectImportedSheetHeadersById(id));
   }
 
-  addToken(value, type){
+
+  addToken(value, type) {
 
     const token = {
       sheet: '',
@@ -44,7 +44,7 @@ export class NewCalculatorModalComponent implements OnInit {
       type
     }
 
-    if(type == 'column') {
+    if (type == 'column') {
       token.sheet = this.selectedSheet.id
     }
 
@@ -53,14 +53,14 @@ export class NewCalculatorModalComponent implements OnInit {
     this.updateFormula()
   }
 
-  updateFormula(){
+  updateFormula() {
     let index = 0
     let token = this.formula[index]
-    while(token) {
-      if(token.type == 'number'){
-        const next_index = index+1
+    while (token) {
+      if (token.type == 'number') {
+        const next_index = index + 1
         const next_token = this.formula[next_index]
-        if (next_token && next_token.type == 'number'){
+        if (next_token && next_token.type == 'number') {
           this.formula.splice(next_index, 1)
           token.value = String(token.value).concat(next_token.value)
         }
@@ -69,7 +69,7 @@ export class NewCalculatorModalComponent implements OnInit {
     }
 
 
-    try{
+    try {
       this.lex(this.formula)
       this.error = null
     } catch (e) {
@@ -77,17 +77,17 @@ export class NewCalculatorModalComponent implements OnInit {
     }
   }
 
-  lex(expr: any[]){
+  lex(expr: any[]) {
     Parser.validate([...expr])
   }
 
-  removeLastToken(){
+  removeLastToken() {
     const token = this.formula[this.formula.length - 1]
-    if(token){
-      switch(token.type){
+    if (token) {
+      switch (token.type) {
         case 'number': {
           const token_len = token.value.length
-          if(token_len > 1){
+          if (token_len > 1) {
             token.value = String(token.value).substr(0, token_len - 1)
             break
           }
@@ -99,12 +99,12 @@ export class NewCalculatorModalComponent implements OnInit {
     }
   }
 
-  clear(){
+  clear() {
     this.formula = []
     this.updateFormula()
   }
 
-  submit(){
+  submit() {
     this.modal.close(this.formula)
   }
 

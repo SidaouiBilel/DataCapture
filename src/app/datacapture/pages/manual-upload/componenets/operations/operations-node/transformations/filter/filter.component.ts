@@ -15,22 +15,22 @@ export class FilterComponent extends OperationComponent implements OnInit {
 
   @Input() showReverse = true;
 
-  sheets$: Observable<Dataset[]>;
+  // sheets$: Observable<Dataset[]>;
 
   numberOperations = [
-    {value: '>', label: '>'},
-    {value: '>=', label: '>='},
-    {value: '<', label: '<'},
-    {value: '<=', label: '<='},
-    {value: '==', label: '='},
-    {value: '!=', label: '!='}
+    { value: '>', label: '>' },
+    { value: '>=', label: '>=' },
+    { value: '<', label: '<' },
+    { value: '<=', label: '<=' },
+    { value: '==', label: '=' },
+    { value: '!=', label: '!=' }
   ];
   stringOperations = [
-    {value: 'fullmatch', label: 'Equals'},
-    {value: 'contains', label: 'Contains'},
-    {value: 'startswith', label: 'Starts With'},
-    {value: 'endswith', label: 'Ends With'},
-    {value: 'match', label: 'REGEX'},
+    { value: 'fullmatch', label: 'Equals' },
+    { value: 'contains', label: 'Contains' },
+    { value: 'startswith', label: 'Starts With' },
+    { value: 'endswith', label: 'Ends With' },
+    { value: 'match', label: 'REGEX' },
     // {value: 'notEqual', label: 'notEqual'},
   ];
   operations = [
@@ -47,7 +47,7 @@ export class FilterComponent extends OperationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sheets$ = this.store.select(selectImportedSheets);
+    // this.sheets$ = this.store.select(selectImportedSheets);
   }
 
   onAddCondition() {

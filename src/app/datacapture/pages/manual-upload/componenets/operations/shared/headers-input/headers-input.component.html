@@ -1,0 +1,22 @@
+<nz-select nz-tooltip [nzTooltipTitle]='value' [nzMaxTagCount]='0' [nzSize]='nzSize' class="header-input"
+  [(ngModel)]="value" [nzMode]='mode'>
+  <nz-option *ngFor='let h of (headers$ | async)' [nzValue]="h" [nzLabel]="h"></nz-option>
+
+  <ng-container *ngIf="headers$ | async; let headers">
+    <ng-container *ngIf='mode=="default"'>
+      <nz-option nzCustomContent class="invalid-option" *ngIf='value && (headers.indexOf(value) < 0)' [nzValue]="value"
+        [nzLabel]="value">
+        <i nz-icon nzType='warning' class="mr-2"></i>{{value}}
+      </nz-option>
+    </ng-container>
+    <ng-container *ngIf='mode=="multiple"'>
+      <ng-container *ngFor='let o of value'>
+        <nz-option nzCustomContent class="invalid-option" *ngIf='o && (headers.indexOf(o) < 0)' [nzValue]="o"
+          [nzLabel]="o">
+          <i nz-icon nzType='warning' class="mr-2"></i>{{o}}
+        </nz-option>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+</nz-select>

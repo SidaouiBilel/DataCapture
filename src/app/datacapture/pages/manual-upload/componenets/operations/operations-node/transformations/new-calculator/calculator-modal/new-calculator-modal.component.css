@@ -8,20 +8,19 @@
   min-height: 50px;
   /* background: #f9f9f9; */
   /* border: 0; */
-
 }
 
 .calculator-button-wrapper {
   padding: 2px;
 }
 
-
 .calculator-display-item {
   font-size: 18px;
   margin: 0 2px;
 }
 
-.calculator-display-number {}
+.calculator-display-number {
+}
 
 .calculator-display-column {
   margin: 0;
@@ -36,7 +35,12 @@
   opacity: 0.8;
 }
 
-.calculator {
+.sheets {
   height: 100%;
+  overflow-y: auto;
+}
+
+.headers {
+  height: 25vh;
   overflow-y: auto;
 }

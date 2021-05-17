@@ -1,4 +1,3 @@
-
 <h5 nz-typography><i nz-icon nzType='calculator'></i> Formula</h5>
 
 <div class="flex column stretch w-100 mb-2 mt-2 border rounded p-2">
@@ -42,13 +41,20 @@
         {{!selectedSheet ? "Sheet" : selectedSheet?.file_name }}
         <i nz-icon nzType='down'></i></button>
       <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ul nz-menu class="w-100 calculator">
+        <ul nz-menu class="w-100 sheets">
           <li *ngFor='let s of sheets$ | async' (click)='selectSheet(s)' nz-menu-item>{{s.file_name}}</li>
         </ul>
       </nz-dropdown-menu>
     </div>
     <div class="calculator-button-wrapper" style="grid-column: span 1;">
-      <input class="calculator-button" nz-input [disabled]="!selectedSheet" [(ngModel)]='column' (keyup.enter)="onEnter()"/>
+      <button [disabled]="!selectedSheet" nz-dropdown nzTrigger='click' [nzDropdownMenu]="headers" class="calculator-button" nzBlock nz-button>
+        Column <i nz-icon nzType='down'></i></button>
+      <nz-dropdown-menu #headers="nzDropdownMenu">
+        <ul nz-menu class="w-100 headers">
+          <li *ngFor='let h of headers$ | async' (click)='addToken(h, "column")' nz-menu-item>{{h}}</li>
+        </ul>
+      </nz-dropdown-menu>
+
     </div>
 
     <div class="calculator-button-wrapper" *ngFor='let btn of [1,2,3,4,5,6,7,8,9,".", 0]'><button

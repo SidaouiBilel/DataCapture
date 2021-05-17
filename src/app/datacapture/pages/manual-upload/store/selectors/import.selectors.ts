@@ -14,9 +14,9 @@ export const selectImportedSheetByIndex = (index) => createSelector(
   (object) => object[index]
 );
 
-export const selectImportedSheetById = (index) => createSelector(
+export const selectImportedSheetById = (id) => createSelector(
   selectImportedSheets,
-  (object) => object[index]
+  (sheets: Dataset[]) => sheets.find(sheet => sheet.id == id)
 );
 
 export const selectActiveSheetIndex = createSelector(
@@ -34,5 +34,10 @@ export const selectActiveSheet = createSelector(
 
 export const selectActiveSheetHeaders = createSelector(
   selectActiveSheet,
+  (sheet: Dataset) => sheet.headers || []
+);
+
+export const selectImportedSheetHeadersById = (id) => createSelector(
+  selectImportedSheetById(id),
   (sheet: Dataset) => sheet.headers || []
 );

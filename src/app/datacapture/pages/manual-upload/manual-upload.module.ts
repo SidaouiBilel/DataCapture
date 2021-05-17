@@ -15,7 +15,7 @@ import { TransformationEditorComponent } from './componenets/operations/operatio
 import { FEATURE_NAME, manualReducers } from './store/manual.state';
 import { StoreModule } from '@ngrx/store';
 import { ImportDatasourceModalComponent } from './modals/import-datasource-modal/import-datasource-modal.component';
-import { NewCalculatorModalComponent } from './componenets/operations/operations-node/transformations/new-calculator/new-calculator-modal/new-calculator-modal.component';
+import { NewCalculatorModalComponent } from './componenets/operations/operations-node/transformations/new-calculator/calculator-modal/new-calculator-modal.component';
 import { NewCalculatorComponent } from './componenets/operations/operations-node/transformations/new-calculator/new-calculator.component';
 import { TransformationNodeComponent } from './componenets/operations/operation-container/transformation-node.component';
 import { FilterComponent } from './componenets/operations/operations-node/transformations/filter/filter.component';
@@ -35,6 +35,7 @@ import { SplitterComponent } from './componenets/operations/operations-node/tran
 import { DeleteRowsComponent } from './componenets/operations/operations-node/transformations/delete-rows/delete-rows.component';
 import { DateFormatterComponent } from './componenets/operations/operations-node/transformations/date-formatter/date-formatter.component';
 import { DefaultValueComponent } from './componenets/operations/operations-node/transformations/default-value/default-value.component';
+import { HeadersInputComponent } from './componenets/operations/shared/headers-input/headers-input.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { DefaultValueComponent } from './componenets/operations/operations-node/
     SplitterComponent,
     DeleteRowsComponent,
     DateFormatterComponent,
-    DefaultValueComponent],
+    DefaultValueComponent,
+    HeadersInputComponent],
   imports: [
     CommonModule,
     SharedModule,
