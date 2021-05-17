@@ -31,24 +31,40 @@ import { TransformToolbarComponent } from './componenets/toolbars/transform-tool
 import { ControlToolbarComponent } from './componenets/toolbars/control-toolbar/control-toolbar.component';
 import { ShortcutsListComponent } from '../upload/components/transformation/shared/shortcuts-list/shortcuts-list.component';
 import { LookInComponent } from './componenets/operations/operations-node/checks/look-in/look-in.component';
+import { FormatterComponent } from './componenets/operations/operations-node/transformations/formatter/formatter.component';
+import { FindAndReplaceComponent } from './componenets/operations/operations-node/transformations/find-and-replace/find-and-replace.component';
+import { SplitterComponent } from './componenets/operations/operations-node/transformations/splitter/splitter.component';
+import { DeleteRowsComponent } from './componenets/operations/operations-node/transformations/delete-rows/delete-rows.component';
+import { DateFormatterComponent } from './componenets/operations/operations-node/transformations/date-formatter/date-formatter.component';
+import { DefaultValueComponent } from './componenets/operations/operations-node/transformations/default-value/default-value.component';
+import { DeleteColumnComponent } from './componenets/operations/operations-node/transformations/delete-column/delete-column.component';
+import { HashComponent } from './componenets/operations/operations-node/transformations/hash/hash.component';
 
 
 @NgModule({
-  declarations: [ImportComponent, TransformComponent, ReportComponent, ControlComponent, NavigatorComponent,
-     ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
-     ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
-     OperationComponent,
-     FilterComponent,
-     MergerComponent,
-     JoinerComponent,
-     PycodeComponent,
-     LimitCheckComponent,
-     OverviewComponent,
-     TransformToolbarComponent,
-     ControlToolbarComponent,
-     ShortcutsListComponent,
-     LookInComponent
-    ],
+  declarations: [
+    ContainerComponent, SheetSelectorComponent, DefaultToolbarComponent, TransformationEditorComponent,
+    ImportDatasourceModalComponent, NewCalculatorModalComponent, NewCalculatorComponent, TransformationNodeComponent,
+    OperationComponent,
+    FilterComponent,
+    MergerComponent,
+    JoinerComponent,
+    PycodeComponent,
+    LimitCheckComponent,
+    OverviewComponent,
+    TransformToolbarComponent,
+    ControlToolbarComponent,
+    FormatterComponent,
+    FindAndReplaceComponent,
+    SplitterComponent,
+    DeleteRowsComponent,
+    DateFormatterComponent,
+    DefaultValueComponent,
+    DeleteColumnComponent,
+    HashComponent,
+    ShortcutsListComponent,
+    LookInComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -56,6 +72,6 @@ import { LookInComponent } from './componenets/operations/operations-node/checks
     StoreModule.forFeature(FEATURE_NAME, manualReducers),
     EffectsModule.forFeature([ManualJobEffects])
   ],
-  entryComponents:[ImportDatasourceModalComponent, NewCalculatorModalComponent, OperationComponent]
+  entryComponents: [ImportDatasourceModalComponent, NewCalculatorModalComponent, OperationComponent]
 })
 export class ManualUploadModule { }

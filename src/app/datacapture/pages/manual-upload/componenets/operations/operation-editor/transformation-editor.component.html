@@ -17,7 +17,7 @@
 
  <div class="scroll-container flex-1 w-100 bg-grey">
    <nz-empty class="m-2" nzNotFoundImage="simple" nzNotFoundContent='No Operations Found' *ngIf='!((nodes$ | async)?.length)'></nz-empty>
-   <div>
+   <div class="w-100">
         <app-transformation-node  *ngFor='let node of nodes$ | async; let i = index' [index]=i [params]='node'></app-transformation-node>
     </div>
   </div>

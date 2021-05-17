@@ -6,6 +6,7 @@ export enum TransformationActionTypes {
   UPDATE_NODE = '[TRANSFORMATION] UPDATE NODE',
   DELETE_NODE = '[TRANSFORMATION] DELETE NODE',
   UPDATE_NODE_ORDER = '[TRANSFORMATION] UPDATE_NODE_ORDER',
+  CLEAR_ALL_NODES = '[TRANSFORMATION] CLEAR_ALL_NODES',
 }
 
 
@@ -29,8 +30,13 @@ export class UpdateNodeOrder implements Action {
   constructor(readonly index: number, readonly step: number) { }
 }
 
+export class ClearAllNodes implements Action {
+  readonly type = TransformationActionTypes.CLEAR_ALL_NODES;
+  constructor() {}
+}
+
 
 
 
 export type TransformationAction = AddTransformationNode | UpdateTransformationNode
-  | DeleteTransformationNode | UpdateNodeOrder;
+  | DeleteTransformationNode | UpdateNodeOrder | ClearAllNodes;
