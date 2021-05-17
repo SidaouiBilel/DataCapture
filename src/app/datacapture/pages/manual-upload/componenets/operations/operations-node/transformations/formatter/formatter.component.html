@@ -3,7 +3,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8">Column</nz-form-label>
     <nz-form-control [nzSm]="18">
-      <input nz-input [nzSize]='size' [(ngModel)]='data.column' (change)='onDataChanged()' name='column' />
+      <app-headers-input [nzSize]='size' [ngModelOptions]=" {standalone: true}"
+      [(ngModel)]='data.column' (change)='onDataChanged()'></app-headers-input>
     </nz-form-control>
 
   </nz-form-item>

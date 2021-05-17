@@ -9,16 +9,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6">Destination</nz-form-label>
     <nz-form-control [nzSm]="10">
-      <nz-select [(ngModel)]='data.destination_sheet' (ngModelChange)='onDataChanged()'
-      nzPlaceHolder='Sheet' name='destination_sheet'>
+      <nz-select [(ngModel)]='data.sheet_destination' (ngModelChange)='onDataChanged()'
+            nzPlaceHolder='Sheet' name='destination_sheet'>
         <nz-option *ngFor='let s of sheets$ | async'
                     nzValue="{{s.id}}" nzLabel="{{s.file_name}}">
         </nz-option>
       </nz-select>
     </nz-form-control>
     <nz-form-control class="inputs-wrapper" [nzSm]="8">
-      <input class="input-columns" nz-input [nzSize]='size' [(ngModel)]='data.destination_column'
-      (change)='onDataChanged()' name='destination_column' placeHolder="Column"/>
+      <app-headers-input [nzSize]='size' [sheetId]="data.sheet_destination" [ngModelOptions]=" {standalone: true}"
+      [(ngModel)]='data.column_destination' (change)='onDataChanged()'></app-headers-input>
     </nz-form-control>
   </nz-form-item>
 
