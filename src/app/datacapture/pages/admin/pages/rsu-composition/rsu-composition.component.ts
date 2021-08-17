@@ -9,17 +9,22 @@ import { ReferenceService } from '../../componenets/references/reference.service
   styleUrls: ['./rsu-composition.component.css']
 })
 export class RsuCompositionComponent implements OnInit {
-
-
   loading;
   uploadURI;
   updateURI;
+  rsuData$: Subject<any> = new Subject();
+  rsuSources$: Subject<any> = new Subject();
+  // rsuTargets$: Subject<any> = new Subject();
+  rsuTargets = []
+
 
   constructor(public service: RsuService) {
   }
 
   ngOnInit(): void {
-    this.updateURI = this.service.RsuDataImport();
+    this.updateURI = this.service.RsuDataUpdate();
+    this.uploadURI = this.service.RsuDataImport();
+    this.laodData()
   }
 
   onBack() {
@@ -27,8 +32,22 @@ export class RsuCompositionComponent implements OnInit {
   }
 
   laodData() {
-  }
+    this.rsuData$.next([]);
+    this.rsuSources$.next([]);
+    // this.rsuTargets$.next([]);
+    this.rsuTargets = [];
 
+    this.loading = true;
+    this.service.getAllRsuCompostion()
+      .subscribe(
+        (res: any) => {
+          this.rsuData$.next(res.data);
+          this.rsuSources$.next(res.sources);
+          // this.rsuTargets$.next(res.targets);
+          this.rsuTargets = res.targets
+          this.loading = false;
+        });
+  }
 
   handleChange(info: any): void {
     if (info.file.status !== 'uploading') {

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
@@ -6,7 +7,7 @@ import { environment } from '@env/environment';
 })
 export class RsuService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   RsuDataImport(): any {
     return `${environment.admin}rsu/import`;
@@ -14,5 +15,9 @@ export class RsuService {
 
   RsuDataUpdate(): any {
     return `${environment.admin}rsu/update`;
+  }
+
+  getAllRsuCompostion() {
+    return this.http.get(`${environment.admin}rsu/`);
   }
 }
