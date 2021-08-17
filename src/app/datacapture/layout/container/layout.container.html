@@ -22,7 +22,7 @@
             <li (click)='settings.setCompactSize()' nz-menu-item>Compact Layout</li>
           </ul>
         </nz-dropdown-menu>
-      
+
 
         <app-user-bar class="ml-2"></app-user-bar>
 
@@ -60,6 +60,10 @@
               <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/dictionaries']">
                 <i nz-icon nzType="book"></i>
                 <span>Dictionaries</span>
+              </li>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/rsu']">
+                <i nz-icon nzType="table"></i>
+                <span>RSU</span>
               </li>
             </ul>
           </li>

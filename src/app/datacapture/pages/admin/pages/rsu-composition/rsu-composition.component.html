@@ -1,0 +1,42 @@
+<div class="ref-data-container">
+
+
+  <div class="flex column fill stretch">
+      <div>
+          <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Compositions"></nz-page-header>
+          <ng-template #userTitle><i class="mr-2" nz-icon nzType="font-size" nzTheme="outline"></i>Rsu Composition</ng-template>
+      </div>
+
+      <div class="fill w-100">
+        <div class="site-page-header-ghost-wrapper">
+          <nz-page-header nzBordered nzBackIcon (nzBack)="onBack()" [nzGhost]="false">
+            <nz-page-header-extra>
+              <div class="flex between">
+                <div class="pr-2">
+                  <nz-upload [nzAction]="uploadURI" [nzHeaders]="{ authorization: 'authorization-text' }"
+                    (nzChange)="handleChange($event)">
+                    <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
+                  </nz-upload>
+                </div>
+              </div>
+
+            </nz-page-header-extra>
+          </nz-page-header>
+        </div>
+
+
+
+
+
+
+
+      </div>
+  </div>
+
+</div>
+
+
+
+
+
+

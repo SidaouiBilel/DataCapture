@@ -45,6 +45,7 @@ import { DictionaryModalComponent } from './modals/dictionary-modal/dictionary-m
 import { DictionaryCardComponent } from './componenets/dictionary-card/dictionary-card.component';
 import { WordPageComponent } from './pages/word-page/word-page.component';
 import { WordModalComponent } from './modals/word-modal/word-modal.component';
+import { RsuCompositionComponent } from './pages/rsu-composition/rsu-composition.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { WordModalComponent } from './modals/word-modal/word-modal.component';
     DictionaryModalComponent,
     DictionaryCardComponent,
     WordPageComponent,
-    WordModalComponent
+    WordModalComponent,
+    RsuCompositionComponent
     ],
   providers:[
     CollectionEditor,

@@ -1,3 +1,4 @@
+import { RsuCompositionComponent } from './pages/rsu-composition/rsu-composition.component';
 import { WordPageComponent } from './pages/word-page/word-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -72,6 +73,19 @@ const routes: Routes = [
       {
         path: ':id/word',
         component: WordPageComponent
+      },
+      {
+        path: '**',
+        redirectTo: ''
+      },
+    ]
+  },
+  {
+    path: 'rsu',
+    children: [
+      {
+        path: '',
+        component: RsuCompositionComponent,
       },
       {
         path: '**',
