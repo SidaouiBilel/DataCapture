@@ -29,11 +29,19 @@
         <thead>
           <tr>
             <th *ngFor='let s of (rsuSources$ | async)'>{{s}}</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let row of basicTable.data">
             <td *ngFor='let target of rsuTargets'>{{(row.composition || {})[target]}}</td>
+            <td>
+              <div class="button-spacing ghost">
+                <button nzShape='circle' nz-button (click)='onEdit(row)'><i nz-icon nzType="edit"></i></button>
+                <nz-divider nzType='vertical'></nz-divider>
+                <button nzShape='circle' nz-button (click)='onDelete(row)'><i nz-icon nzType="delete"></i></button>
+              </div>
+            </td>
            </tr>
         </tbody>
       </nz-table>

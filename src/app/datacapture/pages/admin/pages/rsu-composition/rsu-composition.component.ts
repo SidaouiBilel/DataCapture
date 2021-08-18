@@ -65,4 +65,14 @@ export class RsuCompositionComponent implements OnInit {
     console.log("download file");
   }
 
+
+  onEdit(row){
+    console.log("Edit a row",row);
+  }
+
+
+  onDelete(row){
+    console.log("Edit a row",row);
+  }
+
 }
