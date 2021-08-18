@@ -69,7 +69,6 @@ export class RsuCompositionComponent implements OnInit {
 
 
   onEdit(row) {
-    console.log("Edit a row", row);
     this.modal.create({
       nzContent: RsuDataEditorComponent,
       nzComponentParams: { data: row },
