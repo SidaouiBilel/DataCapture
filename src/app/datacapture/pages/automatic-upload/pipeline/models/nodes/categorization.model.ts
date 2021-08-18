@@ -65,3 +65,18 @@ export class NodeHashByCategory extends PipelineNode{
       }), { desiredSize: new go.Size(this.iconSize, this.iconSize), ...i, margin: 8 })
   }
 }
+
+
+export class NodeCheckRsu extends PipelineNode{
+  static type = 'check'
+  static category = 'Classification'
+  static nzicon = "file-search"
+  static color = '#2e394b';
+  static label = 'Check'
+  static showLabel = false
+  static ports = [
+      {id:"INPUT",spot:go.Spot.Left},
+      {id:"OUTPUT",spot:go.Spot.Right},
+  ]
+
+}
