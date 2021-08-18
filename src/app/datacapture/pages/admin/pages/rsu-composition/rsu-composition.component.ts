@@ -1,7 +1,9 @@
+import { RsuDataEditorComponent } from './../../modals/rsu-data-editor/rsu-data-editor.component';
 import { RsuService } from './../../services/rsu.service';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ReferenceService } from '../../componenets/references/reference.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-rsu-composition',
@@ -18,7 +20,7 @@ export class RsuCompositionComponent implements OnInit {
   rsuTargets = []
 
 
-  constructor(public service: RsuService) {
+  constructor(public service: RsuService, private modal: NzModalService) {
   }
 
   ngOnInit(): void {
@@ -66,13 +68,21 @@ export class RsuCompositionComponent implements OnInit {
   }
 
 
-  onEdit(row){
-    console.log("Edit a row",row);
+  onEdit(row) {
+    console.log("Edit a row", row);
+    this.modal.create({
+      nzContent: RsuDataEditorComponent,
+      nzComponentParams: { data: row },
+    }).afterClose.subscribe(success => {
+      if (success) {
+        this.laodData()
+      }
+    });
   }
 
 
-  onDelete(row){
-    console.log("Edit a row",row);
+  onDelete(row) {
+    console.log("Edit a row", row);
   }
 
 }
