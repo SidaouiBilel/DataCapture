@@ -68,7 +68,7 @@ export class NodeHashByCategory extends PipelineNode{
 
 
 export class NodeCheckRsu extends PipelineNode{
-  static type = 'check'
+  static type = 'rsu-check'
   static category = 'Classification'
   static nzicon = "file-search"
   static color = '#2e394b';
