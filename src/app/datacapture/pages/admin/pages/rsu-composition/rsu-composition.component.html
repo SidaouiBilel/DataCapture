@@ -6,7 +6,7 @@
     </div>
 
     <div class="site-page-header-ghost-wrapper">
-      <nz-page-header nzBordered nzBackIcon (nzBack)="onBack()" [nzGhost]="false">
+      <nz-page-header nzBordered  [nzGhost]="false">
         <nz-page-header-extra>
           <div class="flex between">
             <div class="pr-2">
@@ -35,11 +35,19 @@
         <thead>
           <tr>
             <th *ngFor='let s of (rsuSources$ | async)'>{{s}}</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let row of basicTable.data">
             <td *ngFor='let target of rsuTargets'>{{(row.composition || {})[target]}}</td>
+            <td>
+              <div class="button-spacing ghost">
+                <button nzShape='circle' nz-button (click)='onEdit(row)'><i nz-icon nzType="edit"></i></button>
+                <nz-divider nzType='vertical'></nz-divider>
+                <button nzShape='circle' nz-button (click)='onDelete(row)'><i nz-icon nzType="delete"></i></button>
+              </div>
+            </td>
            </tr>
         </tbody>
       </nz-table>

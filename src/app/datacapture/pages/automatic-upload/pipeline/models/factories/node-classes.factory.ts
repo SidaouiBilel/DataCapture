@@ -1,3 +1,4 @@
+import { NodeCheckComponent } from './../../../../../../shared/setup/nodes/category/node-check/node-check.component';
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
 import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
@@ -15,7 +16,7 @@ import { CollectionImportComponent } from "@app/shared/setup/nodes/datasources/c
 import { NodeJoinComponent } from "@app/shared/setup/nodes/other/node-join/node-join.component";
 import { NodePipelineComponent } from "@app/shared/setup/nodes/other/node-pipeline/node-pipeline.component";
 import { ManualImportNodeComponent } from "@app/shared/setup/nodes/datasources/manual-import-node/manual-import-node.component";
-import { NodeFilterByCategory, NodeHashByCategory } from "../nodes/categorization.model";
+import { NodeCheckRsu, NodeFilterByCategory, NodeHashByCategory } from "../nodes/categorization.model";
 import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/category-filter/category-filter.component";
 import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
 
@@ -56,7 +57,8 @@ export const NODE_TRANSFORMERS = [
 
 export const CATEGORY_NODES = [
   NodeFilterByCategory.setComponenet(CategoryFilterComponent),
-  NodeHashByCategory.setComponenet(CategoryHashComponent)
+  NodeHashByCategory.setComponenet(CategoryHashComponent),
+  NodeCheckRsu.setComponenet(NodeCheckComponent)
 ]
 
 export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
