@@ -9,16 +9,16 @@ export const environment = {
   production: false,
   test: false,
 
-  // import: 'http://localhost:5001/import/v2/',
+  import: 'http://localhost:5001/import/v2/',
   transform: 'http://localhost:5002/transfo/',
   auth: 'http://localhost:5000/',
   pipeline: 'http://localhost:5006/',
   admin: 'http://localhost:5003/',
-
   // import: 'http://localhost:5000/import/',
+
   // import: 'http://localhost:5001/import/v2/',
   // import: 'http://localhost:5001/import/v2/',
-  import: 'http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-import/import/v2/',
+  // import: 'http://a4a1a0328c2d24de7b9356e3eba4b678-705832054.eu-west-1.elb.amazonaws.com/dk-import/import/v2/',
   // cleansing: 'http://localhost:5002/check',
   mapping: 'http://localhost:5003/mapping',
   // mapping: 'http://localhost:5001/mapping',
