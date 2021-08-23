@@ -1,0 +1,76 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-tabset>
+      <nz-tab nzTitle="Basic">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+              <input nz-input formControlName="name" id="name" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">Description</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+              <textarea rows="4" nz-input formControlName="description" id="description"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="database">Database</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <nz-input-group nzCompact>
+                    <input type="text" nz-input formControlName="database" id="database" style="width:50%;" />
+                    <nz-select formControlName="database_type" id="database_type" style="width:50%;"  >
+                    <nz-option [nzLabel]="'SID'" nzValue="SID"></nz-option>
+                    <nz-option [nzLabel]="'Service Name'" nzValue="service_name"></nz-option>
+                    </nz-select>
+                </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        
+      </nz-tab>
+      <nz-tab nzTitle="Authentication">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="host">Host</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+              <input nz-input formControlName="host" id="host" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="port">Port</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+              <input nz-input formControlName="port" id="port" />
+            </nz-form-control>
+          </nz-form-item>
+          
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="user">User</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+              <input nz-input formControlName="user" id="user" />
+            </nz-form-control>
+          </nz-form-item>
+
+          
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="user">Mode</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <nz-select formControlName="mode" id="mode">
+                    <nz-option [nzLabel]="'Normal'" [nzValue]="null"></nz-option>
+                    <nz-option [nzLabel]="'SYSDBA'" nzValue="SYSDBA"></nz-option>
+                    <nz-option [nzLabel]="'SYSOPER Name'" nzValue="SYSOPER"></nz-option>
+                  </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">Password</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+              <input nz-input formControlName="password" id="password" type='password' />
+            </nz-form-control>
+          </nz-form-item>
+        
+        
+      </nz-tab>
+     
+    </nz-tabset>
+    </form>
+    

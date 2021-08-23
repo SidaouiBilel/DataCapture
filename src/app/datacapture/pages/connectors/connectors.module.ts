@@ -9,10 +9,11 @@ import { ConnectorSQLSetupComponent } from './modals/connector-sqlsetup/connecto
 import { ConnectorAzureBlobSetupComponent } from './modals/connector-azure-blob-setup/connector-azure-blob-setup.component';
 import { ConnectorAWSS3SetupComponent } from './modals/connector-awss3-setup/connector-awss3-setup.component';
 import { ConnectorIconComponent } from './shared/connector-icon/connector-icon.component';
+import { ConnectorOracleSetupComponent } from './modals/connector-oracle-setup/connector-oracle-setup.component';
 
 
 @NgModule({
-  declarations: [ConnectorsComponent, ConnectorTypesComponent, ConnectorSQLSetupComponent, ConnectorAzureBlobSetupComponent, ConnectorAWSS3SetupComponent, ConnectorIconComponent],
+  declarations: [ConnectorsComponent, ConnectorTypesComponent, ConnectorSQLSetupComponent, ConnectorAzureBlobSetupComponent, ConnectorAWSS3SetupComponent, ConnectorIconComponent, ConnectorOracleSetupComponent],
   imports: [
     CommonModule,
     ConnectorsRoutingModule,
