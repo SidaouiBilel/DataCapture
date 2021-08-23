@@ -39,7 +39,7 @@ export class ImportManualSourceComponent implements OnInit {
       this.importing = true
     }
     if (status === 'done') {
-      console.log(file)
+
       const result = file.response
       this.data.filename = file.name
       this.data.sheets = result.worksheets

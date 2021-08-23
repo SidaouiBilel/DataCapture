@@ -80,7 +80,7 @@ export class UsersComponent {
     domains.forEach((domain, i) => {
       user.roles.push({role: form.controls['role' + i].value, domain_id: form.controls['domain' + i].value});
     });
-    console.log(user);
+
     if (edit) {
       user.admin = (typeof(user.admin) === 'boolean' ) ? user.admin : isAdmin;
       return this.service.editUser(user);

@@ -10,7 +10,7 @@ export class AuthorService {
     constructor(private http: HttpClient) {}
 
     getAll(id?){
-      return this.http.get(environment.pipeline + 'dataflow/list-pipelines/'+id)
+      return this.http.get(environment.pipeline + 'dataflow/list-pipelines')
   }
 
     delete(id: string) {

@@ -11,22 +11,22 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     children: [
-      {
-        path: 'import',
-        component: ImportComponent,
-      },
+      // {
+      //   path: 'import',
+      //   component: ImportComponent,
+      // },
       {
         path: 'transform',
         component: TransformComponent,
       },
-      {
-        path: 'control',
-        component: ControlComponent,
-      },
-      {
-        path: 'report',
-        component: ReportComponent,
-      },
+      // {
+      //   path: 'control',
+      //   component: ControlComponent,
+      // },
+      // {
+      //   path: 'report',
+      //   component: ReportComponent,
+      // },
       {
         path: '**',
         redirectTo: 'transform'

@@ -61,7 +61,6 @@ import { FilterPipe } from './pipe/source-filter.pipe';
 import { CalculatorComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator.component';
 import { CalculatorModalComponent } from './components/transformation/transformations/transformation-interface/format/calculator/calculator-modal/calculator-modal.component';
 import { DateFormatterComponent } from './components/transformation/transformations/transformation-interface/format/date-formatter/date-formatter.component';
-import { HeaderDescriptionComponent } from './components/transformation/modals/transformation-preview-help/header-description/header-description.component';
 import { GroupByComponent } from './components/transformation/transformations/transformation-interface/format/group-by/group-by.component';
 import { HashComponent } from './components/transformation/transformations/transformation-interface/format/hash/hash.component';
 import { MultiImportComponent } from './components/multi-import/multi-import/multi-import.component';
@@ -113,7 +112,7 @@ const components = [
   CalculatorComponent,
   CalculatorModalComponent,
   DateFormatterComponent, 
-  HeaderDescriptionComponent, 
+  // HeaderDescriptionComponent, 
   GroupByComponent,
   HashComponent,
   MultiImportComponent, 
@@ -147,7 +146,7 @@ const components = [
   ],
   entryComponents: [
     TransformationPipeComponent,
-    HeaderDescriptionComponent,
+    // HeaderDescriptionComponent,
     TransformationInterfaceComponent,
     FormatterComponent,
     MergerComponent,

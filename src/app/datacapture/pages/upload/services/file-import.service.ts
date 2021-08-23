@@ -24,11 +24,12 @@ export class FileImportService {
     return this.http.get( environment.admin + `domain/${domainId}/fields`);
   }
 
-  public getFileData(page: number, worksheet: string, nrows: number, filters=[]): Observable<any> {
+  public getFileData(page: number, worksheet: string, nrows: number, filters=[], result_id=null): Observable<any> {
     const params = new HttpParams()
     .set('page', page + '')
     .set('lob', 0 + '')
-    .set('nrows', nrows + '');
+    .set('nrows', nrows + '')
+    .set('result_id', (result_id)?result_id: '');
     return this.http.put(environment.import + 'data/' + worksheet, {filters} ,{ params });
   }
 
@@ -56,9 +57,9 @@ export class FileImportService {
     });
   }
 
-  public generateSheet(file_id, sheetId, cs, ce, rs, re){
+  public generateSheet(file_id, sheetId, cs, ce, rs, re, provided_header=null){
     return this.http.post(environment.import + 'sheet', {
-      file_id, sheetId, cs, ce, rs, re
+      file_id, sheetId, cs, ce, rs, re, provided_header
     });
   }
 

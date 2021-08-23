@@ -1,0 +1,23 @@
+
+<nz-input-group nzCompact>
+    <nz-select [(ngModel)]='data.sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
+      <nz-option *ngFor='let s of sheets$ | async'  nzValue="{{s.id}}" nzLabel="{{s.file_name}}"></nz-option>
+    </nz-select>
+    <input style="width:25%;"  nz-input [(ngModel)]='data.column' (change)='onDataChanged()' placeHolder="Column"/>
+  </nz-input-group>
+  <br>
+  <nz-input-group nzCompact>
+    <nz-select (change)='onDataChanged()' [nzAllowClear]='true' [(ngModel)]='data.operator' nzPlaceHolder='Operator'>
+      <nz-option *ngFor='let o of operators' [nzLabel]="o" [nzValue]="o"></nz-option>
+    </nz-select>
+  </nz-input-group>
+
+
+  <nz-input-group nzCompact>
+    <nz-select [(ngModel)]='data.with_sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
+      <nz-option *ngFor='let s of sheets$ | async'  nzValue="{{s.id}}" nzLabel="{{s.file_name}}"></nz-option>
+    </nz-select>
+    <input style="width:25%;"  nz-input [(ngModel)]='data.with_column' (change)='onDataChanged()' placeHolder="Column"/>
+  </nz-input-group>
+ 
+  

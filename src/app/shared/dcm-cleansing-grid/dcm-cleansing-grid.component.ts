@@ -146,9 +146,9 @@ export class DcmCleansingGridComponent implements OnInit, OnDestroy {
 
   onCellEdit(params){
   // CHECK IF VALUE HAS CHANGED
-  console.log(1)
+
   if ( params.oldValue !== params.newValue){
-    console.log(2)
+
     // REGISTER MODIFICATION
     this.modifications[params.data.row_index] = {
       ...this.modifications[params.data.row_index],
@@ -156,7 +156,7 @@ export class DcmCleansingGridComponent implements OnInit, OnDestroy {
     };
     // APPLY MODIFICATION
     withValue(this.gridApi$, (grid)=>{
-      console.log(3)
+
       const api = grid.api;
       const line = params.data.row_index;
       const rowNode = params.node;

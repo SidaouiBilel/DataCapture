@@ -48,7 +48,7 @@ export class NumericCheck extends DataCheck {
     updateUIModel(params, model){
         const firstIter:any = model[this.id].iterations[0]
         let iter = {operator:params.operator ,operand: params.operand}
-        console.log(iter)
+
         if (firstIter.operator && (firstIter.operand !== null && firstIter.operand !== "")){
             model[this.id].iterations.push(iter)
         }else{
@@ -83,7 +83,7 @@ export class DateCheck extends DataCheck {
     updateUIModel(params, model){
         const firstIter:any = model[this.id].iterations[0]
         let iter = {operator:params.operator ,operand: params.operand}
-        console.log(firstIter)
+
         if (firstIter.operator || firstIter.operand){
             model[this.id].iterations.push(iter)
         }else{
@@ -112,7 +112,7 @@ export class PropertyCheck extends DataCheck {
     updateUIModel(params, model){
         const firstIter:any = model[this.id].iterations[0]
         let iter = {operator:params.operator ,property: params.property}
-        console.log(firstIter)
+
         if (firstIter.operator || firstIter.property){
             model[this.id].iterations.push(iter)
         }else{

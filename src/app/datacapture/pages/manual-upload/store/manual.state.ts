@@ -1,5 +1,6 @@
 import { AppState } from '@app/core';
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
+import { EditorReducer, EditorState } from './reducers/editor.reducer';
 import { ImportReducer, ImportState } from './reducers/import.reducer';
 import { ManualJobReducer, ManualJobState } from './reducers/job.reducer';
 import { TransformationReducer, TransformationState } from './reducers/transformation.reducer';
@@ -14,14 +15,16 @@ export const selectManual = createFeatureSelector<State, ManualState>(
 export interface ManualState {
   import: ImportState,
   transformation: TransformationState,
-  job: ManualJobState
+  job: ManualJobState,
+  editor: EditorState,
 }
 
 
 export const manualReducers: ActionReducerMap<ManualState> = {
   import: ImportReducer,
   transformation: TransformationReducer,
-  job: ManualJobReducer
+  job: ManualJobReducer,
+  editor: EditorReducer
 };
 export interface State extends AppState {
   manual: ManualState;

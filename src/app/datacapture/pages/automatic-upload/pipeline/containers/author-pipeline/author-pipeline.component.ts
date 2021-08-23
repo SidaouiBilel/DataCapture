@@ -200,7 +200,7 @@ export class AuthorPipelineComponent implements OnDestroy {
     ()=> {
       forkJoin([this.metadata$.pipe(take(1))])
       .subscribe(([metaData]: any) => {
-        if(metaData.scheduler == 'None')
+        // if(metaData.scheduler == 'None')
           this.run({})
       })
     }

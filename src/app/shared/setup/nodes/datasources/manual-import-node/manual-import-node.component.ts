@@ -36,6 +36,8 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
+  providedHeader = null
+
   style = {
     marginTop: '20px',
     marginBottom: '20px',
@@ -100,7 +102,8 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     this.importing = true
     const row_range = this.data.row_range || [0, 0]
     const col_range = this.data.col_range || [0, 0]
-    this.service.generateSheet(this.data.file_id, this.data.sheetId, col_range[0], col_range[1], row_range[0], row_range[1]).subscribe((generated_sheet: any) => {
+    const headers = (this.providedHeader)? this.providedHeader.split(";") : null 
+    this.service.generateSheet(this.data.file_id, this.data.sheetId, col_range[0], col_range[1], row_range[0], row_range[1], headers).subscribe((generated_sheet: any) => {
       this.service.getFileData(1, generated_sheet.sheet_id, 0).subscribe((data) => {
         // this.data.headers = data.headers
         this.importing = false

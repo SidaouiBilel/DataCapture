@@ -18,6 +18,8 @@ import { ManualImportNodeComponent } from "@app/shared/setup/nodes/datasources/m
 import { NodeFilterByCategory, NodeHashByCategory } from "../nodes/categorization.model";
 import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/category-filter/category-filter.component";
 import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
+import { NodeDataCheckLimitCheck, NodeDataCheckLookForCheck, NodeDataCheckReferenceCheck, NodeDataCheckFormatCheck, NodeDataCheckComparisonCheck, NodeDataCheckCustomCheck } from "../nodes/datachecks.model";
+import { LookInNodeComponent } from "@app/shared/setup/nodes/checks/look-in-node/look-in-node.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -59,7 +61,16 @@ export const CATEGORY_NODES = [
   NodeHashByCategory.setComponenet(CategoryHashComponent)
 ]
 
-export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
+export const DATACHECK_NODES = [
+  NodeDataCheckLimitCheck.setComponenet(NodePycodeComponent),
+  NodeDataCheckLookForCheck.setComponenet(LookInNodeComponent),
+  NodeDataCheckReferenceCheck.setComponenet(NodePycodeComponent),
+  NodeDataCheckFormatCheck.setComponenet(NodePycodeComponent),
+  NodeDataCheckComparisonCheck.setComponenet(NodePycodeComponent),
+  NodeDataCheckCustomCheck.setComponenet(NodePycodeComponent),
+]
+
+export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES, ...DATACHECK_NODES]
 
 export function getNodeClassBy(type){
   return ALL_NODES.find(e=>e.type===type)

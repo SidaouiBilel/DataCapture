@@ -73,14 +73,12 @@ export class PipelineEditorComponent implements AfterViewInit{
           const task = run.tasks.find(t=>t.task_id==data.key)
           if(task.cleansing_job_id){
             this.clenaseNode(data, run)
-            return
-          }
-          if(task && ["success","running"].includes(task.state)){
+          } else if(task && ["success","running"].includes(task.state)){
             this.previweNode(data, run)
-            return
           }
+        } else {
+          that.editNode(data);
         }
-        that.editNode(data);
         return
       },
       contextMenu:
@@ -130,7 +128,7 @@ export class PipelineEditorComponent implements AfterViewInit{
                   const task = run.tasks.find(t => t.task_id == node.data.key)
 
                   if (task && ["success"].includes(task.state)) {
-                    console.log('REPORT')
+
                     this.reportNode(task);
                     return
                   }

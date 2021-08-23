@@ -1,0 +1,41 @@
+<nz-steps [nzCurrent]="step" (nzIndexChange)='step=$event'  nzSize="small">
+    <nz-step nzTitle="Sink"></nz-step>
+    <nz-step nzTitle="Settings"></nz-step>
+  </nz-steps>
+  
+  <nz-divider></nz-divider>
+  
+  <div [ngSwitch]="step">
+  
+    <div *ngSwitchCase="0">
+      <p class="text-muted">Select your Export Destination</p>
+      <div  style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 1rem;">
+        <button style="height: fit-content;" (click)='importType=t.type; step=1' *ngFor="let t of types" nz-button><div class="flex column" nz-tooltip [nzTooltipTitle]='t.label'>
+            <div class="p-3"><i style="font-size: 40px;" nz-icon [nzType]='t.icon'></i></div>
+            <div class="pb-2">{{t.label}}</div>
+        </div></button>
+      </div>
+    </div>
+    <div *ngSwitchCase="'1'">
+      <container-element [ngSwitch]="importType">
+        <!-- <ng-container *ngSwitchCase="'manual'">
+          <app-manual-upload-node [previewGrid]=true (onSave)="onSaveHandler($event)"></app-manual-upload-node>
+        </ng-container> -->
+ 
+  
+        <ng-container *ngSwitchCase="'sqlserver'">
+          <app-sql-upload-node></app-sql-upload-node>
+        </ng-container>
+  
+        <ng-container *ngSwitchCase="'postgres'">
+          <app-postgres-upload-node></app-postgres-upload-node>
+        </ng-container>
+  
+        <ng-container *ngSwitchCase="'azure_blob_storage'">
+          <app-storage-account></app-storage-account>
+        </ng-container>
+      </container-element>
+    </div>
+  
+  </div>
+  

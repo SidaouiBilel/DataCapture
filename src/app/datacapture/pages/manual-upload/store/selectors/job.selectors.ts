@@ -29,3 +29,8 @@ export const selectWorkbookSheetResults = createSelector(
   selectManualJob,
   (object: ManualJobState) => object.control_results_metadata || []
 );
+
+export const selectJobLoading = createSelector(
+  selectManualJob,
+  (object: ManualJobState) => object.loading
+);

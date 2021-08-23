@@ -7,6 +7,7 @@ export enum TransformationActionTypes {
   DELETE_NODE = '[TRANSFORMATION] DELETE NODE',
   UPDATE_NODE_ORDER = '[TRANSFORMATION] UPDATE_NODE_ORDER',
   CLEAR_ALL_NODES = '[TRANSFORMATION] CLEAR_ALL_NODES',
+  RESET = '[TRANSFORMATION] RESET',
 }
 
 
@@ -35,8 +36,13 @@ export class ClearAllNodes implements Action {
   constructor() {}
 }
 
+export class ResetTransformations implements Action {
+  readonly type = TransformationActionTypes.RESET;
+  constructor() {}
+}
+
 
 
 
 export type TransformationAction = AddTransformationNode | UpdateTransformationNode
-  | DeleteTransformationNode | UpdateNodeOrder | ClearAllNodes;
+  | DeleteTransformationNode | UpdateNodeOrder | ClearAllNodes | ResetTransformations;

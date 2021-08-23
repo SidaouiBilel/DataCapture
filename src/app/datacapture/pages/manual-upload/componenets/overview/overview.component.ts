@@ -16,7 +16,7 @@ export class OverviewComponent implements OnInit {
 
   @Input('activeIndex') set index(value){
     this.index$.next(value) 
-    console.log({value})
+
   }
 
   index$ = new Subject<Number>()

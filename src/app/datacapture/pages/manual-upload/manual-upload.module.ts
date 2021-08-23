@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ManualUploadRoutingModule } from './manual-upload-routing.module';
-import { ImportComponent } from './pages/import/import.component';
+// import { ImportComponent } from './pages/import/import.component';
 import { TransformComponent } from './pages/transform/transform.component';
-import { ReportComponent } from './pages/report/report.component';
-import { ControlComponent } from './pages/control/control.component';
-import { NavigatorComponent } from './componenets/navigator/navigator.component';
+// import { ReportComponent } from './pages/report/report.component';
+// import { ControlComponent } from './pages/control/control.component';
+// import { NavigatorComponent } from './componenets/navigator/navigator.component';
 import { ContainerComponent } from './pages/container/container.component';
 import { SharedModule } from '@app/shared';
 import { SheetSelectorComponent } from './componenets/sheet-selector/sheet-selector.component';
@@ -39,6 +39,11 @@ import { DateFormatterComponent } from './componenets/operations/operations-node
 import { DefaultValueComponent } from './componenets/operations/operations-node/transformations/default-value/default-value.component';
 import { DeleteColumnComponent } from './componenets/operations/operations-node/transformations/delete-column/delete-column.component';
 import { HashComponent } from './componenets/operations/operations-node/transformations/hash/hash.component';
+import { CompareWithComponent } from './componenets/operations/operations-node/checks/compare-with/compare-with.component';
+import { FormatCheckComponent } from './componenets/operations/operations-node/checks/format-check/format-check.component';
+import { FilterToolbarComponent } from './componenets/toolbars/filter-toolbar/filter-toolbar.component'
+import { ExportDatasinkModalComponent } from './modals/export-datasink-modal/export-datasink-modal.component';
+import { HeaderDescriptionComponent } from '../upload/components/transformation/modals/transformation-preview-help/header-description/header-description.component';
 
 
 @NgModule({
@@ -64,6 +69,12 @@ import { HashComponent } from './componenets/operations/operations-node/transfor
     HashComponent,
     ShortcutsListComponent,
     LookInComponent,
+    TransformComponent,
+    CompareWithComponent,
+    FormatCheckComponent,
+    FilterToolbarComponent,
+    ExportDatasinkModalComponent,
+    HeaderDescriptionComponent
   ],
   imports: [
     CommonModule,

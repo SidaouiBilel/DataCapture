@@ -23,6 +23,9 @@ export function ImportReducer(state: ImportState = initialState, action: any): I
     case ImportTypes.ACTIVE_SHEET_INDEX:
       return { ...state, activeSheetIndex: action.index }
 
+    case ImportTypes.RESET:
+      return { ...initialState }
+
     default:
       return state;
   }

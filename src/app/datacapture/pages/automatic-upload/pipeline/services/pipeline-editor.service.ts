@@ -116,7 +116,7 @@ export class PipelineEditorService {
   previewNode(data: any, run: any) {
     const task = run.tasks.find(t=>t.task_id==data.key)
     const output = task.output || {}
-
+    console.log({task})
     // TODO WEIRD OUTPUT SHOULD INVESTIGATE
     if(output.file_id && output.sheet_id){
       this.drawer.create({
@@ -125,7 +125,8 @@ export class PipelineEditorService {
         nzContentParams: {
           file_id: output.file_id,
           sheet_id: output.sheet_id,
-          folder: output.folder,
+          result_id: output.result_id,
+          // folder: output.folder,
         },
         nzWidth: '90vw',
       })
@@ -139,7 +140,7 @@ export class PipelineEditorService {
   cleanseNode(data: any, run: any) {
     const task = run.tasks.find(t=>t.task_id==data.key)
     const input = task.input || {}
-    console.log(task)
+
     // TODO WEIRD OUTPUT SHOULD INVESTIGATE
     if(input.file_id && input.sheet_id){
       this.drawer.create({

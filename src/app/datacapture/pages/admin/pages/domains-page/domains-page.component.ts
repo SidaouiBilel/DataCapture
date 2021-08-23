@@ -68,7 +68,7 @@ export class DomainsPageComponent implements OnInit {
 
   openConfig(data) {
     this.editor.openConfig(data, this.super_domain_id).subscribe(() => {
-      console.log('not listening');
+
       this.load_data();
     });
   }

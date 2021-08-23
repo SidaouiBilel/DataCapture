@@ -26,7 +26,7 @@ export class MappingEffects {
     withLatestFrom(this.store$.select( selectHeadersToMap )),
     map(([action, headers]) => {
       const mappingSources = {};
-        console.log({headers})
+
         headers.forEach((e) => {mappingSources[e] = false; });
         this.store$.dispatch(new SaveMappedSources(mappingSources));
     })

@@ -42,7 +42,7 @@ export class CustomIconsService extends NzIconService{
         // svgElm.setAttribute("viewBox","0 0 64, 64" )
         svgElm.setAttribute("fill","#fff")
       } catch(exp){
-        console.log('ERROR ON ', type, svgElm, e.icon, e)
+
       }
       // svgElm.setAttribute("fill-rule","evenodd")
       

@@ -2,8 +2,15 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8">Column</nz-form-label>
     <nz-form-control [nzSm]="16">
-      <input nz-input [nzSize]='size' [(ngModel)]='data.column' (change)='onDataChanged()' name='column' />
-    </nz-form-control>
+    <nz-input-group nzCompact>
+    <!-- <nz-input-group> -->
+      <nz-select style="width:50%;" name='sheet' [(ngModel)]='data.sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
+        <nz-option *ngFor='let s of sheets$ | async'  nzValue="{{s.id}}" nzLabel="{{s.file_name}}"></nz-option>
+      </nz-select>
+      <input name='column' style="width:50%;"  nz-input [(ngModel)]='data.column' (change)='onDataChanged()' placeHolder="Column"/>
+  </nz-input-group>
+  </nz-form-control>
+  
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSm]="8">Format</nz-form-label>

@@ -43,7 +43,7 @@ export class JoinerComponent extends TransformationInterfaceComponent implements
   }
 
   onDataSourceSelected(sheet){
-    console.log(sheet)
+
     this.data.join_sheet_id = sheet.sheet_id
     this.data.join_file_id = sheet.file_id
 

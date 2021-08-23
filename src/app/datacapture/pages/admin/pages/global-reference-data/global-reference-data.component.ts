@@ -40,7 +40,7 @@ export class GlobalReferenceDataComponent implements OnInit {
     forkJoin([this.service.getReferenceDataByType(this.ref_type_id), this.service.getReferenceTypesById(this.ref_type_id)])
     .subscribe(
       ([data, refrence]: any) => {
-        console.log({data, refrence});
+
         this.referenceData$.next(data);
         this.activeRefType$.next(refrence);
         this.updateURI = this.service.ReferenceDataUpdate(refrence);
@@ -65,7 +65,7 @@ export class GlobalReferenceDataComponent implements OnInit {
 
   handleChange(info: any): void {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
+
       this.loading = true;
     }
     if (info.file.status === 'done') {

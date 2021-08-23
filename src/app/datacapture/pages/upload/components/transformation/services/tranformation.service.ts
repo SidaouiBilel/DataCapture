@@ -115,12 +115,12 @@ export class TranformationService {
   }
 
   viewDescription(params: any) {
-    console.log(params);
+
     const id = params.column.getId();
     // call on me
     withValue(this.store.select(selectUpdatedSheet), (sheetId) => {
       this.http.post(environment.import + 'describe', {sheet_id: sheetId, column: id}).subscribe((res) => {
-        console.log(res);
+
         const modal = this.modalService.create({
           nzTitle: 'Header Description',
           nzClosable: false,

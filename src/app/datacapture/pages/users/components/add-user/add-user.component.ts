@@ -103,7 +103,7 @@ export class AddUserComponent implements OnInit {
     if (this.listOfRoles.length >= 1) {
       const index = this.listOfRoles.indexOf(i);
       this.listOfRoles.splice(index, 1);
-      console.log(this.listOfRoles);
+
       this.validateForm.removeControl(i.roleInstance);
       this.validateForm.removeControl(i.domainInstance);
     }

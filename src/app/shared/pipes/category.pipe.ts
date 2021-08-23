@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CategoryPipe implements PipeTransform {
 
   transform(filter: Object): any {
-    console.log(filter)
+
     let category = ''
     switch(filter){
       case 'MED':category='Medical';break;

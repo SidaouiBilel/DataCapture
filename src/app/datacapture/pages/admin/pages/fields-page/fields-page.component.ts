@@ -143,7 +143,7 @@ export class FieldsPageComponent implements OnInit, OnDestroy {
 
   handleChange(info: any): void {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
+
       this.loading = true;
     }
     if (info.file.status === 'done') {

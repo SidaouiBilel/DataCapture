@@ -1,0 +1,8 @@
+<div class="b-0">
+    <nz-tag *ngIf=' (IsErrorActive$ | async)' class="ml-2 mr-2" nzColor="error"><i nz-icon nzType='warning'></i> Show Errors Only</nz-tag>
+    <button *ngIf=' (IsErrorActive$ | async)' nz-button (click)='filterByError(false)'> <i nz-icon nzType='table'></i> Show All</button>
+    <button *ngIf='!(IsErrorActive$ | async)' nz-button (click)='filterByError(true)' nzType='error'> <i nz-icon nzType='warning'></i> Errors</button>
+    <button nz-button (click)='filterByError(true)' nzType='warning'> <i nz-icon nzType='warning'></i> Warnings</button>
+    <button nz-button (click)='reset()'> <i nz-icon nzType='close'></i> Reset Filter</button>
+    <!-- <button nz-button> <i nz-icon nzType='export'></i> Export </button> -->
+</div>

@@ -102,7 +102,7 @@ export class TargetPreviewComponent extends PreviewGridComponent implements OnIn
           // that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
-            console.log(res.headers.join("\n")) 
+
             that.store.dispatch(new SaveSourcesPreview(previewData));
             that.totalRecords$.next(res.total);
            

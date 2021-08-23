@@ -66,6 +66,10 @@ export function TransformationReducer(state: TransformationState = initialState,
       }
     }
 
+    case ACTIONS.RESET: {
+      return {...initialState}
+    }
+
     default:
       return state;
   }

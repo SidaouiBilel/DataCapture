@@ -3,25 +3,26 @@
         <button nz-button> <i nz-icon nzType='save'></i> Save</button>
         <button nz-button> <i nz-icon nzType='file'></i> Source</button>
         <button nz-button> <i nz-icon nzType='area-chart'></i> Report</button>
-        <button nz-button> <i nz-icon nzType='export'></i> Export</button>
+        <button nz-button (click)='openExport()'> <i nz-icon nzType='export'></i> Export</button>
     </div>
-
+    
     <div class="b-0">
-
+        <button nz-button (click)='reset()'> Reset</button>
+        
         <!-- <i nz-icon nzType='eye' class="mr-2 ml-2"></i>
-        <nz-radio-group class="border-left" ngModel="SOURCE" nzButtonStyle="solid">
-            <label style="border:0; border-radius: 0;" nz-radio-button nzValue="SOURCE">Source</label>
-            <label style="border:0; border-radius: 0;" nz-radio-button nzValue="TARGET">Final</label>
-        </nz-radio-group> -->
-
-        <!-- <span class="mr-2">
-            <nz-switch [ngModel]="true" [nzCheckedChildren]="AutoTemplate" [nzUnCheckedChildren]="AutoTemplate"></nz-switch>
-            <ng-template #AutoTemplate><i nz-icon nzType='reload'></i></ng-template>
-        </span>
-
-        <span class="mr-2">
-            <nz-switch [ngModel]="true" [nzCheckedChildren]="sourceTemplate" [nzUnCheckedChildren]="sourceTemplate"></nz-switch>
-            <ng-template #sourceTemplate>Display Source</ng-template>
-        </span> -->
+            <nz-radio-group class="border-left" ngModel="SOURCE" nzButtonStyle="solid">
+                <label style="border:0; border-radius: 0;" nz-radio-button nzValue="SOURCE">Source</label>
+                <label style="border:0; border-radius: 0;" nz-radio-button nzValue="TARGET">Final</label>
+            </nz-radio-group> -->
+            
+            <!-- <span class="mr-2">
+                <nz-switch [ngModel]="true" [nzCheckedChildren]="AutoTemplate" [nzUnCheckedChildren]="AutoTemplate"></nz-switch>
+                <ng-template #AutoTemplate><i nz-icon nzType='reload'></i></ng-template>
+            </span>
+            
+            <span class="mr-2">
+                <nz-switch [ngModel]="true" [nzCheckedChildren]="sourceTemplate" [nzUnCheckedChildren]="sourceTemplate"></nz-switch>
+                <ng-template #sourceTemplate>Display Source</ng-template>
+            </span> -->
     </div>
 </div>

@@ -63,7 +63,7 @@ export class PipelineRunToolbarComponent implements OnInit {
   }
 
   openLogs(run: any) {
-    console.log(run);
+
   }
 
   reset(){

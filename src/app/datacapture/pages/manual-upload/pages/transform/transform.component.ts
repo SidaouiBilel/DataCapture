@@ -5,12 +5,14 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/core';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '@app/shared/utils/grid-api.utils';
-import { selectWorkbookId } from '../../store/selectors/job.selectors';
-import { concatMap, map, mergeMap, switchMap } from 'rxjs/operators';
-import { selectEditorSheet } from '../../store/selectors/editor.selector';
+import { selectJobLoading, selectWorkbookId } from '../../store/selectors/job.selectors';
+import { concatMap, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { selectEditorSheet, selectIsErrorActive } from '../../store/selectors/editor.selector';
 import { selectImportedSheets } from '../../store/selectors/import.selectors';
 import { arrayToDict } from '@app/shared/utils/objects.utils';
 import { ActiveSheetIndex } from '../../store/actions/import.actions';
+import { NotificationService } from '@app/core/notifications/notification.service';
+import { ManualUploadEditorService } from '../../services/manual-upload-editor.service';
 
 
 @Component({
@@ -31,7 +33,10 @@ export class TransformComponent implements OnInit {
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  constructor(private store: Store<AppState>, private service: FileImportService) {
+  popup
+  filter$: Observable<any>;
+
+  constructor(private store: Store<AppState>, private service: FileImportService, private ntf:NotificationService, private editor:ManualUploadEditorService) {
   }
 
   ngOnInit(): void {
@@ -43,14 +48,21 @@ export class TransformComponent implements OnInit {
     this.selectedSheet$ = combineLatest([this.viewSheetIndex$, this.viewModeTarget$])
       .pipe(switchMap(([index, istargetMode]) => this.store.select(selectEditorSheet(index, !!istargetMode))))
 
-    // FETCH DATA
-    combineLatest([this.gridReady$, this.size$, this.selectedSheet$]).subscribe(([grid, size, selectedSheet]: any) => {
-      this.onReset()
-      if (selectedSheet) {
-        this.generateDataSource(grid, selectedSheet, size);
-      }
+    // Filter
+    this.filter$ = this.store.select(selectIsErrorActive)
 
+    // FETCH DATA
+    combineLatest([this.gridReady$, this.size$, this.selectedSheet$, this.filter$]).subscribe(([grid, size, selectedSheet, filter]: any) => {
+      this.onReset()
+      if (selectedSheet) this.generateDataSource(grid, selectedSheet, size, filter);
     });
+
+    this.store.select(selectJobLoading).pipe(
+      tap((loading)=>{ 
+        this.ntf.close(this.popup);
+        if (loading) {this.popup = this.ntf.loading(loading)}
+      }),
+    ).subscribe()
   }
 
   onReset() {
@@ -63,7 +75,7 @@ export class TransformComponent implements OnInit {
     this.store.dispatch(new ActiveSheetIndex(sheet.index))
   }
 
-  generateDataSource(gridApi: any, selectedSheet: Dataset, size: number) {
+  generateDataSource(gridApi: any, selectedSheet: Dataset, size: number, filter) {
     this.noData = false;
     const that = this;
     // this.gridApi = gridApi;
@@ -73,10 +85,10 @@ export class TransformComponent implements OnInit {
         const filters = GAPIFilters(params.request.filterModel);
         that.loading$.next(true);
 
-        that.service.getFileData(page, selectedSheet.sheet_id, size, filters).pipe(
+        that.service.getFileData(page, selectedSheet.sheet_id, size, filter, selectedSheet.result_id).pipe(
           mergeMap((preview) => that.service.getResultData(selectedSheet.result_id, preview.index).pipe(map(result => ([preview, result])))),
         ).subscribe(([preview, result]: any) => {
-          console.log({ preview, result })
+
           that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
@@ -87,7 +99,7 @@ export class TransformComponent implements OnInit {
               field: h, colId: h, headerName: h, editable: false, resizable: true, cellRenderer: 'autoTypeRenderer', filter: GAPIFilterComponenet('string'), filterParams: GAPIAllFilterParams(params),
               // COLOR DATA
               cellClass: (params) => {
-                const checks = params.data.DATA_CHECKS || []
+                const checks = ( params.data )? (params.data.DATA_CHECKS || [] ) : []
                 const field_checks = checks.filter(c => c.field == params.colDef.field)
 
                 if (field_checks.length) {
@@ -139,4 +151,22 @@ export class TransformComponent implements OnInit {
   viewModeTarget$
   selectedSheet$
   viewGrid$
+
+  
+  getExtraMenuItems = (params?) => {
+    const that = this;
+    return [
+      {
+        name: 'View Description',
+        tooltip: 'View the header\'s description',
+        action: () => that.editor.viewDescription(this.selectedSheet$, params),
+        alwaysShow: true
+      },
+      'separator',
+      'copy',
+      'copyWithHeaders',
+      'autoSizeAll',
+      'export'
+    ];
+  }
 }

@@ -5,6 +5,7 @@ import { Dataset } from '../manual.model';
 export enum ImportTypes {
   MANUAL_IMPORT = '[MANUAL_IMPORT] EDIT_MANUAL_IMPORT',
   ACTIVE_SHEET_INDEX = '[ACTIVE_SHEET_INDEX] SHEET_SELECTOR',
+  RESET = '[MANUAL_IMPORT] RESET',
 }
 
 export class ManualImport implements Action {
@@ -17,4 +18,9 @@ export class ActiveSheetIndex implements Action {
   constructor(readonly index: number) { }
 }
 
-export type ImportActions = ManualImport | ActiveSheetIndex;
+export class ResetImport implements Action{
+  readonly type = ImportTypes.RESET;
+  constructor() { }
+}
+
+export type ImportActions = ManualImport | ActiveSheetIndex | ResetImport;

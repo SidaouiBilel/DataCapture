@@ -34,7 +34,7 @@ export class FormatCheck extends Check {
 }
 
 export class ComparisonCheck extends Check {
-  type = 'comparison-check';
+  type = 'compare-with';
   label = 'Compare';
   icon = 'right';
 }

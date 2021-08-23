@@ -118,7 +118,7 @@ export function GAPIAllFilterParams(params) {
 
 export function GAPIFilters(filterModel) {
   const adaptedFilter = [];
-  console.log(filterModel);
+
   Object.keys(filterModel).forEach((column) => {
     const filter = filterModel[column];
     const payload: any = {

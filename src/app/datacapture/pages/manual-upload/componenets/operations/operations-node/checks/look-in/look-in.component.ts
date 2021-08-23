@@ -12,7 +12,6 @@ import { OperationComponent } from '../../operation.component';
   styleUrls: ['./look-in.component.css']
 })
 export class LookInComponent extends OperationComponent implements OnInit {
-
   constructor(private store: Store<AppState>) {
     super()
   }
@@ -20,5 +19,4 @@ export class LookInComponent extends OperationComponent implements OnInit {
   ngOnInit(): void {
     this.sheets$ = this.store.select(selectImportedSheets);
   }
-
 }

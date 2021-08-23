@@ -5,7 +5,7 @@ export enum ManualJobActionTypes {
   RUN = '[MANUAL_JOB] RUN',
   LOAD = '[MANUAL_JOB] LOAD WORKBOOK',
   SET_WORKFLOW_DATA = '[MANUAL_JOB] SET_WORKFLOW_DATA',
-  RESET_WORKFLOW_DATA = '[MANUAL_JOB] RESET_WORKFLOW_DATA',
+  RESET = '[MANUAL_JOB] RESET_WORKFLOW_DATA',
 }
 
 export class ManualJobRun implements Action {
@@ -23,9 +23,9 @@ export class ManualJobSetWorkbookData implements Action {
   constructor(readonly worksheets, readonly transformations, readonly results) {}
 }
 
-export class ManualJobResetWorkbookData implements Action {
-  readonly type = ManualJobActionTypes.RESET_WORKFLOW_DATA;
+export class ResetWorkbook implements Action {
+  readonly type = ManualJobActionTypes.RESET;
   constructor() {}
 }
 
-export type ManualJobActions =  ManualJobRun | ManualJobLoadWorkbook | ManualJobSetWorkbookData | ManualJobResetWorkbookData;
+export type ManualJobActions =  ManualJobRun | ManualJobLoadWorkbook | ManualJobSetWorkbookData | ResetWorkbook;

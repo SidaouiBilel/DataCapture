@@ -9,7 +9,7 @@
 <div [ngSwitch]="step">
 
   <div *ngSwitchCase="0">
-    <p class="text-mmuted">Select your Data Source</p>
+    <p class="text-muted">Select your Data Source</p>
     <div  style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 1rem;">
       <button style="height: fit-content;" (click)='importType=t.type; step=1' *ngFor="let t of types" nz-button><div class="flex column" nz-tooltip [nzTooltipTitle]='t.label'>
           <div class="p-3"><i style="font-size: 40px;" nz-icon [nzType]='t.icon'></i></div>
@@ -17,9 +17,9 @@
       </div></button>
     </div>
   </div>
-  <div *ngSwitchCase="1">
+  <div *ngSwitchCase="'1'">
     <container-element [ngSwitch]="importType">
-      <ng-container *ngSwitchDefault>
+      <ng-container *ngSwitchCase="'manual'">
         <app-manual-import-node [previewGrid]=true (onSave)="onSaveHandler($event)"></app-manual-import-node>
       </ng-container>
 

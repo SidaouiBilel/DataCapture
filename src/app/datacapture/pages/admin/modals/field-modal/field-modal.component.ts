@@ -120,7 +120,7 @@ export class FieldModalComponent extends EntityModal implements OnInit {
         ...this.data,
         rules
       }
-      console.log(rules)
+
       this.ds.saveTargetField(this.domain_id, payload).subscribe(res => {
         this.modalrRef.close(true);
       });
@@ -155,7 +155,7 @@ export class FieldModalComponent extends EntityModal implements OnInit {
   }
 
   onIndexChange(ind) {
-    console.log(ind);
+
   }
 
   onChange(f, newValue) {

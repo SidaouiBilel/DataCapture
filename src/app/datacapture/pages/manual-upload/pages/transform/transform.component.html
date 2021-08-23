@@ -5,14 +5,14 @@
     <nz-tab nzTitle="General"><app-default-toolbar></app-default-toolbar></nz-tab>
     <nz-tab nzTitle="Transform"><app-transform-toolbar></app-transform-toolbar></nz-tab>
     <nz-tab nzTitle="Control"><app-control-toolbar></app-control-toolbar></nz-tab>
-    <nz-tab nzTitle="Filter"><app-default-toolbar></app-default-toolbar></nz-tab>
+    <nz-tab nzTitle="Filter"><app-filter-toolbar></app-filter-toolbar></nz-tab>
     <nz-tab nzTitle="Settings"><app-default-toolbar></app-default-toolbar></nz-tab>
   </nz-tabset>
 
   <app-transformation-editor class="editor-block transform-block border" style="grid-column: span 1; grid-row: span 4;"></app-transformation-editor>
 
   <div class="editor-block grid-block border">
-    <app-data-grid *ngIf="(viewGrid$ | async); else noData"  (gridReady)="gridReady$.next($event)" [paginationPageSize]='size$ | async'
+    <app-data-grid [contextMenu]="getExtraMenuItems" *ngIf="(viewGrid$ | async); else noData"  (gridReady)="gridReady$.next($event)" [paginationPageSize]='size$ | async'
     [rangeSelection]='true' [columnDefs]="headers$ | async" ></app-data-grid>
     <ng-template #noData><nz-empty class="nz-empty"></nz-empty></ng-template>
   </div>

@@ -18,7 +18,7 @@ export class AuthorContainer {
                 private not: NotificationService,
                 private store: Store<AppState>) {
                   this.store.select(selectProfile).subscribe(res => {
-                    console.log(res)
+
                     this.profile = res;
                     this.getData();
                   })
@@ -44,7 +44,7 @@ export class AuthorContainer {
     }
 
     editPipeline(pipeline) {
-        console.log("Pipeline", pipeline);
+
         const meta: PipelineMetadata = {
             pipeline_id: pipeline.id,
             name: pipeline.name,
