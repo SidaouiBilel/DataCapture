@@ -8,10 +8,10 @@ import { debounceTime, delay, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './connector-preview.component.html',
   styleUrls: ['./connector-preview.component.css'],
 })
-export class ConnectorPreviewComponent implements OnInit {
+export class ConnectorPreviewComponent {
 
   @Input("data") set _data(value){
-    this.data = value
+    this.data$.next(value)
   }
   data
   
@@ -23,18 +23,31 @@ export class ConnectorPreviewComponent implements OnInit {
   gridReady$ = new Subject<string>();
   paginator$: any;
   
-  private customerDiffer: KeyValueDiffer<string, any>;
-
-  constructor(private differs: KeyValueDiffers, private service: FileImportService) {
+  constructor(private service: FileImportService) {
     this.paginator$ = combineLatest([this.size$, this.data$, this.gridReady$]).pipe(
       debounceTime(1000),
       distinctUntilChanged(),
     )
     .subscribe(([size, data, grid]) => {
-      this.onReset();
-        this.generateDataSource(grid, data, size);
+        this.onReset();
+        if (data) {
+          this.generateDataSource(grid, data, size);
+        } else {
+          this.clearGrid(grid)
+        } 
+
     });
   }
+
+  clearGrid(gridApi){
+    let self = this;
+    let dataSource = {
+       getRows(params:any) {
+          params.successCallback([],0);
+       }
+    };
+    gridApi.api.setDatasource(dataSource);
+}
 
   generateDataSource(gridApi: any, data, size: number) {
     const that = this;
@@ -59,23 +72,16 @@ export class ConnectorPreviewComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.customerDiffer = this.differs.find(this.data).create();
-  }
-
-  dataChanged(changes: KeyValueChanges<string, any>) {
-    this.data$.next(this.data)
-  }
-
-  ngDoCheck(): void {
-      const changes = this.customerDiffer.diff(this.data);
-      if (changes) {
-        this.dataChanged(changes);
-      }
-  }
-
   onReset = () => {
     this.headers$.next(null);
     this.loading$.next(false);
   }
+
+  fetchData(data){
+    this.data$.next(data)
+  }
+
+  clearData(){
+    this.data$.next(null)
+    }
 }

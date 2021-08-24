@@ -14,8 +14,8 @@
 
                 <nz-form-item>
                     <nz-form-label  nzRequired nzFor="connector_id">Connector</nz-form-label>
-                    <nz-form-control  >
-                        <nz-select [(ngModel)]="data.connector_id" [ngModelOptions]="{standalone: true}">
+                    <nz-form-control >
+                        <nz-select (change)="onDataChanged()" [(ngModel)]="data.connector_id" [ngModelOptions]="{standalone: true}">
                             <nz-option *ngFor='let o of connectors$ | async' [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
                         </nz-select>
                     </nz-form-control>
@@ -24,7 +24,7 @@
                 <nz-form-item>
                     <nz-form-label nzRequired>Get With</nz-form-label>
                     <nz-form-control >
-                      <nz-select [(ngModel)]="data.get_with" [ngModelOptions]="{standalone: true}">
+                      <nz-select (change)="onDataChanged()" [(ngModel)]="data.get_with" [ngModelOptions]="{standalone: true}">
                         <nz-option nzValue="schema_and_table" nzLabel="Schema and Table"></nz-option>
                         <nz-option nzValue="query" nzLabel="Query"></nz-option>
                       </nz-select>
@@ -34,14 +34,14 @@
                 <nz-form-item *ngIf='getWith("schema_and_table")'>
                     <nz-form-label  nzRequired nzFor="container">Schema</nz-form-label>
                     <nz-form-control  >
-                        <input nz-input  [(ngModel)]='data.schema' [ngModelOptions]="{standalone: true}"/>
+                        <input (change)="onDataChanged()" nz-input  [(ngModel)]='data.schema' [ngModelOptions]="{standalone: true}"/>
                     </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item *ngIf='getWith("schema_and_table")'>
                     <nz-form-label  nzRequired nzFor="container">Table Name</nz-form-label>
                     <nz-form-control  >
-                        <input nz-input  [(ngModel)]='data.table' [ngModelOptions]="{standalone: true}"/>
+                        <input (change)="onDataChanged()" nz-input  [(ngModel)]='data.table' [ngModelOptions]="{standalone: true}"/>
                     </nz-form-control>
                 </nz-form-item>
 
@@ -50,7 +50,7 @@
                     <nz-form-label  nzRequired nzFor="container">From Query</nz-form-label>
                     <nz-form-control  >
                         <div style="height: 150px" class="border rounded pt-4 pb-4">
-                            <ngx-monaco-editor style="height: 100%"  [ngModelOptions]="{standalone: true}" [options]="editorOptions" [(ngModel)]="data.query"></ngx-monaco-editor>
+                            <ngx-monaco-editor (ngModelChange)="onDataChanged()" style="height: 100%"  [ngModelOptions]="{standalone: true}" [options]="editorOptions" [(ngModel)]="data.query"></ngx-monaco-editor>
                         </div>
                     </nz-form-control>
                 </nz-form-item>
@@ -58,7 +58,7 @@
 
 
                 <div class="mt-2 mb-2">
-                    <app-connector-preview [data]="data"></app-connector-preview>
+                    <app-connector-preview #preview></app-connector-preview>
                 </div>
 
 

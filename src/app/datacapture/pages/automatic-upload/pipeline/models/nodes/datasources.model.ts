@@ -1,4 +1,4 @@
-import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_POSTGRES, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
+import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_ORACLE_DB, CONNECTOR_DEF_POSTGRES, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
 
@@ -49,8 +49,13 @@ export class NodePostgresImport extends NodeImportConnector{
     static connectorDef = CONNECTOR_DEF_POSTGRES
 }
 
+export class NodeOracleImport extends NodeImportConnector{
+    static type = "ORACLE_IMPORT_CONNECTOR"
+    static connectorDef = CONNECTOR_DEF_ORACLE_DB
+}
+
 // SET UP NODE METADATA
-for (let cls of [NodeBlobStorage, NodeSQLImport, NodePostgresImport]){
+for (let cls of [NodeBlobStorage, NodeSQLImport, NodePostgresImport, NodeOracleImport]){
     cls.nzicon = cls.connectorDef.icon
     cls.label = cls.connectorDef.label
 }

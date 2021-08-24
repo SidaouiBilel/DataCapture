@@ -1,5 +1,5 @@
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
-import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
+import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodeOracleImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
 import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
 import { StorageAccountImportNodeComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
@@ -20,6 +20,7 @@ import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/catego
 import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
 import { NodeDataCheckLimitCheck, NodeDataCheckLookForCheck, NodeDataCheckReferenceCheck, NodeDataCheckFormatCheck, NodeDataCheckComparisonCheck, NodeDataCheckCustomCheck } from "../nodes/datachecks.model";
 import { LookInNodeComponent } from "@app/shared/setup/nodes/checks/look-in-node/look-in-node.component";
+import { OracleImportNodeComponent } from "@app/shared/setup/nodes/datasources/oracle-import-node/oracle-import-node.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -33,6 +34,7 @@ export const DATASOURCE_NODES = [
   NodePostgresImport.setComponenet(PostgresImportNodeComponent),
   NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent),
   NodeManualImport.setComponenet(ManualImportNodeComponent),
+  NodeOracleImport.setComponenet(OracleImportNodeComponent),
 ]
 export const DATASINK_NODES = [
   NodeCollectionUpload.setComponenet(CollectionUploadComponent),
