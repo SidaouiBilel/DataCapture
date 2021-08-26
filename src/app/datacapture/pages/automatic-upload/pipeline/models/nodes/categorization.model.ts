@@ -80,3 +80,17 @@ export class NodeCheckRsu extends PipelineNode{
   ]
 
 }
+
+export class NodeCheckSocial extends PipelineNode{
+  static type = 'check-social'
+  static category = 'Classification'
+  static nzicon = "file-search"
+  static color = '#2e394b';
+  static label = 'check social'
+  static showLabel = false
+  static ports = [
+      {id:"INPUT",spot:go.Spot.Left},
+      {id:"OUTPUT",spot:go.Spot.Right},
+  ]
+
+}
