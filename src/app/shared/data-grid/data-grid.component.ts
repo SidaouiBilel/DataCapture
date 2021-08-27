@@ -11,6 +11,7 @@ import { GridCellAutoTypeComponent } from '../grid-cell-auto-type/grid-cell-auto
   styleUrls: ['./data-grid.component.css']
 })
 export class DataGridComponent implements OnInit {
+  @Input() getRowStyle: any;
   @Input() columnDefs: any;
   @Input() totalRecords;
   @Input() rowData: [];

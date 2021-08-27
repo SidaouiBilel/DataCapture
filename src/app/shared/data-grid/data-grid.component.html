@@ -1,6 +1,7 @@
 <!-- class="ag-theme-alpine" -->
 <!-- [defaultColDef]="defaultColDef" -->
 <ag-grid-angular #agGrid
+  [getRowStyle]="getRowStyle"
   [columnDefs]="columnDefs"
   [enableCharts]="enableCharts"
   [enableRangeSelection]="rangeSelection"

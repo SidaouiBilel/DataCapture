@@ -9,13 +9,12 @@ import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } 
   styleUrls: ['./dcm-preview-grid.component.css']
 })
 export class DcmPreviewGridComponent implements OnInit {
-
+  getRowStyle
   file_id
   sheet_id
   folder = 'imports'
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
   paginator$: any;
@@ -25,16 +24,26 @@ export class DcmPreviewGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginator$ = combineLatest([this.size$, this.gridReady$])
-    .subscribe(([size, grid]) => {
-      this.onReset();
-      if (this.folder && this.file_id && this.sheet_id) {
-        this.generateDataSource(grid, this.folder, this.file_id, this.sheet_id, size);
-      }
-    });
+      .subscribe(([size, grid]) => {
+        this.onReset();
+        if (this.folder && this.file_id && this.sheet_id) {
+          this.generateDataSource(grid, this.folder, this.file_id, this.sheet_id, size);
+        }
+      });
+    this.setRowStyle()
   }
   onReset = () => {
     this.headers$.next(null);
     this.loading$.next(false);
+  }
+
+
+  setRowStyle() {
+    this.getRowStyle = params => {
+      if (params?.data?.Fraud == "True") {
+        return { background: '#f3bebe' };
+      }
+    };
   }
 
   generateDataSource(gridApi: any, folder: string, file_id: any, sheet_id: any, size: number) {
@@ -54,18 +63,21 @@ export class DcmPreviewGridComponent implements OnInit {
               previewData[e] = res.data.slice(1, 10).map((f: any) => f[i]);
             });
             const headers = res.headers.map(h => ({
+              hide: (h == "Fraud") ? true : false,
               field: h,
-                colId: h,
-                headerName: h,
-                editable: false,
-                resizable: true,
-                cellRenderer: 'autoTypeRenderer',
-                filter: GAPIFilterComponenet('string'),
-                filterParams: GAPIAllFilterParams(params),
-                chartDataType: (h == '#####' || h == '####') ? 'category' : 'series',
+              colId: h,
+              headerName: h,
+              editable: false,
+              resizable: true,
+              cellRenderer: 'autoTypeRenderer',
+              filter: GAPIFilterComponenet('string'),
+              filterParams: GAPIAllFilterParams(params),
+              chartDataType: (h == '#####' || h == '####') ? 'category' : 'series',
             }));
+            console.log('Headers', headers)
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
+
           }
           const lastRow = () => res.total;
           const data = [];
@@ -81,10 +93,11 @@ export class DcmPreviewGridComponent implements OnInit {
           gridApi.columnApi.autoSizeAllColumns();
           params.successCallback(data, lastRow());
         }, (error) => {
-            params.failCallback();
-            // that.onError(error);
+          params.failCallback();
+          // that.onError(error);
         });
       }
     });
   }
+
 }
