@@ -40,9 +40,16 @@ export class DcmPreviewGridComponent implements OnInit {
 
   setRowStyle() {
     this.getRowStyle = params => {
-      if (params?.data?.Fraud == "True") {
+      if (params?.data?.Fraud == "red") {
         return { background: '#f3bebe' };
       }
+      else if (params?.data?.Fraud == "orange") {
+        return { background: '#f0a878' };
+      }
+      else if (params?.data?.Fraud == "yellow") {
+        return { background: '#def078' };
+      }
+      else return
     };
   }
 
@@ -56,6 +63,7 @@ export class DcmPreviewGridComponent implements OnInit {
         that.loading$.next(true);
         that.service.getFileData(page, sheet_id, size, filters).subscribe((res: any) => {
           // that.total$.next(res.total);
+          console.log('RESPONSE', res)
           that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
