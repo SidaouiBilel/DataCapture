@@ -1,3 +1,4 @@
+import { NodeCheckSocial } from './../nodes/categorization.model';
 import { NodeCheckComponent } from './../../../../../../shared/setup/nodes/category/node-check/node-check.component';
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
 import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
@@ -19,6 +20,7 @@ import { ManualImportNodeComponent } from "@app/shared/setup/nodes/datasources/m
 import { NodeCheckRsu, NodeFilterByCategory, NodeHashByCategory } from "../nodes/categorization.model";
 import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/category-filter/category-filter.component";
 import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
+import { NodeCheckSocialComponent } from '@app/shared/setup/nodes/category/node-check-social/node-check-social.component';
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -58,7 +60,8 @@ export const NODE_TRANSFORMERS = [
 export const CATEGORY_NODES = [
   NodeFilterByCategory.setComponenet(CategoryFilterComponent),
   NodeHashByCategory.setComponenet(CategoryHashComponent),
-  NodeCheckRsu.setComponenet(NodeCheckComponent)
+  NodeCheckRsu.setComponenet(NodeCheckComponent),
+  NodeCheckSocial.setComponenet(NodeCheckSocialComponent)
 ]
 
 export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
