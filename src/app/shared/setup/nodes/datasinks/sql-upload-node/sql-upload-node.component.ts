@@ -11,7 +11,7 @@ import { take } from 'rxjs/operators';
 })
 export class SqlUploadNodeComponent extends PipelineNodeComponent {
 
-  nodeClass = NodeSQLUpload
+  nodeClass:any = NodeSQLUpload
 
   constructor(private connectors: ConnectorsService) { 
     super()

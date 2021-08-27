@@ -1,4 +1,4 @@
-import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
+import { NodeBlobStorageUpload, NodeCollectionUpload, NodeOracleUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
 import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodeOracleImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
 import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
@@ -21,6 +21,7 @@ import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category
 import { NodeDataCheckLimitCheck, NodeDataCheckLookForCheck, NodeDataCheckReferenceCheck, NodeDataCheckFormatCheck, NodeDataCheckComparisonCheck, NodeDataCheckCustomCheck } from "../nodes/datachecks.model";
 import { LookInNodeComponent } from "@app/shared/setup/nodes/checks/look-in-node/look-in-node.component";
 import { OracleImportNodeComponent } from "@app/shared/setup/nodes/datasources/oracle-import-node/oracle-import-node.component";
+import { OracleUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/oracle-upload-node/oracle-upload-node.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -41,6 +42,7 @@ export const DATASINK_NODES = [
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
   NodePostgresUpload.setComponenet(PostgresUploadNodeComponent),
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent),
+  NodeOracleUpload.setComponenet(OracleUploadNodeComponent),
 ]
 export const NODE_TRANSFORMERS = [
               NodeTransformationFilter

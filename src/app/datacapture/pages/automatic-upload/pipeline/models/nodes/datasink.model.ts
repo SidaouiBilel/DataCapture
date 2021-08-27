@@ -1,4 +1,4 @@
-import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_POSTGRES, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
+import { CONNECTOR_DEF_BLOB_STORAGE, CONNECTOR_DEF_ORACLE_DB, CONNECTOR_DEF_POSTGRES, CONNECTOR_DEF_SQL } from "@app/datacapture/pages/connectors/models/connectors.model";
 import { BaseNodeTransformationComponent } from "@app/shared/setup/nodes/transformations/base-node-transformation/base-node-transformation.component";
 import * as go from "gojs";
 import { PipelineNode } from "../node.model";
@@ -94,7 +94,13 @@ export class NodePostgresUpload extends NodeUploadConnector{
     static connectorDef = CONNECTOR_DEF_POSTGRES
 }
 
-for (let cls of [NodeBlobStorageUpload, NodeSQLUpload, NodePostgresUpload]){
+export class NodeOracleUpload extends NodeUploadConnector{
+    static type = "ORACLE_UPLOAD_CONNECTOR"
+    static connectorDef = CONNECTOR_DEF_ORACLE_DB    
+}
+
+
+for (let cls of [NodeBlobStorageUpload, NodeSQLUpload, NodePostgresUpload, NodeOracleUpload]){
     cls.nzicon = cls.connectorDef.icon
     cls.label = cls.connectorDef.label
 }

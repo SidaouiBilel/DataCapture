@@ -29,6 +29,7 @@ export class ConnectorPreviewComponent {
       distinctUntilChanged(),
     )
     .subscribe(([size, data, grid]) => {
+      
         this.onReset();
         if (data) {
           this.generateDataSource(grid, data, size);

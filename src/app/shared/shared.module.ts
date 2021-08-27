@@ -64,6 +64,7 @@ import { WarningsExistPipe } from './pipes/warnings-exist.pipe';
 import { GlobalReportComponent } from './global-report/global-report.component';
 import { LookInNodeComponent } from './setup/nodes/checks/look-in-node/look-in-node.component';
 import { OracleImportNodeComponent } from './setup/nodes/datasources/oracle-import-node/oracle-import-node.component';
+import { OracleUploadNodeComponent } from './setup/nodes/datasinks/oracle-upload-node/oracle-upload-node.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -162,7 +163,8 @@ const Components = [
     WarningsExistPipe,
     GlobalReportComponent,
     LookInNodeComponent,
-    OracleImportNodeComponent
+    OracleImportNodeComponent,
+    OracleUploadNodeComponent
   ],
   exports: [
     ...SharedModules,
