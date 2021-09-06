@@ -1,3 +1,4 @@
+import { DcmStatisticsPreviewComponent } from './../../../../../shared/dcm-statistics-preview/dcm-statistics-preview.component';
 import { DcmCorrelationGridComponent } from './../../../../../shared/dcm-correlation-grid/dcm-correlation-grid.component';
 import { GlobalReportComponent } from './../../../../../shared/global-report/global-report.component';
 import { Injectable } from '@angular/core';
@@ -129,6 +130,25 @@ export class PipelineEditorService {
           folder: output.folder,
         },
         nzWidth: '90vw',
+      })
+    } else if(output.status == 'success') {
+      this.msg.info('No Preview for this Node')
+    } else {
+      this.msg.info('Preview is not ready')
+    }
+  }
+
+
+  statisticsNode(task: any) {
+    const output = task.output || {}
+    if (output.file_id && output.sheet_id) {
+      this.drawer.create({
+        nzTitle: 'Preview Report',
+        nzContent: DcmStatisticsPreviewComponent,
+        nzContentParams: {
+          sheet_id: output.sheet_id
+        },
+        nzWidth: '70vw',
       })
     } else if(output.status == 'success') {
       this.msg.info('No Preview for this Node')

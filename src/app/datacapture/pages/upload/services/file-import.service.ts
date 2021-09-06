@@ -40,6 +40,10 @@ export class FileImportService {
     return this.http.get(environment.import + 'report/' + sheet_id);
   }
 
+  public getStatisticsData(sheet_id: any) {
+    return this.http.get(environment.import + 'statistics/' + sheet_id);
+  }
+
 /*   public getDataCorrelation(sheet_id: any) {
     return this.http.get(environment.import + 'data/' + sheet_id + '/correlation');
   } */
