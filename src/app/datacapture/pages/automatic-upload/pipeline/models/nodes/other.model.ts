@@ -100,3 +100,15 @@ export class NodeCorrelation extends PipelineNode{
       // {id:"OUTPUT",spot:go.Spot.Right},
   ]
 }
+
+export class NodeStatistics extends PipelineNode{
+  static type = 'statistics'
+  static category = 'SCRIPTS'
+  static nzicon = "stock"
+  static color = 'darkorange';
+  static label = 'statistics'
+  static ports = [
+      {id:"INPUT",spot: go.Spot.Left},
+      // {id:"OUTPUT",spot:go.Spot.Right},
+  ]
+}

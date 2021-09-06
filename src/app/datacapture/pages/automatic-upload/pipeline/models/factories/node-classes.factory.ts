@@ -1,4 +1,5 @@
-import { NodeCorrelation } from './../nodes/other.model';
+import { NodeStatisticsComponent } from './../../../../../../shared/setup/nodes/other/node-statistics/node-statistics.component';
+import { NodeCorrelation, NodeStatistics } from './../nodes/other.model';
 import { NodeCheckSocial } from './../nodes/categorization.model';
 import { NodeCheckComponent } from './../../../../../../shared/setup/nodes/category/node-check/node-check.component';
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
@@ -30,6 +31,7 @@ export const NODE_OTHERS = [
   NodePycode.setComponenet(NodePycodeComponent),
   NodeTransformationPipeline.setComponenet(NodePipelineComponent),
   NodeCorrelation.setComponenet(NodeCorrelationComponent),
+  NodeStatistics.setComponenet(NodeStatisticsComponent)
 
 ]
 export const DATASOURCE_NODES = [
