@@ -1,17 +1,38 @@
-<h1>REPARTITION PAUVRE</h1>
-
-<div style="display: block; width: 500px; height: 400px;">
-  <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
-    [chartType]="pieChartType"></canvas>
+<div class="loading" *ngIf="!stats_content">
+  <nz-spin nzSimple nzTip="Loading the statistics..."></nz-spin>
 </div>
 
-
-
-<!-- {0: 66.66666666666666, 1: 33.33333333333333}
-<h1> REPARTITION REGION</h1>
-{12: 50.0, 10: 33.33333333333333, 2: 16.666666666666664}
-REPARTITION REGION / PAUVRE
-Regions [12, 2, 10]
-[{'Region_12': 2, 'Pauvre': 1, 'Count': 1}, {'Region_12': 10, 'Pauvre': 0, 'Count': 1}, {'Region_12': 10, 'Pauvre': 1, 'Count': 1}, {'Region_12': 12, 'Pauvre': 0, 'Count': 3}]
-CONSOMMATION PAUVRE RICHE
-[{'consom': 'DAM_Transport', 'max': 65840, 'pauvre_count': 0}, {'consom': 'DAM_Communication', 'max': 3000, 'pauvre_count': 1}] -->
+<div *ngIf="stats_content">
+  <nz-collapse nzAccordion>
+    <nz-collapse-panel nzHeader="Repartition Pauvre">
+      <div style="display: block; width: 500px; height: 400px;">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+          [chartType]="pieChartType"></canvas>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="Repartition Region">
+      <div style="display: block; width: 500px; height: 400px;">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+          [chartType]="pieChartType"></canvas>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="Consommation states">
+      <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(resultat$ | async )' nzSize='small'>
+        <thead>
+          <tr>
+            <th>Consommation</th>
+            <th>Max</th>
+            <th>Nombre des pauvres ayant une consommation > au max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{data.consommation}}</td>
+            <td>{{data.max}}</td>
+            <td>{{data.count_pauvre}}</td>
+          </tr>
+        </tbody>
+        </nz-table>
+    </nz-collapse-panel>
+  </nz-collapse>
+</div>

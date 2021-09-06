@@ -22,13 +22,13 @@ export class PipelineEditorService {
   links = [];
   nodes = [];
 
-  constructor(private drawer: NzDrawerService, private msg:NzMessageService) { }
+  constructor(private drawer: NzDrawerService, private msg: NzMessageService) { }
 
-  getNodeClass(type): any{
+  getNodeClass(type): any {
     return this.NODES_LIST.find(c => c.type === type);
   }
 
-  editNode(node){
+  editNode(node) {
     return new Observable(observer => {
       const nodeClass = this.getNodeClass(node.type);
       const ref: any = this.drawer.create({
@@ -41,13 +41,13 @@ export class PipelineEditorService {
       });
 
       setTimeout(() => {
-        ref.getContentComponent().onSave.subscribe((newNode) => {observer.next(newNode); observer.complete() ; ref.close(); });
+        ref.getContentComponent().onSave.subscribe((newNode) => { observer.next(newNode); observer.complete(); ref.close(); });
         ref.getContentComponent().onCancel.subscribe(() => ref.close());
       }, 0);
     });
   }
 
-  viewTemplate(nodes, links){
+  viewTemplate(nodes, links) {
     const ref = this.drawer.create({
       nzContent: PiplineTemplateViewerComponent,
       nzContentParams: {
@@ -60,7 +60,7 @@ export class PipelineEditorService {
   }
 
   editPipeline(metaData): Observable<PipelineMetadata> {
-    return new Observable(observer=>{
+    return new Observable(observer => {
       const ref = this.drawer.create({
         nzTitle: 'Pipeline MetaData',
         nzContent: EditPipelineMetadataComponent,
@@ -77,31 +77,13 @@ export class PipelineEditorService {
     })
   }
 
-  updateNode(node){
+  updateNode(node) {
   }
 
-  addNode(nodeCategory){
+  addNode(nodeCategory) {
   }
 
-  deleteNode(node){
-  }
-
-  reportNode(task: any) {
-    const output = task.output || {}
-    if (output.file_id && output.sheet_id) {
-      this.drawer.create({
-        nzTitle: 'Preview Report',
-        nzContent: PreviewReportComponent,
-        nzContentParams: {
-          sheet_id: output.sheet_id
-        },
-        nzWidth: '70vw',
-      })
-    } else if(output.status == 'success') {
-      this.msg.info('No Preview for this Node')
-    } else {
-      this.msg.info('Preview is not ready')
-    }
+  deleteNode(node) {
   }
 
   globalReport(tasks: any) {
@@ -116,11 +98,11 @@ export class PipelineEditorService {
   }
 
   correlationNode(data: any, run: any) {
-    const task = run.tasks.find(t=>t.task_id==data.key)
+    const task = run.tasks.find(t => t.task_id == data.key)
     const output = task.output || {}
 
     // TODO WEIRD OUTPUT SHOULD INVESTIGATE
-    if(output.file_id && output.sheet_id){
+    if (output.file_id && output.sheet_id) {
       this.drawer.create({
         nzTitle: data.label + ' Preview',
         nzContent: DcmCorrelationGridComponent,
@@ -131,7 +113,7 @@ export class PipelineEditorService {
         },
         nzWidth: '90vw',
       })
-    } else if(output.status == 'success') {
+    } else if (output.status == 'success') {
       this.msg.info('No Preview for this Node')
     } else {
       this.msg.info('Preview is not ready')
@@ -143,14 +125,32 @@ export class PipelineEditorService {
     const output = task.output || {}
     if (output.file_id && output.sheet_id) {
       this.drawer.create({
-        nzTitle: 'Preview Report',
+        nzTitle: 'Preview Statistics',
         nzContent: DcmStatisticsPreviewComponent,
         nzContentParams: {
           sheet_id: output.sheet_id
         },
         nzWidth: '70vw',
       })
-    } else if(output.status == 'success') {
+    } else if (output.status == 'success') {
+      this.msg.info('No Preview for this Node')
+    } else {
+      this.msg.info('Preview is not ready')
+    }
+  }
+
+  reportNode(task: any) {
+    const output = task.output || {}
+    if (output.file_id && output.sheet_id) {
+      this.drawer.create({
+        nzTitle: 'Preview Report',
+        nzContent: PreviewReportComponent,
+        nzContentParams: {
+          sheet_id: output.sheet_id
+        },
+        nzWidth: '70vw',
+      })
+    } else if (output.status == 'success') {
       this.msg.info('No Preview for this Node')
     } else {
       this.msg.info('Preview is not ready')
@@ -158,11 +158,11 @@ export class PipelineEditorService {
   }
 
   previewNode(data: any, run: any) {
-    const task = run.tasks.find(t=>t.task_id==data.key)
+    const task = run.tasks.find(t => t.task_id == data.key)
     const output = task.output || {}
 
     // TODO WEIRD OUTPUT SHOULD INVESTIGATE
-    if(output.file_id && output.sheet_id){
+    if (output.file_id && output.sheet_id) {
       this.drawer.create({
         nzTitle: data.label + ' Preview',
         nzContent: DcmPreviewGridComponent,
@@ -173,7 +173,7 @@ export class PipelineEditorService {
         },
         nzWidth: '90vw',
       })
-    } else if(output.status == 'success') {
+    } else if (output.status == 'success') {
       this.msg.info('No Preview for this Node')
     } else {
       this.msg.info('Preview is not ready')
@@ -181,11 +181,11 @@ export class PipelineEditorService {
   }
 
   cleanseNode(data: any, run: any) {
-    const task = run.tasks.find(t=>t.task_id==data.key)
+    const task = run.tasks.find(t => t.task_id == data.key)
     const input = task.input || {}
     console.log(task)
     // TODO WEIRD OUTPUT SHOULD INVESTIGATE
-    if(input.file_id && input.sheet_id){
+    if (input.file_id && input.sheet_id) {
       this.drawer.create({
         nzTitle: data.label + ' Cleansing',
         nzContent: DcmCleansingGridComponent,
@@ -201,7 +201,7 @@ export class PipelineEditorService {
     }
   }
   logsNode(task: any, run: any) {
-    if(task.task_id && run.execution_date && run.dag_id){
+    if (task.task_id && run.execution_date && run.dag_id) {
       this.drawer.create({
         nzTitle: 'Log Preview',
         nzContent: LogPreviewComponent,

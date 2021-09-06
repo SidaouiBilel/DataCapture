@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { NotificationService } from '@app/core/notifications/notification.service';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
+import { BehaviorSubject } from 'rxjs';
 
 
 
@@ -14,8 +15,10 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
 })
 export class DcmStatisticsPreviewComponent implements OnInit {
   @Input() sheet_id;
-  report_content;
+  stats_content;
   length_vars;
+  resultat$ = new BehaviorSubject<any>([]);
+
 
   //Pie Pauvre
   public pieChartLabels: Label[] = [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'];
@@ -36,15 +39,16 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   // }
 
   getStatistics(sheet_id) {
-    console.log(" === sheet_id === ",sheet_id);
     if (sheet_id) {
+      this.resultat$.next([])
       this.importService.getStatisticsData(sheet_id).subscribe(
         (res: any) => {
-          console.log("res",res);
-          this.report_content = res;
-          this.ntf.success('Report generated successfully...');
-          this.length_vars = Object.keys(this.report_content.variables).length;
+          console.log("res", res);
+          this.stats_content = res;
+          this.resultat$.next(res.resultat)
+          this.ntf.success('Statistics generated successfully...');
         }, (err) => {
+          this.resultat$.next([])
           this.drawerRef.close();
           this.ntf.warn('Report failed...');
         }
