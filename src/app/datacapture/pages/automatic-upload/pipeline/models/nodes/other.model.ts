@@ -6,7 +6,7 @@ const $ = go.GraphObject.make;
 
 export class NodeConcat extends PipelineNode{
     static type = 'concat'
-    static category = 'MERGE'    
+    static category = 'MERGE'
     static nzicon = "insert-row-below"
     static color = 'orange';
     static label = 'Concat'
@@ -19,7 +19,7 @@ export class NodeConcat extends PipelineNode{
 
 export class NodeTransformationPipeline extends PipelineNode{
     static type = 'PIPELINE_TRANSFORMATION'
-    static category = 'TRANSFORMATION'    
+    static category = 'TRANSFORMATION'
     static nzicon = "api"
     static color = 'darkorange';
     static label = 'Pipeline'
@@ -45,7 +45,7 @@ export class NodeJoin extends PipelineNode{
 export class NodePycode extends PipelineNode{
     static type = 'pycode';
     static category = 'SCRIPTS';
-    
+
     static icon = 'assets/images/svg/pycode.svg';
     static color = 'red';
     static label = 'Pycode'
@@ -84,6 +84,19 @@ export class NodePycode extends PipelineNode{
           }
         ),  // end Vertical Panel
             ]
-            
+
         }
+}
+
+
+export class NodeCorrelation extends PipelineNode{
+  static type = 'correlation'
+  static category = 'SCRIPTS'
+  static nzicon = "calculator"
+  static color = 'darkorange';
+  static label = 'Correlation'
+  static ports = [
+      {id:"INPUT",spot: go.Spot.Left},
+      // {id:"OUTPUT",spot:go.Spot.Right},
+  ]
 }
