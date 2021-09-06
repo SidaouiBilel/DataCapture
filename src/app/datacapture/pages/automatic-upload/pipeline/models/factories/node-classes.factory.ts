@@ -1,3 +1,4 @@
+import { NodeCorrelation } from './../nodes/other.model';
 import { NodeCheckSocial } from './../nodes/categorization.model';
 import { NodeCheckComponent } from './../../../../../../shared/setup/nodes/category/node-check/node-check.component';
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
@@ -21,12 +22,15 @@ import { NodeCheckRsu, NodeFilterByCategory, NodeHashByCategory } from "../nodes
 import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/category-filter/category-filter.component";
 import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
 import { NodeCheckSocialComponent } from '@app/shared/setup/nodes/category/node-check-social/node-check-social.component';
+import { NodeCorrelationComponent } from '@app/shared/setup/nodes/other/node-correlation/node-correlation.component';
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
   NodeJoin.setComponenet(NodeJoinComponent),
   NodePycode.setComponenet(NodePycodeComponent),
-  NodeTransformationPipeline.setComponenet(NodePipelineComponent)
+  NodeTransformationPipeline.setComponenet(NodePipelineComponent),
+  NodeCorrelation.setComponenet(NodeCorrelationComponent),
+
 ]
 export const DATASOURCE_NODES = [
   NodeCollectionImport.setComponenet(CollectionImportComponent),

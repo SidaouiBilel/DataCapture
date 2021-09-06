@@ -1,3 +1,4 @@
+import { DcmCorrelationGridComponent } from './../../../../../shared/dcm-correlation-grid/dcm-correlation-grid.component';
 import { GlobalReportComponent } from './../../../../../shared/global-report/global-report.component';
 import { Injectable } from '@angular/core';
 import { NzDrawerService, NzMessageService } from 'ng-zorro-antd';
@@ -111,6 +112,29 @@ export class PipelineEditorService {
       },
       nzWidth: '80vw',
     })
+  }
+
+  correlationNode(data: any, run: any) {
+    const task = run.tasks.find(t=>t.task_id==data.key)
+    const output = task.output || {}
+
+    // TODO WEIRD OUTPUT SHOULD INVESTIGATE
+    if(output.file_id && output.sheet_id){
+      this.drawer.create({
+        nzTitle: data.label + ' Preview',
+        nzContent: DcmCorrelationGridComponent,
+        nzContentParams: {
+          file_id: output.file_id,
+          sheet_id: output.sheet_id,
+          folder: output.folder,
+        },
+        nzWidth: '90vw',
+      })
+    } else if(output.status == 'success') {
+      this.msg.info('No Preview for this Node')
+    } else {
+      this.msg.info('Preview is not ready')
+    }
   }
 
   previewNode(data: any, run: any) {
