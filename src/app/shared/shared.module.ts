@@ -66,6 +66,10 @@ import { NodeCheckComponent } from './setup/nodes/category/node-check/node-check
 import { NodeCheckSocialComponent } from './setup/nodes/category/node-check-social/node-check-social.component';
 import { NodeCorrelationComponent } from './setup/nodes/other/node-correlation/node-correlation.component';
 import { DcmCorrelationGridComponent } from './dcm-correlation-grid/dcm-correlation-grid.component';
+import { ChartsModule } from 'ng2-charts';
+import { NodeStatisticsComponent } from './setup/nodes/other/node-statistics/node-statistics.component';
+import { DcmStatisticsPreviewComponent } from './dcm-statistics-preview/dcm-statistics-preview.component';
+
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -80,7 +84,8 @@ const SharedModules = [
   NzModalModule,
   AngularResizedEventModule,
   NzTagModule,
-  MonacoEditorModule
+  MonacoEditorModule,
+  ChartsModule
 ];
 
 const Components = [
@@ -166,7 +171,9 @@ const Components = [
     NodeCheckComponent,
     NodeCheckSocialComponent,
     NodeCorrelationComponent,
-    DcmCorrelationGridComponent
+    DcmCorrelationGridComponent,
+    NodeStatisticsComponent,
+    DcmStatisticsPreviewComponent
   ],
   exports: [
     ...SharedModules,
