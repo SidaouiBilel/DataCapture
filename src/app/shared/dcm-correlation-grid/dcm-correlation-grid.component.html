@@ -1,0 +1,5 @@
+
+<div class="h-100 flex column stretch">
+  <app-data-grid class="flex-1" [getRowStyle]="getRowStyle" [paginationPageSize]='size$ | async' [columnDefs]="headers$ | async"
+    (gridReady)="gridReady$.next($event)" [enableCharts]="true" [rangeSelection]="true"></app-data-grid>
+</div>
