@@ -71,11 +71,15 @@ export class PipelineEditorComponent implements AfterViewInit{
         if(this.diagramModelData.run){
           const run = this.diagramModelData.run
           const task = run.tasks.find(t=>t.task_id==data.key)
+          if(data.type=="correlation" && ["success","running"].includes(task.state)){
+            this.correlationNode(data,run)
+            return
+          }
           if(task.cleansing_job_id){
             this.clenaseNode(data, run)
             return
           }
-          if(task && ["success","running"].includes(task.state)){
+          if(task ){
             this.previweNode(data, run)
             return
           }
@@ -286,6 +290,11 @@ export class PipelineEditorComponent implements AfterViewInit{
 
   logsNode(task: any, run: any) {
     this.editor.logsNode(task, run)
+  }
+
+  correlationNode(data: any, run: any){
+    this.editor.correlationNode(data,run)
+
   }
 
 }
