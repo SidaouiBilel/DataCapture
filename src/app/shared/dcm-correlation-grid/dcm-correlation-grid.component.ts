@@ -70,7 +70,7 @@ export class DcmCorrelationGridComponent implements OnInit {
                 else if (params.value < 0.8 && params.value >= 0.5 ) {
                   return { backgroundColor: '#00ff00' };
                 }
-                else if (params.value > 0.5 && params.value >= 0.2 ) {
+                else if (params.value <  0.5 && params.value >= 0.2 ) {
                   return { backgroundColor: '#def078' };
                 }
                 return;
