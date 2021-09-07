@@ -27,6 +27,21 @@
   background-color: #f0f0f0 !important;
 }
 
-:host{
+:host {
   display: contents;
+}
+
+::ng-deep .corr-valid-cell {
+  color: #2e8d11;
+  background-color: #c9f3be;
+}
+
+::ng-deep .corr-error-cell {
+  color: #db4f5f;
+  background-color: #f3bebe;
+}
+
+::ng-deep .corr-warning-cell {
+  color: #8a9220;
+  background-color: #ebf3be;
 }

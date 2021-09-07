@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } from '../utils/grid-api.utils';
+import { CORRELATION_STATES } from '../utils/state-colors.utils';
 
 
 @Component({
@@ -10,25 +11,22 @@ import { GAPIAllFilterParams, GAPIFilterComponenet, GAPIFilters, INDEX_HEADER } 
   styleUrls: ['./dcm-correlation-grid.component.css']
 })
 export class DcmCorrelationGridComponent implements OnInit {
-  getRowStyle
-  file_id
+  legend = CORRELATION_STATES
   sheet_id
-  folder = 'imports'
   headers$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   size$ = new BehaviorSubject<number>(200);
   gridReady$ = new Subject<string>();
   paginator$: any;
 
-  // TODO REPLACE THIS WITH A GENERIC PREVIEWR SERVICE FOR ALL STEPS
   constructor(private service: FileImportService) { }
 
   ngOnInit(): void {
     this.paginator$ = combineLatest([this.size$, this.gridReady$])
       .subscribe(([size, grid]) => {
         this.onReset();
-        if (this.folder && this.file_id && this.sheet_id) {
-          this.generateDataSource(grid, this.folder, this.file_id, this.sheet_id, size);
+        if (this.sheet_id) {
+          this.generateDataSource(grid, this.sheet_id, size);
         }
       });
   }
@@ -37,7 +35,7 @@ export class DcmCorrelationGridComponent implements OnInit {
     this.loading$.next(false);
   }
 
-  generateDataSource(gridApi: any, folder: string, file_id: any, sheet_id: any, size: number) {
+  generateDataSource(gridApi: any, sheet_id: any, size: number) {
     const that = this;
     gridApi.api.setServerSideDatasource({
       getRows(params) {
@@ -63,21 +61,21 @@ export class DcmCorrelationGridComponent implements OnInit {
               filter: GAPIFilterComponenet('string'),
               filterParams: GAPIAllFilterParams(params),
               chartDataType: (h == '#####' || h == '####') ? 'category' : 'series',
-              cellStyle: params => {
+              cellClass: params => {
                 if (params.value >= 0.8) {
-                  return { backgroundColor: '#f3bebe' };
+                  return 'corr-error-cell';
                 }
-                else if (params.value < 0.8 && params.value >= 0.5 ) {
-                  return { backgroundColor: '#00ff00' };
+                else if (params.value < 0.8 && params.value >= 0.5) {
+                  return 'corr-valid-cell';
                 }
-                else if (params.value <  0.5 && params.value >= 0.2 ) {
-                  return { backgroundColor: '#def078' };
+                else if (params.value < 0.5 && params.value >= 0.2) {
+                  return 'corr-warning-cell';
                 }
                 return;
 
               }
             }));
-            console.log('Headers', headers)
+            // console.log('Headers', headers)
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
 
