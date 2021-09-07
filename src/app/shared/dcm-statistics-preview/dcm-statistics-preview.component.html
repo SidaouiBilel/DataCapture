@@ -4,29 +4,25 @@
 
 <div *ngIf="stats_content">
   <nz-collapse nzAccordion>
-    <nz-collapse-panel nzHeader="Repartition Pauvre">
-      <div style="display: block; width: 600px; height: 300px;">
+    <nz-collapse-panel nzHeader="Social Distribution">
+      <div class="chart">
         <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
           [chartType]="pieChartType"></canvas>
       </div>
     </nz-collapse-panel>
-    <nz-collapse-panel nzHeader="Repartition Region">
-
-      <div style="display: block; width: 600px; height: 300px;">
-
+    <nz-collapse-panel nzHeader="Geographical Distribution">
+      <div class="chart">
         <canvas baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
           [chartType]="pieChartType"></canvas>
-
-
       </div>
     </nz-collapse-panel>
-    <nz-collapse-panel nzHeader="Consommation states">
+    <nz-collapse-panel nzHeader="Consumption stats">
       <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(resultat$ | async )' nzSize='small'>
         <thead>
           <tr>
-            <th>Consommation</th>
+            <th>Consumption</th>
             <th>Max</th>
-            <th>Nombre des pauvres ayant une consommation > au max</th>
+            <th>Number of poor people with consumption above the maximum</th>
           </tr>
         </thead>
         <tbody>

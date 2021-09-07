@@ -2,11 +2,9 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { NotificationService } from '@app/core/notifications/notification.service';
 import { FileImportService } from '@app/datacapture/pages/upload/services/file-import.service';
 import { NzDrawerRef } from 'ng-zorro-antd';
-import { ChartType, ChartOptions } from 'chart.js';
-import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
+import { ChartType } from 'chart.js';
+import { SingleDataSet, Label } from 'ng2-charts';
 import { BehaviorSubject } from 'rxjs';
-
-
 
 @Component({
   selector: 'app-dcm-statistics-preview',
@@ -14,20 +12,18 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./dcm-statistics-preview.component.css']
 })
 export class DcmStatisticsPreviewComponent implements OnInit {
-  @Input() sheet_id;
+  sheet_id;
   stats_content;
   length_vars;
   resultat$ = new BehaviorSubject<any>([]);
 
 
-  //Pie Pauvre
-  public piePauvreChartLabels: Label[] = ['Pauvre', 'Riche'];
+  // Social Chart
+  public piePauvreChartLabels: Label[] = ['Poor', 'Not Poor'];
   public piePauvreChartData: SingleDataSet = [,];
   public pieChartType: ChartType = 'pie';
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
 
-  //Chart Region Pauvre
+  // Geographic Chart
   public pieRegionChartLabels: Label[] = [];
   public pirRegionChartData = []
 
@@ -36,11 +32,6 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   ngOnInit(): void {
     this.getStatistics(this.sheet_id)
   }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   this.report_content = null
-  //   this.getStatistics(changes.sheet_id.currentValue)
-  // }
 
   getStatistics(sheet_id) {
     if (sheet_id) {
@@ -55,21 +46,21 @@ export class DcmStatisticsPreviewComponent implements OnInit {
         }, (err) => {
           this.resultat$.next([])
           this.drawerRef.close();
-          this.ntf.warn('Report failed...');
+          this.ntf.warn('Statistics failed...');
         }
       );
     }
   }
 
   preparePauvrePie(data) {
-    this.piePauvreChartData[0] = data[0]
-    this.piePauvreChartData[1] = data[1]
+    this.piePauvreChartData[0] = data[0].toFixed(2)
+    this.piePauvreChartData[1] = data[1].toFixed(2)
   }
 
   prepareRegionChart(data) {
     Object.keys(data).forEach(key => {
       this.pieRegionChartLabels.push(key)
-      this.pirRegionChartData.push(data[key])
+      this.pirRegionChartData.push(data[key].toFixed(2))
     })
   }
 
