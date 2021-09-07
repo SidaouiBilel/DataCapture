@@ -21,11 +21,15 @@ export class DcmStatisticsPreviewComponent implements OnInit {
 
 
   //Pie Pauvre
-  public pieChartLabels: Label[] = [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'];
-  public pieChartData: SingleDataSet = [300, 500, 100];
+  public piePauvreChartLabels: Label[] = ['Pauvre', 'Riche'];
+  public piePauvreChartData: SingleDataSet = [,];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
+
+  //Chart Region Pauvre
+  public pieRegionChartLabels: Label[] = [];
+  public pirRegionChartData = []
 
   constructor(public importService: FileImportService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
 
@@ -43,9 +47,10 @@ export class DcmStatisticsPreviewComponent implements OnInit {
       this.resultat$.next([])
       this.importService.getStatisticsData(sheet_id).subscribe(
         (res: any) => {
-          console.log("res", res);
           this.stats_content = res;
           this.resultat$.next(res.resultat)
+          this.preparePauvrePie(res['pauvre'])
+          this.prepareRegionChart(res['region'])
           this.ntf.success('Statistics generated successfully...');
         }, (err) => {
           this.resultat$.next([])
@@ -54,6 +59,18 @@ export class DcmStatisticsPreviewComponent implements OnInit {
         }
       );
     }
+  }
+
+  preparePauvrePie(data) {
+    this.piePauvreChartData[0] = data[0]
+    this.piePauvreChartData[1] = data[1]
+  }
+
+  prepareRegionChart(data) {
+    Object.keys(data).forEach(key => {
+      this.pieRegionChartLabels.push(key)
+      this.pirRegionChartData.push(data[key])
+    })
   }
 
 }

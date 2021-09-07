@@ -5,15 +5,19 @@
 <div *ngIf="stats_content">
   <nz-collapse nzAccordion>
     <nz-collapse-panel nzHeader="Repartition Pauvre">
-      <div style="display: block; width: 500px; height: 400px;">
-        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+      <div style="display: block; width: 600px; height: 300px;">
+        <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
           [chartType]="pieChartType"></canvas>
       </div>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="Repartition Region">
-      <div style="display: block; width: 500px; height: 400px;">
-        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+
+      <div style="display: block; width: 600px; height: 300px;">
+
+        <canvas baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
           [chartType]="pieChartType"></canvas>
+
+
       </div>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="Consommation states">
