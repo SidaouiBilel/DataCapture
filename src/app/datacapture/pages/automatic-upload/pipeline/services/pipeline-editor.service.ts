@@ -41,8 +41,8 @@ export class PipelineEditorService {
       });
 
       setTimeout(() => {
-        ref.getContentComponent().onSave.subscribe((newNode) => { observer.next(newNode); observer.complete(); ref.close(); });
-        ref.getContentComponent().onCancel.subscribe(() => ref.close());
+        ref.getContentComponent().onSave?.subscribe((newNode) => { observer.next(newNode); observer.complete(); ref.close(); });
+        ref.getContentComponent().onCancel?.subscribe(() => ref.close());
       }, 0);
     });
   }
