@@ -63,7 +63,7 @@ export class DcmPreviewGridComponent implements OnInit {
         that.loading$.next(true);
         that.service.getFileData(page, sheet_id, size, filters).subscribe((res: any) => {
           // that.total$.next(res.total);
-          console.log('RESPONSE', res)
+          // console.log('RESPONSE', res)
           that.loading$.next(false);
           if (page <= 1) {
             const previewData = {};
@@ -82,7 +82,7 @@ export class DcmPreviewGridComponent implements OnInit {
               filterParams: GAPIAllFilterParams(params),
               chartDataType: (h == '#####' || h == '####') ? 'category' : 'series',
             }));
-            console.log('Headers', headers)
+            // console.log('Headers', headers)
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
 
