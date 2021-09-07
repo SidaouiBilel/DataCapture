@@ -13,19 +13,19 @@ const $ = go.GraphObject.make;
   templateUrl: './pipeline-editor.component.html',
   styleUrls: ['./pipeline-editor.component.css']
 })
-export class PipelineEditorComponent implements AfterViewInit{
+export class PipelineEditorComponent implements AfterViewInit {
 
   constructor(public editor: PipelineEditorService, private cdr: ChangeDetectorRef) { }
 
   @ViewChild('myDiagram', { static: true }) public myDiagramComponent: DiagramComponent;
 
-  @Input("run") set _run(run){
-    this.diagramModelData.run=run
+  @Input("run") set _run(run) {
+    this.diagramModelData.run = run
     this.skipsDiagramUpdate = false;
   };
-  @Input("readOnly") set _readOnly(readOnly){
+  @Input("readOnly") set _readOnly(readOnly) {
     this.readOnly = readOnly
-    if(this.myDiagramComponent.diagram) this.myDiagramComponent.diagram.isReadOnly = readOnly
+    if (this.myDiagramComponent.diagram) this.myDiagramComponent.diagram.isReadOnly = readOnly
     this.skipsDiagramUpdate = false;
   };
   @Input() diagramNodeData: Array<go.ObjectData> = [];
@@ -68,22 +68,22 @@ export class PipelineEditorComponent implements AfterViewInit{
     dia.nodeTemplateMap = generateNodesTemplateMap({
       doubleClick: (e, node) => {
         const data = node.data
-        if(this.diagramModelData.run){
+        if (this.diagramModelData.run) {
           const run = this.diagramModelData.run
-          const task = run.tasks.find(t=>t.task_id==data.key)
-          if(data.type=="correlation" && ["success","running"].includes(task.state)){
-            this.correlationNode(data,run)
+          const task = run.tasks.find(t => t.task_id == data.key)
+          if (data.type == "correlation" && ["success", "running"].includes(task.state)) {
+            this.correlationNode(data, run)
             return
           }
-          if(data.type=="statistics" && ["success","running"].includes(task.state)){
+          if (data.type == "statistics" && ["success", "running"].includes(task.state)) {
             this.statisticsNode(task)
             return
           }
-          if(task.cleansing_job_id){
+          if (task.cleansing_job_id) {
             this.clenaseNode(data, run)
             return
           }
-          if(task ){
+          if (task) {
             this.previweNode(data, run)
             return
           }
@@ -110,8 +110,8 @@ export class PipelineEditorComponent implements AfterViewInit{
 
                 if (this.diagramModelData.run) {
                   const run = this.diagramModelData.run
-                  const task = run.tasks.find(t=>t.task_id==data.key)
-                  if(task && ["success","running"].includes(task.state)){
+                  const task = run.tasks.find(t => t.task_id == data.key)
+                  if (task && ["success", "running"].includes(task.state)) {
                     this.previweNode(node.data, this.diagramModelData.run)
                     return
                   }
@@ -138,7 +138,6 @@ export class PipelineEditorComponent implements AfterViewInit{
                   const task = run.tasks.find(t => t.task_id == node.data.key)
 
                   if (task && ["success"].includes(task.state)) {
-                    console.log('REPORT')
                     this.reportNode(task);
                     return
                   }
@@ -174,10 +173,10 @@ export class PipelineEditorComponent implements AfterViewInit{
             }),
         )
     },
-    []
+      []
     );
 
-    dia.linkTemplate =  $(go.Link,
+    dia.linkTemplate = $(go.Link,
       { curve: go.Link.Bezier },
       $(go.Shape),
       $(go.Shape, { toArrow: "Standard" })
@@ -189,19 +188,19 @@ export class PipelineEditorComponent implements AfterViewInit{
   }
 
   public ngAfterViewInit() {
-    if (this.observedDiagram) {return; }
+    if (this.observedDiagram) { return; }
     this.observedDiagram = this.myDiagramComponent.diagram;
     this.cdr.detectChanges(); // IMPORTANT: without this, Angular will throw ExpressionChangedAfterItHasBeenCheckedError (dev mode only)
     const appComp: PipelineEditorComponent = this;
     // listener for inspector
-    this.myDiagramComponent.diagram.addDiagramListener('ChangedSelection', function(e) {
+    this.myDiagramComponent.diagram.addDiagramListener('ChangedSelection', function (e) {
       const selected_nodes = []
       e.diagram.selection.each(node => {
         if (node instanceof go.Node) {
-          if(appComp.diagramModelData.run) {
+          if (appComp.diagramModelData.run) {
             const run = appComp.diagramModelData.run
             const task = run.tasks.find(t => t.task_id == node.data.key)
-            if(task && ["success"].includes(task.state)) {
+            if (task && ["success"].includes(task.state)) {
               selected_nodes.push(task)
             }
           }
@@ -237,7 +236,7 @@ export class PipelineEditorComponent implements AfterViewInit{
     this.emitChanges();
   }
 
-  public emitChanges(){
+  public emitChanges() {
     this.diagramNodeDataChange.emit(this.diagramNodeData);
     this.diagramLinkDataChange.emit(this.diagramLinkData);
   }
@@ -249,7 +248,7 @@ export class PipelineEditorComponent implements AfterViewInit{
   }
 
   public handleInspectorChange(newNodeData) {
-    if(!this.readOnly){
+    if (!this.readOnly) {
       const key = newNodeData.key;
       // find the entry in nodeDataArray with this key, replace it with newNodeData
       let index = null;
@@ -271,7 +270,7 @@ export class PipelineEditorComponent implements AfterViewInit{
     }
   }
 
-  public addNode(node){
+  public addNode(node) {
     this.handleInspectorChange(node);
   }
 
@@ -296,11 +295,11 @@ export class PipelineEditorComponent implements AfterViewInit{
     this.editor.logsNode(task, run)
   }
 
-  correlationNode(data: any, run: any){
-    this.editor.correlationNode(data,run)
+  correlationNode(data: any, run: any) {
+    this.editor.correlationNode(data, run)
   }
 
-  statisticsNode(task: any){
+  statisticsNode(task: any) {
     this.editor.statisticsNode(task)
   }
 
