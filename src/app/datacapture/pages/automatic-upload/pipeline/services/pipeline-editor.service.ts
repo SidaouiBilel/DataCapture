@@ -107,9 +107,7 @@ export class PipelineEditorService {
         nzTitle: data.label + ' Preview',
         nzContent: DcmCorrelationGridComponent,
         nzContentParams: {
-          file_id: output.file_id,
           sheet_id: output.sheet_id,
-          folder: output.folder,
         },
         nzWidth: '90vw',
       })
