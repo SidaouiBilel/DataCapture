@@ -1,69 +1,235 @@
-<div class="ref-data-container">
-  <div class="flex column fill stretch">
-    <div>
-      <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Compositions"></nz-page-header>
-      <ng-template #userTitle><i class="mr-2" nz-icon nzType="font-size" nzTheme="outline"></i>Rsu Composition</ng-template>
-    </div>
+<nz-tabset>
 
-    <div class="site-page-header-ghost-wrapper">
-      <nz-page-header nzBordered  [nzGhost]="false">
-        <nz-page-header-extra>
-          <div class="flex between">
-            <div class="pr-2">
-              <nz-upload *ngIf="(rsuData$ | async)?.length == 0" [nzAction]="uploadURI" [nzHeaders]="{ authorization: 'authorization-text' }"
-                (nzChange)="handleChange($event)" [nzShowUploadList]="false">
-                <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
-              </nz-upload>
-            </div>
-            <div class="pr-2">
-              <nz-upload *ngIf="(rsuData$ | async)?.length != 0"[nzAction]="updateURI" [nzHeaders]="{ authorization: 'authorization-text' }"
-                (nzChange)="handleChange($event)" [nzShowUploadList]="false">
-                <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Update</button>
-              </nz-upload>
-            </div>
-          </div>
-        </nz-page-header-extra>
-      </nz-page-header>
 
-    </div>
-    <nz-card class="flex fill" nzSize='small' nzTitle='Reference Data'>
+  <nz-tab nzTitle="Tab 1">
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
 
-    <div class="h-100" style="position: relative;">
-      <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20'
-      [nzData]='(rsuData$ | async)' nzSize='small'
-        [nzLoading]='loading'>
-        <thead>
-          <tr>
-            <th *ngFor='let s of (rsuSources$ | async)'>{{s}}</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of basicTable.data">
-            <td *ngFor='let target of rsuTargets'>{{(row.composition || {})[target]}}</td>
-            <td>
-              <div class="button-spacing ghost">
-                <button nzShape='circle' nz-button (click)='onEdit(row)'><i nz-icon nzType="edit"></i></button>
-                <nz-divider nzType='vertical'></nz-divider>
-                <button nzShape='circle' nz-button (click)='onDelete(row)'><i nz-icon nzType="delete"></i></button>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Milieu de résidence </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="milieu">
+            <nz-option nzValue="1" nzLabel="Urbain"></nz-option>
+            <nz-option nzValue="2" nzLabel="Rural"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Région</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="milieu">
+            <nz-option nzValue="1" nzLabel="Tanger-Tétouan-Al Hoceïma"></nz-option>
+            <nz-option nzValue="2" nzLabel="Oriental"></nz-option>
+            <nz-option nzValue="3" nzLabel="Fès-Meknès"></nz-option>
+            <nz-option nzValue="4" nzLabel="Rabat-Salé-Kénitra"></nz-option>
+            <nz-option nzValue="5" nzLabel="Béni Mellal-Khénifra"></nz-option>
+            <nz-option nzValue="6" nzLabel="Casablanca-Settat"></nz-option>
+            <nz-option nzValue="7" nzLabel="Marrakech-Safi"></nz-option>
+            <nz-option nzValue="8" nzLabel="Drâa-Tafilalet"></nz-option>
+            <nz-option nzValue="9" nzLabel="Souss-Massa"></nz-option>
+            <nz-option nzValue="10" nzLabel="Guelmim-Oued Noun"></nz-option>
+            <nz-option nzValue="11" nzLabel="Laâyoune-Sakia El Hamra"></nz-option>
+            <nz-option nzValue="12" nzLabel="Dakhla-Oued Ed Dahab"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille Menage</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="tailleMenage" id="tailleMenage" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ageCM">Age du chef de ménage </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="ageCM" id="ageCM" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">niveauScolaireAgregCM</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="niveauScolaireAgregCM">
+            <nz-option nzValue="" nzLabel="Préscolaire"></nz-option>
+            <nz-option nzValue="2" nzLabel="Primaire "></nz-option>
+            <nz-option nzValue="3" nzLabel="Secondaire collégial"></nz-option>
+            <nz-option nzValue="4" nzLabel=" Secondaire qualifiant"></nz-option>
+            <nz-option nzValue="5" nzLabel=" Supérieur"></nz-option>
+            <nz-option nzValue="6" nzLabel="Autre niveau"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Sexe du chef de ménage </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="sexeCM">
+            <nz-option nzValue="1" nzLabel="Masculin"></nz-option>
+            <nz-option nzValue="2" nzLabel="Féminin"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="situationProfessionAgregCM">
+          Situation_profession_agreg_CM</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="situationProfessionAgregCM">
+            <nz-option nzValue="1" nzLabel="Inactif"></nz-option>
+            <nz-option nzValue="2" nzLabel="Salarié"></nz-option>
+            <nz-option nzValue="4" nzLabel="Employeur"></nz-option>
+            <nz-option nzValue="5" nzLabel=" Autres situations
+            "></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depEau">Dépensep Eau</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="depEau" id="depEau" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ageCM">Dépense Electricité</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="depElec" id="depElec" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depInternet">Dépense Internet</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="depInternet" id="depInternet" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ordinateur">Ordinateur</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="ordinateur">
+            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+            <nz-option nzValue="0" nzLabel="Non"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="parabol">Parabol</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="parabol">
+            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+            <nz-option nzValue="0" nzLabel="Non"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="voiture">Voiture</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="voiture">
+            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+            <nz-option nzValue="0" nzLabel="Non"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="bain">bain</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="bain">
+            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+            <nz-option nzValue="0" nzLabel="Non"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item class="submit-btn">
+        <nz-form-control [nzOffset]="6" [nzSpan]="12">
+          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Submit</button>
+        </nz-form-control>
+      </nz-form-item>
+
+
+    </form>
+  </nz-tab>
+
+  <nz-tab nzTitle="Tab 2">
+    <div class="ref-data-container">
+      <div class="flex column fill stretch">
+        <div>
+          <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Compositions">
+          </nz-page-header>
+          <ng-template #userTitle><i class="mr-2" nz-icon nzType="font-size" nzTheme="outline"></i>Rsu Composition
+          </ng-template>
+        </div>
+
+        <div class="site-page-header-ghost-wrapper">
+          <nz-page-header nzBordered [nzGhost]="false">
+            <nz-page-header-extra>
+              <div class="flex between">
+                <div class="pr-2">
+                  <nz-upload *ngIf="(rsuData$ | async)?.length == 0" [nzAction]="uploadURI"
+                    [nzHeaders]="{ authorization: 'authorization-text' }" (nzChange)="handleChange($event)"
+                    [nzShowUploadList]="false">
+                    <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
+                  </nz-upload>
+                </div>
+                <div class="pr-2">
+                  <nz-upload *ngIf="(rsuData$ | async)?.length != 0" [nzAction]="updateURI"
+                    [nzHeaders]="{ authorization: 'authorization-text' }" (nzChange)="handleChange($event)"
+                    [nzShowUploadList]="false">
+                    <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Update</button>
+                  </nz-upload>
+                </div>
               </div>
-            </td>
-           </tr>
-        </tbody>
-      </nz-table>
+            </nz-page-header-extra>
+          </nz-page-header>
+
+        </div>
+        <nz-card class="flex fill" nzSize='small' nzTitle='Reference Data'>
+
+          <div class="h-100" style="position: relative;">
+            <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(rsuData$ | async)'
+              nzSize='small' [nzLoading]='loading'>
+              <thead>
+                <tr>
+                  <th *ngFor='let s of (rsuSources$ | async)'>{{s}}</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of basicTable.data">
+                  <td *ngFor='let target of rsuTargets'>{{(row.composition || {})[target]}}</td>
+                  <td>
+                    <div class="button-spacing ghost">
+                      <button nzShape='circle' nz-button (click)='onEdit(row)'><i nz-icon nzType="edit"></i></button>
+                      <nz-divider nzType='vertical'></nz-divider>
+                      <button nzShape='circle' nz-button (click)='onDelete(row)'><i nz-icon
+                          nzType="delete"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+
+        </nz-card>
+
+
+      </div>
+
+
     </div>
-
-    </nz-card>
-
-
-  </div>
-
-
-</div>
+  </nz-tab>
 
 
 
-
-
-
-
+</nz-tabset>

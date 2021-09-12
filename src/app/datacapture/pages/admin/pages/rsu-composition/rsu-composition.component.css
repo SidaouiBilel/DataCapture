@@ -3,3 +3,27 @@
   display: flex;
   flex-flow: column;
 }
+
+
+.login-form {
+  max-width: 900px;
+  margin: 1em auto;
+}
+
+.form-input{
+  display: flex;
+  flex-direction: column;
+}
+
+
+.login-form-button {
+  width: 40%;
+  margin: 0 auto;
+
+}
+
+.submit-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

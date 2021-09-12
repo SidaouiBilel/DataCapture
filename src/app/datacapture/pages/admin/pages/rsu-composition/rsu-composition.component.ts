@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ReferenceService } from '../../componenets/references/reference.service';
 import { NzModalService } from 'ng-zorro-antd';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rsu-composition',
@@ -19,14 +20,33 @@ export class RsuCompositionComponent implements OnInit {
   // rsuTargets$: Subject<any> = new Subject();
   rsuTargets = []
 
+  validateForm!: FormGroup;
 
-  constructor(public service: RsuService, private modal: NzModalService) {
+
+  constructor(public service: RsuService, private modal: NzModalService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.updateURI = this.service.RsuDataUpdate();
     this.uploadURI = this.service.RsuDataImport();
     this.laodData()
+
+    this.validateForm = this.fb.group({
+      milieu: [null, [Validators.required]],
+      region: [null, [Validators.required]],
+      tailleMenage: [null, [Validators.required]],
+      ageCM: [null, [Validators.required]],
+      niveauScolaireAgregCM: [null, [Validators.required]],
+      sexeCM: [null, [Validators.required]],
+      situationProfessionAgregCM: [null, [Validators.required]],
+      depEau: [null, [Validators.required]],
+      depElec: [null, [Validators.required]],
+      depInternet: [null, [Validators.required]],
+      ordinateur: [null, [Validators.required]],
+      parabol: [null, [Validators.required]],
+      voiture: [null, [Validators.required]],
+      bain: [null, [Validators.required]],
+    });
   }
 
   onBack() {
@@ -82,6 +102,18 @@ export class RsuCompositionComponent implements OnInit {
 
   onDelete(row) {
     console.log("Edit a row", row);
+  }
+
+
+  submitForm(): void {
+    console.log('sub',this.validateForm.value);
+
+    // for (const i in this.validateForm.controls) {
+    //   if (this.validateForm.controls.hasOwnProperty(i)) {
+    //     this.validateForm.controls[i].markAsDirty();
+    //     this.validateForm.controls[i].updateValueAndValidity();
+    //   }
+    // }
   }
 
 }
