@@ -4,25 +4,45 @@
 
 <div *ngIf="stats_content">
   <nz-collapse nzAccordion>
-    <nz-collapse-panel nzHeader="Social Distribution">
-      <div class="chart">
+    <nz-collapse-panel nzHeader="Repartition Pauvre">
+      <div style="display: block; width: 600px; height: 300px;">
         <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
           [chartType]="pieChartType"></canvas>
       </div>
     </nz-collapse-panel>
-    <nz-collapse-panel nzHeader="Geographical Distribution">
+    <nz-collapse-panel nzHeader="Repartition Region">
+
       <div class="chart">
-        <canvas baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
-          [chartType]="pieChartType"></canvas>
+        <div style="display: block; width: 600px; height: 300px;">
+          <canvas style="height: 100%;" baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
+            [chartType]="pieChartType"></canvas>
+        </div>
+        <div class="region">
+          <ul>
+            <li>1 : Tanger-Tétouan-Al Hoceïma </li>
+            <li>2 : Oriental </li>
+            <li>3 : Fès-Meknès </li>
+            <li>4 : Rabat-Salé-Kénitr </li>
+            <li>5 : Béni Mellal-Khénifra </li>
+            <li>6 : Casablanca-Settat </li>
+            <li>7 : Marrakech-Safi </li>
+            <li>8 : Drâa-Tafilalet </li>
+            <li>9 : Souss-Massa </li>
+            <li>10 : Guelmim-Oued Noun </li>
+            <li>11 : Laâyoune-Sakia El Hamra </li>
+            <li>12 : Dakhla-Oued Ed Dahab </li>
+          </ul>
+        </div>
       </div>
     </nz-collapse-panel>
-    <nz-collapse-panel nzHeader="Consumption stats">
-      <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(resultat$ | async )' nzSize='small'>
+    <nz-collapse-panel nzHeader="Consommation states">
+      <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(resultat$ | async )'
+        nzSize='small'>
         <thead>
           <tr>
-            <th>Consumption</th>
+            <th>Consommation</th>
             <th>Max</th>
-            <th>Number of poor people with consumption above the maximum</th>
+            <th>Nombre des pauvres ayant une consommation > au max</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +52,7 @@
             <td>{{data.count_pauvre}}</td>
           </tr>
         </tbody>
-        </nz-table>
+      </nz-table>
     </nz-collapse-panel>
   </nz-collapse>
 </div>

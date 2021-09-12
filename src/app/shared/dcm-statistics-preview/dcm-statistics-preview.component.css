@@ -6,7 +6,18 @@
 
 .chart {
   margin: auto;
-  display: block;
-  width: 600px;
-  height: 300px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+
+ul{
+  display: flex;
+  flex-direction: column;
+}
+
+li{
+  margin: 5px 0;
+
 }
