@@ -2,7 +2,10 @@
 
 
   <nz-tab nzTitle="Tab 1">
-    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+    <form nz-form [formGroup]="validateForm" class="rsu-form" (ngSubmit)="submitForm()">
+
+
+      <nz-divider nzText="Information Générale"></nz-divider>
 
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Milieu de résidence </nz-form-label>
@@ -35,7 +38,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille Menage</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille du Menage</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input nz-input formControlName="tailleMenage" id="tailleMenage" type="number" />
         </nz-form-control>
@@ -49,7 +52,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">niveauScolaireAgregCM</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Niveau Scolaire du chef de ménage</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <nz-select formControlName="niveauScolaireAgregCM">
             <nz-option nzValue="" nzLabel="Préscolaire"></nz-option>
@@ -73,8 +76,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="situationProfessionAgregCM">
-          Situation_profession_agreg_CM</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="situationProfessionAgregCM">Activité</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <nz-select formControlName="situationProfessionAgregCM">
             <nz-option nzValue="1" nzLabel="Inactif"></nz-option>
@@ -87,28 +89,7 @@
       </nz-form-item>
 
 
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depEau">Dépensep Eau</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="depEau" id="depEau" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ageCM">Dépense Electricité</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="depElec" id="depElec" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depInternet">Dépense Internet</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="depInternet" id="depInternet" type="number" />
-        </nz-form-control>
-      </nz-form-item>
+      <nz-divider nzText="Informations de consommation"></nz-divider>
 
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ordinateur">Ordinateur</nz-form-label>
@@ -150,12 +131,36 @@
         </nz-form-control>
       </nz-form-item>
 
+      <nz-divider nzText="Les Dépenses"></nz-divider>
 
-      <nz-form-item class="submit-btn">
-        <nz-form-control [nzOffset]="6" [nzSpan]="12">
-          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Submit</button>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depEau">Dépense Eau</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="depEau" id="depEau" type="number" />
         </nz-form-control>
       </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ageCM">Dépense Electricité</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="depElec" id="depElec" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depInternet">Dépense Internet</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="depInternet" id="depInternet" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+
+
+
+      <div class="submit-btn">
+        <button  nz-button [nzType]="'primary'">Submit</button>
+      </div>
 
 
     </form>
