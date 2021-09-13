@@ -20,4 +20,8 @@ export class RsuService {
   getAllRsuCompostion() {
     return this.http.get(`${environment.admin}rsu/`);
   }
+
+  getFormResult(data) {
+    return this.http.post('https://b0ea-34-125-193-143.ngrok.io/predict', data);
+  }
 }

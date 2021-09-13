@@ -17,10 +17,12 @@ export class RsuCompositionComponent implements OnInit {
   updateURI;
   rsuData$: Subject<any> = new Subject();
   rsuSources$: Subject<any> = new Subject();
-  // rsuTargets$: Subject<any> = new Subject();
   rsuTargets = []
 
   validateForm!: FormGroup;
+
+
+  current = 0;
 
 
   constructor(public service: RsuService, private modal: NzModalService, private fb: FormBuilder) {
@@ -34,16 +36,19 @@ export class RsuCompositionComponent implements OnInit {
     this.validateForm = this.fb.group({
       milieu: [null, [Validators.required]],
       region: [null, [Validators.required]],
-      tailleMenage: [null, [Validators.required]],
-      ageCM: [null, [Validators.required]],
-      niveauScolaireAgregCM: [null, [Validators.required]],
-      sexeCM: [null, [Validators.required]],
-      situationProfessionAgregCM: [null, [Validators.required]],
-      depEau: [null, [Validators.required]],
-      depElec: [null, [Validators.required]],
-      depInternet: [null, [Validators.required]],
+      taille_menage: [null, [Validators.required]],
+      Age_CM: [null, [Validators.required]],
+      Etat_matrimonial_CM: [null, [Validators.required]],
+      Niveau_scolaire_agreg_CM: [null, [Validators.required]],
+      Sexe_CM: [null, [Validators.required]],
+      Situation_profession_agreg_CM: [null, [Validators.required]],
+      dep_eau: [null, [Validators.required]],
+      dep_elec: [null, [Validators.required]],
+      dep_internet_tele: [null, [Validators.required]],
+      dep_gaz: [null, [Validators.required]],
       ordinateur: [null, [Validators.required]],
       parabol: [null, [Validators.required]],
+      revenu: [null, [Validators.required]],
       voiture: [null, [Validators.required]],
       bain: [null, [Validators.required]],
     });
@@ -105,15 +110,26 @@ export class RsuCompositionComponent implements OnInit {
   }
 
 
-  submitForm(): void {
-    console.log('sub',this.validateForm.value);
-
-    // for (const i in this.validateForm.controls) {
-    //   if (this.validateForm.controls.hasOwnProperty(i)) {
-    //     this.validateForm.controls[i].markAsDirty();
-    //     this.validateForm.controls[i].updateValueAndValidity();
-    //   }
-    // }
+  pre(): void {
+    this.current -= 1;
   }
+
+  next(): void {
+    this.current += 1;
+  }
+
+  submit() {
+  }
+
+  done(): void {
+    this.current += 1;
+    this.service.getFormResult(this.validateForm.value).subscribe(
+      (res) => {
+        console.log('res', res);
+        // this.current += 1;
+      }
+    )
+  }
+
 
 }
