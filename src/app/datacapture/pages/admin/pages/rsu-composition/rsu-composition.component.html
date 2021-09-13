@@ -207,7 +207,7 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="bain">bain</nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="bain">Bain</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="bain">
                       <nz-option nzValue="1" nzLabel="Oui"></nz-option>
@@ -272,7 +272,7 @@
             <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
               <span>Next</span>
             </button>
-            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2" [disabled]="validateForm.invalid">
               <span>Submit</span>
             </button>
           </div>
