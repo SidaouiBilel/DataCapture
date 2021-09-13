@@ -1,34 +1,3 @@
-<!-- <div class="users-container p-1">
-
-  <nz-page-header class="site-page-header" [nzTitle]="rsuTitle" nzSubtitle="Manage Compositions"></nz-page-header>
-  <ng-template #rsuTitle><i class="mr-2" nz-icon nzType="font-size" nzTheme="outline"></i>Rsu Composition</ng-template>
-
-  <div class="flex-box flex-scroll bg-grey rounded-0 m-0 p-0">
-    <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(rsuData$ | async)'
-          nzSize='small' [nzLoading]='loading'>
-          <thead>
-            <tr>
-              <th *ngFor='let s of (rsuSources$ | async)'>{{s}}</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of basicTable.data">
-              <td *ngFor='let target of rsuTargets'>{{(row.composition || {})[target]}}</td>
-              <td>
-                <div class="button-spacing ghost">
-                  <button nzShape='circle' nz-button (click)='onEdit(row)'><i nz-icon nzType="edit"></i></button>
-                  <nz-divider nzType='vertical'></nz-divider>
-                  <button nzShape='circle' nz-button (click)='onDelete(row)'><i nz-icon
-                      nzType="delete"></i></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-    </nz-table>
-  </div>
-</div> -->
-
 <div class="ref-data-container p-1">
   <div class="flex column stretch">
 
