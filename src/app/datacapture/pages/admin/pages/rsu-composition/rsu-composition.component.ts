@@ -1,8 +1,7 @@
 import { RsuDataEditorComponent } from './../../modals/rsu-data-editor/rsu-data-editor.component';
 import { RsuService } from './../../services/rsu.service';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ReferenceService } from '../../componenets/references/reference.service';
+import { Subject } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
