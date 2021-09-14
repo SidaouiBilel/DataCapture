@@ -1,8 +1,7 @@
 import { RsuDataEditorComponent } from './../../modals/rsu-data-editor/rsu-data-editor.component';
 import { RsuService } from './../../services/rsu.service';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ReferenceService } from '../../componenets/references/reference.service';
+import { Subject } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -122,11 +121,9 @@ export class RsuCompositionComponent implements OnInit {
   }
 
   done(): void {
-    this.current += 1;
     this.service.getFormResult(this.validateForm.value).subscribe(
       (res) => {
-        console.log('res', res);
-        // this.current += 1;
+        this.current += 1;
       }
     )
   }

@@ -139,7 +139,7 @@
                     ménage</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Niveau_scolaire_agreg_CM">
-                      <nz-option nzValue="" nzLabel="Préscolaire"></nz-option>
+                      <nz-option nzValue="0" nzLabel="Préscolaire"></nz-option>
                       <nz-option nzValue="2" nzLabel="Primaire "></nz-option>
                       <nz-option nzValue="3" nzLabel="Secondaire collégial"></nz-option>
                       <nz-option nzValue="4" nzLabel=" Secondaire qualifiant"></nz-option>
@@ -170,6 +170,13 @@
                       <nz-option nzValue="5" nzLabel=" Autres situations
                         "></nz-option>
                     </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="revenu">Revenu</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="revenu" id="revenu" type="number" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -247,13 +254,6 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <input nz-input formControlName="dep_internet_tele" id="dep_internet_tele" type="number" />
-                  </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="revenu">Dépense Internet</nz-form-label>
-                  <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="revenu" id="revenu" type="number" />
                   </nz-form-control>
                 </nz-form-item>
               </div>

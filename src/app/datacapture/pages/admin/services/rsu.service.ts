@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
@@ -22,6 +22,6 @@ export class RsuService {
   }
 
   getFormResult(data) {
-    return this.http.post('https://b0ea-34-125-193-143.ngrok.io/predict', data);
+    return this.http.post('http://ec2-54-226-122-65.compute-1.amazonaws.com:8000/predict', data);
   }
 }
