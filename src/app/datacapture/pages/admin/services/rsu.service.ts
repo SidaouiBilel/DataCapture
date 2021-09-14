@@ -20,4 +20,8 @@ export class RsuService {
   getAllRsuCompostion() {
     return this.http.get(`${environment.admin}rsu/`);
   }
+
+  getFormResult(data) {
+    return this.http.post('http://ec2-54-226-122-65.compute-1.amazonaws.com:8000/predict', data);
+  }
 }
