@@ -1,181 +1,15 @@
-<nz-tabset>
+<div class="ref-data-container p-1">
+  <div class="flex column stretch">
 
+    <div>
+      <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Compositions">
+      </nz-page-header>
+      <ng-template #userTitle><i class="mr-2" nz-icon nzType="font-size" nzTheme="outline"></i>Rsu Composition
+      </ng-template>
+    </div>
 
-  <nz-tab nzTitle="Tab 1">
-    <form nz-form [formGroup]="validateForm" class="rsu-form" (ngSubmit)="submitForm()">
-
-
-      <nz-divider nzText="Information Générale"></nz-divider>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Milieu de résidence </nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="milieu">
-            <nz-option nzValue="1" nzLabel="Urbain"></nz-option>
-            <nz-option nzValue="2" nzLabel="Rural"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Région</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="milieu">
-            <nz-option nzValue="1" nzLabel="Tanger-Tétouan-Al Hoceïma"></nz-option>
-            <nz-option nzValue="2" nzLabel="Oriental"></nz-option>
-            <nz-option nzValue="3" nzLabel="Fès-Meknès"></nz-option>
-            <nz-option nzValue="4" nzLabel="Rabat-Salé-Kénitra"></nz-option>
-            <nz-option nzValue="5" nzLabel="Béni Mellal-Khénifra"></nz-option>
-            <nz-option nzValue="6" nzLabel="Casablanca-Settat"></nz-option>
-            <nz-option nzValue="7" nzLabel="Marrakech-Safi"></nz-option>
-            <nz-option nzValue="8" nzLabel="Drâa-Tafilalet"></nz-option>
-            <nz-option nzValue="9" nzLabel="Souss-Massa"></nz-option>
-            <nz-option nzValue="10" nzLabel="Guelmim-Oued Noun"></nz-option>
-            <nz-option nzValue="11" nzLabel="Laâyoune-Sakia El Hamra"></nz-option>
-            <nz-option nzValue="12" nzLabel="Dakhla-Oued Ed Dahab"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille du Menage</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="tailleMenage" id="tailleMenage" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ageCM">Age du chef de ménage </nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="ageCM" id="ageCM" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Niveau Scolaire du chef de ménage</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="niveauScolaireAgregCM">
-            <nz-option nzValue="" nzLabel="Préscolaire"></nz-option>
-            <nz-option nzValue="2" nzLabel="Primaire "></nz-option>
-            <nz-option nzValue="3" nzLabel="Secondaire collégial"></nz-option>
-            <nz-option nzValue="4" nzLabel=" Secondaire qualifiant"></nz-option>
-            <nz-option nzValue="5" nzLabel=" Supérieur"></nz-option>
-            <nz-option nzValue="6" nzLabel="Autre niveau"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Sexe du chef de ménage </nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="sexeCM">
-            <nz-option nzValue="1" nzLabel="Masculin"></nz-option>
-            <nz-option nzValue="2" nzLabel="Féminin"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="situationProfessionAgregCM">Activité</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="situationProfessionAgregCM">
-            <nz-option nzValue="1" nzLabel="Inactif"></nz-option>
-            <nz-option nzValue="2" nzLabel="Salarié"></nz-option>
-            <nz-option nzValue="4" nzLabel="Employeur"></nz-option>
-            <nz-option nzValue="5" nzLabel=" Autres situations
-            "></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-
-      <nz-divider nzText="Informations de consommation"></nz-divider>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ordinateur">Ordinateur</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="ordinateur">
-            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-            <nz-option nzValue="0" nzLabel="Non"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="parabol">Parabol</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="parabol">
-            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-            <nz-option nzValue="0" nzLabel="Non"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="voiture">Voiture</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="voiture">
-            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-            <nz-option nzValue="0" nzLabel="Non"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="bain">bain</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="bain">
-            <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-            <nz-option nzValue="0" nzLabel="Non"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-divider nzText="Les Dépenses"></nz-divider>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depEau">Dépense Eau</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="depEau" id="depEau" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ageCM">Dépense Electricité</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="depElec" id="depElec" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="depInternet">Dépense Internet</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="depInternet" id="depInternet" type="number" />
-        </nz-form-control>
-      </nz-form-item>
-
-
-
-      <div class="submit-btn">
-        <button  nz-button [nzType]="'primary'">Submit</button>
-      </div>
-
-
-    </form>
-  </nz-tab>
-
-  <nz-tab nzTitle="Tab 2">
-    <div class="ref-data-container">
-      <div class="flex column fill stretch">
-        <div>
-          <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Compositions">
-          </nz-page-header>
-          <ng-template #userTitle><i class="mr-2" nz-icon nzType="font-size" nzTheme="outline"></i>Rsu Composition
-          </ng-template>
-        </div>
-
+    <nz-tabset>
+      <nz-tab nzTitle="Rsu Composition">
         <div class="site-page-header-ghost-wrapper">
           <nz-page-header nzBordered [nzGhost]="false">
             <nz-page-header-extra>
@@ -199,8 +33,8 @@
           </nz-page-header>
 
         </div>
-        <nz-card class="flex fill" nzSize='small' nzTitle='Reference Data'>
 
+        <nz-card nzSize='small' nzTitle='Reference Data'>
           <div class="h-100" style="position: relative;">
             <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(rsuData$ | async)'
               nzSize='small' [nzLoading]='loading'>
@@ -225,16 +59,243 @@
               </tbody>
             </nz-table>
           </div>
-
         </nz-card>
+      </nz-tab>
+
+      <nz-tab nzTitle="AI Test">
+        <div class='tab-1-content'>
+          <nz-steps [nzCurrent]="current">
+            <nz-step nzTitle="Information générale"></nz-step>
+            <nz-step nzTitle="Information de consommation"></nz-step>
+            <nz-step nzTitle="Les dépenses"></nz-step>
+            <nz-step nzTitle="Résultat"></nz-step>
+          </nz-steps>
+
+          <div class="  ">
+            <form nz-form [formGroup]="validateForm" class="rsu-form">
+
+              <div *ngIf="current == 0">
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="revenu">Revenu</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="revenu" id="revenu" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
 
 
-      </div>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Milieu de résidence </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="milieu">
+                      <nz-option nzValue="1" nzLabel="Urbain"></nz-option>
+                      <nz-option nzValue="2" nzLabel="Rural"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="region">Région</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="region">
+                      <nz-option nzValue="1" nzLabel="Tanger-Tétouan-Al Hoceïma"></nz-option>
+                      <nz-option nzValue="2" nzLabel="Oriental"></nz-option>
+                      <nz-option nzValue="3" nzLabel="Fès-Meknès"></nz-option>
+                      <nz-option nzValue="4" nzLabel="Rabat-Salé-Kénitra"></nz-option>
+                      <nz-option nzValue="5" nzLabel="Béni Mellal-Khénifra"></nz-option>
+                      <nz-option nzValue="6" nzLabel="Casablanca-Settat"></nz-option>
+                      <nz-option nzValue="7" nzLabel="Marrakech-Safi"></nz-option>
+                      <nz-option nzValue="8" nzLabel="Drâa-Tafilalet"></nz-option>
+                      <nz-option nzValue="9" nzLabel="Souss-Massa"></nz-option>
+                      <nz-option nzValue="10" nzLabel="Guelmim-Oued Noun"></nz-option>
+                      <nz-option nzValue="11" nzLabel="Laâyoune-Sakia El Hamra"></nz-option>
+                      <nz-option nzValue="12" nzLabel="Dakhla-Oued Ed Dahab"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille du Menage
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="taille_menage" id="taille_menage" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="ageCM">Age du chef de ménage </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="Age_CM" id="Age_CM" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Etat_matrimonial_CM">Etat matrimonial du chef
+                    de
+                    ménage
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="Etat_matrimonial_CM">
+                      <nz-option nzValue="1" nzLabel="Célibataire "></nz-option>
+                      <nz-option nzValue="2" nzLabel="Marié"></nz-option>
+                      <nz-option nzValue="3" nzLabel="Divorcé"></nz-option>
+                      <nz-option nzValue="4" nzLabel="Veuf "></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Niveau_scolaire_agreg_CM">Niveau Scolaire du
+                    chef
+                    de
+                    ménage</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="Niveau_scolaire_agreg_CM">
+                      <nz-option nzValue="0" nzLabel="Préscolaire"></nz-option>
+                      <nz-option nzValue="2" nzLabel="Primaire "></nz-option>
+                      <nz-option nzValue="3" nzLabel="Secondaire collégial"></nz-option>
+                      <nz-option nzValue="4" nzLabel=" Secondaire qualifiant"></nz-option>
+                      <nz-option nzValue="5" nzLabel=" Supérieur"></nz-option>
+                      <nz-option nzValue="6" nzLabel="Autre niveau"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Sexe_CM">Sexe du chef de ménage
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="Sexe_CM">
+                      <nz-option nzValue="1" nzLabel="Masculin"></nz-option>
+                      <nz-option nzValue="2" nzLabel="Féminin"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Situation_profession_agreg_CM">Activité
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="Situation_profession_agreg_CM">
+                      <nz-option nzValue="1" nzLabel="Inactif"></nz-option>
+                      <nz-option nzValue="2" nzLabel="Salarié"></nz-option>
+                      <nz-option nzValue="4" nzLabel="Employeur"></nz-option>
+                      <nz-option nzValue="5" nzLabel=" Autres situations
+                        "></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+              </div>
+
+              <div *ngIf="current == 1">
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="ordinateur">Ordinateur</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="ordinateur">
+                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="parabol">Parabol</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="parabol">
+                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="voiture">Voiture</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="voiture">
+                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="bain">Bain</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="bain">
+                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
+                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+              </div>
+
+              <div *ngIf="current == 2">
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_eau">Dépense Eau</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="dep_eau" id="dep_eau" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
 
 
-    </div>
-  </nz-tab>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_elec">Dépense Electricité</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="dep_elec" id="dep_elec" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_gaz">Dépense Gaz</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="dep_gaz" id="dep_gaz" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
 
 
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_internet_tele">Dépense Internet
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="dep_internet_tele" id="dep_internet_tele" type="number" />
+                  </nz-form-control>
+                </nz-form-item>
 
-</nz-tabset>
+
+              </div>
+
+            </form>
+            <div *ngIf="current == 3">
+              <div class="resultat-content">
+                <h1>
+                  La perssone est
+                  <span *ngIf="isFraude.Fraude=='True'" style="color:#F47174;">Fraudause </span>
+                  <span *ngIf="isFraude.Faude=='False'" style="color:#ACD1AF;">Non Fraudause </span>
+                  à
+                  <span>{{isFraude.proba.toFixed(2)}}</span> %
+                </h1>
+              </div>
+            </div>
+          </div>
+
+          <div class="steps-action">
+            <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+              <span>Previous</span>
+            </button>
+            <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+              <span>Next</span>
+            </button>
+            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+              <!-- <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2" [disabled]="validateForm.invalid"> -->
+              <span>Submit</span>
+            </button>
+          </div>
+
+        </div>
+      </nz-tab>
+    </nz-tabset>
+
+  </div>
+</div>
