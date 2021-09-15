@@ -186,12 +186,12 @@
                   </nz-form-control>
                 </nz-form-item>
 
-                <nz-form-item>
+                <!-- <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="revenu">Revenu</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <input nz-input formControlName="revenu" id="revenu" type="number" />
                   </nz-form-control>
-                </nz-form-item>
+                </nz-form-item> -->
 
               </div>
 
@@ -275,7 +275,7 @@
             <div *ngIf="current == 3">
               <div class="resultat-content">
                 <h1>
-                  La perssone est
+                  La personne est
                   <span *ngIf="isFraude.Fraude=='True'" style="color:#F47174;">Fraudause </span>
                   <span *ngIf="isFraude.Faude=='False'" style="color:#ACD1AF;">Non Fraudause </span>
                   à
