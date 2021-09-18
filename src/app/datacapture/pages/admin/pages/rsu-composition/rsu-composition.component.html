@@ -89,8 +89,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Milieu de résidence </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="milieu">
-                      <nz-option nzValue="1" nzLabel="Urbain"></nz-option>
-                      <nz-option nzValue="2" nzLabel="Rural"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Urbain"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Rural"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -99,18 +99,18 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="region">Région</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="region">
-                      <nz-option nzValue="1" nzLabel="Tanger-Tétouan-Al Hoceïma"></nz-option>
-                      <nz-option nzValue="2" nzLabel="Oriental"></nz-option>
-                      <nz-option nzValue="3" nzLabel="Fès-Meknès"></nz-option>
-                      <nz-option nzValue="4" nzLabel="Rabat-Salé-Kénitra"></nz-option>
-                      <nz-option nzValue="5" nzLabel="Béni Mellal-Khénifra"></nz-option>
-                      <nz-option nzValue="6" nzLabel="Casablanca-Settat"></nz-option>
-                      <nz-option nzValue="7" nzLabel="Marrakech-Safi"></nz-option>
-                      <nz-option nzValue="8" nzLabel="Drâa-Tafilalet"></nz-option>
-                      <nz-option nzValue="9" nzLabel="Souss-Massa"></nz-option>
-                      <nz-option nzValue="10" nzLabel="Guelmim-Oued Noun"></nz-option>
-                      <nz-option nzValue="11" nzLabel="Laâyoune-Sakia El Hamra"></nz-option>
-                      <nz-option nzValue="12" nzLabel="Dakhla-Oued Ed Dahab"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Tanger-Tétouan-Al Hoceïma"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Oriental"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Fès-Meknès"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Rabat-Salé-Kénitra"></nz-option>
+                      <nz-option [nzValue]="5" nzLabel="Béni Mellal-Khénifra"></nz-option>
+                      <nz-option [nzValue]="6" nzLabel="Casablanca-Settat"></nz-option>
+                      <nz-option [nzValue]="7" nzLabel="Marrakech-Safi"></nz-option>
+                      <nz-option [nzValue]="8" nzLabel="Drâa-Tafilalet"></nz-option>
+                      <nz-option [nzValue]="9" nzLabel="Souss-Massa"></nz-option>
+                      <nz-option [nzValue]="10" nzLabel="Guelmim-Oued Noun"></nz-option>
+                      <nz-option [nzValue]="11" nzLabel="Laâyoune-Sakia El Hamra"></nz-option>
+                      <nz-option [nzValue]="12" nzLabel="Dakhla-Oued Ed Dahab"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -137,10 +137,10 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Etat_matrimonial_CM">
-                      <nz-option nzValue="1" nzLabel="Célibataire "></nz-option>
-                      <nz-option nzValue="2" nzLabel="Marié"></nz-option>
-                      <nz-option nzValue="3" nzLabel="Divorcé"></nz-option>
-                      <nz-option nzValue="4" nzLabel="Veuf "></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Célibataire "></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Marié"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Divorcé"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Veuf "></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -152,12 +152,12 @@
                     ménage</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Niveau_scolaire_agreg_CM">
-                      <nz-option nzValue="0" nzLabel="Préscolaire"></nz-option>
-                      <nz-option nzValue="2" nzLabel="Primaire "></nz-option>
-                      <nz-option nzValue="3" nzLabel="Secondaire collégial"></nz-option>
-                      <nz-option nzValue="4" nzLabel=" Secondaire qualifiant"></nz-option>
-                      <nz-option nzValue="5" nzLabel=" Supérieur"></nz-option>
-                      <nz-option nzValue="6" nzLabel="Autre niveau"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Préscolaire"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Primaire "></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Secondaire collégial"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel=" Secondaire qualifiant"></nz-option>
+                      <nz-option [nzValue]="5" nzLabel=" Supérieur"></nz-option>
+                      <nz-option [nzValue]="6" nzLabel="Autre niveau"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -167,8 +167,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Sexe_CM">
-                      <nz-option nzValue="1" nzLabel="Masculin"></nz-option>
-                      <nz-option nzValue="2" nzLabel="Féminin"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Masculin"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Féminin"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -178,10 +178,10 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Situation_profession_agreg_CM">
-                      <nz-option nzValue="1" nzLabel="Inactif"></nz-option>
-                      <nz-option nzValue="2" nzLabel="Salarié"></nz-option>
-                      <nz-option nzValue="4" nzLabel="Employeur"></nz-option>
-                      <nz-option nzValue="5" nzLabel="Autres situations"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Inactif"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Salarié"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Employeur"></nz-option>
+                      <nz-option [nzValue]="5" nzLabel="Autres situations"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -192,8 +192,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="ordinateur">Ordinateur</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="ordinateur">
-                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -202,8 +202,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="parabol">Parabol</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="parabol">
-                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -212,8 +212,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="voiture">Voiture</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="voiture">
-                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -222,8 +222,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="bain">Bain</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="bain">
-                      <nz-option nzValue="1" nzLabel="Oui"></nz-option>
-                      <nz-option nzValue="0" nzLabel="Non"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -268,9 +268,9 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Modèle de test </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="modele">
-                      <nz-option nzValue="1" nzLabel="Classification"></nz-option>
-                      <nz-option nzValue="2" nzLabel="Auto encoder"></nz-option>
-                      <nz-option nzValue="3" nzLabel="Isolation Forest"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Classification"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Auto encoder"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Isolation Forest"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -280,21 +280,24 @@
 
             <div *ngIf="current == 4">
               <div>
-                <!-- *ngIf="fraudResult.Faude=='False'" -->
-                <nz-alert *ngIf="fraudResult.Faude=='False'" class="resultat-content"
-                 nzType="success"
-                 nzMessage="Doute de la fraude"
-                 nzDescription="La personne est non fraudause à {{fraudResult.proba.toFixed(2)}} %"
-                 nzShowIcon
-               ></nz-alert>
+                <div *ngIf="!fraudResult.fraude">
+                    <nz-alert class="resultat-content"
+                    nzType="success"
+                    nzMessage="Doute de la fraude"
+                    nzDescription="La personne est non fraudause à {{fraudResult.proba.toFixed(2)}} %"
+                    nzShowIcon
+                  ></nz-alert>
+                </div>
 
-               <!-- *ngIf="fraudResult.Faude=='True'" -->
-                <nz-alert *ngIf="fraudResult.Faude=='True'" class="resultat-content"
-                nzType="error"
-                nzMessage="Doute de la fraude"
-                nzDescription="La personne est fraudause à {{fraudResult.proba.toFixed(2)}} %"
-                nzShowIcon
-              ></nz-alert>
+               <div *ngIf="fraudResult.fraude">
+                  <nz-alert class="resultat-content"
+                  nzType="error"
+                  nzMessage="Doute de la fraude"
+                  nzDescription="La personne est fraudause à {{fraudResult.proba.toFixed(2)}} %"
+                  nzShowIcon
+                ></nz-alert>
+               </div>
+
               </div>
             </div>
           </div>

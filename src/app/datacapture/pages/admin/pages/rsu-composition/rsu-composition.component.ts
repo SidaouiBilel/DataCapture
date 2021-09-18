@@ -125,6 +125,7 @@ export class RsuCompositionComponent implements OnInit {
 
   done(): void {
     this.modele = this.validateForm.value.modele
+    // delete this.validateForm.value.modele
     this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
       (res) => {
         this.fraudResult = res;
