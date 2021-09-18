@@ -46,26 +46,22 @@
   padding-top: 30px;
 }
 
+nz-alert {
+  margin: 3em auto;
+  max-width: 450px;
+  border-radius: 10px;
+  font-weight: bolder;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 .steps-action {
   margin-top: 24px;
 }
 
-button {
-  margin: 0 1em;
+.steps-action button {
+  margin-right: 1em;
 }
 
 .tab-1-content {
   margin: 2em;
-}
-
-
-.resultat-content{
-
-  padding: 2em 1em;
-  margin: 3em auto;
-  max-width: 600px;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
 }

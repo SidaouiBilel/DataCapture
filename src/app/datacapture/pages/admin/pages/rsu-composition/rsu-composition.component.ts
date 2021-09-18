@@ -17,8 +17,9 @@ export class RsuCompositionComponent implements OnInit {
   rsuData$: Subject<any> = new Subject();
   rsuSources$: Subject<any> = new Subject();
   rsuTargets = []
+  modele;
 
-  isFraude;
+  fraudResult;
   validateForm!: FormGroup;
 
 
@@ -34,6 +35,7 @@ export class RsuCompositionComponent implements OnInit {
     this.laodData()
 
     this.validateForm = this.fb.group({
+      modele: [null, [Validators.required]],
       milieu: [null, [Validators.required]],
       region: [null, [Validators.required]],
       taille_menage: [null, [Validators.required]],
@@ -122,9 +124,10 @@ export class RsuCompositionComponent implements OnInit {
   }
 
   done(): void {
-    this.service.getFormResult(this.validateForm.value).subscribe(
+    this.modele = this.validateForm.value.modele
+    this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
       (res) => {
-        this.isFraude = res;
+        this.fraudResult = res;
         this.current += 1;
       }
     )

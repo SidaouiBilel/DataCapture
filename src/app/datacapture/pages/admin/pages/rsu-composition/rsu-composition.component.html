@@ -9,7 +9,7 @@
     </div>
 
     <nz-tabset>
-      <nz-tab nzTitle="Rsu Composition">
+<!--       <nz-tab nzTitle="Rsu Composition">
         <div class="site-page-header-ghost-wrapper">
           <nz-page-header nzBordered [nzGhost]="false">
             <nz-page-header-extra>
@@ -60,7 +60,7 @@
             </nz-table>
           </div>
         </nz-card>
-      </nz-tab>
+      </nz-tab> -->
 
       <nz-tab nzTitle="AI Test">
         <div class='tab-1-content'>
@@ -68,10 +68,11 @@
             <nz-step nzTitle="Information générale"></nz-step>
             <nz-step nzTitle="Information de consommation"></nz-step>
             <nz-step nzTitle="Les dépenses"></nz-step>
+            <nz-step nzTitle="Modèle"></nz-step>
             <nz-step nzTitle="Résultat"></nz-step>
           </nz-steps>
 
-          <div class="  ">
+          <div class="steps-content">
             <form nz-form [formGroup]="validateForm" class="rsu-form">
 
               <div *ngIf="current == 0">
@@ -79,7 +80,7 @@
                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="revenu">Revenu</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="revenu" id="revenu" type="number" />
+                    <input nz-input formControlName="revenu" id="revenu" type="number" min="0"/>
                   </nz-form-control>
                 </nz-form-item>
 
@@ -118,14 +119,14 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille du Menage
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="taille_menage" id="taille_menage" type="number" />
+                    <input nz-input formControlName="taille_menage" id="taille_menage" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="ageCM">Age du chef de ménage </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="Age_CM" id="Age_CM" type="number" />
+                    <input nz-input formControlName="Age_CM" id="Age_CM" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -180,19 +181,10 @@
                       <nz-option nzValue="1" nzLabel="Inactif"></nz-option>
                       <nz-option nzValue="2" nzLabel="Salarié"></nz-option>
                       <nz-option nzValue="4" nzLabel="Employeur"></nz-option>
-                      <nz-option nzValue="5" nzLabel=" Autres situations
-                        "></nz-option>
+                      <nz-option nzValue="5" nzLabel="Autres situations"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
-
-                <!-- <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="revenu">Revenu</nz-form-label>
-                  <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="revenu" id="revenu" type="number" />
-                  </nz-form-control>
-                </nz-form-item> -->
-
               </div>
 
               <div *ngIf="current == 1">
@@ -242,7 +234,7 @@
                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_eau">Dépense Eau</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_eau" id="dep_eau" type="number" />
+                    <input nz-input formControlName="dep_eau" id="dep_eau" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -250,14 +242,14 @@
                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_elec">Dépense Electricité</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_elec" id="dep_elec" type="number" />
+                    <input nz-input formControlName="dep_elec" id="dep_elec" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_gaz">Dépense Gaz</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_gaz" id="dep_gaz" type="number" />
+                    <input nz-input formControlName="dep_gaz" id="dep_gaz" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -266,33 +258,56 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_internet_tele">Dépense Internet
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_internet_tele" id="dep_internet_tele" type="number" />
+                    <input nz-input formControlName="dep_internet_tele" id="dep_internet_tele" type="number" min="0" />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div *ngIf="current == 3">
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Modèle de test </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="modele">
+                      <nz-option nzValue="1" nzLabel="Classification"></nz-option>
+                      <nz-option nzValue="2" nzLabel="Auto encoder"></nz-option>
+                      <nz-option nzValue="3" nzLabel="Isolation Forest"></nz-option>
+                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
               </div>
 
             </form>
-            <div *ngIf="current == 3">
-              <div class="resultat-content">
-                <h1>
-                  La personne est
-                  <span *ngIf="isFraude.Fraude=='True'" style="color:#F47174;">Fraudause </span>
-                  <span *ngIf="isFraude.Faude=='False'" style="color:#ACD1AF;">Non Fraudause </span>
-                  à
-                  <span>{{isFraude.proba.toFixed(2)}}</span> %
-                </h1>
+
+            <div *ngIf="current == 4">
+              <div>
+                <!-- *ngIf="fraudResult.Faude=='False'" -->
+                <nz-alert *ngIf="fraudResult.Faude=='False'" class="resultat-content"
+                 nzType="success"
+                 nzMessage="Doute de la fraude"
+                 nzDescription="La personne est non fraudause à {{fraudResult.proba.toFixed(2)}} %"
+                 nzShowIcon
+               ></nz-alert>
+
+               <!-- *ngIf="fraudResult.Faude=='True'" -->
+                <nz-alert *ngIf="fraudResult.Faude=='True'" class="resultat-content"
+                nzType="error"
+                nzMessage="Doute de la fraude"
+                nzDescription="La personne est fraudause à {{fraudResult.proba.toFixed(2)}} %"
+                nzShowIcon
+              ></nz-alert>
               </div>
             </div>
           </div>
+
 
           <div class="steps-action">
             <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
               <span>Previous</span>
             </button>
-            <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+            <button nz-button nzType="default" (click)="next()" *ngIf="current < 3">
               <span>Next</span>
             </button>
-            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 3"> <!-- [disabled]="validateForm.invalid" -->
               <span>Submit</span>
             </button>
           </div>
