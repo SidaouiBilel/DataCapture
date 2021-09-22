@@ -47,6 +47,8 @@ export class RsuService {
 
   getUri(modele) {
     switch (modele) {
+      case 0:
+        return 'http://ec2-54-226-122-65.compute-1.amazonaws.com:8000/predict_without_revenu'
       case 1:
         return 'http://ec2-54-226-122-65.compute-1.amazonaws.com:8000/predict'
       case 2:

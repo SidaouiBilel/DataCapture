@@ -139,6 +139,7 @@ export class RsuCompositionComponent implements OnInit {
   getMessage(modele, res) {
     let message = ''
     switch (modele) {
+      case 0:
       case 1: {
         (res.fraude) ?
           (message = "La personne est fraudause à " + res.proba.toFixed(2) + " %") :
