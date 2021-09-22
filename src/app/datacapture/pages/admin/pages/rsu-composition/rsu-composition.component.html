@@ -280,25 +280,13 @@
 
             <div *ngIf="current == 4">
               <div>
-                <div *ngIf="!fraudResult.fraude">
-                    <nz-alert class="resultat-content"
-                    nzType="success"
-                    nzMessage="Doute de la fraude"
-                    nzDescription="La personne est non fraudause à {{fraudResult.proba.toFixed(2)}} %"
-                    nzShowIcon
-                  ></nz-alert>
-                </div>
-
-               <div *ngIf="fraudResult.fraude">
-                  <nz-alert class="resultat-content"
-                  nzType="error"
-                  nzMessage="Doute de la fraude"
-                  nzDescription="La personne est fraudause à {{fraudResult.proba.toFixed(2)}} %"
-                  nzShowIcon
-                ></nz-alert>
-               </div>
-
-              </div>
+                <nz-alert class="resultat-content"
+                [nzType]="(fraudResult.fraude) ? 'error' : 'success'"
+                nzMessage="Doute de la fraude"
+                [nzDescription]="fraudResult.msg"
+                nzShowIcon
+              ></nz-alert>
+             </div>
             </div>
           </div>
 
@@ -310,7 +298,7 @@
             <button nz-button nzType="default" (click)="next()" *ngIf="current < 3">
               <span>Next</span>
             </button>
-            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 3"> <!-- [disabled]="validateForm.invalid" -->
+            <button nz-button nzType="primary" (click)="done()" *ngIf="current === 3" [disabled]="validateForm.invalid">
               <span>Submit</span>
             </button>
           </div>

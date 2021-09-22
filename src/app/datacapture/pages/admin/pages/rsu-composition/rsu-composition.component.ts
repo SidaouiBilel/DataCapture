@@ -129,10 +129,97 @@ export class RsuCompositionComponent implements OnInit {
     this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
       (res) => {
         this.fraudResult = res;
+        this.fraudResult.msg = this.getMessage(this.modele, res)
         this.current += 1;
       }
     )
   }
 
+
+  getMessage(modele, res) {
+    let message = ''
+    switch (modele) {
+      case 1: {
+        (res.fraude) ?
+          (message = "La personne est fraudause à " + res.proba.toFixed(2) + " %") :
+          (message = "La personne est non fraudause à " + res.proba.toFixed(2) + " %")
+        break;
+      }
+
+      case 2: {
+        let msg = this.getSubMsg(modele, res.proba);
+        (res.fraude) ?
+          (message = "La personne est fraudause avec une " + msg) :
+          (message = "La personne est non fraudause avec une " + msg)
+        break;
+      }
+
+      case 3: {
+        let msg = this.getSubMsg(modele, res.proba);
+        (res.fraude) ?
+          (message = "La personne est fraudause avec une " + msg) :
+          (message = "La personne est non fraudause avec une " + msg)
+        break;
+      }
+
+      default: {
+        message = 'Default message'
+        break;
+      }
+
+    }
+
+    return message
+  }
+
+  getSubMsg(modele, proba) {
+    let msg = ''
+    switch (modele) {
+      case 2: {
+        switch (proba) {
+          case 68: {
+            msg = "probabilité moyenne (1 std de l'erreur normale )"
+            break;
+          }
+          case 95: {
+            msg = "probabilité élevé (2 std de l'erreur normale )"
+            break;
+          }
+          case 99: {
+            msg = "probabilité  plus élevée (3 std de l'erreur normale )"
+            break;
+          }
+          default: {
+            msg = ''
+            break;
+          }
+        }
+        break;
+      }
+      case 3: {
+        switch (proba) {
+          case 1.0: {
+            msg = "probabilité moyenne (1)"
+            break;
+          }
+          case 2.0: {
+            msg = "probabilité élevé (2)"
+            break;
+          }
+          default: {
+            msg = "probabilité  plus élevée (supérieur ou égale à 3)"
+            break;
+          }
+        }
+        break;
+      }
+      default: {
+        msg = ''
+        break;
+      }
+    }
+
+    return msg
+  }
 
 }
