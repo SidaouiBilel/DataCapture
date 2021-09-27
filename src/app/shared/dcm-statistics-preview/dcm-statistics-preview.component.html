@@ -4,12 +4,13 @@
 
 <div *ngIf="stats_content">
   <nz-collapse nzAccordion>
-    <nz-collapse-panel nzHeader="Repartition Pauvre">
+    <nz-collapse-panel nzHeader="Repartition Eligibilité">
       <div style="display: block; width: 600px; height: 300px;">
-        <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
+        <canvas style="height: 100%;" baseChart [data]="pieScoreChartData" [labels]="pieScoreChartLabels"
           [chartType]="pieChartType"></canvas>
       </div>
     </nz-collapse-panel>
+
     <nz-collapse-panel nzHeader="Repartition Region">
 
       <div class="chart">
@@ -35,6 +36,14 @@
         </div>
       </div>
     </nz-collapse-panel>
+
+    <nz-collapse-panel nzHeader="Repartition Milieu">
+      <div style="display: block; width: 600px; height: 300px;">
+        <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
+          [chartType]="pieChartType"></canvas>
+      </div>
+    </nz-collapse-panel>
+
     <nz-collapse-panel nzHeader="Consommation states">
       <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(resultat$ | async )'
         nzSize='small'>

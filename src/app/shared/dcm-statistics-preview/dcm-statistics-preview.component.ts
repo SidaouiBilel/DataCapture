@@ -19,13 +19,21 @@ export class DcmStatisticsPreviewComponent implements OnInit {
 
 
   // Social Chart
-  public piePauvreChartLabels: Label[] = ['Poor', 'Not Poor'];
-  public piePauvreChartData: SingleDataSet = [,];
+  /*   public piePauvreChartLabels: Label[] = ['Poor', 'Not Poor'];
+    public piePauvreChartData: SingleDataSet = [,]; */
   public pieChartType: ChartType = 'pie';
 
   // Geographic Chart
   public pieRegionChartLabels: Label[] = [];
   public pirRegionChartData = []
+
+  // Milieu Chart
+  public pieMilieuChartLabels: Label[] = ['Urbain', 'Rural'];
+  public pieMilieuChartData = []
+
+  // Milieu Chart
+  public pieScoreChartLabels: Label[] = ['Refus', 'Refus', 'Refus'];
+  public pieScoreChartData = []
 
   constructor(public importService: FileImportService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
 
@@ -40,8 +48,10 @@ export class DcmStatisticsPreviewComponent implements OnInit {
         (res: any) => {
           this.stats_content = res;
           this.resultat$.next(res.resultat)
-          this.preparePauvrePie(res['pauvre'])
+          // this.preparePauvrePie(res['pauvre'])
           this.prepareRegionChart(res['region'])
+          this.prepareMilieuChart(res['milieu'])
+          this.prepareScoreChart(res['categorie'])
           this.ntf.success('Statistics generated successfully...');
         }, (err) => {
           this.resultat$.next([])
@@ -52,16 +62,27 @@ export class DcmStatisticsPreviewComponent implements OnInit {
     }
   }
 
-  preparePauvrePie(data) {
-    this.piePauvreChartData[0] = data[0].toFixed(2)
-    this.piePauvreChartData[1] = data[1].toFixed(2)
-  }
+  /*   preparePauvrePie(data) {
+      this.piePauvreChartData[0] = data[0].toFixed(2)
+      this.piePauvreChartData[1] = data[1].toFixed(2)
+    } */
 
   prepareRegionChart(data) {
     Object.keys(data).forEach(key => {
       this.pieRegionChartLabels.push(key)
       this.pirRegionChartData.push(data[key].toFixed(2))
     })
+  }
+
+  prepareMilieuChart(data) {
+    this.pieMilieuChartData[0] = data[0].toFixed(2)
+    this.pieMilieuChartData[1] = data[1].toFixed(2)
+  }
+
+  prepareScoreChart(data) {
+    this.pieScoreChartData[0] = data[0].toFixed(2)
+    this.pieScoreChartData[1] = data[1].toFixed(2)
+    this.pieScoreChartData[2] = data[2].toFixed(2)
   }
 
 }
