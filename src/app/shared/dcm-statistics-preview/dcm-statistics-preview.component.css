@@ -11,13 +11,15 @@
   width: 100%;
 }
 
-
-ul{
+ul {
   display: flex;
   flex-direction: column;
 }
 
-li{
+li {
   margin: 5px 0;
+}
 
+.count {
+  font-weight: bolder;
 }

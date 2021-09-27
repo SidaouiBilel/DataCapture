@@ -15,7 +15,7 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   sheet_id;
   stats_content;
   length_vars;
-  resultat$ = new BehaviorSubject<any>([]);
+  consommation$ = new BehaviorSubject<any>([]);
 
 
   // Social Chart
@@ -32,7 +32,7 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   public pieMilieuChartData = []
 
   // Milieu Chart
-  public pieScoreChartLabels: Label[] = ['Refus', 'Refus', 'Refus'];
+  public pieScoreChartLabels: Label[] = ['En position de pauvreté', 'En position vulnérable', 'Rejeté'];
   public pieScoreChartData = []
 
   constructor(public importService: FileImportService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
@@ -43,18 +43,18 @@ export class DcmStatisticsPreviewComponent implements OnInit {
 
   getStatistics(sheet_id) {
     if (sheet_id) {
-      this.resultat$.next([])
+      this.consommation$.next([])
       this.importService.getStatisticsData(sheet_id).subscribe(
         (res: any) => {
           this.stats_content = res;
-          this.resultat$.next(res.resultat)
+          this.consommation$.next(res.consommation)
           // this.preparePauvrePie(res['pauvre'])
           this.prepareRegionChart(res['region'])
           this.prepareMilieuChart(res['milieu'])
           this.prepareScoreChart(res['categorie'])
           this.ntf.success('Statistics generated successfully...');
         }, (err) => {
-          this.resultat$.next([])
+          this.consommation$.next([])
           this.drawerRef.close();
           this.ntf.warn('Statistics failed...');
         }
@@ -75,14 +75,15 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   }
 
   prepareMilieuChart(data) {
-    this.pieMilieuChartData[0] = data[0].toFixed(2)
-    this.pieMilieuChartData[1] = data[1].toFixed(2)
+    Object.keys(data).forEach(key => {
+      this.pieMilieuChartData.push(data[key].toFixed(2))
+    })
   }
 
   prepareScoreChart(data) {
-    this.pieScoreChartData[0] = data[0].toFixed(2)
-    this.pieScoreChartData[1] = data[1].toFixed(2)
-    this.pieScoreChartData[2] = data[2].toFixed(2)
+    Object.keys(data).forEach(key => {
+      this.pieScoreChartData.push(data[key].toFixed(2))
+    })
   }
 
 }
