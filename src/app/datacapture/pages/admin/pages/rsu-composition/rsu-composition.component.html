@@ -129,8 +129,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Demandeur_Sexe">
-                      <nz-option [nzValue]="1" nzLabel="ذكر"></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="'أنثى"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="M"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="F"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -145,7 +145,7 @@
                       <nz-option [nzValue]="3" nzLabel="سكن مجاني"></nz-option>
                       <nz-option [nzValue]="4" nzLabel="أخر"></nz-option>
                       <nz-option [nzValue]="5" nzLabel="سكن صفيحي"></nz-option>
-                      <nz-option [nzValue]="6" nzLabel="Fémiسكن طينيnin"></nz-option>
+                      <nz-option [nzValue]="6" nzLabel="سكن طيني"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -212,11 +212,11 @@
 
               <div *ngIf="current == 1">
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="ordinateur">toilet </nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="ordinateur">Toilet </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="toilet">
-                      <nz-option [nzValue]="1" nzLabel="نعم"></nz-option>
-                      <nz-option [nzValue]="0" nzLabel="لا"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -225,9 +225,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="parabol">Parabol</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="parabol">
-                      <nz-option [nzValue]="1" nzLabel="نعم"></nz-option>
-                      <nz-option [nzValue]="0" nzLabel="لا"></nz-option>
-                    </nz-select>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
 
@@ -235,8 +234,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="voiture">Voiture</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="voiture">
-                      <nz-option [nzValue]="1" nzLabel="نعم"></nz-option>
-                      <nz-option [nzValue]="0" nzLabel="لا"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -245,8 +244,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="bain">Bain</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="bain">
-                      <nz-option [nzValue]="1" nzLabel="نعم"></nz-option>
-                      <nz-option [nzValue]="0" nzLabel="لا"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -278,7 +277,7 @@
 
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_tele">Dépense Tele
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_tele">Dépense Téléphone
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <input nz-input formControlName="dep_tele" id="dep_tele" type="number" min="0" />
@@ -286,8 +285,7 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="eau_fontaine_publique">Dépense Eau Fontaine
-                    Publique
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="eau_fontaine_publique">Eau Fontaine Publique
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <input nz-input formControlName="eau_fontaine_publique" id="eau_fontaine_publique" type="number"
@@ -296,8 +294,7 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="reseau_evacuation_publique_eau_usee">Dépense
-                    Evacuation Publique
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="reseau_evacuation_publique_eau_usee">Evacuation Publique
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <input nz-input formControlName="reseau_evacuation_publique_eau_usee"
