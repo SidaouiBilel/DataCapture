@@ -1,5 +1,6 @@
+import { EstimationComponent } from './../../../../../../shared/setup/nodes/category/estimation/estimation.component';
 import { NodeStatisticsComponent } from './../../../../../../shared/setup/nodes/other/node-statistics/node-statistics.component';
-import { NodeCorrelation, NodeStatistics } from './../nodes/other.model';
+import { NodeCorrelation, NodeEstimation, NodeStatistics } from './../nodes/other.model';
 import { NodeCheckSocial } from './../nodes/categorization.model';
 import { NodeCheckComponent } from './../../../../../../shared/setup/nodes/category/node-check/node-check.component';
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
@@ -31,7 +32,8 @@ export const NODE_OTHERS = [
   NodePycode.setComponenet(NodePycodeComponent),
   NodeTransformationPipeline.setComponenet(NodePipelineComponent),
   NodeCorrelation.setComponenet(NodeCorrelationComponent),
-  NodeStatistics.setComponenet(NodeStatisticsComponent)
+  NodeStatistics.setComponenet(NodeStatisticsComponent),
+  NodeEstimation.setComponenet(EstimationComponent)
 
 ]
 export const DATASOURCE_NODES = [
@@ -68,6 +70,7 @@ export const CATEGORY_NODES = [
   NodeHashByCategory.setComponenet(CategoryHashComponent),
   NodeCheckRsu.setComponenet(NodeCheckComponent),
   NodeCheckSocial.setComponenet(NodeCheckSocialComponent)
+
 ]
 
 export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]

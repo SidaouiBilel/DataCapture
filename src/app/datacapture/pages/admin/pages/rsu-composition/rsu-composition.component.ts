@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { profession } from './utils/model';
+import { log } from 'console';
 
 @Component({
   selector: 'app-rsu-composition',
@@ -21,8 +23,8 @@ export class RsuCompositionComponent implements OnInit {
 
   fraudResult;
   validateForm!: FormGroup;
-
-
+  profession = profession;
+  date_naissance = null;
   current = 0;
 
 
@@ -36,23 +38,40 @@ export class RsuCompositionComponent implements OnInit {
 
     this.validateForm = this.fb.group({
       modele: [null, [Validators.required]],
+
+      revenu: [null, [Validators.required]],
       milieu: [null, [Validators.required]],
       region: [null, [Validators.required]],
       taille_menage: [null, [Validators.required]],
-      Age_CM: [null, [Validators.required]],
+      Demandeur_Sexe: [null, [Validators.required]],
+      Logement_libelle_Ar: [null, [Validators.required]],
+      date_naissance_an: [null, [Validators.required]],
+      date_naissance_mois: [null, [Validators.required]],
+      date_naissance_jour: [null, [Validators.required]],
       Etat_matrimonial_CM: [null, [Validators.required]],
       Niveau_scolaire_agreg_CM: [null, [Validators.required]],
-      Sexe_CM: [null, [Validators.required]],
       Situation_profession_agreg_CM: [null, [Validators.required]],
-      dep_eau: [null, [Validators.required]],
-      dep_elec: [null, [Validators.required]],
-      dep_internet_tele: [null, [Validators.required]],
-      dep_gaz: [null, [Validators.required]],
-      ordinateur: [null, [Validators.required]],
+
       parabol: [null, [Validators.required]],
-      revenu: [null, [Validators.required]],
       voiture: [null, [Validators.required]],
       bain: [null, [Validators.required]],
+      toilet: [null, [Validators.required]],
+
+      dep_eau: [null, [Validators.required]],
+      dep_elec: [null, [Validators.required]],
+      dep_tele: [null, [Validators.required]],
+      reseau_evacuation_publique_eau_usee: [null, [Validators.required]],
+      eau_fontaine_publique: [null, [Validators.required]],
+
+
+    });
+  }
+
+  onChangeDate(result: Date): void {
+    this.validateForm.patchValue({
+      date_naissance_an: result.getFullYear(),
+      date_naissance_mois: result.getMonth() + 1,
+      date_naissance_jour: result.getDay(),
     });
   }
 
@@ -126,6 +145,7 @@ export class RsuCompositionComponent implements OnInit {
   done(): void {
     this.modele = this.validateForm.value.modele
     // delete this.validateForm.value.modele
+    console.log(this.validateForm.value);
     this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
       (res) => {
         this.fraudResult = res;
@@ -221,6 +241,13 @@ export class RsuCompositionComponent implements OnInit {
     }
 
     return msg
+  }
+
+
+  onSetDate(event) {
+    console.log("eveent ", event);
+
+
   }
 
 }

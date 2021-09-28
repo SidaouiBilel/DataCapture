@@ -69,6 +69,7 @@ import { DcmCorrelationGridComponent } from './dcm-correlation-grid/dcm-correlat
 import { ChartsModule } from 'ng2-charts';
 import { NodeStatisticsComponent } from './setup/nodes/other/node-statistics/node-statistics.component';
 import { DcmStatisticsPreviewComponent } from './dcm-statistics-preview/dcm-statistics-preview.component';
+import { EstimationComponent } from './setup/nodes/category/estimation/estimation.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -173,7 +174,8 @@ const Components = [
     NodeCorrelationComponent,
     DcmCorrelationGridComponent,
     NodeStatisticsComponent,
-    DcmStatisticsPreviewComponent
+    DcmStatisticsPreviewComponent,
+    EstimationComponent
   ],
   exports: [
     ...SharedModules,

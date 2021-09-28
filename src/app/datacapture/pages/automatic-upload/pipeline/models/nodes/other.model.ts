@@ -109,3 +109,16 @@ export class NodeStatistics extends PipelineNode {
     { id: "INPUT", spot: go.Spot.Left },
   ]
 }
+
+export class NodeEstimation extends PipelineNode{
+  static type = 'estimation'
+  static category = 'SCRIPTS'
+  static nzicon = "reconciliation"
+  static color = 'red';
+  static label = 'Estimation'
+  static showLabel = false
+  static ports = [
+      {id:"INPUT",spot:go.Spot.Left},
+      {id:"OUTPUT",spot:go.Spot.Right},
+  ]
+}
