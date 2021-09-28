@@ -5,16 +5,15 @@
 <div *ngIf="stats_content">
   <nz-collapse nzAccordion>
     <nz-collapse-panel nzHeader="Repartition Eligibilité">
-      <div style="display: block; width: 600px; height: 300px;">
+      <div class="canvas">
         <canvas style="height: 100%;" baseChart [data]="pieScoreChartData" [labels]="pieScoreChartLabels"
           [chartType]="pieChartType"></canvas>
       </div>
     </nz-collapse-panel>
 
     <nz-collapse-panel nzHeader="Repartition Region">
-
       <div class="chart">
-        <div style="display: block; width: 600px; height: 300px;">
+        <div class="canvas">
           <canvas style="height: 100%;" baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
             [chartType]="pieChartType"></canvas>
         </div>
@@ -38,7 +37,7 @@
     </nz-collapse-panel>
 
     <nz-collapse-panel nzHeader="Repartition Milieu">
-      <div style="display: block; width: 600px; height: 300px;">
+      <div class="canvas">
         <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
           [chartType]="pieChartType"></canvas>
       </div>
@@ -57,7 +56,9 @@
         <thead>
           <tr>
             <th>Consommation</th>
+            <th>Minimum</th>
             <th>Maximum</th>
+            <th>Moyenne</th>
             <th>Nombre de personnes</th>
           </tr>
         </thead>
@@ -66,6 +67,7 @@
             <td>{{data.consommation}}</td>
             <td>{{data.min}}</td>
             <td>{{data.max}}</td>
+            <td>{{data.mean}}</td>
             <td>{{data.count}}</td>
           </tr>
         </tbody>
@@ -79,12 +81,11 @@
           <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.max_revenu_of_not_approuved}}</nz-tag> Revenu maximum</li>
           <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.}}</nz-tag> Nombre de personnes</li>
         </ul> -->
+        <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_consommations_above_revenu}}</nz-tag> Nombre de personnes qui consomment plus que leurs revenu mensuel.</li>
         <nz-divider></nz-divider>
         <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_without_job_not_approuved}}</nz-tag> Nombre de personnes sans travail ('بدون' | 'عاطل') et avec un score 'Rejeté'.</li>
         <nz-divider></nz-divider>
         <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_with_job_not_approuved}}</nz-tag> Nombre de personnes avec un travail et avec un score 'Rejeté'.</li>
-        <nz-divider></nz-divider>
-        <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_consommations_above_revenu}}</nz-tag> Nombre de personnes qui consomment plus que leurs revenu mensuel.</li>
       </ul>
       <h4></h4>
     </nz-collapse-panel>
