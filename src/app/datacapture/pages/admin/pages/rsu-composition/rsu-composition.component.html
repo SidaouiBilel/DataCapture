@@ -89,8 +89,8 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Milieu de résidence </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="milieu">
-                      <nz-option [nzValue]="1" nzLabel="حضاري"></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="قروي"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Urbain"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Rural"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -129,8 +129,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Demandeur_Sexe">
-                      <nz-option [nzValue]="1" nzLabel="M"></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="F"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Masculin"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Féminin"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -140,12 +140,12 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Logement_libelle_Ar">
-                      <nz-option [nzValue]="1" nzLabel="كراء"></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="ملك"></nz-option>
-                      <nz-option [nzValue]="3" nzLabel="سكن مجاني"></nz-option>
-                      <nz-option [nzValue]="4" nzLabel="أخر"></nz-option>
-                      <nz-option [nzValue]="5" nzLabel="سكن صفيحي"></nz-option>
-                      <nz-option [nzValue]="6" nzLabel="سكن طيني"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Louer"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Proprétaire"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Hébergement gratuit"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Autre"></nz-option>
+                      <nz-option [nzValue]="5" nzLabel="Bidonville"></nz-option>
+                      <nz-option [nzValue]="6" nzLabel="LOgement en boue"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -167,42 +167,42 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Etat_matrimonial_CM">
-                      <nz-option [nzValue]="1" nzLabel="عازب "></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="متزوج "></nz-option>
-                      <nz-option [nzValue]="3" nzLabel="أرمل "></nz-option>
-                      <nz-option [nzValue]="4" nzLabel="مطلق أو متزوج بأجنبية "></nz-option>
-                      <nz-option [nzValue]="5" nzLabel="زوج مهجور "></nz-option>
-                      <nz-option [nzValue]="6" nzLabel="متزوج بأجنبية "></nz-option>
-                      <nz-option [nzValue]="7" nzLabel="متزوجة بأجنبي "></nz-option>
-                      <nz-option [nzValue]="8" nzLabel="زوجة مهجورة "></nz-option>
-                      <nz-option [nzValue]="9" nzLabel="أخر "></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Single "></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Marrié "></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Veuf "></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Divorcé ou marié à un étranger "></nz-option>
+                      <nz-option [nzValue]="5" nzLabel="Paire abandonnée "></nz-option>
+                      <nz-option [nzValue]="8" nzLabel="Femme abandonnée"></nz-option>
+                      <nz-option [nzValue]="6" nzLabel="Marié à un étranger "></nz-option>
+                      <nz-option [nzValue]="7" nzLabel="Mariée à un étranger"></nz-option>
+                      <nz-option [nzValue]="9" nzLabel="Autre "></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
 
-                <nz-form-item>
+<!--                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Niveau_scolaire_agreg_CM">Niveau Scolaire du
                     chef
                     de
                     ménage</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Niveau_scolaire_agreg_CM">
-                      <nz-option [nzValue]="0" nzLabel="ما قبل المدرسة"></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="ابتدائي"></nz-option>
-                      <nz-option [nzValue]="3" nzLabel="اعدادي"></nz-option>
-                      <nz-option [nzValue]="4" nzLabel="ثانوي"></nz-option>
-                      <nz-option [nzValue]="5" nzLabel="جامعي"></nz-option>
-                      <nz-option [nzValue]="6" nzLabel="اخر"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Préscolaire"></nz-option>
+                      <nz-option [nzValue]="2" nzLabel="Primaire"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Collège"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Lycée"></nz-option>
+                      <nz-option [nzValue]="5" nzLabel="Faculté"></nz-option>
+                      <nz-option [nzValue]="6" nzLabel="Autre"></nz-option>
                     </nz-select>
                   </nz-form-control>
-                </nz-form-item>
+                </nz-form-item> -->
 
                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Situation_profession_agreg_CM">Profession du
                     chef de ménage</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Situation_profession_agreg_CM">
-                      <nz-option *ngFor="let prof of profession;let i = index;" [nzValue]="i+1" nzLabel="{{prof}}">
+                      <nz-option *ngFor="let prof of profession_fr; let i = index;" [nzValue]="i+1" nzLabel="{{prof}}">
                       </nz-option>
                     </nz-select>
                   </nz-form-control>
@@ -222,11 +222,12 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="parabol">Parabol</nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="parab">Parabol</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <nz-select formControlName="parabol">
+                    <nz-select formControlName="parab">
                       <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
-                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>                    </nz-select>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
+                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
 
@@ -234,6 +235,16 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="voiture">Voiture</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="voiture">
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="moto">Moto</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="moto">
                       <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
                       <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
                     </nz-select>
