@@ -62,7 +62,6 @@ export class RsuCompositionComponent implements OnInit {
       dep_tele: [null, [Validators.required]],
       revenu: [null, [Validators.required]],
 
-      // Hadi makaynach f input f oussama
       // Niveau_scolaire_agreg_CM: [null, [Validators.required]],
     });
   }
@@ -144,7 +143,7 @@ export class RsuCompositionComponent implements OnInit {
 
   done(): void {
     this.modele = this.validateForm.value.modele
-    // delete this.validateForm.value.modele
+    delete this.validateForm.value.modele
     console.log(this.validateForm.value);
     this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
       (res) => {

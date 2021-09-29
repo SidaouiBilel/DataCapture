@@ -136,7 +136,7 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Logement_libelle_Ar">type de Logement
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Logement_libelle_Ar">Type de Logement
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Logement_libelle_Ar">
@@ -296,22 +296,25 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="eau_fontaine_publique">Eau Fontaine Publique
-                  </nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="eau_fontaine_publique">Eau Fontaine Publique </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="eau_fontaine_publique" id="eau_fontaine_publique" type="number"
-                      min="0" />
+                    <nz-select formControlName="eau_fontaine_publique">
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
+                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="reseau_evacuation_publique_eau_usee">Evacuation Publique
-                  </nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="reseau_evacuation_publique_eau_usee">Evacuation Publique </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="reseau_evacuation_publique_eau_usee"
-                      id="reseau_evacuation_publique_eau_usee" type="number" min="0" />
+                    <nz-select formControlName="reseau_evacuation_publique_eau_usee">
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
+                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
+
               </div>
 
               <div *ngIf="current == 3">
@@ -319,10 +322,11 @@
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Modèle de test </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="modele">
-                      <nz-option [nzValue]="0" nzLabel="Classification (Sans revenu)"></nz-option>
                       <nz-option [nzValue]="1" nzLabel="Classification"></nz-option>
+<!--                       <nz-option [nzValue]="0" nzLabel="Classification (Sans revenu)"></nz-option>
+ --><!--
                       <nz-option [nzValue]="2" nzLabel="Auto encoder"></nz-option>
-                      <nz-option [nzValue]="3" nzLabel="Isolation Forest"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Isolation Forest"></nz-option> -->
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
