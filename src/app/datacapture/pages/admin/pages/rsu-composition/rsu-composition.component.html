@@ -180,7 +180,7 @@
                   </nz-form-control>
                 </nz-form-item>
 
-<!--                 <nz-form-item>
+                <!--                 <nz-form-item>
                   <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Niveau_scolaire_agreg_CM">Niveau Scolaire du
                     chef
                     de
@@ -261,6 +261,29 @@
                   </nz-form-control>
                 </nz-form-item>
 
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="eau_fontaine_publique">Eau Fontaine Publique
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="eau_fontaine_publique">
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="reseau_evacuation_publique_eau_usee">
+                    Evacuation Publique
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <nz-select formControlName="reseau_evacuation_publique_eau_usee">
+                      <nz-option [nzValue]="1" nzLabel="Oui"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Non"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
               </div>
 
               <div *ngIf="current == 2">
@@ -295,23 +318,7 @@
                   </nz-form-control>
                 </nz-form-item>
 
-                <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="eau_fontaine_publique">Eau Fontaine Publique
-                  </nz-form-label>
-                  <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="eau_fontaine_publique" id="eau_fontaine_publique" type="number"
-                      min="0" />
-                  </nz-form-control>
-                </nz-form-item>
 
-                <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="reseau_evacuation_publique_eau_usee">Evacuation Publique
-                  </nz-form-label>
-                  <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="reseau_evacuation_publique_eau_usee"
-                      id="reseau_evacuation_publique_eau_usee" type="number" min="0" />
-                  </nz-form-control>
-                </nz-form-item>
               </div>
 
               <div *ngIf="current == 3">
