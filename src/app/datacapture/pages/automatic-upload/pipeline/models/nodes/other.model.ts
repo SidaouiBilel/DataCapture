@@ -110,15 +110,15 @@ export class NodeStatistics extends PipelineNode {
   ]
 }
 
-export class NodeEstimation extends PipelineNode{
+export class NodeEstimation extends PipelineNode {
   static type = 'estimation'
   static category = 'SCRIPTS'
   static nzicon = "reconciliation"
   static color = 'red';
-  static label = 'Estimation'
+  static label = 'Test AI'
   static showLabel = false
   static ports = [
-      {id:"INPUT",spot:go.Spot.Left},
-      {id:"OUTPUT",spot:go.Spot.Right},
+    { id: "INPUT", spot: go.Spot.Left },
+    { id: "OUTPUT", spot: go.Spot.Right },
   ]
 }
