@@ -157,40 +157,46 @@ export class RsuCompositionComponent implements OnInit {
 
 
   getMessage(modele, res) {
-    let message = ''
-    switch (modele) {
-      case 0:
-      case 1: {
-        (res.fraude) ?
-          (message = "La personne est fraudause à " + res.proba.toFixed(2) + " %") :
-          (message = "La personne est non fraudause à " + res.proba.toFixed(2) + " %")
-        break;
-      }
-
-      case 2: {
-        let msg = this.getSubMsg(modele, res.proba);
-        (res.fraude) ?
-          (message = "La personne est fraudause avec une " + msg) :
-          (message = "La personne est non fraudause avec une " + msg)
-        break;
-      }
-
-      case 3: {
-        let msg = this.getSubMsg(modele, res.proba);
-        (res.fraude) ?
-          (message = "La personne est fraudause avec une " + msg) :
-          (message = "La personne est non fraudause avec une " + msg)
-        break;
-      }
-
-      default: {
-        message = 'Default message'
-        break;
-      }
-
-    }
+    let message = '';
+    (res.fraude) ?
+      (message = "La personne est fraudause à " + parseFloat(res['proba']).toFixed(2) + " %") :
+      (message = "La personne est non fraudause à " + parseFloat(res['proba']).toFixed(2) + " %")
 
     return message
+
+    /*     switch (modele) {
+          case 0:
+          case 1: {
+            (res.fraude) ?
+              (message = "La personne est fraudause à " + res.proba.toFixed(2) + " %") :
+              (message = "La personne est non fraudause à " + res.proba.toFixed(2) + " %")
+            break;
+          }
+
+          case 2: {
+            let msg = this.getSubMsg(modele, res.proba);
+            (res.fraude) ?
+              (message = "La personne est fraudause avec une " + msg) :
+              (message = "La personne est non fraudause avec une " + msg)
+            break;
+          }
+
+          case 3: {
+            let msg = this.getSubMsg(modele, res.proba);
+            (res.fraude) ?
+              (message = "La personne est fraudause avec une " + msg) :
+              (message = "La personne est non fraudause avec une " + msg)
+            break;
+          }
+
+          default: {
+            message = 'Default message'
+            break;
+          }
+
+        }
+
+        return message */
   }
 
   getSubMsg(modele, proba) {
