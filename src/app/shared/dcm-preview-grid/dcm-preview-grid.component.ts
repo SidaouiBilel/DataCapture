@@ -40,10 +40,10 @@ export class DcmPreviewGridComponent implements OnInit {
 
   setRowStyle() {
     this.getRowStyle = params => {
-      if (params?.data?.fraude == "0") {
-        return { background: '#8cdd78' };
-      }
-      else if (params?.data?.fraude == "1") {
+      // if (params?.data?.fraude == 0) {
+      //   return { background: '#8cdd78' };
+      // }
+      if (params?.data?.fraude == 1) {
         return { background: '#f3bebe' };
       }
       else return
@@ -68,7 +68,7 @@ export class DcmPreviewGridComponent implements OnInit {
               previewData[e] = res.data.slice(1, 10).map((f: any) => f[i]);
             });
             const headers = res.headers.map(h => ({
-              hide: (h == "fraude") ? true : false,
+              // hide: (h == "fraude") ? true : false,
               field: h,
               colId: h,
               headerName: h,
