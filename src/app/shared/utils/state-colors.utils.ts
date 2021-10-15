@@ -20,6 +20,6 @@ export const RUN_STATES = {
 
 export const CORRELATION_STATES = [
   { label: '20 -> 50', color: '#ebf3be' },
-  { label: '50 -> 80', color: '#db4f5f' },
-  { label: '80 -> 100', color: '#2e8d11' },
+  { label: '50 -> 80', color: '#2e8d11' },
+  { label: '80 -> 100', color: '#db4f5f' },
 ]

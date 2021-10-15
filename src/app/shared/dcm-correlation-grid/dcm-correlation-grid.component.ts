@@ -75,7 +75,6 @@ export class DcmCorrelationGridComponent implements OnInit {
 
               }
             }));
-            // console.log('Headers', headers)
             headers.unshift(INDEX_HEADER);
             that.headers$.next(headers);
 
