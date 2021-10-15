@@ -38,7 +38,7 @@ export class RsuCompositionComponent implements OnInit {
     this.laodData()
 
     this.validateForm = this.fb.group({
-      modele: [null, [Validators.required]],
+      // modele: [null, [Validators.required]],
 
       region: [null, [Validators.required]],
       milieu: [null, [Validators.required]],
@@ -48,9 +48,9 @@ export class RsuCompositionComponent implements OnInit {
       Logement_libelle_Ar: [null, [Validators.required]],
       Situation_profession_agreg_CM: [null, [Validators.required]],
       parab: [null, [Validators.required]],
-      date_naissance_an: [null, [Validators.required]],
-      date_naissance_mois: [null, [Validators.required]],
-      date_naissance_jour: [null, [Validators.required]],
+      // date_naissance_an: [null, [Validators.required]],
+      // date_naissance_mois: [null, [Validators.required]],
+      // date_naissance_jour: [null, [Validators.required]],
       voiture: [null, [Validators.required]],
       moto: [null, [Validators.required]],
       bain: [null, [Validators.required]],
@@ -60,7 +60,7 @@ export class RsuCompositionComponent implements OnInit {
       dep_eau: [null, [Validators.required]],
       dep_elec: [null, [Validators.required]],
       dep_tele: [null, [Validators.required]],
-      revenu: [null, [Validators.required]],
+      // revenu: [null, [Validators.required]],
 
       // Hadi makaynach f input f oussama
       // Niveau_scolaire_agreg_CM: [null, [Validators.required]],
@@ -143,18 +143,28 @@ export class RsuCompositionComponent implements OnInit {
   }
 
   done(): void {
-    this.modele = this.validateForm.value.modele
+    // this.modele = this.validateForm.value.modele
     // delete this.validateForm.value.modele
     console.log(this.validateForm.value);
-    this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
+    // this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
+    this.service.getFormResult2(this.validateForm.value).subscribe(
       (res) => {
         this.fraudResult = res;
-        this.fraudResult.msg = this.getMessage(this.modele, res)
+        // this.fraudResult.msg = this.getMessage(this.modele, res)
+        this.fraudResult.msg = this.getMessage2(res)
         this.current += 1;
       }
     )
   }
 
+  getMessage2(res) {
+    let message = '';
+    (res.fraude) ?
+      (message = "La personne est fraudause") :
+      (message = "La personne est non fraudause")
+
+    return message
+  }
 
   getMessage(modele, res) {
     let message = '';
@@ -252,8 +262,6 @@ export class RsuCompositionComponent implements OnInit {
 
   onSetDate(event) {
     console.log("eveent ", event);
-
-
   }
 
 }
