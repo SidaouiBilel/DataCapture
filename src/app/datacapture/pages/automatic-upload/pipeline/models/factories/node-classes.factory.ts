@@ -1,6 +1,5 @@
 import { EstimationComponent } from './../../../../../../shared/setup/nodes/category/estimation/estimation.component';
-import { NodeStatisticsComponent } from './../../../../../../shared/setup/nodes/other/node-statistics/node-statistics.component';
-import { NodeCorrelation, NodeEstimation, NodeStatistics } from './../nodes/other.model';
+import { NodeCorrelation, NodeEstimation, NodeStatistics, NodeStatisticsHcp } from './../nodes/other.model';
 import { NodeCheckSocial } from './../nodes/categorization.model';
 import { NodeCheckComponent } from './../../../../../../shared/setup/nodes/category/node-check/node-check.component';
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
@@ -25,6 +24,8 @@ import { CategoryFilterComponent } from "@app/shared/setup/nodes/category/catego
 import { CategoryHashComponent } from "@app/shared/setup/nodes/category/category-hash/category-hash.component";
 import { NodeCheckSocialComponent } from '@app/shared/setup/nodes/category/node-check-social/node-check-social.component';
 import { NodeCorrelationComponent } from '@app/shared/setup/nodes/other/node-correlation/node-correlation.component';
+import { NodeStatisticsHcpComponent } from '@app/shared/setup/nodes/other/node-statistics-hcp/node-statistics-hcp.component';
+import { NodeStatisticsComponent } from '@app/shared/setup/nodes/other/node-statistics/node-statistics.component';
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -33,6 +34,7 @@ export const NODE_OTHERS = [
   NodeTransformationPipeline.setComponenet(NodePipelineComponent),
   NodeCorrelation.setComponenet(NodeCorrelationComponent),
   NodeStatistics.setComponenet(NodeStatisticsComponent),
+  NodeStatisticsHcp.setComponenet(NodeStatisticsHcpComponent),
   NodeEstimation.setComponenet(EstimationComponent)
 
 ]
@@ -50,20 +52,20 @@ export const DATASINK_NODES = [
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent),
 ]
 export const NODE_TRANSFORMERS = [
-              NodeTransformationFilter
-              ,NodeTransformationFilterAndReplace
-              ,NodeTransformationMerge
-              ,NodeTransformationReplace
-              ,NodeTransformationDeleteRow
-              ,NodeTransformationDefaultValue
-              ,NodeTransformationSplitter
-              ,NodeTransformationCalculator
-              ,NodeTransformationFormatDate
-              ,NodeTransformationHash
-          ].map(cls =>{
-              cls.setComponenet(cls.component)
-              return cls
-          })
+  NodeTransformationFilter
+  , NodeTransformationFilterAndReplace
+  , NodeTransformationMerge
+  , NodeTransformationReplace
+  , NodeTransformationDeleteRow
+  , NodeTransformationDefaultValue
+  , NodeTransformationSplitter
+  , NodeTransformationCalculator
+  , NodeTransformationFormatDate
+  , NodeTransformationHash
+].map(cls => {
+  cls.setComponenet(cls.component)
+  return cls
+})
 
 export const CATEGORY_NODES = [
   NodeFilterByCategory.setComponenet(CategoryFilterComponent),
@@ -73,8 +75,8 @@ export const CATEGORY_NODES = [
 
 ]
 
-export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
+export const ALL_NODES = [...DATASOURCE_NODES, ...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES]
 
-export function getNodeClassBy(type){
-  return ALL_NODES.find(e=>e.type===type)
+export function getNodeClassBy(type) {
+  return ALL_NODES.find(e => e.type === type)
 }

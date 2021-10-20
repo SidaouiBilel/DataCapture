@@ -70,6 +70,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NodeStatisticsComponent } from './setup/nodes/other/node-statistics/node-statistics.component';
 import { DcmStatisticsPreviewComponent } from './dcm-statistics-preview/dcm-statistics-preview.component';
 import { EstimationComponent } from './setup/nodes/category/estimation/estimation.component';
+import { NodeStatisticsHcpComponent } from './setup/nodes/other/node-statistics-hcp/node-statistics-hcp.component';
 
 // import { ZorroSharperModule } from "zorro-sharper";
 
@@ -175,7 +176,8 @@ const Components = [
     DcmCorrelationGridComponent,
     NodeStatisticsComponent,
     DcmStatisticsPreviewComponent,
-    EstimationComponent
+    EstimationComponent,
+    NodeStatisticsHcpComponent
   ],
   exports: [
     ...SharedModules,
@@ -187,7 +189,7 @@ const Components = [
     UtilsService,
     NodeTranformationService,
     // CustomIconsService,
-    {provide: NzIconService, useClass:CustomIconsService}
+    { provide: NzIconService, useClass: CustomIconsService }
   ],
   entryComponents: [
     CustomTooltipComponent,
@@ -199,6 +201,6 @@ const Components = [
     StorageAccountImportNodeComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule { }
 
 

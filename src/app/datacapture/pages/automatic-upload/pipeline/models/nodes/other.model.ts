@@ -110,6 +110,17 @@ export class NodeStatistics extends PipelineNode {
   ]
 }
 
+export class NodeStatisticsHcp extends PipelineNode {
+  static type = 'statistics_hcp'
+  static category = 'SCRIPTS'
+  static nzicon = "stock"
+  static color = 'red';
+  static label = 'Statistics HCP'
+  static ports = [
+    { id: "INPUT", spot: go.Spot.Left },
+  ]
+}
+
 export class NodeEstimation extends PipelineNode {
   static type = 'estimation'
   static category = 'SCRIPTS'
