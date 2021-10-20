@@ -13,6 +13,13 @@
         </div>
       </nz-collapse-panel>
 
+      <nz-collapse-panel nzHeader="Repartition Milieu">
+        <div class="canvas">
+          <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
+            [chartType]="pieChartType"></canvas>
+        </div>
+      </nz-collapse-panel>
+
       <nz-collapse-panel nzHeader="Repartition Region">
         <div class="chart">
           <div class="canvas">
@@ -35,13 +42,6 @@
               <li>12 : Dakhla-Oued Ed Dahab </li>
             </ul>
           </div>
-        </div>
-      </nz-collapse-panel>
-
-      <nz-collapse-panel nzHeader="Repartition Milieu">
-        <div class="canvas">
-          <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
-            [chartType]="pieChartType"></canvas>
         </div>
       </nz-collapse-panel>
 
