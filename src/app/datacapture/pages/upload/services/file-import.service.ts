@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {environment} from '@env/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '@env/environment';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -13,40 +13,40 @@ export class FileImportService {
   }
 
   getAll() {
-    return this.http.get( environment.admin + 'domain/');
+    return this.http.get(environment.admin + 'domain/');
   }
 
   getAllSuper() {
-    return this.http.get( environment.admin + 'domain/all/super');
+    return this.http.get(environment.admin + 'domain/all/super');
   }
 
   getTargetFields(domainId: string) {
-    return this.http.get( environment.admin + `domain/${domainId}/fields`);
+    return this.http.get(environment.admin + `domain/${domainId}/fields`);
   }
 
-  public getFileData(page: number, worksheet: string, nrows: number, filters=[]): Observable<any> {
+  public getFileData(page: number, worksheet: string, nrows: number, filters = []): Observable<any> {
     const params = new HttpParams()
-    .set('page', page + '')
-    .set('lob', 0 + '')
-    .set('nrows', nrows + '');
-    return this.http.put(environment.import + 'data/' + worksheet, {filters} ,{ params });
+      .set('page', page + '')
+      .set('lob', 0 + '')
+      .set('nrows', nrows + '');
+    return this.http.put(environment.import + 'data/' + worksheet, { filters }, { params });
   }
 
   public getResultData(result_id, indices): Observable<any> {
-    return this.http.post(environment.import + 'results/', { result_id, indices});
+    return this.http.post(environment.import + 'results/', { result_id, indices });
   }
 
   public getReportData(sheet_id: any) {
     return this.http.get(environment.import + 'report/' + sheet_id);
   }
 
-  public getStatisticsData(sheet_id: any) {
-    return this.http.get(environment.import + 'statistics/' + sheet_id);
+  public getStatisticsData(sheet_id: any, type) {
+    return this.http.get(environment.import + 'statistics/' + sheet_id + "/" + type);
   }
 
-/*   public getDataCorrelation(sheet_id: any) {
-    return this.http.get(environment.import + 'data/' + sheet_id + '/correlation');
-  } */
+  /*   public getDataCorrelation(sheet_id: any) {
+      return this.http.get(environment.import + 'data/' + sheet_id + '/correlation');
+    } */
 
   public updateRow(filename: string, worksheet: string, worksheetId: string, nrows: number, page: number, num: number[], lines: string[]) {
     return this.http.post('environment.endPoints.upload1' + 'data', {
@@ -60,22 +60,21 @@ export class FileImportService {
     });
   }
 
-  public generateSheet(file_id, sheetId, cs, ce, rs, re){
+  public generateSheet(file_id, sheetId, cs, ce, rs, re) {
     return this.http.post(environment.import + 'sheet', {
       file_id, sheetId, cs, ce, rs, re
     });
   }
 
-  public describeColumn(sheet_id, column){
+  public describeColumn(sheet_id, column) {
     return this.http.post(environment.import + 'describe', {
       sheet_id, column
     });
   }
 
-  public previewConnectorData(connection_data)
-  {
+  public previewConnectorData(connection_data) {
     return this.http.post(environment.import + 'connectors/preview', connection_data).pipe(
-      catchError(error=>of({
+      catchError(error => of({
         "headers": [],
         "data": [],
         "total": 0,

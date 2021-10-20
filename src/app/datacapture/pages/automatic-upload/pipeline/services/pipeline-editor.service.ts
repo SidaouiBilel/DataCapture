@@ -119,14 +119,15 @@ export class PipelineEditorService {
   }
 
 
-  statisticsNode(task: any) {
+  statisticsNode(task: any, type) {
     const output = task.output || {}
     if (output.file_id && output.sheet_id) {
       this.drawer.create({
         nzTitle: 'Preview Statistics',
         nzContent: DcmStatisticsPreviewComponent,
         nzContentParams: {
-          sheet_id: output.sheet_id
+          sheet_id: output.sheet_id,
+          type
         },
         nzWidth: '70vw',
       })

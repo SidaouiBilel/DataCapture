@@ -79,6 +79,10 @@ export class PipelineEditorComponent implements AfterViewInit {
             this.statisticsNode(task)
             return
           }
+          if (data.type == "statistics_hcp" && ["success", "running"].includes(task.state)) {
+            this.statisticsNode(task, false)
+            return
+          }
           if (task.cleansing_job_id) {
             this.clenaseNode(data, run)
             return
@@ -299,8 +303,8 @@ export class PipelineEditorComponent implements AfterViewInit {
     this.editor.correlationNode(data, run)
   }
 
-  statisticsNode(task: any) {
-    this.editor.statisticsNode(task)
+  statisticsNode(task: any, type = true) {
+    this.editor.statisticsNode(task, type)
   }
 
 }
