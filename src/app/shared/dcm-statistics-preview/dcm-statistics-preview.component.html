@@ -7,16 +7,33 @@
   <div *ngIf="type">
     <nz-collapse nzAccordion>
       <nz-collapse-panel nzHeader="Repartition Eligibilité">
-        <div class="canvas">
-          <canvas style="height: 100%;" baseChart [data]="pieScoreChartData" [labels]="pieScoreChartLabels"
-            [chartType]="pieChartType"></canvas>
+        <div class="chart">
+          <div class="canvas">
+            <canvas style="height: 100%;" baseChart [data]="pieScoreChartData" [labels]="pieScoreChartLabels"
+              [chartType]="pieChartType"></canvas>
+          </div>
+          <div class="region">
+            <ul>
+              <li>En position de pauvreté : <b>{{pieScoreChartData[0]}} % </b></li>
+              <li>En position vulnérable : <b>{{pieScoreChartData[1]}} % </b></li>
+              <li>Rejeté : <b>{{pieScoreChartData[2]}} % </b></li>
+            </ul>
+          </div>
         </div>
       </nz-collapse-panel>
 
       <nz-collapse-panel nzHeader="Repartition Milieu">
-        <div class="canvas">
-          <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
-            [chartType]="pieChartType"></canvas>
+        <div class="chart">
+          <div class="canvas">
+            <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
+              [chartType]="pieChartType"></canvas>
+          </div>
+          <div class="region">
+            <ul>
+              <li>Urbain : <b>{{pieMilieuChartData[0]}} % </b></li>
+              <li>Rural : <b>{{pieMilieuChartData[1]}} % </b></li>
+            </ul>
+          </div>
         </div>
       </nz-collapse-panel>
 
@@ -28,18 +45,18 @@
           </div>
           <div class="region">
             <ul>
-              <li>1 : Tanger-Tétouan-Al Hoceïma </li>
-              <li>2 : Oriental </li>
-              <li>3 : Fès-Meknès </li>
-              <li>4 : Rabat-Salé-Kénitr </li>
-              <li>5 : Béni Mellal-Khénifra </li>
-              <li>6 : Casablanca-Settat </li>
-              <li>7 : Marrakech-Safi </li>
-              <li>8 : Drâa-Tafilalet </li>
-              <li>9 : Souss-Massa </li>
-              <li>10 : Guelmim-Oued Noun </li>
-              <li>11 : Laâyoune-Sakia El Hamra </li>
-              <li>12 : Dakhla-Oued Ed Dahab </li>
+              <li>1 : Tanger-Tétouan-Al Hoceïma <b> {{pirRegionChartData[0]}} %</b></li>
+              <li>2 : Oriental <b> {{pirRegionChartData[1]}} %</b></li>
+              <li>3 : Fès-Meknès <b> {{pirRegionChartData[2]}} %</b></li>
+              <li>4 : Rabat-Salé-Kénitr <b> {{pirRegionChartData[3]}} %</b></li>
+              <li>5 : Béni Mellal-Khénifra <b> {{pirRegionChartData[4]}} %</b></li>
+              <li>6 : Casablanca-Settat <b> {{pirRegionChartData[5]}} %</b></li>
+              <li>7 : Marrakech-Safi <b> {{pirRegionChartData[6]}} %</b></li>
+              <li>8 : Drâa-Tafilalet <b> {{pirRegionChartData[7]}} %</b></li>
+              <li>9 : Souss-Massa <b> {{pirRegionChartData[8]}} %</b></li>
+              <li>10 : Guelmim-Oued Noun <b> {{pirRegionChartData[9]}} %</b></li>
+              <li>11 : Laâyoune-Sakia El Hamra <b> {{pirRegionChartData[10]}} %</b></li>
+              <li>12 : Dakhla-Oued Ed Dahab <b> {{pirRegionChartData[11]}} %</b></li>
             </ul>
           </div>
         </div>
@@ -98,16 +115,32 @@
   <div *ngIf="!type">
     <nz-collapse nzAccordion>
       <nz-collapse-panel nzHeader="Repartition Classe sociale">
-        <div class="canvas">
-          <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
-            [chartType]="pieChartType"></canvas>
+        <div class="chart">
+          <div class="canvas">
+            <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
+              [chartType]="pieChartType"></canvas>
+          </div>
+          <div class="region">
+            <ul>
+              <li>Pauvre : <b>{{piePauvreChartData[0]}} % </b></li>
+              <li>Non pauvre : <b>{{piePauvreChartData[1]}} % </b></li>
+            </ul>
+          </div>
         </div>
       </nz-collapse-panel>
 
       <nz-collapse-panel nzHeader="Repartition Milieu">
-        <div class="canvas">
-          <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
-            [chartType]="pieChartType"></canvas>
+        <div class="chart">
+          <div class="canvas">
+            <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
+              [chartType]="pieChartType"></canvas>
+          </div>
+          <div class="region">
+            <ul>
+              <li>Urbain : <b>{{pieMilieuChartData[0]}} % </b></li>
+              <li>Rural : <b>{{pieMilieuChartData[1]}} % </b></li>
+            </ul>
+          </div>
         </div>
       </nz-collapse-panel>
 
@@ -119,18 +152,18 @@
           </div>
           <div class="region">
             <ul>
-              <li>1 : Tanger-Tétouan-Al Hoceïma </li>
-              <li>2 : Oriental </li>
-              <li>3 : Fès-Meknès </li>
-              <li>4 : Rabat-Salé-Kénitr </li>
-              <li>5 : Béni Mellal-Khénifra </li>
-              <li>6 : Casablanca-Settat </li>
-              <li>7 : Marrakech-Safi </li>
-              <li>8 : Drâa-Tafilalet </li>
-              <li>9 : Souss-Massa </li>
-              <li>10 : Guelmim-Oued Noun </li>
-              <li>11 : Laâyoune-Sakia El Hamra </li>
-              <li>12 : Dakhla-Oued Ed Dahab </li>
+              <li>1 : Tanger-Tétouan-Al Hoceïma <b> {{pirRegionChartData[0]}} %</b></li>
+              <li>2 : Oriental <b> {{pirRegionChartData[1]}} %</b></li>
+              <li>3 : Fès-Meknès <b> {{pirRegionChartData[2]}} %</b></li>
+              <li>4 : Rabat-Salé-Kénitr <b> {{pirRegionChartData[3]}} %</b></li>
+              <li>5 : Béni Mellal-Khénifra <b> {{pirRegionChartData[4]}} %</b></li>
+              <li>6 : Casablanca-Settat <b> {{pirRegionChartData[5]}} %</b></li>
+              <li>7 : Marrakech-Safi <b> {{pirRegionChartData[6]}} %</b></li>
+              <li>8 : Drâa-Tafilalet <b> {{pirRegionChartData[7]}} %</b></li>
+              <li>9 : Souss-Massa <b> {{pirRegionChartData[8]}} %</b></li>
+              <li>10 : Guelmim-Oued Noun <b> {{pirRegionChartData[9]}} %</b></li>
+              <li>11 : Laâyoune-Sakia El Hamra <b> {{pirRegionChartData[10]}} %</b></li>
+              <li>12 : Dakhla-Oued Ed Dahab <b> {{pirRegionChartData[11]}} %</b></li>
             </ul>
           </div>
         </div>

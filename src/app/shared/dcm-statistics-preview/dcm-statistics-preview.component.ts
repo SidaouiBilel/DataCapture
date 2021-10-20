@@ -34,7 +34,7 @@ export class DcmStatisticsPreviewComponent implements OnInit {
 
   // ------------------ HCP ------------------- //
   // Social Chart
-  public piePauvreChartLabels: Label[] = ['Pauvre', 'Pas pauvre'];
+  public piePauvreChartLabels: Label[] = ['Pauvre', 'Non pauvre'];
   public piePauvreChartData: SingleDataSet = [,];
 
   constructor(public importService: FileImportService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
