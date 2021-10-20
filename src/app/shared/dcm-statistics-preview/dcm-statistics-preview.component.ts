@@ -16,14 +16,10 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   stats_content;
   length_vars;
   consommation$ = new BehaviorSubject<any>([]);
-
-
-  // Social Chart
-  /*   public piePauvreChartLabels: Label[] = ['Poor', 'Not Poor'];
-    public piePauvreChartData: SingleDataSet = [,]; */
+  type
   public pieChartType: ChartType = 'pie';
 
-  // Geographic Chart
+  // Region Chart
   public pieRegionChartLabels: Label[] = [];
   public pirRegionChartData = []
 
@@ -31,27 +27,39 @@ export class DcmStatisticsPreviewComponent implements OnInit {
   public pieMilieuChartLabels: Label[] = ['Urbain', 'Rural'];
   public pieMilieuChartData = []
 
-  // Milieu Chart
+  // ------------------ RAMED ------------------- //
+  // Score Chart
   public pieScoreChartLabels: Label[] = ['En position de pauvreté', 'En position vulnérable', 'Rejeté'];
   public pieScoreChartData = []
+
+  // ------------------ HCP ------------------- //
+  // Social Chart
+  public piePauvreChartLabels: Label[] = ['Pauvre', 'Pas pauvre'];
+  public piePauvreChartData: SingleDataSet = [,];
 
   constructor(public importService: FileImportService, private ntf: NotificationService, private drawerRef: NzDrawerRef<string>) { }
 
   ngOnInit(): void {
-    this.getStatistics(this.sheet_id)
+    this.getStatistics(this.sheet_id, this.type)
   }
 
-  getStatistics(sheet_id) {
+  // ------------------ RAMED / HCP ------------------- //
+  // type == true => RAMED
+  getStatistics(sheet_id, type) {
     if (sheet_id) {
       this.consommation$.next([])
-      this.importService.getStatisticsData(sheet_id).subscribe(
+      this.importService.getStatisticsData(sheet_id, type).subscribe(
         (res: any) => {
           this.stats_content = res;
           this.consommation$.next(res.consommation)
-          // this.preparePauvrePie(res['pauvre'])
           this.prepareRegionChart(res['region'])
           this.prepareMilieuChart(res['milieu'])
-          this.prepareScoreChart(res['categorie'])
+
+          if (type)
+            this.prepareScoreChart(res['categorie'])
+          else
+            this.preparePauvrePie(res['pauvre'])
+
           this.ntf.success('Statistics generated successfully...');
         }, (err) => {
           this.consommation$.next([])
@@ -61,11 +69,6 @@ export class DcmStatisticsPreviewComponent implements OnInit {
       );
     }
   }
-
-  /*   preparePauvrePie(data) {
-      this.piePauvreChartData[0] = data[0].toFixed(2)
-      this.piePauvreChartData[1] = data[1].toFixed(2)
-    } */
 
   prepareRegionChart(data) {
     Object.keys(data).forEach(key => {
@@ -80,10 +83,16 @@ export class DcmStatisticsPreviewComponent implements OnInit {
     })
   }
 
+  // ------------------ RAMED -------------------- //
   prepareScoreChart(data) {
     Object.keys(data).forEach(key => {
       this.pieScoreChartData.push(data[key].toFixed(2))
     })
   }
 
+  // ------------------ HCP -------------------- //
+  preparePauvrePie(data) {
+    this.piePauvreChartData[0] = data[0].toFixed(2)
+    this.piePauvreChartData[1] = data[1].toFixed(2)
+  }
 }

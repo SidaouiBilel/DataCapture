@@ -3,91 +3,169 @@
 </div>
 
 <div *ngIf="stats_content">
-  <nz-collapse nzAccordion>
-    <nz-collapse-panel nzHeader="Repartition Eligibilité">
-      <div class="canvas">
-        <canvas style="height: 100%;" baseChart [data]="pieScoreChartData" [labels]="pieScoreChartLabels"
-          [chartType]="pieChartType"></canvas>
-      </div>
-    </nz-collapse-panel>
-
-    <nz-collapse-panel nzHeader="Repartition Region">
-      <div class="chart">
+  <!-- RAMED -->
+  <div *ngIf="type">
+    <nz-collapse nzAccordion>
+      <nz-collapse-panel nzHeader="Repartition Eligibilité">
         <div class="canvas">
-          <canvas style="height: 100%;" baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
+          <canvas style="height: 100%;" baseChart [data]="pieScoreChartData" [labels]="pieScoreChartLabels"
             [chartType]="pieChartType"></canvas>
         </div>
-        <div class="region">
-          <ul>
-            <li>1 : Tanger-Tétouan-Al Hoceïma </li>
-            <li>2 : Oriental </li>
-            <li>3 : Fès-Meknès </li>
-            <li>4 : Rabat-Salé-Kénitr </li>
-            <li>5 : Béni Mellal-Khénifra </li>
-            <li>6 : Casablanca-Settat </li>
-            <li>7 : Marrakech-Safi </li>
-            <li>8 : Drâa-Tafilalet </li>
-            <li>9 : Souss-Massa </li>
-            <li>10 : Guelmim-Oued Noun </li>
-            <li>11 : Laâyoune-Sakia El Hamra </li>
-            <li>12 : Dakhla-Oued Ed Dahab </li>
-          </ul>
+      </nz-collapse-panel>
+
+      <nz-collapse-panel nzHeader="Repartition Region">
+        <div class="chart">
+          <div class="canvas">
+            <canvas style="height: 100%;" baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
+              [chartType]="pieChartType"></canvas>
+          </div>
+          <div class="region">
+            <ul>
+              <li>1 : Tanger-Tétouan-Al Hoceïma </li>
+              <li>2 : Oriental </li>
+              <li>3 : Fès-Meknès </li>
+              <li>4 : Rabat-Salé-Kénitr </li>
+              <li>5 : Béni Mellal-Khénifra </li>
+              <li>6 : Casablanca-Settat </li>
+              <li>7 : Marrakech-Safi </li>
+              <li>8 : Drâa-Tafilalet </li>
+              <li>9 : Souss-Massa </li>
+              <li>10 : Guelmim-Oued Noun </li>
+              <li>11 : Laâyoune-Sakia El Hamra </li>
+              <li>12 : Dakhla-Oued Ed Dahab </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nz-collapse-panel>
+      </nz-collapse-panel>
 
-    <nz-collapse-panel nzHeader="Repartition Milieu">
-      <div class="canvas">
-        <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
-          [chartType]="pieChartType"></canvas>
-      </div>
-    </nz-collapse-panel>
+      <nz-collapse-panel nzHeader="Repartition Milieu">
+        <div class="canvas">
+          <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
+            [chartType]="pieChartType"></canvas>
+        </div>
+      </nz-collapse-panel>
 
-    <nz-collapse-panel nzHeader="Consommation states">
-      <nz-alert class="resultat-content"
-      nzType="info"
-      nzMessage="Description"
-      nzDescription="Le nombre des personnes ayant un score diffèrent à 'Rejeté' et ils consomment plus que la moyenne de consommation des personnes ayant un score 'Rejeté'."
-      nzShowIcon
-    ></nz-alert>
-      <h4></h4>
-      <nz-table nzBordered #basicTable [nzData]='(consommation$ | async )'
-        nzSize='small'>
-        <thead>
-          <tr>
-            <th>Consommation</th>
-            <th>Minimum</th>
-            <th>Maximum</th>
-            <th>Moyenne</th>
-            <th>Nombre de personnes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of basicTable.data">
-            <td>{{data.consommation}}</td>
-            <td>{{data.min}}</td>
-            <td>{{data.max}}</td>
-            <td>{{data.mean}}</td>
-            <td>{{data.count}}</td>
-          </tr>
-        </tbody>
-      </nz-table>
-    </nz-collapse-panel>
+      <nz-collapse-panel nzHeader="Consommation states">
+        <nz-alert class="resultat-content"
+        nzType="info"
+        nzMessage="Description"
+        nzDescription="Le nombre des personnes ayant un score diffèrent à 'Rejeté' et ils consomment plus que la moyenne de consommation des personnes ayant un score 'Rejeté'."
+        nzShowIcon
+      ></nz-alert>
+        <h4></h4>
+        <nz-table nzBordered #basicTable [nzData]='(consommation$ | async )'
+          nzSize='small'>
+          <thead>
+            <tr>
+              <th>Consommation</th>
+              <th>Minimum</th>
+              <th>Maximum</th>
+              <th>Moyenne</th>
+              <th>Nombre de personnes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <td>{{data.consommation}}</td>
+              <td>{{data.min}}</td>
+              <td>{{data.max}}</td>
+              <td>{{data.mean}}</td>
+              <td>{{data.count}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-collapse-panel>
 
-    <nz-collapse-panel nzHeader="Autres states">
-      <ul>
-<!--         <li class="count">Le nombre des personnes avec un score diffère à "Rejeté", ayant un revenu supérieur au revenu maximum des personnes non retenues par Ramed.</li>
-        <ul style="list-style-type: none">
-          <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.max_revenu_of_not_approuved}}</nz-tag> Revenu maximum</li>
-          <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.}}</nz-tag> Nombre de personnes</li>
-        </ul> -->
-        <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_consommations_above_revenu}}</nz-tag> Nombre de personnes qui consomment plus que leurs revenu mensuel.</li>
-        <nz-divider></nz-divider>
-        <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_without_job_not_approuved}}</nz-tag> Nombre de personnes sans travail ('بدون' | 'عاطل') et avec un score 'Rejeté'.</li>
-        <nz-divider></nz-divider>
-        <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_with_job_not_approuved}}</nz-tag> Nombre de personnes avec un travail et avec un score 'Rejeté'.</li>
-      </ul>
-      <h4></h4>
-    </nz-collapse-panel>
-  </nz-collapse>
+      <nz-collapse-panel nzHeader="Autres states">
+        <ul>
+  <!--         <li class="count">Le nombre des personnes avec un score diffère à "Rejeté", ayant un revenu supérieur au revenu maximum des personnes non retenues par Ramed.</li>
+          <ul style="list-style-type: none">
+            <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.max_revenu_of_not_approuved}}</nz-tag> Revenu maximum</li>
+            <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.}}</nz-tag> Nombre de personnes</li>
+          </ul> -->
+          <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_consommations_above_revenu}}</nz-tag> Nombre de personnes qui consomment plus que leurs revenu mensuel.</li>
+          <nz-divider></nz-divider>
+          <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_without_job_not_approuved}}</nz-tag> Nombre de personnes sans travail ('بدون' | 'عاطل') et avec un score 'Rejeté'.</li>
+          <nz-divider></nz-divider>
+          <li class="count"><nz-tag [nzColor]="'blue'">{{stats_content.count_of_with_job_not_approuved}}</nz-tag> Nombre de personnes avec un travail et avec un score 'Rejeté'.</li>
+        </ul>
+        <h4></h4>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+
+  <!-- HCP -->
+  <div *ngIf="!type">
+    <nz-collapse nzAccordion>
+      <nz-collapse-panel nzHeader="Repartition Classe sociale">
+        <div class="canvas">
+          <canvas style="height: 100%;" baseChart [data]="piePauvreChartData" [labels]="piePauvreChartLabels"
+            [chartType]="pieChartType"></canvas>
+        </div>
+      </nz-collapse-panel>
+
+      <nz-collapse-panel nzHeader="Repartition Milieu">
+        <div class="canvas">
+          <canvas style="height: 100%;" baseChart [data]="pieMilieuChartData" [labels]="pieMilieuChartLabels"
+            [chartType]="pieChartType"></canvas>
+        </div>
+      </nz-collapse-panel>
+
+      <nz-collapse-panel nzHeader="Repartition Region">
+        <div class="chart">
+          <div class="canvas">
+            <canvas style="height: 100%;" baseChart [data]="pirRegionChartData" [labels]="pieRegionChartLabels"
+              [chartType]="pieChartType"></canvas>
+          </div>
+          <div class="region">
+            <ul>
+              <li>1 : Tanger-Tétouan-Al Hoceïma </li>
+              <li>2 : Oriental </li>
+              <li>3 : Fès-Meknès </li>
+              <li>4 : Rabat-Salé-Kénitr </li>
+              <li>5 : Béni Mellal-Khénifra </li>
+              <li>6 : Casablanca-Settat </li>
+              <li>7 : Marrakech-Safi </li>
+              <li>8 : Drâa-Tafilalet </li>
+              <li>9 : Souss-Massa </li>
+              <li>10 : Guelmim-Oued Noun </li>
+              <li>11 : Laâyoune-Sakia El Hamra </li>
+              <li>12 : Dakhla-Oued Ed Dahab </li>
+            </ul>
+          </div>
+        </div>
+      </nz-collapse-panel>
+
+      <nz-collapse-panel nzHeader="Consommation states">
+        <nz-alert class="resultat-content"
+        nzType="info"
+        nzMessage="Description"
+        nzDescription="Le nombre des personnes pauvre et ils consomment plus que la moyenne de consommation des personnes non pauvre."
+        nzShowIcon
+      ></nz-alert>
+        <h4></h4>
+        <nz-table nzBordered #basicTable [nzData]='(consommation$ | async )'
+          nzSize='small'>
+          <thead>
+            <tr>
+              <th>Consommation</th>
+              <th>Minimum</th>
+              <th>Maximum</th>
+              <th>Moyenne</th>
+              <th>Nombre de personnes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <td>{{data.consommation}}</td>
+              <td>{{data.min}}</td>
+              <td>{{data.max}}</td>
+              <td>{{data.mean}}</td>
+              <td>{{data.count}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
 </div>
