@@ -22,9 +22,32 @@ export class RsuService {
     return this.http.get(`${environment.admin}rsu/`);
   }
 
-  getFormResult(data, modele) {
-    let url = this.getUri(modele)
-    return this.http.post(url, data);
+  getFormResult(data) {
+    // let url = this.getUri(modele)
+    let url = "http://localhost:5010/"
+    data['regles'] = []
+    return this.http.post(url, {
+      "Region_Libelle_ar": 12,
+      "Milieu": 1,
+      "Etat_matrimonial_CM": 1,
+      "Demandeur_Sexe": 1,
+      "Demandeur_Taye_Menage": 7,
+      "Demandeur_nbr_Chambre": 2,
+      "Logement_libelle_Ar": 4,
+      "Fonction_libelle_Ar": 20,
+      "parab": 0,
+      "voiture": 1,
+      "moto": 1,
+      "bain": 1,
+      "reseau_evacuation_publique_eau_usee": 0,
+      "eau_fontaine_publique": 0,
+      "toilet": 1,
+      "Demandeur_frais_Logement": 0,
+      "SocioEconomique_consomation_Eau": 0,
+      "SocioEconomique_consomation_Electricite": 200,
+      "SocioEconomique_consomation_Telephone": 25,
+      "regles": []
+    });
   }
 
   getFormResult2(data) {

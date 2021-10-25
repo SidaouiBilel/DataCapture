@@ -86,19 +86,19 @@
 
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="milieu">Milieu de résidence </nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Milieu">Milieu de résidence </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <nz-select formControlName="milieu">
+                    <nz-select formControlName="Milieu">
                       <nz-option [nzValue]="1" nzLabel="Urbain"></nz-option>
-                      <nz-option [nzValue]="2" nzLabel="Rural"></nz-option>
+                      <nz-option [nzValue]="0" nzLabel="Rural"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="region">Région</nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Region_Libelle_ar">Région</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <nz-select formControlName="region">
+                    <nz-select formControlName="Region_Libelle_ar">
                       <nz-option [nzValue]="1" nzLabel="Dakhla-Oued Ed Dahab"></nz-option>
                       <nz-option [nzValue]="2" nzLabel="Casablanca-Settat"></nz-option>
                       <nz-option [nzValue]="3" nzLabel="Rabat-Salé-Kénitra"></nz-option>
@@ -116,10 +116,18 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="tailleMenage">Taille du Menage
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Demandeur_Taye_Menage">Taille du Menage
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="taille_menage" id="taille_menage" type="number" min="0" />
+                    <input nz-input formControlName="Demandeur_Taye_Menage" id="Demandeur_Taye_Menage" type="number" min="0" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Demandeur_nbr_Chambre">Nombre de chambres
+                  </nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="Demandeur_nbr_Chambre" id="Demandeur_nbr_Chambre" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -140,12 +148,12 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
                     <nz-select formControlName="Logement_libelle_Ar">
-                      <nz-option [nzValue]="1" nzLabel="Louer"></nz-option>
+                      <nz-option [nzValue]="1" nzLabel="Locataire"></nz-option>
                       <nz-option [nzValue]="2" nzLabel="Proprétaire"></nz-option>
-                      <nz-option [nzValue]="3" nzLabel="Hébergement gratuit"></nz-option>
-                      <nz-option [nzValue]="4" nzLabel="Autre"></nz-option>
+                      <nz-option [nzValue]="3" nzLabel="Logement gratuit"></nz-option>
                       <nz-option [nzValue]="5" nzLabel="Bidonville"></nz-option>
                       <nz-option [nzValue]="6" nzLabel="Logement en boue"></nz-option>
+                      <nz-option [nzValue]="4" nzLabel="Autres"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
@@ -198,10 +206,10 @@
                 </nz-form-item> -->
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Situation_profession_agreg_CM">Profession du
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Fonction_libelle_Ar">Profession du
                     chef de ménage</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <nz-select formControlName="Situation_profession_agreg_CM">
+                    <nz-select formControlName="Fonction_libelle_Ar">
                       <nz-option *ngFor="let prof of profession_fr; let i = index;" [nzValue]="i+1" nzLabel="{{prof}}">
                       </nz-option>
                     </nz-select>
@@ -288,17 +296,23 @@
 
               <div *ngIf="current == 2">
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_eau">Dépense Eau</nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="Demandeur_frais_Logement">Frais de logement</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_eau" id="dep_eau" type="number" min="0" />
+                    <input nz-input formControlName="Demandeur_frais_Logement" id="Demandeur_frais_Logement" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
+                <nz-form-item>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="SocioEconomique_consomation_Eau">Dépense Eau</nz-form-label>
+                  <nz-form-control [nzSm]="10" [nzXs]="24">
+                    <input nz-input formControlName="SocioEconomique_consomation_Eau" id="SocioEconomique_consomation_Eau" type="number" min="0" />
+                  </nz-form-control>
+                </nz-form-item>
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_elec">Dépense Electricité</nz-form-label>
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="SocioEconomique_consomation_Electricite">Dépense Electricité</nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_elec" id="dep_elec" type="number" min="0" />
+                    <input nz-input formControlName="SocioEconomique_consomation_Electricite" id="SocioEconomique_consomation_Electricite" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -311,10 +325,10 @@
 
 
                 <nz-form-item>
-                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="dep_tele">Dépense Téléphone
+                  <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="SocioEconomique_consomation_Telephone">Dépense Téléphone
                   </nz-form-label>
                   <nz-form-control [nzSm]="10" [nzXs]="24">
-                    <input nz-input formControlName="dep_tele" id="dep_tele" type="number" min="0" />
+                    <input nz-input formControlName="SocioEconomique_consomation_Telephone" id="SocioEconomique_consomation_Telephone" type="number" min="0" />
                   </nz-form-control>
                 </nz-form-item>
 
@@ -339,8 +353,18 @@
 
             <div *ngIf="current == 3">
               <div>
-                <nz-alert class="resultat-content" [nzType]="(fraudResult.fraude) ? 'error' : 'success'"
+                <nz-alert style="min-width: 750px;" class="resultat-content" [nzType]="(fraudResult.fraude) ? 'error' : 'success'"
                   nzMessage="Doute de la fraude" [nzDescription]="fraudResult.msg" nzShowIcon></nz-alert>
+
+                  <nz-alert style="min-width: 750px;" *ngIf="fraudResult?.msgRegles?.length > 0" class="resultat-content" [nzType]="(fraudResult.fraude) ? 'error' : 'success'"
+                  nzMessage="Raison de la fraude" [nzDescription]="regles"></nz-alert>
+
+                <ng-template #regles style="font-weight: bolder">
+                  <p style="text-align: left; margin: 10px 90px" nz-paragraph *ngFor="let rg of fraudResult.msgRegles">
+                    <i nz-icon nzType="close-circle"></i>
+                    {{rg}}
+                  </p>
+                </ng-template>
               </div>
             </div>
           </div>

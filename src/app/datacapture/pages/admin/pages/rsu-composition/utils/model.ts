@@ -77,6 +77,26 @@ export const profession = [
   'طرازة',
 ]
 
+export const regles = [
+  { id: "RG1", value: "Consommation d'électricité par tranche de consommation de téléphone" },
+  { id: "RG2", value: "Consommation de téléphone par tranche de consommation d'électricité" },
+  { id: "RG3", value: "Frais logement par nombre de chambres" },
+  { id: "RG4", value: "Consommation d'eau selon le nombre de chambres" },
+  { id: "RG5", value: "Consommation d'életrictié par type de logement" },
+  { id: "RG6", value: "Consommation de téléphone par rapport au frais logement" },
+  { id: "RG6_Bis", value: "Consommation de téléphone par rapport au type logement" },
+  { id: "RG7", value: "Consommation d'électricité par rapport au nombre de chambres" },
+  { id: "RG8", value: "Consommation d'eau par rapport à la Taille du Menage" },
+  { id: "RG9", value: "Consommation de téléphone par rapport à la Taille du Menage" },
+  { id: "RG10", value: "Consommation d'électricité par rapport à la Taille du Menage" },
+  { id: "RG11", value: "Frais logement par rapport à la  Taille du Menage" },
+  { id: "RG12", value: "Depense totale selon la Taille du Menage" },
+  { id: "RG13", value: "Depense totale selon le nombre de chambres" },
+  { id: "RG14", value: "Depense totale selon la fonction" },
+  { id: "RG15", value: "Frais logement par rapport à la région" },
+  { id: "RG16", value: "Consommation d'eau par rapport à la région" },
+]
+
 export const profession_fr = [
   'Tailleur',
   'Sans travail',

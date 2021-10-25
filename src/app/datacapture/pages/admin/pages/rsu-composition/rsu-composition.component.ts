@@ -4,14 +4,14 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { profession, profession_fr } from './utils/model';
-import { log } from 'console';
+import { profession, profession_fr, regles } from './utils/model';
 
 @Component({
   selector: 'app-rsu-composition',
   templateUrl: './rsu-composition.component.html',
   styleUrls: ['./rsu-composition.component.css']
 })
+
 export class RsuCompositionComponent implements OnInit {
   loading;
   uploadURI;
@@ -25,6 +25,7 @@ export class RsuCompositionComponent implements OnInit {
   validateForm!: FormGroup;
   profession = profession;
   profession_fr = profession_fr;
+  reglesMasgs = regles;
   date_naissance = null;
   current = 0;
 
@@ -33,6 +34,10 @@ export class RsuCompositionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // console.log(this.rgs["RG1"])
+    /*     Object.keys(this.rgs).forEach(
+          item => this.rgs[item]['RG1']
+        ) */
     this.updateURI = this.service.RsuDataUpdate();
     this.uploadURI = this.service.RsuDataImport();
     this.laodData()
@@ -40,13 +45,14 @@ export class RsuCompositionComponent implements OnInit {
     this.validateForm = this.fb.group({
       // modele: [null, [Validators.required]],
 
-      region: [null, [Validators.required]],
-      milieu: [null, [Validators.required]],
+      Region_Libelle_ar: [null, [Validators.required]],
+      Milieu: [null, [Validators.required]],
       Etat_matrimonial_CM: [null, [Validators.required]],
       Demandeur_Sexe: [null, [Validators.required]],
-      taille_menage: [null, [Validators.required]],
+      Demandeur_Taye_Menage: [null, [Validators.required]],
+      Demandeur_nbr_Chambre: [null, [Validators.required]],
       Logement_libelle_Ar: [null, [Validators.required]],
-      Situation_profession_agreg_CM: [null, [Validators.required]],
+      Fonction_libelle_Ar: [null, [Validators.required]],
       parab: [null, [Validators.required]],
       // date_naissance_an: [null, [Validators.required]],
       // date_naissance_mois: [null, [Validators.required]],
@@ -57,9 +63,10 @@ export class RsuCompositionComponent implements OnInit {
       reseau_evacuation_publique_eau_usee: [null, [Validators.required]],
       eau_fontaine_publique: [null, [Validators.required]],
       toilet: [null, [Validators.required]],
-      dep_eau: [null, [Validators.required]],
-      dep_elec: [null, [Validators.required]],
-      dep_tele: [null, [Validators.required]],
+      Demandeur_frais_Logement: [null, [Validators.required]],
+      SocioEconomique_consomation_Eau: [null, [Validators.required]],
+      SocioEconomique_consomation_Electricite: [null, [Validators.required]],
+      SocioEconomique_consomation_Telephone: [null, [Validators.required]],
       // revenu: [null, [Validators.required]],
 
       // Hadi makaynach f input f oussama
@@ -147,22 +154,35 @@ export class RsuCompositionComponent implements OnInit {
     // delete this.validateForm.value.modele
     console.log(this.validateForm.value);
     // this.service.getFormResult(this.validateForm.value, this.modele).subscribe(
-    this.service.getFormResult2(this.validateForm.value).subscribe(
-      (res) => {
+    this.service.getFormResult(this.validateForm.value).subscribe(
+      (res: any) => {
         this.fraudResult = res;
         // this.fraudResult.msg = this.getMessage(this.modele, res)
         this.fraudResult.msg = this.getMessage2(res)
+        this.fraudResult.msgRegles = this.getReglesMsgs(res)
         this.current += 1;
       }
     )
   }
 
+  getReglesMsgs(res) {
+    let msgRegles = [];
+
+    if (res.fraude) {
+      res.regles.forEach(elem => {
+        let rg = this.reglesMasgs.find(item => item.id == elem)
+        msgRegles.push(rg.value)
+      });
+      this.fraudResult.msgRegles = msgRegles
+    }
+
+    return msgRegles;
+  }
+
   getMessage2(res) {
     let message = '';
-    (res.fraude) ?
-      (message = "La personne est fraudause") :
-      (message = "La personne est non fraudause")
-
+    if (res.fraude) message = "La personne est fraudause avec une probabilité de " + parseFloat(res['proba']).toFixed(2) + " %"
+    else message = "La personne est non fraudause"
     return message
   }
 
