@@ -26,7 +26,8 @@ export class RsuService {
     // let url = this.getUri(modele)
     let url = "http://localhost:5010/"
     data['regles'] = []
-    return this.http.post(url, {
+    return this.http.post(url, data);
+    /*  {
       "Region_Libelle_ar": 12,
       "Milieu": 1,
       "Etat_matrimonial_CM": 1,
@@ -47,7 +48,7 @@ export class RsuService {
       "SocioEconomique_consomation_Electricite": 200,
       "SocioEconomique_consomation_Telephone": 25,
       "regles": []
-    });
+    } */
   }
 
   getFormResult2(data) {
