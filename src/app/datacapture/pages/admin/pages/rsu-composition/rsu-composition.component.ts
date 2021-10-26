@@ -63,7 +63,7 @@ export class RsuCompositionComponent implements OnInit {
       reseau_evacuation_publique_eau_usee: [null, [Validators.required]],
       eau_fontaine_publique: [null, [Validators.required]],
       toilet: [null, [Validators.required]],
-      Demandeur_frais_Logement: [null, [Validators.required]],
+      // Demandeur_frais_Logement: [null, [Validators.required]],
       SocioEconomique_consomation_Eau: [null, [Validators.required]],
       SocioEconomique_consomation_Electricite: [null, [Validators.required]],
       SocioEconomique_consomation_Telephone: [null, [Validators.required]],
