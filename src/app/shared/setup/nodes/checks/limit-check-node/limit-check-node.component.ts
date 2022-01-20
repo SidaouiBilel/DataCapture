@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 
 @Component({
-  selector: 'app-look-in-node',
-  templateUrl: './look-in-node.component.html',
-  styleUrls: ['./look-in-node.component.css']
+  selector: 'app-limit-check-node',
+  templateUrl: './limit-check-node.component.html',
+  styleUrls: ['./limit-check-node.component.css']
 })
-export class LookInNodeComponent extends PipelineNodeComponent  {
+export class LimitCheckNodeComponent  extends PipelineNodeComponent  {
 
   constructor() { 
     super()
   }
+
+  operators = ['>', '>=', '<', '<=', '==']
+
 }

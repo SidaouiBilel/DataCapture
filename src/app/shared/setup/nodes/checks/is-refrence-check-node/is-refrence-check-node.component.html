@@ -1,0 +1,13 @@
+
+<p nz-typography nzEditable [(nzContent)]="data.label"></p>
+
+
+<input  nz-input [(ngModel)]='data.col' (change)='onDataChanged()' placeHolder="Column"/>
+<br>
+<app-input-ref-type [(ngModel)]='data.ref_type_id'></app-input-ref-type>
+<!-- <app-reference-type-input ></app-reference-type-input> -->
+  
+<div class="button-spacing mt-2">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+</div>

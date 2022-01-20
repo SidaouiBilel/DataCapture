@@ -1,0 +1,17 @@
+
+<p nz-typography nzEditable [(nzContent)]="data.label"></p>
+
+
+<input  nz-input [(ngModel)]='data.col' (change)='onDataChanged()' placeHolder="Column"/>
+
+<nz-select (change)='onDataChanged()' [nzAllowClear]='true' [(ngModel)]='data.operator' nzPlaceHolder='Operator'>
+    <nz-option *ngFor='let o of operators' [nzLabel]="o" [nzValue]="o"></nz-option>
+  </nz-select>
+  <br>
+    <input  nz-input [(ngModel)]='data.limit' (change)='onDataChanged()' placeHolder="Limit"/>
+ 
+  
+<div class="button-spacing mt-2">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+</div>

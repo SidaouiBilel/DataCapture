@@ -1,0 +1,29 @@
+<div>
+    <p nz-typography nzEditable [(nzContent)]="data.label"></p>
+
+    <form nz-form [nzLayout]="'vertical'">
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8">Column</nz-form-label>
+          <nz-form-control [nzSm]="16">
+              <input name='column' nz-input [(ngModel)]='data.column' (change)='onDataChanged()' placeHolder="Column"/>
+        </nz-form-control>
+        
+        </nz-form-item>
+      
+        <nz-form-item>
+          <nz-form-label [nzSm]="8">To</nz-form-label>
+          <nz-form-control [nzSm]="16">
+            <input nz-input [nzSize]='size' [(ngModel)]='data.regex' (change)='onDataChanged()' name='to' />
+          </nz-form-control>
+        </nz-form-item>
+      
+      </form>
+      
+
+    <div class="button-spacing mt-2">
+        <button nz-button (click)='cancel()'>Cancel</button>
+        <button nz-button nzType='primary' (click)='save()'>Save</button>
+    </div>
+    
+</div>

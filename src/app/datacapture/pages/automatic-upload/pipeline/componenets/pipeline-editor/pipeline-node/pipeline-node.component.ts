@@ -29,4 +29,6 @@ export class PipelineNodeComponent implements OnInit {
   cancel() {
     this.onCancel.emit(this.data);
   }
+
+  onDataChanged(){}
 }

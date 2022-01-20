@@ -65,6 +65,11 @@ import { GlobalReportComponent } from './global-report/global-report.component';
 import { LookInNodeComponent } from './setup/nodes/checks/look-in-node/look-in-node.component';
 import { OracleImportNodeComponent } from './setup/nodes/datasources/oracle-import-node/oracle-import-node.component';
 import { OracleUploadNodeComponent } from './setup/nodes/datasinks/oracle-upload-node/oracle-upload-node.component';
+import { FormatCheckNodeComponent } from './setup/nodes/checks/format-check-node/format-check-node.component';
+import { CompareCheckNodeComponent } from './setup/nodes/checks/compare-check-node/compare-check-node.component';
+import { IsRefrenceCheckNodeComponent } from './setup/nodes/checks/is-refrence-check-node/is-refrence-check-node.component';
+import { LimitCheckNodeComponent } from './setup/nodes/checks/limit-check-node/limit-check-node.component';
+import { InputRefTypeComponent } from './inputs/input-ref-type/input-ref-type.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -164,7 +169,12 @@ const Components = [
     GlobalReportComponent,
     LookInNodeComponent,
     OracleImportNodeComponent,
-    OracleUploadNodeComponent
+    OracleUploadNodeComponent,
+    FormatCheckNodeComponent,
+    CompareCheckNodeComponent,
+    IsRefrenceCheckNodeComponent,
+    LimitCheckNodeComponent,
+    InputRefTypeComponent
   ],
   exports: [
     ...SharedModules,

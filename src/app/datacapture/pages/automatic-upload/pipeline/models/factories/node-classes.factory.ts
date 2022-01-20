@@ -22,6 +22,10 @@ import { NodeDataCheckLimitCheck, NodeDataCheckLookForCheck, NodeDataCheckRefere
 import { LookInNodeComponent } from "@app/shared/setup/nodes/checks/look-in-node/look-in-node.component";
 import { OracleImportNodeComponent } from "@app/shared/setup/nodes/datasources/oracle-import-node/oracle-import-node.component";
 import { OracleUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/oracle-upload-node/oracle-upload-node.component";
+import { FormatCheckNodeComponent } from "@app/shared/setup/nodes/checks/format-check-node/format-check-node.component";
+import { CompareCheckNodeComponent } from "@app/shared/setup/nodes/checks/compare-check-node/compare-check-node.component";
+import { LimitCheckNodeComponent } from "@app/shared/setup/nodes/checks/limit-check-node/limit-check-node.component";
+import { IsRefrenceCheckNodeComponent } from "@app/shared/setup/nodes/checks/is-refrence-check-node/is-refrence-check-node.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -66,12 +70,12 @@ export const CATEGORY_NODES = [
 ]
 
 export const DATACHECK_NODES = [
-  NodeDataCheckLimitCheck.setComponenet(NodePycodeComponent),
+  NodeDataCheckLimitCheck.setComponenet(LimitCheckNodeComponent),
   NodeDataCheckLookForCheck.setComponenet(LookInNodeComponent),
-  NodeDataCheckReferenceCheck.setComponenet(NodePycodeComponent),
-  NodeDataCheckFormatCheck.setComponenet(NodePycodeComponent),
-  NodeDataCheckComparisonCheck.setComponenet(NodePycodeComponent),
-  NodeDataCheckCustomCheck.setComponenet(NodePycodeComponent),
+  NodeDataCheckReferenceCheck.setComponenet(IsRefrenceCheckNodeComponent),
+  NodeDataCheckFormatCheck.setComponenet(FormatCheckNodeComponent),
+  NodeDataCheckComparisonCheck.setComponenet(CompareCheckNodeComponent),
+  // NodeDataCheckCustomCheck.setComponenet(NodePycodeComponent),
 ]
 
 export const ALL_NODES = [...DATASOURCE_NODES,...DATASINK_NODES, ...NODE_TRANSFORMERS, ...NODE_OTHERS, ...CATEGORY_NODES, ...DATACHECK_NODES]

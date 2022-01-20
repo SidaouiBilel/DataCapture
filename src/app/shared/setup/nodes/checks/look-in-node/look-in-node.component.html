@@ -1,31 +1,12 @@
 <div>
     <p nz-typography nzEditable [(nzContent)]="data.label"></p>
-    <p nz-typography class="text-muted"><b>Input: </b> <nz-tag *ngFor='let i of data.inputs'>{{i.name}}</nz-tag></p>
 
-    <div class="button-spacing mb-3">
-        <button nz-button (click)='addInput()'>Add Input</button>
-        <button nz-button (click)='removeInput()'>Remove Input</button>
-    </div>
-
-
-    <div>
-        <nz-input-group nzCompact>
-            <nz-select [(ngModel)]='data.sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
-            <nz-option *ngFor='let s of data.inputs'  nzValue="{{s.portId}}" nzLabel="{{s.name}}"></nz-option>
-            </nz-select>
-            <input style="width:25%;"  nz-input [(ngModel)]='data.column' (change)='onDataChanged()' placeHolder="Column"/>
-        </nz-input-group>
-        <nz-input-group nzCompact>
-            <nz-select [(ngModel)]='data.search_sheet' (ngModelChange)='onDataChanged()' nzPlaceHolder='Sheet'>
-                <nz-option *ngFor='let s of data.inputs'  nzValue="{{s.portId}}" nzLabel="{{s.name}}"></nz-option>
-            </nz-select>
-            <input style="width:25%;"  nz-input [(ngModel)]='data.search_column' (change)='onDataChanged()' placeHolder="Column"/>
-        </nz-input-group>
-    </div>
-    
+    <input nz-input [(ngModel)]='data.col' (change)='onDataChanged()' placeHolder="Look For Column"/>
+    <input nz-input [(ngModel)]='data.col_1' (change)='onDataChanged()' placeHolder="Values In Column"/>
 
     <div class="button-spacing mt-2">
         <button nz-button (click)='cancel()'>Cancel</button>
         <button nz-button nzType='primary' (click)='save()'>Save</button>
     </div>
+    
 </div>
