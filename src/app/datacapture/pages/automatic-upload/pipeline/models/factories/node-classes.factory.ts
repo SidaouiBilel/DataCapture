@@ -1,5 +1,5 @@
-import { NodeBlobStorageUpload, NodeCollectionUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
-import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
+import { NodeBlobStorageUpload, NodeCollectionUpload, NodeMongoDBUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
+import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodeMongoDBImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
 import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
 import { StorageAccountImportNodeComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
@@ -15,6 +15,8 @@ import { CollectionImportComponent } from "@app/shared/setup/nodes/datasources/c
 import { NodeJoinComponent } from "@app/shared/setup/nodes/other/node-join/node-join.component";
 import { NodePipelineComponent } from "@app/shared/setup/nodes/other/node-pipeline/node-pipeline.component";
 import { ManualImportNodeComponent } from "@app/shared/setup/nodes/datasources/manual-import-node/manual-import-node.component";
+import { MongodbUploadNodeComponent } from "@app/shared/setup/nodes/datasinks/mongodb-upload-node/mongodb-upload-node.component";
+import { MongodbImportNodeComponent } from "@app/shared/setup/nodes/datasources/mongodb-import-node/mongodb-import-node.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -27,6 +29,7 @@ export const DATASOURCE_NODES = [
   NodeSQLImport.setComponenet(SqlImportNodeComponent), 
   NodePostgresImport.setComponenet(PostgresImportNodeComponent), 
   NodeBlobStorage.setComponenet(StorageAccountImportNodeComponent),
+  NodeMongoDBImport.setComponenet(MongodbImportNodeComponent),
   NodeManualImport.setComponenet(ManualImportNodeComponent),
 ]
 export const DATASINK_NODES = [
@@ -34,6 +37,7 @@ export const DATASINK_NODES = [
   NodeSQLUpload.setComponenet(SqlUploadNodeComponent),
   NodePostgresUpload.setComponenet(PostgresUploadNodeComponent),
   NodeBlobStorageUpload.setComponenet(StorageAccountUploadNodeComponent), 
+  NodeMongoDBUpload.setComponenet(MongodbUploadNodeComponent), 
 ]
 export const NODE_TRANSFORMERS = [
               NodeTransformationFilter

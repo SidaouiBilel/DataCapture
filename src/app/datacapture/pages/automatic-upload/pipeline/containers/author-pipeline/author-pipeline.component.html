@@ -1,5 +1,5 @@
 <div class="flex column stretch h-100">
-  <app-pipeline-editor [readOnly]="context.monitor_as_run && !context.failed" [run]='run$|async' class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
+  <app-pipeline-editor [headerText]='(metadata$ | async)?.name || "UNAMED"' [readOnly]="context.monitor_as_run && !context.failed" [run]='run$|async' class="fill" [diagramNodeData]='nodes$ | async' (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
   [diagramLinkData]='links$ | async' (diagramLinkDataChange)='onDiagramLinkDataChange($event)'>
 
   <div class="button-spacing ghost flex start">

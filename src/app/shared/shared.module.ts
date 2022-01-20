@@ -52,6 +52,8 @@ import { NodeJoinComponent } from './setup/nodes/other/node-join/node-join.compo
 import { NodePipelineComponent } from './setup/nodes/other/node-pipeline/node-pipeline.component';
 import { NodeTranformationService } from './setup/nodes/other/node-pipeline/service/node-transformation.service';
 import { ManualImportNodeComponent } from './setup/nodes/datasources/manual-import-node/manual-import-node.component';
+import { MongodbUploadNodeComponent } from './setup/nodes/datasinks/mongodb-upload-node/mongodb-upload-node.component';
+import { MongodbImportNodeComponent } from './setup/nodes/datasources/mongodb-import-node/mongodb-import-node.component';
 // import { ZorroSharperModule } from "zorro-sharper";
 
 // In this constant, Add all the shared modules and components that you will be using in all the rest of the application
@@ -121,6 +123,8 @@ const Components = [
     NodeJoinComponent,
     NodePipelineComponent,
     ManualImportNodeComponent,
+    MongodbUploadNodeComponent,
+    MongodbImportNodeComponent,
   ],
   exports: [
     ...SharedModules,

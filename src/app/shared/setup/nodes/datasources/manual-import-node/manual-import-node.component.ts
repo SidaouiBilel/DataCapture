@@ -65,6 +65,7 @@ export class ManualImportNodeComponent extends PipelineNodeComponent implements 
     this.ntf.default('Preparing Dataset')
     this.service.generateSheet(this.data.file_id, this.data.sheetId, 0, 0 ,0 ,0).subscribe((generated_sheet:any)=>{
       this.importing = false
+      this.data.label = e.sheetName
       this.data.sheet_id = generated_sheet.sheet_id
       this.ntf.success('Dataset ready')
     }, err=> this.imported = false)

@@ -23,6 +23,9 @@ export class PipelineEditorComponent implements AfterViewInit{
     this.diagramModelData.run=run
     this.skipsDiagramUpdate = false;
   };
+
+  @Input() public headerText = 'Pipline Editor';
+
   @Input("readOnly") set _readOnly(readOnly){
     this.readOnly = readOnly
     if(this.myDiagramComponent.diagram) this.myDiagramComponent.diagram.isReadOnly = readOnly
