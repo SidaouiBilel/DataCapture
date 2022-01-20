@@ -36,9 +36,8 @@ export class AuthorPipelineComponent implements OnDestroy {
     // FETCH STORE DATA
     this.links$ = this.store.select(selectPipelineEditLinks).pipe(map(e => _.cloneDeep(e)));
     this.nodes$ = this.store.select(selectPipelineEditNodes).pipe(map(e => _.cloneDeep(e)));
-    this.metadata$ = this.store.select(selectPipelineMetaData);
+    this.metadata$ = this.store.select(selectPipelineMetaData).pipe(map(e => _.cloneDeep(e)));
     this.runId$ = this.store.select(selectRunId);
-
     // LISTENERS
     this.runId$.pipe(tap(this.onRunIdChanged)).subscribe()
    }
@@ -67,10 +66,15 @@ export class AuthorPipelineComponent implements OnDestroy {
   publish=()=>new Promise((resolve, reject) => {
       forkJoin([this.metadata$.pipe(take(1))])
       .subscribe(([metaData]: any) => {
+        if(!metaData.pipeline_id)
+        {
+          reject("Pipeline ID is null");
+        } else {
           this.pipelines.publishDag(metaData.pipeline_id).subscribe(() => {
             this.ntf.success('Pipeline Published');
             resolve(null)
-        });
+          });
+        }
       })
     })
 
