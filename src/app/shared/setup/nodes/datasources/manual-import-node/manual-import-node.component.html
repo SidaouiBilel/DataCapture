@@ -31,6 +31,11 @@
 </ng-container>
 
 
+<div class="button-spacing">
+  <button nz-button (click)="openConfig()"><i nz-icon nzType="setting"></i>Select Range</button>
+  <!-- <button nz-button (click)="resetRange()"><i nz-icon nzType="redo"></i>Reset Range</button> -->
+  </div>
+
 <nz-alert class="mt-2" nzShowIcon *ngIf='data.sheet_id' nzMessage="Dataset is ready"></nz-alert>
 
 

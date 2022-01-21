@@ -14,7 +14,7 @@ export class PipelineNode{
     static category;
     // DEFAULT LABEL OF THE NODE
     static label;
-    static showLabel = false
+    static showLabel = true
     
     
     // NODE COLORATION OR THEME

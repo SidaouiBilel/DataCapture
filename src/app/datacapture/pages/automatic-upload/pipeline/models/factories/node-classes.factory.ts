@@ -1,7 +1,7 @@
 import { NodeBlobStorageUpload, NodeCollectionUpload, NodeMongoDBUpload, NodePostgresUpload, NodeSQLUpload } from "../nodes/datasink.model";
 import { NodeBlobStorage, NodeCollectionImport, NodeManualImport, NodeMongoDBImport, NodePostgresImport, NodeSQLImport } from "../nodes/datasources.model";
 import { NodeTransformationCalculator, NodeTransformationDefaultValue, NodeTransformationDeleteRow, NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationFormatDate, NodeTransformationGroupBy, NodeTransformationHash, NodeTransformationMerge, NodeTransformationReplace, NodeTransformations, NodeTransformationSplitter } from "../nodes/transformations.model";
-import { NodeConcat, NodeJoin, NodePycode, NodeTransformationPipeline } from "../nodes/other.model";
+import { NodeConcat, NodeJoin, NodeMap, NodePycode, NodeSelect, NodeTransformationPipeline } from "../nodes/other.model";
 import { StorageAccountImportNodeComponent } from "@app/shared/setup/nodes/datasources/azure/storage-account/storage-account.component";
 import { SqlImportNodeComponent } from "@app/shared/setup/nodes/datasources/sql-import-node/sql-import-node.component";
 import { NodePycodeComponent } from "@app/shared/setup/nodes/other/node-pycode/node-pycode.component";
@@ -22,6 +22,8 @@ export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
   NodeJoin.setComponenet(NodeJoinComponent),
   NodePycode.setComponenet(NodePycodeComponent),
+  NodeMap.setComponenet(NodePycodeComponent),
+  NodeSelect.setComponenet(NodePycodeComponent),
   NodeTransformationPipeline.setComponenet(NodePipelineComponent)
 ] 
 export const DATASOURCE_NODES = [

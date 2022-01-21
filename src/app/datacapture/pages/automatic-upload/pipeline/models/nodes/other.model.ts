@@ -54,3 +54,27 @@ export class NodePycode extends PipelineNode{
         {id:"OUTPUT",spot:go.Spot.Right},
     ];
 }
+
+export class NodeMap extends PipelineNode{
+    static type = 'map'
+    static category = 'TRANSFORMATION'    
+    static nzicon = "rotate-left"
+    static color = 'darkorange';
+    static label = 'Map'
+    static ports = [
+        {id:"INPUT",spot: go.Spot.Left},
+        {id:"OUTPUT",spot:go.Spot.Right},
+    ]
+}
+
+export class NodeSelect extends PipelineNode{
+    static type = 'select'
+    static category = 'TRANSFORMATION'    
+    static nzicon = "select"
+    static color = 'darkorange';
+    static label = 'Select'
+    static ports = [
+        {id:"INPUT",spot: go.Spot.Left},
+        {id:"OUTPUT",spot:go.Spot.Right},
+    ]
+}

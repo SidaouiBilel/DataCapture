@@ -109,18 +109,19 @@
 
           <li nz-submenu nzIcon="deployment-unit" nzTitle="Automatic Upload" >
             <ul>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/pipeline']">
+                <i nz-icon nzType="edit" nzRotate='-90'></i>
+                <span>Editor</span>
+              </li>
               <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/author']">
-                <i nz-icon nzType="edit"></i>
-                <span>Author</span>
+                <i nz-icon nzType="apartment"></i>
+                <span>Piplines</span>
               </li>
               <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/monitor']">
                 <i nz-icon nzType="monitor"></i>
-                <span>Monitor</span>
+                <span>Runs</span>
               </li>
-              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/pipeline']">
-                <i nz-icon nzType="apartment" nzRotate='-90'></i>
-                <span>Pipeline</span>
-              </li>
+              
             </ul>
           </li>
         </ul>
